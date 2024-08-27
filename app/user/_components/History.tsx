@@ -27,7 +27,7 @@ export default function History() {
       <div className="flex flex-col pb-1">
         <div className="ml-4 flex w-full gap-12">
           {YEAR_MONTHS.map(({ month }) => (
-            <Text type="caption" className="text-[10px]">
+            <Text key={month} type="caption" className="text-[10px]">
               {month}월
             </Text>
           ))}

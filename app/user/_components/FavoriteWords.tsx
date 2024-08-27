@@ -9,7 +9,7 @@ export default function FavoriteWords() {
       <Title>가장 많이 사용하는</Title>
       <div className="flex gap-2">
         {mock.map((word) => (
-          <Tag>{word}</Tag>
+          <Tag key={word}>{word}</Tag>
         ))}
       </div>
     </div>
@@ -18,7 +18,7 @@ export default function FavoriteWords() {
 
 function Tag({ children }: PropsWithChildren) {
   return (
-    <div className="rounded-md border border-gray-300 px-4 py-1 text-xs text-gray-600">
+    <div className="rounded-md border border-gray-300 px-4 py-1 text-xs text-gray-600 hover:bg-gray-100">
       {children}
     </div>
   )

@@ -49,7 +49,7 @@ export default function PrevOneSentence() {
       <Title>그날의 한 문장</Title>
       <div className="flex flex-col">
         {mock.map((item) => (
-          <ProfileSentenceItem sentence={item} />
+          <ProfileSentenceItem key={item.id} sentence={item} />
         ))}
       </div>
     </div>
