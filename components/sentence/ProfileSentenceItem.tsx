@@ -3,7 +3,7 @@ import Text from '../shared/Text'
 
 interface Props {
   sentence: any
-}
+} 
 
 export default function ProfileSentenceItem({ sentence }: Props) {
   return (

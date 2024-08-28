@@ -5,7 +5,7 @@ import { ElementType, PropsWithChildren } from 'react'
 interface Props {
   as?: ElementType
   className?: string
-  type?: 'body' | 'caption'
+  type?: 'body' | 'caption' | 'error'
   size?: 'sm' | 'md' | 'lg'
 }
 
@@ -14,6 +14,7 @@ const TEXT_VARIANTS = cva('', {
     type: {
       body: 'text-gray-700',
       caption: 'text-gray-500',
+      error: 'text-red-500',
     },
     size: {
       sm: 'text-xs',
@@ -30,5 +31,9 @@ export default function Text({
   size = 'md',
   as: Component = 'p',
 }: PropsWithChildren<Props>) {
-  return <Component className={cn(TEXT_VARIANTS({ type, size }), className)}>{children}</Component>
+  return (
+    <Component className={cn(TEXT_VARIANTS({ type, size }), className)}>
+      {children}
+    </Component>
+  )
 }

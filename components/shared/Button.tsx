@@ -12,7 +12,8 @@ const BUTTON_VARIANTS = cva('', {
   variants: {
     active: {
       primary: 'rounded-3xl bg-blue-400 text-white hover:bg-blue-500',
-      secondary: '',
+      secondary:
+        'rounded-3xl ring-1 ring-gray-400 hover:bg-gray-400 hover:text-white',
     },
     disabled: {
       primary: '',
