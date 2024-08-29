@@ -7,8 +7,11 @@ import { ISignIn } from '@/types/auth'
 import AuthForm from '../_components/AuthForm'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
+import Link from 'next/link'
+import { useSignIn } from '@/services/mutates/auth/useSignIn'
 
 export default function SignInPage() {
+  const { mutate: signIn, isPending, isSuccess } = useSignIn()
   const {
     register,
     handleSubmit,
@@ -23,13 +26,18 @@ export default function SignInPage() {
     },
   })
 
-  const handleSubmitSignIn = async (authData: ISignIn) => {}
+  const handleSubmitSignIn = async (data: ISignIn) => {
+    signIn(data, {})
+  }
 
   return (
     <form
       onSubmit={handleSubmit(handleSubmitSignIn)}
       className="flex w-96 flex-col gap-2"
     >
+      <Button variant="teritory" size="sm" className="w-fit">
+        <Link href="/signup">가입하러 가기</Link>
+      </Button>
       <Title>로그인</Title>
       <AuthForm
         register={register('email')}
@@ -43,7 +51,9 @@ export default function SignInPage() {
         type="password"
         name="비밀번호"
       />
-      <Button>로그인</Button>
+      <Button isLoading={isPending} disabled={isSuccess} type="submit">
+        로그인
+      </Button>
     </form>
   )
 }

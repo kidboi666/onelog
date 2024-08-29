@@ -1,33 +1,38 @@
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
 import { ComponentProps, forwardRef, PropsWithRef } from 'react'
+import Spinner, { Size } from './Spinner'
 
-interface Props extends ComponentProps<'button'> {
+export interface ButtonProps extends ComponentProps<'button'> {
   isLoading?: boolean
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'teritory' | 'list'
   size?: 'sm' | 'md' | 'lg'
 }
 
-const BUTTON_VARIANTS = cva('', {
+const BUTTON_VARIANTS = cva('flex items-center justify-center', {
   variants: {
     active: {
-      primary: 'rounded-3xl bg-blue-400 text-white hover:bg-blue-500',
-      secondary:
-        'rounded-3xl ring-1 ring-gray-400 hover:bg-gray-400 hover:text-white',
+      primary:
+        'border border-blue-400 bg-blue-400 text-white hover:border-blue-500 hover:bg-blue-500',
+      secondary: 'border border-gray-400 hover:bg-gray-400 hover:text-white',
+      teritory: 'underline hover:text-gray-400',
+      list: 'justify-start hover:bg-gray-200',
     },
     disabled: {
-      primary: '',
+      primary: 'gap-2 border border-gray-400 bg-gray-400 text-gray-200',
       secondary: '',
+      teritory: '',
+      list: '',
     },
     size: {
-      sm: '',
-      md: 'px-4 py-1 text-sm',
-      lg: '',
+      sm: 'text-xs',
+      md: 'p-2 text-sm',
+      lg: 'p-2 text-lg',
     },
   },
 })
 
-const Button = forwardRef<HTMLButtonElement, PropsWithRef<Props>>(
+const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
   (
     {
       children,
@@ -35,6 +40,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<Props>>(
       isLoading,
       onClick,
       disabled,
+      type = 'button',
       size = 'md',
       variant = 'primary',
       ...props
@@ -46,6 +52,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<Props>>(
         ref={ref}
         disabled={disabled}
         onClick={onClick}
+        type={type}
         className={cn(
           BUTTON_VARIANTS(
             isLoading || disabled
@@ -57,6 +64,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<Props>>(
         {...props}
       >
         {children}
+        {isLoading && <Spinner size={Size.s} />}
       </button>
     )
   },

@@ -8,7 +8,6 @@ export default function UserPageLayout({ children }: PropsWithChildren) {
       <div className="h-screen max-w-[400px] bg-gray-100 p-12">
         <LeftSection />
       </div>
-
       <div className="flex w-full max-w-[896px] flex-col px-12">
         <Summary />
         <div className="flex flex-col gap-12">{children}</div>
