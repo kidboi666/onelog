@@ -11,12 +11,12 @@ import Link from 'next/link'
 import { useSignUp } from '@/services/mutates/auth/useSignUp'
 
 export default function SignUpPage() {
-  const { mutate: signUp } = useSignUp()
+  const { mutate: signUp, isPending, isSuccess } = useSignUp()
   const {
     register,
     handleSubmit,
     setError,
-    formState: { errors, dirtyFields },
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(signUpSchema),
     mode: 'onBlur',
@@ -28,8 +28,15 @@ export default function SignUpPage() {
     },
   })
 
-  const handleSubmitSignUp = async (authData: ISignUp) => {
-    signUp(authData, {})
+  const handleSubmitSignUp = async (data: ISignUp) => {
+    signUp(data, {
+      onError: (error) => {
+        setError('email', {
+          type: 'validate',
+          message: error.message,
+        })
+      },
+    })
   }
 
   return (
@@ -65,7 +72,9 @@ export default function SignUpPage() {
         type="password"
         name="비밀번호 확인"
       />
-      <Button type="submit">회원가입</Button>
+      <Button isLoading={isPending} disabled={isSuccess} type="submit">
+        회원가입
+      </Button>
     </form>
   )
 }

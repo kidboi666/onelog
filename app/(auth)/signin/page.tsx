@@ -16,7 +16,7 @@ export default function SignInPage() {
     register,
     handleSubmit,
     setError,
-    formState: { errors, dirtyFields },
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(signInSchema),
     mode: 'onBlur',
@@ -27,7 +27,14 @@ export default function SignInPage() {
   })
 
   const handleSubmitSignIn = async (data: ISignIn) => {
-    signIn(data, {})
+    signIn(data, {
+      onError: (error) => {
+        setError('email', {
+          type: 'validateError',
+          message: error.message,
+        })
+      },
+    })
   }
 
   return (
