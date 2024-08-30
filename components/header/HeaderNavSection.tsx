@@ -23,16 +23,18 @@ export default function HeaderNavSection() {
       ) : (
         <LinkButton href="/signin">시작하기</LinkButton>
       )}
-      <Button variant="secondary" onClick={() => setOpen((prev) => !prev)}>
-        <Icon className="size-5 rotate-90">
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M7 12.5a2.5 2.5 0 11-5.001-.001A2.5 2.5 0 017 12.5zm7.5 0a2.5 2.5 0 11-5.001-.001 2.5 2.5 0 015.001.001zm7.5 0a2.5 2.5 0 11-5.001-.001A2.5 2.5 0 0122 12.5z"
-            fill="currentColor"
-          />
-        </Icon>
-      </Button>
+      {me && (
+        <Button variant="secondary" onClick={() => setOpen((prev) => !prev)}>
+          <Icon className="size-5 rotate-90">
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M7 12.5a2.5 2.5 0 11-5.001-.001A2.5 2.5 0 017 12.5zm7.5 0a2.5 2.5 0 11-5.001-.001 2.5 2.5 0 015.001.001zm7.5 0a2.5 2.5 0 11-5.001-.001A2.5 2.5 0 0122 12.5z"
+              fill="currentColor"
+            />
+          </Icon>
+        </Button>
+      )}
       {isOpen && (
         <List className="absolute right-0 top-full h-fit w-40 border border-gray-200 bg-white shadow-md">
           <List.Row>
