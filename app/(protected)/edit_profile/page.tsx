@@ -9,6 +9,7 @@ import IntroduceSection from './_components/IntroduceSection'
 import ChallangeSection from './_components/ChallangeSection'
 import ProfileImageSection from './_components/ProfileImageSection'
 import { useInput } from '@/hooks/useInput'
+import Button from '@/components/shared/Button'
 
 export default function EditProfilePage() {
   const supabase = createBrowserClient()
@@ -16,27 +17,27 @@ export default function EditProfilePage() {
   const { data } = useSuspenseQuery(meQuery.getUserInfo(supabase, me?.sub))
   const [nickname, onChangeNickName, setNickname] = useInput('')
   const [aboutMe, onChangeAboutMe, setAboutMe] = useInput('')
+  const [avatarUrl, onChangeAvatarUrl, setAvatarUrl] = useInput('')
   const [profileImage, setProfileImage] = useState<File | null>(null)
-  const [imageUrl, setImageUrl] = useState('')
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e?.target?.files?.[0]) {
       setProfileImage(e.target.files[0])
       const nextPreview = URL.createObjectURL(e.target.files[0])
-      setImageUrl(nextPreview)
+      setAvatarUrl(nextPreview)
     }
   }
-  console.log(data)
+
   useEffect(() => {
     setNickname(data[0].nickname)
     setAboutMe(data[0].about_me)
   }, [data.avatar_url, data.nickname, data.about_me])
 
   return (
-    <div className="flex flex-col gap-4">
+    <form className="flex flex-col gap-4">
       <ProfileImageSection
         onChange={handleImageChange}
-        imagePreview={imageUrl}
+        imagePreview={avatarUrl}
       />
       <div className="flex w-56 flex-col gap-2">
         <NickNameSection value={nickname} onChange={onChangeNickName} />
@@ -45,6 +46,7 @@ export default function EditProfilePage() {
         <IntroduceSection value={aboutMe} onChange={onChangeAboutMe} />
       </div>
       <ChallangeSection />
-    </div>
+      <Button type="submit">수정하기</Button>
+    </form>
   )
 }
