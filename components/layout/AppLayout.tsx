@@ -21,9 +21,7 @@ export default function AppLayout({
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       {Header && Header}
-      <div className="mx-auto max-w-[640px] md:max-w-[768px] lg:max-w-[1024px] xl:max-w-[1280px]">
-        {children}
-      </div>
+      <div className="mx-auto max-w-[640px] md:max-w-[768px]">{children}</div>
       {Footer && Footer}
     </HydrationBoundary>
   )

@@ -29,7 +29,6 @@ export default function WritePage() {
   const { mutate: addSentence, isPending, isSuccess } = useAddSentence()
   const [sentence, onChangeSentence] = useInput('')
   const { openModal } = useModal()
-  const [isReadyToSubmit, setReadyToSubmit] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState(INIT_STATUS)
 
   const handleStatusClick = (status: typeof INIT_STATUS) => {
@@ -51,12 +50,6 @@ export default function WritePage() {
     )
   }
 
-  useEffect(() => {
-    if (isReadyToSubmit) {
-      handleSubmit()
-    }
-  }, [isReadyToSubmit])
-
   return (
     <div
       onKeyDown={(e) =>
@@ -77,7 +70,7 @@ export default function WritePage() {
       <div className="flex flex-col items-center gap-4">
         <Title>오늘의 기분 농도를 선택하세요.</Title>
         <div className="flex items-center gap-2">
-          <Text>Good</Text>
+          <Text>Bad</Text>
           {EMOTION_STATUS.map((emotion) => (
             <div
               key={emotion.percent}
@@ -94,7 +87,7 @@ export default function WritePage() {
               </Text>
             </div>
           ))}
-          <Text>Bad</Text>
+          <Text>Good</Text>
         </div>
       </div>
 

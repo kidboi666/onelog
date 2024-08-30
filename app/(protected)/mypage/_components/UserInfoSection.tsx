@@ -1,7 +1,7 @@
 'use client'
 
-import Button from '@/components/shared/Button'
 import Line from '@/components/shared/Line'
+import LinkButton from '@/components/shared/LinkButton'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { createBrowserClient } from '@/lib/supabase/client'
@@ -30,7 +30,18 @@ export default function UserInfoSection() {
           덕질하고 리뷰합니다. 콘텐츠업계에서 배우는 브랜딩과 프로듀싱에 관해
           이야기합니다.
         </Text>
-        <Button className="w-fit">글쓰기</Button>
+        <div className="flex gap-4">
+          <LinkButton href="/write" className="w-fit">
+            글쓰기
+          </LinkButton>
+          <LinkButton
+            href="/edit_profile"
+            variant="secondary"
+            className="w-fit"
+          >
+            프로필 수정
+          </LinkButton>
+        </div>
       </div>
     </>
   )
