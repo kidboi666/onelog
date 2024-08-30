@@ -12,7 +12,7 @@ import { useState } from 'react'
 
 export default function HeaderNavSection() {
   const supabase = createBrowserClient()
-  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { mutate: signOut } = useSignOut()
   const [isOpen, setOpen] = useState(false)
 

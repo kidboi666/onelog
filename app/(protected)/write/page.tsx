@@ -1,7 +1,7 @@
 'use client'
 
 import { createBrowserClient } from '@/lib/supabase/client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
@@ -25,7 +25,7 @@ export const INIT_STATUS = { percent: '', color: '' }
 
 export default function WritePage() {
   const supabase = createBrowserClient()
-  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { mutate: addSentence, isPending, isSuccess } = useAddSentence()
   const [sentence, onChangeSentence] = useInput('')
   const { openModal } = useModal()

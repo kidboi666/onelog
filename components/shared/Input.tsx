@@ -1,6 +1,8 @@
+'use client'
+
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
-import { ComponentProps } from 'react'
+import { ComponentProps, useRef } from 'react'
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
 
 interface Props extends ComponentProps<'input'> {
@@ -16,7 +18,7 @@ const INPUT_VARIANTS = cva('outline-none', {
     variant: {
       primary:
         'bg-gray-100 shadow-md transition focus:bg-white focus:ring-2 focus:ring-blue-200',
-      secondary: 'border-b-2 border-blue-200 transition focus:border-b-4',
+      secondary: 'border-b border-blue-200 transition',
       auth: 'bg-gray-100 transition focus:ring-2 focus:ring-blue-200',
     },
     dimension: {
@@ -34,11 +36,21 @@ export default function Input({
   dimension,
   ...props
 }: Props) {
+  const lineRef = useRef<HTMLDivElement>(null)
   return (
-    <input
-      className={cn(INPUT_VARIANTS({ variant, dimension }), className)}
-      {...register}
-      {...props}
-    />
+    <div className="flex flex-col">
+      <input
+        onFocus={() => lineRef.current?.setAttribute('data-status', 'onFocus')}
+        onBlur={() => lineRef.current?.setAttribute('data-status', 'onBlur')}
+        className={cn(INPUT_VARIANTS({ variant, dimension }), className)}
+        {...register}
+        {...props}
+      />
+      <div
+        ref={lineRef}
+        data-status="onBlur"
+        className="h-1 origin-left bg-blue-200 transition ease-in-out data-[status=onBlur]:scale-x-0"
+      />
+    </div>
   )
 }

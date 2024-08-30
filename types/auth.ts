@@ -8,3 +8,10 @@ export interface ISignUp {
   password: string
   nickname: string
 }
+
+export interface IUpdateUserInfo {
+  userId: string
+  aboutMe: string
+  nickname: string
+  avatarUrl: string
+}

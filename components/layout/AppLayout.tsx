@@ -16,7 +16,7 @@ export default function AppLayout({
 }: PropsWithChildren<Props>) {
   const supabase = createServerClient()
   const queryClient = getQueryClient()
-  queryClient.prefetchQuery(meQuery.getUserInfo(supabase))
+  queryClient.prefetchQuery(meQuery.getUserSession(supabase))
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
