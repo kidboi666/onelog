@@ -41,9 +41,6 @@ export default function WritePage() {
       user_id: me.sub,
     })
   }
-  console.log(sentence)
-  console.log(selectedStatus.percent)
-  console.log(me?.sub)
 
   return (
     <form

@@ -10,6 +10,7 @@ export const meQuery = {
         return data.session?.user.user_metadata
       },
     }),
+
   getUserInfo: (supabase: any) =>
     queryOptions({
       queryKey: ['me', 'info'],
