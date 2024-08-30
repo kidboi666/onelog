@@ -7,14 +7,14 @@ import { List } from '@/components/shared/List'
 import { createBrowserClient } from '@/lib/supabase/client'
 import useSignOut from '@/services/mutates/auth/useSignOut'
 import { meQuery } from '@/services/queries/auth/meQuery'
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
 export default function HeaderNavSection() {
-  const [isOpen, setOpen] = useState(false)
   const supabase = createBrowserClient()
+  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase))
   const { mutate: signOut } = useSignOut()
-  const { data: me } = useQuery(meQuery.getUserInfo(supabase))
+  const [isOpen, setOpen] = useState(false)
 
   return (
     <nav className="relative flex gap-2">
@@ -38,7 +38,7 @@ export default function HeaderNavSection() {
       {isOpen && (
         <List className="absolute right-0 top-full h-fit w-40 border border-gray-200 bg-white shadow-md">
           <List.Row>
-            <LinkButton href="/user" variant="list" className="w-full">
+            <LinkButton href="/mypage" variant="list" className="w-full">
               마이 페이지
             </LinkButton>
           </List.Row>

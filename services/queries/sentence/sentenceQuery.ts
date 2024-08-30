@@ -9,6 +9,7 @@ export const sentenceQuery = {
           .from('sentence')
           .select()
           .eq('user_id', userId)
+          .order('created_at', { ascending: false })
 
         return data
       },

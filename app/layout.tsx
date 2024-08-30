@@ -4,6 +4,7 @@ import ReactQueryProvider from '@/providers/query-client-provider'
 import Header from '@/components/header/Header'
 import AppLayout from '@/components/layout/AppLayout'
 import './globals.css'
+import ModalProvider from '@/providers/modal-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,6 +22,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={inter.className}>
         <ReactQueryProvider>
+          <ModalProvider />
           <AppLayout Header={<Header />}>{children}</AppLayout>
         </ReactQueryProvider>
       </body>

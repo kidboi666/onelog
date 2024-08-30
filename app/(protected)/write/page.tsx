@@ -1,8 +1,8 @@
 'use client'
 
 import { createBrowserClient } from '@/lib/supabase/client'
-import { FormEvent, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 import { useInput } from '@/hooks/useInput'
@@ -11,6 +11,7 @@ import Input from '@/components/shared/Input'
 import Button from '@/components/shared/Button'
 import Title from '@/components/shared/Title'
 import EmotionBlock from './_components/EmotionBlock'
+import { useModal } from '@/store/useModal'
 
 const EMOTION_STATUS = [
   { percent: '0%', color: 'bg-white' },
@@ -24,27 +25,49 @@ export const INIT_STATUS = { percent: '', color: '' }
 
 export default function WritePage() {
   const supabase = createBrowserClient()
-  const { data: me } = useQuery(meQuery.getUserSession(supabase))
-  const [selectedStatus, setSelectedStatus] = useState(INIT_STATUS)
+  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase))
+  const { mutate: addSentence, isPending, isSuccess } = useAddSentence()
   const [sentence, onChangeSentence] = useInput('')
-  const { mutate: addSentence } = useAddSentence()
+  const { openModal } = useModal()
+  const [isReadyToSubmit, setReadyToSubmit] = useState(false)
+  const [selectedStatus, setSelectedStatus] = useState(INIT_STATUS)
 
   const handleStatusClick = (status: typeof INIT_STATUS) => {
     setSelectedStatus({ percent: status.percent, color: status.color })
   }
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    addSentence({
-      content: sentence,
-      emotion_level: selectedStatus.percent,
-      user_id: me.sub,
-    })
+  const handleSubmit = () => {
+    addSentence(
+      {
+        content: sentence,
+        emotion_level: selectedStatus.percent,
+        user_id: me?.sub,
+      },
+      {
+        onSuccess: () => {
+          openModal('success')
+        },
+      },
+    )
   }
 
+  useEffect(() => {
+    if (isReadyToSubmit) {
+      handleSubmit()
+    }
+  }, [isReadyToSubmit])
+
   return (
-    <form
-      onSubmit={handleSubmit}
+    <div
+      onKeyDown={(e) =>
+        e.key === 'Enter' &&
+        openModal('confirmation', {
+          sentence,
+          isPending,
+          isSuccess,
+          onSubmit: () => handleSubmit(),
+        })
+      }
       className="mt-20 flex flex-col items-center justify-between gap-20 px-12"
     >
       <div className="relative">
@@ -81,8 +104,20 @@ export default function WritePage() {
           onChange={onChangeSentence}
           className="w-full rounded-md p-4 ring-1 ring-blue-200"
         />
-        <Button type="submit">한줄 남기기</Button>
+        <Button
+          onClick={(e) =>
+            openModal('confirmation', {
+              sentence,
+              isPending,
+              isSuccess,
+              onSubmit: () => handleSubmit(),
+            })
+          }
+          disabled={!sentence || !selectedStatus.percent}
+        >
+          한줄 남기기
+        </Button>
       </div>
-    </form>
+    </div>
   )
 }
