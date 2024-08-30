@@ -14,7 +14,8 @@ interface Props extends ComponentProps<'input'> {
 const INPUT_VARIANTS = cva('outline-none', {
   variants: {
     variant: {
-      primary: 'bg-gray-100',
+      primary:
+        'bg-gray-100 shadow-md transition focus:bg-white focus:ring-2 focus:ring-blue-200',
       secondary: '',
       auth: 'bg-gray-100 transition focus:ring-2 focus:ring-blue-200',
     },

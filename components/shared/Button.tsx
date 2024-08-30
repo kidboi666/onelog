@@ -5,7 +5,7 @@ import Spinner, { Size } from './Spinner'
 
 export interface ButtonProps extends ComponentProps<'button'> {
   isLoading?: boolean
-  variant?: 'primary' | 'secondary' | 'teritory' | 'list'
+  variant?: 'primary' | 'secondary' | 'teritory' | 'list' | 'emptyStyle'
   size?: 'sm' | 'md' | 'lg'
 }
 
@@ -17,12 +17,14 @@ const BUTTON_VARIANTS = cva('flex items-center justify-center', {
       secondary: 'border border-gray-400 hover:bg-gray-400 hover:text-white',
       teritory: 'underline hover:text-gray-400',
       list: 'justify-start hover:bg-gray-200',
+      emptyStyle: '',
     },
     disabled: {
       primary: 'gap-2 border border-gray-400 bg-gray-400 text-gray-200',
       secondary: '',
       teritory: '',
       list: '',
+      emptyStyle: '',
     },
     size: {
       sm: 'text-xs',

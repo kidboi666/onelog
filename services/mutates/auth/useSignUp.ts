@@ -3,7 +3,7 @@ import { ISignUp } from '@/types/auth'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
-export const useSignUp = () => {
+export default function useSignUp() {
   const supabase = createBrowserClient()
   const router = useRouter()
   const queryClient = useQueryClient()

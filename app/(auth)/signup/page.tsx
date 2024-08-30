@@ -8,7 +8,7 @@ import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
 import AuthForm from '../_components/AuthForm'
 import Link from 'next/link'
-import { useSignUp } from '@/services/mutates/auth/useSignUp'
+import useSignUp from '@/services/mutates/auth/useSignUp'
 
 export default function SignUpPage() {
   const { mutate: signUp, isPending, isSuccess } = useSignUp()

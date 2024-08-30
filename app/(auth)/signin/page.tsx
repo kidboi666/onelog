@@ -8,7 +8,7 @@ import AuthForm from '../_components/AuthForm'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
 import Link from 'next/link'
-import { useSignIn } from '@/services/mutates/auth/useSignIn'
+import useSignIn from '@/services/mutates/auth/useSignIn'
 
 export default function SignInPage() {
   const { mutate: signIn, isPending, isSuccess } = useSignIn()
@@ -58,7 +58,11 @@ export default function SignInPage() {
         type="password"
         name="비밀번호"
       />
-      <Button isLoading={isPending} disabled={isSuccess} type="submit">
+      <Button
+        isLoading={isPending || isSuccess}
+        disabled={isSuccess}
+        type="submit"
+      >
         로그인
       </Button>
     </form>
