@@ -10,7 +10,7 @@ import ProfileSentenceItem from '@/components/sentence/ProfileSentenceItem'
 
 export default function PrevOneSentence() {
   const supabase = createBrowserClient()
-  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: sentence } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, me?.sub),
   )

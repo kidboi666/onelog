@@ -21,7 +21,7 @@ export default function useSignIn() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['me'] })
-      router.push('/user')
+      router.push('/mypage')
     },
   })
 }

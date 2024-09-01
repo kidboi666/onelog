@@ -13,7 +13,7 @@ const TEXT_VARIANTS = cva('', {
   variants: {
     type: {
       body: 'text-gray-700',
-      caption: 'text-gray-500',
+      caption: 'text-gray-400',
       error: 'text-red-500',
     },
     size: {

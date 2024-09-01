@@ -1,12 +1,6 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import ReactQueryProvider from '@/providers/query-client-provider'
-import Header from '@/components/header/Header'
-import AppLayout from '@/components/layout/AppLayout'
-import ModalProvider from '@/providers/modal-provider'
 import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'One Sentence',
@@ -20,11 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
-        <ReactQueryProvider>
-          <ModalProvider />
-          <AppLayout Header={<Header />}>{children}</AppLayout>
-        </ReactQueryProvider>
+      <body>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <div id="portal" />
       </body>
     </html>
   )

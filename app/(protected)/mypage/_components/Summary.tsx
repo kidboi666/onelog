@@ -3,7 +3,7 @@ import Title from '@/components/shared/Title'
 
 export default function Summary() {
   return (
-    <div className="flex w-full justify-between px-20 py-12">
+    <div className="flex w-full justify-between py-12">
       <div className="flex flex-col gap-2">
         <Text type="caption">시작한지</Text>
         <Title size="bigger" type="sub">

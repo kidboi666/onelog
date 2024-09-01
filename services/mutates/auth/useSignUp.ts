@@ -17,17 +17,15 @@ export default function useSignUp() {
           data: {
             nickname: authData.nickname,
             avatar_url: '',
+            about_me: '',
           },
         },
       })
-      if (error) {
-        throw error
-      }
       return data
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['me'] })
-      router.replace('/user')
+      router.replace('/mypage')
     },
   })
 }

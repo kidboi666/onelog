@@ -1,21 +1,24 @@
 'use client'
 
-import Button from '@/components/shared/Button'
-import Icon from '@/components/shared/Icon'
-import LinkButton from '@/components/shared/LinkButton'
-import { List } from '@/components/shared/List'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 import { createBrowserClient } from '@/lib/supabase/client'
 import useSignOut from '@/services/mutates/auth/useSignOut'
 import { meQuery } from '@/services/queries/auth/meQuery'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import Button from '@/components/shared/Button'
+import Icon from '@/components/shared/Icon'
+import LinkButton from '@/components/shared/LinkButton'
+import HeaderDropDown from './HeaderDropDown'
+import useOutsideClick from '@/hooks/useOutsideClick'
 
 export default function HeaderNavSection() {
   const supabase = createBrowserClient()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { mutate: signOut } = useSignOut()
   const [isOpen, setOpen] = useState(false)
-
+  const targetRef = useOutsideClick<HTMLUListElement>(() =>
+    setOpen((prev) => !prev),
+  )
   return (
     <nav className="relative flex gap-2">
       {me ? (
@@ -35,20 +38,7 @@ export default function HeaderNavSection() {
           </Icon>
         </Button>
       )}
-      {isOpen && (
-        <List className="absolute right-0 top-full h-fit w-40 border border-gray-200 bg-white shadow-md">
-          <List.Row>
-            <LinkButton href="/mypage" variant="list" className="w-full">
-              마이 페이지
-            </LinkButton>
-          </List.Row>
-          <List.Row>
-            <Button variant="list" onClick={() => signOut()} className="w-full">
-              로그아웃
-            </Button>
-          </List.Row>
-        </List>
-      )}
+      {isOpen && <HeaderDropDown targetRef={targetRef} signOut={signOut} />}
     </nav>
   )
 }

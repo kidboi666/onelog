@@ -2,7 +2,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 
 type TChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 
-export function useInput<T extends string | number>(
+export function useInput<T extends string | number | null>(
   initValue: T,
 ): [T, (e: TChangeEvent) => void, Dispatch<SetStateAction<T>>] {
   const [value, setValue] = useState<T>(initValue)

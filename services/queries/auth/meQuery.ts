@@ -1,3 +1,4 @@
+import { Tables } from '@/types/supabase'
 import { queryOptions } from '@tanstack/react-query'
 
 export const meQuery = {
@@ -7,20 +8,26 @@ export const meQuery = {
       queryFn: async () => {
         const { data, error } = await supabase.auth.getUser()
 
+        if (error) {
+          return null
+        }
+
         return data.user?.user_metadata
       },
     }),
   getUserInfo: (supabase: any, userId: string) =>
-    queryOptions({
+    queryOptions<Tables<'user_info'>>({
       queryKey: ['me', 'info'],
       queryFn: async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('user_info')
           .select()
           .eq('id', userId)
+          .single()
 
         return data
       },
       enabled: !!userId,
+      staleTime: 1000 * 60 * 10,
     }),
 }

@@ -11,7 +11,7 @@ export interface ISignUp {
 
 export interface IUpdateUserInfo {
   userId: string
-  aboutMe: string
-  nickname: string
-  avatarUrl: string
+  aboutMe: string | null
+  nickname: string | null
+  avatarUrl?: string | null
 }

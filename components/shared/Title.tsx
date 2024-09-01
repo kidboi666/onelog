@@ -13,7 +13,7 @@ const TITLE_VARIANTS = cva('', {
   variants: {
     type: {
       title: 'font-semibold text-gray-800',
-      sub: 'font-medium text-gray-600',
+      sub: 'font-medium text-gray-800',
     },
     size: {
       sm: 'text-lg',
@@ -31,5 +31,9 @@ export default function Title({
   size = 'md',
   as: Component = 'h1',
 }: PropsWithChildren<Props>) {
-  return <Component className={cn(TITLE_VARIANTS({ type, size }), className)}>{children}</Component>
+  return (
+    <Component className={cn(TITLE_VARIANTS({ type, size }), className)}>
+      {children}
+    </Component>
+  )
 }

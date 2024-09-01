@@ -12,6 +12,7 @@ export default function useSignOut() {
     mutationFn: async () => {
       await supabase.auth.signOut()
       queryClient.removeQueries({ queryKey: ['me'] })
+      queryClient.removeQueries({ queryKey: ['me', 'session'] })
       alert('로그아웃 하였습니다.')
       router.refresh()
     },

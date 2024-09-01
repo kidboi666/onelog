@@ -9,17 +9,19 @@ export default function useUpdateUserInfo() {
 
   return useMutation({
     mutationFn: async (params: IUpdateUserInfo) => {
-      const { data } = await supabase
-        .from('user_info')
-        .update({
+      const { data } = await supabase.auth.updateUser({
+        data: {
           about_me: params.aboutMe,
           avatar_url: params.avatarUrl,
           nickname: params.nickname,
-        })
-        .eq('id', params.userId)
-        .select()
+        },
+      })
 
       return data
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['me'] })
     },
   })
 }
