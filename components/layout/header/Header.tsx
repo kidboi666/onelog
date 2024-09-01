@@ -11,7 +11,7 @@ export default function Header() {
           href="/mypage"
           className="relative size-full"
         >
-          <Image src="/logo-horizontal.svg" fill alt="하루한줄 로고" />
+          <Image src="/logo_horizontal.svg" fill alt="하루한줄 로고" />
         </LinkButton>
       </div>
       <HeaderNavSection />

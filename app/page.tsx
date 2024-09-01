@@ -7,7 +7,7 @@ export default function MainPage() {
     <div className="flex h-screen w-full flex-col items-center justify-center md:flex-row">
       <div className="relative h-80 w-full md:size-full">
         <Image
-          src="logo-vertical.svg"
+          src="logo_vertical.svg"
           fill
           alt="로고 이미지"
           className="object-fill"
