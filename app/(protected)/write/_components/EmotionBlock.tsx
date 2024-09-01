@@ -1,5 +1,5 @@
 import cn from '@/lib/cn'
-import { INIT_STATUS } from '../page'
+import { INIT_STATUS } from '../_constants'
 import Button, { ButtonProps } from '@/components/shared/Button'
 
 interface Props extends ButtonProps {

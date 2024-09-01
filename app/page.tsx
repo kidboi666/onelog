@@ -1,9 +1,8 @@
 import LinkButton from '@/components/shared/LinkButton'
 import Title from '@/components/shared/Title'
 import Image from 'next/image'
-import { PropsWithChildren } from 'react'
 
-export default function MainPage({ children }: PropsWithChildren) {
+export default function MainPage() {
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center md:flex-row">
       <div className="relative h-80 w-full md:size-full">
@@ -27,7 +26,6 @@ export default function MainPage({ children }: PropsWithChildren) {
             로그인하러 가기
           </LinkButton>
         </div>
-        <div>{children}</div>
       </div>
     </div>
   )

@@ -13,8 +13,7 @@ import Title from '@/components/shared/Title'
 import EmotionBlock from './_components/EmotionBlock'
 import { useModal } from '@/store/useModal'
 import { EMOTION_STATUS } from '@/constants/emotion'
-
-export const INIT_STATUS = { percent: '', color: '' }
+import { INIT_STATUS } from './_constants'
 
 export default function WritePage() {
   const supabase = createBrowserClient()
