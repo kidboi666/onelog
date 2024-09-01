@@ -1,15 +1,33 @@
+import Line from '@/components/shared/Line'
 import FavoriteWords from './_components/FavoriteWords'
 import History from './_components/History'
 import PrevOneSentence from './_components/PrevOneSentence'
+import ProfileSection from './_components/ProfileSection'
 import Summary from './_components/Summary'
+import Button from '@/components/shared/Button'
 
 export default function UserPage() {
   return (
     <>
-      <Summary />
-      <History />
-      <FavoriteWords />
-      <PrevOneSentence />
+      <div className="flex w-full flex-col justify-center gap-8 bg-white xl:flex-row">
+        <div className="w-full xl:max-w-[300px]">
+          <div className="flex h-fit flex-col bg-gray-50 p-4">
+            <ProfileSection />
+          </div>
+          <Line className="my-4" />
+          <div className="w-full px-4">
+            <Button className="w-full">루틴 계획하기</Button>
+          </div>
+        </div>
+        <div className="flex w-full flex-col px-4 xl:max-w-[768px]">
+          <div className="flex flex-col gap-12">
+            <Summary />
+            <History />
+            <FavoriteWords />
+            <PrevOneSentence />
+          </div>
+        </div>
+      </div>
     </>
   )
 }

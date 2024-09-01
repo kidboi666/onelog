@@ -1,7 +1,7 @@
 import Input from '@/components/shared/Input'
 import Title from '@/components/shared/Title'
 import useStateChange from '@/hooks/useStateChange'
-import { ComponentProps, useRef } from 'react'
+import { ComponentProps } from 'react'
 
 export default function NickNameSection({
   value,

@@ -1,4 +1,4 @@
-import { getQueryClient } from '@/lib/get-query-client'
+import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { createServerClient } from '@/lib/supabase/server'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'

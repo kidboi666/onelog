@@ -2,7 +2,6 @@ import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { PropsWithChildren } from 'react'
 
-const YEAR_DAYS = 365
 const YEAR_MONTHS = [
   { month: 1, days: 31 },
   { month: 2, days: 28 },
@@ -17,7 +16,6 @@ const YEAR_MONTHS = [
   { month: 11, days: 30 },
   { month: 12, days: 31 },
 ]
-const MONTH_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 const ONE_WEEK = ['월', '화', '수', '목', '금', '토', '일']
 
 export default function History() {
@@ -57,8 +55,6 @@ export default function History() {
 
 function Block({ children }: PropsWithChildren) {
   return (
-    <div className="size-2.5 select-none rounded-sm text-center text-[7px] text-blue-200 ring-1 ring-blue-300 hover:bg-blue-300">
-      {children}
-    </div>
+    <div className="size-2.5 select-none rounded-sm text-center text-[7px] ring-1 ring-gray-300 hover:bg-gray-300" />
   )
 }

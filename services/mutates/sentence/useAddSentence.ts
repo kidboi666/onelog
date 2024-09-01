@@ -1,4 +1,4 @@
-import { getQueryClient } from '@/lib/get-query-client'
+import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { createBrowserClient } from '@/lib/supabase/client'
 import { useModal } from '@/store/useModal'
 import { ISentence } from '@/types/sentence'

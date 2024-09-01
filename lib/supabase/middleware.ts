@@ -1,6 +1,8 @@
-import { AUTH_RESTRICTED_ROUTES, PROTECTED_ROUTES } from '@/constants/path'
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+
+const AUTH_RESTRICTED_ROUTES = ['/signup', '/signin']
+const PROTECTED_ROUTES = ['/mypage', '/write', '/edit_profile']
 
 export async function updateSession(req: NextRequest) {
   let supabaseResponse = NextResponse.next({

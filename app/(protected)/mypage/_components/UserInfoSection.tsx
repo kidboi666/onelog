@@ -18,39 +18,44 @@ export default function UserInfoSection() {
 
   return (
     <>
-      <div className="flex justify-center">
-        <div className="relative size-40 overflow-hidden rounded-full">
+      <div className="pointer-events-none sticky z-30 flex -translate-y-20 justify-center">
+        <div className="relative size-40 overflow-hidden rounded-full border border-gray-200">
           {me?.avatar_url ? (
-            <Image src={me?.avatar_url} alt="프로필 이미지" fill />
+            <Image
+              src={me?.avatar_url}
+              alt="프로필 이미지"
+              fill
+              className="rounded-full border-4 border-gray-50"
+            />
           ) : (
             <div className="absolute size-full bg-gray-200" />
           )}
         </div>
       </div>
-      <div className="flex items-center justify-center py-8">
-        <Title className="text-5xl font-medium">
+      <div className="absolute top-40 self-end py-8 xl:top-48">
+        <Title className="text-4xl font-medium">
           <Text as="span" className="mr-2">
             By
           </Text>
           {me?.nickname}
         </Title>
       </div>
-      <Line />
+      <div className="relative">
+        <Line />
+        <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-gray-50 px-2 text-sm text-gray-400">
+          소 개
+        </span>
+      </div>
       <div className="flex flex-col gap-4 pt-6">
-        <Title type="sub">소 개</Title>
         <Text type="caption">
-          {me?.about_me ? (
-            me.about_me
-          ) : (
-            <Text type="caption">자기 소개를 작성해주세요.</Text>
-          )}
+          {me?.about_me ? me.about_me : '자기 소개를 작성해주세요.'}
         </Text>
         <div className="flex gap-4">
           <LinkButton href="/write" className="flex-1">
             글쓰기
           </LinkButton>
           <LinkButton
-            href="/edit_profile"
+            href="/mypage/edit_profile"
             variant="secondary"
             className="flex-1"
           >

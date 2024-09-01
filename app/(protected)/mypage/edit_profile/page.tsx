@@ -3,15 +3,17 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createBrowserClient } from '@/lib/supabase/client'
+
 import { meQuery } from '@/services/queries/auth/meQuery'
+import useUploadAvatarImage from '@/services/mutates/auth/useUploadAvatarImage'
+import useUpdateUserInfo from '@/services/mutates/auth/useUpdateUserInfo'
+import { useInput } from '@/hooks/useInput'
+
+import Button from '@/components/shared/Button'
 import NickNameSection from './_components/NickNameSection'
 import IntroduceSection from './_components/IntroduceSection'
 import ChallangeSection from './_components/ChallangeSection'
 import ProfileImageSection from './_components/ProfileImageSection'
-import { useInput } from '@/hooks/useInput'
-import Button from '@/components/shared/Button'
-import useUploadAvatarImage from '@/services/mutates/auth/useUploadAvatarImage'
-import useUpdateUserInfo from '@/services/mutates/auth/useUpdateUserInfo'
 
 export default function EditProfilePage() {
   const supabase = createBrowserClient()
@@ -74,6 +76,7 @@ export default function EditProfilePage() {
     setNickname(data?.nickname)
     setAboutMe(data?.about_me)
     setAvatarUrl(data?.avatar_url)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.avatar_url, data?.nickname, data?.about_me])
 
   return (

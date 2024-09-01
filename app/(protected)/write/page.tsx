@@ -12,8 +12,9 @@ import Button from '@/components/shared/Button'
 import Title from '@/components/shared/Title'
 import EmotionBlock from './_components/EmotionBlock'
 import { useModal } from '@/store/useModal'
-import { EMOTION_STATUS } from '@/constants/emotion'
-import { INIT_STATUS } from './_constants'
+
+import { INIT_STATUS, EMOTION_STATUS } from './_constants'
+import useStateChange from '@/hooks/useStateChange'
 
 export default function WritePage() {
   const supabase = createBrowserClient()
@@ -22,6 +23,7 @@ export default function WritePage() {
   const [sentence, onChangeSentence] = useInput('')
   const { openModal } = useModal()
   const [selectedStatus, setSelectedStatus] = useState(INIT_STATUS)
+  const [ref, open, close] = useStateChange<HTMLDivElement>()
 
   const handleStatusClick = (status: typeof INIT_STATUS) => {
     setSelectedStatus({ percent: status.percent, color: status.color })
@@ -85,11 +87,20 @@ export default function WritePage() {
 
       <div className="flex flex-col gap-8">
         <Title>오늘을 한 줄로 기억해보세요.</Title>
-        <Input
-          onChange={onChangeSentence}
-          variant="secondary"
-          className="py-2"
-        />
+        <div className="flex flex-col">
+          <Input
+            onFocus={open}
+            onBlur={close}
+            onChange={onChangeSentence}
+            variant="secondary"
+            className="py-2"
+          />
+          <div
+            ref={ref}
+            data-status="closed"
+            className="status-line data-line"
+          />
+        </div>
         <Button
           onClick={(e) =>
             openModal('confirmation', {

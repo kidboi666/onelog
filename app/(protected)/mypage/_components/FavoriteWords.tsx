@@ -1,16 +1,16 @@
 import Title from '@/components/shared/Title'
 import { PropsWithChildren } from 'react'
 
-const mock = ['무력하다', '블로그', '도서관', '책읽기', '쉬고싶다']
+interface Props {
+  words?: string[]
+}
 
-export default function FavoriteWords() {
+export default function FavoriteWords({ words }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <Title>가장 많이 사용하는</Title>
       <div className="flex gap-2">
-        {mock.map((word) => (
-          <Tag key={word}>{word}</Tag>
-        ))}
+        {words?.map((word) => <Tag key={word}>{word}</Tag>)}
       </div>
     </div>
   )

@@ -5,3 +5,16 @@ export const formatDateToYMD = (date: string | number) => {
   const day = newDate.getDate().toString().padStart(2, '0')
   return `${year}.${month}.${day}`
 }
+
+export const getSignUpDays = (date: string) => {
+  const targetTime = new Date(date)
+  const currentTime = new Date()
+  const diffTime = Number(currentTime) - Number(targetTime)
+  const result = Math.floor(diffTime / 86400000)
+
+  if (result < 1) {
+    return '방금 전'
+  }
+
+  return result
+}

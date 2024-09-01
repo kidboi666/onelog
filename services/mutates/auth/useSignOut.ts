@@ -1,4 +1,4 @@
-import { getQueryClient } from '@/lib/get-query-client'
+import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { createBrowserClient } from '@/lib/supabase/client'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
