@@ -29,3 +29,12 @@
   font-family: 'goorm-sans';
   line-height: normal;
 }
+
+@layer components {
+  .data-line {
+    @apply h-1 origin-left bg-gray-400 transition ease-in-out;
+  }
+  .status-line[data-status='closed'] {
+    @apply data-[status=closed]:scale-x-0;
+  }
+}

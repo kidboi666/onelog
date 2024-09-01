@@ -13,8 +13,8 @@ interface Props extends ComponentProps<'textarea'> {
 const TEXTAREA_VARIANTS = cva('w-full outline-none', {
   variants: {
     variant: {
-      primary: 'h-fit min-h-20 border-b-2 border-blue-200',
-      secondary: 'border-b-2 border-blue-200 transition focus:border-b-4',
+      primary: 'h-fit min-h-20 border-b border-gray-400',
+      secondary: 'border-b-1 border-gray-400 transition focus:border-b-4',
     },
     dimension: {
       sm: 'text-xs',
@@ -30,20 +30,10 @@ export default function TextArea({
   dimension = 'md',
   ...props
 }: Props) {
-  const lineRef = useRef<HTMLDivElement>(null)
   return (
-    <div className="flex flex-col">
-      <textarea
-        onFocus={() => lineRef.current?.setAttribute('data-status', 'onFocus')}
-        onBlur={() => lineRef.current?.setAttribute('data-status', 'onBlur')}
-        className={cn(TEXTAREA_VARIANTS({ variant, dimension }), className)}
-        {...props}
-      />
-      <div
-        ref={lineRef}
-        data-status="onBlur"
-        className="h-1 origin-left bg-blue-200 transition ease-in-out data-[status=onBlur]:scale-x-0"
-      />
-    </div>
+    <textarea
+      className={cn(TEXTAREA_VARIANTS({ variant, dimension }), className)}
+      {...props}
+    />
   )
 }

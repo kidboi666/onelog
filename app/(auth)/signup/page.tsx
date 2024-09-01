@@ -77,7 +77,11 @@ export default function SignUpPage() {
       >
         로그인하러 가기
       </LinkButton>
-      <Button isLoading={isPending} disabled={isSuccess} type="submit">
+      <Button
+        isLoading={isPending || isSuccess}
+        disabled={isSuccess}
+        type="submit"
+      >
         회원가입
       </Button>
     </form>
