@@ -4,16 +4,28 @@ import { ComponentProps, PropsWithChildren, RefObject } from 'react'
 interface Props extends ComponentProps<'ul'> {
   className?: string
   targetRef?: RefObject<HTMLUListElement>
+  dataStatus?: string
 }
 
 export const List = ({
   children,
   className,
   targetRef,
+  dataStatus,
   ...props
 }: PropsWithChildren<Props>) => {
   return (
-    <ul ref={targetRef} className={cn('list-none', className)} {...props}>
+    <ul
+      ref={targetRef}
+      data-status={dataStatus}
+      onTransitionEnd={() => {
+        if (targetRef?.current?.getAttribute('data-status') === 'closed') {
+          targetRef.current.classList.add('hidden')
+        }
+      }}
+      className={cn('list-none', className)}
+      {...props}
+    >
       {children}
     </ul>
   )

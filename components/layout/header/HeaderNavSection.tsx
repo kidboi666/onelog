@@ -1,24 +1,37 @@
 'use client'
 
+import { MouseEvent } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { useState } from 'react'
 import { createBrowserClient } from '@/lib/supabase/client'
 import useSignOut from '@/services/mutates/auth/useSignOut'
 import { meQuery } from '@/services/queries/auth/meQuery'
+import useStateChange from '@/hooks/useStateChange'
+import useOutsideClick from '@/hooks/useOutsideClick'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
-import HeaderDropDown from './HeaderDropDown'
-import useOutsideClick from '@/hooks/useOutsideClick'
+import HeaderNavSectionDropDown from './HeaderNavSectionDropDown'
 
 export default function HeaderNavSection() {
   const supabase = createBrowserClient()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { mutate: signOut } = useSignOut()
-  const [isOpen, setOpen] = useState(false)
-  const targetRef = useOutsideClick<HTMLUListElement>(() =>
-    setOpen((prev) => !prev),
-  )
+  const [dropdownRef, open, closed] = useStateChange<HTMLUListElement>()
+  const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(closed)
+
+  const handleOpenStateChange = (e: MouseEvent) => {
+    const isOpen = dropdownRef.current?.getAttribute('data-status')
+
+    if (isOpen === 'opened') {
+      closed()
+    }
+
+    if (isOpen === 'closed') {
+      dropdownRef.current?.classList.remove('hidden')
+      open()
+    }
+  }
+
   return (
     <nav className="relative flex gap-2">
       {me ? (
@@ -27,7 +40,11 @@ export default function HeaderNavSection() {
         <LinkButton href="/signin">시작하기</LinkButton>
       )}
       {me && (
-        <Button variant="secondary" onClick={() => setOpen((prev) => !prev)}>
+        <Button
+          variant="secondary"
+          ref={dropdownButtonRef}
+          onClick={handleOpenStateChange}
+        >
           <Icon className="size-5 rotate-90">
             <path
               fillRule="evenodd"
@@ -38,7 +55,7 @@ export default function HeaderNavSection() {
           </Icon>
         </Button>
       )}
-      {isOpen && <HeaderDropDown targetRef={targetRef} signOut={signOut} />}
+      <HeaderNavSectionDropDown targetRef={dropdownRef} signOut={signOut} />
     </nav>
   )
 }

@@ -40,7 +40,7 @@ export default function SignInPage() {
   return (
     <form
       onSubmit={handleSubmit(handleSubmitSignIn)}
-      className="flex w-96 flex-col gap-4"
+      className="flex w-full flex-col gap-4 md:w-96"
     >
       <Title>로그인</Title>
       <AuthForm

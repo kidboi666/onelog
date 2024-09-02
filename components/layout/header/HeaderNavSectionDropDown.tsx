@@ -8,11 +8,15 @@ interface Props {
   targetRef: RefObject<HTMLUListElement>
 }
 
-export default function HeaderDropDown({ signOut, targetRef }: Props) {
+export default function HeaderNavSectionDropDown({
+  targetRef,
+  signOut,
+}: Props) {
   return (
     <List
       targetRef={targetRef}
-      className="absolute right-0 top-full h-fit w-40 border border-gray-200 bg-white shadow-md"
+      dataStatus="closed"
+      className="data-slideDown status-slideDown absolute right-0 top-full hidden h-fit w-40 origin-top-right rounded-md border border-gray-200 bg-white shadow-md"
     >
       <List.Row>
         <LinkButton href="/mypage" variant="list" className="w-full">

@@ -21,8 +21,9 @@ export default function EditProfilePage() {
   const { data: me } = useSuspenseQuery(
     meQuery.getUserInfo(supabase, data?.sub),
   )
-  const { mutateAsync: uploadImage } = useUploadAvatarImage()
-  const { mutate: updateProfile } = useUpdateUserInfo()
+  const { mutateAsync: uploadImage, isPending: isPendingImageUpload } =
+    useUploadAvatarImage()
+  const { mutate: updateProfile, isPending } = useUpdateUserInfo()
   const [nickname, onChangeNickName, setNickname] = useInput<string | null>('')
   const [aboutMe, onChangeAboutMe, setAboutMe] = useInput<string | null>('')
   const [avatarUrl, onChangeAvatarUrl, setAvatarUrl] = useInput<string | null>(
@@ -73,26 +74,33 @@ export default function EditProfilePage() {
   }
 
   useEffect(() => {
-    setNickname(data?.nickname)
-    setAboutMe(data?.about_me)
-    setAvatarUrl(data?.avatar_url)
+    setNickname(me?.nickname)
+    setAboutMe(me?.about_me)
+    setAvatarUrl(me?.avatar_url)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.avatar_url, data?.nickname, data?.about_me])
+  }, [me?.avatar_url, me?.nickname, me?.about_me])
 
   return (
-    <form onSubmit={handleProfileUpdate} className="flex flex-col gap-4">
+    <form
+      onSubmit={handleProfileUpdate}
+      className="animate-fade-in mt-20 flex w-full flex-col justify-center gap-8 px-2 md:max-w-[768px] md:flex-row"
+    >
       <ProfileImageSection
         onChange={handleImageChange}
         imagePreview={avatarUrl}
       />
-      <div className="flex w-56 flex-col gap-2">
-        <NickNameSection value={nickname ?? ''} onChange={onChangeNickName} />
+      <div className="flex w-full flex-col gap-12">
+        <div className="flex w-full flex-col gap-8">
+          <NickNameSection value={nickname ?? ''} onChange={onChangeNickName} />
+        </div>
+        <div className="flex w-full flex-col gap-8">
+          <IntroduceSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
+        </div>
+        <ChallangeSection />
+        <Button type="submit" isLoading={isPendingImageUpload || isPending}>
+          수정하기
+        </Button>
       </div>
-      <div className="flex w-full flex-col gap-2">
-        <IntroduceSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
-      </div>
-      <ChallangeSection />
-      <Button type="submit">수정하기</Button>
     </form>
   )
 }

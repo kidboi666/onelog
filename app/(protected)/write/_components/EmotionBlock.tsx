@@ -19,7 +19,7 @@ export default function EmotionBlock({
       variant="emptyStyle"
       onClick={onClick}
       className={cn(
-        'flex size-12 items-center justify-center rounded-sm border border-blue-300 text-blue-500',
+        'flex size-10 items-center justify-center rounded-sm border md:size-12',
         className,
       )}
     >

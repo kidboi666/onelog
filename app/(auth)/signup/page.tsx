@@ -42,7 +42,7 @@ export default function SignUpPage() {
   return (
     <form
       onSubmit={handleSubmit(handleSubmitSignUp)}
-      className="flex w-96 flex-col gap-4"
+      className="flex w-full flex-col gap-4 md:w-96"
     >
       <Title>회원가입</Title>
       <AuthForm

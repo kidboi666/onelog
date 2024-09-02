@@ -17,23 +17,23 @@ export default function ModalContainer({
 }: PropsWithChildren<Props>) {
   const { data, closeModal } = useModal()
 
-  // const handleKeydown = (e: KeyboardEvent) => {
-  //   if (e.key === 'Escape') {
-  //     return closeModal()
-  //   }
-  // }
+  const handleKeydown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      return closeModal()
+    }
+  }
 
-  // useEffect(() => {
-  //   document.addEventListener('keydown', handleKeydown)
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeydown)
 
-  //   return () => {
-  //     document.removeEventListener('keydown', handleKeydown)
-  //   }
-  // }, [])
+    return () => {
+      document.removeEventListener('keydown', handleKeydown)
+    }
+  }, [])
 
   return (
     <div
-      className="fixed left-1/2 top-1/2 flex h-fit w-full max-w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white"
+      className="fixed left-1/2 top-1/2 flex h-fit w-full max-w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white md:max-w-[480px]"
       {...props}
     >
       <Component

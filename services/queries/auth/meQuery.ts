@@ -28,6 +28,5 @@ export const meQuery = {
         return data
       },
       enabled: !!userId,
-      staleTime: 1000 * 60 * 10,
     }),
 }

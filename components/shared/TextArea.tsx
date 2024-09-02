@@ -13,7 +13,7 @@ interface Props extends ComponentProps<'textarea'> {
 const TEXTAREA_VARIANTS = cva('w-full outline-none', {
   variants: {
     variant: {
-      primary: 'h-fit min-h-20 border-b border-gray-400',
+      primary: 'h-fit min-h-12 border-b border-gray-800',
       secondary: 'border-b-1 border-gray-400 transition focus:border-b-4',
     },
     dimension: {

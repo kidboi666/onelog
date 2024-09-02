@@ -19,7 +19,11 @@ export default function NickNameSection({
           value={value}
           onChange={onChange}
         />
-        <div ref={ref} data-status="closed" className="status-line data-line" />
+        <div
+          ref={ref}
+          data-status="closed"
+          className="status-line data-line bg-gray-800"
+        />
       </div>
     </>
   )

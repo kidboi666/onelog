@@ -20,7 +20,7 @@ const ONE_WEEK = ['월', '화', '수', '목', '금', '토', '일']
 
 export default function History() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 overflow-x-auto">
       <Title>한 눈에 보기</Title>
       <div className="flex flex-col pb-1">
         <div className="ml-4 flex w-full gap-12">
@@ -42,7 +42,7 @@ export default function History() {
             {YEAR_MONTHS.map((month) => {
               let blocks = []
               for (let i = 0; i <= month.days; i++) {
-                blocks.push(<Block>{month.month}</Block>)
+                blocks.push(<Block />)
               }
               return [...blocks]
             })}
@@ -53,7 +53,7 @@ export default function History() {
   )
 }
 
-function Block({ children }: PropsWithChildren) {
+function Block() {
   return (
     <div className="size-2.5 select-none rounded-sm text-center text-[7px] ring-1 ring-gray-300 hover:bg-gray-300" />
   )

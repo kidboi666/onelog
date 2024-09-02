@@ -24,7 +24,8 @@ export default function useSignUp() {
       return data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['me'] })
+      queryClient.invalidateQueries({ queryKey: ['me', 'info'] })
+      queryClient.invalidateQueries({ queryKey: ['me', 'session'] })
       router.replace('/mypage')
     },
   })

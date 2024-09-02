@@ -10,3 +10,6 @@ export const config = {
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }
+
+export const AUTH_RESTRICTED_ROUTES = ['/signup', '/signin']
+export const PROTECTED_ROUTES = ['/mypage', '/write', '/mypage/edit_profile']

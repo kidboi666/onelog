@@ -19,7 +19,7 @@ const TITLE_VARIANTS = cva('', {
       sm: 'text-lg',
       md: 'text-2xl',
       lg: 'text-4xl',
-      bigger: 'text-6xl',
+      bigger: 'text-4xl md:text-6xl',
     },
   },
 })

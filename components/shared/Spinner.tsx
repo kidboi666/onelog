@@ -1,9 +1,5 @@
-'use client'
-
-import { useEffect } from 'react'
-
 interface Props {
-  size: Size
+  size?: Size
 }
 
 export enum Size {
@@ -13,21 +9,32 @@ export enum Size {
 }
 
 export default function Spinner({ size = Size.m }: Props) {
-  useEffect(() => {
-    const getLoader = async () => {
-      const { ring2 } = await import('ldrs')
-      ring2.register()
-    }
-    getLoader()
-  }, [])
   return (
-    <l-ring-2
-      size={size}
-      stroke="3"
-      stroke-length="0.25"
-      bg-opacity="0.1"
-      speed="0.8"
-      color="black"
-    />
+    <svg
+      width={size}
+      height={size}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="xMidYMid"
+    >
+      <circle
+        cx="50"
+        cy="50"
+        fill="none"
+        stroke="#000"
+        stroke-width="10"
+        r="35"
+        stroke-dasharray="164.93485265729915 56.972477469788485"
+        transform="rotate(360 50 50)"
+      >
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          dur="1s"
+          repeatCount="indefinite"
+          values="0 50 50;360 50 50"
+        ></animateTransform>
+      </circle>
+    </svg>
   )
 }

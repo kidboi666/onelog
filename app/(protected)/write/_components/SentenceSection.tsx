@@ -30,7 +30,11 @@ export default function SentenceSection({
           variant="secondary"
           className="w-full py-2"
         />
-        <div ref={ref} data-status="closed" className="status-line data-line" />
+        <div
+          ref={ref}
+          data-status="closed"
+          className="status-line data-line bg-gray-800"
+        />
       </div>
       <Button
         type="submit"

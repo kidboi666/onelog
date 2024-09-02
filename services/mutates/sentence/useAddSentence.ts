@@ -11,12 +11,11 @@ export default function useAddSentence() {
 
   return useMutation({
     mutationFn: async (params: ISentence) => {
-      const { data } = supabase
+      await new Promise((res) => setTimeout(res, 1000))
+      return supabase
         .from('sentence')
         .insert({ ...params })
         .select()
-
-      return new Promise((res) => setTimeout(res, 1000))
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sentence'] })

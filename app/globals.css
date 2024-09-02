@@ -32,9 +32,15 @@
 
 @layer components {
   .data-line {
-    @apply h-1 origin-left bg-gray-400 transition ease-in-out;
+    @apply h-[2px] origin-left transition ease-in-out;
   }
   .status-line[data-status='closed'] {
-    @apply data-[status=closed]:scale-x-0;
+    @apply scale-x-0;
+  }
+  .data-slideDown {
+    @apply transition ease-in-out;
+  }
+  .status-slideDown[data-status='closed'] {
+    @apply scale-95 opacity-0;
   }
 }

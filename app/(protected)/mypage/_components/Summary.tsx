@@ -17,7 +17,6 @@ export default function Summary() {
   const { data: sentence } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, data?.sub),
   )
-  console.log(sentence)
 
   return (
     <div className="flex w-full justify-between py-12">
@@ -30,7 +29,7 @@ export default function Summary() {
       <div className="flex flex-col gap-2">
         <Text type="caption">기록</Text>
         <Title size="bigger" type="sub" className="text-gray-600">
-          {sentence.length}
+          {sentence?.length}
           <Text as="span">개</Text>
         </Title>
       </div>

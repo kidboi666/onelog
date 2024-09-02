@@ -32,7 +32,7 @@ export default function UserInfoSection() {
           )}
         </div>
       </div>
-      <div className="absolute top-40 self-end py-8 xl:top-48">
+      <div className="absolute top-40 mt-8 self-end py-8 xl:top-48">
         <Title className="text-4xl font-medium">
           <Text as="span" className="mr-2">
             By
@@ -46,7 +46,7 @@ export default function UserInfoSection() {
           소 개
         </span>
       </div>
-      <div className="flex flex-col gap-4 pt-6">
+      <div className="flex flex-col gap-8">
         <Text type="caption">
           {me?.about_me ? me.about_me : '자기 소개를 작성해주세요.'}
         </Text>

@@ -13,15 +13,16 @@ const BUTTON_VARIANTS = cva('flex items-center justify-center transition', {
   variants: {
     active: {
       primary:
-        'border border-gray-800 bg-gray-800 font-semibold text-white hover:border-gray-600 hover:bg-gray-600 active:ring-2 active:ring-gray-600',
+        'rounded-md border border-gray-800 bg-gray-800 font-semibold text-white hover:border-gray-600 hover:bg-gray-600 active:ring-2 active:ring-gray-600',
       secondary:
-        'border border-gray-400 hover:bg-gray-400 hover:text-white active:ring-2 active:ring-gray-400',
+        'rounded-md border border-gray-400 hover:bg-gray-400 hover:text-white active:ring-2 active:ring-gray-400',
       teritory: 'underline hover:text-gray-400',
       list: 'justify-start hover:bg-gray-200',
       emptyStyle: '',
     },
     disabled: {
-      primary: 'gap-2 border border-gray-300 bg-gray-300 text-gray-50',
+      primary:
+        'gap-2 rounded-md border border-gray-300 bg-gray-300 text-gray-50',
       secondary: '',
       teritory: '',
       list: '',
