@@ -1,35 +1,33 @@
 'use client'
 
-import { createBrowserClient } from '@/lib/supabase/client'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { createBrowserClient } from '@/lib/supabase/client'
+import { useModal } from '@/store/useModal'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 import { useInput } from '@/hooks/useInput'
-import Text from '@/components/shared/Text'
-import Input from '@/components/shared/Input'
-import Button from '@/components/shared/Button'
-import Title from '@/components/shared/Title'
-import EmotionBlock from './_components/EmotionBlock'
-import { useModal } from '@/store/useModal'
+import { formatDateToYMD } from '@/utils/formatDate'
 
-import { INIT_STATUS, EMOTION_STATUS } from './_constants'
-import useStateChange from '@/hooks/useStateChange'
+import Title from '@/components/shared/Title'
+import { INIT_STATUS, WEEKDAY } from './_constants'
+import EmotionSection from './_components/EmotionSection'
+import SentenceSection from './_components/SentenceSection'
 
 export default function WritePage() {
   const supabase = createBrowserClient()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { mutate: addSentence, isPending, isSuccess } = useAddSentence()
-  const [sentence, onChangeSentence] = useInput('')
+  const { mutate: addSentence, isPending } = useAddSentence()
+  const [sentence, onChangeSentence, setSentence] = useInput('')
   const { openModal } = useModal()
   const [selectedStatus, setSelectedStatus] = useState(INIT_STATUS)
-  const [ref, open, close] = useStateChange<HTMLDivElement>()
 
   const handleStatusClick = (status: typeof INIT_STATUS) => {
     setSelectedStatus({ percent: status.percent, color: status.color })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
     addSentence(
       {
         content: sentence,
@@ -38,84 +36,41 @@ export default function WritePage() {
       },
       {
         onSuccess: () => {
-          openModal('success')
+          openModal('success', {
+            onSubmit: () => {
+              setSentence('')
+              setSelectedStatus(INIT_STATUS)
+            },
+          })
         },
       },
     )
   }
 
   return (
-    <div
-      onKeyDown={(e) =>
-        e.key === 'Enter' &&
-        openModal('confirmation', {
-          sentence,
-          emotionLevel: selectedStatus,
-          isPending,
-          isSuccess,
-          onSubmit: () => handleSubmit(),
-        })
-      }
+    <form
+      onSubmit={handleSubmit}
       className="mt-20 flex w-full flex-col items-center justify-between gap-20 md:px-12 xl:max-w-[768px]"
     >
       <div className="relative">
-        <Title>2024.08.28(목)의 기록</Title>
+        <Title>
+          {`${formatDateToYMD(new Date().toString())}(${WEEKDAY[new Date().getDay()]}) 기록`}
+        </Title>
       </div>
-      <div className="flex flex-col gap-8">
-        <Title>오늘의 기분 농도를 선택하세요.</Title>
-        <div className="flex gap-2">
-          <Text>Bad</Text>
-          {EMOTION_STATUS.map((emotion) => (
-            <div
-              key={emotion.percent}
-              className="relative flex flex-col items-center gap-2"
-            >
-              <EmotionBlock
-                state={emotion}
-                currentState={selectedStatus}
-                onClick={() => handleStatusClick(emotion)}
-                className={emotion.color}
-              />
-              <Text size="sm" className="absolute top-[calc(100%--4px)]">
-                {emotion.percent}
-              </Text>
-            </div>
-          ))}
-          <Text>Good</Text>
-        </div>
+      <div className="flex flex-col items-center gap-8">
+        <EmotionSection
+          selectedStatus={selectedStatus}
+          onStatusClick={handleStatusClick}
+        />
       </div>
-
-      <div className="flex flex-col gap-8">
-        <Title>오늘을 한 줄로 기억해보세요.</Title>
-        <div className="flex flex-col">
-          <Input
-            onFocus={open}
-            onBlur={close}
-            onChange={onChangeSentence}
-            variant="secondary"
-            className="py-2"
-          />
-          <div
-            ref={ref}
-            data-status="closed"
-            className="status-line data-line"
-          />
-        </div>
-        <Button
-          onClick={(e) =>
-            openModal('confirmation', {
-              sentence,
-              emotionLevel: selectedStatus,
-              isPending,
-              isSuccess,
-              onSubmit: () => handleSubmit(),
-            })
-          }
-          disabled={!sentence || !selectedStatus.percent}
-        >
-          한줄 남기기
-        </Button>
+      <div className="flex w-[400px] flex-col items-center gap-8">
+        <SentenceSection
+          onChangeSentence={onChangeSentence}
+          selectedStatusPercent={selectedStatus.percent}
+          sentence={sentence}
+          isPending={isPending}
+        />
       </div>
-    </div>
+    </form>
   )
 }

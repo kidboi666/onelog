@@ -1,4 +1,4 @@
-import { formatDateToYMD } from '@/utils/formatDate'
+import { formatDateToHMS, formatDateToYMD } from '@/utils/formatDate'
 import Icon from '../shared/Icon'
 import Text from '../shared/Text'
 
@@ -11,7 +11,8 @@ export default function ProfileSentenceItem({ sentence }: Props) {
     <div className="flex justify-between rounded-md px-1 py-2 hover:bg-blue-100">
       <div className="flex gap-2">
         <Text type="caption" size="sm">
-          {formatDateToYMD(sentence.created_at)}
+          {formatDateToYMD(sentence.created_at)}{' '}
+          {formatDateToHMS(sentence.created_at)}
         </Text>
         <Text size="sm">{sentence.content}</Text>
       </div>

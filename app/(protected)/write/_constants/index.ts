@@ -7,3 +7,5 @@ export const EMOTION_STATUS = [
   { percent: '75%', color: 'bg-blue-200' },
   { percent: '100%', color: 'bg-blue-300' },
 ]
+
+export const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토']

@@ -17,19 +17,19 @@ export default function ModalContainer({
 }: PropsWithChildren<Props>) {
   const { data, closeModal } = useModal()
 
-  const handleKeydown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      return closeModal()
-    }
-  }
+  // const handleKeydown = (e: KeyboardEvent) => {
+  //   if (e.key === 'Escape') {
+  //     return closeModal()
+  //   }
+  // }
 
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeydown)
+  // useEffect(() => {
+  //   document.addEventListener('keydown', handleKeydown)
 
-    return () => {
-      document.removeEventListener('keydown', handleKeydown)
-    }
-  }, [])
+  //   return () => {
+  //     document.removeEventListener('keydown', handleKeydown)
+  //   }
+  // }, [])
 
   return (
     <div
