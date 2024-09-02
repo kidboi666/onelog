@@ -22,9 +22,9 @@ export default function Spinner({ size = Size.m }: Props) {
         cy="50"
         fill="none"
         stroke="#000"
-        stroke-width="10"
+        strokeWidth="10"
         r="35"
-        stroke-dasharray="164.93485265729915 56.972477469788485"
+        strokeDasharray="164.93485265729915 56.972477469788485"
         transform="rotate(360 50 50)"
       >
         <animateTransform

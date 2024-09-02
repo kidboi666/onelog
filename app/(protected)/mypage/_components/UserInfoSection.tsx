@@ -18,8 +18,8 @@ export default function UserInfoSection() {
 
   return (
     <>
-      <div className="pointer-events-none sticky z-30 flex -translate-y-20 justify-center">
-        <div className="relative size-40 overflow-hidden rounded-full border border-gray-200">
+      <div className="pointer-events-none flex justify-center sm:sticky sm:z-30 sm:-translate-y-20">
+        <div className="relative overflow-hidden rounded-full border border-gray-200 max-sm:size-56 sm:size-40">
           {me?.avatar_url ? (
             <Image
               src={me?.avatar_url}
@@ -31,14 +31,14 @@ export default function UserInfoSection() {
             <div className="absolute size-full bg-gray-200" />
           )}
         </div>
-      </div>
-      <div className="absolute top-40 mt-8 self-end py-8 xl:top-48">
-        <Title className="text-4xl font-medium">
-          <Text as="span" className="mr-2">
-            By
-          </Text>
-          {me?.nickname}
-        </Title>
+        <div className="self-end max-xl:mt-8 sm:absolute sm:top-40 xl:top-48">
+          <Title className="text-4xl font-medium">
+            <Text as="span" className="mr-2">
+              By
+            </Text>
+            {me?.nickname}
+          </Title>
+        </div>
       </div>
       <div className="relative">
         <Line />
