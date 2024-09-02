@@ -21,15 +21,13 @@ export default function EditProfilePage() {
   const { data: me } = useSuspenseQuery(
     meQuery.getUserInfo(supabase, data?.sub),
   )
-  const { mutateAsync: uploadImage, isPending: isPendingImageUpload } =
-    useUploadAvatarImage()
-  const { mutate: updateProfile, isPending } = useUpdateUserInfo()
   const [nickname, onChangeNickName, setNickname] = useInput<string | null>('')
   const [aboutMe, onChangeAboutMe, setAboutMe] = useInput<string | null>('')
-  const [avatarUrl, onChangeAvatarUrl, setAvatarUrl] = useInput<string | null>(
-    '',
-  )
+  const [avatarUrl, , setAvatarUrl] = useInput<string | null>('')
   const [image, setImage] = useState<File | null>(null)
+  const { mutate: updateProfile, isPending } = useUpdateUserInfo()
+  const { mutateAsync: uploadImage, isPending: isPendingImageUpload } =
+    useUploadAvatarImage()
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -44,7 +42,6 @@ export default function EditProfilePage() {
       { userId: me.id, image },
       {
         onSuccess: (data) => {
-          console.log(data)
           updateProfile({
             userId: me.id,
             aboutMe,
@@ -90,14 +87,22 @@ export default function EditProfilePage() {
         imagePreview={avatarUrl}
       />
       <div className="flex w-full flex-col gap-12">
-        <div className="flex w-full flex-col gap-8">
+        <div className="flex w-full max-w-52 flex-col gap-8">
           <NickNameSection value={nickname ?? ''} onChange={onChangeNickName} />
         </div>
         <div className="flex w-full flex-col gap-8">
           <IntroduceSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
         </div>
         <ChallangeSection />
-        <Button type="submit" isLoading={isPendingImageUpload || isPending}>
+        <Button
+          type="submit"
+          isLoading={isPendingImageUpload || isPending}
+          disabled={
+            nickname === me?.nickname &&
+            aboutMe === me?.about_me &&
+            avatarUrl === me?.avatar_url
+          }
+        >
           수정하기
         </Button>
       </div>

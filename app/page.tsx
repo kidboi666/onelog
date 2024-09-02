@@ -14,7 +14,7 @@ export default function MainPage() {
         />
       </div>
 
-      <div className="flex w-full flex-col justify-center gap-12 p-8">
+      <div className="flex w-full flex-col justify-center gap-12 p-4">
         <div className="flex flex-col gap-4">
           <Title>지금 가입하세요.</Title>
           <Title>당신의 글쓰기 루틴을 만드세요.</Title>

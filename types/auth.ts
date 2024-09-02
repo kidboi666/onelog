@@ -15,3 +15,13 @@ export interface IUpdateUserInfo {
   nickname: string | null
   avatarUrl?: string | null
 }
+
+export interface ISessionInfo {
+  about_me: string
+  avatar_url: string | null
+  email: string
+  email_verified: boolean
+  nickname: string
+  phone_verified: boolean
+  sub: string
+}

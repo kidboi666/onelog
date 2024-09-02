@@ -12,4 +12,4 @@ export const config = {
 }
 
 export const AUTH_RESTRICTED_ROUTES = ['/signup', '/signin']
-export const PROTECTED_ROUTES = ['/mypage', '/write', '/mypage/edit_profile']
+export const PROTECTED_ROUTES = ['/mypage', '/write', '/edit_profile']

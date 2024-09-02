@@ -2,23 +2,31 @@ import { useModal } from '@/store/useModal'
 import ModalContainer from '../ModalContainer'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
+import { useEffect } from 'react'
 
 export default function SuccessModal() {
-  const { data, type, closeModal } = useModal()
+  const { type, closeModal } = useModal()
 
   if (type !== 'success') return null
 
-  const handleButtonClick = () => {
-    if (data.onSubmit) {
-      data.onSubmit()
+  const handleEnterPush = (e?: KeyboardEvent) => {
+    if (e?.key === 'Enter') {
+      closeModal()
     }
-    closeModal()
   }
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEnterPush)
+
+    return () => {
+      document.removeEventListener('keydown', handleEnterPush)
+    }
+  }, [])
 
   return (
     <ModalContainer>
-      <Title>등록에 성공하였습니다.</Title>
-      <Button onClick={handleButtonClick}>확인</Button>
+      <Title>요청이 완료되었습니다.</Title>
+      <Button onClick={closeModal}>확인</Button>
     </ModalContainer>
   )
 }

@@ -15,10 +15,9 @@ import SentenceSection from './SentenceSection'
 export default function WritingFormSection() {
   const supabase = createBrowserClient()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { mutate: addSentence, isPending } = useAddSentence()
   const [sentence, onChangeSentence, setSentence] = useInput('')
-  const { openModal } = useModal()
   const [selectedStatus, setSelectedStatus] = useState(INIT_STATUS)
+  const { mutate: addSentence, isPending } = useAddSentence()
 
   const handleStatusClick = (status: typeof INIT_STATUS) => {
     setSelectedStatus({ percent: status.percent, color: status.color })
@@ -34,12 +33,8 @@ export default function WritingFormSection() {
       },
       {
         onSuccess: () => {
-          openModal('success', {
-            onSubmit: () => {
-              setSentence('')
-              setSelectedStatus(INIT_STATUS)
-            },
-          })
+          setSentence('')
+          setSelectedStatus(INIT_STATUS)
         },
       },
     )

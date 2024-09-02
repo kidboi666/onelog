@@ -7,8 +7,8 @@ export default function AuthLayout({ children }: PropsWithChildren) {
       <div className="relative h-40 w-full">
         <Image src="logo_horizontal.svg" fill alt="로고 이미지" />
       </div>
-      <div className="flex w-full flex-col justify-center gap-12 p-2 md:p-8">
-        <div>{children}</div>
+      <div className="flex w-full flex-col items-center justify-center gap-12 p-4 md:p-8">
+        {children}
       </div>
     </div>
   )

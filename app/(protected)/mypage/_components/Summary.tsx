@@ -22,20 +22,27 @@ export default function Summary() {
     <div className="flex w-full justify-between py-12">
       <div className="flex flex-col gap-2">
         <Text type="caption">시작한지</Text>
-        <Title className="text-gray-600" size="bigger" type="sub">
-          {getSignUpDays(me?.created_at)}
+        <Title size="bigger" type="sub">
+          {getSignUpDays(me?.created_at) === '오늘' ? (
+            getSignUpDays(me?.created_at)
+          ) : (
+            <>
+              {getSignUpDays(me?.created_at)}
+              <Text as="span">일 째</Text>
+            </>
+          )}
         </Title>
       </div>
       <div className="flex flex-col gap-2">
         <Text type="caption">기록</Text>
-        <Title size="bigger" type="sub" className="text-gray-600">
+        <Title size="bigger" type="sub">
           {sentence?.length}
           <Text as="span">개</Text>
         </Title>
       </div>
       <div className="flex flex-col gap-2">
         <Text type="caption">평균 달성률</Text>
-        <Title className="text-gray-600" size="bigger" type="sub">
+        <Title size="bigger" type="sub">
           미구현
         </Title>
       </div>

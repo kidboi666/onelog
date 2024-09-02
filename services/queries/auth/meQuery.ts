@@ -1,9 +1,10 @@
+import { ISessionInfo } from '@/types/auth'
 import { Tables } from '@/types/supabase'
 import { queryOptions } from '@tanstack/react-query'
 
 export const meQuery = {
   getUserSession: (supabase: any) =>
-    queryOptions({
+    queryOptions<ISessionInfo>({
       queryKey: ['me', 'session'],
       queryFn: async () => {
         const { data, error } = await supabase.auth.getUser()

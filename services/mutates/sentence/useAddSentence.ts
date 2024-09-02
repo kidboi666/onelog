@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query'
 export default function useAddSentence() {
   const supabase = createBrowserClient()
   const queryClient = getQueryClient()
-  const { closeModal } = useModal()
+  const { openModal } = useModal()
 
   return useMutation({
     mutationFn: async (params: ISentence) => {
@@ -19,7 +19,7 @@ export default function useAddSentence() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sentence'] })
-      closeModal()
+      openModal('success')
     },
   })
 }

@@ -16,7 +16,7 @@ export default function ProfileImageSection({ onChange, imagePreview }: Props) {
   return (
     <div
       onClick={() => handlePreviewClick()}
-      className="relative flex h-fit cursor-pointer flex-col"
+      className="relative flex h-fit w-fit cursor-pointer flex-col"
     >
       {imagePreview && (
         <div className="relative size-40 overflow-hidden rounded-full">
