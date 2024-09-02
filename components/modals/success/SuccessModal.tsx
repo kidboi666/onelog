@@ -7,8 +7,6 @@ import { useEffect } from 'react'
 export default function SuccessModal() {
   const { type, closeModal } = useModal()
 
-  if (type !== 'success') return null
-
   const handleEnterPush = (e?: KeyboardEvent) => {
     if (e?.key === 'Enter') {
       closeModal()
@@ -22,6 +20,8 @@ export default function SuccessModal() {
       document.removeEventListener('keydown', handleEnterPush)
     }
   }, [])
+
+  if (type !== 'success') return null
 
   return (
     <ModalContainer>
