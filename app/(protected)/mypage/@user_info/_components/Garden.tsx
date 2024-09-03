@@ -10,6 +10,7 @@ import { gardenQuery } from '@/services/queries/garden/gardenQuery'
 import { DAYS_OF_WEEK } from '../_constants'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
+import { Tables } from '@/types/supabase'
 
 /**
  * 인자로 주어진 년의 1월 1일의 요일을 구하는 함수
@@ -21,9 +22,12 @@ const getFirstDayInYear = (year: number) => {
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수
  */
-const getRenderedBlock = (months: number[]) => {
+const getRenderedBlock = (months: number[], targetDays: Tables<'garden'>[]) => {
+  console.log(`색칠할 블록 ${targetDays}`)
+
   return months.map((days, i) => {
     let blocks = []
+
     for (let day = 1; day <= days; day++) {
       blocks.push(<Block>{day}</Block>)
     }
@@ -82,7 +86,10 @@ export default function Garden() {
   )
   const currentYear = new Date().getFullYear()
   const firstDayIndex = getFirstDayInYear(currentYear)
-  const shouldRenderElement = getRenderedBlock(getDaysInYear(currentYear))
+  const shouldRenderElement = getRenderedBlock(
+    getDaysInYear(currentYear),
+    hasSentenceMonth,
+  )
 
   const whatMonths = hasSentenceMonth.map((data) => {
     const pickMonth = new Date(data.created_at).getMonth() + 1
@@ -91,13 +98,12 @@ export default function Garden() {
 
     return { month: pickMonth, sentence: pickSentences }
   })
-  console.log(hasSentenceMonth)
+
   return (
     <div className="flex flex-col gap-4 overflow-x-auto">
       <Title>한 눈에 보기</Title>
       <div className="flex flex-col pb-1">
         <GardenBlock
-          whatMonths={whatMonths}
           shouldRenderElement={shouldRenderElement}
           firstDayIndex={firstDayIndex}
         />
