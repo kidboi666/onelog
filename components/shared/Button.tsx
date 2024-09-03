@@ -13,9 +13,9 @@ const BUTTON_VARIANTS = cva('flex items-center justify-center transition', {
   variants: {
     active: {
       primary:
-        'rounded-md border border-gray-800 bg-gray-800 font-semibold text-white hover:border-gray-600 hover:bg-gray-600 active:ring-2 active:ring-gray-600',
+        'active:animate-click rounded-md border border-gray-800 bg-gray-800 font-semibold text-white hover:border-gray-600 hover:bg-gray-600',
       secondary:
-        'rounded-md border border-gray-400 hover:bg-gray-400 hover:text-white active:ring-2 active:ring-gray-400',
+        'active:animate-click rounded-md border border-gray-400 hover:bg-gray-400 hover:text-white',
       teritory: 'underline hover:text-gray-400',
       list: 'justify-start hover:bg-gray-200',
       emptyStyle: '',

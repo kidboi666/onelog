@@ -2,6 +2,7 @@
 
 id,
 content : 내용
+emotion_level : 감정 농도
 created_at : 생성 시간
 updated_at : 수정 시간
 favorite : 찜 갯수
@@ -15,7 +16,7 @@ id,
 created_at : 생성 시간
 updated_at : 수정 시간
 year_month : 해당 년도와 월 (예: '2024.04')
-sentences[] : 해당 월에 작성된 문장의 정보 (예: { sentence_id, date, content })
+sentences[] : 해당 월에 작성된 문장의 정보 (예: { sentence_id, created_at, content, emotion_level })
 
 ## word_dictionary가 가지고 있어야할 정보
 

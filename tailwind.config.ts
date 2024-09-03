@@ -18,9 +18,14 @@ const config: Config = {
           from: { opacity: '0' },
           to: { opacity: '1' },
         },
+        click: {
+          from: { transform: 'scale(0.95)' },
+          to: { transform: 'scale(1)' },
+        },
       },
       animation: {
         'fade-in': 'fade-in 0.3s linear',
+        click: 'click 0.3s ease-in-out forwards',
       },
     },
   },
