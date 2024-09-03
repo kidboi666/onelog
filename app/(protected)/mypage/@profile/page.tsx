@@ -5,13 +5,12 @@ import Line from '@/components/shared/Line'
 import LinkButton from '@/components/shared/LinkButton'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import { createBrowserClient } from '@/lib/supabase/client'
+import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 
 export default function ProfileSection() {
-  const supabase = createBrowserClient()
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(
     meQuery.getUserInfo(supabase, data?.sub),

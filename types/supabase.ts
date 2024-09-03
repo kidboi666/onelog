@@ -42,27 +42,24 @@ export type Database = {
         }
         Relationships: []
       }
-      post: {
+      garden: {
         Row: {
-          author_id: number | null
-          content: string | null
+          created_at: string
           id: number
-          published: boolean
-          title: string
+          sentences: Json[] | null
+          year_month: string
         }
         Insert: {
-          author_id?: number | null
-          content?: string | null
+          created_at?: string
           id?: number
-          published?: boolean
-          title: string
+          sentences?: Json[] | null
+          year_month: string
         }
         Update: {
-          author_id?: number | null
-          content?: string | null
+          created_at?: string
           id?: number
-          published?: boolean
-          title?: string
+          sentences?: Json[] | null
+          year_month?: string
         }
         Relationships: []
       }
@@ -138,6 +135,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      word_frequency: {
+        Row: {
+          count: number
+          created_at: string
+          id: number
+          word: string[] | null
+        }
+        Insert: {
+          count?: number
+          created_at?: string
+          id?: number
+          word?: string[] | null
+        }
+        Update: {
+          count?: number
+          created_at?: string
+          id?: number
+          word?: string[] | null
+        }
+        Relationships: []
       }
     }
     Views: {

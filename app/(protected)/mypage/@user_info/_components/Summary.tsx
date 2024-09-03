@@ -2,14 +2,13 @@
 
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import { createBrowserClient } from '@/lib/supabase/client'
+import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { getSignUpDays } from '@/utils/formatDate'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 export default function Summary() {
-  const supabase = createBrowserClient()
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(
     meQuery.getUserInfo(supabase, data?.sub),

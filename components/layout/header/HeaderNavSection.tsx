@@ -2,7 +2,7 @@
 
 import { MouseEvent } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createBrowserClient } from '@/lib/supabase/client'
+
 import useSignOut from '@/services/mutates/auth/useSignOut'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useStateChange from '@/hooks/useStateChange'
@@ -11,9 +11,9 @@ import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
 import HeaderNavSectionDropDown from './HeaderNavSectionDropDown'
+import { supabase } from '@/lib/supabase/client'
 
 export default function HeaderNavSection() {
-  const supabase = createBrowserClient()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { mutate: signOut } = useSignOut()
   const [dropdownRef, open, closed] = useStateChange<HTMLUListElement>()

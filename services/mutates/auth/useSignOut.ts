@@ -1,10 +1,9 @@
+import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import { createBrowserClient } from '@/lib/supabase/client'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
 export default function useSignOut() {
-  const supabase = createBrowserClient()
   const queryClient = getQueryClient()
   const router = useRouter()
 

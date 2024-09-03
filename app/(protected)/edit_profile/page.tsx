@@ -2,7 +2,6 @@
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createBrowserClient } from '@/lib/supabase/client'
 
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useUploadAvatarImage from '@/services/mutates/auth/useUploadAvatarImage'
@@ -14,9 +13,9 @@ import NickNameSection from './_components/NickNameSection'
 import IntroduceSection from './_components/IntroduceSection'
 import ChallangeSection from './_components/ChallangeSection'
 import ProfileImageSection from './_components/ProfileImageSection'
+import { supabase } from '@/lib/supabase/client'
 
 export default function EditProfilePage() {
-  const supabase = createBrowserClient()
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(
     meQuery.getUserInfo(supabase, data?.sub),
@@ -80,7 +79,7 @@ export default function EditProfilePage() {
   return (
     <form
       onSubmit={handleProfileUpdate}
-      className="animate-fade-in mt-20 flex w-full flex-col justify-center gap-8 px-2 md:max-w-[768px] md:flex-row"
+      className="mt-20 flex w-full animate-fade-in flex-col justify-center gap-8 px-2 md:max-w-[768px] md:flex-row"
     >
       <ProfileImageSection
         onChange={handleImageChange}

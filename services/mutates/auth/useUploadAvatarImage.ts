@@ -1,4 +1,4 @@
-import { createBrowserClient } from '@/lib/supabase/client'
+import { supabase } from '@/lib/supabase/client'
 import { useMutation } from '@tanstack/react-query'
 
 interface IFile {
@@ -7,7 +7,6 @@ interface IFile {
 }
 
 export default function useUploadAvatarImage() {
-  const supabase = createBrowserClient()
   return useMutation({
     mutationFn: async (params: IFile) => {
       const { data, error } = await supabase.storage

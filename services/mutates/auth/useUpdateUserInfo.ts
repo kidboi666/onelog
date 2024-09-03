@@ -1,11 +1,10 @@
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import { createBrowserClient } from '@/lib/supabase/client'
 import { IUpdateUserInfo } from '@/types/auth'
 import { useMutation } from '@tanstack/react-query'
 import { useModal } from '@/store/useModal'
+import { supabase } from '@/lib/supabase/client'
 
 export default function useUpdateUserInfo() {
-  const supabase = createBrowserClient()
   const queryClient = getQueryClient()
   const { openModal } = useModal()
 

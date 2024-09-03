@@ -2,14 +2,13 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Tables } from '@/types/supabase'
-import { createBrowserClient } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import Title from '@/components/shared/Title'
 import ProfileSentenceItem from '@/components/sentence/ProfileSentenceItem'
+import { supabase } from '@/lib/supabase/client'
 
 export default function PrevOneSentence() {
-  const supabase = createBrowserClient()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: sentence } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, me?.sub),

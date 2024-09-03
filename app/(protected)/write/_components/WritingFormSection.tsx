@@ -2,7 +2,6 @@
 
 import { FormEvent, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createBrowserClient } from '@/lib/supabase/client'
 import { useModal } from '@/store/useModal'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
@@ -11,9 +10,9 @@ import { useInput } from '@/hooks/useInput'
 import { INIT_STATUS } from '../_constants'
 import EmotionSection from './EmotionSection'
 import SentenceSection from './SentenceSection'
+import { supabase } from '@/lib/supabase/client'
 
 export default function WritingFormSection() {
-  const supabase = createBrowserClient()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [sentence, onChangeSentence, setSentence] = useInput('')
   const [selectedStatus, setSelectedStatus] = useState(INIT_STATUS)
