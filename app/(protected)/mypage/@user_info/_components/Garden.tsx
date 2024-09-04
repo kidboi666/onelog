@@ -12,10 +12,6 @@ import { DAYS_OF_WEEK } from '../_constants'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
-import GardenSortDropDown from './GardenSortDropDown'
-import Icon from '@/components/shared/Icon'
-import useStateChange from '@/hooks/useStateChange'
-import useOutsideClick from '@/hooks/useOutsideClick'
 
 /**
  * 인자로 주어진 년의 1월 1일의 요일을 구하는 함수
@@ -52,7 +48,7 @@ const getRenderedBlockFromWrittenLength = (
       let foundTargetDays
       if (foundTargetMonth?.sentences) {
         foundTargetDays = foundTargetMonth.sentences.filter(
-          (v, i) => new Date(v.created_at).getDate() === day,
+          (v: any, i) => new Date(v?.created_at).getDate() === day,
         )
         if (foundTargetDays.length >= 1) {
           blocks.push(<Block key={day} length={foundTargetDays.length} />)
@@ -82,9 +78,9 @@ const getRenderedBlockFromEmotionLevel = (
       let targetDaysForEmotionLevel
       if (foundTargetMonth?.sentences) {
         const targetDays = foundTargetMonth.sentences.filter(
-          (v, i) => new Date(v.created_at).getDate() === day,
+          (v: any, i) => new Date(v.created_at).getDate() === day,
         )
-        const levels = targetDays.map((v) =>
+        const levels = targetDays.map((v: any) =>
           Number(v.emotion_level.replace('%', '')),
         )
         const sum = levels.reduce((total, num) => total + num, 0)
