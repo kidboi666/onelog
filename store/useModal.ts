@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type ModalType = 'confirmation' | 'success'
+type ModalType = 'confirmation' | 'success' | 'addSentence'
 
 interface ModalState {
   isOpen: boolean

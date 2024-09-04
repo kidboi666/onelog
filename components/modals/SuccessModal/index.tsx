@@ -1,8 +1,9 @@
 import { useModal } from '@/store/useModal'
-import ModalContainer from '../ModalContainer'
+
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
 import { useEffect } from 'react'
+import Modal from '../Modal'
 
 export default function SuccessModal() {
   const { type, closeModal } = useModal()
@@ -24,9 +25,9 @@ export default function SuccessModal() {
   if (type !== 'success') return null
 
   return (
-    <ModalContainer>
+    <Modal>
       <Title>요청이 완료되었습니다.</Title>
       <Button onClick={closeModal}>확인</Button>
-    </ModalContainer>
+    </Modal>
   )
 }

@@ -1,9 +1,9 @@
 import { useModal } from '@/store/useModal'
-import ModalContainer from '../ModalContainer'
 import Title from '@/components/shared/Title'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import cn from '@/lib/cn'
+import Modal from '../Modal'
 
 export default function ConfirmationModal() {
   const { type, data, closeModal } = useModal()
@@ -11,7 +11,7 @@ export default function ConfirmationModal() {
   if (type !== 'confirmation') return null
 
   return (
-    <ModalContainer as="form">
+    <Modal as="form">
       <Title>등록하시겠습니까?</Title>
       <div className="flex flex-col items-center gap-4 p-4">
         <div className="flex flex-col items-center">
@@ -38,6 +38,6 @@ export default function ConfirmationModal() {
           등록하기
         </Button>
       </div>
-    </ModalContainer>
+    </Modal>
   )
 }

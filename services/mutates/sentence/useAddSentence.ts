@@ -18,6 +18,7 @@ export default function useAddSentence() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sentence'] })
+      queryClient.invalidateQueries({ queryKey: ['garden'] })
       openModal('success')
     },
   })

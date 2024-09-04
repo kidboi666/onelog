@@ -6,11 +6,18 @@ import Summary from './_components/Summary'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { gardenQuery } from '@/services/queries/garden/gardenQuery'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { ISessionInfo } from '@/types/auth'
 
-export default function UserInfoSection() {
+export default async function UserInfoSection() {
   const supabase = createServerClient()
   const queryClient = getQueryClient()
-  queryClient.prefetchQuery(gardenQuery.getGarden(supabase))
+
+  await queryClient.prefetchQuery(meQuery.getUserSession(supabase))
+  const res = queryClient.getQueryData<ISessionInfo>(['me', 'session'])
+
+  if (!res) return
+  queryClient.prefetchQuery(gardenQuery.getGarden(supabase, res?.sub))
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

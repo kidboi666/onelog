@@ -1,12 +1,19 @@
-import { ReactNode, Suspense } from 'react'
+import { PropsWithChildren, ReactNode, Suspense } from 'react'
 import Spinner, { Size } from '@/components/shared/Spinner'
+import Portal from '@/components/portal/Portal'
 
 interface Props {
   profile: ReactNode
   user_info: ReactNode
+  modal: ReactNode
 }
 
-export default function UserPage({ profile, user_info }: Props) {
+export default function UserLayout({
+  children,
+  profile,
+  user_info,
+  modal,
+}: PropsWithChildren<Props>) {
   return (
     <Suspense fallback={<Spinner size={Size.l} />}>
       <div className="flex w-full animate-fade-in flex-col justify-center gap-8 bg-white lg:flex-row">
@@ -17,8 +24,10 @@ export default function UserPage({ profile, user_info }: Props) {
         </div>
         <div className="flex w-full flex-col px-4 lg:max-w-[768px]">
           <div className="flex w-full flex-col gap-12">{user_info}</div>
+          {children}
         </div>
       </div>
+      <Portal>{modal}</Portal>
     </Suspense>
   )
 }

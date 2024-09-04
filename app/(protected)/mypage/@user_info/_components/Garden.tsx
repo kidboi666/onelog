@@ -12,6 +12,7 @@ import { DAYS_OF_WEEK } from '../_constants'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
+import { meQuery } from '@/services/queries/auth/meQuery'
 
 /**
  * 인자로 주어진 년의 1월 1일의 요일을 구하는 함수
@@ -121,7 +122,8 @@ const createEmptySpaceByWeekday = (
 }
 
 export default function Garden() {
-  const { data } = useSuspenseQuery(gardenQuery.getGarden(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data } = useSuspenseQuery(gardenQuery.getGarden(supabase, me.sub))
   const [orderBy, setOrderBy] = useState('length')
 
   const currentYear = new Date().getFullYear()

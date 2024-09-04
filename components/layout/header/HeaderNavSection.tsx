@@ -1,6 +1,5 @@
 'use client'
 
-import { MouseEvent } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 import useSignOut from '@/services/mutates/auth/useSignOut'
