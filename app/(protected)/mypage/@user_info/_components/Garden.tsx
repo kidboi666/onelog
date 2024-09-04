@@ -1,18 +1,20 @@
 'use client'
 
-import { ReactElement, useState } from 'react'
+import { ReactElement, useRef, useState } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import cn from '@/lib/cn'
 import { supabase } from '@/lib/supabase/client'
-import { useSuspenseQuery } from '@tanstack/react-query'
 import { gardenQuery } from '@/services/queries/garden/gardenQuery'
+import { meQuery } from '@/services/queries/auth/meQuery'
 import { Tables } from '@/types/supabase'
-import { IDateBlock } from '@/types/garden'
+import { IBlockInfo, IDateBlock } from '@/types/garden'
 
 import { DAYS_OF_WEEK } from '../_constants'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
-import { meQuery } from '@/services/queries/auth/meQuery'
+import { WEEKDAY } from '../../(modals)/write/_constants'
+import { useSentence } from '@/store/useSentence'
 
 /**
  * 인자로 주어진 년의 1월 1일의 요일을 구하는 함수
@@ -37,6 +39,7 @@ const getDaysInYear = (year: number) => {
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 작성 갯수 기준 색칠)
  */
 const getRenderedBlockFromWrittenLength = (
+  year: number,
   months: number[],
   targetDays: Tables<'garden'>[],
 ) => {
@@ -46,17 +49,27 @@ const getRenderedBlockFromWrittenLength = (
       (v) => new Date(v.created_at).getMonth() === i,
     )
     for (let day = 1; day <= days; day++) {
+      const weekDay = new Date(year, i, day).getDay()
       let foundTargetDays
       if (foundTargetMonth?.sentences) {
         foundTargetDays = foundTargetMonth.sentences.filter(
           (v: any, i) => new Date(v?.created_at).getDate() === day,
         )
         if (foundTargetDays.length >= 1) {
-          blocks.push(<Block key={day} length={foundTargetDays.length} />)
+          blocks.push(
+            <Block
+              key={day}
+              summary={foundTargetDays}
+              blockInfo={{ month: i + 1, date: day, weekDay }}
+              length={foundTargetDays.length}
+            />,
+          )
           continue
         }
       }
-      blocks.push(<Block key={day} />)
+      blocks.push(
+        <Block key={day} blockInfo={{ month: i + 1, date: day, weekDay }} />,
+      )
     }
     return { month: i + 1, days: [...blocks] }
   })
@@ -66,6 +79,7 @@ const getRenderedBlockFromWrittenLength = (
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 이모션 레벨 기준 색칠)
  */
 const getRenderedBlockFromEmotionLevel = (
+  year: number,
   months: number[],
   targetDays: Tables<'garden'>[],
 ) => {
@@ -76,6 +90,7 @@ const getRenderedBlockFromEmotionLevel = (
     )
 
     for (let day = 1; day <= days; day++) {
+      const weekDay = new Date(year, i + 1, day).getDay()
       let targetDaysForEmotionLevel
       if (foundTargetMonth?.sentences) {
         const targetDays = foundTargetMonth.sentences.filter(
@@ -87,11 +102,20 @@ const getRenderedBlockFromEmotionLevel = (
         const sum = levels.reduce((total, num) => total + num, 0)
         targetDaysForEmotionLevel = sum / levels.length
         if (targetDaysForEmotionLevel) {
-          blocks.push(<Block key={day} average={targetDaysForEmotionLevel} />)
+          blocks.push(
+            <Block
+              key={day}
+              summary={targetDays}
+              blockInfo={{ month: i + 1, date: day, weekDay }}
+              average={targetDaysForEmotionLevel}
+            />,
+          )
           continue
         }
       }
-      blocks.push(<Block key={day} />)
+      blocks.push(
+        <Block key={day} blockInfo={{ month: i + 1, date: day, weekDay }} />,
+      )
     }
     return { month: i + 1, days: [...blocks] }
   })
@@ -130,8 +154,16 @@ export default function Garden() {
   const firstDayIndex = getFirstDayInYear(currentYear)
   const shouldRenderElement =
     orderBy === 'emotion'
-      ? getRenderedBlockFromEmotionLevel(getDaysInYear(currentYear), data)
-      : getRenderedBlockFromWrittenLength(getDaysInYear(currentYear), data)
+      ? getRenderedBlockFromEmotionLevel(
+          currentYear,
+          getDaysInYear(currentYear),
+          data,
+        )
+      : getRenderedBlockFromWrittenLength(
+          currentYear,
+          getDaysInYear(currentYear),
+          data,
+        )
 
   const handleSortOrder = (order: 'emotion' | 'length') => {
     setOrderBy(order)
@@ -144,22 +176,22 @@ export default function Garden() {
         <div className="flex gap-2">
           <Button
             size="sm"
-            variant="secondary"
+            variant={orderBy === 'length' ? 'primary' : 'secondary'}
             onClick={() => handleSortOrder('length')}
           >
             문장 갯수
           </Button>
           <Button
             size="sm"
-            variant="secondary"
+            variant={orderBy === 'emotion' ? 'primary' : 'secondary'}
             onClick={() => handleSortOrder('emotion')}
           >
             감정 농도 평균
           </Button>
         </div>
       </div>
-      <div className="flex flex-col overflow-x-auto p-1">
-        <GardenBlock
+      <div className="flex flex-col overflow-y-visible overflow-x-scroll p-1">
+        <GardenBlockSection
           shouldRenderElement={shouldRenderElement}
           firstDayIndex={firstDayIndex}
         />
@@ -181,16 +213,19 @@ export default function Garden() {
   )
 }
 
-interface Props {
+interface GardenBlockSectionProps {
   shouldRenderElement: IDateBlock[]
   firstDayIndex: number
 }
 
-function GardenBlock({ shouldRenderElement, firstDayIndex }: Props) {
+function GardenBlockSection({
+  shouldRenderElement,
+  firstDayIndex,
+}: GardenBlockSectionProps) {
   return (
     <>
-      <div className="flex gap-1">
-        <div className="grid grid-rows-7">
+      <div className="flex gap-2">
+        <div className="grid grid-rows-7 gap-1">
           {DAYS_OF_WEEK.map((day) => (
             <Text key={day} type="caption" className="h-1 text-[10px]">
               {day}
@@ -212,10 +247,15 @@ interface BlockProps {
   className?: string
   length?: number
   average?: number
+  summary?: any
+  blockInfo?: IBlockInfo
 }
 
-function Block({ length, empty, average }: BlockProps) {
+function Block({ length, empty, average, summary, blockInfo }: BlockProps) {
+  const infoRef = useRef<HTMLDivElement>(null)
+  const { setSentences } = useSentence()
   let sentencesColor
+
   if (length) {
     if (length === 1) {
       sentencesColor = 'bg-blue-100'
@@ -238,14 +278,46 @@ function Block({ length, empty, average }: BlockProps) {
       sentencesColor = 'bg-blue-400'
     }
   }
+
+  if (empty) {
+    return <div className="size-2.5 select-none opacity-0" />
+  }
+
   return (
-    <div
-      className={cn(
-        'size-2.5 select-none rounded-sm text-center text-[7px] ring-1 ring-gray-300 transition hover:opacity-55',
-        empty ? 'opacity-0' : '',
-        length ? `${sentencesColor}` : '',
-        average ? `${sentencesColor}` : '',
+    <div className="relative">
+      <div
+        onMouseEnter={() =>
+          infoRef.current?.setAttribute('data-status', 'opened')
+        }
+        onMouseLeave={() =>
+          infoRef.current?.setAttribute('data-status', 'closed')
+        }
+        onClick={() => setSentences(summary)}
+        className={cn(
+          'size-2.5 select-none rounded-sm text-center text-[7px] ring-1 ring-gray-300 hover:opacity-55',
+          length ? `${sentencesColor}` : '',
+          average ? `${sentencesColor}` : '',
+        )}
+      />
+      {blockInfo && (
+        <div
+          ref={infoRef}
+          data-status="closed"
+          className={cn(
+            'absolute z-30 flex w-fit items-center justify-center text-nowrap rounded-md bg-white p-1 shadow-lg transition data-[status=closed]:scale-0',
+            blockInfo.month! > 10
+              ? 'right-full origin-top-right'
+              : 'left-full origin-top-left',
+            blockInfo.weekDay >= 5 ? 'bottom-0' : 'top-0',
+          )}
+        >
+          <Text
+            type="caption"
+            size="sm"
+            className="select-none"
+          >{`${blockInfo.month} / ${blockInfo.date} / ${WEEKDAY[blockInfo.weekDay]}`}</Text>
+        </div>
       )}
-    />
+    </div>
   )
 }

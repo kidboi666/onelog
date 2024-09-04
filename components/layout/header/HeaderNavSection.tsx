@@ -34,7 +34,7 @@ export default function HeaderNavSection() {
   return (
     <nav className="relative flex gap-2">
       {me ? (
-        <LinkButton href="/write">글쓰기</LinkButton>
+        <LinkButton href="/mypage/write">글쓰기</LinkButton>
       ) : (
         <LinkButton href="/signin">시작하기</LinkButton>
       )}

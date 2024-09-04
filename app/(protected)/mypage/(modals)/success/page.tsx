@@ -1,16 +1,16 @@
-import { useModal } from '@/store/useModal'
+'use client'
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
-import { useEffect } from 'react'
-import Modal from '../Modal'
+import Modal from '@/components/shared/Modal'
 
 export default function SuccessModal() {
-  const { type, closeModal } = useModal()
-
+  const router = useRouter()
   const handleEnterPush = (e?: KeyboardEvent) => {
     if (e?.key === 'Enter') {
-      closeModal()
+      router.back()
     }
   }
 
@@ -22,12 +22,10 @@ export default function SuccessModal() {
     }
   }, [])
 
-  if (type !== 'success') return null
-
   return (
     <Modal>
       <Title>요청이 완료되었습니다.</Title>
-      <Button onClick={closeModal}>확인</Button>
+      <Button onClick={() => router.back()}>확인</Button>
     </Modal>
   )
 }

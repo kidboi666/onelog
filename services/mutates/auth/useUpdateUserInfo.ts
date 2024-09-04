@@ -1,12 +1,12 @@
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { IUpdateUserInfo } from '@/types/auth'
 import { useMutation } from '@tanstack/react-query'
-import { useModal } from '@/store/useModal'
 import { supabase } from '@/lib/supabase/client'
+import { useRouter } from 'next/navigation'
 
 export default function useUpdateUserInfo() {
   const queryClient = getQueryClient()
-  const { openModal } = useModal()
+  const router = useRouter()
 
   return useMutation({
     mutationFn: async (params: IUpdateUserInfo) => {
@@ -24,7 +24,7 @@ export default function useUpdateUserInfo() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['me', 'info'] })
       queryClient.invalidateQueries({ queryKey: ['me', 'session'] })
-      openModal('success')
+      router.replace('success')
     },
   })
 }

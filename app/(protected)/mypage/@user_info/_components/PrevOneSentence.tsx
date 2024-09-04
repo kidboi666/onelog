@@ -1,24 +1,17 @@
 'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { Tables } from '@/types/supabase'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import Title from '@/components/shared/Title'
 import ProfileSentenceItem from '@/components/sentence/ProfileSentenceItem'
-import { supabase } from '@/lib/supabase/client'
+import { useSentence } from '@/store/useSentence'
 
 export default function PrevOneSentence() {
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getSentence(supabase, me?.sub),
-  )
+  const { sentences } = useSentence()
 
   return (
     <div className="flex flex-col gap-4">
       <Title>그날의 한 문장</Title>
       <div className="flex flex-col">
-        {sentence?.map((item: Tables<'sentence'>) => (
+        {sentences?.map((item) => (
           <ProfileSentenceItem key={item.id} sentence={item} />
         ))}
       </div>
