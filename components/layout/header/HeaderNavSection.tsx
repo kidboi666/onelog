@@ -19,7 +19,7 @@ export default function HeaderNavSection() {
   const [dropdownRef, open, closed] = useStateChange<HTMLUListElement>()
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(closed)
 
-  const handleOpenStateChange = (e: MouseEvent) => {
+  const handleOpenStateChange = () => {
     const isOpen = dropdownRef.current?.getAttribute('data-status')
 
     if (isOpen === 'opened') {

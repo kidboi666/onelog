@@ -13,9 +13,9 @@ const BUTTON_VARIANTS = cva('flex items-center justify-center transition', {
   variants: {
     active: {
       primary:
-        'active:animate-click rounded-md border border-gray-800 bg-gray-800 font-semibold text-white hover:border-gray-600 hover:bg-gray-600',
+        'rounded-md border border-gray-800 bg-gray-800 font-semibold text-white hover:border-gray-600 hover:bg-gray-600 active:animate-click',
       secondary:
-        'active:animate-click rounded-md border border-gray-400 hover:bg-gray-400 hover:text-white',
+        'rounded-md border border-gray-400 hover:bg-gray-400 hover:text-white active:animate-click',
       teritory: 'underline hover:text-gray-400',
       list: 'justify-start hover:bg-gray-200',
       emptyStyle: '',
@@ -29,7 +29,7 @@ const BUTTON_VARIANTS = cva('flex items-center justify-center transition', {
       emptyStyle: '',
     },
     size: {
-      sm: 'text-xs',
+      sm: 'p-1 text-xs',
       md: 'p-2 text-sm',
       lg: 'p-2 text-lg',
     },

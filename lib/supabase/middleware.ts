@@ -43,7 +43,7 @@ export async function updateSession(req: NextRequest) {
   }
 
   if (user && AUTH_RESTRICTED_ROUTES.includes(req.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL('/', req.url))
+    return NextResponse.redirect(new URL('/mypage', req.url))
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
