@@ -1,11 +1,13 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { FormEvent, Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { formatDateToYMD } from '@/utils/formatDate'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { useInput } from '@/hooks/useInput'
+import { INIT_STATUS, WEEKDAY } from './_constants'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 
 import Spinner, { Size } from '@/components/shared/Spinner'
@@ -13,10 +15,8 @@ import Title from '@/components/shared/Title'
 import Modal from '@/components/shared/Modal'
 import EmotionSection from './_components/EmotionSection'
 import SentenceSection from './_components/SentenceSection'
-import { INIT_STATUS, WEEKDAY } from './_constants'
-import { useRouter } from 'next/navigation'
 
-export default function WriteModal() {
+export default function SentenceModal() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [sentence, onChangeSentence, setSentence] = useInput('')
   const [selectedStatus, setSelectedStatus] = useState(INIT_STATUS)
@@ -37,13 +37,14 @@ export default function WriteModal() {
       },
       {
         onSuccess: () => {
-          router.push('/mypage/success')
+          router.push('/success')
           setSentence('')
           setSelectedStatus(INIT_STATUS)
         },
       },
     )
   }
+
   return (
     <Modal>
       <Suspense fallback={<Spinner size={Size.l} />}>

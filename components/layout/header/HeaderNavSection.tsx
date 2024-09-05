@@ -1,8 +1,7 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-
-import useSignOut from '@/services/mutates/auth/useSignOut'
+import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useStateChange from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
@@ -10,11 +9,9 @@ import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
 import HeaderNavSectionDropDown from './HeaderNavSectionDropDown'
-import { supabase } from '@/lib/supabase/client'
 
 export default function HeaderNavSection() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { mutate: signOut } = useSignOut()
   const [dropdownRef, open, closed] = useStateChange<HTMLUListElement>()
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(closed)
 
@@ -33,11 +30,10 @@ export default function HeaderNavSection() {
 
   return (
     <nav className="relative flex gap-2">
-      {me ? (
-        <LinkButton href="/mypage/write">글쓰기</LinkButton>
-      ) : (
-        <LinkButton href="/signin">시작하기</LinkButton>
-      )}
+      <LinkButton href="/post">글쓰기</LinkButton>
+      <LinkButton href="/post/sentence" className="text-nowrap">
+        한줄쓰기
+      </LinkButton>
       {me && (
         <Button
           variant="secondary"
@@ -54,7 +50,7 @@ export default function HeaderNavSection() {
           </Icon>
         </Button>
       )}
-      <HeaderNavSectionDropDown targetRef={dropdownRef} signOut={signOut} />
+      <HeaderNavSectionDropDown targetRef={dropdownRef} />
     </nav>
   )
 }

@@ -1,6 +1,6 @@
 import cn from '@/lib/cn'
-import { INIT_STATUS } from '../_constants'
 import Button, { ButtonProps } from '@/components/shared/Button'
+import { INIT_STATUS } from '../_constants'
 
 interface Props extends ButtonProps {
   className: string

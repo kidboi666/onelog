@@ -13,8 +13,8 @@ import { DAYS_OF_WEEK } from '../_constants'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
-import { WEEKDAY } from '../../(modals)/write/_constants'
 import { useSentence } from '@/store/useSentence'
+import { WEEKDAY } from '@/app/(protected)/(modals)/post/sentence/_constants'
 
 /**
  * 인자로 주어진 년의 1월 1일의 요일을 구하는 함수

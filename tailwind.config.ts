@@ -6,8 +6,16 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'selector',
   theme: {
     extend: {
+      colors: {
+        'var-green': '#3FB580',
+        'var-yellow': '#FED23F',
+        'var-blue': '#2A9DEB',
+        'var-gray': '#1F2936',
+        'var-orange': '#F5964B',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

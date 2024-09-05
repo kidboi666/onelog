@@ -58,7 +58,7 @@ export default function ProfileSection() {
           >
             프로필 수정
           </LinkButton>
-          <LinkButton href="/mypage/write" className="flex-1">
+          <LinkButton href="/post/sentence" className="flex-1">
             글쓰기
           </LinkButton>
         </div>
