@@ -17,6 +17,7 @@ export default function ColorPicker() {
     setColor(selectedColor)
     // 색상 테마 설정 로직
   }
+  console.log(currentColor)
 
   return (
     <div className="flex flex-col gap-2">
@@ -48,7 +49,7 @@ function ColorBlock({ color, onClick, selectedColor }: ColorBlockProps) {
       variant="secondary"
       onClick={() => onClick(color)}
       className={cn(
-        'size-20 rounded-md border-none text-white',
+        'size-20 rounded-md text-white ring-0',
         color === 'yellow' && 'bg-var-yellow',
         color === 'orange' && 'bg-var-orange',
         color === 'gray' && 'bg-var-gray',

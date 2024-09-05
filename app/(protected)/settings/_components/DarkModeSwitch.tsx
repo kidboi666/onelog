@@ -47,15 +47,16 @@ function DarkModeBlock({
   return (
     <Button
       onClick={() => onBlockClick(theme)}
-      variant={theme === 'light' ? 'secondary' : 'primary'}
       className={cn(
-        'size-20 flex-col font-semibold',
-        theme === 'light' ? 'text-sm' : 'text-xs',
+        'flex gap-2 font-semibold',
+        theme === 'light'
+          ? 'ring-var-gray text-var-gray bg-white text-sm ring-1'
+          : 'bg-var-gray',
       )}
     >
       {theme === 'light' ? '밝은' : '어두운'} 화면
       {selectedTheme === theme && (
-        <Icon view={20} size={24}>
+        <Icon view={20} size={20}>
           <path
             fillRule="evenodd"
             d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
