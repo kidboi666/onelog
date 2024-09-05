@@ -11,7 +11,7 @@ export default function HeaderNavSectionDropDown({ targetRef }: Props) {
     <List
       targetRef={targetRef}
       dataStatus="closed"
-      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-40 origin-top-right overflow-hidden rounded-md border border-gray-200 bg-white shadow-md"
+      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-40 origin-top-right overflow-hidden rounded-md border border-gray-200 shadow-md dark:border-gray-600"
     >
       <List.Row>
         <LinkButton href="/mypage" variant="list" className="w-full">

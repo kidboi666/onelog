@@ -23,7 +23,7 @@ export const List = ({
           targetRef.current.classList.add('hidden')
         }
       }}
-      className={cn('list-none', className)}
+      className={cn('dark:bg-var-dark list-none bg-white', className)}
       {...props}
     >
       {children}

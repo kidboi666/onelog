@@ -1,3 +1,5 @@
+import Box from '@/components/shared/Box'
+import Container from '@/components/shared/Container'
 import Input from '@/components/shared/Input'
 import Text from '@/components/shared/Text'
 import { ComponentProps, useRef } from 'react'
@@ -28,13 +30,13 @@ export default function AuthForm({
     }
   }
   return (
-    <>
-      {name}
+    <Container className="flex flex-col gap-2">
+      <Text type="caption">{name}</Text>
       <label
         htmlFor={type}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className="flex w-full flex-col"
+        className="relative flex w-full flex-col overflow-hidden rounded-b-md"
       >
         <Input
           variant="auth"
@@ -44,17 +46,17 @@ export default function AuthForm({
           error={error}
           className="p-2"
         />
-        <div
+        <Box
           ref={lineRef}
-          data-status="onBlur"
-          className="h-1 origin-left bg-gray-300 transition ease-in-out data-[status=onBlur]:scale-x-0"
+          dataStatus="onBlur"
+          className="absolute bottom-0 left-0 h-1 w-full origin-left bg-gray-300 transition ease-in-out data-[status=onBlur]:scale-x-0"
         />
-        {error?.message && (
-          <Text type="error" size="sm">
-            {error.message}
-          </Text>
-        )}
       </label>
-    </>
+      {error?.message && (
+        <Text type="error" size="sm">
+          {error.message}
+        </Text>
+      )}
+    </Container>
   )
 }

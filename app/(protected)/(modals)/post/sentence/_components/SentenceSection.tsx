@@ -33,7 +33,7 @@ export default function SentenceSection({
         <div
           ref={ref}
           data-status="closed"
-          className="status-line data-line bg-gray-800"
+          className="status-line data-line bg-var-gray dark:bg-white"
         />
       </div>
       <Button

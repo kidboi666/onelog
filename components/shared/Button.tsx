@@ -17,15 +17,18 @@ const BUTTON_VARIANTS = cva(
   {
     variants: {
       active: {
-        primary: 'rounded-md text-white hover:opacity-85 active:animate-click',
-        secondary: 'rounded-md ring-1 hover:opacity-85 active:animate-click',
-        teritory: 'underline hover:opacity-85 active:animate-click',
-        list: 'text-var-gray justify-start font-light hover:bg-gray-200',
-        emptyStyle: 'hover:opacity-85',
+        primary:
+          'rounded-md text-white ring-1 hover:opacity-65 active:animate-click',
+        secondary:
+          'rounded-md text-gray-600 ring-1 ring-gray-500 hover:opacity-65 active:animate-click dark:text-white dark:ring-gray-400',
+        teritory:
+          'underline hover:opacity-65 active:animate-click dark:text-white',
+        list: 'text-var-gray justify-start font-light hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700',
+        emptyStyle: 'hover:opacity-65',
       },
       disabled: {
         primary:
-          'gap-2 rounded-md border border-gray-300 bg-gray-300 text-gray-50',
+          'gap-2 rounded-md bg-gray-300 text-gray-50 ring-1 ring-gray-300 dark:bg-gray-600 dark:text-gray-500 dark:ring-gray-600',
         secondary: '',
         teritory: '',
         list: '',
@@ -63,16 +66,21 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         onClick={onClick}
         type={type}
         className={cn(
-          color === 'blue' && variant === 'primary' && 'bg-var-blue',
-          color === 'blue' && variant === 'secondary' && 'ring-var-blue text-var-blue', //prettier-ignore
-          color === 'yellow' && variant === 'primary' && 'bg-var-yellow',
-          color === 'yellow' && variant === 'secondary' && 'ring-var-yellow text-var-yellow', //prettier-ignore
-          color === 'green' && variant === 'primary' && 'bg-var-green',
-          color === 'green' && variant === 'secondary' && 'ring-var-green text-var-green', //prettier-ignore
-          color === 'orange' && variant === 'primary' && 'bg-var-orange',
-          color === 'orange' && variant === 'secondary' && 'ring-var-orange text-var-orange', //prettier-ignore
-          color === 'gray' && variant === 'primary' && 'bg-var-gray',
-          color === 'gray' && variant === 'secondary' && 'ring-var-gray text-var-gray', //prettier-ignore
+          color === 'blue' &&
+            variant === 'primary' &&
+            'bg-var-blue ring-var-blue',
+          color === 'yellow' &&
+            variant === 'primary' &&
+            'bg-var-yellow ring-var-yellow',
+          color === 'green' &&
+            variant === 'primary' &&
+            'bg-var-green ring-var-green',
+          color === 'orange' &&
+            variant === 'primary' &&
+            'bg-var-orange ring-var-orange',
+          color === 'black' &&
+            variant === 'primary' &&
+            'bg-var-black dark:text-var-dark ring-var-black dark:bg-white dark:ring-white',
           BUTTON_VARIANTS(
             isLoading || disabled
               ? { disabled: variant, size: size }

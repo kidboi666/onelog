@@ -1,5 +1,3 @@
-'use client'
-
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
@@ -9,6 +7,7 @@ import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
 import HeaderNavSectionDropDown from './HeaderNavSectionDropDown'
+import Container from '@/components/shared/Container'
 
 export default function HeaderNavSection() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -29,9 +28,13 @@ export default function HeaderNavSection() {
   }
 
   return (
-    <nav className="relative flex gap-2">
+    <Container as="nav" className="relative flex gap-2">
       <LinkButton href="/post">글쓰기</LinkButton>
-      <LinkButton href="/post/sentence" className="text-nowrap">
+      <LinkButton
+        href="/post/sentence"
+        variant="secondary"
+        className="text-nowrap"
+      >
         한줄쓰기
       </LinkButton>
       {me && (
@@ -39,6 +42,7 @@ export default function HeaderNavSection() {
           variant="secondary"
           ref={dropdownButtonRef}
           onClick={handleOpenStateChange}
+          className="px-2"
         >
           <Icon className="size-5 rotate-90">
             <path
@@ -51,6 +55,6 @@ export default function HeaderNavSection() {
         </Button>
       )}
       <HeaderNavSectionDropDown targetRef={dropdownRef} />
-    </nav>
+    </Container>
   )
 }

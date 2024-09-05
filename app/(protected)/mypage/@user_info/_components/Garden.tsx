@@ -1,20 +1,19 @@
 'use client'
 
-import { ReactElement, useRef, useState } from 'react'
+import { ReactElement, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import cn from '@/lib/cn'
 import { supabase } from '@/lib/supabase/client'
 import { gardenQuery } from '@/services/queries/garden/gardenQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { Tables } from '@/types/supabase'
-import { IBlockInfo, IDateBlock } from '@/types/garden'
+import { IDateBlock } from '@/types/garden'
 
 import { DAYS_OF_WEEK } from '../_constants'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
-import { useSentence } from '@/store/useSentence'
-import { WEEKDAY } from '@/app/(protected)/(modals)/post/sentence/_constants'
+import Container from '@/components/shared/Container'
+import Block from '@/components/shared/Block'
 
 /**
  * 인자로 주어진 년의 1월 1일의 요일을 구하는 함수
@@ -170,7 +169,7 @@ export default function Garden() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <Container className="flex flex-col gap-4">
       <div className="relative flex justify-between">
         <Title>한 눈에 보기</Title>
         <div className="flex gap-2">
@@ -186,11 +185,11 @@ export default function Garden() {
             variant={orderBy === 'emotion' ? 'primary' : 'secondary'}
             onClick={() => handleSortOrder('emotion')}
           >
-            감정 농도 평균
+            감정 농도
           </Button>
         </div>
       </div>
-      <div className="flex flex-col overflow-y-visible overflow-x-scroll p-1">
+      <div className="flex flex-col overflow-x-auto overflow-y-visible p-1">
         <GardenBlockSection
           shouldRenderElement={shouldRenderElement}
           firstDayIndex={firstDayIndex}
@@ -209,7 +208,7 @@ export default function Garden() {
           {orderBy === 'emotion' ? 'Good' : 'More'}
         </Text>
       </div>
-    </div>
+    </Container>
   )
 }
 
@@ -239,85 +238,5 @@ function GardenBlockSection({
         </div>
       </div>
     </>
-  )
-}
-
-interface BlockProps {
-  empty?: boolean
-  className?: string
-  length?: number
-  average?: number
-  summary?: any
-  blockInfo?: IBlockInfo
-}
-
-function Block({ length, empty, average, summary, blockInfo }: BlockProps) {
-  const infoRef = useRef<HTMLDivElement>(null)
-  const { setSentences } = useSentence()
-  let sentencesColor
-
-  if (length) {
-    if (length === 1) {
-      sentencesColor = 'bg-blue-100'
-    } else if (length === 2) {
-      sentencesColor = 'bg-blue-200'
-    } else if (length === 3) {
-      sentencesColor = 'bg-blue-300'
-    } else {
-      sentencesColor = 'bg-blue-400'
-    }
-  }
-  if (average) {
-    if (average <= 25) {
-      sentencesColor = 'bg-blue-100'
-    } else if (average <= 50) {
-      sentencesColor = 'bg-blue-200'
-    } else if (average <= 75) {
-      sentencesColor = 'bg-blue-300'
-    } else {
-      sentencesColor = 'bg-blue-400'
-    }
-  }
-
-  if (empty) {
-    return <div className="size-2.5 select-none opacity-0" />
-  }
-
-  return (
-    <div className="relative">
-      <div
-        onMouseEnter={() =>
-          infoRef.current?.setAttribute('data-status', 'opened')
-        }
-        onMouseLeave={() =>
-          infoRef.current?.setAttribute('data-status', 'closed')
-        }
-        onClick={() => setSentences(summary)}
-        className={cn(
-          'size-2.5 select-none rounded-sm text-center text-[7px] ring-1 ring-gray-300 hover:opacity-55',
-          length ? `${sentencesColor}` : '',
-          average ? `${sentencesColor}` : '',
-        )}
-      />
-      {blockInfo && (
-        <div
-          ref={infoRef}
-          data-status="closed"
-          className={cn(
-            'absolute z-30 flex w-fit items-center justify-center text-nowrap rounded-md bg-white p-1 shadow-lg transition data-[status=closed]:scale-0',
-            blockInfo.month! > 10
-              ? 'right-full origin-top-right'
-              : 'left-full origin-top-left',
-            blockInfo.weekDay >= 5 ? 'bottom-0' : 'top-0',
-          )}
-        >
-          <Text
-            type="caption"
-            size="sm"
-            className="select-none"
-          >{`${blockInfo.month} / ${blockInfo.date} / ${WEEKDAY[blockInfo.weekDay]}`}</Text>
-        </div>
-      )}
-    </div>
   )
 }

@@ -6,13 +6,35 @@ import Title from '@/components/shared/Title'
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
 import { TTheme } from '@/types/theme'
+import { useEffect } from 'react'
 
 export default function DarkModeSwitch() {
   const { theme, setTheme } = useTheme()
+
+  const handleTheme = () => {
+    const savedTheme = localStorage.getItem('theme')
+
+    if (savedTheme === 'dark') {
+      localStorage.setItem('theme', 'light')
+      document.documentElement.classList.remove('dark')
+    } else {
+      localStorage.setItem('theme', 'dark')
+      document.documentElement.classList.add('dark')
+    }
+  }
+
   const handleThemeClick = (selectedTheme: TTheme) => {
     setTheme(selectedTheme)
-    // 다크 모드 테마 설정 로직
+    handleTheme()
   }
+
+  useEffect(() => {
+    if (localStorage.theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [])
 
   return (
     <div className="flex flex-col gap-2">
@@ -47,11 +69,12 @@ function DarkModeBlock({
   return (
     <Button
       onClick={() => onBlockClick(theme)}
+      variant="emptyStyle"
       className={cn(
-        'flex gap-2 font-semibold',
+        'flex gap-2 rounded-md font-semibold ring-1',
         theme === 'light'
-          ? 'ring-var-gray text-var-gray bg-white text-sm ring-1'
-          : 'bg-var-gray',
+          ? 'ring-var-black bg-white text-sm text-black ring-1'
+          : 'bg-var-black text-white ring-white',
       )}
     >
       {theme === 'light' ? '밝은' : '어두운'} 화면

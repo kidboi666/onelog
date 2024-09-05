@@ -1,3 +1,4 @@
+import Container from '@/components/shared/Container'
 import Title from '@/components/shared/Title'
 import { PropsWithChildren } from 'react'
 
@@ -7,12 +8,12 @@ interface Props {
 
 export default function FavoriteWords({ words }: Props) {
   return (
-    <div className="flex flex-col gap-4">
+    <Container className="flex flex-col gap-4">
       <Title>가장 많이 사용하는</Title>
       <div className="flex gap-2">
         {words?.map((word) => <Tag key={word}>{word}</Tag>)}
       </div>
-    </div>
+    </Container>
   )
 }
 

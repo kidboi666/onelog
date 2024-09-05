@@ -13,8 +13,9 @@ const config: Config = {
         'var-green': '#3FB580',
         'var-yellow': '#FED23F',
         'var-blue': '#2A9DEB',
-        'var-gray': '#1F2936',
+        'var-black': '#131313',
         'var-orange': '#F5964B',
+        'var-dark': '#191919',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -33,7 +34,7 @@ const config: Config = {
       },
       animation: {
         'fade-in': 'fade-in 0.3s linear',
-        click: 'click 0.3s ease-in-out forwards',
+        click: 'click 0.1s ease-in-out forwards',
       },
     },
   },

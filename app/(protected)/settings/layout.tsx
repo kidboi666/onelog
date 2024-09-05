@@ -1,4 +1,5 @@
-import Portal from '@/components/portal/Portal'
+import Container from '@/components/shared/Container'
+import Portal from '@/components/shared/Portal'
 import { PropsWithChildren, ReactNode } from 'react'
 
 interface Props {
@@ -10,9 +11,9 @@ export default function SettingsLayout({
   modal,
 }: PropsWithChildren<Props>) {
   return (
-    <div className="mt-20 flex w-full flex-col gap-12 px-2 md:max-w-[560px]">
+    <Container className="mt-20 flex w-full flex-col gap-12 px-2 md:max-w-[560px]">
       {children}
       <Portal>{modal}</Portal>
-    </div>
+    </Container>
   )
 }

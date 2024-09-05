@@ -11,10 +11,12 @@ export default function SettingsPage() {
       <ColorPicker />
       <DarkModeSwitch />
       <LogoutButton />
-      <Button>Primary</Button>
-      <Button disabled>Primary</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="teritory">teritory</Button>
+      <div className="flex w-full flex-col gap-2">
+        <Button>Primary</Button>
+        <Button disabled>Primary</Button>
+        <Button variant="teritory">teritory</Button>
+        <Button variant="secondary">Secondary</Button>
+      </div>
     </>
   )
 }

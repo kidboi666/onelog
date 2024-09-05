@@ -3,10 +3,12 @@
 import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect } from 'react'
+import Box from './Box'
+import Container from './Container'
 
 interface Props extends ComponentProps<'div'> {
   className?: string
-  as?: 'div' | 'form'
+  as?: 'div'
 }
 
 export default function Modal({
@@ -31,25 +33,25 @@ export default function Modal({
   }, [])
 
   return (
-    <div
+    <Container
       onClick={() => router.back()}
-      className="fixed inset-0 z-50 bg-black/50"
+      className="dark:bg-var-dark/50 fixed inset-0 z-50 bg-black/50"
     >
-      <div onClick={(e) => e.stopPropagation()}>
-        <div
-          className="fixed left-1/2 top-1/2 flex h-fit w-full max-w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white md:max-w-[480px]"
+      <Box onClick={(e) => e.stopPropagation()}>
+        <Box
+          className="fixed left-1/2 top-1/2 flex h-fit w-full max-w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 rounded-md shadow-lg md:max-w-[480px]"
           {...props}
         >
-          <Component
+          <Container
             className={cn(
-              'flex w-full flex-col items-center justify-center gap-12 p-8',
+              'flex w-full flex-col items-center justify-center gap-12 rounded-md p-8 dark:border dark:border-gray-600',
               className,
             )}
           >
             {children}
-          </Component>
-        </div>
-      </div>
-    </div>
+          </Container>
+        </Box>
+      </Box>
+    </Container>
   )
 }

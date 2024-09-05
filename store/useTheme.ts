@@ -9,7 +9,7 @@ interface ThemeState {
 }
 
 export const useTheme = create<ThemeState>((set) => ({
-  color: 'gray',
+  color: 'black',
   theme: 'light',
   setColor: (color: TColor) => set({ color }),
   setTheme: (theme: TTheme) => set({ theme }),

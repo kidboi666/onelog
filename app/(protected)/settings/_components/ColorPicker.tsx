@@ -1,6 +1,7 @@
 'use client'
 
 import Button from '@/components/shared/Button'
+import Container from '@/components/shared/Container'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
@@ -8,7 +9,7 @@ import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
 import { TColor } from '@/types/theme'
 
-const colors: TColor[] = ['gray', 'green', 'yellow', 'blue', 'orange']
+const colors: TColor[] = ['black', 'green', 'yellow', 'blue', 'orange']
 
 export default function ColorPicker() {
   const { color: currentColor, setColor } = useTheme()
@@ -17,12 +18,11 @@ export default function ColorPicker() {
     setColor(selectedColor)
     // 색상 테마 설정 로직
   }
-  console.log(currentColor)
 
   return (
-    <div className="flex flex-col gap-2">
+    <Container className="flex flex-col gap-2">
       <Title>색상 설정</Title>
-      <List className="flex gap-2">
+      <List className="flex gap-4">
         {colors.map((color) => (
           <List.Row key={color}>
             <ColorBlock
@@ -33,7 +33,7 @@ export default function ColorPicker() {
           </List.Row>
         ))}
       </List>
-    </div>
+    </Container>
   )
 }
 
@@ -49,10 +49,10 @@ function ColorBlock({ color, onClick, selectedColor }: ColorBlockProps) {
       variant="secondary"
       onClick={() => onClick(color)}
       className={cn(
-        'size-20 rounded-md text-white ring-0',
+        'size-14 rounded-full text-white ring-0',
         color === 'yellow' && 'bg-var-yellow',
         color === 'orange' && 'bg-var-orange',
-        color === 'gray' && 'bg-var-gray',
+        color === 'black' && 'bg-var-black',
         color === 'blue' && 'bg-var-blue',
         color === 'green' && 'bg-var-green',
       )}

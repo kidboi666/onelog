@@ -4,15 +4,18 @@ import { meQuery } from '@/services/queries/auth/meQuery'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { PropsWithChildren, ReactNode } from 'react'
 import { ISessionInfo } from '@/types/auth'
+import Container from '../shared/Container'
 
 interface Props {
   Header?: ReactNode
   Footer?: ReactNode
+  Background?: ReactNode
 }
 
 export default async function AppLayout({
   Header,
   Footer,
+  Background,
   children,
 }: PropsWithChildren<Props>) {
   const supabase = createServerClient()
@@ -26,8 +29,9 @@ export default async function AppLayout({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
+      {Background && Background}
       {Header && Header}
-      <div className="flex w-full justify-center">{children}</div>
+      <Container className="flex w-full justify-center">{children}</Container>
       {Footer && Footer}
     </HydrationBoundary>
   )

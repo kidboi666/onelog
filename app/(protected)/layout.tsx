@@ -1,7 +1,8 @@
 import { PropsWithChildren, ReactNode } from 'react'
 import AppLayout from '@/components/layout/AppLayout'
-import Header from '@/components/layout/header/Header'
-import Portal from '@/components/portal/Portal'
+import Header from '@/components/layout/Header/Header'
+import Portal from '@/components/shared/Portal'
+import Background from '@/components/layout/Background'
 
 interface Props {
   modal: ReactNode
@@ -13,7 +14,9 @@ export default function ProtectedLayout({
 }: PropsWithChildren<Props>) {
   return (
     <>
-      <AppLayout Header={<Header />}>{children}</AppLayout>
+      <AppLayout Header={<Header />} Background={<Background />}>
+        {children}
+      </AppLayout>
       <Portal>{modal}</Portal>
     </>
   )
