@@ -1,5 +1,10 @@
 import cn from '@/lib/cn'
-import { ComponentProps, forwardRef, PropsWithRef } from 'react'
+import {
+  ComponentProps,
+  forwardRef,
+  PropsWithRef,
+  TransitionEvent,
+} from 'react'
 
 type As = 'div' | 'main' | 'nav' | 'footer' | 'header'
 
@@ -23,6 +28,7 @@ const RefContainer = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
       onClick,
       children,
       className,
+      onTransitionEnd,
       ...Props
     },
     ref,
@@ -32,11 +38,7 @@ const RefContainer = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
         ref={ref}
         data-status={dataStatus}
         onClick={onClick}
-        onTransitionEnd={() => {
-          if (ref?.current?.getAttribute('data-status') === 'closed') {
-            ref.current.classList.add('hidden')
-          }
-        }}
+        onTransitionEnd={onTransitionEnd}
         className={cn(
           isRounded && 'rounded-md ring-1 ring-gray-300 dark:ring-gray-600',
           isBlur && 'bg-white/70 backdrop-blur-lg dark:bg-var-dark/70',

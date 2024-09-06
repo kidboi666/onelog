@@ -3,7 +3,7 @@
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
 import { ComponentProps, forwardRef, PropsWithRef } from 'react'
-import Spinner, { Size } from './Spinner'
+import Spinner from './Spinner'
 import { useTheme } from '@/store/useTheme'
 import { formatButtonColor } from '@/utils/formatColor'
 
@@ -79,7 +79,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         {...props}
       >
         {children}
-        {isLoading && <Spinner size={Size.s} />}
+        {isLoading && <Spinner size={60} />}
       </button>
     )
   },

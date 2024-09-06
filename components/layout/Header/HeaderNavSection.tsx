@@ -32,6 +32,12 @@ export default function HeaderNavSection() {
     }
   }
 
+  const handleTransitionEnd = () => {
+    if (dropdownRef?.current?.getAttribute('data-status') === 'closed') {
+      dropdownRef.current.classList.add('hidden')
+    }
+  }
+
   return (
     <Container as="nav" className="relative flex gap-2">
       <Box className="flex gap-2 max-sm:hidden">
@@ -61,7 +67,10 @@ export default function HeaderNavSection() {
           </Icon>
         </Button>
       )}
-      <HeaderNavSectionDropDown targetRef={dropdownRef} />
+      <HeaderNavSectionDropDown
+        onTransitionEnd={handleTransitionEnd}
+        targetRef={dropdownRef}
+      />
     </Container>
   )
 }

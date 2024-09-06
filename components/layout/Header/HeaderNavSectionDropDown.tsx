@@ -5,15 +5,20 @@ import { RefObject } from 'react'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>
+  onTransitionEnd: () => void
 }
 
-export default function HeaderNavSectionDropDown({ targetRef }: Props) {
+export default function HeaderNavSectionDropDown({
+  targetRef,
+  onTransitionEnd,
+}: Props) {
   return (
     <RefContainer
       ref={targetRef}
       dataStatus="closed"
       isRounded
       isBackground
+      onTransitionEnd={onTransitionEnd}
       className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-40 origin-top-right overflow-hidden shadow-md"
     >
       <Box className="sm:hidden">
