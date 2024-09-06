@@ -12,10 +12,10 @@ import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 
 import Title from '@/components/shared/Title'
 import Modal from '@/components/shared/Modal'
-import EmotionSection from './_components/EmotionSection'
-import SentenceSection from './_components/SentenceSection'
 import Box from '@/components/shared/Box'
 import FormContainer from '@/components/shared/FormContainer'
+import EmotionSection from './_components/EmotionSection'
+import SentenceSection from './_components/SentenceSection'
 
 export default function SentenceModal() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))

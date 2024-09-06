@@ -1,5 +1,5 @@
 import cn from '@/lib/cn'
-import { ComponentProps, RefObject } from 'react'
+import { ComponentProps } from 'react'
 
 type As = 'div' | 'main' | 'nav' | 'footer' | 'header'
 
@@ -7,23 +7,31 @@ interface Props extends ComponentProps<'div'> {
   as?: As
   className?: string
   dataStatus?: string
-  targetRef?: RefObject<HTMLDivElement>
+  isRounded?: boolean
+  isBlur?: boolean
+  isBackground?: boolean
 }
 
 export default function Container({
   as: Component = 'div',
   dataStatus,
+  isRounded,
+  isBackground,
+  isBlur,
   onClick,
   children,
   className,
-  targetRef,
 }: Props) {
   return (
     <Component
-      ref={targetRef}
       data-status={dataStatus}
       onClick={onClick}
-      className={cn('dark:bg-var-dark bg-white', className)}
+      className={cn(
+        isRounded && 'rounded-md ring-1 ring-gray-300 dark:ring-gray-600',
+        isBackground && 'dark:bg-var-white bg-white',
+        isBlur && 'bg-white/70 backdrop-blur-lg dark:bg-var-dark/70',
+        className,
+      )}
     >
       {children}
     </Component>

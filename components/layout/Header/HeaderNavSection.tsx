@@ -10,13 +10,15 @@ import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
 import HeaderNavSectionDropDown from './HeaderNavSectionDropDown'
 import Container from '@/components/shared/Container'
+import Box from '@/components/shared/Box'
+import { wait } from '@/utils/wait'
 
 export default function HeaderNavSection() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const [dropdownRef, open, closed] = useStateChange<HTMLUListElement>()
+  const [dropdownRef, open, closed] = useStateChange<HTMLDivElement>()
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(closed)
 
-  const handleOpenStateChange = () => {
+  const handleOpenStateChange = async () => {
     const isOpen = dropdownRef.current?.getAttribute('data-status')
 
     if (isOpen === 'opened') {
@@ -25,20 +27,23 @@ export default function HeaderNavSection() {
 
     if (isOpen === 'closed') {
       dropdownRef.current?.classList.remove('hidden')
+      await wait(0)
       open()
     }
   }
 
   return (
     <Container as="nav" className="relative flex gap-2">
-      <LinkButton href="/post">글쓰기</LinkButton>
-      <LinkButton
-        href="/post/sentence"
-        variant="secondary"
-        className="text-nowrap"
-      >
-        한줄쓰기
-      </LinkButton>
+      <Box className="flex gap-2 max-sm:hidden">
+        <LinkButton href="/post">글쓰기</LinkButton>
+        <LinkButton
+          href="/post/sentence"
+          variant="secondary"
+          className="text-nowrap"
+        >
+          한줄쓰기
+        </LinkButton>
+      </Box>
       {me && (
         <Button
           variant="secondary"

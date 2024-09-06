@@ -2,20 +2,19 @@
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { supabase } from '@/lib/supabase/client'
 
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useUploadAvatarImage from '@/services/mutates/auth/useUploadAvatarImage'
 import useUpdateUserInfo from '@/services/mutates/auth/useUpdateUserInfo'
 import { useInput } from '@/hooks/useInput'
 
-import Button from '@/components/shared/Button'
-import NickNameSection from './_components/NickNameSection'
-import IntroduceSection from './_components/IntroduceSection'
-import ChallangeSection from './_components/ChallangeSection'
-import ProfileImageSection from './_components/ProfileImageSection'
-import { supabase } from '@/lib/supabase/client'
 import Box from '@/components/shared/Box'
 import FormContainer from '@/components/shared/FormContainer'
+import IntroduceSection from './_components/IntroduceSection'
+import ChallangeSection from './_components/ChallangeSection'
+import SubmitButtonSection from './_components/SubmitButtonSection'
+import AboutMeSection from './_components/AboutMeSection'
 
 export default function EditProfilePage() {
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -30,7 +29,7 @@ export default function EditProfilePage() {
   const { mutateAsync: uploadImage, isPending: isPendingImageUpload } =
     useUploadAvatarImage()
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       setImage(file)
@@ -84,26 +83,22 @@ export default function EditProfilePage() {
       className="mt-20 flex w-full animate-fade-in flex-col justify-center gap-8 px-2 md:max-w-[768px] md:flex-row"
     >
       <Box className="flex w-full flex-col gap-12">
-        <Box className="flex items-end justify-between">
-          <NickNameSection value={nickname ?? ''} onChange={onChangeNickName} />
-          <ProfileImageSection
-            onChange={handleImageChange}
-            imagePreview={avatarUrl}
-          />
-        </Box>
+        <AboutMeSection
+          avatarUrl={avatarUrl}
+          nickname={nickname}
+          onChangeImage={handleChangeImage}
+          onChangeNickName={onChangeNickName}
+        />
         <IntroduceSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
         <ChallangeSection />
-        <Button
-          type="submit"
-          isLoading={isPendingImageUpload || isPending}
+        <SubmitButtonSection
+          isPending={isPendingImageUpload || isPending}
           disabled={
             nickname === me?.nickname &&
             aboutMe === me?.about_me &&
             avatarUrl === me?.avatar_url
           }
-        >
-          수정하기
-        </Button>
+        />
       </Box>
     </FormContainer>
   )

@@ -1,16 +1,16 @@
 'use client'
 
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { supabase } from '@/lib/supabase/client'
+import { useTheme } from '@/store/useTheme'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import { formatColor } from '@/utils/formatColor'
+import { getSignUpDays } from '@/utils/formatDate'
 import Box from '@/components/shared/Box'
 import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import { supabase } from '@/lib/supabase/client'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import { useTheme } from '@/store/useTheme'
-import { formatColor } from '@/utils/formatColor'
-import { getSignUpDays } from '@/utils/formatDate'
-import { useSuspenseQuery } from '@tanstack/react-query'
 
 export default function Summary() {
   const { color } = useTheme()
@@ -39,7 +39,7 @@ export default function Summary() {
       </Box>
       <Box className="flex flex-col gap-2">
         <Text type="caption">기록</Text>
-        <Title size="bigger" type="sub" className={formatColor(color)}>
+        <Title size="bigger" type="customColor" className={formatColor(color)}>
           {sentence?.length}
           <Text as="span">개</Text>
         </Title>

@@ -1,3 +1,5 @@
+'use client'
+
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
 import { ElementType, PropsWithChildren } from 'react'
@@ -5,7 +7,7 @@ import { ElementType, PropsWithChildren } from 'react'
 interface Props {
   as?: ElementType
   className?: string
-  type?: 'title' | 'sub'
+  type?: 'title' | 'sub' | 'customColor'
   size?: 'sm' | 'md' | 'lg' | 'bigger'
 }
 
@@ -14,6 +16,7 @@ const TITLE_VARIANTS = cva('', {
     type: {
       title: 'font-semibold text-gray-800 dark:text-white',
       sub: 'font-medium text-gray-800 dark:text-white',
+      customColor: 'font-semibold',
     },
     size: {
       sm: 'text-lg',

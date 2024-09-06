@@ -1,28 +1,35 @@
+import Box from '@/components/shared/Box'
 import LinkButton from '@/components/shared/LinkButton'
-import { List } from '@/components/shared/List'
+import RefContainer from '@/components/shared/RefContainer'
 import { RefObject } from 'react'
 
 interface Props {
-  targetRef: RefObject<HTMLUListElement>
+  targetRef: RefObject<HTMLDivElement>
 }
 
 export default function HeaderNavSectionDropDown({ targetRef }: Props) {
   return (
-    <List
-      targetRef={targetRef}
+    <RefContainer
+      ref={targetRef}
       dataStatus="closed"
-      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-40 origin-top-right overflow-hidden rounded-md border border-gray-200 shadow-md dark:border-gray-600"
+      isRounded
+      isBackground
+      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-40 origin-top-right overflow-hidden shadow-md"
     >
-      <List.Row>
-        <LinkButton href="/mypage" variant="list" className="w-full">
-          마이 페이지
+      <Box className="sm:hidden">
+        <LinkButton href="/post" variant="list" className="w-full">
+          글쓰기
         </LinkButton>
-      </List.Row>
-      <List.Row>
-        <LinkButton href="/settings" variant="list" className="w-full">
-          환경 설정
+        <LinkButton href="/post/sentence" variant="list">
+          한줄쓰기
         </LinkButton>
-      </List.Row>
-    </List>
+      </Box>
+      <LinkButton href="/mypage" variant="list" className="w-full">
+        마이 페이지
+      </LinkButton>
+      <LinkButton href="/settings" variant="list" className="w-full">
+        환경 설정
+      </LinkButton>
+    </RefContainer>
   )
 }

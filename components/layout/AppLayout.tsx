@@ -31,7 +31,9 @@ export default async function AppLayout({
     <HydrationBoundary state={dehydrate(queryClient)}>
       {Background ? Background : null}
       {Header ? Header : null}
-      <Container className="flex w-full justify-center">{children}</Container>
+      <Container as="main" className="flex w-full justify-center">
+        {children}
+      </Container>
       {Footer ? Footer : null}
     </HydrationBoundary>
   )

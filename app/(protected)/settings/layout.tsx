@@ -11,7 +11,7 @@ export default function SettingsLayout({
   modal,
 }: PropsWithChildren<Props>) {
   return (
-    <Container className="mt-20 flex w-full flex-col gap-12 px-2 md:max-w-[560px]">
+    <Container className="mt-20 flex w-full animate-fade-in flex-col gap-24 px-4 md:max-w-[560px]">
       {children}
       <Portal>{modal}</Portal>
     </Container>

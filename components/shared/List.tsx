@@ -4,6 +4,8 @@ import { ComponentProps, PropsWithChildren, RefObject } from 'react'
 interface Props extends ComponentProps<'ul'> {
   className?: string
   targetRef?: RefObject<HTMLUListElement>
+  isRounded?: boolean
+  isBackground?: boolean
   dataStatus?: string
 }
 
@@ -12,6 +14,8 @@ export const List = ({
   className,
   targetRef,
   dataStatus,
+  isRounded,
+  isBackground,
   ...props
 }: PropsWithChildren<Props>) => {
   return (
@@ -23,7 +27,12 @@ export const List = ({
           targetRef.current.classList.add('hidden')
         }
       }}
-      className={cn('dark:bg-var-dark list-none bg-white', className)}
+      className={cn(
+        'list-none',
+        isRounded && 'rounded-md border border-gray-200 dark:border-gray-600',
+        isBackground && 'bg-white dark:bg-var-dark',
+        className,
+      )}
       {...props}
     >
       {children}
