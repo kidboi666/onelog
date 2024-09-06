@@ -1,8 +1,8 @@
 import { PropsWithChildren, ReactNode } from 'react'
 import AppLayout from '@/components/layout/AppLayout'
+import Background from '@/components/layout/Background'
 import Header from '@/components/layout/Header/Header'
 import Portal from '@/components/shared/Portal'
-import Background from '@/components/layout/Background'
 
 interface Props {
   modal: ReactNode
