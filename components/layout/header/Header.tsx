@@ -1,5 +1,3 @@
-'use client'
-
 import HeaderNavSection from './HeaderNavSection'
 import Container from '@/components/shared/Container'
 import HeaderLogoSection from './HeaderLogoSection'
