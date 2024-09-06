@@ -18,6 +18,7 @@ export default function Modal({
   ...props
 }: PropsWithChildren<Props>) {
   const router = useRouter()
+
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       router.back()
@@ -35,7 +36,7 @@ export default function Modal({
   return (
     <Container
       onClick={() => router.back()}
-      className="dark:bg-var-dark/50 fixed inset-0 z-50 bg-black/50"
+      className="fixed inset-0 z-50 bg-black/50 dark:bg-var-dark/80"
     >
       <Box onClick={(e) => e.stopPropagation()}>
         <Box

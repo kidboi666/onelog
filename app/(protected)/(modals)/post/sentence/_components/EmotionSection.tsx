@@ -3,10 +3,9 @@ import Title from '@/components/shared/Title'
 import EmotionBlock from './EmotionBlock'
 import { EMOTION_STATUS } from '../_constants'
 import { List } from '@/components/shared/List'
-import { useTheme } from '@/store/useTheme'
-import cn from '@/lib/cn'
 import Box from '@/components/shared/Box'
 import Icon from '@/components/shared/Icon'
+import Container from '@/components/shared/Container'
 
 interface Props {
   selectedStatus: any
@@ -17,24 +16,12 @@ export default function EmotionSection({
   selectedStatus,
   onStatusClick,
 }: Props) {
-  const { color } = useTheme()
-  const colorizeOpacity = (order: number) => {
-    if (order === 0) {
-      return 'opacity-0'
-    } else if (order === 1) {
-      return 'opacity-25'
-    } else if (order === 2) {
-      return 'opacity-50'
-    } else if (order === 3) {
-      return 'opacity-75'
-    } else {
-      return 'opacity-100'
-    }
-  }
   return (
-    <>
-      <Title>오늘의 기분 농도를 선택하세요.</Title>
-      <div className="flex items-center gap-2">
+    <Container className="flex flex-col items-center gap-8">
+      <Title type="sub" size="sm">
+        오늘의 기분 농도를 선택하세요.
+      </Title>
+      <Container className="flex items-center gap-2">
         <Text>Bad</Text>
         <List className="flex gap-2">
           {EMOTION_STATUS.map((emotion, i) => (
@@ -53,21 +40,8 @@ export default function EmotionSection({
               )}
               <Box className="size-full overflow-hidden rounded-md border">
                 <EmotionBlock
+                  index={i}
                   onClick={() => onStatusClick(emotion)}
-                  className={cn(
-                    'opacity-0',
-                    color === 'blue' &&
-                      'bg-var-blue ring-var-blue dark:bg-var-blue',
-                    color === 'yellow' &&
-                      'bg-var-yellow ring-var-yellow dark:bg-var-yellow',
-                    color === 'green' &&
-                      'bg-var-green ring-var-green dark:bg-var-green',
-                    color === 'orange' &&
-                      'bg-var-orange ring-var-orange dark:bg-var-orange',
-                    color === 'black' &&
-                      'bg-var-black dark:text-var-dark ring-var-black dark:bg-white dark:ring-white',
-                    colorizeOpacity(i),
-                  )}
                 />
               </Box>
               <Text size="sm" className="absolute top-[calc(100%--4px)]">
@@ -77,7 +51,7 @@ export default function EmotionSection({
           ))}
         </List>
         <Text>Good</Text>
-      </div>
-    </>
+      </Container>
+    </Container>
   )
 }

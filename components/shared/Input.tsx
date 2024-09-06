@@ -17,8 +17,8 @@ const INPUT_VARIANTS = cva('outline-none', {
       primary:
         'border-b border-blue-200 bg-gray-100 shadow-md transition focus:bg-white',
       secondary:
-        'dark:bg-var-gray border-b border-gray-800 bg-white transition dark:border-white dark:text-white',
-      auth: 'rounded-md bg-gray-200 transition dark:bg-white/45 dark:text-white',
+        'border-b border-gray-800 bg-white transition dark:border-white dark:bg-var-dark dark:text-white',
+      auth: 'rounded-md bg-gray-200 transition dark:bg-white/15 dark:text-white',
     },
     dimension: {
       sm: 'text-xs',

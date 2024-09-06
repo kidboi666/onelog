@@ -1,6 +1,7 @@
 import Box from '@/components/shared/Box'
 import Container from '@/components/shared/Container'
 import Input from '@/components/shared/Input'
+import RefBox from '@/components/shared/RefBox'
 import Text from '@/components/shared/Text'
 import { ComponentProps, useRef } from 'react'
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
@@ -31,25 +32,25 @@ export default function AuthForm({
   }
   return (
     <Container className="flex flex-col gap-2">
-      <Text type="caption">{name}</Text>
+      <Text type="body">{name}</Text>
       <label
         htmlFor={type}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className="relative flex w-full flex-col overflow-hidden rounded-b-md"
+        className="relative flex w-full flex-col"
       >
         <Input
-          variant="auth"
+          variant="secondary"
           placeholder={placeholder}
           type={type}
           register={register}
           error={error}
-          className="p-2"
+          className="mt-2"
         />
-        <Box
+        <RefBox
           ref={lineRef}
           dataStatus="onBlur"
-          className="absolute bottom-0 left-0 h-1 w-full origin-left bg-gray-300 transition ease-in-out data-[status=onBlur]:scale-x-0"
+          className="absolute -bottom-1 left-0 h-1 w-full origin-left bg-gray-800 transition ease-in-out data-[status=onBlur]:scale-x-0 dark:bg-gray-300"
         />
       </label>
       {error?.message && (

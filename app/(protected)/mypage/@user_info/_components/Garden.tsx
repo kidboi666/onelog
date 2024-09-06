@@ -14,30 +14,13 @@ import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
 import Container from '@/components/shared/Container'
 import Block from '@/components/shared/Block'
-
-/**
- * 인자로 주어진 년의 1월 1일의 요일을 구하는 함수
- */
-const getFirstDayInYear = (year: number) => {
-  return new Date(year, 0, 1).getDay()
-}
-
-/**
- * 인자로 받는 년의 각 달의 일수를 구하는 함수
- */
-const getDaysInYear = (year: number) => {
-  const daysInYear = []
-  for (let month = 0; month < 12; month++) {
-    const daysInMonth = new Date(year, month + 1, 0).getDate()
-    daysInYear.push(daysInMonth)
-  }
-  return daysInYear
-}
+import { getDaysInYear, getFirstDayInYear } from '@/utils/formatDate'
+import Box from '@/components/shared/Box'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 작성 갯수 기준 색칠)
  */
-const getRenderedBlockFromWrittenLength = (
+export const getRenderedBlockFromWrittenLength = (
   year: number,
   months: number[],
   targetDays: Tables<'garden'>[],
@@ -170,9 +153,9 @@ export default function Garden() {
 
   return (
     <Container className="flex flex-col gap-4">
-      <div className="relative flex justify-between">
+      <Box className="relative flex justify-between">
         <Title>한 눈에 보기</Title>
-        <div className="flex gap-2">
+        <Box className="flex gap-2">
           <Button
             size="sm"
             variant={orderBy === 'length' ? 'primary' : 'secondary'}
@@ -187,15 +170,15 @@ export default function Garden() {
           >
             감정 농도
           </Button>
-        </div>
-      </div>
-      <div className="flex flex-col overflow-x-auto overflow-y-visible p-1">
+        </Box>
+      </Box>
+      <Box className="flex flex-col overflow-x-auto overflow-y-visible p-1">
         <GardenBlockSection
           shouldRenderElement={shouldRenderElement}
           firstDayIndex={firstDayIndex}
         />
-      </div>
-      <div className="flex items-center gap-2 self-end">
+      </Box>
+      <Box className="flex items-center gap-2 self-end">
         <Text type="caption" size="sm" className="leading-none">
           {orderBy === 'emotion' ? 'Bad' : 'Less'}
         </Text>
@@ -207,7 +190,7 @@ export default function Garden() {
         <Text type="caption" size="sm">
           {orderBy === 'emotion' ? 'Good' : 'More'}
         </Text>
-      </div>
+      </Box>
     </Container>
   )
 }
@@ -223,20 +206,20 @@ function GardenBlockSection({
 }: GardenBlockSectionProps) {
   return (
     <>
-      <div className="flex gap-2">
-        <div className="grid grid-rows-7 gap-1">
+      <Container className="flex gap-2">
+        <Box className="grid grid-rows-7 gap-1">
           {DAYS_OF_WEEK.map((day) => (
             <Text key={day} type="caption" className="h-1 text-[10px]">
               {day}
             </Text>
           ))}
-        </div>
-        <div>
-          <div className="grid grid-flow-col grid-rows-7 gap-1">
+        </Box>
+        <Box>
+          <Box className="grid grid-flow-col grid-rows-7 gap-1">
             {createEmptySpaceByWeekday(shouldRenderElement, firstDayIndex)}
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Container>
     </>
   )
 }

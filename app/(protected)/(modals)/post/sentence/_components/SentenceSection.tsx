@@ -1,5 +1,8 @@
+import Box from '@/components/shared/Box'
 import Button from '@/components/shared/Button'
+import Container from '@/components/shared/Container'
 import Input from '@/components/shared/Input'
+import RefBox from '@/components/shared/RefBox'
 import Title from '@/components/shared/Title'
 import useStateChange from '@/hooks/useStateChange'
 import { ChangeEvent } from 'react'
@@ -19,9 +22,11 @@ export default function SentenceSection({
 }: Props) {
   const [ref, open, close] = useStateChange<HTMLDivElement>()
   return (
-    <>
-      <Title>오늘을 한 줄로 기억해보세요.</Title>
-      <div className="flex w-full flex-col">
+    <Container className="flex w-full flex-col items-center gap-8 md:w-[400px]">
+      <Title type="sub" size="sm">
+        오늘을 한 줄로 기억해보세요.
+      </Title>
+      <Box className="flex w-full flex-col">
         <Input
           onFocus={open}
           onBlur={close}
@@ -30,12 +35,12 @@ export default function SentenceSection({
           variant="secondary"
           className="w-full py-2"
         />
-        <div
+        <RefBox
           ref={ref}
-          data-status="closed"
-          className="status-line data-line bg-var-gray dark:bg-white"
+          dataStatus="closed"
+          className="status-line data-line bg-var-black dark:bg-white"
         />
-      </div>
+      </Box>
       <Button
         type="submit"
         isLoading={isPending}
@@ -43,6 +48,6 @@ export default function SentenceSection({
       >
         한줄 남기기
       </Button>
-    </>
+    </Container>
   )
 }

@@ -2,7 +2,7 @@
 
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
-import { ComponentProps, useRef } from 'react'
+import { ComponentProps } from 'react'
 
 interface Props extends ComponentProps<'textarea'> {
   className?: string
@@ -10,11 +10,12 @@ interface Props extends ComponentProps<'textarea'> {
   dimension?: 'sm' | 'md' | 'lg'
 }
 
-const TEXTAREA_VARIANTS = cva('w-full outline-none', {
+const TEXTAREA_VARIANTS = cva('w-full outline-none transition', {
   variants: {
     variant: {
-      primary: 'h-fit min-h-12 border-b border-gray-800',
-      secondary: 'border-b-1 border-gray-400 transition focus:border-b-4',
+      primary:
+        'h-fit min-h-20 rounded-md ring-1 ring-gray-800 focus:ring-4 dark:bg-var-dark dark:text-white dark:ring-white',
+      secondary: 'border-b-1 border-gray-400 focus:border-b-4',
     },
     dimension: {
       sm: 'text-xs',

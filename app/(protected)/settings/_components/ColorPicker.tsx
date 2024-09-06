@@ -16,7 +16,7 @@ export default function ColorPicker() {
 
   const handleColorChange = (selectedColor: TColor) => {
     setColor(selectedColor)
-    // 색상 테마 설정 로직
+    localStorage.setItem('color-theme', selectedColor)
   }
 
   return (

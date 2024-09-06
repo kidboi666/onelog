@@ -14,6 +14,8 @@ import IntroduceSection from './_components/IntroduceSection'
 import ChallangeSection from './_components/ChallangeSection'
 import ProfileImageSection from './_components/ProfileImageSection'
 import { supabase } from '@/lib/supabase/client'
+import Box from '@/components/shared/Box'
+import FormContainer from '@/components/shared/FormContainer'
 
 export default function EditProfilePage() {
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -77,21 +79,19 @@ export default function EditProfilePage() {
   }, [me?.avatar_url, me?.nickname, me?.about_me])
 
   return (
-    <form
+    <FormContainer
       onSubmit={handleProfileUpdate}
       className="mt-20 flex w-full animate-fade-in flex-col justify-center gap-8 px-2 md:max-w-[768px] md:flex-row"
     >
-      <ProfileImageSection
-        onChange={handleImageChange}
-        imagePreview={avatarUrl}
-      />
-      <div className="flex w-full flex-col gap-12">
-        <div className="flex w-full max-w-52 flex-col gap-8">
+      <Box className="flex w-full flex-col gap-12">
+        <Box className="flex items-end justify-between">
           <NickNameSection value={nickname ?? ''} onChange={onChangeNickName} />
-        </div>
-        <div className="flex w-full flex-col gap-8">
-          <IntroduceSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
-        </div>
+          <ProfileImageSection
+            onChange={handleImageChange}
+            imagePreview={avatarUrl}
+          />
+        </Box>
+        <IntroduceSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
         <ChallangeSection />
         <Button
           type="submit"
@@ -104,7 +104,7 @@ export default function EditProfilePage() {
         >
           수정하기
         </Button>
-      </div>
-    </form>
+      </Box>
+    </FormContainer>
   )
 }

@@ -28,3 +28,22 @@ export const getSignUpDays = (date: string) => {
 
   return result
 }
+
+/**
+ * 인자로 주어진 년의 1월 1일의 요일을 구하는 함수
+ */
+export const getFirstDayInYear = (year: number) => {
+  return new Date(year, 0, 1).getDay()
+}
+
+/**
+ * 인자로 받는 년의 각 달의 일수를 구하는 함수
+ */
+export const getDaysInYear = (year: number) => {
+  const daysInYear = []
+  for (let month = 0; month < 12; month++) {
+    const daysInMonth = new Date(year, month + 1, 0).getDate()
+    daysInYear.push(daysInMonth)
+  }
+  return daysInYear
+}

@@ -1,57 +1,47 @@
 'use client'
 
+import Box from '@/components/shared/Box'
 import Button from '@/components/shared/Button'
+import Container from '@/components/shared/Container'
 import Icon from '@/components/shared/Icon'
 import Title from '@/components/shared/Title'
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
 import { TTheme } from '@/types/theme'
-import { useEffect } from 'react'
 
 export default function DarkModeSwitch() {
   const { theme, setTheme } = useTheme()
 
-  const handleTheme = () => {
-    const savedTheme = localStorage.getItem('theme')
-
-    if (savedTheme === 'dark') {
-      localStorage.setItem('theme', 'light')
-      document.documentElement.classList.remove('dark')
-    } else {
-      localStorage.setItem('theme', 'dark')
-      document.documentElement.classList.add('dark')
-    }
+  const handleThemeChange = (theme: TTheme) => {
+    setTheme(theme)
+    localStorage.setItem('theme', theme)
+    handleDocumentClass(theme)
   }
 
-  const handleThemeClick = (selectedTheme: TTheme) => {
-    setTheme(selectedTheme)
-    handleTheme()
-  }
-
-  useEffect(() => {
-    if (localStorage.theme === 'dark') {
+  const handleDocumentClass = (theme: TTheme) => {
+    if (theme === 'dark') {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
-  }, [])
+  }
 
   return (
-    <div className="flex flex-col gap-2">
+    <Container className="flex flex-col gap-2">
       <Title>다크 모드 설정</Title>
-      <div className="flex gap-2">
+      <Box className="flex gap-2">
         <DarkModeBlock
           theme="dark"
           selectedTheme={theme}
-          onBlockClick={handleThemeClick}
+          onBlockClick={handleThemeChange}
         />
         <DarkModeBlock
           theme="light"
           selectedTheme={theme}
-          onBlockClick={handleThemeClick}
+          onBlockClick={handleThemeChange}
         />
-      </div>
-    </div>
+      </Box>
+    </Container>
   )
 }
 
@@ -73,8 +63,8 @@ function DarkModeBlock({
       className={cn(
         'flex gap-2 rounded-md font-semibold ring-1',
         theme === 'light'
-          ? 'ring-var-black bg-white text-sm text-black ring-1'
-          : 'bg-var-black text-white ring-white',
+          ? 'bg-white text-sm text-black ring-1 ring-gray-400'
+          : 'bg-var-black text-white ring-gray-500',
       )}
     >
       {theme === 'light' ? '밝은' : '어두운'} 화면

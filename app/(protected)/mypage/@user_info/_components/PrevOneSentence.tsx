@@ -1,20 +1,22 @@
 'use client'
 
-import Title from '@/components/shared/Title'
-import ProfileSentenceItem from '@/components/sentence/ProfileSentenceItem'
 import { useSentence } from '@/store/useSentence'
+import Title from '@/components/shared/Title'
+import PrevOneSentenceItem from './PrevOneSentenceItem'
+import { List } from '@/components/shared/List'
+import Container from '@/components/shared/Container'
 
 export default function PrevOneSentence() {
   const { sentences } = useSentence()
 
   return (
-    <div className="flex flex-col gap-4">
+    <Container className="flex flex-col gap-4">
       <Title>그날의 한 문장</Title>
-      <div className="flex flex-col">
+      <List className="flex flex-col">
         {sentences?.map((item) => (
-          <ProfileSentenceItem key={item.id} sentence={item} />
+          <PrevOneSentenceItem key={item.id} sentence={item} />
         ))}
-      </div>
-    </div>
+      </List>
+    </Container>
   )
 }

@@ -5,11 +5,12 @@ import { cva } from 'class-variance-authority'
 import { ComponentProps, forwardRef, PropsWithRef } from 'react'
 import Spinner, { Size } from './Spinner'
 import { useTheme } from '@/store/useTheme'
+import { formatButtonColor } from '@/utils/formatColor'
 
 export interface ButtonProps extends ComponentProps<'button'> {
   isLoading?: boolean
   variant?: 'primary' | 'secondary' | 'teritory' | 'list' | 'emptyStyle'
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'none'
 }
 
 const BUTTON_VARIANTS = cva(
@@ -38,6 +39,7 @@ const BUTTON_VARIANTS = cva(
         sm: 'px-2 py-1 text-xs',
         md: 'px-4 py-2 text-sm',
         lg: 'px-4 py-2 text-lg',
+        none: '',
       },
     },
   },
@@ -66,21 +68,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         onClick={onClick}
         type={type}
         className={cn(
-          color === 'blue' &&
-            variant === 'primary' &&
-            'bg-var-blue ring-var-blue',
-          color === 'yellow' &&
-            variant === 'primary' &&
-            'bg-var-yellow ring-var-yellow',
-          color === 'green' &&
-            variant === 'primary' &&
-            'bg-var-green ring-var-green',
-          color === 'orange' &&
-            variant === 'primary' &&
-            'bg-var-orange ring-var-orange',
-          color === 'black' &&
-            variant === 'primary' &&
-            'bg-var-black dark:text-var-dark ring-var-black dark:bg-white dark:ring-white',
+          formatButtonColor(color, variant),
           BUTTON_VARIANTS(
             isLoading || disabled
               ? { disabled: variant, size: size }

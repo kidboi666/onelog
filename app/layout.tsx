@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import './globals.css'
 import ReactQueryProvider from '@/lib/tanstack/query-client-provider'
+import Container from '@/components/shared/Container'
 
 export const metadata: Metadata = {
   title: 'One Sentence',
