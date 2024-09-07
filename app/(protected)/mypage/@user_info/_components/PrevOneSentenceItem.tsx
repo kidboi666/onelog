@@ -33,7 +33,7 @@ function FavoriteButton({ count }: { count: number }) {
   return (
     <Button
       variant="emptyStyle"
-      size="none"
+      size="emptyStyle"
       className="items-start gap-1 text-xs text-gray-400 dark:text-gray-400"
     >
       <Icon name="heart" size={14}>
@@ -50,7 +50,7 @@ function CommentButton({ count }: { count: number }) {
   return (
     <Button
       variant="emptyStyle"
-      size="none"
+      size="emptyStyle"
       className="items-start gap-1 text-xs text-gray-400 dark:text-gray-400"
     >
       <Icon name="comment" size={14}>

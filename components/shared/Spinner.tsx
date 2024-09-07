@@ -15,7 +15,7 @@ export default function Spinner({ size = 40 }: Props) {
     <Button
       disabled
       variant="emptyStyle"
-      size="none"
+      size="emptyStyle"
       className={formatColor(color)}
     >
       <Icon size={size} view={100}>
