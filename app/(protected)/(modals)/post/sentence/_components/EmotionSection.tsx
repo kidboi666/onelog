@@ -38,7 +38,7 @@ export default function EmotionSection({
                   ></path>
                 </Icon>
               )}
-              <Box className="size-full overflow-hidden rounded-md border">
+              <Box className="size-full overflow-hidden rounded-md ring-1 ring-gray-400">
                 <EmotionBlock
                   index={i}
                   onClick={() => onStatusClick(emotion)}

@@ -27,14 +27,11 @@ export default function EmotionBlock({ index, onClick }: Props) {
       onClick={onClick}
       className={cn(
         'opaicty-0 flex size-full items-center justify-center p-0',
-        color === 'blue' && 'bg-var-blue ring-var-blue dark:bg-var-blue',
-        color === 'yellow' &&
-          'bg-var-yellow ring-var-yellow dark:bg-var-yellow',
-        color === 'green' && 'bg-var-green ring-var-green dark:bg-var-green',
-        color === 'orange' &&
-          'bg-var-orange ring-var-orange dark:bg-var-orange',
-        color === 'black' &&
-          'bg-var-black ring-var-black dark:bg-white dark:text-var-dark dark:ring-white',
+        color === 'blue' && 'bg-var-blue dark:bg-var-blue',
+        color === 'yellow' && 'bg-var-yellow dark:bg-var-yellow',
+        color === 'green' && 'bg-var-green dark:bg-var-green',
+        color === 'orange' && 'bg-var-orange dark:bg-var-orange',
+        color === 'black' && 'bg-var-black dark:bg-white dark:text-var-dark',
         colorizeOpacity(index),
       )}
     ></Button>

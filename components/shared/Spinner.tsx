@@ -12,7 +12,12 @@ interface Props {
 export default function Spinner({ size = 40 }: Props) {
   const { color } = useTheme()
   return (
-    <Button disabled variant="emptyStyle" className={formatColor(color)}>
+    <Button
+      disabled
+      variant="emptyStyle"
+      size="none"
+      className={formatColor(color)}
+    >
       <Icon size={size} view={100}>
         <circle
           cx="50"
