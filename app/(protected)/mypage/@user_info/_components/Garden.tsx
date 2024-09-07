@@ -16,6 +16,9 @@ import Container from '@/components/shared/Container'
 import Block from '@/components/shared/Block'
 import { getDaysInYear, getFirstDayInYear } from '@/utils/formatDate'
 import Box from '@/components/shared/Box'
+import { useTheme } from '@/store/useTheme'
+import cn from '@/lib/cn'
+import { TColor } from '@/types/theme'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 작성 갯수 기준 색칠)
@@ -130,6 +133,7 @@ const createEmptySpaceByWeekday = (
 export default function Garden() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data } = useSuspenseQuery(gardenQuery.getGarden(supabase, me.sub))
+  const { theme } = useTheme()
   const [orderBy, setOrderBy] = useState('length')
 
   const currentYear = new Date().getFullYear()
@@ -172,7 +176,14 @@ export default function Garden() {
           </Button>
         </Box>
       </Box>
-      <Box className="flex flex-col overflow-x-auto overflow-y-visible p-1">
+      <Box
+        className={cn(
+          'scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar flex h-fit flex-col overflow-x-auto p-1',
+          theme === 'dark'
+            ? 'scrollbar-thumb-gray-700'
+            : 'scrollbar-thumb-gray-300',
+        )}
+      >
         <GardenBlockSection
           shouldRenderElement={shouldRenderElement}
           firstDayIndex={firstDayIndex}

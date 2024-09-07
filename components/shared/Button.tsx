@@ -10,7 +10,7 @@ import { formatButtonColor } from '@/utils/formatColor'
 export interface ButtonProps extends ComponentProps<'button'> {
   isLoading?: boolean
   variant?: 'primary' | 'secondary' | 'teritory' | 'list' | 'emptyStyle'
-  size?: 'sm' | 'md' | 'lg' | 'none'
+  size?: 'sm' | 'md' | 'lg' | 'emptyStyle'
 }
 
 const BUTTON_VARIANTS = cva(
@@ -18,13 +18,12 @@ const BUTTON_VARIANTS = cva(
   {
     variants: {
       active: {
-        primary:
-          'rounded-md text-white ring-1 hover:opacity-65 active:animate-click',
+        primary: 'rounded-md text-white hover:opacity-65 active:animate-click',
         secondary:
-          'rounded-md text-gray-600 ring-1 ring-gray-500 hover:opacity-65 active:animate-click dark:text-white dark:ring-gray-400',
+          'rounded-md border border-var-gray text-var-black hover:opacity-65 active:animate-click dark:text-white dark:ring-var-gray',
         teritory:
           'underline hover:opacity-65 active:animate-click dark:text-white',
-        list: 'text-var-gray justify-start font-light hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700',
+        list: 'justify-start font-normal text-var-black hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700',
         emptyStyle: 'hover:opacity-65',
       },
       disabled: {
@@ -39,7 +38,7 @@ const BUTTON_VARIANTS = cva(
         sm: 'px-2 py-1 text-xs',
         md: 'px-4 py-2 text-sm',
         lg: 'px-4 py-2 text-lg',
-        none: '',
+        emptyStyle: '',
       },
     },
   },
@@ -68,7 +67,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         onClick={onClick}
         type={type}
         className={cn(
-          formatButtonColor(color, variant),
+          color && formatButtonColor(color, variant),
           BUTTON_VARIANTS(
             isLoading || disabled
               ? { disabled: variant, size: size }

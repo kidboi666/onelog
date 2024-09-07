@@ -1,5 +1,19 @@
 import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
+import scrollbar from 'tailwind-scrollbar'
+import { PluginCreator } from 'tailwindcss/types/config'
+
+const pluginContainer: PluginCreator = ({ addUtilities }) => {
+  addUtilities({
+    '.no-scrollbar::-webkit-scrollbar': {
+      display: 'none',
+    },
+    '.no-scrollbar': {
+      scrollbarWidth: 'none', // Firefox
+      msOverflowStyle: 'none', // IE and Edge
+    },
+  })
+}
 
 const config: Config = {
   content: [
@@ -17,6 +31,7 @@ const config: Config = {
         'var-black': '#131313',
         'var-orange': '#F5964B',
         'var-dark': '#191919',
+        'var-gray': '#9ca3af',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -39,6 +54,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [typography],
+  plugins: [typography, pluginContainer, scrollbar],
 }
 export default config

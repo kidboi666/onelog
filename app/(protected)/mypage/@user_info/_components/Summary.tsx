@@ -5,12 +5,13 @@ import { supabase } from '@/lib/supabase/client'
 import { useTheme } from '@/store/useTheme'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import { formatColor } from '@/utils/formatColor'
+// import { formatColor } from '@/utils/formatColor'
 import { getSignUpDays } from '@/utils/formatDate'
 import Box from '@/components/shared/Box'
 import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
+import { TColor } from '@/types/theme'
 
 export default function Summary() {
   const { color } = useTheme()
@@ -21,6 +22,24 @@ export default function Summary() {
   const { data: sentence } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, data?.sub),
   )
+
+  const formatColor = (color: TColor) => {
+    switch (color) {
+      case 'green':
+        return 'text-var-green dark:text-var-green'
+      case 'blue':
+        return 'text-var-blue dark:text-var-blue'
+      case 'yellow':
+        return 'text-var-yellow dark:text-var-yellow'
+      case 'orange':
+        return 'text-var-orange dark:text-var-orange'
+      case 'black':
+        return 'text-var-black dark:text-var-black'
+      default:
+        'text-var-black dark:text-white'
+        break
+    }
+  }
 
   return (
     <Container className="flex w-full justify-between py-12">
@@ -39,8 +58,8 @@ export default function Summary() {
       </Box>
       <Box className="flex flex-col gap-2">
         <Text type="caption">기록</Text>
-        <Title size="bigger" type="customColor" className={formatColor(color)}>
-          {sentence?.length}
+        <Title size="bigger" type="sub" className={formatColor(color)}>
+          {sentence.length}
           <Text as="span">개</Text>
         </Title>
       </Box>

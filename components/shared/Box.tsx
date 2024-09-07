@@ -21,7 +21,7 @@ export default function Box({
     <Component
       onClick={onClick}
       className={cn(
-        isRounded && 'rounded-md ring-1 ring-gray-300 dark:ring-gray-600',
+        isRounded && 'rounded-md ring-1 ring-var-gray',
         isBackground && 'bg-white dark:bg-var-dark',
         className,
       )}

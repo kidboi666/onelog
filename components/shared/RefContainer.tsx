@@ -3,7 +3,6 @@ import {
   ComponentProps,
   forwardRef,
   PropsWithRef,
-  TransitionEvent,
 } from 'react'
 
 type As = 'div' | 'main' | 'nav' | 'footer' | 'header'
@@ -15,6 +14,7 @@ interface Props extends ComponentProps<'div'> {
   isRounded?: boolean
   isBackground?: boolean
   isBlur?: boolean
+  isPage?: boolean
 }
 
 const RefContainer = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
@@ -25,6 +25,7 @@ const RefContainer = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
       isRounded,
       isBackground,
       isBlur,
+      isPage,
       onClick,
       children,
       className,
@@ -40,9 +41,10 @@ const RefContainer = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
         onClick={onClick}
         onTransitionEnd={onTransitionEnd}
         className={cn(
-          isRounded && 'rounded-md ring-1 ring-gray-300 dark:ring-gray-600',
+          isRounded && 'rounded-md ring-1 ring-var-gray ',
           isBlur && 'bg-white/70 backdrop-blur-lg dark:bg-var-dark/70',
           isBackground && 'bg-white dark:bg-var-dark',
+          isPage && 'mt-4',
           className,
         )}
         {...Props}

@@ -29,9 +29,9 @@ export default function Container({
       data-status={dataStatus}
       onClick={onClick}
       className={cn(
-        isRounded && 'rounded-md ring-1 ring-gray-300 dark:ring-gray-600',
-        isBackground && 'dark:bg-var-white bg-white',
-        isBlur && 'bg-white/70 backdrop-blur-lg dark:bg-var-dark/70',
+        isRounded && 'rounded-md ring-1 ring-var-gray ',
+        isBackground && 'dark:bg-var-black bg-white',
+        isBlur && 'bg-white/60 backdrop-blur-lg dark:bg-var-dark/60',
         isPage && 'mt-4',
         className,
       )}

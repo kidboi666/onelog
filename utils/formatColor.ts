@@ -4,15 +4,15 @@ import { TColor } from '@/types/theme'
 export const formatColor = (color: TColor) => {
   switch (color) {
     case 'green':
-      return 'text-var-green dark:text-var-green'
+      return 'text-var-green '
     case 'blue':
-      return 'text-var-blue dark:text-var-blue'
+      return 'text-var-blue '
     case 'yellow':
-      return 'text-var-yellow dark:text-var-yellow'
+      return 'text-var-yellow '
     case 'orange':
-      return 'text-var-orange dark:text-var-orange'
+      return 'text-var-orange '
     case 'black':
-      return 'text-var-black dark:text-var-black'
+      return 'text-var-black '
     default:
       'text-var-black dark:text-white'
       break

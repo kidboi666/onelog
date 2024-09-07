@@ -2,12 +2,12 @@
 
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 
 export default function Background() {
-  const { color, setColor, theme, setTheme } = useTheme()
+  const { setColor, theme, setTheme } = useTheme()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (localStorage.theme === 'dark') {
       document.documentElement.classList.add('dark')
       setTheme('dark')
@@ -17,7 +17,7 @@ export default function Background() {
     }
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const currentColor = localStorage.getItem('color-theme')
     switch (currentColor) {
       case 'green':

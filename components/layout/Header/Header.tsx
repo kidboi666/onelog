@@ -7,7 +7,7 @@ export default function Header() {
     <Container
       as="header"
       isBlur
-      className="sticky top-0 z-30 flex h-20 w-full items-center justify-between border-b border-gray-300 p-4 md:h-28 md:items-start lg:px-12 dark:border-gray-600"
+      className="sticky top-0 z-30 flex h-20 w-full items-center justify-between border-b border-var-gray p-4 md:h-28 md:items-start lg:px-12"
     >
       <HeaderLogoSection />
       <HeaderNavSection />
