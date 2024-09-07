@@ -10,6 +10,7 @@ interface Props extends ComponentProps<'div'> {
   isRounded?: boolean
   isBlur?: boolean
   isBackground?: boolean
+  isPage?: boolean
 }
 
 export default function Container({
@@ -18,6 +19,7 @@ export default function Container({
   isRounded,
   isBackground,
   isBlur,
+  isPage,
   onClick,
   children,
   className,
@@ -30,6 +32,7 @@ export default function Container({
         isRounded && 'rounded-md ring-1 ring-gray-300 dark:ring-gray-600',
         isBackground && 'dark:bg-var-white bg-white',
         isBlur && 'bg-white/70 backdrop-blur-lg dark:bg-var-dark/70',
+        isPage && 'mt-4',
         className,
       )}
     >
