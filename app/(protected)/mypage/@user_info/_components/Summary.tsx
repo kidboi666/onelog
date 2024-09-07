@@ -59,7 +59,7 @@ export default function Summary() {
       <Box className="flex flex-col gap-2">
         <Text type="caption">기록</Text>
         <Title size="bigger" type="sub" className={formatColor(color)}>
-          {sentence.length}
+          {sentence?.length}
           <Text as="span">개</Text>
         </Title>
       </Box>

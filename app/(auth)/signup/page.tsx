@@ -9,9 +9,12 @@ import Button from '@/components/shared/Button'
 import AuthForm from '../_components/AuthForm'
 import useSignUp from '@/services/mutates/auth/useSignUp'
 import LinkButton from '@/components/shared/LinkButton'
+import { useSignInOAuth } from '@/services/mutates/auth/useSignInOAuth'
+import Icon from '@/components/shared/Icon'
 
 export default function SignUpPage() {
   const { mutate: signUp, isPending, isSuccess } = useSignUp()
+  const { mutate: signUpOAuth } = useSignInOAuth()
   const {
     register,
     handleSubmit,
@@ -37,6 +40,10 @@ export default function SignUpPage() {
         })
       },
     })
+  }
+
+  const handleSubmitOAuthSignUp = () => {
+    signUpOAuth()
   }
 
   return (
@@ -83,6 +90,18 @@ export default function SignUpPage() {
         type="submit"
       >
         회원가입
+      </Button>{' '}
+      <Button
+        onClick={handleSubmitOAuthSignUp}
+        className="bg-var-yellow text-white"
+      >
+        <Icon size={20}>
+          <path
+            d="M11.6144 3C6.30451 3 2 6.48454 2 10.7831C2 13.5255 3.75623 15.9314 6.4034 17.3177L5.38748 20.7042C5.32567 20.9098 5.55504 21.0797 5.7336 20.9606L9.58943 18.3899C10.2428 18.5035 10.9194 18.5662 11.6144 18.5662C16.9243 18.5662 21.2288 15.0816 21.2288 10.7831C21.2288 6.48454 16.9243 3 11.6144 3Z"
+            fill="currentColor"
+          />
+        </Icon>{' '}
+        카카오로 가입
       </Button>
     </form>
   )
