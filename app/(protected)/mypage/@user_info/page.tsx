@@ -18,7 +18,7 @@ export default async function UserInfoSection() {
   const res = queryClient.getQueryData<ISessionInfo>(['me', 'session'])
 
   if (!res) return
-  queryClient.prefetchQuery(gardenQuery.getGarden(supabase, res?.sub))
+  queryClient.prefetchQuery(gardenQuery.getGarden(supabase, res?.userId))
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

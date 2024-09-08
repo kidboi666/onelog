@@ -17,10 +17,10 @@ export default function Summary() {
   const { color } = useTheme()
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data?.sub),
+    meQuery.getUserInfo(supabase, data?.userId),
   )
   const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getSentence(supabase, data?.sub),
+    sentenceQuery.getSentence(supabase, data?.userId),
   )
 
   const formatColor = (color: TColor) => {

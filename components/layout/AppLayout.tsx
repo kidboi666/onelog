@@ -25,7 +25,7 @@ export default async function AppLayout({
   const res = queryClient.getQueryData<ISessionInfo>(['me', 'session'])
 
   if (!res) return
-  queryClient.prefetchQuery(meQuery.getUserInfo(supabase, res?.sub))
+  queryClient.prefetchQuery(meQuery.getUserInfo(supabase, res?.userId))
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

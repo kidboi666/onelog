@@ -19,7 +19,7 @@ import AboutMeSection from './_components/AboutMeSection'
 export default function EditProfilePage() {
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data?.sub),
+    meQuery.getUserInfo(supabase, data?.userId),
   )
   const [nickname, onChangeNickName, setNickname] = useInput<string | null>('')
   const [aboutMe, onChangeAboutMe, setAboutMe] = useInput<string | null>('')

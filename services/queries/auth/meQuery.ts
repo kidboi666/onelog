@@ -13,7 +13,7 @@ export const meQuery = {
           return null
         }
 
-        return data.user?.user_metadata
+        return { ...data.user?.user_metadata, userId: data.user?.id }
       },
     }),
   getUserInfo: (supabase: any, userId: string) =>

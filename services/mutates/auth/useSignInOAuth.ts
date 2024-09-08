@@ -1,18 +1,22 @@
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import { isDevelop } from '@/utils/isDevelop'
 import { useMutation } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
 
 export const useSignInOAuth = () => {
-  const router = useRouter()
   const queryClient = getQueryClient()
 
   return useMutation({
     mutationFn: async () => {
+      let redirectToUri
+      isDevelop
+        ? (redirectToUri = 'http://localhost:3000')
+        : (redirectToUri = 'https://one-sentence-gray.vercel.app')
+
       const { data } = await supabase.auth.signInWithOAuth({
         provider: 'kakao',
         options: {
-          redirectTo: 'http://localhost:3000/mypage',
+          redirectTo: `${redirectToUri}/oauth/kakao/callback`,
         },
       })
       return data

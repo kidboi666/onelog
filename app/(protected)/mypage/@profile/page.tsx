@@ -10,7 +10,7 @@ import NavigatorSection from './_components/NavigatorSection'
 export default function ProfileSection() {
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data?.sub),
+    meQuery.getUserInfo(supabase, data?.userId),
   )
 
   return (

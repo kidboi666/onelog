@@ -34,7 +34,7 @@ export default function SentenceModal() {
       {
         content: sentence,
         emotion_level: selectedStatus.percent,
-        user_id: me?.sub,
+        user_id: me?.userId,
       },
       {
         onSuccess: () => {

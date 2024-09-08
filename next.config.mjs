@@ -19,6 +19,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'knbqtoddehiqtawhenwl.supabase.co',
       },
+      {
+        protocol: 'http',
+        hostname: 'k.kakaocdn.net',
+      },
     ],
   },
 }

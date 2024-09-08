@@ -24,4 +24,5 @@ export interface ISessionInfo {
   nickname: string
   phone_verified: boolean
   sub: string
+  userId: string
 }
