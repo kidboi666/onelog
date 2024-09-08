@@ -1,23 +1,23 @@
 import { ChangeEvent } from 'react'
-import NickNameSection from './NickNameSection'
+import UserNameSection from './UserNameSection'
 import ProfileImageSection from './ProfileImageSection'
 import Container from '@/components/shared/Container'
 
 interface Props {
   onChangeImage: (e: ChangeEvent<HTMLInputElement>) => void
-  onChangeNickName: (e: ChangeEvent<HTMLInputElement>) => void
-  nickname: string | null
+  onChangeUserName: (e: ChangeEvent<HTMLInputElement>) => void
+  userName: string | null
   avatarUrl: string | null
 }
 export default function AboutMeSection({
   onChangeImage,
-  onChangeNickName,
-  nickname,
+  onChangeUserName,
+  userName,
   avatarUrl,
 }: Props) {
   return (
     <Container className="flex items-end justify-between">
-      <NickNameSection value={nickname ?? ''} onChange={onChangeNickName} />
+      <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
       <ProfileImageSection onChange={onChangeImage} imagePreview={avatarUrl} />
     </Container>
   )

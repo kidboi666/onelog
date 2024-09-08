@@ -9,13 +9,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  background,
 }: Readonly<{
   children: React.ReactNode
+  background: React.ReactNode
 }>) {
   return (
     <html lang="ko">
       <body>
         <ReactQueryProvider>{children}</ReactQueryProvider>
+        {background}
         <div id="portal" />
       </body>
     </html>

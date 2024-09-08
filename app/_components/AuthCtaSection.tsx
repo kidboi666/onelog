@@ -1,11 +1,15 @@
+'use client'
+
 import Box from '@/components/shared/Box'
 import Container from '@/components/shared/Container'
 import LinkButton from '@/components/shared/LinkButton'
 import Title from '@/components/shared/Title'
+import { useTheme } from '@/store/useTheme'
 
 export default function AuthCtaSection() {
+  const { theme } = useTheme()
   return (
-    <Container className="flex w-full justify-center">
+    <Container isBackground className="flex w-full justify-center">
       <Box className="flex w-96 flex-col gap-12 p-4">
         <Box className="flex flex-col gap-4">
           <Title>지금 가입하세요.</Title>

@@ -29,10 +29,10 @@ export default function Container({
       data-status={dataStatus}
       onClick={onClick}
       className={cn(
-        isRounded && 'rounded-md ring-1 ring-var-gray ',
-        isBackground && 'dark:bg-var-black bg-white',
+        isRounded && 'rounded-md ring-1 ring-var-gray',
+        isBackground && 'bg-white dark:bg-var-black',
         isBlur && 'bg-white/60 backdrop-blur-lg dark:bg-var-dark/60',
-        isPage && 'mt-4',
+        isPage && 'mt-20',
         className,
       )}
     >

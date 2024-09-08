@@ -14,7 +14,7 @@ export default function useUpdateUserInfo() {
         data: {
           about_me: params.aboutMe,
           avatar_url: params.avatarUrl,
-          nickname: params.nickname,
+          user_name: params.userName,
         },
       })
 

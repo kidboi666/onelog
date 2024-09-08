@@ -25,7 +25,7 @@ export default function SignUpPage() {
     mode: 'onBlur',
     defaultValues: {
       email: '',
-      nickname: '',
+      userName: '',
       password: '',
       passwordConfirmation: '',
     },
@@ -59,9 +59,9 @@ export default function SignUpPage() {
         name="이메일"
       />
       <AuthForm
-        register={register('nickname')}
-        error={errors.nickname}
-        type="nickname"
+        register={register('userName')}
+        error={errors.userName}
+        type="userName"
         name="필명"
       />
       <AuthForm

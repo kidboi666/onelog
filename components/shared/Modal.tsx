@@ -43,15 +43,16 @@ export default function Modal({
           className="fixed left-1/2 top-1/2 flex h-fit w-full max-w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 rounded-md shadow-lg md:max-w-[480px]"
           {...props}
         >
-          <Box
+          <Container
             isRounded
+            isBlur
             className={cn(
-              'flex w-full flex-col items-center justify-center gap-12 bg-white/75 p-8 backdrop-blur-lg dark:bg-var-dark/75',
+              'flex w-full flex-col items-center justify-center gap-12 p-8',
               className,
             )}
           >
             {children}
-          </Box>
+          </Container>
         </Box>
       </Box>
     </Container>

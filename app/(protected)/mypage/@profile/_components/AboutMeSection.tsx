@@ -6,10 +6,10 @@ import Image from 'next/image'
 
 interface Props {
   avatarUrl: string | null
-  nickname: string | null
+  userName: string | null
 }
 
-export default function AboutMe({ avatarUrl, nickname }: Props) {
+export default function AboutMe({ avatarUrl, userName }: Props) {
   return (
     <>
       <Box className="pointer-events-none flex flex-col justify-center max-sm:justify-between">
@@ -30,7 +30,7 @@ export default function AboutMe({ avatarUrl, nickname }: Props) {
             <Text as="span" className="mr-2">
               By
             </Text>
-            {nickname}
+            {userName}
           </Title>
         </Box>
       </Box>

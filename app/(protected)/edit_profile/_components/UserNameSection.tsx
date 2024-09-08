@@ -6,7 +6,7 @@ import Title from '@/components/shared/Title'
 import useStateChange from '@/hooks/useStateChange'
 import { ComponentProps } from 'react'
 
-export default function NickNameSection({
+export default function UserNameSection({
   value,
   onChange,
 }: ComponentProps<'input'>) {

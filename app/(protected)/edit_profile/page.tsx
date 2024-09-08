@@ -9,7 +9,6 @@ import useUploadAvatarImage from '@/services/mutates/auth/useUploadAvatarImage'
 import useUpdateUserInfo from '@/services/mutates/auth/useUpdateUserInfo'
 import { useInput } from '@/hooks/useInput'
 
-import Box from '@/components/shared/Box'
 import FormContainer from '@/components/shared/FormContainer'
 import IntroduceSection from './_components/IntroduceSection'
 import ChallangeSection from './_components/ChallangeSection'
@@ -21,7 +20,7 @@ export default function EditProfilePage() {
   const { data: me } = useSuspenseQuery(
     meQuery.getUserInfo(supabase, data?.userId),
   )
-  const [nickname, onChangeNickName, setNickname] = useInput<string | null>('')
+  const [userName, onChangeUserName, setUserName] = useInput<string | null>('')
   const [aboutMe, onChangeAboutMe, setAboutMe] = useInput<string | null>('')
   const [avatarUrl, , setAvatarUrl] = useInput<string | null>('')
   const [image, setImage] = useState<File | null>(null)
@@ -46,7 +45,7 @@ export default function EditProfilePage() {
             userId: me.id,
             aboutMe,
             avatarUrl: data,
-            nickname,
+            userName,
           })
         },
       },
@@ -57,7 +56,7 @@ export default function EditProfilePage() {
     updateProfile({
       userId: me.id,
       aboutMe,
-      nickname,
+      userName,
     })
   }
 
@@ -71,35 +70,33 @@ export default function EditProfilePage() {
   }
 
   useEffect(() => {
-    setNickname(me?.nickname)
+    setUserName(me?.user_name)
     setAboutMe(me?.about_me)
     setAvatarUrl(me?.avatar_url)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [me?.avatar_url, me?.nickname, me?.about_me])
+  }, [me?.avatar_url, me?.user_name, me?.about_me])
 
   return (
     <FormContainer
       onSubmit={handleProfileUpdate}
-      className="mt-20 flex w-full animate-fade-in flex-col justify-center gap-8 px-2 md:max-w-[768px] md:flex-row"
+      className="flex w-full flex-col justify-center gap-12 md:max-w-[768px]"
     >
-      <Box className="flex w-full flex-col gap-12">
-        <AboutMeSection
-          avatarUrl={avatarUrl}
-          nickname={nickname}
-          onChangeImage={handleChangeImage}
-          onChangeNickName={onChangeNickName}
-        />
-        <IntroduceSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
-        <ChallangeSection />
-        <SubmitButtonSection
-          isPending={isPendingImageUpload || isPending}
-          disabled={
-            nickname === me?.nickname &&
-            aboutMe === me?.about_me &&
-            avatarUrl === me?.avatar_url
-          }
-        />
-      </Box>
+      <AboutMeSection
+        avatarUrl={avatarUrl}
+        userName={userName}
+        onChangeImage={handleChangeImage}
+        onChangeUserName={onChangeUserName}
+      />
+      <IntroduceSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
+      <ChallangeSection />
+      <SubmitButtonSection
+        isPending={isPendingImageUpload || isPending}
+        disabled={
+          userName === me?.user_name &&
+          aboutMe === me?.about_me &&
+          avatarUrl === me?.avatar_url
+        }
+      />
     </FormContainer>
   )
 }

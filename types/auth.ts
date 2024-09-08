@@ -6,13 +6,13 @@ export interface ISignIn {
 export interface ISignUp {
   email: string
   password: string
-  nickname: string
+  userName: string
 }
 
 export interface IUpdateUserInfo {
   userId: string
   aboutMe: string | null
-  nickname: string | null
+  userName: string | null
   avatarUrl?: string | null
 }
 
@@ -21,7 +21,7 @@ export interface ISessionInfo {
   avatar_url: string | null
   email: string
   email_verified: boolean
-  nickname: string
+  user_name: string
   phone_verified: boolean
   sub: string
   userId: string

@@ -8,7 +8,7 @@ export default function Background() {
   const { setColor, theme, setTheme } = useTheme()
 
   useLayoutEffect(() => {
-    if (localStorage.theme === 'dark') {
+    if (localStorage.getItem('theme') === 'dark') {
       document.documentElement.classList.add('dark')
       setTheme('dark')
     } else {

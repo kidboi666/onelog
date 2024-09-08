@@ -4,7 +4,12 @@ interface Props extends ComponentProps<'form'> {}
 
 export default function FormContainer({
   children,
+  className,
   ...Props
 }: PropsWithChildren<Props>) {
-  return <form {...Props}>{children}</form>
+  return (
+    <form className={className} {...Props}>
+      {children}
+    </form>
+  )
 }

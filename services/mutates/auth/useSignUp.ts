@@ -14,7 +14,7 @@ export default function useSignUp() {
         password: authData.password,
         options: {
           data: {
-            nickname: authData.nickname,
+            user_name: authData.userName,
             avatar_url: '',
             about_me: '',
           },

@@ -47,18 +47,21 @@ export type Database = {
           created_at: string
           id: number
           sentences: Json[] | null
+          user_id: string
           year_month: string
         }
         Insert: {
           created_at?: string
           id?: number
           sentences?: Json[] | null
+          user_id: string
           year_month: string
         }
         Update: {
           created_at?: string
           id?: number
           sentences?: Json[] | null
+          user_id?: string
           year_month?: string
         }
         Relationships: []
@@ -108,7 +111,7 @@ export type Database = {
           created_at: string
           email: string | null
           id: string
-          nickname: string | null
+          user_name: string | null
         }
         Insert: {
           about_me?: string | null
@@ -116,7 +119,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           id: string
-          nickname?: string | null
+          user_name?: string | null
         }
         Update: {
           about_me?: string | null
@@ -124,7 +127,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           id?: string
-          nickname?: string | null
+          user_name?: string | null
         }
         Relationships: [
           {
