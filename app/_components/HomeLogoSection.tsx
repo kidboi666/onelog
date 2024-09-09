@@ -5,7 +5,7 @@ import cn from '@/lib/cn'
 
 export default function HomeLogoSection() {
   return (
-    <Container isBackground className="relative h-80 w-full md:size-full">
+    <Container className="relative h-80 w-full md:size-full">
       <LinkButton
         href="/"
         disabled

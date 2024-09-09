@@ -1,11 +1,11 @@
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import EmotionBlock from './EmotionBlock'
 import { EMOTION_STATUS } from '../_constants'
 import { List } from '@/components/shared/List'
-import Box from '@/components/shared/Box'
 import Icon from '@/components/shared/Icon'
 import Container from '@/components/shared/Container'
+import EmotionBlock from '@/components/shared/EmotionBlock'
+import cn from '@/lib/cn'
 
 interface Props {
   selectedStatus: any
@@ -30,7 +30,16 @@ export default function EmotionSection({
               className="relative flex size-10 flex-col items-center gap-2 rounded-md md:size-12"
             >
               {selectedStatus.percent === emotion.percent && (
-                <Icon size={20} view={20} className="text-white">
+                <Icon
+                  size={20}
+                  view={20}
+                  className={cn(
+                    'absolute top-1/2 z-30 -translate-y-1/2',
+                    i >= 1
+                      ? 'text-white dark:text-black'
+                      : 'text-black dark:text-white',
+                  )}
+                >
                   <path
                     fillRule="evenodd"
                     d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
@@ -38,12 +47,7 @@ export default function EmotionSection({
                   ></path>
                 </Icon>
               )}
-              <Box className="size-full overflow-hidden rounded-md ring-1 ring-gray-400">
-                <EmotionBlock
-                  index={i}
-                  onClick={() => onStatusClick(emotion)}
-                />
-              </Box>
+              <EmotionBlock level={i} onClick={() => onStatusClick(emotion)} />
               <Text size="sm" className="absolute top-[calc(100%--4px)]">
                 {emotion.percent}
               </Text>

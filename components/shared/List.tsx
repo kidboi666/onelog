@@ -29,8 +29,8 @@ export const List = ({
       }}
       className={cn(
         'list-none',
-        isRounded && 'rounded-md border border-gray-200 dark:border-gray-600',
-        isBackground && 'bg-white dark:bg-var-dark',
+        isRounded && 'rounded-md',
+        isBackground && 'bg-white dark:bg-var-black',
         className,
       )}
       {...props}

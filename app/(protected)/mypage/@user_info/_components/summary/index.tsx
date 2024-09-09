@@ -20,7 +20,7 @@ export default function Summary() {
     meQuery.getUserInfo(supabase, data?.userId),
   )
   const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getSentence(supabase, data?.userId),
+    sentenceQuery.getAllSentence(supabase, data?.userId),
   )
 
   const formatColor = (color: TColor) => {
@@ -34,7 +34,7 @@ export default function Summary() {
       case 'orange':
         return 'text-var-orange dark:text-var-orange'
       case 'black':
-        return 'text-var-black dark:text-var-black'
+        return 'text-var-black dark:text-white '
       default:
         'text-var-black dark:text-white'
         break

@@ -179,10 +179,7 @@ export default function Garden() {
       </Box>
       <Box
         className={cn(
-          'scrollbar-thumb-rounded-full scrollbar-track-rounded-full flex h-fit flex-col overflow-x-auto p-1 scrollbar',
-          theme === 'dark'
-            ? 'scrollbar-thumb-gray-700'
-            : 'scrollbar-thumb-gray-300',
+          'garden_scrollbar flex h-fit flex-col overflow-x-auto p-1',
         )}
       >
         <GardenBlockSection

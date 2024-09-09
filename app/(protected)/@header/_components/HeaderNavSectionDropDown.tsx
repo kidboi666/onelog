@@ -35,6 +35,9 @@ export default function HeaderNavSectionDropDown({
       <LinkButton href="/settings" variant="list" className="w-full">
         환경 설정
       </LinkButton>
+      <LinkButton href="/todo" variant="list" className="w-full">
+        할일 관리
+      </LinkButton>
     </RefContainer>
   )
 }

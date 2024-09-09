@@ -1,7 +1,6 @@
 import Box from '@/components/shared/Box'
 import Container from '@/components/shared/Container'
 import Empty from '@/components/shared/Empty'
-import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { PropsWithChildren } from 'react'
 
@@ -12,8 +11,8 @@ interface Props {
 export default function FavoriteWords({ words }: Props) {
   return (
     <Container className="flex flex-col gap-4">
-      <Title>가장 많이 사용하는 단어</Title>
-      <Box className="flex gap-2">
+      <Title>가장 많이 사용하는</Title>
+      <Box isBackground isRounded className="flex gap-2">
         {words ? (
           words?.map((word) => <Tag key={word}>{word}</Tag>)
         ) : (

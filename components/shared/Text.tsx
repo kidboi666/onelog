@@ -6,7 +6,7 @@ interface Props {
   as?: ElementType
   className?: string
   type?: 'body' | 'caption' | 'error'
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
 }
 
 const TEXT_VARIANTS = cva('', {
@@ -17,6 +17,7 @@ const TEXT_VARIANTS = cva('', {
       error: 'text-red-500',
     },
     size: {
+      xs: 'text-[10px]',
       sm: 'text-xs',
       md: 'text-sm',
       lg: 'text-base',

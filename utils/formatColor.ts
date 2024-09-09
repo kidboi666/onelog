@@ -12,7 +12,7 @@ export const formatColor = (color: TColor) => {
     case 'orange':
       return 'text-var-orange '
     case 'black':
-      return 'text-var-black '
+      return 'text-var-black dark:text-white'
     default:
       'text-var-black dark:text-white'
       break
@@ -43,15 +43,15 @@ export const formatButtonColor = (
 export const formatBlockColor = (color: TColor) => {
   switch (color) {
     case 'blue':
-      return 'bg-var-blue ring-var-blue dark:bg-var-blue'
+      return 'bg-var-blue dark:bg-var-blue'
     case 'yellow':
-      return 'bg-var-yellow ring-var-yellow dark:bg-var-yellow'
+      return 'bg-var-yellow  dark:bg-var-yellow'
     case 'green':
-      return 'bg-var-green ring-var-green dark:bg-var-green'
+      return 'bg-var-green dark:bg-var-green'
     case 'orange':
-      return 'bg-var-orange ring-var-orange dark:bg-var-orange'
+      return 'bg-var-orange  dark:bg-var-orange'
     case 'black':
-      return 'bg-var-black dark:text-var-dark ring-var-black dark:bg-white dark:ring-white'
+      return 'bg-var-black dark:text-var-dark dark:bg-white '
     default:
       break
   }

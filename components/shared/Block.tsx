@@ -24,6 +24,7 @@ interface BlockProps {
 }
 
 export default function Block({
+  className,
   length,
   empty,
   average,
@@ -52,7 +53,10 @@ export default function Block({
         }
         disabled={disabled}
         onClick={() => setSentences(summary)}
-        className="size-2.5 cursor-auto select-none overflow-hidden rounded-sm ring-1 ring-gray-300 dark:ring-gray-700"
+        className={cn(
+          'size-2.5 cursor-auto select-none overflow-hidden rounded-sm ring-1 ring-gray-300 dark:ring-gray-700',
+          className,
+        )}
       >
         <Box
           className={cn(

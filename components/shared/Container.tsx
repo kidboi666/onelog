@@ -31,11 +31,11 @@ export default function Container({
       data-status={dataStatus}
       onClick={onClick}
       className={cn(
-        isRounded && 'rounded-md ring-1 ring-var-gray',
+        isRounded && 'rounded-md',
         isBackground && 'bg-white dark:bg-var-black',
-        isBlur && 'bg-white/60 backdrop-blur-lg dark:bg-var-dark/60',
+        isBlur && 'bg-white/60 backdrop-blur-xl dark:bg-var-black/60',
         isPage && 'mt-20',
-        isEmpty && 'flex w-full items-center justify-center py-8',
+        isEmpty && 'flex w-full items-center justify-center py-12 opacity-65',
         className,
       )}
     >

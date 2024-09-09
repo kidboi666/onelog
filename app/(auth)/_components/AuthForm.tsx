@@ -38,8 +38,8 @@ export default function AuthForm({
         />
         <RefBox
           ref={ref}
-          dataStatus="onBlur"
-          className="absolute -bottom-1 left-0 h-1 w-full origin-left bg-gray-800 transition ease-in-out data-[status=onBlur]:scale-x-0 dark:bg-gray-300"
+          dataStatus="closed"
+          className="absolute -bottom-1 left-0 h-1 w-full origin-left bg-gray-800 transition ease-in-out data-[status=closed]:scale-x-0 dark:bg-gray-300"
         />
       </label>
       {error?.message && (

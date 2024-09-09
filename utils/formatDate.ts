@@ -4,16 +4,24 @@ export const formatDateToYMD = (date: string | number) => {
   const month = (newDate.getMonth() + 1).toString().padStart(2, '0')
   const day = newDate.getDate().toString().padStart(2, '0')
 
-  return `${year}.${month}.${day}`
+  return `${year}. ${month}. ${day}`
 }
 
-export const formatDateToHMS = (date: string | number) => {
+export const formatDateToMDY = (date: string | number) => {
+  const newDate = new Date(date)
+  const year = newDate.getFullYear()
+  const month = newDate.getMonth() + 1
+  const day = newDate.getDate()
+
+  return `${month}월 ${day}일, ${year}`
+}
+
+export const formatDateToHM = (date: string | number) => {
   const newDate = new Date(date)
   const hour = newDate.getHours().toString().padStart(2, '0')
   const minute = newDate.getMinutes().toString().padStart(2, '0')
-  const second = newDate.getSeconds().toString().padStart(2, '0')
 
-  return `${hour}.${minute}.${second}`
+  return `${hour}:${minute}`
 }
 
 export const getSignUpDays = (date: string) => {

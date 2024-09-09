@@ -6,6 +6,8 @@ interface Props extends ComponentProps<'div'> {
   className?: string
   isRounded?: boolean
   isBackground?: boolean
+  col?: boolean
+  row?: boolean
 }
 
 export default function Box({
@@ -14,6 +16,8 @@ export default function Box({
   className,
   isRounded,
   isBackground,
+  col,
+  row,
   onClick,
   ...Props
 }: PropsWithChildren<Props>) {
@@ -21,8 +25,10 @@ export default function Box({
     <Component
       onClick={onClick}
       className={cn(
-        isRounded && 'rounded-md ring-1 ring-var-gray',
-        isBackground && 'bg-white dark:bg-var-dark',
+        isRounded && 'rounded-md',
+        isBackground && 'bg-white dark:bg-var-black',
+        col && 'flex flex-col',
+        row && 'flex',
         className,
       )}
       {...Props}

@@ -1,15 +1,17 @@
 import { create } from 'zustand'
 
-interface Sentence {
+export interface ISentenceState {
   created_at: string
   content: string
   emotion_level: string
   id: string
+  favorite?: number
+  comment?: any[]
 }
 
 interface SentenceState {
-  sentences: Sentence[] | null
-  setSentences: (sentences: Sentence[]) => void
+  sentences: ISentenceState[] | null
+  setSentences: (sentences: ISentenceState[]) => void
 }
 
 export const useSentence = create<SentenceState>((set) => ({

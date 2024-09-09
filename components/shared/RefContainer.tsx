@@ -37,7 +37,7 @@ const RefContainer = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
         onClick={onClick}
         onTransitionEnd={onTransitionEnd}
         className={cn(
-          isRounded && 'rounded-md ring-1 ring-var-gray',
+          isRounded && 'rounded-md',
           isBlur && 'bg-white/70 backdrop-blur-lg dark:bg-var-dark/70',
           isBackground && 'bg-white dark:bg-var-dark',
           isPage && 'mt-4',
