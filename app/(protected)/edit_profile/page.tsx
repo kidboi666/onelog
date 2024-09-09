@@ -14,6 +14,7 @@ import IntroduceSection from './_components/IntroduceSection'
 import ChallangeSection from './_components/ChallangeSection'
 import SubmitButtonSection from './_components/SubmitButtonSection'
 import AboutMeSection from './_components/AboutMeSection'
+import useDeleteAvatarImage from '@/services/mutates/auth/useDeleteAvatarImage'
 
 export default function EditProfilePage() {
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -24,9 +25,15 @@ export default function EditProfilePage() {
   const [aboutMe, onChangeAboutMe, setAboutMe] = useInput<string | null>('')
   const [avatarUrl, , setAvatarUrl] = useInput<string | null>('')
   const [image, setImage] = useState<File | null>(null)
-  const { mutate: updateProfile, isPending } = useUpdateUserInfo()
+  const [prevAvatarUrl, , setPrevAvatarUrl] = useInput<string | null>('')
+  const {
+    mutate: updateProfile,
+    isPending: isPendingUpdateUserInfo,
+    isSuccess: isSuccessUpdateUserInfo,
+  } = useUpdateUserInfo()
   const { mutateAsync: uploadImage, isPending: isPendingImageUpload } =
     useUploadAvatarImage()
+  const { mutate: deletePrevImage } = useDeleteAvatarImage()
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -37,6 +44,9 @@ export default function EditProfilePage() {
   }
 
   const handleProfileUpdateWithImage = () => {
+    if (prevAvatarUrl) {
+      deletePrevImage(prevAvatarUrl)
+    }
     uploadImage(
       { email: me.email, image },
       {
@@ -73,13 +83,14 @@ export default function EditProfilePage() {
     setUserName(me?.user_name)
     setAboutMe(me?.about_me)
     setAvatarUrl(me?.avatar_url)
+    setPrevAvatarUrl(me?.avatar_url)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me?.avatar_url, me?.user_name, me?.about_me])
 
   return (
     <FormContainer
       onSubmit={handleProfileUpdate}
-      className="flex w-full flex-col justify-center gap-12 md:max-w-[768px]"
+      className="flex w-full animate-fade-in flex-col justify-center gap-12 md:max-w-[768px]"
     >
       <AboutMeSection
         avatarUrl={avatarUrl}
@@ -90,7 +101,11 @@ export default function EditProfilePage() {
       <IntroduceSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
       <ChallangeSection />
       <SubmitButtonSection
-        isPending={isPendingImageUpload || isPending}
+        isPending={
+          isPendingImageUpload ||
+          isPendingUpdateUserInfo ||
+          isSuccessUpdateUserInfo
+        }
         disabled={
           userName === me?.user_name &&
           aboutMe === me?.about_me &&
