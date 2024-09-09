@@ -42,7 +42,7 @@ export default function Summary() {
   }
 
   return (
-    <Container className="flex w-full justify-between py-12">
+    <Container className="flex w-full justify-between">
       <Box className="flex flex-col gap-2">
         <Text type="caption">시작한지</Text>
         <Title size="bigger" type="sub">

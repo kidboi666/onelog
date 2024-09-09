@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>
+      <body className="hidden">
         <ReactQueryProvider>{children}</ReactQueryProvider>
         {background}
         <div id="portal" />

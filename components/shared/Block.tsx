@@ -10,6 +10,7 @@ import cn from '@/lib/cn'
 import Text from './Text'
 import { WEEKDAY } from '@/app/(protected)/(modals)/post/sentence/_constants'
 import { colorizeOpacity, formatBlockColor } from '@/utils/formatColor'
+import RefBox from './RefBox'
 
 interface BlockProps {
   empty?: boolean
@@ -57,7 +58,7 @@ export default function Block({
         />
       </Box>
       {blockInfo && (
-        <div
+        <RefBox
           ref={infoRef}
           data-status="closed"
           className={cn(
@@ -73,7 +74,7 @@ export default function Block({
             size="sm"
             className="select-none"
           >{`${blockInfo.month} / ${blockInfo.date} / ${WEEKDAY[blockInfo.weekDay]}`}</Text>
-        </div>
+        </RefBox>
       )}
     </Container>
   )

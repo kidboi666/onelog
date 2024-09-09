@@ -2,47 +2,32 @@
 
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
+import { TColor } from '@/types/theme'
 import { useLayoutEffect } from 'react'
 
 export default function Background() {
   const { setColor, theme, setTheme } = useTheme()
 
   useLayoutEffect(() => {
-    if (localStorage.getItem('theme') === 'dark') {
+    const currentColor = localStorage.getItem('color-theme') as TColor
+    const isDarkMode = localStorage.getItem('theme') === 'dark'
+
+    if (isDarkMode) {
       document.documentElement.classList.add('dark')
       setTheme('dark')
     } else {
       document.documentElement.classList.remove('dark')
       setTheme('light')
     }
+    setColor(currentColor ?? 'black')
+
+    document.body.classList.remove('hidden')
   }, [])
 
-  useLayoutEffect(() => {
-    const currentColor = localStorage.getItem('color-theme')
-    switch (currentColor) {
-      case 'green':
-        setColor('green')
-        break
-      case 'blue':
-        setColor('blue')
-        break
-      case 'yellow':
-        setColor('yellow')
-        break
-      case 'orange':
-        setColor('orange')
-        break
-      case 'black':
-        setColor('black')
-        break
-      default:
-        break
-    }
-  }, [])
   return (
     <div
       className={cn(
-        'fixed -z-10 h-dvh w-dvw',
+        'fixed inset-0 -z-10 h-dvh w-dvw',
         theme === 'light' ? 'bg-white' : 'bg-var-dark',
       )}
     />

@@ -10,7 +10,7 @@ export default function UserNameSection({
   value,
   onChange,
 }: ComponentProps<'input'>) {
-  const [ref, open, close] = useStateChange<HTMLInputElement>()
+  const { ref, open, close } = useStateChange<HTMLInputElement>()
   return (
     <Container className="flex w-full max-w-52 flex-col gap-8">
       <Title>필명</Title>

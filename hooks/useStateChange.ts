@@ -1,23 +1,46 @@
-import { RefObject, useRef } from 'react'
+import { wait } from '@/utils/wait'
+import { useCallback, useRef } from 'react'
 
-export default function useStateChange<T extends HTMLElement>(): [
-  RefObject<T>,
-  () => void,
-  () => void,
-] {
-  const targetRef = useRef<T>(null)
+export default function useStateChange<T extends HTMLElement>() {
+  const ref = useRef<T>(null)
 
-  const handleOpen = () => {
-    if (targetRef.current) {
-      targetRef.current.setAttribute('data-status', 'opened')
+  const open = useCallback(async () => {
+    if (ref.current) {
+      ref.current.classList.remove('hidden')
+      await wait(0)
+      ref.current.setAttribute('data-status', 'opened')
     }
-  }
+  }, [])
 
-  const handleClose = () => {
-    if (targetRef.current) {
-      targetRef.current.setAttribute('data-status', 'closed')
+  const close = useCallback(() => {
+    if (ref.current) {
+      ref.current.setAttribute('data-status', 'closed')
     }
-  }
+  }, [])
 
-  return [targetRef, handleOpen, handleClose]
+  const handleTransitionEnd = useCallback(() => {
+    if (ref?.current?.getAttribute('data-status') === 'closed') {
+      ref.current.classList.add('hidden')
+    }
+  }, [])
+
+  const handleButtonClick = useCallback(() => {
+    const isOpen = ref.current?.getAttribute('data-status')
+
+    if (isOpen === 'opened') {
+      close()
+    }
+
+    if (isOpen === 'closed') {
+      open()
+    }
+  }, [])
+
+  return {
+    ref,
+    open,
+    close,
+    onTransitionEnd: handleTransitionEnd,
+    onClick: handleButtonClick,
+  }
 }

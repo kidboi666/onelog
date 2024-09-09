@@ -12,8 +12,8 @@ interface Props {
 export default function AboutMe({ avatarUrl, userName }: Props) {
   return (
     <>
-      <Box className="pointer-events-none flex flex-col justify-center max-sm:justify-between">
-        <Box className="relative overflow-hidden rounded-full border border-gray-400 max-sm:size-52 sm:size-40 xl:sticky xl:z-30 xl:-translate-y-20 dark:border-gray-600">
+      <Box className="pointer-events-none flex flex-col justify-center gap-4 max-sm:justify-between">
+        <Box className="relative overflow-hidden rounded-full border border-gray-400 max-sm:size-52 sm:size-40 dark:border-gray-600">
           {avatarUrl ? (
             <Image
               src={avatarUrl}
@@ -25,7 +25,7 @@ export default function AboutMe({ avatarUrl, userName }: Props) {
             <Box className="absolute size-full bg-gray-200" />
           )}
         </Box>
-        <Box className="self-end xl:absolute xl:top-40">
+        <Box className="self-end">
           <Title className="text-4xl font-medium">
             <Text as="span" className="mr-2">
               By

@@ -11,32 +11,16 @@ import LinkButton from '@/components/shared/LinkButton'
 import HeaderNavSectionDropDown from './HeaderNavSectionDropDown'
 import Container from '@/components/shared/Container'
 import Box from '@/components/shared/Box'
-import { wait } from '@/utils/wait'
 
 export default function HeaderNavSection() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const [dropdownRef, open, closed] = useStateChange<HTMLDivElement>()
-  const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(closed)
-
-  const handleOpenStateChange = async () => {
-    const isOpen = dropdownRef.current?.getAttribute('data-status')
-
-    if (isOpen === 'opened') {
-      closed()
-    }
-
-    if (isOpen === 'closed') {
-      dropdownRef.current?.classList.remove('hidden')
-      await wait(0)
-      open()
-    }
-  }
-
-  const handleTransitionEnd = () => {
-    if (dropdownRef?.current?.getAttribute('data-status') === 'closed') {
-      dropdownRef.current.classList.add('hidden')
-    }
-  }
+  const {
+    ref: dropdownRef,
+    close,
+    onClick,
+    onTransitionEnd,
+  } = useStateChange<HTMLDivElement>()
+  const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(close)
 
   return (
     <Container as="nav" className="relative flex gap-2">
@@ -54,7 +38,7 @@ export default function HeaderNavSection() {
         <Button
           variant="secondary"
           ref={dropdownButtonRef}
-          onClick={handleOpenStateChange}
+          onClick={onClick}
           className="px-2"
         >
           <Icon className="size-5 rotate-90">
@@ -68,7 +52,7 @@ export default function HeaderNavSection() {
         </Button>
       )}
       <HeaderNavSectionDropDown
-        onTransitionEnd={handleTransitionEnd}
+        onTransitionEnd={onTransitionEnd}
         targetRef={dropdownRef}
       />
     </Container>

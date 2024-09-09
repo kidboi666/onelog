@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabase/client'
 import { useMutation } from '@tanstack/react-query'
 
 interface IFile {
-  userId: string
+  email: string | null
   image: File | null
 }
 
@@ -11,7 +11,7 @@ export default function useUploadAvatarImage() {
     mutationFn: async (params: IFile) => {
       const { data, error } = await supabase.storage
         .from('profile_image')
-        .upload(`${params.userId}/${params.image!.name}`, params.image!)
+        .upload(`${params.email}/${params.image!.name}`, params.image!)
 
       if (error) {
         throw error

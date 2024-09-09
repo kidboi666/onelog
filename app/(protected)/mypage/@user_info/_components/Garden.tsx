@@ -74,7 +74,7 @@ const getRenderedBlockFromEmotionLevel = (
     )
 
     for (let day = 1; day <= days; day++) {
-      const weekDay = new Date(year, i + 1, day).getDay()
+      const weekDay = new Date(year, i, day).getDay()
       let targetDaysForEmotionLevel
       if (foundTargetMonth?.sentences) {
         const targetDays = foundTargetMonth.sentences.filter(
@@ -215,21 +215,17 @@ function GardenBlockSection({
   firstDayIndex,
 }: GardenBlockSectionProps) {
   return (
-    <>
-      <Container className="flex gap-2">
-        <Box className="grid grid-rows-7 gap-1">
-          {DAYS_OF_WEEK.map((day) => (
-            <Text key={day} type="caption" className="h-1 text-[10px]">
-              {day}
-            </Text>
-          ))}
-        </Box>
-        <Box>
-          <Box className="grid grid-flow-col grid-rows-7 gap-1">
-            {createEmptySpaceByWeekday(shouldRenderElement, firstDayIndex)}
-          </Box>
-        </Box>
-      </Container>
-    </>
+    <Container className="flex gap-2">
+      <Box className="grid grid-rows-7 gap-1">
+        {DAYS_OF_WEEK.map((day) => (
+          <Text key={day} type="caption" className="h-1 text-[10px]">
+            {day}
+          </Text>
+        ))}
+      </Box>
+      <Box className="grid grid-flow-col grid-rows-7 gap-1">
+        {createEmptySpaceByWeekday(shouldRenderElement, firstDayIndex)}
+      </Box>
+    </Container>
   )
 }

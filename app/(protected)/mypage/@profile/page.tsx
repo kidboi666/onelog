@@ -16,7 +16,7 @@ export default function ProfileSection() {
   return (
     <Container
       isRounded
-      className="mt-12 flex h-fit flex-col gap-8 bg-transparent px-4 py-8 max-lg:mx-4 xl:px-8 dark:bg-transparent"
+      className="mt-12 flex h-fit flex-col gap-8 bg-transparent p-4 max-lg:mx-4 lg:p-8 dark:bg-transparent"
     >
       <AboutMeSection avatarUrl={me?.avatar_url} userName={me?.user_name} />
       <NavigatorSection aboutMe={me?.about_me} />

@@ -27,11 +27,11 @@ export default async function UserLayout({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Container className="flex w-full animate-fade-in flex-col items-center justify-center gap-8 lg:flex-row">
+      <Container className="flex w-full animate-fade-in flex-col justify-center gap-8 lg:flex-row">
         <Box className="h-fit w-full flex-shrink-0 lg:sticky lg:top-[63px] lg:z-30 lg:max-w-[300px]">
           {profile}
         </Box>
-        <Box className="flex w-full flex-col px-4 lg:max-w-[768px]">
+        <Box className="flex w-full flex-col px-4 py-12 lg:max-w-[768px]">
           {user_info}
         </Box>
       </Container>

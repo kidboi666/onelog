@@ -38,7 +38,7 @@ export default function EditProfilePage() {
 
   const handleProfileUpdateWithImage = () => {
     uploadImage(
-      { userId: me.id, image },
+      { email: me.email, image },
       {
         onSuccess: (data) => {
           updateProfile({

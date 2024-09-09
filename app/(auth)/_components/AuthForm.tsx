@@ -1,9 +1,9 @@
-import Box from '@/components/shared/Box'
 import Container from '@/components/shared/Container'
 import Input from '@/components/shared/Input'
 import RefBox from '@/components/shared/RefBox'
 import Text from '@/components/shared/Text'
-import { ComponentProps, useRef } from 'react'
+import useStateChange from '@/hooks/useStateChange'
+import { ComponentProps } from 'react'
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
 
 interface Props extends ComponentProps<'input'> {
@@ -18,25 +18,14 @@ export default function AuthForm({
   register,
   error,
 }: Props) {
-  const lineRef = useRef<HTMLDivElement>(null)
-  const handleFocus = () => {
-    if (lineRef.current) {
-      lineRef.current.setAttribute('data-status', 'onFocus')
-    }
-  }
-
-  const handleBlur = () => {
-    if (lineRef.current) {
-      lineRef.current.setAttribute('data-status', 'onBlur')
-    }
-  }
+  const { ref, open, close } = useStateChange<HTMLDivElement>()
   return (
     <Container className="flex flex-col gap-2">
       <Text type="body">{name}</Text>
       <label
         htmlFor={type}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        onFocus={open}
+        onBlur={close}
         className="relative flex w-full flex-col"
       >
         <Input
@@ -48,7 +37,7 @@ export default function AuthForm({
           className="mt-2"
         />
         <RefBox
-          ref={lineRef}
+          ref={ref}
           dataStatus="onBlur"
           className="absolute -bottom-1 left-0 h-1 w-full origin-left bg-gray-800 transition ease-in-out data-[status=onBlur]:scale-x-0 dark:bg-gray-300"
         />

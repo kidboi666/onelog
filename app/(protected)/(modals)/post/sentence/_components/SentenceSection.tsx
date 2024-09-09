@@ -20,7 +20,7 @@ export default function SentenceSection({
   selectedStatusPercent,
   isPending,
 }: Props) {
-  const [ref, open, close] = useStateChange<HTMLDivElement>()
+  const { ref, open, close } = useStateChange<HTMLDivElement>()
   return (
     <Container className="flex w-full flex-col items-center gap-8 md:w-[400px]">
       <Title type="sub" size="sm">
