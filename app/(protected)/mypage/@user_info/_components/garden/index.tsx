@@ -3,21 +3,21 @@
 import { ReactElement, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
+import cn from '@/lib/cn'
+import { useTheme } from '@/store/useTheme'
 import { gardenQuery } from '@/services/queries/garden/gardenQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { Tables } from '@/types/supabase'
 import { IDateBlock } from '@/types/garden'
+import { getDaysInYear, getFirstDayInYear } from '@/utils/formatDate'
+import { DAYS_OF_WEEK } from '../../_constants'
 
-import { DAYS_OF_WEEK } from '../_constants'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
 import Container from '@/components/shared/Container'
 import Block from '@/components/shared/Block'
-import { getDaysInYear, getFirstDayInYear } from '@/utils/formatDate'
 import Box from '@/components/shared/Box'
-import { useTheme } from '@/store/useTheme'
-import cn from '@/lib/cn'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 작성 갯수 기준 색칠)
@@ -131,7 +131,9 @@ const createEmptySpaceByWeekday = (
 
 export default function Garden() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data } = useSuspenseQuery(gardenQuery.getGarden(supabase, me?.userId))
+  const { data: garden } = useSuspenseQuery(
+    gardenQuery.getGarden(supabase, me?.userId),
+  )
   const { theme } = useTheme()
   const [orderBy, setOrderBy] = useState('length')
 
@@ -142,12 +144,12 @@ export default function Garden() {
       ? getRenderedBlockFromEmotionLevel(
           currentYear,
           getDaysInYear(currentYear),
-          data,
+          garden,
         )
       : getRenderedBlockFromWrittenLength(
           currentYear,
           getDaysInYear(currentYear),
-          data,
+          garden,
         )
 
   const handleSortOrder = (order: 'emotion' | 'length') => {
@@ -192,11 +194,11 @@ export default function Garden() {
         <Text type="caption" size="sm" className="leading-none">
           {orderBy === 'emotion' ? 'Bad' : 'Less'}
         </Text>
-        <Block />
-        <Block length={1} />
-        <Block length={2} />
-        <Block length={3} />
-        <Block length={4} />
+        <Block disabled />
+        <Block disabled length={1} />
+        <Block disabled length={2} />
+        <Block disabled length={3} />
+        <Block disabled length={4} />
         <Text type="caption" size="sm">
           {orderBy === 'emotion' ? 'Good' : 'More'}
         </Text>

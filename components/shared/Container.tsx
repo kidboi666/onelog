@@ -11,6 +11,7 @@ interface Props extends ComponentProps<'div'> {
   isBlur?: boolean
   isBackground?: boolean
   isPage?: boolean
+  isEmpty?: boolean
 }
 
 export default function Container({
@@ -20,6 +21,7 @@ export default function Container({
   isBackground,
   isBlur,
   isPage,
+  isEmpty,
   onClick,
   children,
   className,
@@ -33,6 +35,7 @@ export default function Container({
         isBackground && 'bg-white dark:bg-var-black',
         isBlur && 'bg-white/60 backdrop-blur-lg dark:bg-var-dark/60',
         isPage && 'mt-20',
+        isEmpty && 'flex w-full items-center justify-center py-8',
         className,
       )}
     >

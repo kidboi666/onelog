@@ -11,6 +11,7 @@ import Text from './Text'
 import { WEEKDAY } from '@/app/(protected)/(modals)/post/sentence/_constants'
 import { colorizeOpacity, formatBlockColor } from '@/utils/formatColor'
 import RefBox from './RefBox'
+import Button from './Button'
 
 interface BlockProps {
   empty?: boolean
@@ -19,6 +20,7 @@ interface BlockProps {
   average?: number
   summary?: any
   blockInfo?: IBlockInfo
+  disabled?: boolean
 }
 
 export default function Block({
@@ -27,6 +29,7 @@ export default function Block({
   average,
   summary,
   blockInfo,
+  disabled,
 }: BlockProps) {
   const infoRef = useRef<HTMLDivElement>(null)
   const { setSentences } = useSentence()
@@ -38,15 +41,18 @@ export default function Block({
 
   return (
     <Container className="relative">
-      <Box
+      <Button
+        variant="emptyStyle"
+        size="emptyStyle"
         onMouseEnter={() =>
           infoRef.current?.setAttribute('data-status', 'opened')
         }
         onMouseLeave={() =>
           infoRef.current?.setAttribute('data-status', 'closed')
         }
+        disabled={disabled}
         onClick={() => setSentences(summary)}
-        className="size-2.5 select-none overflow-hidden rounded-sm ring-1 ring-gray-300 dark:ring-gray-700"
+        className="size-2.5 cursor-auto select-none overflow-hidden rounded-sm ring-1 ring-gray-300 dark:ring-gray-700"
       >
         <Box
           className={cn(
@@ -56,7 +62,7 @@ export default function Block({
             average && `${colorizeOpacity(average, [25, 50, 75])}`,
           )}
         />
-      </Box>
+      </Button>
       {blockInfo && (
         <RefBox
           ref={infoRef}

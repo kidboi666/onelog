@@ -11,17 +11,17 @@ interface Props {
 
 export default function PrevOneSentenceItem({ sentence }: Props) {
   return (
-    <List.Row className="flex justify-between rounded-md px-1 py-2 transition hover:bg-gray-100 dark:hover:bg-gray-700">
-      <Box className="flex gap-2">
+    <List.Row className="flex justify-between rounded-md px-1 py-2 transition hover:bg-gray-100 dark:hover:bg-gray-800">
+      <Box className="flex w-full gap-2">
         <Text type="caption" size="sm">
           {formatDateToYMD(sentence.created_at)}
         </Text>
         <Text type="caption" size="sm">
           {formatDateToHMS(sentence.created_at)}
         </Text>
-        <Text size="sm">{sentence.content}</Text>
-      </Box>
-      <Box className="flex gap-2">
+        <Text size="sm" className="flex-1">
+          {sentence.content}
+        </Text>
         <FavoriteButton count={22} />
         <CommentButton count={3} />
       </Box>
