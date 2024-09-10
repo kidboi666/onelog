@@ -11,11 +11,11 @@ import { getDaysInYear, getFirstDayInYear } from '@/utils/formatDate'
 
 import Title from '@/components/shared/Title'
 import Container from '@/components/shared/Container'
-import Block from '@/components/shared/Block'
 import Box from '@/components/shared/Box'
 import GardenBlockSection from './_components/GardenBlockSection'
 import ColorInfoDisplay from './_components/ColorInfoDisplay'
 import SortOptionMenu from './_components/SortOptionMenu'
+import Block from './_components/Block'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 작성 갯수 기준 색칠)

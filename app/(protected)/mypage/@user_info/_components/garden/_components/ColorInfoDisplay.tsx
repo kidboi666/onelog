@@ -1,6 +1,6 @@
-import Block from '@/components/shared/Block'
 import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
+import Block from './Block'
 
 interface Props {
   orderBy: string

@@ -18,7 +18,7 @@ export default function GardenBlockSection({
   return (
     <Container
       className={cn(
-        'garden_scrollbar flex h-fit flex-col gap-2 overflow-x-auto p-1',
+        'garden-scrollbar-light dark:gardent-scrollbar-dark flex h-fit flex-col gap-2 overflow-x-auto p-1',
       )}
     >
       <Box row className="mt-4 gap-2">

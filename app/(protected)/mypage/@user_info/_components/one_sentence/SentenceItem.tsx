@@ -18,7 +18,7 @@ export default function SentenceItem({ sentence }: Props) {
   return (
     <List.Row
       onClick={() => router.push(`/sentence_info/${sentence?.id}`)}
-      className="flex cursor-pointer items-center justify-between gap-4 truncate rounded-md px-1 py-2 transition hover:bg-gray-100 dark:hover:bg-gray-800"
+      className="hover:bg-var-lightgray flex cursor-pointer items-center justify-between gap-4 truncate rounded-md px-1 py-2 transition dark:hover:bg-var-dark"
     >
       <Text type="caption" size="xs">
         {formatDateToYMD(sentence?.created_at)} ·

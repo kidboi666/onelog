@@ -11,6 +11,30 @@ const pluginContainer: PluginCreator = ({ addUtilities }) => {
       scrollbarWidth: 'none', // Firefox
       msOverflowStyle: 'none', // IE and Edge
     },
+    '.garden-scrollbar-light': {
+      '&::-webkit-scrollbar': {
+        width: '8px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        borderRadius: '8px',
+        background: '#d3d3d3',
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        background: '#b5b5b5',
+      },
+    },
+    '.gardent-scrollbar-dark': {
+      '&::-webkit-scrollbar': {
+        width: '8px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        borderRadius: '8px',
+        background: '#222224',
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        background: '#3b3b3e',
+      },
+    },
   })
 }
 
@@ -31,7 +55,8 @@ const config: Config = {
         'var-orange': '#F5964B',
         'var-dark': '#191919',
         'var-gray': '#9CA3AF',
-        'var-light-gray': '#F5F5F7',
+        'var-lightgray': '#F5F5F7',
+        'var-darkgray': '#222224',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

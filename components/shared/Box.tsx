@@ -26,7 +26,7 @@ export default function Box({
       onClick={onClick}
       className={cn(
         isRounded && 'rounded-md',
-        isBackground && 'bg-white dark:bg-var-black',
+        isBackground && 'dark:bg-var-darkgray bg-white',
         col && 'flex flex-col',
         row && 'flex',
         className,

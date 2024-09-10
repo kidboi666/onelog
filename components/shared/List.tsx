@@ -30,7 +30,7 @@ export const List = ({
       className={cn(
         'list-none',
         isRounded && 'rounded-md',
-        isBackground && 'bg-white dark:bg-var-black',
+        isBackground && 'dark:bg-var-darkgray bg-white',
         className,
       )}
       {...props}

@@ -107,9 +107,11 @@ export default function EditProfilePage() {
           isSuccessUpdateUserInfo
         }
         disabled={
-          userName === me?.user_name &&
-          aboutMe === me?.about_me &&
-          avatarUrl === me?.avatar_url
+          (userName === me?.user_name &&
+            aboutMe === me?.about_me &&
+            avatarUrl === me?.avatar_url) ||
+          userName?.length! > 8 ||
+          aboutMe?.length! > 150
         }
       />
     </FormContainer>

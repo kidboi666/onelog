@@ -29,14 +29,14 @@ export default function HeaderNavSectionDropDown({
           한줄쓰기
         </LinkButton>
       </Box>
+      <LinkButton href="/todo" variant="list" className="w-full">
+        할일 관리
+      </LinkButton>
       <LinkButton href="/mypage" variant="list" className="w-full">
         마이 페이지
       </LinkButton>
       <LinkButton href="/settings" variant="list" className="w-full">
         환경 설정
-      </LinkButton>
-      <LinkButton href="/todo" variant="list" className="w-full">
-        할일 관리
       </LinkButton>
     </RefContainer>
   )

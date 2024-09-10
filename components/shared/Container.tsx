@@ -32,8 +32,8 @@ export default function Container({
       onClick={onClick}
       className={cn(
         isRounded && 'rounded-md',
-        isBackground && 'bg-white dark:bg-var-black',
-        isBlur && 'bg-white/60 backdrop-blur-xl dark:bg-var-black/60',
+        isBackground && 'dark:bg-var-darkgray bg-white',
+        isBlur && 'dark:bg-var-darkgray/60 bg-white/60 backdrop-blur-xl',
         isPage && 'mt-20',
         isEmpty && 'flex w-full items-center justify-center py-12 opacity-65',
         className,

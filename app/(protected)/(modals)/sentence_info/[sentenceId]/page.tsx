@@ -10,6 +10,8 @@ import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import FavoriteButton from './_components/FavoriteButton'
 import CommentButton from './_components/CommentButton'
+import Image from 'next/image'
+import { meQuery } from '@/services/queries/auth/meQuery'
 
 interface Props {
   params: { sentenceId: string }
@@ -17,8 +19,12 @@ interface Props {
 
 export default function SentenceInfoModal({ params }: Props) {
   const sentenceId = params.sentenceId
-  const { data } = useSuspenseQuery(
+  const { data: sentences } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, sentenceId),
+  )
+  const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, data.userId),
   )
   const formatEmotionLevel = (emotionLevel: string) => {
     switch (emotionLevel) {
@@ -36,29 +42,35 @@ export default function SentenceInfoModal({ params }: Props) {
   }
   return (
     <Modal className="items-start">
-      <Box col className="gap-4">
-        <Box row className="items-center gap-2">
-          <Text type="caption">그 날의 감정 농도</Text>
-          <EmotionBlock
-            level={formatEmotionLevel(data?.emotion_level) ?? 0}
-            className="size-4"
-          />
-          <Text>{data.emotion_level}</Text>
+      <Box col className="w-full gap-4">
+        <Box row className="items-start justify-between gap-2">
+          <Box row className="items-center gap-2">
+            <Text type="caption">그 날의 감정 농도</Text>
+            <EmotionBlock
+              level={formatEmotionLevel(sentences?.emotion_level) ?? 0}
+              className="size-4"
+            />
+            <Text>{sentences.emotion_level}</Text>
+          </Box>
+          <Box className="relative size-14 overflow-hidden rounded-full">
+            <Image src={me?.avatar_url!} alt="프로필 이미지" fill />
+          </Box>
         </Box>
-        <Text>{data.content}</Text>
+        <Text>{sentences.content}</Text>
       </Box>
       <Box col className="gap-4">
         <Text type="caption">
-          {formatDateToMDY(data.created_at)} · {formatDateToHM(data.created_at)}
+          {formatDateToMDY(sentences.created_at)} ·{' '}
+          {formatDateToHM(sentences.created_at)}
         </Text>
         <Box row className="gap-4">
           <Box row className="gap-2">
             <FavoriteButton size={20} />
-            <Text type="caption">{data.favorite ?? 0}</Text>
+            <Text type="caption">{sentences.favorite ?? 0}</Text>
           </Box>
           <Box row className="gap-2">
             <CommentButton size={20} />
-            <Text type="caption">{data.comment ?? 0}</Text>
+            <Text type="caption">{sentences.comment ?? 0}</Text>
           </Box>
         </Box>
       </Box>

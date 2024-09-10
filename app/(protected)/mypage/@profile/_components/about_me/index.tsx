@@ -12,26 +12,21 @@ interface Props {
 export default function AboutMe({ avatarUrl, userName }: Props) {
   return (
     <>
-      <Box className="pointer-events-none flex flex-col justify-center gap-4 max-sm:justify-between">
-        <Box className="relative overflow-hidden rounded-full border border-gray-400 max-sm:size-52 sm:size-40 dark:border-gray-600">
+      <Box className="pointer-events-none flex flex-col items-center gap-4">
+        <Box className="relative size-52 overflow-hidden rounded-full border border-gray-400 dark:border-gray-600">
           {avatarUrl ? (
             <Image
               src={avatarUrl}
               alt="프로필 이미지"
               fill
-              className="rounded-full border-4 border-gray-50 dark:border"
+              className="dark:border-var-darkgray border-var-lightgray rounded-full border-4"
             />
           ) : (
             <Box className="absolute size-full bg-gray-200" />
           )}
         </Box>
         <Box className="self-end">
-          <Title className="text-4xl font-medium">
-            <Text as="span" className="mr-2">
-              By
-            </Text>
-            {userName}
-          </Title>
+          <Title className="text-2xl font-medium">{userName}</Title>
         </Box>
       </Box>
       <Box className="relative">
@@ -39,7 +34,7 @@ export default function AboutMe({ avatarUrl, userName }: Props) {
         <Text
           as="span"
           type="caption"
-          className="absolute -top-2 left-1/2 -translate-x-1/2 bg-white px-2 text-sm text-gray-400 dark:bg-var-black"
+          className="dark:bg-var-darkgray absolute -top-2 left-1/2 -translate-x-1/2 bg-white px-2 text-sm text-gray-400"
         >
           소 개
         </Text>

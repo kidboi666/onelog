@@ -23,7 +23,7 @@ const BUTTON_VARIANTS = cva(
           'rounded-md border border-var-gray text-var-black hover:opacity-65 active:animate-click dark:text-white dark:ring-var-gray',
         teritory:
           'underline hover:opacity-65 active:animate-click dark:text-white',
-        list: 'justify-start font-normal text-var-black hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700',
+        list: 'hover:bg-var-lightgray justify-start font-normal text-var-black dark:text-white dark:hover:bg-var-dark',
         emptyStyle: 'hover:opacity-65',
       },
       disabled: {

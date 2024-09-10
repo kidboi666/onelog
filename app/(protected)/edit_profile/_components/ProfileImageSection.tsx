@@ -21,7 +21,7 @@ export default function ProfileImageSection({ onChange, imagePreview }: Props) {
       className="relative flex h-fit w-fit cursor-pointer flex-col"
     >
       {imagePreview && (
-        <Box className="relative size-40 overflow-hidden rounded-full">
+        <Box className="relative size-56 overflow-hidden rounded-full">
           <Image src={imagePreview} fill alt="프로필 사진 미리보기" />
         </Box>
       )}

@@ -38,8 +38,8 @@ const RefContainer = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
         onTransitionEnd={onTransitionEnd}
         className={cn(
           isRounded && 'rounded-md',
-          isBlur && 'bg-white/70 backdrop-blur-lg dark:bg-var-dark/70',
-          isBackground && 'bg-white dark:bg-var-dark',
+          isBlur && 'dark:bg-var-darkgray/70 bg-white/70 backdrop-blur-lg',
+          isBackground && 'dark:bg-var-darkgray bg-white',
           isPage && 'mt-4',
           className,
         )}
