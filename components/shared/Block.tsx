@@ -39,9 +39,24 @@ export default function Block({
   if (empty) {
     return <div className="size-2.5 select-none opacity-0" />
   }
+  const calculateMonthPoint = (blockInfo: IBlockInfo) => {
+    const targetDate = blockInfo.weekDay
+    const calculateMargin = 14 * (targetDate + 1) + 2
+    return calculateMargin
+  }
 
   return (
     <Container className="relative">
+      {blockInfo?.date === 1 && (
+        <Box
+          className="absolute text-nowrap"
+          style={{ top: -calculateMonthPoint(blockInfo) }}
+        >
+          <Text type="caption" size="xs">
+            {`${blockInfo?.month}월`}
+          </Text>
+        </Box>
+      )}
       <Button
         variant="emptyStyle"
         size="emptyStyle"

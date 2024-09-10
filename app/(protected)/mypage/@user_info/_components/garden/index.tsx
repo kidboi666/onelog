@@ -3,21 +3,19 @@
 import { ReactElement, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
-import cn from '@/lib/cn'
-import { useTheme } from '@/store/useTheme'
 import { gardenQuery } from '@/services/queries/garden/gardenQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { Tables } from '@/types/supabase'
 import { IDateBlock } from '@/types/garden'
 import { getDaysInYear, getFirstDayInYear } from '@/utils/formatDate'
-import { DAYS_OF_WEEK } from '../../_constants'
 
-import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import Button from '@/components/shared/Button'
 import Container from '@/components/shared/Container'
 import Block from '@/components/shared/Block'
 import Box from '@/components/shared/Box'
+import GardenBlockSection from './_components/GardenBlockSection'
+import ColorInfoDisplay from './_components/ColorInfoDisplay'
+import SortOptionMenu from './_components/SortOptionMenu'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 작성 갯수 기준 색칠)
@@ -78,7 +76,7 @@ const getRenderedBlockFromEmotionLevel = (
       let targetDaysForEmotionLevel
       if (foundTargetMonth?.sentences) {
         const targetDays = foundTargetMonth.sentences.filter(
-          (v: any, i) => new Date(v.created_at).getDate() === day,
+          (v: any) => new Date(v.created_at).getDate() === day,
         )
         const levels = targetDays.map((v: any) =>
           Number(v.emotion_level.replace('%', '')),
@@ -108,7 +106,7 @@ const getRenderedBlockFromEmotionLevel = (
 /**
  * 계산된 365개의 요소가 든 배열에 1월1일과 일요일로 시작되는 구간의 줄맞춤을 위해 빈블럭을 채워넣는 함수
  */
-const createEmptySpaceByWeekday = (
+export const createEmptySpaceByWeekday = (
   yearMonth: IDateBlock[],
   firstDayIndex: number,
 ) => {
@@ -134,7 +132,6 @@ export default function Garden() {
   const { data: garden } = useSuspenseQuery(
     gardenQuery.getGarden(supabase, me?.userId),
   )
-  const { theme } = useTheme()
   const [orderBy, setOrderBy] = useState('length')
 
   const currentYear = new Date().getFullYear()
@@ -160,71 +157,13 @@ export default function Garden() {
     <Container className="flex flex-col gap-4">
       <Box className="relative flex justify-between">
         <Title>한 눈에 보기</Title>
-        <Box className="flex gap-2">
-          <Button
-            size="sm"
-            variant={orderBy === 'length' ? 'primary' : 'secondary'}
-            onClick={() => handleSortOrder('length')}
-          >
-            문장 갯수
-          </Button>
-          <Button
-            size="sm"
-            variant={orderBy === 'emotion' ? 'primary' : 'secondary'}
-            onClick={() => handleSortOrder('emotion')}
-          >
-            감정 농도
-          </Button>
-        </Box>
+        <SortOptionMenu orderBy={orderBy} onSortOrder={handleSortOrder} />
       </Box>
-      <Box
-        className={cn(
-          'garden_scrollbar flex h-fit flex-col overflow-x-auto p-1',
-        )}
-      >
-        <GardenBlockSection
-          shouldRenderElement={shouldRenderElement}
-          firstDayIndex={firstDayIndex}
-        />
-      </Box>
-      <Box className="flex items-center gap-2 self-end">
-        <Text type="caption" size="sm" className="leading-none">
-          {orderBy === 'emotion' ? 'Bad' : 'Less'}
-        </Text>
-        <Block disabled />
-        <Block disabled length={1} />
-        <Block disabled length={2} />
-        <Block disabled length={3} />
-        <Block disabled length={4} />
-        <Text type="caption" size="sm">
-          {orderBy === 'emotion' ? 'Good' : 'More'}
-        </Text>
-      </Box>
-    </Container>
-  )
-}
-
-interface GardenBlockSectionProps {
-  shouldRenderElement: IDateBlock[]
-  firstDayIndex: number
-}
-
-function GardenBlockSection({
-  shouldRenderElement,
-  firstDayIndex,
-}: GardenBlockSectionProps) {
-  return (
-    <Container className="flex gap-2">
-      <Box className="grid grid-rows-7 gap-1">
-        {DAYS_OF_WEEK.map((day) => (
-          <Text key={day} type="caption" className="h-1 text-[10px]">
-            {day}
-          </Text>
-        ))}
-      </Box>
-      <Box className="grid grid-flow-col grid-rows-7 gap-1">
-        {createEmptySpaceByWeekday(shouldRenderElement, firstDayIndex)}
-      </Box>
+      <GardenBlockSection
+        shouldRenderElement={shouldRenderElement}
+        firstDayIndex={firstDayIndex}
+      />
+      <ColorInfoDisplay orderBy={orderBy} />
     </Container>
   )
 }
