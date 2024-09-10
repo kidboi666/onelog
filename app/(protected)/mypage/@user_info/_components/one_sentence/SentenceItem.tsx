@@ -1,4 +1,4 @@
-import { formatDateToHM, formatDateToYMD } from '@/utils/formatDate'
+import { formatDateToHM } from '@/utils/formatDate'
 import Text from '@/components/shared/Text'
 import { List } from '@/components/shared/List'
 import Box from '@/components/shared/Box'
@@ -21,7 +21,6 @@ export default function SentenceItem({ sentence }: Props) {
       className="hover:bg-var-lightgray flex cursor-pointer items-center justify-between gap-4 truncate rounded-md px-1 py-2 transition dark:hover:bg-var-dark"
     >
       <Text type="caption" size="xs">
-        {formatDateToYMD(sentence?.created_at)} ·
         {formatDateToHM(sentence?.created_at)}
       </Text>
       <Text size="sm" className="flex-1 truncate">

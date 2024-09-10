@@ -14,14 +14,16 @@ export default function IntroduceSection({ value, onChange }: Props) {
   return (
     <Container className="flex w-full flex-col gap-8">
       <Title>소개글</Title>
-      <TextArea value={value} onChange={onChange} className="px-2 py-1" />
-      <Box className="self-end">
-        {value && (
-          <Text
-            size="sm"
-            className={cn(value?.length > 150 && 'text-red-600')}
-          >{`${value?.length} / 150`}</Text>
-        )}
+      <Box col className="gap-2">
+        <TextArea value={value} onChange={onChange} className="px-2 py-1" />
+        <Box className="self-end">
+          {value && (
+            <Text
+              size="sm"
+              className={cn(value?.length > 150 && 'text-red-600')}
+            >{`${value?.length} / 150`}</Text>
+          )}
+        </Box>
       </Box>
     </Container>
   )

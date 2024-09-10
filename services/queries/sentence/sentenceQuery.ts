@@ -44,4 +44,20 @@ export const sentenceQuery = {
         return data
       },
     }),
+
+  getUsedWords: (supabase: any, word: string, trigger: boolean) =>
+    queryOptions<Tables<'word_dictionary'>>({
+      queryKey: ['words', word],
+      queryFn: async () => {
+        const { data } = await supabase
+          .from('word_dictionary')
+          .select()
+          .eq('word', word)
+          .single()
+
+        return data
+      },
+      staleTime: 0,
+      enabled: trigger,
+    }),
 }

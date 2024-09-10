@@ -17,19 +17,21 @@ export default function UserNameSection({ value, onChange }: Props) {
   return (
     <Container className="flex w-full max-w-52 flex-col gap-8">
       <Title>필명</Title>
-      <Box className="flex w-full flex-col">
-        <Input
-          onFocus={() => open()}
-          onBlur={() => close()}
-          variant="secondary"
-          value={value}
-          onChange={onChange}
-        />
-        <RefBox
-          ref={ref}
-          dataStatus="closed"
-          className="status-line data-line bg-gray-800 dark:bg-white"
-        />
+      <Box className="flex w-full flex-col gap-2">
+        <Box col>
+          <Input
+            onFocus={() => open()}
+            onBlur={() => close()}
+            variant="secondary"
+            value={value}
+            onChange={onChange}
+          />
+          <RefBox
+            ref={ref}
+            dataStatus="closed"
+            className="status-line data-line bg-gray-800 dark:bg-white"
+          />
+        </Box>
         <Box className="self-end">
           {value && (
             <Text

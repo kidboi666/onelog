@@ -70,7 +70,7 @@ export default function SentenceInfoModal({ params }: Props) {
           </Box>
           <Box row className="gap-2">
             <CommentButton size={20} />
-            <Text type="caption">{sentences.comment ?? 0}</Text>
+            <Text type="caption">{0}</Text>
           </Box>
         </Box>
       </Box>

@@ -5,12 +5,12 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { ISessionInfo } from '@/types/auth'
 
-import Container from '@/components/shared/Container'
 import Summary from './_components/summary'
 import FavoriteWords from './_components/favorite_word'
 import Garden from './_components/garden'
 import PrevOneSentence from './_components/one_sentence'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import PostSentence from './_components/post_sentence'
 
 export default async function UserInfoSection() {
   const supabase = createServerClient()
@@ -25,12 +25,11 @@ export default async function UserInfoSection() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Container className="flex w-full flex-col gap-12">
-        <Summary />
-        <FavoriteWords />
-        <Garden />
-        <PrevOneSentence />
-      </Container>
+      <PostSentence />
+      <Summary />
+      <FavoriteWords />
+      <Garden />
+      <PrevOneSentence />
     </HydrationBoundary>
   )
 }
