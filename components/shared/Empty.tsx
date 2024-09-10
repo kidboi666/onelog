@@ -12,7 +12,7 @@ export default function Empty({
   className,
 }: PropsWithChildren<Props>) {
   return (
-    <Container isEmpty className={cn(className)}>
+    <Container isEmpty isBackground isRounded className={cn(className)}>
       <Text type="caption">{children}</Text>
     </Container>
   )

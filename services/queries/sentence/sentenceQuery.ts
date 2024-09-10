@@ -16,6 +16,7 @@ export const sentenceQuery = {
       },
       enabled: !!userId,
     }),
+
   getSentence: (supabase: any, sentenceId: string) =>
     queryOptions<Tables<'sentence'>>({
       queryKey: ['sentence', sentenceId],
@@ -24,6 +25,20 @@ export const sentenceQuery = {
           .from('sentence')
           .select()
           .eq('id', sentenceId)
+          .single()
+
+        return data
+      },
+    }),
+
+  getMyUsedWords: (supabase: any, userId: string) =>
+    queryOptions<Tables<'user_words'>>({
+      queryKey: ['favorite_words', userId],
+      queryFn: async () => {
+        const { data } = await supabase
+          .from('user_words')
+          .select()
+          .eq('user_id', userId)
           .single()
 
         return data

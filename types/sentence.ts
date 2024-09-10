@@ -3,3 +3,8 @@ export interface ISentence {
   content: string
   emotion_level: string
 }
+
+export interface IFavoriteWord {
+  word: string
+  count: number
+}

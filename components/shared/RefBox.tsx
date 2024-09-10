@@ -5,6 +5,9 @@ interface Props extends ComponentProps<'div'> {
   as?: 'div'
   className?: string
   dataStatus?: string
+  isRounded?: boolean
+  isBackground?: boolean
+  onTransitionEnd?: () => void
 }
 
 const RefBox = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
@@ -15,6 +18,9 @@ const RefBox = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
       children,
       className,
       onClick,
+      isRounded,
+      isBackground,
+      onTransitionEnd,
       ...Props
     },
     ref,
@@ -24,7 +30,12 @@ const RefBox = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
         ref={ref}
         data-status={dataStatus}
         onClick={onClick}
-        className={cn(className)}
+        onTransitionEnd={onTransitionEnd}
+        className={cn(
+          isRounded && 'rounded-md',
+          isBackground && 'dark:bg-var-darkgray bg-white',
+          className,
+        )}
         {...Props}
       >
         {children}

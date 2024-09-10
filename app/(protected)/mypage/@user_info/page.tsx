@@ -10,6 +10,7 @@ import Summary from './_components/summary'
 import FavoriteWords from './_components/favorite_word'
 import Garden from './_components/garden'
 import PrevOneSentence from './_components/one_sentence'
+import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 
 export default async function UserInfoSection() {
   const supabase = createServerClient()
@@ -19,7 +20,8 @@ export default async function UserInfoSection() {
   const res = queryClient.getQueryData<ISessionInfo>(['me', 'session'])
 
   if (!res) return
-  queryClient.prefetchQuery(gardenQuery.getGarden(supabase, res?.userId))
+  queryClient.prefetchQuery(sentenceQuery.getMyUsedWords(supabase, res.userId))
+  queryClient.prefetchQuery(gardenQuery.getGarden(supabase, res.userId))
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

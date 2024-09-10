@@ -13,15 +13,15 @@ export default function PrevOneSentence() {
   return (
     <Container className="flex flex-col gap-4">
       <Title>그날의 한 문장</Title>
-      <List isRounded isBackground className="flex flex-col p-4">
-        {sentences ? (
-          sentences?.map((item) => (
+      {sentences ? (
+        <List isRounded isBackground className="flex flex-col p-4">
+          {sentences?.map((item) => (
             <SentenceItem key={item.id} sentence={item} />
-          ))
-        ) : (
-          <Empty>작성된 내용이 없습니다.</Empty>
-        )}
-      </List>
+          ))}
+        </List>
+      ) : (
+        <Empty>작성된 내용이 없습니다.</Empty>
+      )}
     </Container>
   )
 }
