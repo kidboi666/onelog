@@ -9,8 +9,14 @@ import { formatButtonColor } from '@/utils/formatColor'
 
 export interface ButtonProps extends ComponentProps<'button'> {
   isLoading?: boolean
-  variant?: 'primary' | 'secondary' | 'teritory' | 'list' | 'emptyStyle'
-  size?: 'sm' | 'md' | 'lg' | 'emptyStyle'
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'teritory'
+    | 'list'
+    | 'emptyStyle'
+    | 'icon'
+  size?: 'sm' | 'md' | 'lg' | 'emptyStyle' | 'icon'
 }
 
 const BUTTON_VARIANTS = cva(
@@ -23,8 +29,9 @@ const BUTTON_VARIANTS = cva(
           'rounded-md border border-var-gray text-var-black hover:opacity-65 active:animate-click dark:text-white dark:ring-var-gray',
         teritory:
           'underline hover:opacity-65 active:animate-click dark:text-white',
-        list: 'hover:bg-var-lightgray justify-start font-normal text-var-black dark:text-white dark:hover:bg-var-dark',
+        list: 'justify-start font-normal text-var-black hover:bg-var-lightgray dark:text-white dark:hover:bg-var-dark',
         emptyStyle: 'hover:opacity-65',
+        icon: 'rounded-md text-gray-400 transition hover:bg-gray-200 hover:opacity-65 active:animate-click dark:text-var-darkgray',
       },
       disabled: {
         primary:
@@ -33,12 +40,14 @@ const BUTTON_VARIANTS = cva(
         teritory: '',
         list: '',
         emptyStyle: '',
+        icon: '',
       },
       size: {
         sm: 'px-2 py-1 text-xs',
         md: 'px-4 py-2 text-sm',
         lg: 'px-4 py-2 text-lg',
         emptyStyle: '',
+        icon: 'p-2',
       },
     },
   },

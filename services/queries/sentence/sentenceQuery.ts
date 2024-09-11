@@ -2,7 +2,15 @@ import { Tables } from '@/types/supabase'
 import { queryOptions } from '@tanstack/react-query'
 
 export const sentenceQuery = {
-  getAllSentence: (supabase: any, userId: string) =>
+  getAllSentence: (supabase: any) =>
+    queryOptions({
+      queryKey: ['all_sentence'],
+      queryFn: async () => {
+        const { data } = await supabase.from('sentence').select()
+        return data
+      },
+    }),
+  getAllMySentence: (supabase: any, userId: string) =>
     queryOptions({
       queryKey: ['sentence'],
       queryFn: async () => {

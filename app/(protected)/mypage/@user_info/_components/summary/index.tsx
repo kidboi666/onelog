@@ -20,7 +20,7 @@ export default function Summary() {
     meQuery.getUserInfo(supabase, data?.userId),
   )
   const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getAllSentence(supabase, data?.userId),
+    sentenceQuery.getAllMySentence(supabase, data?.userId),
   )
 
   const formatColor = (color: TColor) => {

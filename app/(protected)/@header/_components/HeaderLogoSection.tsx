@@ -9,7 +9,7 @@ export default function HeaderLogoSection() {
   const { theme } = useTheme()
   return (
     <LinkButton
-      href="/mypage"
+      href="/home"
       variant="emptyStyle"
       className={cn('w-fit', theme === 'dark' ? 'text-white' : 'text-black')}
     >
