@@ -70,7 +70,7 @@ export default function PostSentence() {
         </Button>
       </Box>
       <List className="relative flex items-start justify-between gap-2">
-        <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-gray-300" />
+        <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-gray-300 dark:border-gray-500" />
         {EMOTION_STATUS.map((emotion) => (
           <EmotionSection
             key={emotion.status}
@@ -107,7 +107,7 @@ function EmotionSection({ emotion, selectedEmotion, onChangeEmotion }: Props) {
         </Text>
         <RefBox
           className={cn(
-            'absolute top-1 size-2 rounded-full bg-gray-300 ring-1 ring-gray-300 transition group-hover:ring-4',
+            'absolute top-1 size-2 rounded-full bg-gray-300 ring-1 ring-gray-300 transition group-hover:ring-4 dark:bg-var-darkgray dark:ring-gray-500',
             selectedEmotion === emotion.percent && 'bg-slate-700 ring-4',
           )}
         />
