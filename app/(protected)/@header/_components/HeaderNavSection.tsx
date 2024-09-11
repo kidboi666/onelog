@@ -6,7 +6,6 @@ import { meQuery } from '@/services/queries/auth/meQuery'
 import useStateChange from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import Button from '@/components/shared/Button'
-import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
 import HeaderNavSectionDropDown from './HeaderNavSectionDropDown'
 import Container from '@/components/shared/Container'
@@ -42,7 +41,7 @@ export default function HeaderNavSection() {
           onClick={onClick}
           className="p-0"
         >
-          <Avatar src={me.avatar_url} size="sm" />
+          <Avatar src={me.avatar_url} size="sm" ring="xs" />
         </Button>
       )}
       <HeaderNavSectionDropDown

@@ -7,7 +7,7 @@ import { supabase } from '@/lib/supabase/client'
 import { formatDateToYMD } from '@/utils/formatDate'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { useInput } from '@/hooks/useInput'
-import { INIT_STATUS, WEEKDAY } from './_constants'
+import { EMOTION_STATUS, INIT_STATUS, WEEKDAY } from './_constants'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 
 import Title from '@/components/shared/Title'
@@ -16,49 +16,78 @@ import Box from '@/components/shared/Box'
 import FormContainer from '@/components/shared/FormContainer'
 import EmotionSection from './_components/EmotionSection'
 import SentenceSection from './_components/SentenceSection'
+import Avatar from '@/components/feature/user/Avatar'
+import Input from '@/components/shared/Input'
+import Button from '@/components/shared/Button'
+import { List } from '@/components/shared/List'
+import EmotionPicker from '@/components/feature/sentence/EmotionPicker'
 
 export default function SentenceModal() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [sentence, onChangeSentence, setSentence] = useInput('')
-  const [selectedStatus, setSelectedStatus] = useState(INIT_STATUS)
+  const [selectedEmotion, setSelectedEmotion] = useState('')
   const { mutate: addSentence, isPending } = useAddSentence()
   const router = useRouter()
 
-  const handleStatusClick = (status: typeof INIT_STATUS) => {
-    setSelectedStatus({ percent: status.percent, color: status.color })
+  const handleChangeEmotion = (emotion: string) => {
+    setSelectedEmotion(emotion)
   }
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    addSentence(
-      {
-        content: sentence,
-        emotion_level: selectedStatus.percent,
-        user_id: me?.userId,
-        avatar_url: me?.avatar_url,
-        email: me?.email,
-        user_name: me?.user_name,
-      },
-      {
-        onSuccess: () => {
-          router.push('/success')
-          setSentence('')
-          setSelectedStatus(INIT_STATUS)
-        },
-      },
-    )
-  }
+  // const handleSubmit = (e: FormEvent) => {
+  //   e.preventDefault()
+  //   addSentence(
+  //     {
+  //       content: sentence,
+  //       emotion_level: selectedEmotion.percent,
+  //       user_id: me?.userId,
+  //       avatar_url: me?.avatar_url,
+  //       email: me?.email,
+  //       user_name: me?.user_name,
+  //     },
+  //     {
+  //       onSuccess: () => {
+  //         router.push('/success')
+  //         setSentence('')
+  //         setSelectedStatus(INIT_STATUS)
+  //       },
+  //     },
+  //   )
+  // }
 
   return (
-    <Modal>
-      <FormContainer
-        onSubmit={handleSubmit}
-        className="flex w-full animate-fade-in flex-col items-center justify-between gap-20 px-4 md:px-12 xl:max-w-[768px]"
-      >
-        <Title>
-          {`${formatDateToYMD(new Date().toString())}(${WEEKDAY[new Date().getDay()]}) 기록`}
-        </Title>
-        <Box className="flex w-full flex-col items-center gap-20">
+    <Modal className="bg-var-lightgray">
+      <FormContainer className="size-full">
+        <Box col className="w-full flex-1 gap-4">
+          <Box row className="gap-4 rounded-md bg-var-lightgray px-2 py-4">
+            <Input
+              value={sentence}
+              variant="primary"
+              placeholder="오늘 당신의 생각을 한 줄로 기록하세요."
+              onChange={onChangeSentence}
+              className="flex-1 p-2 text-sm"
+            />
+            <Button
+              isLoading={isPending}
+              disabled={!sentence || !selectedEmotion}
+              type="submit"
+              className="self-end"
+            >
+              등록하기
+            </Button>
+          </Box>
+          <List className="relative flex items-start justify-between gap-2">
+            <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-gray-300 dark:border-gray-500" />
+            {EMOTION_STATUS.map((emotion) => (
+              <EmotionPicker
+                key={emotion.status}
+                emotion={emotion}
+                selectedEmotion={selectedEmotion}
+                onChangeEmotion={handleChangeEmotion}
+              />
+            ))}
+          </List>
+        </Box>
+        {/* <Box className="flex w-full flex-col items-center gap-20">
           <EmotionSection
             selectedStatus={selectedStatus}
             onStatusClick={handleStatusClick}
@@ -69,7 +98,7 @@ export default function SentenceModal() {
             sentence={sentence}
             isPending={isPending}
           />
-        </Box>
+        </Box> */}
       </FormContainer>
     </Modal>
   )

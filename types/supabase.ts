@@ -75,6 +75,7 @@ export type Database = {
           email: string | null
           emotion_level: string
           favorite: number | null
+          favorited_user_id: string[] | null
           id: number
           user_id: string
           user_name: string | null
@@ -87,6 +88,7 @@ export type Database = {
           email?: string | null
           emotion_level: string
           favorite?: number | null
+          favorited_user_id?: string[] | null
           id?: number
           user_id: string
           user_name?: string | null
@@ -99,6 +101,7 @@ export type Database = {
           email?: string | null
           emotion_level?: string
           favorite?: number | null
+          favorited_user_id?: string[] | null
           id?: number
           user_id?: string
           user_name?: string | null
@@ -119,6 +122,7 @@ export type Database = {
           avatar_url: string | null
           created_at: string
           email: string | null
+          favorite_sentence: Json[] | null
           favorite_words: string[] | null
           id: string
           user_name: string | null
@@ -128,6 +132,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           email?: string | null
+          favorite_sentence?: Json[] | null
           favorite_words?: string[] | null
           id: string
           user_name?: string | null
@@ -137,6 +142,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           email?: string | null
+          favorite_sentence?: Json[] | null
           favorite_words?: string[] | null
           id?: string
           user_name?: string | null
@@ -206,7 +212,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      decrement_favorite: {
+        Args: {
+          sentence_id: number
+          user_uuid: string
+        }
+        Returns: undefined
+      }
+      increment_favorite: {
+        Args: {
+          sentence_id: number
+          user_uuid: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

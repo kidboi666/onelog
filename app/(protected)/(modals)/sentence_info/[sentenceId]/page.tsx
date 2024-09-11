@@ -50,23 +50,23 @@ export default function SentenceInfoModal({ params }: Props) {
               level={formatEmotionLevel(sentences?.emotion_level) ?? 0}
               className="size-4"
             />
-            <Text>{sentences.emotion_level}</Text>
+            <Text>{sentences?.emotion_level}</Text>
           </Box>
           <Box className="relative size-14 overflow-hidden rounded-full">
             <Image src={me?.avatar_url!} alt="프로필 이미지" fill />
           </Box>
         </Box>
-        <Text>{sentences.content}</Text>
+        <Text>{sentences?.content}</Text>
       </Box>
       <Box col className="gap-4">
         <Text type="caption">
-          {formatDateToMDY(sentences.created_at)} ·{' '}
-          {formatDateToHM(sentences.created_at)}
+          {formatDateToMDY(sentences?.created_at)} ·{' '}
+          {formatDateToHM(sentences?.created_at)}
         </Text>
         <Box row className="gap-4">
           <Box row className="gap-2">
             <FavoriteButton size={20} />
-            <Text type="caption">{sentences.favorite ?? 0}</Text>
+            <Text type="caption">{sentences?.favorite ?? 0}</Text>
           </Box>
           <Box row className="gap-2">
             <CommentButton size={20} />
