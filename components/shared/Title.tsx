@@ -6,7 +6,7 @@ interface Props {
   as?: ElementType
   className?: string
   type?: 'title' | 'sub' | 'customColor'
-  size?: 'sm' | 'md' | 'lg' | 'bigger'
+  size?: 'sm' | 'md' | 'lg' | 'bigger' | 'xs'
 }
 
 const TITLE_VARIANTS = cva('', {
@@ -17,6 +17,7 @@ const TITLE_VARIANTS = cva('', {
       customColor: 'font-semibold',
     },
     size: {
+      xs: 'text-base',
       sm: 'text-lg',
       md: 'text-2xl',
       lg: 'text-4xl',
