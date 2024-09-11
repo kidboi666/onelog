@@ -18,7 +18,7 @@ export default function ProfileImageSection({ onChange, imagePreview }: Props) {
   return (
     <Container
       onClick={() => handlePreviewClick()}
-      className="relative flex h-fit w-fit cursor-pointer flex-col"
+      className="h-fitw-full relative flex cursor-pointer flex-col items-center max-sm:-order-1"
     >
       {imagePreview && (
         <Box className="relative size-56 overflow-hidden rounded-full">

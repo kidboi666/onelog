@@ -16,7 +16,7 @@ export default function AboutMeSection({
   avatarUrl,
 }: Props) {
   return (
-    <Container className="flex items-end justify-between">
+    <Container className="flex w-full justify-between max-sm:flex-col max-sm:gap-12 sm:items-end">
       <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
       <ProfileImageSection onChange={onChangeImage} imagePreview={avatarUrl} />
     </Container>

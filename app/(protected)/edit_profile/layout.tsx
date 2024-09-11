@@ -5,7 +5,6 @@ import { PropsWithChildren } from 'react'
 export default function EditProfileLayout({ children }: PropsWithChildren) {
   return (
     <Container className="mt-20 flex w-full flex-col items-center px-4">
-      <BackButton />
       {children}
     </Container>
   )

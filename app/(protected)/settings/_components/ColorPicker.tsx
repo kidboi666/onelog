@@ -22,7 +22,7 @@ export default function ColorPicker() {
   return (
     <Container className="flex flex-col gap-2">
       <Title>색상 설정</Title>
-      <List className="flex gap-4">
+      <List className="flex gap-4 overflow-y-auto">
         {colors.map((color) => (
           <List.Row key={color}>
             <ColorBlock
