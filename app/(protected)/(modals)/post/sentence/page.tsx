@@ -35,6 +35,9 @@ export default function SentenceModal() {
         content: sentence,
         emotion_level: selectedStatus.percent,
         user_id: me?.userId,
+        avatar_url: me?.avatar_url,
+        email: me?.email,
+        user_name: me?.user_name,
       },
       {
         onSuccess: () => {

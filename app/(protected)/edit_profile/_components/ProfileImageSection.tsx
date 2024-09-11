@@ -1,3 +1,4 @@
+import Avatar from '@/components/feature/user/Avatar'
 import Box from '@/components/shared/Box'
 import Container from '@/components/shared/Container'
 import Image from 'next/image'
@@ -18,13 +19,9 @@ export default function ProfileImageSection({ onChange, imagePreview }: Props) {
   return (
     <Container
       onClick={() => handlePreviewClick()}
-      className="h-fitw-full relative flex cursor-pointer flex-col items-center max-sm:-order-1"
+      className="relative flex cursor-pointer flex-col items-center max-sm:-order-1"
     >
-      {imagePreview && (
-        <Box className="relative size-56 overflow-hidden rounded-full">
-          <Image src={imagePreview} fill alt="프로필 사진 미리보기" />
-        </Box>
-      )}
+      <Avatar src={imagePreview} size="xl" ring="md" />
       <input
         ref={inputRef}
         type="file"

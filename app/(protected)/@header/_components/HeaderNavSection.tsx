@@ -11,6 +11,7 @@ import LinkButton from '@/components/shared/LinkButton'
 import HeaderNavSectionDropDown from './HeaderNavSectionDropDown'
 import Container from '@/components/shared/Container'
 import Box from '@/components/shared/Box'
+import Avatar from '@/components/feature/user/Avatar'
 
 export default function HeaderNavSection() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -36,19 +37,12 @@ export default function HeaderNavSection() {
       </Box>
       {me && (
         <Button
-          variant="secondary"
+          variant="emptyStyle"
           ref={dropdownButtonRef}
           onClick={onClick}
-          className="px-2"
+          className="p-0"
         >
-          <Icon className="size-5 rotate-90">
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M7 12.5a2.5 2.5 0 11-5.001-.001A2.5 2.5 0 017 12.5zm7.5 0a2.5 2.5 0 11-5.001-.001 2.5 2.5 0 015.001.001zm7.5 0a2.5 2.5 0 11-5.001-.001A2.5 2.5 0 0122 12.5z"
-              fill="currentColor"
-            />
-          </Icon>
+          <Avatar src={me.avatar_url} size="sm" />
         </Button>
       )}
       <HeaderNavSectionDropDown

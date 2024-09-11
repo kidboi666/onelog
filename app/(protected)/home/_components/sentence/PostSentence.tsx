@@ -17,7 +17,7 @@ import { List } from '@/components/shared/List'
 import RefBox from '@/components/shared/RefBox'
 import FormContainer from '@/components/shared/FormContainer'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
+import Avatar from '@/components/feature/user/Avatar'
 
 export default function PostSentence() {
   const [sentence, onChangeSentence, setSentence] = useInput('')
@@ -37,6 +37,9 @@ export default function PostSentence() {
         content: sentence,
         emotion_level: selectedEmotion,
         user_id: data.userId,
+        user_name: data.user_name,
+        email: data.email,
+        avatar_url: data.avatar_url,
       },
       {
         onSuccess: () => {
@@ -50,14 +53,7 @@ export default function PostSentence() {
 
   return (
     <FormContainer onSubmit={handleSubmitSentence} className="flex gap-2">
-      <Box className="relative size-10 overflow-hidden rounded-full">
-        <Image
-          src={data?.avatar_url!}
-          fill
-          alt="프로필 이미지"
-          className="object-cover"
-        />
-      </Box>
+      <Avatar src={data.avatar_url} size="sm" />
       <Box col className="flex-1 gap-4">
         <Box row className="gap-4">
           <Input

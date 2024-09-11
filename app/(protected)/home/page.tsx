@@ -14,11 +14,6 @@ export default function HomePage() {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <PostSentence />
       <AllSentence />
-      <AllSentence />
-      <AllSentence />
-      <AllSentence />
-      <AllSentence />
-      <AllSentence />
     </HydrationBoundary>
   )
 }

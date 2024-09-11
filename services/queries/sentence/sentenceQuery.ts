@@ -3,10 +3,13 @@ import { queryOptions } from '@tanstack/react-query'
 
 export const sentenceQuery = {
   getAllSentence: (supabase: any) =>
-    queryOptions({
+    queryOptions<Tables<'sentence'>[]>({
       queryKey: ['all_sentence'],
       queryFn: async () => {
-        const { data } = await supabase.from('sentence').select()
+        const { data } = await supabase
+          .from('sentence')
+          .select()
+          .order('created_at', { ascending: false })
         return data
       },
     }),

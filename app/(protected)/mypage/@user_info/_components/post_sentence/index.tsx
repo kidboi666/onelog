@@ -21,7 +21,7 @@ import { useRouter } from 'next/navigation'
 export default function PostSentence() {
   const [sentence, onChangeSentence, setSentence] = useInput('')
   const [selectedEmotion, setSelectedEmotion] = useState('')
-  const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { mutate, isPending } = useAddSentence()
   const router = useRouter()
 
@@ -35,7 +35,10 @@ export default function PostSentence() {
       {
         content: sentence,
         emotion_level: selectedEmotion,
-        user_id: data.userId,
+        user_id: me.userId,
+        avatar_url: me.avatar_url,
+        email: me.email,
+        user_name: me.user_name,
       },
       {
         onSuccess: () => {

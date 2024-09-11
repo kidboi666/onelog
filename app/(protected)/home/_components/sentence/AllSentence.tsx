@@ -1,5 +1,6 @@
 'use client'
 
+import Avatar from '@/components/feature/user/Avatar'
 import Box from '@/components/shared/Box'
 import Button from '@/components/shared/Button'
 import Container from '@/components/shared/Container'
@@ -9,26 +10,19 @@ import Title from '@/components/shared/Title'
 import { supabase } from '@/lib/supabase/client'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import Image from 'next/image'
 
 export default function AllSentence() {
-  const { data } = useSuspenseQuery(sentenceQuery.getAllSentence(supabase))
-  console.log(data)
-  return (
-    <Container className="group flex flex-col gap-4 transition duration-300 ease-in-out hover:-translate-y-1">
+  const { data: sentences } = useSuspenseQuery(
+    sentenceQuery.getAllSentence(supabase),
+  )
+
+  return sentences.map((sentence) => (
+    <Container key={sentence.id} className="flex flex-col gap-4">
       <Box row className="gap-2">
-        <Box className="flex items-center">
-          <Image
-            src="profile.svg"
-            alt="프로필 이미지"
-            width={40}
-            height={40}
-            className="rounded-full bg-gray-400"
-          />
-        </Box>
+        <Avatar src={sentence?.avatar_url!} size="sm" />
         <Box col>
           <Title size="xs" type="sub">
-            김현우
+            {sentence?.user_name}
             <Text as="span" size="sm" type="caption">
               {' '}
               님의 하루 한줄
@@ -38,7 +32,7 @@ export default function AllSentence() {
             감정 농도
             <Text as="span" className="text-var-blue opacity-50">
               {' '}
-              50%
+              {sentence.emotion_level}
             </Text>
           </Text>
         </Box>
@@ -47,11 +41,9 @@ export default function AllSentence() {
         isBackground
         isRounded
         col
-        className="gap-4 p-4 shadow-sm transition ease-in-out group-hover:shadow-lg"
+        className="gap-4 p-4 shadow-sm transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
       >
-        <Text>
-          오브젝트 나열할땐 어떤 일들이 일어날까요. 저도 잘 모르겠습니다.
-        </Text>
+        <Text>{sentence.content}</Text>
         <Box row className="flex-1 self-end">
           <Button
             variant="icon"
@@ -64,7 +56,7 @@ export default function AllSentence() {
                 d="M129,57.86c0-17.04-13.6-30.86-30.38-30.86-9.55,0-18.06,6.72-23.62,13.71-5.57-7-14.08-13.71-23.62-13.71-16.78,0-30.38,13.82-30.38,30.86,0,6.34,1.88,12.24,5.12,17.14.71,1.08,7.48,9.38,8.38,10.28,9.41,9.37,40.5,37.71,40.5,37.71,0,0,35.62-33.78,46.54-44.93,4.98-5.09,7.46-12.47,7.46-20.21Z"
               />
             </Icon>
-            0
+            {sentence.favorite ?? 0}
           </Button>
           <Button
             variant="icon"
@@ -83,5 +75,5 @@ export default function AllSentence() {
         </Box>
       </Box>
     </Container>
-  )
+  ))
 }
