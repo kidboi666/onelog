@@ -42,6 +42,73 @@ export type Database = {
         }
         Relationships: []
       }
+      comment: {
+        Row: {
+          avatar_url: string | null
+          comment: number | null
+          comment_id: number | null
+          content: string
+          created_at: string
+          email: string
+          favorite: number | null
+          favorited_user_id: string[] | null
+          id: number
+          sentence_id: number | null
+          user_id: string
+          user_name: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          comment?: number | null
+          comment_id?: number | null
+          content: string
+          created_at?: string
+          email: string
+          favorite?: number | null
+          favorited_user_id?: string[] | null
+          id?: number
+          sentence_id?: number | null
+          user_id: string
+          user_name: string
+        }
+        Update: {
+          avatar_url?: string | null
+          comment?: number | null
+          comment_id?: number | null
+          content?: string
+          created_at?: string
+          email?: string
+          favorite?: number | null
+          favorited_user_id?: string[] | null
+          id?: number
+          sentence_id?: number | null
+          user_id?: string
+          user_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comment_comment_id_fkey"
+            columns: ["comment_id"]
+            isOneToOne: false
+            referencedRelation: "comment"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comment_sentence_id_fkey"
+            columns: ["sentence_id"]
+            isOneToOne: false
+            referencedRelation: "sentence"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comment_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       garden: {
         Row: {
           created_at: string
@@ -69,7 +136,7 @@ export type Database = {
       sentence: {
         Row: {
           avatar_url: string | null
-          comment: Json[] | null
+          comment: number | null
           content: string
           created_at: string
           email: string | null
@@ -82,7 +149,7 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
-          comment?: Json[] | null
+          comment?: number | null
           content: string
           created_at?: string
           email?: string | null
@@ -95,7 +162,7 @@ export type Database = {
         }
         Update: {
           avatar_url?: string | null
-          comment?: Json[] | null
+          comment?: number | null
           content?: string
           created_at?: string
           email?: string | null
@@ -122,6 +189,7 @@ export type Database = {
           avatar_url: string | null
           created_at: string
           email: string | null
+          favorite_comment: Json[] | null
           favorite_sentence: Json[] | null
           favorite_words: string[] | null
           id: string
@@ -132,6 +200,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           email?: string | null
+          favorite_comment?: Json[] | null
           favorite_sentence?: Json[] | null
           favorite_words?: string[] | null
           id: string
@@ -142,6 +211,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           email?: string | null
+          favorite_comment?: Json[] | null
           favorite_sentence?: Json[] | null
           favorite_words?: string[] | null
           id?: string

@@ -6,6 +6,7 @@ import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import Sentence from './Sentence'
+import Container from '@/components/shared/Container'
 
 export default function AllSentence() {
   const { data: sentences } = useSuspenseQuery(
@@ -18,12 +19,16 @@ export default function AllSentence() {
     favoriteSentence({ userId: me?.userId, sentenceId })
   }
 
-  return sentences.map((sentence) => (
-    <Sentence
-      key={sentence.id}
-      sentence={sentence}
-      userId={me?.userId}
-      onFavoriteSentence={handleFavoriteSentence}
-    />
-  ))
+  return (
+    <Container className="flex flex-col gap-2">
+      {sentences.map((sentence) => (
+        <Sentence
+          key={sentence.id}
+          sentence={sentence}
+          userId={me?.userId}
+          onFavoriteSentence={handleFavoriteSentence}
+        />
+      ))}
+    </Container>
+  )
 }

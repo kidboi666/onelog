@@ -7,7 +7,7 @@ interface IComment {
   userName: string
   userId: string
   content: string
-  sentenceId: string | null
+  sentenceId: number | null
   avatarUrl: string | null
   commentId: number | null
 }

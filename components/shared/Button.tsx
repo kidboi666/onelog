@@ -31,7 +31,7 @@ const BUTTON_VARIANTS = cva(
           'underline hover:opacity-65 active:animate-click dark:text-white',
         list: 'justify-start font-normal text-var-black hover:bg-var-lightgray dark:text-white dark:hover:bg-var-dark',
         emptyStyle: 'hover:opacity-65',
-        icon: 'rounded-md text-gray-400 transition hover:bg-gray-200 hover:opacity-65 active:animate-click dark:text-var-darkgray',
+        icon: 'rounded-md text-gray-400 transition hover:bg-gray-200 hover:opacity-65 active:animate-click dark:text-var-gray',
       },
       disabled: {
         primary:
