@@ -17,7 +17,7 @@ export default function FavoriteWords() {
     sentenceQuery.getMyUsedWords(supabase, me.userId),
   )
   const sortedUsedWords = useMemo(
-    () => words?.words?.sort((a, b) => b.count - a.count),
+    () => words?.words?.sort((a, b) => b?.count - a?.count),
     [words?.words],
   )
   const shouldRenderWords = useMemo(
