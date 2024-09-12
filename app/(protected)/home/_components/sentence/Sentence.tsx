@@ -1,8 +1,6 @@
 import Avatar from '@/components/feature/user/Avatar'
 import Box from '@/components/shared/Box'
-import Button from '@/components/shared/Button'
 import Container from '@/components/shared/Container'
-import Icon from '@/components/shared/Icon'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { Tables } from '@/types/supabase'
@@ -10,20 +8,20 @@ import { useState } from 'react'
 import CommentContainer from './_components/comment'
 import FavoriteButton from '../button/FavoriteButton'
 import CommentButton from '../button/CommentButton'
+import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
 
 interface Props {
   sentence: Tables<'sentence'>
   userId: string
-  onFavoriteSentence: (sentenceId: number) => void
 }
 
-export default function Sentence({
-  sentence,
-  userId,
-  onFavoriteSentence,
-}: Props) {
+export default function Sentence({ sentence, userId }: Props) {
   const [showComment, setShowComment] = useState(false)
+  const { mutate: favoriteSentence } = useFavoriteSentence()
 
+  const handleFavoriteSentence = (sentenceId: number) => {
+    favoriteSentence({ userId, sentenceId })
+  }
   const handleShowComment = () => {
     setShowComment((prev) => !prev)
   }
@@ -60,11 +58,15 @@ export default function Sentence({
             <Text>{sentence.content}</Text>
             <Box row className="flex-1">
               <FavoriteButton
-                sentence={sentence}
-                onFavoriteSentence={onFavoriteSentence}
+                item={sentence}
+                onFavorite={handleFavoriteSentence}
                 userId={userId}
               />
-              <CommentButton onShowComment={handleShowComment} />
+              <CommentButton
+                showComment={showComment}
+                commentCount={sentence.comment!}
+                onShowComment={handleShowComment}
+              />
             </Box>
           </Box>
         </Box>

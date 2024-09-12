@@ -26,16 +26,16 @@ const BUTTON_VARIANTS = cva(
       active: {
         primary: 'rounded-md text-white hover:opacity-65 active:animate-click',
         secondary:
-          'rounded-md border border-var-gray text-var-black hover:opacity-65 active:animate-click dark:text-white dark:ring-var-gray',
+          'rounded-md border border-var-gray text-var-black hover:opacity-65 active:animate-click dark:text-gray-200 dark:ring-gray-600',
         teritory:
-          'underline hover:opacity-65 active:animate-click dark:text-white',
-        list: 'justify-start font-normal text-var-black hover:bg-var-lightgray dark:text-white dark:hover:bg-var-dark',
+          'underline hover:opacity-65 active:animate-click dark:text-gray-200',
+        list: 'justify-start font-normal text-var-black hover:bg-var-lightgray dark:text-gray-400 dark:hover:bg-var-dark',
         emptyStyle: 'hover:opacity-65',
         icon: 'rounded-md text-gray-400 transition hover:bg-gray-200 hover:opacity-65 active:animate-click dark:text-var-gray',
       },
       disabled: {
         primary:
-          'gap-2 rounded-md bg-gray-300 text-gray-50 ring-1 ring-gray-300 dark:bg-gray-600 dark:text-gray-500 dark:ring-gray-600',
+          'gap-2 rounded-md bg-gray-300 text-gray-200 ring-1 ring-gray-300 dark:bg-gray-600 dark:text-gray-500 dark:ring-gray-600',
         secondary: '',
         teritory: '',
         list: '',

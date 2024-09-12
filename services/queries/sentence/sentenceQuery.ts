@@ -48,11 +48,11 @@ export const sentenceQuery = {
       queryFn: async () => {
         const { data } = await supabase
           .from('user_info')
-          .select('favorite_sentence')
+          .select('favorite_sentence_id')
           .eq('id', userId)
           .single()
 
-        return data.favorite_sentence
+        return data.favorite_sentence_id
       },
     }),
 

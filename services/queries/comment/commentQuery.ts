@@ -10,20 +10,22 @@ export const commentQuery = {
           .from('comment')
           .select()
           .eq('sentence_id', sentenceId)
+          .is('comment_id', null)
 
         return data
       },
       enabled: !!sentenceId,
     }),
 
-  getCommentToComment: (supabase: any, commentId: number) =>
+  getCommentToComment: (supabase: any, sentenceId: number, commentId: number) =>
     queryOptions<Tables<'comment'>[]>({
-      queryKey: ['comment', commentId],
+      queryKey: ['comment', sentenceId, commentId],
       queryFn: async () => {
         const { data } = await supabase
           .from('comment')
           .select()
           .eq('comment_id', commentId)
+          .order('created_at', { ascending: false })
 
         return data
       },

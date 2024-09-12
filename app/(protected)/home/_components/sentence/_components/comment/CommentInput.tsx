@@ -9,40 +9,54 @@ import { Tables } from '@/types/supabase'
 import { FormEvent } from 'react'
 
 interface Props {
-  sentenceId?: number
+  sentenceId: number
   commentId?: number
 }
 
 export default function CommentInput({ sentenceId, commentId }: Props) {
-  const [content, onChangeContent] = useInput('')
+  const [content, onChangeContent, setContent] = useInput('')
   const me = getQueryClient().getQueryData<Tables<'user_info'>>(['me', 'info'])
-  const { mutate: postComment } = usePostComment()
+  const { mutate: postComment, isPending: isPostPending } = usePostComment()
 
   const handlePostComment = (e: FormEvent) => {
     e.preventDefault()
-    postComment({
-      email: me!.email!,
-      userName: me!.user_name!,
-      userId: me!.id!,
-      content,
-      sentenceId: sentenceId || null,
-      avatarUrl: me!.avatar_url || null,
-      commentId: commentId || null,
-    })
+    postComment(
+      {
+        email: me!.email!,
+        userName: me!.user_name!,
+        userId: me!.id!,
+        content,
+        sentenceId: sentenceId,
+        avatarUrl: me!.avatar_url || null,
+        commentId: commentId || null,
+      },
+      {
+        onSuccess: () => {
+          setContent('')
+        },
+      },
+    )
   }
 
   return (
-    <FormContainer onSubmit={handlePostComment} className="mb-8 flex gap-4">
+    <FormContainer
+      onSubmit={handlePostComment}
+      className="mb-8 flex w-full gap-4"
+    >
       <Avatar src={me?.avatar_url} size="sm" />
       <Input
         value={content}
         onChange={onChangeContent}
         dimension="sm"
         placeholder="댓글을 달아주세요."
-        className="flex-1"
+        className="w-full"
       />
-      <Button disabled={!content} className="self-end">
-        댓글 달기
+      <Button
+        disabled={!content}
+        isLoading={isPostPending}
+        className="h-full self-end text-nowrap"
+      >
+        댓글달기
       </Button>
     </FormContainer>
   )

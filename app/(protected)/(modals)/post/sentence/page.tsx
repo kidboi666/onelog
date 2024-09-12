@@ -1,22 +1,17 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
-import { formatDateToYMD } from '@/utils/formatDate'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { useInput } from '@/hooks/useInput'
 import { EMOTION_STATUS, INIT_STATUS, WEEKDAY } from './_constants'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 
-import Title from '@/components/shared/Title'
 import Modal from '@/components/shared/Modal'
 import Box from '@/components/shared/Box'
 import FormContainer from '@/components/shared/FormContainer'
-import EmotionSection from './_components/EmotionSection'
-import SentenceSection from './_components/SentenceSection'
-import Avatar from '@/components/feature/user/Avatar'
 import Input from '@/components/shared/Input'
 import Button from '@/components/shared/Button'
 import { List } from '@/components/shared/List'
@@ -58,13 +53,16 @@ export default function SentenceModal() {
     <Modal className="bg-var-lightgray">
       <FormContainer className="size-full">
         <Box col className="w-full flex-1 gap-4">
-          <Box row className="gap-4 rounded-md bg-var-lightgray px-2 py-4">
+          <Box
+            row
+            className="gap-4 rounded-md bg-var-lightgray px-2 py-4 dark:bg-var-darkgray"
+          >
             <Input
               value={sentence}
               variant="primary"
               placeholder="오늘 당신의 생각을 한 줄로 기록하세요."
               onChange={onChangeSentence}
-              className="flex-1 p-2 text-sm"
+              className="flex-1 p-2 text-sm dark:bg-var-dark"
             />
             <Button
               isLoading={isPending}

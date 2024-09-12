@@ -7,7 +7,7 @@ interface IComment {
   userName: string
   userId: string
   content: string
-  sentenceId: number | null
+  sentenceId: number
   avatarUrl: string | null
   commentId: number | null
 }
@@ -24,15 +24,22 @@ export const usePostComment = () => {
           user_name: params.userName,
           user_id: params.userId,
           content: params.content,
-          sentence_id: params.sentenceId || null,
+          sentence_id: params.sentenceId,
           avatar_url: params.avatarUrl || null,
           comment_id: params.commentId || null,
         })
         .select()
+        .single()
     },
-    onSuccess: ({ data }) => {
+    onSettled: (_, __, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ['comment', data?.[0]?.post_id],
+        queryKey: ['all_sentence'],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['comment', variables.sentenceId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['comment', variables.commentId],
       })
     },
   })

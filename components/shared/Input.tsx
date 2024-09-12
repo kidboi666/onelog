@@ -15,7 +15,7 @@ const INPUT_VARIANTS = cva('outline-none', {
   variants: {
     variant: {
       primary:
-        'rounded-md bg-white shadow-sm ring-gray-200 transition focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-white/20',
+        'rounded-md bg-white shadow-sm ring-gray-200 transition focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-gray-600',
       secondary:
         'border-b border-gray-800 bg-transparent transition ease-in-out dark:border-white dark:bg-transparent dark:text-white',
       auth: 'rounded-md bg-gray-200 transition dark:bg-white/15 dark:text-white',

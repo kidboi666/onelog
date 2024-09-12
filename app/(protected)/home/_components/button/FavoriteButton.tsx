@@ -16,7 +16,7 @@ export default function FavoriteButton({ item, onFavorite, userId }: Props) {
       size="icon"
       onClick={() => onFavorite(item?.id!)}
       className={cn(
-        'flex gap-2 border-none text-xs font-light',
+        'flex gap-2 border-none text-xs font-light hover:text-red-500',
         item?.favorited_user_id?.includes(userId) &&
           'text-red-500 dark:text-red-500',
       )}

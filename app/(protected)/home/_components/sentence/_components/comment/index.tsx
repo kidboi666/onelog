@@ -17,7 +17,11 @@ export default function CommentContainer({ sentenceId }: Props) {
     <>
       <CommentInput sentenceId={sentenceId} />
       {comments.map((comment) => (
-        <CommentItem comment={comment} />
+        <CommentItem
+          key={comment.id}
+          comment={comment}
+          sentenceId={sentenceId}
+        />
       ))}
       <Line className="mb-8 mt-4" />
     </>

@@ -189,8 +189,8 @@ export type Database = {
           avatar_url: string | null
           created_at: string
           email: string | null
-          favorite_comment: Json[] | null
-          favorite_sentence: Json[] | null
+          favorite_comment_id: number[] | null
+          favorite_sentence_id: number[] | null
           favorite_words: string[] | null
           id: string
           user_name: string | null
@@ -200,8 +200,8 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           email?: string | null
-          favorite_comment?: Json[] | null
-          favorite_sentence?: Json[] | null
+          favorite_comment_id?: number[] | null
+          favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
           id: string
           user_name?: string | null
@@ -211,8 +211,8 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           email?: string | null
-          favorite_comment?: Json[] | null
-          favorite_sentence?: Json[] | null
+          favorite_comment_id?: number[] | null
+          favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
           id?: string
           user_name?: string | null
@@ -289,9 +289,23 @@ export type Database = {
         }
         Returns: undefined
       }
+      decrement_favorite_comment: {
+        Args: {
+          comment_intid: number
+          user_uuid: string
+        }
+        Returns: undefined
+      }
       increment_favorite: {
         Args: {
           sentence_id: number
+          user_uuid: string
+        }
+        Returns: undefined
+      }
+      increment_favorite_comment: {
+        Args: {
+          comment_intid: number
           user_uuid: string
         }
         Returns: undefined

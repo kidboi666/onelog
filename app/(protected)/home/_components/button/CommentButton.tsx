@@ -1,17 +1,27 @@
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
+import cn from '@/lib/cn'
 
 interface Props {
   onShowComment: () => void
+  commentCount?: number
+  showComment?: boolean
 }
 
-export default function CommentButton({ onShowComment }: Props) {
+export default function CommentButton({
+  onShowComment,
+  commentCount,
+  showComment,
+}: Props) {
   return (
     <Button
       variant="icon"
       size="icon"
       onClick={onShowComment}
-      className="flex gap-2 border-none text-xs font-light"
+      className={cn(
+        'flex gap-2 border-none text-xs font-light transition hover:text-blue-400',
+        showComment ? 'text-blue-400 dark:text-blue-400' : '',
+      )}
     >
       <Icon size={16} view={150}>
         <g id="income">
@@ -20,7 +30,7 @@ export default function CommentButton({ onShowComment }: Props) {
           <line x1="51" y1="78" x2="99" y2="78" />
         </g>
       </Icon>
-      0
+      {commentCount ?? 0}
     </Button>
   )
 }
