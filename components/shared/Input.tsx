@@ -21,9 +21,9 @@ const INPUT_VARIANTS = cva('outline-none', {
       auth: 'rounded-md bg-gray-200 transition dark:bg-white/15 dark:text-white',
     },
     dimension: {
-      sm: 'text-xs',
-      md: 'text-sm',
-      lg: 'text-base',
+      sm: 'p-2 text-xs',
+      md: 'p-4 text-sm',
+      lg: 'p-4 text-base',
     },
   },
 })

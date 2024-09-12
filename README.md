@@ -45,3 +45,15 @@ sentences[] : 해당 월에 작성된 문장의 정보 (예: { sentence_id, crea
 
 word: 단어
 count: 사용 횟수
+
+## comment에 필요한 정보
+
+id primary
+created_at timestamp
+email text
+user_name text
+avatar_url text
+content text
+sentence_id int4
+comment_id int4
+user_id uuid

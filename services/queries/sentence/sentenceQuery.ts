@@ -42,6 +42,20 @@ export const sentenceQuery = {
       },
     }),
 
+  getMyFavoriteSentence: (supabase: any, userId: string) =>
+    queryOptions({
+      queryKey: ['favorite_sentences'],
+      queryFn: async () => {
+        const { data } = await supabase
+          .from('user_info')
+          .select('favorite_sentence')
+          .eq('id', userId)
+          .single()
+
+        return data.favorite_sentence
+      },
+    }),
+
   getMyUsedWords: (supabase: any, userId: string) =>
     queryOptions<Tables<'user_words'>>({
       queryKey: ['favorite_words', userId],

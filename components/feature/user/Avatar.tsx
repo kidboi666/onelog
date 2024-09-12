@@ -38,7 +38,7 @@ export default function Avatar({
     <Box
       className={cn(
         avatarVariants({ size, ring }),
-        'relative overflow-hidden rounded-full bg-gray-400',
+        'relative flex-shrink-0 overflow-hidden rounded-full bg-gray-400',
         className,
       )}
     >

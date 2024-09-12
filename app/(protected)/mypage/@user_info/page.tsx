@@ -11,6 +11,7 @@ import Garden from './_components/garden'
 import PrevOneSentence from './_components/one_sentence'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import PostSentence from './_components/post_sentence'
+import MyFavoriteSentence from './_components/my_favorite_sentence'
 
 export default async function UserInfoSection() {
   const supabase = createServerClient()
@@ -30,6 +31,7 @@ export default async function UserInfoSection() {
       <FavoriteWords />
       <Garden />
       <PrevOneSentence />
+      <MyFavoriteSentence />
     </HydrationBoundary>
   )
 }

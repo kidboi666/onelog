@@ -3,7 +3,7 @@ import { createServerClient } from '@/lib/supabase/server'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
-import AllSentence from './_components/sentence/AllSentence'
+import AllSentence from './_components/sentence'
 
 export default function HomePage() {
   const supabase = createServerClient()
