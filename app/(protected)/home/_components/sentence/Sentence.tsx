@@ -9,6 +9,7 @@ import CommentContainer from './_components/comment'
 import FavoriteButton from '../button/FavoriteButton'
 import CommentButton from '../button/CommentButton'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
+import { formatDateToHM, formatDateToYMD } from '@/utils/formatDate'
 
 interface Props {
   sentence: Tables<'sentence'>
@@ -39,13 +40,21 @@ export default function Sentence({ sentence, userId }: Props) {
                 님의 하루 한줄
               </Text>
             </Title>
-            <Text size="sm">
-              감정 농도
-              <Text as="span" className="text-var-blue opacity-50">
-                {' '}
-                {sentence.emotion_level}
+            <Box row className="items-center gap-2">
+              <Text size="sm">
+                감정 농도
+                <Text as="span" className="text-var-blue opacity-50">
+                  {' '}
+                  {sentence.emotion_level}
+                </Text>
               </Text>
-            </Text>
+              <Text as="span" size="sm" type="caption">
+                {' '}
+                {formatDateToYMD(sentence.created_at)}
+                {' ・ '}
+                {formatDateToHM(sentence.created_at)}
+              </Text>
+            </Box>
           </Box>
         </Box>
         <Box col>

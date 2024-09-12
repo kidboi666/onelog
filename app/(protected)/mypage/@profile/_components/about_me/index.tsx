@@ -19,11 +19,11 @@ export default function AboutMe({ avatarUrl, userName }: Props) {
         </Box>
       </Box>
       <Box className="relative">
-        <Line className="opacity-50" />
+        <Line className="border-gray-500" />
         <Text
           as="span"
           type="caption"
-          className="absolute -top-2 left-1/2 -translate-x-1/2 bg-white px-2 text-sm text-gray-400 dark:bg-var-darkgray"
+          className="absolute -top-2 left-1/2 -translate-x-1/2 bg-white px-2 text-sm text-gray-400 dark:bg-var-darkgray dark:text-gray-500"
         >
           소 개
         </Text>
