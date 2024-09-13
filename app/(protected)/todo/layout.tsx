@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default function Layout({
-  children,
   sidebar,
   task_manager,
 }: PropsWithChildren<Props>) {

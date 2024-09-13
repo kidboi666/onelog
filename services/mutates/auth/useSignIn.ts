@@ -1,11 +1,10 @@
 import { supabase } from '@/lib/supabase/client'
 import { ISignIn } from '@/types/auth'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
 export default function useSignIn() {
   const router = useRouter()
-  const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: async (authData: ISignIn) => {
@@ -19,9 +18,7 @@ export default function useSignIn() {
       return data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['me', 'info'] })
-      queryClient.invalidateQueries({ queryKey: ['me', 'session'] })
-      router.replace('/mypage')
+      router.replace('/home')
     },
   })
 }

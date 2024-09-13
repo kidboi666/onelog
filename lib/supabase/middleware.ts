@@ -35,15 +35,15 @@ export async function updateSession(req: NextRequest) {
   // issues with users being randomly logged out.
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser()
+    data: { session },
+  } = await supabase.auth.getSession()
 
-  if (!user && PROTECTED_ROUTES.includes(req.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL('/', req.url))
+  if (!session && PROTECTED_ROUTES.includes(req.nextUrl.pathname)) {
+    return NextResponse.redirect(new URL('/signin', req.url))
   }
 
-  if (user && AUTH_RESTRICTED_ROUTES.includes(req.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL('/mypage', req.url))
+  if (session && AUTH_RESTRICTED_ROUTES.includes(req.nextUrl.pathname)) {
+    return NextResponse.redirect(new URL('/home', req.url))
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're

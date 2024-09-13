@@ -1,25 +1,29 @@
+'use client'
+
 import Avatar from '@/components/feature/user/Avatar'
 import Box from '@/components/shared/Box'
 import Line from '@/components/shared/Line'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
+import { supabase } from '@/lib/supabase/client'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
-interface Props {
-  avatarUrl: string | null
-  userName: string | null
-}
+export default function AboutMe() {
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
 
-export default function AboutMe({ avatarUrl, userName }: Props) {
+  if (!me) return null
+
   return (
     <>
       <Box className="pointer-events-none flex flex-col items-center gap-4">
-        <Avatar src={avatarUrl} size="xl" ring="md" />
+        <Avatar src={me.avatar_url} size="xl" ring="md" shadow="sm" />
         <Box className="self-end">
-          <Title className="text-2xl font-medium">{userName}</Title>
+          <Title className="text-2xl font-medium">{me.user_name}</Title>
         </Box>
       </Box>
       <Box className="relative">
-        <Line className="border-gray-500" />
+        <Line className="border-gray-400 dark:border-gray-500" />
         <Text
           as="span"
           type="caption"

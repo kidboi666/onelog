@@ -11,6 +11,7 @@ interface Props extends ComponentProps<'div'> {
   isBackground?: boolean
   isBlur?: boolean
   isPage?: boolean
+  isEmpty?: boolean
 }
 
 const RefContainer = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
@@ -22,6 +23,7 @@ const RefContainer = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
       isBackground,
       isBlur,
       isPage,
+      isEmpty,
       onClick,
       children,
       className,
@@ -38,9 +40,10 @@ const RefContainer = forwardRef<HTMLDivElement, PropsWithRef<Props>>(
         onTransitionEnd={onTransitionEnd}
         className={cn(
           isRounded && 'rounded-md',
-          isBlur && 'dark:bg-var-darkgray/70 bg-white/70 backdrop-blur-lg',
-          isBackground && 'dark:bg-var-darkgray bg-white',
-          isPage && 'mt-4',
+          isBackground && 'bg-white dark:bg-var-darkgray',
+          isBlur && 'bg-white/60 backdrop-blur-xl dark:bg-var-darkgray/60',
+          isPage && 'mt-20',
+          isEmpty && 'flex w-full items-center justify-center py-12 opacity-65',
           className,
         )}
         {...Props}

@@ -7,6 +7,7 @@ interface Props {
   src?: string | null
   size?: 'sm' | 'md' | 'lg' | 'xl'
   ring?: 'none' | 'xs' | 'sm' | 'md' | 'lg'
+  shadow?: 'none' | 'sm' | 'md' | 'lg'
   className?: string
 }
 
@@ -25,6 +26,12 @@ const avatarVariants = cva('', {
       md: 'border-4 border-white ring-1 ring-gray-400',
       lg: 'border-8 border-white ring-1 ring-gray-400',
     },
+    shadow: {
+      none: '',
+      sm: 'shadow-sm',
+      md: 'shadow-md',
+      lg: 'shadow-lg',
+    },
   },
 })
 
@@ -32,13 +39,14 @@ export default function Avatar({
   src,
   size = 'md',
   ring = 'none',
+  shadow = 'none',
   className,
 }: Props) {
   return (
     <Box
       className={cn(
-        avatarVariants({ size, ring }),
-        'relative flex-shrink-0 overflow-hidden rounded-full bg-gray-400',
+        avatarVariants({ size, ring, shadow }),
+        'relative flex-shrink-0 overflow-hidden rounded-full bg-gray-400 dark:bg-var-darkgray',
         className,
       )}
     >

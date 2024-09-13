@@ -1,3 +1,9 @@
+import { RefObject } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { supabase } from '@/lib/supabase/client'
+import useSignOut from '@/services/mutates/auth/useSignOut'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import Title from '@/components/shared/Title'
 import Avatar from '@/components/feature/user/Avatar'
 import Box from '@/components/shared/Box'
 import Button from '@/components/shared/Button'
@@ -5,13 +11,6 @@ import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
 import RefContainer from '@/components/shared/RefContainer'
 import Text from '@/components/shared/Text'
-import Title from '@/components/shared/Title'
-import { supabase } from '@/lib/supabase/client'
-import useSignOut from '@/services/mutates/auth/useSignOut'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import Image from 'next/image'
-import { RefObject } from 'react'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>
@@ -43,7 +42,7 @@ export default function HeaderNavSectionDropDown({
         className="flex"
         innerClassName="flex gap-2"
       >
-        <Avatar src={me?.avatar_url} size="sm" />
+        <Avatar src={me?.avatar_url} size="sm" ring="xs" shadow="sm" />
         <Box col className="items-start">
           <Title size="xs">{me?.user_name}</Title>
           <Text type="caption" size="sm">

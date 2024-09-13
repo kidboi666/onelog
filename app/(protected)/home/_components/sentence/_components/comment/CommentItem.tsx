@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { supabase } from '@/lib/supabase/client'
@@ -15,6 +15,7 @@ import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import CommentInput from './CommentInput'
+import Spinner from '@/components/shared/Spinner'
 
 interface Props {
   comment: Tables<'comment'>
@@ -44,7 +45,7 @@ export default function CommentItem({ comment, sentenceId }: Props) {
 
   return (
     <Container className="flex w-full gap-2">
-      <Avatar src={comment?.avatar_url} size="sm" />
+      <Avatar src={comment?.avatar_url} size="sm" shadow="sm" />
       <Box col className="flex-1 gap-2">
         <Box>
           <Title size="xs" type="sub">
@@ -84,13 +85,9 @@ export default function CommentItem({ comment, sentenceId }: Props) {
         {showComment &&
           commentToComments.length >= 1 &&
           commentToComments.map((comment) => (
-            <>
-              <CommentItem
-                key={comment.id}
-                sentenceId={sentenceId}
-                comment={comment}
-              />
-            </>
+            <Suspense key={comment.id} fallback={<Spinner size={40} />}>
+              <CommentItem sentenceId={sentenceId} comment={comment} />
+            </Suspense>
           ))}
       </Box>
     </Container>

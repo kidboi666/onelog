@@ -1,7 +1,5 @@
 import Avatar from '@/components/feature/user/Avatar'
-import Box from '@/components/shared/Box'
 import Container from '@/components/shared/Container'
-import Image from 'next/image'
 import { ComponentProps, useRef } from 'react'
 
 interface Props extends ComponentProps<'input'> {
@@ -21,7 +19,7 @@ export default function ProfileImageSection({ onChange, imagePreview }: Props) {
       onClick={() => handlePreviewClick()}
       className="relative flex cursor-pointer flex-col items-center max-sm:-order-1"
     >
-      <Avatar src={imagePreview} size="xl" ring="md" />
+      <Avatar src={imagePreview} size="xl" ring="md" shadow="sm" />
       <input
         ref={inputRef}
         type="file"

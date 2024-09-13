@@ -43,7 +43,7 @@ export default function CommentInput({ sentenceId, commentId }: Props) {
       onSubmit={handlePostComment}
       className="mb-8 flex w-full gap-4"
     >
-      <Avatar src={me?.avatar_url} size="sm" />
+      <Avatar src={me?.avatar_url} size="sm" shadow="sm" />
       <Input
         value={content}
         onChange={onChangeContent}

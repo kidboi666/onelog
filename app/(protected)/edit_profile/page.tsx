@@ -110,7 +110,7 @@ export default function EditProfilePage() {
           (userName === me?.user_name &&
             aboutMe === me?.about_me &&
             avatarUrl === me?.avatar_url) ||
-          userName?.length! > 8 ||
+          userName?.length! > 10 ||
           aboutMe?.length! > 150
         }
       />

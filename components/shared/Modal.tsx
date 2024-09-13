@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect } from 'react'
 import Box from './Box'
 import Container from './Container'
+import Portal from './Portal'
 
 interface Props extends ComponentProps<'div'> {
   className?: string
@@ -34,26 +35,28 @@ export default function Modal({
   }, [])
 
   return (
-    <Container
-      onClick={() => router.back()}
-      className="fixed inset-0 z-50 animate-fade-in bg-var-dark/25 backdrop-blur-sm dark:bg-var-dark/25"
-    >
-      <Box
-        onClick={(e) => e.stopPropagation()}
-        className="fixed left-1/2 top-1/2 flex h-fit w-full max-w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 rounded-md shadow-lg md:max-w-[480px]"
-        {...props}
+    <Portal>
+      <Container
+        onClick={() => router.back()}
+        className="fixed inset-0 z-50 animate-fade-in bg-var-dark/25 backdrop-blur-sm dark:bg-var-dark/25"
       >
-        <Container
-          isRounded
-          isBackground
-          className={cn(
-            'flex w-full flex-col items-center justify-center gap-12 p-8',
-            className,
-          )}
+        <Box
+          onClick={(e) => e.stopPropagation()}
+          className="fixed left-1/2 top-1/2 flex h-fit w-full max-w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 rounded-md shadow-lg md:max-w-[480px]"
+          {...props}
         >
-          {children}
-        </Container>
-      </Box>
-    </Container>
+          <Container
+            isRounded
+            isBackground
+            className={cn(
+              'flex w-full flex-col items-center justify-center gap-12 p-8',
+              className,
+            )}
+          >
+            {children}
+          </Container>
+        </Box>
+      </Container>
+    </Portal>
   )
 }

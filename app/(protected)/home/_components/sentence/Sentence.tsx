@@ -4,12 +4,16 @@ import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { Tables } from '@/types/supabase'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import CommentContainer from './_components/comment'
 import FavoriteButton from '../button/FavoriteButton'
 import CommentButton from '../button/CommentButton'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
 import { formatDateToHM, formatDateToYMD } from '@/utils/formatDate'
+import Spinner from '@/components/shared/Spinner'
+import useIntersect from '@/hooks/useIntersect'
+import RefContainer from '@/components/shared/RefContainer'
+import cn from '@/lib/cn'
 
 interface Props {
   sentence: Tables<'sentence'>
@@ -18,6 +22,7 @@ interface Props {
 
 export default function Sentence({ sentence, userId }: Props) {
   const [showComment, setShowComment] = useState(false)
+  const [ref, inView] = useIntersect<HTMLDivElement>({ threshold: 0.2 }, true)
   const { mutate: favoriteSentence } = useFavoriteSentence()
 
   const handleFavoriteSentence = (sentenceId: number) => {
@@ -29,9 +34,13 @@ export default function Sentence({ sentence, userId }: Props) {
 
   return (
     <>
-      <Container key={sentence.id} className="my-4 flex flex-col gap-4">
+      <RefContainer
+        ref={ref}
+        key={sentence.id}
+        className={cn('my-4 flex flex-col gap-4', inView ? 'animate-' : '')}
+      >
         <Box row className="gap-2">
-          <Avatar src={sentence?.avatar_url!} size="sm" />
+          <Avatar src={sentence?.avatar_url!} size="sm" shadow="sm" />
           <Box col>
             <Title size="xs" type="sub">
               {sentence?.user_name}
@@ -79,8 +88,12 @@ export default function Sentence({ sentence, userId }: Props) {
             </Box>
           </Box>
         </Box>
-        {showComment && <CommentContainer sentenceId={sentence?.id} />}
-      </Container>
+        {showComment && (
+          <Suspense fallback={<Spinner size={40} />}>
+            <CommentContainer sentenceId={sentence?.id} />
+          </Suspense>
+        )}
+      </RefContainer>
     </>
   )
 }

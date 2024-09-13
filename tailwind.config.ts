@@ -68,6 +68,10 @@ const config: Config = {
           from: { opacity: '0' },
           to: { opacity: '1' },
         },
+        'slide-down': {
+          from: { opacity: '0', transform: 'translateY(-10%)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
         click: {
           from: { transform: 'scale(0.95)' },
           to: { transform: 'scale(1)' },
@@ -75,6 +79,7 @@ const config: Config = {
       },
       animation: {
         'fade-in': 'fade-in 0.3s linear',
+        'slide-down': 'slide-down 0.3s ease-in-out',
         click: 'click 0.1s ease-in-out forwards',
       },
     },

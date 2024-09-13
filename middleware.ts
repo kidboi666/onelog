@@ -18,6 +18,7 @@ export const PROTECTED_ROUTES = [
   '/edit_profile',
   '/settings',
   '/post',
+  '/todo',
   '/post/sentence',
   '/home',
 ]

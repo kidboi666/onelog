@@ -41,7 +41,7 @@ export default function HeaderNavSection() {
           onClick={onClick}
           className="p-0"
         >
-          <Avatar src={me.avatar_url} size="sm" ring="xs" />
+          <Avatar src={me.avatar_url} size="sm" ring="xs" shadow="sm" />
         </Button>
       )}
       <HeaderNavSectionDropDown

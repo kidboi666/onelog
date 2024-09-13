@@ -36,8 +36,8 @@ export default function UserNameSection({ value, onChange }: Props) {
           {value && (
             <Text
               size="sm"
-              className={cn(value?.length > 8 && 'text-red-600')}
-            >{`${value?.length} / 8`}</Text>
+              className={cn(value?.length > 10 && 'text-red-600')}
+            >{`${value?.length} / 10`}</Text>
           )}
         </Box>
       </Box>

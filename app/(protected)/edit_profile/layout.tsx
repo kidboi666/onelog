@@ -1,6 +1,5 @@
-import BackButton from '@/components/shared/BackButton'
 import Container from '@/components/shared/Container'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, Suspense } from 'react'
 
 export default function EditProfileLayout({ children }: PropsWithChildren) {
   return (

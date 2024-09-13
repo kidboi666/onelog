@@ -51,7 +51,7 @@ export default function PostSentence() {
 
   return (
     <FormContainer onSubmit={handleSubmitSentence} className="flex gap-2">
-      <Avatar src={data.avatar_url} size="sm" />
+      <Avatar src={data?.avatar_url} size="sm" shadow="sm" />
       <Box col className="flex-1 gap-4">
         <Box row className="gap-4">
           <Input

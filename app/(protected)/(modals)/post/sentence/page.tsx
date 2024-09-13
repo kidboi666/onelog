@@ -1,12 +1,12 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { useInput } from '@/hooks/useInput'
-import { EMOTION_STATUS, INIT_STATUS, WEEKDAY } from './_constants'
+import { EMOTION_STATUS } from './_constants'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 
 import Modal from '@/components/shared/Modal'
@@ -28,30 +28,31 @@ export default function SentenceModal() {
     setSelectedEmotion(emotion)
   }
 
-  // const handleSubmit = (e: FormEvent) => {
-  //   e.preventDefault()
-  //   addSentence(
-  //     {
-  //       content: sentence,
-  //       emotion_level: selectedEmotion.percent,
-  //       user_id: me?.userId,
-  //       avatar_url: me?.avatar_url,
-  //       email: me?.email,
-  //       user_name: me?.user_name,
-  //     },
-  //     {
-  //       onSuccess: () => {
-  //         router.push('/success')
-  //         setSentence('')
-  //         setSelectedStatus(INIT_STATUS)
-  //       },
-  //     },
-  //   )
-  // }
+  const handleSubmitSentence = (e: FormEvent) => {
+    e.preventDefault()
+    addSentence(
+      {
+        content: sentence,
+        emotion_level: selectedEmotion,
+        user_id: me.userId,
+        user_name: me.user_name,
+        email: me.email,
+        avatar_url: me.avatar_url,
+      },
+      {
+        onSuccess: () => {
+          setSentence('')
+          setSelectedEmotion('')
+          router.push('/success')
+          router.back()
+        },
+      },
+    )
+  }
 
   return (
     <Modal className="bg-var-lightgray">
-      <FormContainer className="size-full">
+      <FormContainer onSubmit={handleSubmitSentence} className="size-full">
         <Box col className="w-full flex-1 gap-4">
           <Box
             row
@@ -85,18 +86,6 @@ export default function SentenceModal() {
             ))}
           </List>
         </Box>
-        {/* <Box className="flex w-full flex-col items-center gap-20">
-          <EmotionSection
-            selectedStatus={selectedStatus}
-            onStatusClick={handleStatusClick}
-          />
-          <SentenceSection
-            onChangeSentence={onChangeSentence}
-            selectedStatusPercent={selectedStatus.percent}
-            sentence={sentence}
-            isPending={isPending}
-          />
-        </Box> */}
       </FormContainer>
     </Modal>
   )
