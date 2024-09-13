@@ -14,7 +14,7 @@ import Tag from './_components/Tag'
 export default function FavoriteWords() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: words } = useSuspenseQuery(
-    sentenceQuery.getMyUsedWords(supabase, me.userId),
+    sentenceQuery.getMyUsedWords(supabase, me?.userId),
   )
   const sortedUsedWords = useMemo(
     () => words?.words?.sort((a, b) => b?.count - a?.count),

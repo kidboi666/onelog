@@ -35,14 +35,14 @@ export async function updateSession(req: NextRequest) {
   // issues with users being randomly logged out.
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  if (!session && PROTECTED_ROUTES.includes(req.nextUrl.pathname)) {
+  if (!user && PROTECTED_ROUTES.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/signin', req.url))
   }
 
-  if (session && AUTH_RESTRICTED_ROUTES.includes(req.nextUrl.pathname)) {
+  if (user && AUTH_RESTRICTED_ROUTES.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/home', req.url))
   }
 

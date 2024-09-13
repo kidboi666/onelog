@@ -11,6 +11,8 @@ import HeaderNavSectionDropDown from './HeaderNavSectionDropDown'
 import Container from '@/components/shared/Container'
 import Box from '@/components/shared/Box'
 import Avatar from '@/components/feature/user/Avatar'
+import { Suspense } from 'react'
+import Spinner from '@/components/shared/Spinner'
 
 export default function HeaderNavSection() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -34,16 +36,17 @@ export default function HeaderNavSection() {
           한줄쓰기
         </LinkButton>
       </Box>
-      {me && (
+      <Suspense fallback={<Spinner size={40} />}>
         <Button
           variant="emptyStyle"
           ref={dropdownButtonRef}
           onClick={onClick}
           className="p-0"
         >
-          <Avatar src={me.avatar_url} size="sm" ring="xs" shadow="sm" />
+          <Avatar src={me?.avatar_url} size="sm" ring="xs" shadow="sm" />
         </Button>
-      )}
+      </Suspense>
+
       <HeaderNavSectionDropDown
         onTransitionEnd={onTransitionEnd}
         targetRef={dropdownRef}

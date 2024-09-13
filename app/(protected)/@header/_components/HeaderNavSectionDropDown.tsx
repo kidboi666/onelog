@@ -21,10 +21,8 @@ export default function HeaderNavSectionDropDown({
   targetRef,
   onTransitionEnd,
 }: Props) {
-  const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data?.userId),
-  )
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+
   const { mutate: signOut } = useSignOut()
   const validateEmail = me?.email?.split('@')[0]
   return (

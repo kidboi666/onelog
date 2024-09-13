@@ -21,7 +21,7 @@ const INPUT_VARIANTS = cva('outline-none', {
       auth: 'rounded-md bg-gray-200 transition dark:bg-white/15 dark:text-white',
     },
     dimension: {
-      sm: 'py-2 text-sm',
+      sm: 'p-2 text-sm',
       md: 'p-4 text-sm',
       lg: 'p-4 text-base',
     },
@@ -33,11 +33,16 @@ export default function Input({
   register,
   variant = 'primary',
   dimension = 'sm',
+  error,
   ...props
 }: Props) {
   return (
     <input
-      className={cn(INPUT_VARIANTS({ variant, dimension }), className)}
+      className={cn(
+        INPUT_VARIANTS({ variant, dimension }),
+        error ? 'ring-4 ring-red-500 dark:ring-red-500' : '',
+        className,
+      )}
       {...register}
       {...props}
     />

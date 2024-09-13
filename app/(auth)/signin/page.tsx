@@ -14,7 +14,11 @@ import { useSignInOAuth } from '@/services/mutates/auth/useSignInOAuth'
 
 export default function SignInPage() {
   const { mutate: signIn, isPending, isSuccess } = useSignIn()
-  const { mutate: signInOAuth } = useSignInOAuth()
+  const {
+    mutate: signInOAuth,
+    isPending: isOAuthPending,
+    isSuccess: isOAuthSuccess,
+  } = useSignInOAuth()
   const {
     register,
     handleSubmit,
@@ -77,6 +81,8 @@ export default function SignInPage() {
         로그인
       </Button>
       <Button
+        isLoading={isOAuthPending || isOAuthSuccess}
+        disabled={isOAuthSuccess}
         onClick={handleSubmitOAuthSignIn}
         className="bg-var-yellow text-white"
       >

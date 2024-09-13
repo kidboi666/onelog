@@ -1,6 +1,5 @@
 import Avatar from '@/components/feature/user/Avatar'
 import Box from '@/components/shared/Box'
-import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { Tables } from '@/types/supabase'

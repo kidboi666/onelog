@@ -52,7 +52,7 @@ export const sentenceQuery = {
           .eq('id', userId)
           .single()
 
-        return data.favorite_sentence_id
+        return data
       },
     }),
 
