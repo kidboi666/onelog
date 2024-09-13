@@ -69,7 +69,7 @@ export default function Block({
         disabled={disabled}
         onClick={() => setSentences(summary)}
         className={cn(
-          'size-2.5 cursor-auto select-none overflow-hidden rounded-sm ring-1 ring-gray-300 dark:ring-white/20',
+          'size-2.5 cursor-auto select-none overflow-hidden rounded-sm ring-1 ring-gray-300 dark:ring-gray-700',
           className,
         )}
       >
@@ -87,7 +87,7 @@ export default function Block({
           ref={infoRef}
           data-status="closed"
           className={cn(
-            'dark:bg-var-darkgray absolute z-30 flex h-fit w-fit items-center justify-center text-nowrap rounded-md bg-white p-1 shadow-md transition data-[status=closed]:scale-0',
+            'absolute z-30 flex h-fit w-fit items-center justify-center text-nowrap rounded-md bg-white p-1 shadow-md transition data-[status=closed]:scale-0 dark:bg-var-darkgray',
             blockInfo.month! > 10
               ? 'right-full origin-top-right'
               : 'left-full origin-top-left',

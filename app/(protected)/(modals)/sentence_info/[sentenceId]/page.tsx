@@ -10,8 +10,7 @@ import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import FavoriteButton from './_components/FavoriteButton'
 import CommentButton from './_components/CommentButton'
-import Image from 'next/image'
-import { meQuery } from '@/services/queries/auth/meQuery'
+import Avatar from '@/components/feature/user/Avatar'
 
 interface Props {
   params: { sentenceId: string }
@@ -21,10 +20,6 @@ export default function SentenceInfoModal({ params }: Props) {
   const sentenceId = params.sentenceId
   const { data: sentences } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, sentenceId),
-  )
-  const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data.userId),
   )
   const formatEmotionLevel = (emotionLevel: string) => {
     switch (emotionLevel) {
@@ -40,6 +35,7 @@ export default function SentenceInfoModal({ params }: Props) {
         return 4
     }
   }
+  console.log(sentences)
   return (
     <Modal className="items-start">
       <Box col className="w-full gap-4">
@@ -52,9 +48,7 @@ export default function SentenceInfoModal({ params }: Props) {
             />
             <Text>{sentences?.emotion_level}</Text>
           </Box>
-          <Box className="relative size-14 overflow-hidden rounded-full">
-            <Image src={me?.avatar_url!} alt="프로필 이미지" fill />
-          </Box>
+          <Avatar src={sentences?.avatar_url || null} size="sm" />
         </Box>
         <Text>{sentences?.content}</Text>
       </Box>

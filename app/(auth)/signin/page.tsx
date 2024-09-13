@@ -70,6 +70,7 @@ export default function SignInPage() {
         size="sm"
         variant="teritory"
         className="w-fit self-end"
+        innerClassName="px-0"
       >
         가입하러 가기
       </LinkButton>

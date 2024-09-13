@@ -1,6 +1,7 @@
 import Container from '@/components/shared/Container'
 import Input from '@/components/shared/Input'
 import Text from '@/components/shared/Text'
+import Title from '@/components/shared/Title'
 import { ComponentProps } from 'react'
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
 
@@ -18,7 +19,9 @@ export default function AuthForm({
 }: Props) {
   return (
     <Container className="flex flex-col gap-2">
-      <Text type="body">{name}</Text>
+      <Title as="h2" type="sub" size="xs">
+        {name}
+      </Title>
       <label htmlFor={type} className="relative flex w-full flex-col">
         <Input
           variant="primary"

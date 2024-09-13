@@ -13,6 +13,7 @@ export default function LinkButton({
   className,
   innerClassName,
   href,
+  size,
   variant,
   ...props
 }: PropsWithChildren<Props>) {
@@ -20,6 +21,7 @@ export default function LinkButton({
     <Link href={href} className={cn('h-full w-full', className)}>
       <Button
         variant={variant}
+        size={size}
         {...props}
         className={cn('h-full w-full', innerClassName)}
       >

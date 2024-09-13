@@ -27,7 +27,7 @@ export default function Tag({ word }: Props) {
           setHover(false)
         }}
         onClick={onClick}
-        className="relative animate-fade-in text-xs font-light text-gray-600 hover:bg-gray-100"
+        className="relative text-xs font-light text-gray-600"
       >
         {word.word}
       </Button>

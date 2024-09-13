@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 interface Props {
   src?: string | null
-  size?: 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   ring?: 'none' | 'xs' | 'sm' | 'md' | 'lg'
   shadow?: 'none' | 'sm' | 'md' | 'lg'
   className?: string
@@ -14,6 +14,7 @@ interface Props {
 const avatarVariants = cva('', {
   variants: {
     size: {
+      xs: 'size-8',
       sm: 'size-10',
       md: 'size-20',
       lg: 'size-40',

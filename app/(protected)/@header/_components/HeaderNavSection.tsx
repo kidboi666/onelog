@@ -27,11 +27,15 @@ export default function HeaderNavSection() {
   return (
     <Container as="nav" className="relative flex gap-2">
       <Box className="flex gap-2 max-sm:hidden">
-        <LinkButton href="/post">글쓰기</LinkButton>
+        <LinkButton size="md" href="/post" innerClassName="py-1">
+          글쓰기
+        </LinkButton>
         <LinkButton
+          size="md"
           href="/post/sentence"
           variant="secondary"
           className="text-nowrap"
+          innerClassName="py-1"
         >
           한줄쓰기
         </LinkButton>

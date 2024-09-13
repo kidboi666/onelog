@@ -14,7 +14,11 @@ import Icon from '@/components/shared/Icon'
 
 export default function SignUpPage() {
   const { mutate: signUp, isPending, isSuccess } = useSignUp()
-  const { mutate: signUpOAuth } = useSignInOAuth()
+  const {
+    mutate: signUpOAuth,
+    isPending: isOAuthPending,
+    isSuccess: isOAuthSuccess,
+  } = useSignInOAuth()
   const {
     register,
     handleSubmit,
@@ -81,6 +85,7 @@ export default function SignUpPage() {
         size="sm"
         variant="teritory"
         className="w-fit self-end"
+        innerClassName="px-0"
       >
         로그인하러 가기
       </LinkButton>
@@ -92,6 +97,8 @@ export default function SignUpPage() {
         회원가입
       </Button>{' '}
       <Button
+        isLoading={isOAuthPending || isOAuthSuccess}
+        disabled={isOAuthSuccess}
         onClick={handleSubmitOAuthSignUp}
         className="bg-var-yellow text-white"
       >
