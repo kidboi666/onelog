@@ -12,11 +12,11 @@ export default async function UserLayout({
   user_info,
 }: PropsWithChildren<Props>) {
   return (
-    <Container className="flex w-full animate-fade-in flex-col justify-center gap-8 lg:flex-row">
-      <Box className="h-fit w-full flex-1 lg:sticky lg:top-20 lg:max-w-[300px]">
+    <Container className="flex w-full animate-fade-in flex-col justify-center md:flex-row xl:gap-8">
+      <Box className="top-20 h-fit w-full max-xl:px-4 md:max-w-[300px] lg:sticky">
         {profile}
       </Box>
-      <Box className="flex w-full flex-col gap-12 py-12 max-lg:px-4 lg:max-w-[768px]">
+      <Box className="flex min-w-20 flex-col gap-12 py-12 max-xl:px-4 xl:max-w-[768px]">
         {user_info}
       </Box>
     </Container>

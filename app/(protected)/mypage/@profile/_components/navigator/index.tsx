@@ -24,7 +24,7 @@ export default function NavigatorSection() {
             <LinkButton
               href="/edit_profile"
               variant="secondary"
-              className="flex-1"
+              className="flex-1 text-nowrap"
             >
               프로필 수정
             </LinkButton>

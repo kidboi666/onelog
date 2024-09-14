@@ -29,7 +29,7 @@ const BUTTON_VARIANTS = cva(
           'rounded-md border border-var-gray text-var-black hover:opacity-65 active:animate-click dark:text-gray-200 dark:ring-gray-600',
         teritory:
           'underline hover:opacity-65 active:animate-click dark:text-gray-200',
-        list: 'justify-start font-normal text-var-black hover:bg-var-lightgray dark:text-gray-400 dark:hover:bg-var-dark',
+        list: 'justify-start rounded-md font-normal text-var-black hover:bg-var-lightgray dark:text-gray-400 dark:hover:bg-var-dark',
         emptyStyle: 'hover:opacity-65',
         icon: 'rounded-md text-gray-400 transition hover:bg-gray-200 hover:opacity-65 active:animate-click dark:text-var-gray',
       },

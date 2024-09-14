@@ -32,7 +32,7 @@ export default function HeaderNavSectionDropDown({
       isRounded
       isBackground
       onTransitionEnd={onTransitionEnd}
-      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-60 origin-top-right overflow-hidden shadow-md"
+      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit origin-top-right p-2 shadow-md"
     >
       <LinkButton
         href="/mypage"
@@ -47,7 +47,9 @@ export default function HeaderNavSectionDropDown({
             @{validateEmail}
           </Text>
           <Box row className="gap-2">
-            <Text size="sm">마이 페이지 가기</Text>
+            <Text size="sm" className="text-nowrap">
+              마이 페이지 가기
+            </Text>
             <Box row className="items-center text-gray-500 dark:text-gray-400">
               <Icon view={150} size={10}>
                 <g id="forward">
@@ -60,20 +62,20 @@ export default function HeaderNavSectionDropDown({
         </Box>
       </LinkButton>
       <Box className="sm:hidden">
-        <LinkButton href="/post" variant="list">
+        <LinkButton href="/post" variant="list" innerClassName="py-2">
           글쓰기
         </LinkButton>
-        <LinkButton href="/post/sentence" variant="list">
+        <LinkButton href="/post/sentence" variant="list" innerClassName="py-2">
           한줄쓰기
         </LinkButton>
       </Box>
-      <LinkButton href="/todo" variant="list">
+      <LinkButton href="/todo" variant="list" innerClassName="py-2">
         할일 관리
       </LinkButton>
-      <LinkButton href="/settings" variant="list">
+      <LinkButton href="/settings" variant="list" innerClassName="py-2">
         설정
       </LinkButton>
-      <Button onClick={() => signOut()} variant="list" className="w-full">
+      <Button onClick={() => signOut()} variant="list" className="w-full py-2">
         로그아웃
       </Button>
     </RefContainer>

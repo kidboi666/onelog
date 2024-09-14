@@ -15,7 +15,7 @@ export default function ProfileSection() {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Container
         isBackground
-        className="mt-12 flex h-fit flex-col gap-8 rounded-md p-4 shadow-md max-lg:mx-4 lg:p-8"
+        className="mt-12 flex h-fit flex-col gap-8 rounded-md p-4 shadow-md md:p-8"
       >
         <AboutMeSection />
         <NavigatorSection />

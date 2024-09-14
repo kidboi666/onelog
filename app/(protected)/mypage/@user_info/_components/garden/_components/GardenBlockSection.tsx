@@ -21,7 +21,7 @@ export default function GardenBlockSection({
         'flex h-fit flex-col gap-2 overflow-x-auto p-1 garden-scrollbar-light dark:gardent-scrollbar-dark',
       )}
     >
-      <Box row className="mt-4 gap-2">
+      <Box row className="mt-4 w-full gap-2">
         <Box className="grid grid-rows-7 gap-1">
           {DAYS_OF_WEEK.map((day) => (
             <Text key={day} type="caption" className="h-1 text-[10px]">
