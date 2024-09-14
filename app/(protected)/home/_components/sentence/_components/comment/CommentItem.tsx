@@ -1,6 +1,5 @@
 import { Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { supabase } from '@/lib/supabase/client'
 import useFavoriteComment from '@/services/mutates/comment/useFavoriteComment'
 import { commentQuery } from '@/services/queries/comment/commentQuery'
@@ -16,6 +15,9 @@ import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import CommentInput from './CommentInput'
 import Spinner from '@/components/shared/Spinner'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import { ISessionInfo } from '@/types/auth'
 
 interface Props {
   comment: Tables<'comment'>
@@ -23,7 +25,13 @@ interface Props {
 }
 
 export default function CommentItem({ comment, sentenceId }: Props) {
-  const me = getQueryClient().getQueryData<Tables<'user_info'>>(['me', 'info'])
+  const cachedMe = getQueryClient().getQueryData<ISessionInfo>([
+    'me',
+    'session',
+  ])
+  const { data: me } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, cachedMe!.userId),
+  )
   const [showComment, setShowComment] = useState(false)
   const [showCommentInput, setShowCommentInput] = useState(false)
   const { data: commentToComments } = useSuspenseQuery(

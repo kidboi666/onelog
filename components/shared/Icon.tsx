@@ -30,7 +30,7 @@ export default function Icon({
       viewBox={`0 0 ${viewX || view} ${viewY || view}`}
       className={cn(className)}
       aria-valuetext={name}
-      aria-hidden
+      stroke="currentColor"
       fill="currentColor"
     >
       {children}

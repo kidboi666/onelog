@@ -16,7 +16,8 @@ export interface ButtonProps extends ComponentProps<'button'> {
     | 'list'
     | 'emptyStyle'
     | 'icon'
-  size?: 'sm' | 'md' | 'lg' | 'emptyStyle' | 'icon'
+    | 'none'
+  size?: 'sm' | 'md' | 'lg' | 'emptyStyle' | 'icon' | 'none'
 }
 
 const BUTTON_VARIANTS = cva(
@@ -31,6 +32,7 @@ const BUTTON_VARIANTS = cva(
           'underline hover:opacity-65 active:animate-click dark:text-gray-200',
         list: 'justify-start rounded-md font-normal text-var-black hover:bg-var-lightgray dark:text-gray-400 dark:hover:bg-var-dark',
         emptyStyle: 'hover:opacity-65',
+        none: '',
         icon: 'rounded-md text-gray-400 transition hover:bg-gray-200 hover:opacity-65 active:animate-click dark:text-var-gray',
       },
       disabled: {
@@ -41,6 +43,7 @@ const BUTTON_VARIANTS = cva(
         list: '',
         emptyStyle: '',
         icon: '',
+        none: '',
       },
       size: {
         sm: 'px-3 py-1 text-xs',
@@ -48,6 +51,7 @@ const BUTTON_VARIANTS = cva(
         lg: 'px-4 py-4 text-lg',
         emptyStyle: '',
         icon: 'p-2',
+        none: '',
       },
     },
   },

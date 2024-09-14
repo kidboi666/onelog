@@ -3,9 +3,12 @@ import Button from '@/components/shared/Button'
 import FormContainer from '@/components/shared/FormContainer'
 import Input from '@/components/shared/Input'
 import { useInput } from '@/hooks/useInput'
+import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { usePostComment } from '@/services/mutates/comment/usePostComment'
-import { Tables } from '@/types/supabase'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { ISessionInfo } from '@/types/auth'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { FormEvent } from 'react'
 
 interface Props {
@@ -15,7 +18,13 @@ interface Props {
 
 export default function CommentInput({ sentenceId, commentId }: Props) {
   const [content, onChangeContent, setContent] = useInput('')
-  const me = getQueryClient().getQueryData<Tables<'user_info'>>(['me', 'info'])
+  const cachedMe = getQueryClient().getQueryData<ISessionInfo>([
+    'me',
+    'session',
+  ])
+  const { data: me } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, cachedMe!.userId),
+  )
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
 
   const handlePostComment = (e: FormEvent) => {

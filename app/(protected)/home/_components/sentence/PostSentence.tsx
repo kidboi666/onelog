@@ -16,8 +16,10 @@ import FormContainer from '@/components/shared/FormContainer'
 import { useRouter } from 'next/navigation'
 import Avatar from '@/components/feature/user/Avatar'
 import EmotionPicker from '@/components/feature/sentence/EmotionPicker'
+import cn from '@/lib/cn'
 
 export default function PostSentence() {
+  const [isFocus, setFocus] = useState(false)
   const [sentence, onChangeSentence, setSentence] = useInput('')
   const [selectedEmotion, setSelectedEmotion] = useState('')
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -55,11 +57,16 @@ export default function PostSentence() {
       <Box col className="flex-1 gap-4">
         <Box row className="gap-4">
           <Input
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
             value={sentence}
             variant="primary"
             placeholder="오늘 당신의 생각을 한 줄로 기록하세요."
             onChange={onChangeSentence}
-            className="flex-1 p-2 text-sm"
+            className={cn(
+              'flex-1 p-2 text-sm',
+              isFocus ? 'ring-4' : 'animate-cta-fadein-out',
+            )}
           />
           <Button
             isLoading={isPending}

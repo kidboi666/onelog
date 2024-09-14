@@ -32,13 +32,13 @@ export default function HeaderNavSectionDropDown({
       isRounded
       isBackground
       onTransitionEnd={onTransitionEnd}
-      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit origin-top-right p-2 shadow-md"
+      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-60 origin-top-right p-2 shadow-md"
     >
       <LinkButton
         href="/mypage"
         variant="list"
         className="flex"
-        innerClassName="flex gap-2"
+        innerClassName="flex gap-4"
       >
         <Avatar src={me?.avatar_url} size="sm" ring="xs" shadow="sm" />
         <Box col className="items-start">

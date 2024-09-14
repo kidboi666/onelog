@@ -76,11 +76,26 @@ const config: Config = {
           from: { transform: 'scale(0.95)' },
           to: { transform: 'scale(1)' },
         },
+        'cta-fadein-out': {
+          '0%': {
+            boxShadow:
+              'var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)',
+          },
+          '50%': {
+            boxShadow:
+              'var(--tw-ring-inset) 0 0 0 calc(5px + var(--tw-ring-offset-width)) var(--tw-ring-color)',
+          },
+          '100%': {
+            boxShadow:
+              'var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)',
+          },
+        },
       },
       animation: {
         'fade-in': 'fade-in 0.3s linear',
         'slide-down': 'slide-down 0.3s ease-in-out',
         click: 'click 0.1s ease-in-out forwards',
+        'cta-fadein-out': 'cta-fadein-out 3s ease-in-out infinite',
       },
     },
   },
