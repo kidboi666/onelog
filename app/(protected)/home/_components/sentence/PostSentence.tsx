@@ -53,9 +53,14 @@ export default function PostSentence() {
 
   return (
     <FormContainer onSubmit={handleSubmitSentence} className="flex gap-2">
-      <Avatar src={data?.avatar_url} size="sm" shadow="sm" />
       <Box col className="flex-1 gap-4">
         <Box row className="gap-4">
+          <Avatar
+            src={data?.avatar_url}
+            size="sm"
+            shadow="sm"
+            className="max-sm:hidden"
+          />
           <Input
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
@@ -72,7 +77,7 @@ export default function PostSentence() {
             isLoading={isPending}
             disabled={!sentence || !selectedEmotion}
             type="submit"
-            className="self-end"
+            className="self-end text-nowrap"
           >
             등록하기
           </Button>

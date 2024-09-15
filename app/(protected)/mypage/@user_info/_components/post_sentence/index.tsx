@@ -67,7 +67,7 @@ export default function PostSentence() {
           isLoading={isPending}
           disabled={!sentence || !selectedEmotion}
           type="submit"
-          className="self-end"
+          className="self-end text-nowrap"
         >
           등록하기
         </Button>
