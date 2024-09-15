@@ -69,7 +69,7 @@ export default function PostSentence() {
             placeholder="오늘 당신의 생각을 한 줄로 기록하세요."
             onChange={onChangeSentence}
             className={cn(
-              'flex-1 p-2 text-sm',
+              'min-w-0 flex-1 p-2 text-sm',
               isFocus ? 'ring-4' : 'animate-cta-fadein-out',
             )}
           />

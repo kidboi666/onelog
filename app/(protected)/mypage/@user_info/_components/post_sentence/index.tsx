@@ -61,7 +61,7 @@ export default function PostSentence() {
           variant="primary"
           placeholder="오늘 당신의 생각을 한 줄로 기록하세요."
           onChange={onChangeSentence}
-          className="flex-1 p-2 text-sm"
+          className="min-w-0 flex-1 p-2 text-sm"
         />
         <Button
           isLoading={isPending}
