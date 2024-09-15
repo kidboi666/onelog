@@ -1,20 +1,23 @@
 'use client'
 
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import { useInput } from '@/hooks/useInput'
 import Container from '@/components/shared/Container'
 import TitleInput from './_components/input/TitleInput'
 import { FileInput } from './_components/input/FileInput'
 import Box from '@/components/shared/Box'
-import Markdown from '@/components/shared/Markdown'
-import TextArea from '@/components/shared/TextArea'
+import { TagsInput } from '@/components/shared/TagsInput'
+import useBlockEditor from '@/hooks/useBlockEditor'
+import { EditorContent } from '@tiptap/react'
 
 export default function PostPage() {
+  const ref = useRef<HTMLDivElement>(null)
   const [imagePreview, setImagePreview] = useState('')
   const [title, onChangeTitle] = useInput('')
-  const [content, onChangeContent] = useInput('')
+  const [content, onChangeContent, setContent] = useInput<string>('hello world')
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [tags, setTags] = useState<string[]>([])
+  const { editor } = useBlockEditor({ setContent, content })
 
   const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -23,6 +26,7 @@ export default function PostPage() {
       setImageFile(file)
     }
   }
+
   return (
     <Container
       isBackground
@@ -38,10 +42,10 @@ export default function PostPage() {
         />
       </Box>
       <TitleInput value={title} onChange={onChangeTitle} />
-      <TextArea value={content} onChange={onChangeContent} />
-      <div contentEditable />
-      <Markdown text={content} />
-      {/* <TagsInput tags={tags} setTags={setTags} /> */}
+
+      <EditorContent editor={editor} />
+      <TagsInput tags={tags} setTags={setTags} />
+      {/* <Markdown text={content} className="bg-red bor size-20" /> */}
       {/* <Button disabled>포스팅하기</Button> */}
     </Container>
   )
