@@ -53,7 +53,7 @@ export default function PostSentence() {
   return (
     <FormContainer
       onSubmit={handleSubmitSentence}
-      className="flex flex-col gap-4 overflow-hidden"
+      className="flex flex-col gap-4"
     >
       <Box row className="w-full flex-1 gap-4">
         <Input
@@ -61,7 +61,7 @@ export default function PostSentence() {
           variant="primary"
           placeholder="오늘 당신의 생각을 한 줄로 기록하세요."
           onChange={onChangeSentence}
-          className="min-w-0 flex-1 p-2 text-sm"
+          className="w-full min-w-0 p-2 text-sm"
         />
         <Button
           isLoading={isPending}

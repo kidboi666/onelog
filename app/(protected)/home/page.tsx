@@ -12,7 +12,7 @@ export default function HomePage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      {/* <PostSentence /> */}
+      <PostSentence />
       <AllSentence />
     </HydrationBoundary>
   )

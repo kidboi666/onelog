@@ -1,3 +1,4 @@
+import Portal from '@/components/shared/Portal'
 import { PropsWithChildren, ReactNode } from 'react'
 
 interface Props {
@@ -13,7 +14,7 @@ export default function MyPageLayout({
   return (
     <>
       {header}
-      {modal}
+      <Portal>{modal}</Portal>
       {children}
     </>
   )

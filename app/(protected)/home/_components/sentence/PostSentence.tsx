@@ -53,7 +53,7 @@ export default function PostSentence() {
 
   return (
     <FormContainer onSubmit={handleSubmitSentence} className="flex gap-2">
-      <Box col className="flex-1 gap-4">
+      <Box col className="w-full gap-4">
         <Box row className="gap-4">
           <Avatar
             src={data?.avatar_url}
@@ -69,7 +69,7 @@ export default function PostSentence() {
             placeholder="오늘 당신의 생각을 한 줄로 기록하세요."
             onChange={onChangeSentence}
             className={cn(
-              'min-w-0 flex-1 p-2 text-sm',
+              'w-full min-w-0 p-2 text-sm',
               isFocus ? 'ring-4' : 'animate-cta-fadein-out',
             )}
           />

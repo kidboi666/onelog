@@ -53,7 +53,7 @@ export default function SentenceModal() {
   return (
     <Modal className="bg-var-lightgray">
       <FormContainer onSubmit={handleSubmitSentence} className="size-full">
-        <Box col className="w-full flex-1 gap-4">
+        <Box col className="w-full gap-4">
           <Box
             row
             className="gap-4 rounded-md bg-var-lightgray px-2 py-4 dark:bg-var-darkgray"
@@ -63,7 +63,7 @@ export default function SentenceModal() {
               variant="primary"
               placeholder="오늘 당신의 생각을 한 줄로 기록하세요."
               onChange={onChangeSentence}
-              className="flex-1 p-2 text-sm dark:bg-var-dark"
+              className="w-full p-2 text-sm dark:bg-var-dark"
             />
             <Button
               isLoading={isPending}
