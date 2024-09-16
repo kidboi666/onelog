@@ -26,7 +26,7 @@ export default async function UserInfoSection() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PostSentence />
+      {/* <PostSentence /> */}
       <Summary />
       <FavoriteWords />
       <Garden />
