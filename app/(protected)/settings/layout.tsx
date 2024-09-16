@@ -12,7 +12,7 @@ export default function SettingsLayout({
   modal,
 }: PropsWithChildren<Props>) {
   return (
-    <Container className="mt-20 flex w-full items-center justify-center">
+    <Container className="my-20 flex w-full items-center justify-center">
       <Box className="flex w-full animate-fade-in flex-col gap-24 px-4 md:max-w-[560px]">
         {children}
       </Box>

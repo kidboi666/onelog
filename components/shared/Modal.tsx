@@ -49,7 +49,7 @@ export default function Modal({
             isRounded
             isBackground
             className={cn(
-              'flex w-full flex-col items-center justify-center gap-12 p-8',
+              'flex w-full flex-col items-center justify-center p-4',
               className,
             )}
           >

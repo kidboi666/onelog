@@ -53,7 +53,7 @@ export default function PostSentence() {
   return (
     <FormContainer
       onSubmit={handleSubmitSentence}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-4 overflow-hidden"
     >
       <Box row className="w-full flex-1 gap-4">
         <Input
