@@ -11,7 +11,7 @@ export default function TitleInput({
       onChange={onChange}
       variant="none"
       dimension="lg"
-      className="border-b border-gray-300 px-0 py-4 text-4xl text-gray-600 placeholder:text-gray-300"
+      className="border-b border-gray-300 px-0 py-4 text-4xl text-gray-600 placeholder:text-gray-300 dark:bg-transparent dark:text-gray-300 dark:placeholder:text-gray-600"
       placeholder="제목을 입력하세요."
     />
   )

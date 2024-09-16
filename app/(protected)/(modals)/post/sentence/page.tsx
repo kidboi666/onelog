@@ -69,7 +69,8 @@ export default function SentenceModal() {
               isLoading={isPending}
               disabled={!sentence || !selectedEmotion}
               type="submit"
-              className="self-end"
+              size="md"
+              className="self-end text-nowrap"
             >
               등록하기
             </Button>

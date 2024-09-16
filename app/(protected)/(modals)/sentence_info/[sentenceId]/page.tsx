@@ -35,7 +35,7 @@ export default function SentenceInfoModal({ params }: Props) {
         return 4
     }
   }
-  console.log(sentences)
+
   return (
     <Modal className="items-start">
       <Box col className="w-full gap-4">

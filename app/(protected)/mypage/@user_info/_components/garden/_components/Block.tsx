@@ -85,7 +85,7 @@ export default function Block({
       {blockInfo && (
         <RefBox
           ref={infoRef}
-          data-status="closed"
+          dataStatus="closed"
           className={cn(
             'absolute z-30 flex h-fit w-fit items-center justify-center text-nowrap rounded-md bg-white p-1 shadow-md transition data-[status=closed]:scale-0 dark:bg-var-darkgray',
             blockInfo.month! > 10
