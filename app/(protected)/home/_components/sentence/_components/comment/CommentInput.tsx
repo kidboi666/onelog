@@ -61,6 +61,7 @@ export default function CommentInput({ sentenceId, commentId }: Props) {
         className="w-full"
       />
       <Button
+        type="submit"
         disabled={!content}
         isLoading={isPostPending}
         className="h-full self-end text-nowrap"

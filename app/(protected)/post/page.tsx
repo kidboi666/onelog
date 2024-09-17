@@ -14,7 +14,7 @@ export default function PostPage() {
   const ref = useRef<HTMLDivElement>(null)
   const [imagePreview, setImagePreview] = useState('')
   const [title, onChangeTitle] = useInput('')
-  const [content, onChangeContent, setContent] = useInput<string>('hello world')
+  const [content, onChangeContent, setContent] = useInput<string>('')
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [tags, setTags] = useState<string[]>([])
   const { editor } = useBlockEditor({ setContent, content })

@@ -52,7 +52,7 @@ export const TagsInput = ({ tags, setTags }: Props) => {
     <>
       <div
         className={cn(
-          'group flex flex-wrap gap-2 rounded-lg px-2 py-3 text-sm ring-1 ring-gray-300 transition dark:border-gray-600',
+          'group flex flex-wrap gap-2 rounded-lg px-2 py-3 text-sm ring-1 ring-gray-300 transition dark:ring-gray-600',
           error && 'border-red-500',
         )}
       >
@@ -63,8 +63,8 @@ export const TagsInput = ({ tags, setTags }: Props) => {
               <List.Row key={tag + idx}>
                 <Button
                   variant="secondary"
-                  onClick={(e) => null}
-                  className="rounded-xl px-2 py-[2px] text-xs font-medium text-gray-500 dark:text-gray-400 dark:ring-gray-600"
+                  onClick={() => handleDelete(idx)}
+                  className="animate-grow-up rounded-xl border-0 px-2 py-[2px] text-xs font-medium text-gray-600 ring-1 ring-gray-300 dark:text-gray-200 dark:ring-gray-600"
                 >
                   {tag}
                 </Button>
@@ -78,7 +78,7 @@ export const TagsInput = ({ tags, setTags }: Props) => {
           value={text}
           onChange={onChangeText}
           onKeyDown={handleKeyDown}
-          className="w-full bg-transparent text-slate-800 outline-none transition dark:text-slate-400 dark:placeholder:text-slate-500"
+          className="w-full bg-transparent text-gray-600 outline-none transition dark:text-gray-200 dark:placeholder:text-gray-600"
         />
       </div>
       {error && (

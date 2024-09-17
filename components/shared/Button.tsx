@@ -27,7 +27,7 @@ const BUTTON_VARIANTS = cva(
       active: {
         primary: 'rounded-md text-white hover:opacity-65 active:animate-click',
         secondary:
-          'rounded-md border border-var-gray text-var-black hover:opacity-65 active:animate-click dark:text-gray-200 dark:ring-gray-600',
+          'rounded-md text-var-black ring-1 ring-gray-400 hover:opacity-65 active:animate-click dark:text-gray-200 dark:ring-gray-500',
         teritory:
           'underline hover:opacity-65 active:animate-click dark:text-gray-200',
         list: 'justify-start rounded-md font-normal text-var-black hover:bg-var-lightgray dark:text-gray-400 dark:hover:bg-var-dark',
@@ -37,7 +37,7 @@ const BUTTON_VARIANTS = cva(
       },
       disabled: {
         primary:
-          'gap-2 rounded-md bg-gray-300 text-gray-200 ring-1 ring-gray-300 dark:bg-gray-600 dark:text-gray-500 dark:ring-gray-600',
+          'gap-2 rounded-md bg-gray-300 text-gray-200 ring-1 ring-gray-300 dark:bg-gray-500 dark:text-gray-400 dark:ring-gray-500',
         secondary: '',
         teritory: '',
         list: '',
@@ -83,8 +83,8 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
           color && formatButtonColor(color, variant),
           BUTTON_VARIANTS(
             isLoading || disabled
-              ? { disabled: variant, size: size }
-              : { active: variant, size: size },
+              ? { disabled: variant, size }
+              : { active: variant, size },
           ),
           className,
         )}

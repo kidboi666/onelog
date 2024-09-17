@@ -12,8 +12,8 @@ interface Props {
 const TITLE_VARIANTS = cva('', {
   variants: {
     type: {
-      title: 'font-semibold text-gray-600 dark:text-gray-400',
-      sub: 'font-medium text-gray-600 dark:text-gray-400',
+      title: 'font-semibold text-gray-600 dark:text-gray-200',
+      sub: 'font-medium text-gray-600 dark:text-gray-200',
       customColor: 'font-semibold',
     },
     size: {

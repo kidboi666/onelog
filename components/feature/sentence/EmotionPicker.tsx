@@ -34,7 +34,7 @@ export default function EmotionPicker({
         </Text>
         <RefBox
           className={cn(
-            'absolute top-1 size-2 rounded-full bg-gray-300 ring-1 ring-gray-300 transition group-hover:ring-4 dark:bg-var-darkgray dark:ring-gray-500',
+            'absolute top-1 size-2 rounded-full bg-gray-300 ring-1 ring-gray-200 transition group-hover:ring-4 dark:bg-var-darkgray dark:ring-gray-600',
             selectedEmotion === emotion.percent && 'bg-slate-700 ring-4',
           )}
         />

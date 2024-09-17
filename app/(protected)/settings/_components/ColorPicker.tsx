@@ -49,7 +49,7 @@ function ColorBlock({ color, onClick, selectedColor }: ColorBlockProps) {
       variant="secondary"
       onClick={() => onClick(color)}
       className={cn(
-        'size-14 rounded-full text-white ring-0',
+        'size-14 rounded-full border text-white ring-0 dark:border-gray-500',
         color === 'yellow' && 'bg-var-yellow',
         color === 'orange' && 'bg-var-orange',
         color === 'black' && 'bg-var-black',

@@ -11,9 +11,15 @@ import useSignUp from '@/services/mutates/auth/useSignUp'
 import LinkButton from '@/components/shared/LinkButton'
 import { useSignInOAuth } from '@/services/mutates/auth/useSignInOAuth'
 import Icon from '@/components/shared/Icon'
+import { useMemo } from 'react'
+import cn from '@/lib/cn'
 
 export default function SignUpPage() {
-  const { mutate: signUp, isPending, isSuccess } = useSignUp()
+  const {
+    mutate: signUp,
+    isPending: isNormalAuthPending,
+    isSuccess: isNormalAuthSuccess,
+  } = useSignUp()
   const {
     mutate: signUpOAuth,
     isPending: isOAuthPending,
@@ -34,6 +40,14 @@ export default function SignUpPage() {
       passwordConfirmation: '',
     },
   })
+  const isPending = useMemo(
+    () => isNormalAuthPending || isOAuthPending,
+    [isNormalAuthPending, isOAuthPending],
+  )
+  const isSuccess = useMemo(
+    () => isNormalAuthSuccess || isOAuthSuccess,
+    [isNormalAuthSuccess, isOAuthSuccess],
+  )
 
   const handleSubmitSignUp = async (data: ISignUp) => {
     signUp(data, {
@@ -97,10 +111,13 @@ export default function SignUpPage() {
         회원가입
       </Button>{' '}
       <Button
-        isLoading={isOAuthPending || isOAuthSuccess}
-        disabled={isOAuthSuccess}
+        isLoading={isPending || isSuccess}
+        disabled={isSuccess}
         onClick={handleSubmitOAuthSignUp}
-        className="bg-var-yellow text-white"
+        className={cn(
+          'bg-var-yellow text-white dark:bg-var-yellow',
+          isPending || isSuccess ? 'bg-gray-300 dark:bg-gray-500' : '',
+        )}
       >
         <Icon size={20}>
           <path

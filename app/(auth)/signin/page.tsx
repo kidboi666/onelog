@@ -11,9 +11,15 @@ import useSignIn from '@/services/mutates/auth/useSignIn'
 import LinkButton from '@/components/shared/LinkButton'
 import Icon from '@/components/shared/Icon'
 import { useSignInOAuth } from '@/services/mutates/auth/useSignInOAuth'
+import { useMemo } from 'react'
+import cn from '@/lib/cn'
 
 export default function SignInPage() {
-  const { mutate: signIn, isPending, isSuccess } = useSignIn()
+  const {
+    mutate: signIn,
+    isPending: isNormalAuthPending,
+    isSuccess: isNormalAuthSuccess,
+  } = useSignIn()
   const {
     mutate: signInOAuth,
     isPending: isOAuthPending,
@@ -32,6 +38,14 @@ export default function SignInPage() {
       password: '',
     },
   })
+  const isPending = useMemo(
+    () => isNormalAuthPending || isOAuthPending,
+    [isNormalAuthPending, isOAuthPending],
+  )
+  const isSuccess = useMemo(
+    () => isNormalAuthSuccess || isOAuthSuccess,
+    [isNormalAuthSuccess, isOAuthSuccess],
+  )
 
   const handleSubmitSignIn = (data: ISignIn) => {
     signIn(data, {
@@ -82,10 +96,13 @@ export default function SignInPage() {
         로그인
       </Button>
       <Button
-        isLoading={isOAuthPending || isOAuthSuccess}
-        disabled={isOAuthSuccess}
+        isLoading={isPending || isSuccess}
+        disabled={isSuccess}
         onClick={handleSubmitOAuthSignIn}
-        className="bg-var-yellow text-white"
+        className={cn(
+          'bg-var-yellow text-white dark:bg-var-yellow',
+          isPending || isSuccess ? 'bg-gray-300 dark:bg-gray-500' : '',
+        )}
       >
         <Icon size={20}>
           <path

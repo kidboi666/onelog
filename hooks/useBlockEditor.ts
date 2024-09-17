@@ -34,7 +34,7 @@ export default function useBlockEditor({ content, setContent }: Props) {
     editorProps: {
       attributes: {
         spellcheck: 'false',
-        class: 'w-full text-gray-300 dark:text-gray-600 m-5 outline-none',
+        class: 'w-full text-gray-600 dark:text-gray-200 m-5 outline-none',
       },
     },
   })

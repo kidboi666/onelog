@@ -76,6 +76,10 @@ const config: Config = {
           from: { transform: 'scale(0.95)' },
           to: { transform: 'scale(1)' },
         },
+        'grow-up': {
+          from: { opacity: '0', transform: 'scale(0.95)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
         'cta-fadein-out': {
           '0%': {
             boxShadow:
@@ -96,6 +100,7 @@ const config: Config = {
         'slide-down': 'slide-down 0.3s ease-in-out',
         click: 'click 0.1s ease-in-out forwards',
         'cta-fadein-out': 'cta-fadein-out 3s ease-in-out infinite',
+        'grow-up': 'grow-up 0.3s ease-in-out forwards',
       },
     },
   },

@@ -15,7 +15,7 @@ export default function IntroduceSection({ value, onChange }: Props) {
     <Container className="flex w-full flex-col gap-8">
       <Title>소개글</Title>
       <Box col className="gap-2">
-        <TextArea value={value} onChange={onChange} className="px-2 py-1" />
+        <TextArea value={value} onChange={onChange} className="p-2" />
         <Box className="self-end">
           {value && (
             <Text
