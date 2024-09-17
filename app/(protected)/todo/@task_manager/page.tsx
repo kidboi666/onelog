@@ -73,18 +73,12 @@ export default function TodoPage() {
     >
       <FormContainer onSubmit={handleTodoChange} className="w-full">
         <Input
-          variant="secondary"
           value={todoText}
           onFocus={open}
           onBlur={close}
           onChange={onChangeTodoText}
           placeholder="할일을 입력하세요."
-          className="w-full py-1 font-light"
-        />
-        <RefBox
-          ref={ref}
-          dataStatus="closed"
-          className="data-line status-line bg-var-dark"
+          className="w-full font-light"
         />
         <Box className="mt-4 flex flex-col gap-4 text-left">
           <Box>
