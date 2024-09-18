@@ -42,6 +42,7 @@ export default function TaskForm({
     e.preventDefault()
     const nextTodos = [...todos, todo]
     setTodos(nextTodos)
+    setTodo(INIT_TODO)
   }
 
   const handleTodoSubmit = (e: ChangeEvent<HTMLInputElement>) => {
@@ -101,29 +102,37 @@ export default function TaskForm({
         >{`${currentYear}년 ${currentMonth}월 ${currentDate}일 오늘 할 일`}</Text>
       </Box>
       <Box className="mt-4 flex flex-col gap-4 text-left">
-        <Title type="sub">할 일</Title>
-        <List className="flex flex-col gap-2">
-          {todos.map((todo) => (
-            <Todo
-              key={todo.name}
-              todo={todo}
-              isSuccess={todo.isSuccess}
-              onDelete={handleDeleteButtonClick}
-              onSuccess={handleSuccessButtonClick}
-            />
-          ))}
-        </List>
-        <Title type="sub">완료한 일</Title>
-        <List className="flex flex-col gap-2">
-          {successTodos.map((todo) => (
-            <Todo
-              key={todo.name}
-              todo={todo}
-              isSuccess={todo.isSuccess}
-              onSuccess={handleResetTodoStatus}
-            />
-          ))}
-        </List>
+        {todos.length >= 1 && (
+          <Box col className="animate-fade-in gap-4">
+            <Title type="sub">할 일</Title>
+            <List className="flex flex-col gap-2">
+              {todos.map((todo) => (
+                <Todo
+                  key={todo.name}
+                  todo={todo}
+                  isSuccess={todo.isSuccess}
+                  onDelete={handleDeleteButtonClick}
+                  onSuccess={handleSuccessButtonClick}
+                />
+              ))}
+            </List>
+          </Box>
+        )}
+        {successTodos.length >= 1 && (
+          <Box col className="animate-fade-in gap-4">
+            <Title type="sub">완료됨</Title>
+            <List className="flex flex-col gap-2">
+              {successTodos.map((todo) => (
+                <Todo
+                  key={todo.name}
+                  todo={todo}
+                  isSuccess={todo.isSuccess}
+                  onSuccess={handleResetTodoStatus}
+                />
+              ))}
+            </List>
+          </Box>
+        )}
       </Box>
     </FormContainer>
   )
