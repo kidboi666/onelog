@@ -9,6 +9,7 @@ import { formatButtonColor } from '@/utils/formatColor'
 
 export interface ButtonProps extends ComponentProps<'button'> {
   isLoading?: boolean
+  dataStatus?: string
   variant?:
     | 'primary'
     | 'secondary'
@@ -27,17 +28,17 @@ const BUTTON_VARIANTS = cva(
       active: {
         primary: 'rounded-md text-white hover:opacity-65 active:animate-click',
         secondary:
-          'rounded-md text-var-black ring-1 ring-gray-400 hover:opacity-65 active:animate-click dark:text-gray-200 dark:ring-gray-500',
+          'rounded-md text-var-black ring-1 ring-zinc-400 hover:opacity-65 active:animate-click dark:text-zinc-200 dark:ring-zinc-500',
         teritory:
-          'underline hover:opacity-65 active:animate-click dark:text-gray-200',
-        list: 'justify-start rounded-md font-normal text-gray-600 hover:bg-var-lightgray dark:text-gray-300 dark:hover:bg-var-dark',
+          'underline hover:opacity-65 active:animate-click dark:text-zinc-200',
+        list: 'justify-start rounded-md font-normal text-zinc-600 hover:bg-var-lightgray dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
         emptyStyle: 'hover:opacity-65',
         none: '',
-        icon: 'rounded-md text-gray-400 transition hover:bg-gray-200 hover:opacity-65 active:animate-click dark:text-var-gray',
+        icon: 'rounded-md text-zinc-400 transition hover:bg-var-lightgray active:animate-click dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
       },
       disabled: {
         primary:
-          'gap-2 rounded-md bg-gray-300 text-gray-200 ring-1 ring-gray-300 dark:bg-gray-500 dark:text-gray-400 dark:ring-gray-500',
+          'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
         secondary: '',
         teritory: '',
         list: '',
@@ -64,6 +65,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
       className,
       isLoading,
       onClick,
+      dataStatus,
       disabled,
       type = 'button',
       size = 'md',
@@ -77,6 +79,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
       <button
         ref={ref}
         disabled={disabled}
+        data-status={dataStatus}
         onClick={onClick}
         type={type}
         className={cn(

@@ -22,10 +22,10 @@ const avatarVariants = cva('', {
     },
     ring: {
       none: '',
-      xs: 'border border-white ring-1 ring-gray-400',
-      sm: 'border-2 border-white ring-1 ring-gray-400',
-      md: 'border-4 border-white ring-1 ring-gray-400',
-      lg: 'border-8 border-white ring-1 ring-gray-400',
+      xs: 'border border-white ring-1 ring-zinc-400',
+      sm: 'border-2 border-white ring-1 ring-zinc-400',
+      md: 'border-4 border-white ring-1 ring-zinc-400',
+      lg: 'border-8 border-white ring-1 ring-zinc-400',
     },
     shadow: {
       none: '',
@@ -47,7 +47,7 @@ export default function Avatar({
     <Box
       className={cn(
         avatarVariants({ size, ring, shadow }),
-        'relative flex-shrink-0 overflow-hidden rounded-full bg-gray-400 dark:bg-var-darkgray',
+        'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 dark:bg-var-darkgray',
         className,
       )}
     >

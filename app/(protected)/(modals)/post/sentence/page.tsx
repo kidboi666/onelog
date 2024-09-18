@@ -60,7 +60,6 @@ export default function SentenceModal() {
           >
             <Input
               value={sentence}
-              variant="primary"
               placeholder="오늘 당신의 생각을 한 줄로 기록하세요."
               onChange={onChangeSentence}
               className="w-full p-2 text-sm dark:bg-var-dark"
@@ -76,7 +75,7 @@ export default function SentenceModal() {
             </Button>
           </Box>
           <List className="relative flex items-start justify-between gap-2">
-            <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-gray-200 dark:border-gray-600" />
+            <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-zinc-200 dark:border-zinc-600" />
             {EMOTION_STATUS.map((emotion) => (
               <EmotionPicker
                 key={emotion.status}

@@ -27,15 +27,15 @@ export default function EmotionPicker({
         variant="emptyStyle"
         size="sm"
         onClick={() => onChangeEmotion(emotion.percent)}
-        className="absolute flex flex-col gap-2 font-medium text-gray-400 hover:opacity-100"
+        className="absolute flex flex-col gap-2 font-medium text-zinc-400 hover:opacity-100"
       >
         <Text type="caption" size="sm" className="absolute top-4">
           {emotion.status}
         </Text>
         <RefBox
           className={cn(
-            'absolute top-1 size-2 rounded-full bg-gray-300 ring-1 ring-gray-200 transition group-hover:ring-4 dark:bg-var-darkgray dark:ring-gray-600',
-            selectedEmotion === emotion.percent && 'bg-slate-700 ring-4',
+            'absolute top-1 size-2 rounded-full bg-zinc-300 ring-1 ring-zinc-200 transition group-hover:ring-4 dark:bg-var-darkgray dark:ring-zinc-600',
+            selectedEmotion === emotion.percent && 'bg-zinc-700 ring-4',
           )}
         />
       </Button>

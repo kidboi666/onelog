@@ -26,7 +26,7 @@ export default function EmotionBlock({ level, onClick, className }: Props) {
   return (
     <Box
       className={cn(
-        'size-full overflow-hidden rounded-full ring-1 ring-gray-400',
+        'size-full overflow-hidden rounded-full ring-1 ring-zinc-400',
         className,
       )}
     >

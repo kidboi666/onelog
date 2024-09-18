@@ -7,7 +7,7 @@ interface Props {
   size?: number
   sizeX?: number
   sizeY?: number
-  view?: number
+  view?: number | string
   viewX?: number
   viewY?: number
 }
@@ -23,11 +23,17 @@ export default function Icon({
   viewX,
   viewY,
 }: PropsWithChildren<Props>) {
+  let viewProp
+  if (typeof view === 'string') {
+    viewProp = view
+  }
   return (
     <svg
       width={sizeX || size}
       height={sizeY || size}
-      viewBox={`0 0 ${viewX || view} ${viewY || view}`}
+      viewBox={cn(
+        viewProp ? viewProp : `0 0 ${viewX || view} ${viewY || view}`,
+      )}
       className={cn(className)}
       aria-valuetext={name}
       stroke="currentColor"

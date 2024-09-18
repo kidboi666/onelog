@@ -31,7 +31,7 @@ export default function PostPage() {
     <Container
       isBackground
       isRounded
-      className="flex min-h-screen flex-col gap-4 p-4"
+      className="flex min-h-screen flex-col gap-4"
     >
       <Box row className="gap-4">
         <FileInput

@@ -16,7 +16,7 @@ const TEXT_EDITOR_VARIANTS = cva('outline-none', {
   variants: {
     variant: {
       primary:
-        'rounded-md bg-white shadow-sm ring-gray-200 transition focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-white/20',
+        'rounded-md bg-white shadow-sm ring-zinc-200 transition focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-white/20',
     },
     size: {
       sm: 'p-2 text-xs',

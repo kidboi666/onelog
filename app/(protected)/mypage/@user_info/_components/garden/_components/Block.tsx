@@ -69,7 +69,7 @@ export default function Block({
         disabled={disabled}
         onClick={() => setSentences(summary)}
         className={cn(
-          'size-2.5 cursor-auto select-none overflow-hidden rounded-sm ring-1 ring-gray-300 dark:ring-gray-700',
+          'size-2.5 cursor-auto select-none overflow-hidden rounded-sm ring-1 ring-zinc-300 dark:ring-zinc-700',
           className,
         )}
       >

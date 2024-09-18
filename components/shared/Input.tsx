@@ -16,10 +16,10 @@ const INPUT_VARIANTS = cva('outline-none', {
   variants: {
     variant: {
       primary:
-        'rounded-md bg-white shadow-sm ring-gray-200 transition focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-gray-600',
+        'rounded-md bg-white shadow-sm ring-zinc-200 transition focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-zinc-600',
       secondary:
-        'border-b border-var-gray bg-transparent transition ease-in-out dark:bg-transparent dark:text-white dark:ring-gray-600',
-      auth: 'rounded-md bg-gray-200 transition dark:bg-white/15 dark:text-white',
+        'border-var-zinc border-b bg-transparent transition ease-in-out dark:bg-transparent dark:text-white dark:ring-zinc-600',
+      auth: 'rounded-md bg-zinc-200 transition dark:bg-white/15 dark:text-white',
       none: '',
     },
     dimension: {

@@ -83,7 +83,7 @@ export default function PostSentence() {
           </Button>
         </Box>
         <List className="relative flex items-start justify-between gap-2">
-          <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-gray-200 dark:border-gray-600" />
+          <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-zinc-200 dark:border-zinc-600" />
           {EMOTION_STATUS.map((emotion) => (
             <EmotionPicker
               key={emotion.status}

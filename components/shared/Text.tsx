@@ -12,8 +12,8 @@ interface Props {
 const TEXT_VARIANTS = cva('', {
   variants: {
     type: {
-      body: 'text-gray-600 dark:text-gray-200',
-      caption: 'text-gray-400 dark:text-gray-500',
+      body: 'text-zinc-600 dark:text-zinc-200',
+      caption: 'text-zinc-400 dark:text-zinc-500',
       error: 'text-red-500',
     },
     size: {
