@@ -12,7 +12,7 @@ interface Props extends ComponentProps<'input'> {
   dataStatus?: string
 }
 
-const INPUT_VARIANTS = cva('outline-none', {
+const INPUT_VARIANTS = cva('min-w-4 outline-none', {
   variants: {
     variant: {
       primary:

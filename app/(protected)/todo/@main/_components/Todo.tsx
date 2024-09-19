@@ -1,10 +1,11 @@
-import Box from '@/components/shared/Box'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
 import cn from '@/lib/cn'
 import { INIT_TODO } from './TaskForm'
+import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
+import { useState } from 'react'
 
 interface TodoProps {
   todo: typeof INIT_TODO
@@ -19,9 +20,15 @@ export default function Todo({
   onDelete,
   onSuccess,
 }: TodoProps) {
+  const [isHover, setHover] = useState(false)
   return (
-    <List.Row className="flex animate-fade-in items-center justify-between">
-      <Box row className="items-center gap-2">
+    <List.Row
+      draggable
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      className="flex animate-fade-in cursor-pointer items-center justify-between rounded-md bg-white p-2 shadow-sm transition hover:opacity-85 dark:bg-var-darkgray"
+    >
+      <div className="flex items-center gap-2">
         <Button
           size="none"
           variant="icon"
@@ -42,16 +49,24 @@ export default function Todo({
           )}
         </Button>
 
-        <Text
-          className={cn(
-            onDelete && onSuccess ? '' : 'text-zinc-400 dark:text-zinc-600',
-          )}
-        >
-          {todo.name}
-        </Text>
-      </Box>
-      {onDelete ? (
-        <Box className="flex gap-2">
+        <div>
+          <Text
+            className={cn(
+              'text-xs',
+              isSuccess ? 'text-zinc-400 dark:text-zinc-600' : '',
+            )}
+          >
+            {todo.name}
+          </Text>
+          <Text type="caption" size="xs">
+            {isSuccess
+              ? `완료일 : ${formatDateToMDY(todo.updatedAt)} ${formatDateToHM(todo.updatedAt)}`
+              : `등록일 : ${formatDateToMDY(todo.createdAt)} ${formatDateToHM(todo.createdAt)}`}
+          </Text>
+        </div>
+      </div>
+      {onDelete && isHover ? (
+        <div className="flex gap-2">
           <Button
             size="none"
             variant="icon"
@@ -65,7 +80,7 @@ export default function Todo({
               ></path>
             </Icon>
           </Button>
-        </Box>
+        </div>
       ) : null}
     </List.Row>
   )

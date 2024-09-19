@@ -6,7 +6,7 @@ interface Props {
   header: ReactNode
 }
 
-export default function MyPageLayout({
+export default function Layout({
   children,
   modal,
   header,

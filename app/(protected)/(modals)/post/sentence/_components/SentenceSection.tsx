@@ -26,7 +26,7 @@ export default function SentenceSection({
       <Title type="sub" size="sm">
         오늘을 한 줄로 기억해보세요.
       </Title>
-      <Box className="flex w-full flex-col">
+      <div className="flex w-full flex-col">
         <Input
           onFocus={open}
           onBlur={close}
@@ -40,7 +40,7 @@ export default function SentenceSection({
           dataStatus="closed"
           className="status-line data-line bg-var-black dark:bg-white"
         />
-      </Box>
+      </div>
       <Button
         type="submit"
         isLoading={isPending}

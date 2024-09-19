@@ -15,6 +15,11 @@ export interface Todo {
   isSuccess: boolean
 }
 
+export interface TTodo {
+  pending: Todo[]
+  success: Todo[]
+}
+
 export interface TodoFolder {
   id: number
   name: string

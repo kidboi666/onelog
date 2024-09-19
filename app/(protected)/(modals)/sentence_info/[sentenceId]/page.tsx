@@ -1,6 +1,5 @@
 'use client'
 
-import Box from '@/components/shared/Box'
 import EmotionBlock from '@/components/shared/EmotionBlock'
 import Modal from '@/components/shared/Modal'
 import Text from '@/components/shared/Text'
@@ -38,36 +37,36 @@ export default function SentenceInfoModal({ params }: Props) {
 
   return (
     <Modal className="items-start">
-      <Box col className="w-full gap-4">
-        <Box row className="items-start justify-between gap-2">
-          <Box row className="items-center gap-2">
+      <div className="flex w-full flex-col gap-4">
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex items-center gap-2">
             <Text type="caption">그 날의 감정 농도</Text>
             <EmotionBlock
               level={formatEmotionLevel(sentences?.emotion_level) ?? 0}
               className="size-4"
             />
             <Text>{sentences?.emotion_level}</Text>
-          </Box>
+          </div>
           <Avatar src={sentences?.avatar_url || null} size="sm" />
-        </Box>
+        </div>
         <Text>{sentences?.content}</Text>
-      </Box>
-      <Box col className="gap-4">
+      </div>
+      <div className="flex flex-col gap-4">
         <Text type="caption">
           {formatDateToMDY(sentences?.created_at)} ·{' '}
           {formatDateToHM(sentences?.created_at)}
         </Text>
-        <Box row className="gap-4">
-          <Box row className="gap-2">
+        <div className="flex gap-4">
+          <div className="flex gap-2">
             <FavoriteButton size={20} />
             <Text type="caption">{sentences?.favorite ?? 0}</Text>
-          </Box>
-          <Box row className="gap-2">
+          </div>
+          <div className="flex gap-2">
             <CommentButton size={20} />
             <Text type="caption">{0}</Text>
-          </Box>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
     </Modal>
   )
 }

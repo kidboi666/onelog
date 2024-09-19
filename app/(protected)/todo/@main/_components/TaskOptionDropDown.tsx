@@ -8,10 +8,10 @@ import { RefObject } from 'react'
 interface Props {
   targetRef: RefObject<HTMLDivElement>
   onTransitionEnd: () => void
-  folderId: number
+  folderId?: number
 }
 
-export default function FolderDropDown({
+export default function TaskOptionDropDown({
   targetRef,
   onTransitionEnd,
   folderId,

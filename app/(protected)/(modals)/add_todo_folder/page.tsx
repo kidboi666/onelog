@@ -57,17 +57,17 @@ export default function AddTodoFolderModal() {
         onSubmit={handleSubmit}
         className="flex w-full flex-col gap-8"
       >
-        <Box col className="gap-2">
+        <div className="flex flex-col gap-2">
           <Text>폴더명</Text>
           <Input
             value={folderName}
             onChange={onChangeFolderName}
             className="dark:bg-var-dark"
           />
-        </Box>
-        <Box col className="gap-2">
+        </div>
+        <div className="flex flex-col gap-2">
           <Text>색상</Text>
-          <Box row className="gap-2">
+          <div className="flex gap-2">
             {colors.map((color) => (
               <Button
                 key={color}
@@ -95,8 +95,8 @@ export default function AddTodoFolderModal() {
                 )}
               </Button>
             ))}
-          </Box>
-        </Box>
+          </div>
+        </div>
         <Button type="submit" disabled={!folderName || !folderColor}>
           수정하기
         </Button>

@@ -1,6 +1,5 @@
 'use client'
 
-import Box from '@/components/shared/Box'
 import FormContainer from '@/components/shared/FormContainer'
 import Input from '@/components/shared/Input'
 import { List } from '@/components/shared/List'
@@ -9,7 +8,11 @@ import Todo from './Todo'
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import useStateChange from '@/hooks/useStateChange'
 import Text from '@/components/shared/Text'
-import { Todo as TTodo } from '@/types/todo'
+import { TodoFolder, Todo as TTodo } from '@/types/todo'
+import Button from '@/components/shared/Button'
+import Icon from '@/components/shared/Icon'
+import TaskOptionDropDown from './TaskOptionDropDown'
+import useOutsideClick from '@/hooks/useOutsideClick'
 
 export const INIT_TODO = {
   id: 0,
@@ -20,6 +23,7 @@ export const INIT_TODO = {
 }
 
 interface Props {
+  selectedFolder: TodoFolder | null
   todos: TTodo[]
   setTodos: (todos: TTodo[]) => void
   successTodos: TTodo[]
@@ -27,32 +31,37 @@ interface Props {
 }
 
 export default function TaskForm({
+  selectedFolder,
   todos,
   setTodos,
   successTodos,
   setSuccessTodos,
 }: Props) {
-  const [todo, setTodo] = useState(INIT_TODO)
-  const { open, close, ref } = useStateChange<HTMLDivElement>()
+  const [todoText, setTodoText] = useState('')
+  const { onClick, ref, open, close, onTransitionEnd } =
+    useStateChange<HTMLDivElement>()
+  const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
+
   const currentMonth = new Date().getMonth() + 1
   const currentDate = new Date().getDate()
   const currentYear = new Date().getFullYear()
 
-  const handleTodoChange = (e: FormEvent) => {
+  const handleSubmitTodo = (e: FormEvent) => {
     e.preventDefault()
-    const nextTodos = [...todos, todo]
-    setTodos(nextTodos)
-    setTodo(INIT_TODO)
-  }
-
-  const handleTodoSubmit = (e: ChangeEvent<HTMLInputElement>) => {
-    setTodo({
+    const nextTodo = {
       id: Date.now(),
-      name: e.target.value,
       createdAt: Date.now(),
       updatedAt: Date.now(),
+      name: todoText,
       isSuccess: false,
-    })
+    }
+    const nextTodos = [...todos, nextTodo]
+    setTodos(nextTodos)
+    setTodoText('')
+  }
+
+  const handleChangeTodo = (e: ChangeEvent<HTMLInputElement>) => {
+    setTodoText(e.target.value)
   }
 
   const handleDeleteButtonClick = useCallback(
@@ -65,7 +74,11 @@ export default function TaskForm({
 
   const handleSuccessButtonClick = (selectedTodo: typeof INIT_TODO) => {
     const nextTodos = todos.filter((todo) => todo.id !== selectedTodo.id)
-    const validateTodo = { ...selectedTodo, isSuccess: true }
+    const validateTodo = {
+      ...selectedTodo,
+      isSuccess: true,
+      updatedAt: Date.now(),
+    }
     const nextSuccessTodos = [...successTodos, validateTodo]
     setTodos(nextTodos)
     setSuccessTodos(nextSuccessTodos)
@@ -83,27 +96,38 @@ export default function TaskForm({
 
   return (
     <FormContainer
-      onSubmit={handleTodoChange}
-      className="flex w-60 flex-shrink-0 flex-col overflow-y-auto"
+      onSubmit={handleSubmitTodo}
+      className="flex w-80 flex-shrink-0 flex-col"
     >
-      <Box col className="gap-2">
+      <div className="relative flex items-center justify-between">
+        <Title>{selectedFolder?.name}</Title>
+        <Button ref={dropdownRef} variant="icon" size="none" onClick={onClick}>
+          <Icon view="0 -960 960 960" size={20}>
+            <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
+          </Icon>
+        </Button>
+        <TaskOptionDropDown
+          folderId={selectedFolder?.id}
+          targetRef={ref}
+          onTransitionEnd={onTransitionEnd}
+        />
+      </div>
+      <div className="mt-4 flex flex-col gap-2">
         <Input
-          value={todo.name}
-          onFocus={open}
-          onBlur={close}
-          onChange={handleTodoSubmit}
+          value={todoText}
+          onChange={handleChangeTodo}
           placeholder="할일을 입력하세요."
           dimension="sm"
-          className="ring-inset"
+          className="sticky"
         />
         <Text
           type="caption"
           size="sm"
         >{`${currentYear}년 ${currentMonth}월 ${currentDate}일 오늘 할 일`}</Text>
-      </Box>
-      <Box className="mt-4 flex flex-col gap-4 text-left">
+      </div>
+      <div className="mt-4 flex flex-col gap-4 text-left">
         {todos.length >= 1 && (
-          <Box col className="animate-fade-in gap-4">
+          <div className="flex animate-fade-in flex-col gap-4">
             <Title type="sub">할 일</Title>
             <List className="flex flex-col gap-2">
               {todos.map((todo) => (
@@ -116,10 +140,10 @@ export default function TaskForm({
                 />
               ))}
             </List>
-          </Box>
+          </div>
         )}
         {successTodos.length >= 1 && (
-          <Box col className="animate-fade-in gap-4">
+          <div className="flex animate-fade-in flex-col gap-4">
             <Title type="sub">완료됨</Title>
             <List className="flex flex-col gap-2">
               {successTodos.map((todo) => (
@@ -131,9 +155,9 @@ export default function TaskForm({
                 />
               ))}
             </List>
-          </Box>
+          </div>
         )}
-      </Box>
+      </div>
     </FormContainer>
   )
 }

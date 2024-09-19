@@ -1,4 +1,4 @@
-import EditTodoFolderModal from '../../(modals)/edit_todo_folder/[folderId]/page'
+import EditTodoFolderModal from '@/app/(protected)/(modals)/edit_todo_folder/[folderId]/page'
 
 interface Props {
   params: { folderId: string }

@@ -10,7 +10,6 @@ import { EMOTION_STATUS } from './_constants'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 
 import Modal from '@/components/shared/Modal'
-import Box from '@/components/shared/Box'
 import FormContainer from '@/components/shared/FormContainer'
 import Input from '@/components/shared/Input'
 import Button from '@/components/shared/Button'
@@ -53,11 +52,8 @@ export default function SentenceModal() {
   return (
     <Modal className="bg-var-lightgray">
       <FormContainer onSubmit={handleSubmitSentence} className="size-full">
-        <Box col className="w-full gap-4">
-          <Box
-            row
-            className="gap-4 rounded-md bg-var-lightgray px-2 py-4 dark:bg-var-darkgray"
-          >
+        <div className="flex w-full flex-col gap-4">
+          <div className="flex gap-4 rounded-md bg-var-lightgray px-2 py-4 dark:bg-var-darkgray">
             <Input
               value={sentence}
               placeholder="오늘 당신의 생각을 한 줄로 기록하세요."
@@ -73,7 +69,7 @@ export default function SentenceModal() {
             >
               등록하기
             </Button>
-          </Box>
+          </div>
           <List className="relative flex items-start justify-between gap-2">
             <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-zinc-200 dark:border-zinc-600" />
             {EMOTION_STATUS.map((emotion) => (
@@ -85,7 +81,7 @@ export default function SentenceModal() {
               />
             ))}
           </List>
-        </Box>
+        </div>
       </FormContainer>
     </Modal>
   )

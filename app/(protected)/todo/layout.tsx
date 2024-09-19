@@ -1,25 +1,22 @@
 import Container from '@/components/shared/Container'
-import Portal from '@/components/shared/Portal'
 import { PropsWithChildren, ReactNode } from 'react'
 
 interface Props {
   sidebar: ReactNode
-  task_manager: ReactNode
-  modal: ReactNode
+  main: ReactNode
+  todo_info: ReactNode
 }
 
 export default function Layout({
   sidebar,
-  task_manager,
-  children,
-  modal,
+  main,
+  todo_info,
 }: PropsWithChildren<Props>) {
   return (
     <Container className="flex w-full animate-fade-in flex-row">
       {sidebar}
-      {task_manager}
-      <Portal>{modal}</Portal>
-      {children}
+      {main}
+      {todo_info}
     </Container>
   )
 }

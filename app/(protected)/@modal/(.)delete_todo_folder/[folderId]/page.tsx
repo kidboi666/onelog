@@ -1,4 +1,4 @@
-import DeleteTodoFolderModal from '../../(modals)/delete_todo_folder/[folderId]/page'
+import DeleteTodoFolderModal from '@/app/(protected)/(modals)/delete_todo_folder/[folderId]/page'
 
 interface Props {
   params: { folderId: string }
