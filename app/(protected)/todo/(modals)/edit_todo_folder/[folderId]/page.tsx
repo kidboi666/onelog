@@ -28,6 +28,7 @@ export default function EditTodoFolderModal({ params }: Props) {
     dotColor: 'black',
     createdAt: 0,
     updatedAt: 0,
+    index: 0,
   })
   const [prevFolders, setPrevFolders] = useState<TodoFolder[]>([])
   const [folderName, onChangeFolderName, setFolderName] = useInput<string>('')

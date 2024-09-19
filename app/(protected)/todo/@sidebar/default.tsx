@@ -20,6 +20,7 @@ export const INIT_TODO_FOLDER: TodoFolder = {
   createdAt: 0,
   updatedAt: 0,
   dotColor: 'black',
+  index: 0,
 }
 
 export default function SideBar() {
@@ -33,14 +34,6 @@ export default function SideBar() {
 
   const handleAddTodoFolder = () => {
     router.push('/todo/add_todo_folder')
-    const nextFolder = {
-      ...INIT_TODO_FOLDER,
-      id: Date.now(),
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    }
-    const nextFolders = [...todoFolders, nextFolder]
-    setTodoFolders(nextFolders)
   }
 
   useEffect(() => {

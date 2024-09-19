@@ -11,10 +11,11 @@ import Button from '@/components/shared/Button'
 import FolderDropDown from './FolderDropDown'
 import Dot from './Dot'
 import Icon from '@/components/shared/Icon'
+import { TodoFolder } from '@/types/todo'
 
 interface Props {
   isOpenSide: boolean
-  folder: typeof INIT_TODO_FOLDER
+  folder: TodoFolder
 }
 
 export default function Folder({ isOpenSide, folder }: Props) {
@@ -27,14 +28,19 @@ export default function Folder({ isOpenSide, folder }: Props) {
     onTransitionEnd,
   } = useStateChange<HTMLDivElement>()
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(close)
+
   const isSelected = folder.id === selectedFolder?.id
 
   const handleFolderClick = () => {
     setSelectFolder(folder)
   }
 
+  const dragStart = () => {}
+
   return (
     <Button
+      draggable
+      onDragStart={dragStart}
       onMouseEnter={() => setShowKebabButton(true)}
       onMouseLeave={() => setShowKebabButton(false)}
       variant="list"

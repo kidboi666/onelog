@@ -21,4 +21,5 @@ export interface TodoFolder {
   createdAt: number
   updatedAt: number
   dotColor: TTodoColor
+  index: number
 }
