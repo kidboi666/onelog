@@ -52,7 +52,7 @@ export default function AddTodoFolderModal() {
   }
 
   return (
-    <Modal>
+    <Modal className="bg-var-lightgray">
       <FormContainer
         onSubmit={handleSubmit}
         className="flex w-full flex-col gap-8"

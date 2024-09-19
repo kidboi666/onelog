@@ -11,6 +11,7 @@ import Icon from '@/components/shared/Icon'
 import useStateChange from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import TaskOptionDropDown from './_components/TaskOptionDropDown'
+import cn from '@/lib/cn'
 
 export default function TodoPage() {
   const { selectedFolder, setTodos, todos, successTodos, setSuccessTodos } =
@@ -40,7 +41,24 @@ export default function TodoPage() {
   }, [selectedFolder && selectedFolder.id])
 
   return (
-    <Container className="flex h-[calc(100dvh-80px)] w-full flex-col gap-4 overflow-x-auto p-4">
+    <Container
+      className={cn(
+        'relative flex h-[calc(100dvh-80px)] w-full flex-col gap-4 overflow-x-auto p-4',
+        selectedFolder?.dotColor === 'yellow' &&
+          'bg-var-yellow/15 dark:bg-var-yellow/25',
+        selectedFolder?.dotColor === 'orange' &&
+          'bg-var-orange/15 dark:bg-var-orange/25',
+        selectedFolder?.dotColor === 'black' && 'bg-black/15 dark:bg-black/25',
+        selectedFolder?.dotColor === 'blue' &&
+          'bg-var-blue/15 dark:bg-var-blue/25',
+        selectedFolder?.dotColor === 'green' &&
+          'bg-var-green/15 dark:bg-var-green/25',
+        selectedFolder?.dotColor === 'red' &&
+          'bg-red-500/15 dark:bg-red-500/25',
+        selectedFolder?.dotColor === 'purple' &&
+          'bg-purple-500/15 dark:bg-purple-500/25',
+      )}
+    >
       <Box row className="relative items-center justify-between">
         <Title>{selectedFolder?.name}</Title>
         <Button

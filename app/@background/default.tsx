@@ -27,7 +27,7 @@ export default function Background() {
   return (
     <div
       className={cn(
-        'fixed inset-0 -z-10 h-dvh w-full',
+        'fixed inset-0 -z-20 h-dvh w-full',
         theme === 'light' ? 'bg-var-lightgray' : 'bg-var-dark',
       )}
     />
