@@ -1,4 +1,3 @@
-import Container from '@/components/shared/Container'
 import HeaderLogoSection from './_components/HeaderLogoSection'
 import HeaderNavSection from './_components/HeaderNavSection'
 import { createServerClient } from '@/lib/supabase/server'
@@ -14,14 +13,10 @@ export default function Default() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Container
-        as="header"
-        isBlur
-        className="sticky top-0 z-50 flex h-20 w-full items-center justify-between p-4 shadow-sm lg:px-12"
-      >
+      <header className="sticky top-0 z-50 flex h-20 w-full items-center justify-between bg-white/60 p-4 shadow-sm backdrop-blur-xl lg:px-12 dark:bg-var-darkgray/60">
         <HeaderLogoSection />
         <HeaderNavSection />
-      </Container>
+      </header>
     </HydrationBoundary>
   )
 }

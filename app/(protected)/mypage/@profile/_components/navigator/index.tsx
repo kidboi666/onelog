@@ -1,6 +1,5 @@
 'use client'
 
-import Box from '@/components/shared/Box'
 import Button from '@/components/shared/Button'
 import LinkButton from '@/components/shared/LinkButton'
 import Text from '@/components/shared/Text'
@@ -15,12 +14,12 @@ export default function NavigatorSection() {
 
   return (
     <>
-      <Box className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8">
         <Text type="caption">
           {me.about_me ? me.about_me : '자기 소개를 작성해주세요.'}
         </Text>
-        <Box col className="gap-4">
-          <Box row className="gap-4">
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-4">
             <LinkButton
               href="/edit_profile"
               variant="secondary"
@@ -31,10 +30,10 @@ export default function NavigatorSection() {
             <LinkButton href="/post" className="flex-1">
               글쓰기
             </LinkButton>
-          </Box>
+          </div>
           <Button className="w-full">루틴 계획하기</Button>
-        </Box>
-      </Box>
+        </div>
+      </div>
     </>
   )
 }

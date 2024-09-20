@@ -2,10 +2,8 @@
 
 import { ChangeEvent, useRef, useState } from 'react'
 import { useInput } from '@/hooks/useInput'
-import Container from '@/components/shared/Container'
 import TitleInput from './_components/input/TitleInput'
 import { FileInput } from './_components/input/FileInput'
-import Box from '@/components/shared/Box'
 import { TagsInput } from '@/components/shared/TagsInput'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import { EditorContent } from '@tiptap/react'
@@ -28,25 +26,21 @@ export default function PostPage() {
   }
 
   return (
-    <Container
-      isBackground
-      isRounded
-      className="flex min-h-screen flex-col gap-4"
-    >
-      <Box row className="gap-4">
+    <div className="flex min-h-screen flex-col gap-4 rounded-md bg-white dark:bg-var-darkgray">
+      <div className="flex gap-4">
         <FileInput
           file={imageFile}
           onChangeFile={handleChangeFile}
           preview={imagePreview}
           setPreview={setImagePreview}
         />
-      </Box>
+      </div>
       <TitleInput value={title} onChange={onChangeTitle} />
 
       <EditorContent editor={editor} />
       <TagsInput tags={tags} setTags={setTags} />
       {/* <Markdown text={content} className="bg-red bor size-20" /> */}
       {/* <Button disabled>포스팅하기</Button> */}
-    </Container>
+    </div>
   )
 }

@@ -10,8 +10,6 @@ import { IDateBlock } from '@/types/garden'
 import { getDaysInYear, getFirstDayInYear } from '@/utils/formatDate'
 
 import Title from '@/components/shared/Title'
-import Container from '@/components/shared/Container'
-import Box from '@/components/shared/Box'
 import GardenBlockSection from './_components/GardenBlockSection'
 import ColorInfoDisplay from './_components/ColorInfoDisplay'
 import SortOptionMenu from './_components/SortOptionMenu'
@@ -154,16 +152,16 @@ export default function Garden() {
   }
 
   return (
-    <Container className="flex flex-col gap-4">
-      <Box className="relative flex justify-between">
+    <div className="flex flex-col gap-4">
+      <div className="relative flex justify-between">
         <Title>한 눈에 보기</Title>
         <SortOptionMenu orderBy={orderBy} onSortOrder={handleSortOrder} />
-      </Box>
+      </div>
       <GardenBlockSection
         shouldRenderElement={shouldRenderElement}
         firstDayIndex={firstDayIndex}
       />
       <ColorInfoDisplay orderBy={orderBy} />
-    </Container>
+    </div>
   )
 }

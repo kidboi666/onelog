@@ -1,4 +1,3 @@
-import RefBox from '@/components/shared/RefBox'
 import Spinner from '@/components/shared/Spinner'
 import Text from '@/components/shared/Text'
 import { supabase } from '@/lib/supabase/client'
@@ -25,13 +24,11 @@ export default function TagInfo({
   )
 
   return (
-    <RefBox
-      isBackground
-      isRounded
-      dataStatus="closed"
+    <div
+      data-status="closed"
       onTransitionEnd={onTransitionEnd}
       ref={targetRef}
-      className="data-slideDown status-slideDown absolute -top-10 z-10 origin-bottom-left text-nowrap p-2 shadow-md"
+      className="data-slideDown status-slideDown absolute -top-10 z-10 origin-bottom-left text-nowrap bg-white p-2 shadow-md dark:bg-var-darkgray"
     >
       {isFetching ? (
         <Spinner size={20} />
@@ -41,6 +38,6 @@ export default function TagInfo({
           <Text size="xs">다른 사람들이 사용한 횟수 : {data?.count}</Text>
         </>
       )}
-    </RefBox>
+    </div>
   )
 }

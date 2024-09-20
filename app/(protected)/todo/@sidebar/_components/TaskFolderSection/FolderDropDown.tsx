@@ -1,6 +1,5 @@
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
-import RefContainer from '@/components/shared/RefContainer'
 import Text from '@/components/shared/Text'
 import { useRouter } from 'next/navigation'
 import { RefObject } from 'react'
@@ -18,13 +17,11 @@ export default function FolderDropDown({
 }: Props) {
   const router = useRouter()
   return (
-    <RefContainer
+    <div
       ref={targetRef}
       onTransitionEnd={onTransitionEnd}
-      dataStatus="closed"
-      isRounded
-      isBackground
-      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] z-30 hidden size-fit origin-top-right bg-var-lightgray p-1 shadow-md dark:bg-var-dark"
+      data-status="closed"
+      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] z-30 hidden size-fit origin-top-right rounded-md bg-var-lightgray p-1 shadow-md dark:bg-var-dark"
     >
       <Button
         variant="list"
@@ -46,6 +43,6 @@ export default function FolderDropDown({
         </Icon>
         <Text size="sm">수정</Text>
       </Button>
-    </RefContainer>
+    </div>
   )
 }

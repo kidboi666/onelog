@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import Container from '@/components/shared/Container'
 import TaskForm from './_components/TaskForm'
 import { useTodo } from '@/store/useTodo'
 import cn from '@/lib/cn'
@@ -46,7 +45,7 @@ export default function TodoPage() {
   }, [selectedFolder && selectedFolder.id])
 
   return (
-    <Container
+    <div
       className={cn(
         'relative flex h-[calc(100dvh-80px)] w-full flex-col gap-4 overflow-x-auto p-4',
         selectedFolder?.dotColor === 'yellow' &&
@@ -76,6 +75,6 @@ export default function TodoPage() {
       ) : (
         <TodoDashBoard todoFolders={todoFolders} />
       )}
-    </Container>
+    </div>
   )
 }

@@ -8,11 +8,9 @@ import { supabase } from '@/lib/supabase/client'
 
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 import { EMOTION_STATUS } from '@/app/(protected)/(modals)/post/sentence/_constants'
-import Box from '@/components/shared/Box'
 import Button from '@/components/shared/Button'
 import Input from '@/components/shared/Input'
 import { List } from '@/components/shared/List'
-import FormContainer from '@/components/shared/FormContainer'
 import { useRouter } from 'next/navigation'
 import Avatar from '@/components/feature/user/Avatar'
 import EmotionPicker from '@/components/feature/sentence/EmotionPicker'
@@ -52,9 +50,9 @@ export default function PostSentence() {
   }
 
   return (
-    <FormContainer onSubmit={handleSubmitSentence} className="flex gap-2">
-      <Box col className="w-full gap-4">
-        <Box row className="gap-4">
+    <form onSubmit={handleSubmitSentence} className="flex gap-2">
+      <div className="flex w-full flex-col gap-4">
+        <div className="flex gap-4">
           <Avatar
             src={data?.avatar_url}
             size="sm"
@@ -81,7 +79,7 @@ export default function PostSentence() {
           >
             등록하기
           </Button>
-        </Box>
+        </div>
         <List className="relative flex items-start justify-between gap-2">
           <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-zinc-200 dark:border-zinc-600" />
           {EMOTION_STATUS.map((emotion) => (
@@ -93,7 +91,7 @@ export default function PostSentence() {
             />
           ))}
         </List>
-      </Box>
-    </FormContainer>
+      </div>
+    </form>
   )
 }

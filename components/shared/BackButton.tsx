@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation'
 import Button from './Button'
 import cn from '@/lib/cn'
-import Container from './Container'
 
 interface Props {
   className?: string
@@ -15,7 +14,7 @@ export default function BackButton({ className }: Props) {
     router.back()
   }
   return (
-    <Container className="w-full md:max-w-[768px]">
+    <div className="w-full md:max-w-[768px]">
       <Button
         variant="secondary"
         onClick={handleButtonClick}
@@ -23,6 +22,6 @@ export default function BackButton({ className }: Props) {
       >
         {'<'}
       </Button>
-    </Container>
+    </div>
   )
 }

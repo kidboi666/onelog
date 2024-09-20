@@ -2,8 +2,6 @@
 
 import { useTodo } from '@/store/useTodo'
 import Modal from '@/components/shared/Modal'
-import FormContainer from '@/components/shared/FormContainer'
-import Box from '@/components/shared/Box'
 import Text from '@/components/shared/Text'
 import Input from '@/components/shared/Input'
 import Button from '@/components/shared/Button'
@@ -53,10 +51,7 @@ export default function AddTodoFolderModal() {
 
   return (
     <Modal className="bg-var-lightgray">
-      <FormContainer
-        onSubmit={handleSubmit}
-        className="flex w-full flex-col gap-8"
-      >
+      <form onSubmit={handleSubmit} className="flex w-full flex-col gap-8">
         <div className="flex flex-col gap-2">
           <Text>폴더명</Text>
           <Input
@@ -100,7 +95,7 @@ export default function AddTodoFolderModal() {
         <Button type="submit" disabled={!folderName || !folderColor}>
           수정하기
         </Button>
-      </FormContainer>
+      </form>
     </Modal>
   )
 }

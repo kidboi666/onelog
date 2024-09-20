@@ -1,4 +1,3 @@
-import Box from '@/components/shared/Box'
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
 import Image from 'next/image'
@@ -44,7 +43,7 @@ export default function Avatar({
   className,
 }: Props) {
   return (
-    <Box
+    <div
       className={cn(
         avatarVariants({ size, ring, shadow }),
         'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 dark:bg-var-darkgray',
@@ -56,6 +55,6 @@ export default function Avatar({
       ) : (
         <Image src="profile.svg" fill className="" alt="프로필 이미지 없음" />
       )}
-    </Box>
+    </div>
   )
 }

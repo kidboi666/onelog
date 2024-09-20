@@ -1,7 +1,6 @@
 'use client'
 
 import Avatar from '@/components/feature/user/Avatar'
-import Box from '@/components/shared/Box'
 import Line from '@/components/shared/Line'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
@@ -16,13 +15,13 @@ export default function AboutMe() {
 
   return (
     <>
-      <Box className="pointer-events-none flex flex-col items-center gap-4">
+      <div className="pointer-events-none flex flex-col items-center gap-4">
         <Avatar src={me.avatar_url} size="xl" ring="md" shadow="sm" />
-        <Box className="self-end">
+        <div className="self-end">
           <Title className="text-2xl font-medium">{me.user_name}</Title>
-        </Box>
-      </Box>
-      <Box className="relative">
+        </div>
+      </div>
+      <div className="relative">
         <Line className="border-zinc-400 dark:border-zinc-500" />
         <Text
           as="span"
@@ -31,7 +30,7 @@ export default function AboutMe() {
         >
           소 개
         </Text>
-      </Box>
+      </div>
     </>
   )
 }

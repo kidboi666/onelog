@@ -1,6 +1,5 @@
 'use client'
 
-import Container from '@/components/shared/Container'
 import Title from '@/components/shared/Title'
 import cn from '@/lib/cn'
 import { useEffect, useState } from 'react'
@@ -47,10 +46,9 @@ export default function SideBar() {
   }, [todoFolders])
 
   return (
-    <Container
-      isBackground
+    <div
       className={cn(
-        'z-30 flex h-[calc(100dvh-80px)] w-80 flex-shrink-0 flex-col gap-4 p-4 shadow-md',
+        'z-30 flex h-[calc(100dvh-80px)] w-80 flex-shrink-0 flex-col gap-4 bg-white p-4 shadow-md dark:bg-var-darkgray',
         isOpenSide ? 'w-72' : 'w-fit',
       )}
     >
@@ -95,6 +93,6 @@ export default function SideBar() {
           </Icon>
         </Button>
       </div>
-    </Container>
+    </div>
   )
 }

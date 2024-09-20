@@ -1,5 +1,4 @@
 import Button from '@/components/shared/Button'
-import Container from '@/components/shared/Container'
 
 interface Props {
   orderBy: string
@@ -8,7 +7,7 @@ interface Props {
 
 export default function SortOptionMenu({ orderBy, onSortOrder }: Props) {
   return (
-    <Container className="flex gap-2">
+    <div className="flex gap-2">
       <Button
         size="sm"
         variant={orderBy === 'length' ? 'primary' : 'secondary'}
@@ -23,6 +22,6 @@ export default function SortOptionMenu({ orderBy, onSortOrder }: Props) {
       >
         감정 농도
       </Button>
-    </Container>
+    </div>
   )
 }

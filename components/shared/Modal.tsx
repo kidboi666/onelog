@@ -3,8 +3,6 @@
 import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect } from 'react'
-import Box from './Box'
-import Container from './Container'
 
 interface Props extends ComponentProps<'div'> {
   className?: string
@@ -34,26 +32,24 @@ export default function Modal({
   }, [])
 
   return (
-    <Container
+    <div
       onClick={() => router.back()}
       className="fixed inset-0 z-50 animate-fade-in bg-var-dark/25 backdrop-blur-sm dark:bg-var-dark/25"
     >
-      <Box
+      <div
         onClick={(e) => e.stopPropagation()}
         className="fixed left-1/2 top-1/2 flex h-fit w-full max-w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 rounded-md shadow-lg md:max-w-[480px]"
         {...props}
       >
-        <Container
-          isRounded
-          isBackground
+        <div
           className={cn(
-            'flex w-full flex-col items-center justify-center gap-12 px-2 py-8 md:px-8',
+            'flex w-full flex-col items-center justify-center gap-12 rounded-md bg-white px-2 py-8 md:px-8 dark:bg-var-darkgray',
             className,
           )}
         >
           {children}
-        </Container>
-      </Box>
-    </Container>
+        </div>
+      </div>
+    </div>
   )
 }

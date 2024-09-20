@@ -1,6 +1,5 @@
 'use client'
 
-import FormContainer from '@/components/shared/FormContainer'
 import Input from '@/components/shared/Input'
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
@@ -95,7 +94,7 @@ export default function TaskForm({
   }
 
   return (
-    <FormContainer
+    <form
       onSubmit={handleSubmitTodo}
       className="flex w-80 flex-shrink-0 flex-col"
     >
@@ -158,6 +157,6 @@ export default function TaskForm({
           </div>
         )}
       </div>
-    </FormContainer>
+    </form>
   )
 }

@@ -4,7 +4,6 @@ import { useTodo } from '@/store/useTodo'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import useStateChange from '@/hooks/useStateChange'
 
-import Box from '@/components/shared/Box'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import FolderDropDown from './FolderDropDown'
@@ -138,7 +137,7 @@ export default function Folder({
         >
           <Dot color={folder.dotColor} isSelected={isSelected} />
           {isOpenSide && (
-            <Box row className="flex-1 items-center justify-between">
+            <div className="flex flex-1 items-center justify-between">
               <Text
                 type="caption"
                 className={cn(
@@ -160,7 +159,7 @@ export default function Folder({
                   </Icon>
                 </Button>
               )}
-            </Box>
+            </div>
           )}
           <FolderDropDown
             targetRef={dropdownRef}

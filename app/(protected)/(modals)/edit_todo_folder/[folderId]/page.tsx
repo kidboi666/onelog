@@ -5,7 +5,6 @@ import Text from '@/components/shared/Text'
 import { FormEvent, useEffect, useState } from 'react'
 import Input from '@/components/shared/Input'
 import Button from '@/components/shared/Button'
-import FormContainer from '@/components/shared/FormContainer'
 import { useInput } from '@/hooks/useInput'
 import cn from '@/lib/cn'
 import Icon from '@/components/shared/Icon'
@@ -72,10 +71,7 @@ export default function EditTodoFolderModal({ params }: Props) {
 
   return (
     <Modal className="bg-var-lightgray">
-      <FormContainer
-        onSubmit={handleSubmit}
-        className="flex w-full flex-col gap-8"
-      >
+      <form onSubmit={handleSubmit} className="flex w-full flex-col gap-8">
         <div className="flex flex-col gap-2">
           <Text>폴더명</Text>
           <Input
@@ -125,7 +121,7 @@ export default function EditTodoFolderModal({ params }: Props) {
         >
           수정하기
         </Button>
-      </FormContainer>
+      </form>
     </Modal>
   )
 }

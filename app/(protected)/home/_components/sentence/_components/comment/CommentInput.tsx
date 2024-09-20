@@ -1,6 +1,5 @@
 import Avatar from '@/components/feature/user/Avatar'
 import Button from '@/components/shared/Button'
-import FormContainer from '@/components/shared/FormContainer'
 import Input from '@/components/shared/Input'
 import { useInput } from '@/hooks/useInput'
 import { supabase } from '@/lib/supabase/client'
@@ -48,10 +47,7 @@ export default function CommentInput({ sentenceId, commentId }: Props) {
   }
 
   return (
-    <FormContainer
-      onSubmit={handlePostComment}
-      className="mb-8 flex w-full gap-4"
-    >
+    <form onSubmit={handlePostComment} className="mb-8 flex w-full gap-4">
       <Avatar src={me?.avatar_url} size="sm" shadow="sm" />
       <Input
         value={content}
@@ -68,6 +64,6 @@ export default function CommentInput({ sentenceId, commentId }: Props) {
       >
         댓글달기
       </Button>
-    </FormContainer>
+    </form>
   )
 }

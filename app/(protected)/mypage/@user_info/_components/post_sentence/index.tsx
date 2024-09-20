@@ -10,12 +10,9 @@ import { supabase } from '@/lib/supabase/client'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 import { EMOTION_STATUS } from '@/app/(protected)/(modals)/post/sentence/_constants'
 import Text from '@/components/shared/Text'
-import Box from '@/components/shared/Box'
 import Button from '@/components/shared/Button'
 import Input from '@/components/shared/Input'
 import { List } from '@/components/shared/List'
-import RefBox from '@/components/shared/RefBox'
-import FormContainer from '@/components/shared/FormContainer'
 import { useRouter } from 'next/navigation'
 
 export default function PostSentence() {
@@ -51,11 +48,8 @@ export default function PostSentence() {
   }
 
   return (
-    <FormContainer
-      onSubmit={handleSubmitSentence}
-      className="flex flex-col gap-4"
-    >
-      <Box row className="w-full flex-1 gap-4">
+    <form onSubmit={handleSubmitSentence} className="flex flex-col gap-4">
+      <div className="flex w-full flex-1 gap-4">
         <Input
           value={sentence}
           variant="primary"
@@ -71,7 +65,7 @@ export default function PostSentence() {
         >
           등록하기
         </Button>
-      </Box>
+      </div>
       <List className="relative flex items-start justify-between gap-2">
         <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-gray-300 dark:border-gray-500" />
         {EMOTION_STATUS.map((emotion) => (
@@ -83,7 +77,7 @@ export default function PostSentence() {
           />
         ))}
       </List>
-    </FormContainer>
+    </form>
   )
 }
 
@@ -108,7 +102,7 @@ function EmotionSection({ emotion, selectedEmotion, onChangeEmotion }: Props) {
         <Text type="caption" size="sm" className="absolute top-4">
           {emotion.status}
         </Text>
-        <RefBox
+        <div
           className={cn(
             'absolute top-1 size-2 rounded-full bg-gray-300 ring-1 ring-gray-300 transition group-hover:ring-4 dark:bg-var-darkgray dark:ring-gray-500',
             selectedEmotion === emotion.percent && 'bg-slate-700 ring-4',

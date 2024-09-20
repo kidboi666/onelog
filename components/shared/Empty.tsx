@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react'
-import Container from './Container'
 import Text from './Text'
 import cn from '@/lib/cn'
 
@@ -12,8 +11,13 @@ export default function Empty({
   className,
 }: PropsWithChildren<Props>) {
   return (
-    <Container isEmpty isBackground isRounded className={cn(className)}>
+    <div
+      className={cn(
+        'flex w-full items-center justify-center rounded-md bg-white py-12 opacity-65 dark:bg-var-darkgray',
+        className,
+      )}
+    >
       <Text type="caption">{children}</Text>
-    </Container>
+    </div>
   )
 }

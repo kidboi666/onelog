@@ -1,6 +1,5 @@
 'use client'
 
-import Container from '@/components/shared/Container'
 import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
 import cn from '@/lib/cn'

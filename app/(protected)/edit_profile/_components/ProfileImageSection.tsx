@@ -1,5 +1,4 @@
 import Avatar from '@/components/feature/user/Avatar'
-import Container from '@/components/shared/Container'
 import { ComponentProps, useRef } from 'react'
 
 interface Props extends ComponentProps<'input'> {
@@ -15,7 +14,7 @@ export default function ProfileImageSection({ onChange, imagePreview }: Props) {
     }
   }
   return (
-    <Container
+    <div
       onClick={() => handlePreviewClick()}
       className="relative flex cursor-pointer flex-col items-center max-sm:-order-1"
     >
@@ -27,6 +26,6 @@ export default function ProfileImageSection({ onChange, imagePreview }: Props) {
         accept="image/*"
         className="hidden"
       />
-    </Container>
+    </div>
   )
 }

@@ -1,6 +1,5 @@
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
-import cn from '@/lib/cn'
 
 interface Props {
   onShowCommentInput: () => void

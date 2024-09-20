@@ -8,7 +8,6 @@ import useOutsideClick from '@/hooks/useOutsideClick'
 import Button from '@/components/shared/Button'
 import LinkButton from '@/components/shared/LinkButton'
 import HeaderNavSectionDropDown from './HeaderNavSectionDropDown'
-import Container from '@/components/shared/Container'
 import Avatar from '@/components/feature/user/Avatar'
 import { Suspense } from 'react'
 import Spinner from '@/components/shared/Spinner'
@@ -25,7 +24,7 @@ export default function HeaderNavSection() {
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(close)
 
   return (
-    <Container as="nav" className="relative flex gap-2">
+    <nav className="relative flex gap-2">
       <div className="flex max-sm:hidden">
         <LinkButton
           href="/post"
@@ -70,6 +69,6 @@ export default function HeaderNavSection() {
         onTransitionEnd={onTransitionEnd}
         targetRef={dropdownRef}
       />
-    </Container>
+    </nav>
   )
 }

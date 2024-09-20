@@ -1,5 +1,4 @@
 import Button from '@/components/shared/Button'
-import Container from '@/components/shared/Container'
 import useStateChange from '@/hooks/useStateChange'
 import { IFavoriteWord } from '@/types/sentence'
 import TagInfo from './TagInfo'
@@ -13,8 +12,9 @@ export default function Tag({ word }: Props) {
   const [isHover, setHover] = useState(false)
   const { onClick, ref, open, close, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
+
   return (
-    <Container className="relative">
+    <div className="relative">
       <Button
         variant="secondary"
         size="sm"
@@ -37,6 +37,6 @@ export default function Tag({ word }: Props) {
         onTransitionEnd={onTransitionEnd}
         targetRef={ref}
       />
-    </Container>
+    </div>
   )
 }

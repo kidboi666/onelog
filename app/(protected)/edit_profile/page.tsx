@@ -9,12 +9,14 @@ import useUploadAvatarImage from '@/services/mutates/auth/useUploadAvatarImage'
 import useUpdateUserInfo from '@/services/mutates/auth/useUpdateUserInfo'
 import { useInput } from '@/hooks/useInput'
 
-import FormContainer from '@/components/shared/FormContainer'
-import IntroduceSection from './_components/IntroduceSection'
-import ChallangeSection from './_components/ChallangeSection'
-import SubmitButtonSection from './_components/SubmitButtonSection'
-import AboutMeSection from './_components/AboutMeSection'
 import useDeleteAvatarImage from '@/services/mutates/auth/useDeleteAvatarImage'
+import UserNameSection from './_components/UserNameSection'
+import ProfileImageSection from './_components/ProfileImageSection'
+import Button from '@/components/shared/Button'
+import Title from '@/components/shared/Title'
+import Text from '@/components/shared/Text'
+import TextArea from '@/components/shared/TextArea'
+import cn from '@/lib/cn'
 
 export default function EditProfilePage() {
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -88,20 +90,39 @@ export default function EditProfilePage() {
   }, [me?.avatar_url, me?.user_name, me?.about_me])
 
   return (
-    <FormContainer
+    <form
       onSubmit={handleProfileUpdate}
       className="flex w-full animate-fade-in flex-col justify-center gap-12 md:max-w-[768px]"
     >
-      <AboutMeSection
-        avatarUrl={avatarUrl}
-        userName={userName}
-        onChangeImage={handleChangeImage}
-        onChangeUserName={onChangeUserName}
-      />
-      <IntroduceSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
-      <ChallangeSection />
-      <SubmitButtonSection
-        isPending={
+      <div className="flex w-full justify-between max-sm:flex-col max-sm:gap-12 sm:items-end">
+        <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
+        <ProfileImageSection
+          onChange={handleChangeImage}
+          imagePreview={avatarUrl}
+        />
+      </div>
+      <div className="flex w-full flex-col gap-8">
+        <Title>소개글</Title>
+        <div className="flex flex-col gap-2">
+          <TextArea
+            value={aboutMe ?? ''}
+            onChange={onChangeAboutMe}
+            className="p-2"
+          />
+          <div className="self-end">
+            {aboutMe && (
+              <Text
+                size="sm"
+                className={cn(aboutMe?.length > 150 && 'text-red-600')}
+              >{`${aboutMe?.length} / 150`}</Text>
+            )}
+          </div>
+        </div>
+      </div>
+      <Title>도전 배지</Title>
+      <Button
+        type="submit"
+        isLoading={
           isPendingImageUpload ||
           isPendingUpdateUserInfo ||
           isSuccessUpdateUserInfo
@@ -113,7 +134,9 @@ export default function EditProfilePage() {
           userName?.length! > 10 ||
           aboutMe?.length! > 150
         }
-      />
-    </FormContainer>
+      >
+        수정하기
+      </Button>
+    </form>
   )
 }

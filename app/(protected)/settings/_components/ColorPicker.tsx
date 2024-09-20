@@ -1,7 +1,6 @@
 'use client'
 
 import Button from '@/components/shared/Button'
-import Container from '@/components/shared/Container'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
@@ -20,7 +19,7 @@ export default function ColorPicker() {
   }
 
   return (
-    <Container className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <Title>색상 설정</Title>
       <List className="flex gap-4 overflow-y-auto">
         {colors.map((color) => (
@@ -33,7 +32,7 @@ export default function ColorPicker() {
           </List.Row>
         ))}
       </List>
-    </Container>
+    </div>
   )
 }
 

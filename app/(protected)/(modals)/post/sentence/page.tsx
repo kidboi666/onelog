@@ -10,7 +10,6 @@ import { EMOTION_STATUS } from './_constants'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 
 import Modal from '@/components/shared/Modal'
-import FormContainer from '@/components/shared/FormContainer'
 import Input from '@/components/shared/Input'
 import Button from '@/components/shared/Button'
 import { List } from '@/components/shared/List'
@@ -51,7 +50,7 @@ export default function SentenceModal() {
 
   return (
     <Modal className="bg-var-lightgray">
-      <FormContainer onSubmit={handleSubmitSentence} className="size-full">
+      <form onSubmit={handleSubmitSentence} className="size-full">
         <div className="flex w-full flex-col gap-4">
           <div className="flex gap-4 rounded-md bg-var-lightgray px-2 py-4 dark:bg-var-darkgray">
             <Input
@@ -82,7 +81,7 @@ export default function SentenceModal() {
             ))}
           </List>
         </div>
-      </FormContainer>
+      </form>
     </Modal>
   )
 }

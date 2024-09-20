@@ -9,8 +9,6 @@ import FavoriteButton from '../../../button/FavoriteButton'
 import CommentButton from '../../../button/CommentButton'
 import CommentInputButton from '../../../button/CommentInputButton'
 import Avatar from '@/components/feature/user/Avatar'
-import Box from '@/components/shared/Box'
-import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import CommentInput from './CommentInput'
@@ -52,10 +50,10 @@ export default function CommentItem({ comment, sentenceId }: Props) {
   }
 
   return (
-    <Container className="flex w-full gap-2">
+    <div className="flex w-full gap-2">
       <Avatar src={comment?.avatar_url} size="sm" shadow="sm" />
-      <Box col className="flex-1 gap-2">
-        <Box>
+      <div className="flex flex-1 flex-col gap-2">
+        <div>
           <Title size="xs" type="sub">
             {comment.user_name}
             <Text as="span" type="caption" size="sm">
@@ -68,11 +66,11 @@ export default function CommentItem({ comment, sentenceId }: Props) {
             {' ・ '}
             {formatDateToHM(comment.created_at)}
           </Text>
-        </Box>
-        <Box isBackground isRounded className="w-fit p-2">
+        </div>
+        <div className="w-fit rounded-md bg-white p-2 dark:bg-var-darkgray">
           <Text>{comment.content}</Text>
-        </Box>
-        <Box row className="flex-1">
+        </div>
+        <div className="flex flex-1">
           <FavoriteButton
             item={comment}
             onFavorite={handleFavoriteComment}
@@ -86,7 +84,7 @@ export default function CommentItem({ comment, sentenceId }: Props) {
             />
           )}
           <CommentInputButton onShowCommentInput={handleShowCommentInput} />
-        </Box>
+        </div>
         {showCommentInput && (
           <CommentInput sentenceId={sentenceId} commentId={comment.id} />
         )}
@@ -97,7 +95,7 @@ export default function CommentItem({ comment, sentenceId }: Props) {
               <CommentItem sentenceId={sentenceId} comment={comment} />
             </Suspense>
           ))}
-      </Box>
-    </Container>
+      </div>
+    </div>
   )
 }

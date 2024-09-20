@@ -1,4 +1,3 @@
-import Container from '@/components/shared/Container'
 import { PropsWithChildren, ReactNode } from 'react'
 
 interface Props {
@@ -13,10 +12,10 @@ export default function Layout({
   todo_info,
 }: PropsWithChildren<Props>) {
   return (
-    <Container className="flex w-full animate-fade-in flex-row">
+    <div className="flex w-full animate-fade-in flex-row">
       {sidebar}
       {main}
       {todo_info}
-    </Container>
+    </div>
   )
 }

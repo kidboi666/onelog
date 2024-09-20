@@ -1,4 +1,3 @@
-import Container from '@/components/shared/Container'
 import Input from '@/components/shared/Input'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
@@ -18,7 +17,7 @@ export default function AuthForm({
   error,
 }: Props) {
   return (
-    <Container className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <Title as="h2" type="sub" size="xs">
         {name}
       </Title>
@@ -37,6 +36,6 @@ export default function AuthForm({
           {error.message}
         </Text>
       )}
-    </Container>
+    </div>
   )
 }

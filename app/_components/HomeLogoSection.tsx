@@ -1,11 +1,10 @@
-import Container from '@/components/shared/Container'
 import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
 import cn from '@/lib/cn'
 
 export default function HomeLogoSection() {
   return (
-    <Container className="relative h-80 w-full md:size-full">
+    <div className="relative h-80 w-full md:size-full">
       <LinkButton
         href="/"
         disabled
@@ -45,6 +44,6 @@ export default function HomeLogoSection() {
           </g>
         </Icon>
       </LinkButton>
-    </Container>
+    </div>
   )
 }

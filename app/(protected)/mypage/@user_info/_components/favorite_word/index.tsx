@@ -5,8 +5,6 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import Box from '@/components/shared/Box'
-import Container from '@/components/shared/Container'
 import Empty from '@/components/shared/Empty'
 import Title from '@/components/shared/Title'
 import Tag from './_components/Tag'
@@ -26,17 +24,17 @@ export default function FavoriteWords() {
   )
 
   return (
-    <Container className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <Title>가장 많이 사용하는</Title>
       {shouldRenderWords?.length! >= 1 ? (
-        <Box isBackground isRounded className="flex flex-wrap gap-2 p-4">
+        <div className="flex flex-wrap gap-2 rounded-md bg-white p-4 dark:bg-var-darkgray">
           {shouldRenderWords?.map((word) => (
             <Tag key={word.word} word={word} />
           ))}
-        </Box>
+        </div>
       ) : (
         <Empty>아직 자주 사용하는 단어가 없습니다.</Empty>
       )}
-    </Container>
+    </div>
   )
 }

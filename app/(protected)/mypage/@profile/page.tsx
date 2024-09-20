@@ -1,5 +1,4 @@
 import { meQuery } from '@/services/queries/auth/meQuery'
-import Container from '@/components/shared/Container'
 import AboutMeSection from './_components/about_me'
 import NavigatorSection from './_components/navigator'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
@@ -13,13 +12,10 @@ export default function ProfileSection() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Container
-        isBackground
-        className="mt-12 flex h-fit flex-col gap-8 rounded-md p-4 shadow-md md:p-8"
-      >
+      <div className="mt-12 flex h-fit flex-col gap-8 rounded-md bg-white p-4 shadow-md md:p-8 dark:bg-var-darkgray">
         <AboutMeSection />
         <NavigatorSection />
-      </Container>
+      </div>
     </HydrationBoundary>
   )
 }

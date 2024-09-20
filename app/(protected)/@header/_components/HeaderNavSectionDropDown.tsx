@@ -5,11 +5,9 @@ import useSignOut from '@/services/mutates/auth/useSignOut'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import Title from '@/components/shared/Title'
 import Avatar from '@/components/feature/user/Avatar'
-import Box from '@/components/shared/Box'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
-import RefContainer from '@/components/shared/RefContainer'
 import Text from '@/components/shared/Text'
 
 interface Props {
@@ -26,13 +24,11 @@ export default function HeaderNavSectionDropDown({
   const { mutate: signOut } = useSignOut()
   const validateEmail = me?.email?.split('@')[0]
   return (
-    <RefContainer
+    <div
       ref={targetRef}
-      dataStatus="closed"
-      isRounded
-      isBackground
+      data-status="closed"
       onTransitionEnd={onTransitionEnd}
-      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-60 origin-top-right p-2 shadow-md"
+      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-60 origin-top-right rounded-md bg-white p-2 shadow-md dark:bg-var-darkgray"
     >
       <LinkButton
         href="/mypage"
@@ -141,6 +137,6 @@ export default function HeaderNavSectionDropDown({
         </svg>
         로그아웃
       </Button>
-    </RefContainer>
+    </div>
   )
 }

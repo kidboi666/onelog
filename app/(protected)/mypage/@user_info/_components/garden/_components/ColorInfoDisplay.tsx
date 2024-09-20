@@ -1,4 +1,3 @@
-import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 import Block from './Block'
 
@@ -8,7 +7,7 @@ interface Props {
 
 export default function ColorInfoDisplay({ orderBy }: Props) {
   return (
-    <Container className="flex items-center gap-2 self-end">
+    <div className="flex items-center gap-2 self-end">
       <Text type="caption" size="sm" className="leading-none">
         {orderBy === 'emotion' ? 'Bad' : 'Less'}
       </Text>
@@ -20,6 +19,6 @@ export default function ColorInfoDisplay({ orderBy }: Props) {
       <Text type="caption" size="sm">
         {orderBy === 'emotion' ? 'Good' : 'More'}
       </Text>
-    </Container>
+    </div>
   )
 }

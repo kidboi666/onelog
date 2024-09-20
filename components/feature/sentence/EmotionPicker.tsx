@@ -5,7 +5,6 @@ import { EMOTION_STATUS } from '@/app/(protected)/(modals)/post/sentence/_consta
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import { List } from '@/components/shared/List'
-import RefBox from '@/components/shared/RefBox'
 
 interface Props {
   emotion: (typeof EMOTION_STATUS)[number]
@@ -32,7 +31,7 @@ export default function EmotionPicker({
         <Text type="caption" size="sm" className="absolute top-4">
           {emotion.status}
         </Text>
-        <RefBox
+        <div
           className={cn(
             'absolute top-1 size-2 rounded-full bg-zinc-300 ring-1 ring-zinc-200 transition group-hover:ring-4 dark:bg-var-darkgray dark:ring-zinc-600',
             selectedEmotion === emotion.percent && 'bg-zinc-700 ring-4',

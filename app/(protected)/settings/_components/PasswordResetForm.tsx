@@ -1,7 +1,6 @@
 'use client'
 
 import Button from '@/components/shared/Button'
-import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { supabase } from '@/lib/supabase/client'
@@ -18,7 +17,7 @@ export default function PasswordResetForm() {
   }
 
   return (
-    <Container className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <Title>비밀번호 변경</Title>
       <Text>
         이메일 :{' '}
@@ -29,6 +28,6 @@ export default function PasswordResetForm() {
       <Button onClick={handlePasswordReset} className="w-fit">
         현재 이메일로 비밀번호 변경 이메일 보내기
       </Button>
-    </Container>
+    </div>
   )
 }

@@ -3,7 +3,6 @@ import Title from '@/components/shared/Title'
 import { EMOTION_STATUS } from '../_constants'
 import { List } from '@/components/shared/List'
 import Icon from '@/components/shared/Icon'
-import Container from '@/components/shared/Container'
 import EmotionBlock from '@/components/shared/EmotionBlock'
 import cn from '@/lib/cn'
 
@@ -17,11 +16,11 @@ export default function EmotionSection({
   onStatusClick,
 }: Props) {
   return (
-    <Container className="flex flex-col items-center gap-8">
+    <div className="flex flex-col items-center gap-8">
       <Title type="sub" size="sm">
         오늘의 기분 농도를 선택하세요.
       </Title>
-      <Container className="flex items-center gap-2">
+      <div className="flex items-center gap-2">
         <Text>Bad</Text>
         <List className="flex gap-2">
           {EMOTION_STATUS.map((emotion, i) => (
@@ -55,7 +54,7 @@ export default function EmotionSection({
           ))}
         </List>
         <Text>Good</Text>
-      </Container>
-    </Container>
+      </div>
+    </div>
   )
 }

@@ -1,7 +1,6 @@
 import cn from '@/lib/cn'
 import Button, { ButtonProps } from '@/components/shared/Button'
 import { useTheme } from '@/store/useTheme'
-import Box from './Box'
 
 interface Props extends ButtonProps {
   level: number
@@ -24,7 +23,7 @@ export default function EmotionBlock({ level, onClick, className }: Props) {
     }
   }
   return (
-    <Box
+    <div
       className={cn(
         'size-full overflow-hidden rounded-full ring-1 ring-zinc-400',
         className,
@@ -43,6 +42,6 @@ export default function EmotionBlock({ level, onClick, className }: Props) {
           colorizeOpacity(level),
         )}
       ></Button>
-    </Box>
+    </div>
   )
 }

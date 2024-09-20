@@ -1,8 +1,6 @@
 'use client'
 
-import Box from '@/components/shared/Box'
 import Button from '@/components/shared/Button'
-import Container from '@/components/shared/Container'
 import Icon from '@/components/shared/Icon'
 import Title from '@/components/shared/Title'
 import cn from '@/lib/cn'
@@ -27,9 +25,9 @@ export default function DarkModeSwitch() {
   }
 
   return (
-    <Container className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <Title>다크 모드 설정</Title>
-      <Box className="flex gap-2">
+      <div className="flex gap-2">
         <DarkModeBlock
           theme="dark"
           selectedTheme={theme}
@@ -40,8 +38,8 @@ export default function DarkModeSwitch() {
           selectedTheme={theme}
           onBlockClick={handleThemeChange}
         />
-      </Box>
-    </Container>
+      </div>
+    </div>
   )
 }
 

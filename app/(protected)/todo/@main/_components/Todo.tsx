@@ -6,6 +6,7 @@ import cn from '@/lib/cn'
 import { INIT_TODO } from './TaskForm'
 import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface TodoProps {
   todo: typeof INIT_TODO
@@ -20,12 +21,14 @@ export default function Todo({
   onDelete,
   onSuccess,
 }: TodoProps) {
+  const router = useRouter()
   const [isHover, setHover] = useState(false)
   return (
     <List.Row
       draggable
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      // onClick={() => router.push('/')}
       className="flex animate-fade-in cursor-pointer items-center justify-between rounded-md bg-white p-2 shadow-sm transition hover:opacity-85 dark:bg-var-darkgray"
     >
       <div className="flex items-center gap-2">
