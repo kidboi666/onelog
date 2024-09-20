@@ -1,9 +1,9 @@
 'use client'
 
-import Folder from './Folder'
 import { TodoFolder } from '@/types/todo'
 import { List } from '@/components/shared/List'
 import { useRef } from 'react'
+import Folder from '../../../_components/Folder'
 
 interface Props {
   isOpenSide: boolean

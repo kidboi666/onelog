@@ -1,21 +1,18 @@
 'use client'
 
-import { useEffect } from 'react'
-import TaskForm from './_components/TaskForm'
+import { PropsWithChildren, useEffect } from 'react'
 import { useTodo } from '@/store/useTodo'
 import cn from '@/lib/cn'
-import TodoDashBoard from './_components/TodoDashBoard'
 
-export default function TodoPage() {
+export default function Layout({ children }: PropsWithChildren) {
   const {
     selectedFolder,
     selectedFolderId,
-    setSelectedFolderId,
-    setTodos,
     todos,
-    successTodos,
+    setTodos,
     setSuccessTodos,
-    todoFolders,
+    successTodos,
+    setSelectedFolderId,
   } = useTodo()
 
   useEffect(() => {
@@ -29,8 +26,8 @@ export default function TodoPage() {
           JSON.stringify({ pending: todos, success: successTodos }),
         )
       }
+      setSelectedFolderId(null)
     }
-    setSelectedFolderId(null)
   }, [todos, successTodos])
 
   useEffect(() => {
@@ -63,18 +60,7 @@ export default function TodoPage() {
           'bg-purple-500/15 dark:bg-purple-500/25',
       )}
     >
-      {selectedFolder ? (
-        <TaskForm
-          key={selectedFolder?.id}
-          selectedFolder={selectedFolder}
-          todos={todos}
-          setTodos={setTodos}
-          successTodos={successTodos}
-          setSuccessTodos={setSuccessTodos}
-        />
-      ) : (
-        <TodoDashBoard todoFolders={todoFolders} />
-      )}
+      {children}
     </div>
   )
 }

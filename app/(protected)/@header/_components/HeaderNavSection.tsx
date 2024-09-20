@@ -45,7 +45,7 @@ export default function HeaderNavSection() {
           </Icon>
         </LinkButton>{' '}
         <LinkButton
-          href="/todo"
+          href="/todo/main"
           variant="list"
           innerClassName="py-2 flex gap-2"
         >

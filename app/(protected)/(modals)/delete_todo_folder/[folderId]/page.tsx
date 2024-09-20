@@ -13,7 +13,7 @@ interface Props {
 export default function DeleteTodoFolderModal({ params }: Props) {
   const folderId = params.folderId
   const router = useRouter()
-  const { todoFolders, setTodoFolders, setSelectFolder } = useTodo()
+  const { todoFolders, setTodoFolders, setSelectedFolder } = useTodo()
 
   const handleCancelButtonClick = () => {
     router.back()
@@ -24,7 +24,7 @@ export default function DeleteTodoFolderModal({ params }: Props) {
       (todoFolder) => todoFolder.id !== Number(folderId),
     )
     setTodoFolders(nextFolders)
-    setSelectFolder(null)
+    setSelectedFolder(null)
     router.back()
   }
   return (

@@ -9,7 +9,6 @@ import useBlockEditor from '@/hooks/useBlockEditor'
 import { EditorContent } from '@tiptap/react'
 
 export default function PostPage() {
-  const ref = useRef<HTMLDivElement>(null)
   const [imagePreview, setImagePreview] = useState('')
   const [title, onChangeTitle] = useInput('')
   const [content, onChangeContent, setContent] = useInput<string>('')
@@ -26,7 +25,7 @@ export default function PostPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col gap-4 rounded-md bg-white dark:bg-var-darkgray">
+    <div className="flex min-h-screen flex-col gap-4 rounded-md bg-white p-4 dark:bg-var-darkgray">
       <div className="flex gap-4">
         <FileInput
           file={imageFile}

@@ -1,27 +1,25 @@
+'use client'
+
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
 import cn from '@/lib/cn'
 import { Todo as TTodo, TodoFolder } from '@/types/todo'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { useTodo } from '@/store/useTodo'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
-import TaskOptionDropDown from './TaskOptionDropDown'
 import useStateChange from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
-import Todo from './Todo'
-import { useRouter } from 'next/navigation'
 import Input from '@/components/shared/Input'
 import { useInput } from '@/hooks/useInput'
+import TaskOptionDropDown from '../../_components/TaskOptionDropDown'
+import Todo from '../../_components/Todo'
 
-interface Props {
-  todoFolders: TodoFolder[]
-}
-
-export default function TodoDashBoard({ todoFolders }: Props) {
+export default function TodoDashBoard() {
+  const { todoFolders } = useTodo()
   return (
     <>
-      <Title>할일 대시보드</Title>
+      <Title>할일 전체</Title>
       <List className="flex flex-wrap gap-4">
         {todoFolders.map((folder) => (
           <TodoFolderCard key={folder.id} folder={folder} />
@@ -40,7 +38,6 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
   const { ref, onClick, onTransitionEnd, close } =
     useStateChange<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
-  const router = useRouter()
   const [todoText, onChangeTodoText, setTodoText] = useInput<string>('')
   const [showInput, setShowInput] = useState(false)
   const [localTodos, setLocalTodos] = useState<TTodo[]>([])
@@ -53,6 +50,7 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
       updatedAt: Date.now(),
     }
     const nextSuccessTodos = [...localSuccessTodos, validateTodo]
+    setLocalSuccessTodos(nextSuccessTodos)
     setSuccessTodos(nextSuccessTodos)
 
     const nextTodos =

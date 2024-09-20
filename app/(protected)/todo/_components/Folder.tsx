@@ -11,6 +11,7 @@ import Dot from './Dot'
 import Icon from '@/components/shared/Icon'
 import { TodoFolder } from '@/types/todo'
 import { List } from '@/components/shared/List'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   isOpenSide: boolean
@@ -25,7 +26,8 @@ export default function Folder({
   dragItem,
   dragOverItem,
 }: Props) {
-  const { selectedFolder, setSelectFolder, todoFolders, setTodoFolders } =
+  const router = useRouter()
+  const { selectedFolder, setSelectedFolder, todoFolders, setTodoFolders } =
     useTodo()
   const {
     ref: dropdownRef,
@@ -40,7 +42,8 @@ export default function Folder({
   const [isDraggingDown, setDraggingDown] = useState(false)
 
   const handleFolderClick = () => {
-    setSelectFolder(folder)
+    setSelectedFolder(folder)
+    router.push('/todo/custom_task')
   }
 
   const dragStart = () => {
@@ -119,7 +122,7 @@ export default function Folder({
         onDragEnd={drop}
         onDragOver={dragOver}
         className={cn(
-          'size-full animate-fade-in border border-transparent transition',
+          'relative size-full animate-fade-in border border-transparent transition',
           isHover && isDraggingDown === false && 'border-t-blue-500',
           isHover && isDraggingDown && 'border-b-blue-500',
         )}
@@ -129,7 +132,7 @@ export default function Folder({
           onClick={handleFolderClick}
           ref={dropdownButtonRef}
           className={cn(
-            'relative flex h-10 w-full p-4',
+            'flex h-10 w-full p-4',
             isOpenSide ? 'gap-4' : 'justify-center',
           )}
           onMouseEnter={() => setShowKebabButton(true)}
@@ -161,12 +164,12 @@ export default function Folder({
               )}
             </div>
           )}
-          <FolderDropDown
-            targetRef={dropdownRef}
-            onTransitionEnd={onTransitionEnd}
-            folderId={folder.id}
-          />
         </Button>
+        <FolderDropDown
+          targetRef={dropdownRef}
+          onTransitionEnd={onTransitionEnd}
+          folderId={folder.id}
+        />
       </List.Row>
     </>
   )

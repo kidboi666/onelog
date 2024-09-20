@@ -16,6 +16,15 @@ export default function TaskOptionDropDown({
   folderId,
 }: Props) {
   const router = useRouter()
+
+  const handleFolderDelete = () => {
+    router.push(`/delete_todo_folder/${folderId}`)
+  }
+
+  const handleFolderEdit = () => {
+    router.push(`/edit_todo_folder/${folderId}`)
+  }
+
   return (
     <div
       ref={targetRef}
@@ -25,7 +34,7 @@ export default function TaskOptionDropDown({
     >
       <Button
         variant="list"
-        onClick={() => router.push(`/delete_todo_folder/${folderId}`)}
+        onClick={handleFolderDelete}
         className="w-full gap-2 py-2 hover:bg-white dark:hover:bg-var-darkgray"
       >
         <Icon view="0 -960 960 960" size={12}>
@@ -35,7 +44,7 @@ export default function TaskOptionDropDown({
       </Button>
       <Button
         variant="list"
-        onClick={() => router.push(`/edit_todo_folder/${folderId}`)}
+        onClick={handleFolderEdit}
         className="w-full gap-2 text-nowrap py-2 hover:bg-white dark:hover:bg-var-darkgray"
       >
         <Icon view="0 -960 960 960" size={12}>
