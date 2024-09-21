@@ -52,6 +52,7 @@ export default function TodoFolderCard({ folder }: TodoFolderCardProps) {
       name: todoText,
       isSuccess: false,
       folderId: folder.id,
+      memo: null,
     }
     const nextTodos = [...localTodos, nextTodo]
     setSelectedFolderId(folder.id)
