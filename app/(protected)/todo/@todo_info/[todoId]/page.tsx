@@ -41,7 +41,7 @@ export default function Page({ params }: Props) {
         ...todo,
         isSuccess: true,
         updatedAt: Date.now(),
-        memo: memo || null,
+        memo: memo,
       }
 
       const nextSuccessTodos = [...successTodos, validateTodo]

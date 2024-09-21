@@ -36,7 +36,7 @@ export default function TaskForm() {
       name: todoText,
       isSuccess: false,
       folderId: selectedFolder!.id,
-      memo: null,
+      memo: '',
     }
 
     const nextTodos = [...todos, nextTodo]

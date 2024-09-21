@@ -14,7 +14,7 @@ export interface Todo {
   updatedAt: number
   isSuccess: boolean
   folderId: number
-  memo: string | null
+  memo?: string
 }
 
 export interface TTodo {

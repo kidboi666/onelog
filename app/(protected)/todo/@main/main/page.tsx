@@ -75,7 +75,7 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
       name: todoText,
       isSuccess: false,
       folderId: folder.id,
-      memo: null,
+      memo: '',
     }
 
     const nextTodos = [...localTodos, nextTodo]
