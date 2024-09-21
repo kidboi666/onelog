@@ -63,12 +63,10 @@ export default function Page({ params }: Props) {
         )
       }
       setTodo(foundTodo)
-      setMemo(foundTodo?.memo)
+      setMemo(foundTodo.memo || '')
       open()
     }
   }, [todoId])
-
-  if (!todoId || !folderId) return null
 
   if (todo?.isSuccess) {
     return null
