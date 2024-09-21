@@ -40,7 +40,6 @@ export default function Layout({ children }: PropsWithChildren) {
       setSuccessTodos(selectedTodos?.success ?? [])
     }
   }, [selectedFolder && selectedFolder.id])
-
   return (
     <div
       className={cn(

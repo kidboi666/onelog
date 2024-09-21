@@ -50,7 +50,7 @@ export default function AddTodoFolderModal() {
   }
 
   return (
-    <Modal className="bg-var-lightgray">
+    <Modal>
       <form onSubmit={handleSubmit} className="flex w-full flex-col gap-8">
         <div className="flex flex-col gap-2">
           <Text>폴더명</Text>

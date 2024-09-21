@@ -11,7 +11,7 @@ interface Props {
   sentenceId: number
 }
 
-export default function CommentContainer({ sentenceId }: Props) {
+export default function Comments({ sentenceId }: Props) {
   const { data: comments } = useSuspenseQuery(
     commentQuery.getComment(supabase, sentenceId),
   )

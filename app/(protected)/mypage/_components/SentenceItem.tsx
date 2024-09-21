@@ -6,6 +6,7 @@ import Favorite from './Favorite'
 import Comment from './Comment'
 import Emotion from './Emotion'
 import { ISentenceState } from '@/store/useSentence'
+import { useTransition } from 'react'
 
 interface Props {
   sentence: ISentenceState
@@ -14,10 +15,15 @@ interface Props {
 export default function SentenceItem({ sentence }: Props) {
   const router = useRouter()
   const level = sentence?.emotion_level.split('%')
+  const [isLoading, startTransition] = useTransition()
 
   return (
     <List.Row
-      onClick={() => router.push(`/sentence_info/${sentence?.id}`)}
+      onClick={() =>
+        startTransition(() =>
+          router.push(`/sentence_info/${sentence?.id}`, { scroll: false }),
+        )
+      }
       className="flex cursor-pointer items-center justify-between gap-4 truncate rounded-md px-1 py-2 transition hover:bg-var-lightgray dark:hover:bg-var-dark"
     >
       <Text type="caption" size="xs">

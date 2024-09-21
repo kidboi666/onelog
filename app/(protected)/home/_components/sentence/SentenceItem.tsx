@@ -3,7 +3,6 @@ import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { Tables } from '@/types/supabase'
 import { Suspense, useState } from 'react'
-import CommentContainer from './_components/comment'
 import FavoriteButton from '../button/FavoriteButton'
 import CommentButton from '../button/CommentButton'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
@@ -11,13 +10,14 @@ import { formatDateToHM, formatDateToYMD } from '@/utils/formatDate'
 import Spinner from '@/components/shared/Spinner'
 import useIntersect from '@/hooks/useIntersect'
 import cn from '@/lib/cn'
+import Comments from '../comment/Comments'
 
 interface Props {
   sentence: Tables<'sentence'>
   userId: string
 }
 
-export default function Sentence({ sentence, userId }: Props) {
+export default function SentenceItem({ sentence, userId }: Props) {
   const [showComment, setShowComment] = useState(false)
   const [ref, inView] = useIntersect<HTMLDivElement>({ threshold: 0.2 }, true)
   const { mutate: favoriteSentence } = useFavoriteSentence()
@@ -81,7 +81,7 @@ export default function Sentence({ sentence, userId }: Props) {
       </div>
       {showComment && (
         <Suspense fallback={<Spinner size={40} />}>
-          <CommentContainer sentenceId={sentence?.id} />
+          <Comments sentenceId={sentence?.id} />
         </Suspense>
       )}
     </div>

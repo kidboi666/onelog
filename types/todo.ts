@@ -13,6 +13,8 @@ export interface Todo {
   createdAt: number
   updatedAt: number
   isSuccess: boolean
+  folderId: number
+  memo: string | null
 }
 
 export interface TTodo {

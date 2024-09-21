@@ -7,11 +7,11 @@ import useStateChange from '@/hooks/useStateChange'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import FolderDropDown from './FolderDropDown'
-import Dot from './Dot'
 import Icon from '@/components/shared/Icon'
 import { TodoFolder } from '@/types/todo'
 import { List } from '@/components/shared/List'
 import { useRouter } from 'next/navigation'
+import Dot from './Dot'
 
 interface Props {
   isOpenSide: boolean

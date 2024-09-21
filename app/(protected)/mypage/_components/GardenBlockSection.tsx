@@ -1,8 +1,8 @@
 import { IDateBlock } from '@/types/garden'
-import { DAYS_OF_WEEK } from '../_constants'
 import Text from '@/components/shared/Text'
-import { createEmptySpaceByWeekday } from '..'
 import cn from '@/lib/cn'
+import { createEmptySpaceByWeekday } from '../@user_info/_components/garden'
+import { DAYS_OF_WEEK } from '../_constants'
 
 interface GardenBlockSectionProps {
   shouldRenderElement: IDateBlock[]

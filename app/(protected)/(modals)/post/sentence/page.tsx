@@ -49,7 +49,7 @@ export default function SentenceModal() {
   }
 
   return (
-    <Modal className="bg-var-lightgray">
+    <Modal className="">
       <form onSubmit={handleSubmitSentence} className="size-full">
         <div className="flex w-full flex-col gap-4">
           <div className="flex gap-4 rounded-md bg-var-lightgray px-2 py-4 dark:bg-var-darkgray">

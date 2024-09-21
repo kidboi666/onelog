@@ -3,15 +3,17 @@ import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
 import cn from '@/lib/cn'
-import { INIT_TODO } from './TaskForm'
 import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
+import { useRouter } from 'next/navigation'
+import { Todo as TTodo } from '@/types/todo'
+import Spinner from '@/components/shared/Spinner'
 
 interface TodoProps {
-  todo: typeof INIT_TODO
+  todo: TTodo
   isSuccess?: boolean
-  onDelete?: (selectedTodo: typeof INIT_TODO) => void
-  onSuccess?: (selectedTodo: typeof INIT_TODO) => void
+  onDelete?: (selectedTodo: TTodo) => void
+  onSuccess?: (selectedTodo: TTodo) => void
 }
 
 export default function Todo({
@@ -21,11 +23,19 @@ export default function Todo({
   onSuccess,
 }: TodoProps) {
   const [isHover, setHover] = useState(false)
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+
+  const handleTodoClick = () => {
+    router.push(`/todo/${todo.id}?folder_id=${todo.folderId}`)
+  }
+
   return (
     <List.Row
       draggable
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={() => startTransition(() => handleTodoClick())}
       className="flex animate-fade-in cursor-pointer items-center justify-between rounded-md bg-white p-2 shadow-sm transition hover:opacity-85 dark:bg-var-darkgray"
     >
       <div className="flex items-center gap-2">
@@ -33,10 +43,13 @@ export default function Todo({
           size="none"
           variant="icon"
           className={cn(
-            'size-4 rounded-full border border-zinc-400 text-white hover:text-zinc-400 dark:border-zinc-600 dark:text-white',
+            'size-4 flex-shrink-0 rounded-full border border-zinc-400 text-white hover:text-zinc-400 dark:border-zinc-600 dark:text-white',
             isSuccess ? 'bg-zinc-400 dark:bg-zinc-600' : '',
           )}
-          onClick={() => onSuccess!(todo)}
+          onClick={(e) => {
+            e.stopPropagation()
+            onSuccess!(todo)
+          }}
         >
           {isSuccess && (
             <Icon size={12} view={20} className="animate-grow-up">
@@ -52,7 +65,7 @@ export default function Todo({
         <div>
           <Text
             className={cn(
-              'text-xs',
+              'line-clamp-4 break-all text-xs',
               isSuccess ? 'text-zinc-400 dark:text-zinc-600' : '',
             )}
           >
@@ -64,7 +77,9 @@ export default function Todo({
               : `등록일 : ${formatDateToMDY(todo.createdAt)} ${formatDateToHM(todo.createdAt)}`}
           </Text>
         </div>
+        {isPending && <Spinner size={20} />}
       </div>
+
       {onDelete && isHover ? (
         <div className="flex gap-2">
           <Button

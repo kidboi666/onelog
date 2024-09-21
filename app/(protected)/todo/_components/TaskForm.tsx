@@ -19,6 +19,8 @@ export const INIT_TODO = {
   createdAt: 0,
   updatedAt: 0,
   isSuccess: false,
+  folderId: 0,
+  memo: null,
 }
 
 interface Props {
@@ -37,7 +39,7 @@ export default function TaskForm({
   setSuccessTodos,
 }: Props) {
   const [todoText, setTodoText] = useState('')
-  const { onClick, ref, open, close, onTransitionEnd } =
+  const { onClick, ref, close, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
 
@@ -53,6 +55,8 @@ export default function TaskForm({
       updatedAt: Date.now(),
       name: todoText,
       isSuccess: false,
+      folderId: selectedFolder!.id,
+      memo: null,
     }
     const nextTodos = [...todos, nextTodo]
     setTodos(nextTodos)
@@ -64,14 +68,14 @@ export default function TaskForm({
   }
 
   const handleDeleteButtonClick = useCallback(
-    (selectedTodo: typeof INIT_TODO) => {
+    (selectedTodo: TTodo) => {
       const nextTodos = todos.filter((todo) => todo.name !== selectedTodo.name)
       setTodos(nextTodos)
     },
     [todos],
   )
 
-  const handleSuccessButtonClick = (selectedTodo: typeof INIT_TODO) => {
+  const handleSuccessButtonClick = (selectedTodo: TTodo) => {
     const nextTodos = todos.filter((todo) => todo.id !== selectedTodo.id)
     const validateTodo = {
       ...selectedTodo,
@@ -83,7 +87,7 @@ export default function TaskForm({
     setSuccessTodos(nextSuccessTodos)
   }
 
-  const handleResetTodoStatus = (selectedTodo: typeof INIT_TODO) => {
+  const handleResetTodoStatus = (selectedTodo: TTodo) => {
     const validateTodo = { ...selectedTodo, isSuccess: false }
     const nextTodos = [...todos, validateTodo]
     const nextSuccessTodos = successTodos.filter(

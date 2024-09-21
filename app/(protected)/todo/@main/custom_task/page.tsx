@@ -13,24 +13,11 @@ import useOutsideClick from '@/hooks/useOutsideClick'
 import { useTodo } from '@/store/useTodo'
 import Todo from '../../_components/Todo'
 import TaskOptionDropDown from '../../_components/TaskOptionDropDown'
-
-const INIT_TODO = {
-  id: 0,
-  name: '',
-  createdAt: 0,
-  updatedAt: 0,
-  isSuccess: false,
-}
+import { Todo as TTodo } from '@/types/todo'
 
 export default function TaskForm() {
-  const {
-    todoFolders,
-    todos,
-    setTodos,
-    successTodos,
-    selectedFolder,
-    setSuccessTodos,
-  } = useTodo()
+  const { todos, setTodos, successTodos, selectedFolder, setSuccessTodos } =
+    useTodo()
   const [todoText, setTodoText] = useState('')
   const { onClick, ref, close, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
@@ -48,7 +35,10 @@ export default function TaskForm() {
       updatedAt: Date.now(),
       name: todoText,
       isSuccess: false,
+      folderId: selectedFolder!.id,
+      memo: null,
     }
+
     const nextTodos = [...todos, nextTodo]
     setTodos(nextTodos)
     setTodoText('')
@@ -59,14 +49,14 @@ export default function TaskForm() {
   }
 
   const handleDeleteButtonClick = useCallback(
-    (selectedTodo: typeof INIT_TODO) => {
+    (selectedTodo: TTodo) => {
       const nextTodos = todos.filter((todo) => todo.name !== selectedTodo.name)
       setTodos(nextTodos)
     },
     [todos],
   )
 
-  const handleSuccessButtonClick = (selectedTodo: typeof INIT_TODO) => {
+  const handleSuccessButtonClick = (selectedTodo: TTodo) => {
     const nextTodos = todos.filter((todo) => todo.id !== selectedTodo.id)
     const validateTodo = {
       ...selectedTodo,
@@ -78,7 +68,7 @@ export default function TaskForm() {
     setSuccessTodos(nextSuccessTodos)
   }
 
-  const handleResetTodoStatus = (selectedTodo: typeof INIT_TODO) => {
+  const handleResetTodoStatus = (selectedTodo: TTodo) => {
     const validateTodo = { ...selectedTodo, isSuccess: false }
     const nextTodos = [...todos, validateTodo]
     const nextSuccessTodos = successTodos.filter(

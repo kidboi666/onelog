@@ -1,7 +1,7 @@
 'use client'
 
 import cn from '@/lib/cn'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import TaskFolderSection from './_components/TaskFolderSection'
 import SideMenuButtonSection from './_components/SideMenuButtonSection'
 import { TodoFolder } from '@/types/todo'
@@ -11,6 +11,9 @@ import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import Line from '@/components/shared/Line'
 import TodoMenuSection from './_components/TodoMenuSection'
+import { List } from '@/components/shared/List'
+import { TODO_MENU } from '../_constants'
+import Spinner from '@/components/shared/Spinner'
 
 export const INIT_TODO_FOLDER: TodoFolder = {
   id: 0,
@@ -23,17 +26,26 @@ export const INIT_TODO_FOLDER: TodoFolder = {
 
 export default function SideBarPage() {
   const router = useRouter()
+  const [isLoading, startTransition] = useTransition()
   const [isOpenSide, setOpenSide] = useState(false)
-  const { todoFolders, setTodoFolders, setSelectedMenu, selectedMenu } =
-    useTodo()
+  const {
+    todoFolders,
+    setTodoFolders,
+    setSelectedFolder,
+    setSelectedMenu,
+    selectedMenu,
+  } = useTodo()
 
   const handleSideMenu = () => {
     setOpenSide((prev) => !prev)
   }
+
   const handleMenuSelect = (menu: TodoMenu) => {
+    setSelectedFolder(null)
     setSelectedMenu(menu)
     router.push(`/todo/${menu}`)
   }
+
   const handleAddTodoFolder = () => {
     router.push('/add_todo_folder')
   }
@@ -62,11 +74,17 @@ export default function SideBarPage() {
           isOpenSide={isOpenSide}
           onSideMenu={handleSideMenu}
         />
-        <TodoMenuSection
-          isOpenSide={isOpenSide}
-          onMenuSelect={handleMenuSelect}
-          selectedMenu={selectedMenu}
-        />
+        <List className="flex flex-col gap-2">
+          {TODO_MENU.map((menu) => (
+            <TodoMenuSection
+              key={menu.id}
+              menu={menu}
+              isOpenSide={isOpenSide}
+              onMenuSelect={handleMenuSelect}
+              selectedMenu={selectedMenu}
+            />
+          ))}
+        </List>
         <Line />
         <TaskFolderSection isOpenSide={isOpenSide} todoFolders={todoFolders} />
       </div>
@@ -76,10 +94,18 @@ export default function SideBarPage() {
           isOpenSide ? '' : 'flex-col',
         )}
       >
-        <Button variant="icon" onClick={handleAddTodoFolder} className="gap-2">
-          <Icon view="0 -960 960 960" size={18}>
-            <path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
-          </Icon>
+        <Button
+          variant="icon"
+          onClick={() => startTransition(() => handleAddTodoFolder())}
+          className="gap-2"
+        >
+          {isLoading ? (
+            <Spinner size={18} />
+          ) : (
+            <Icon view="0 -960 960 960" size={18}>
+              <path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+            </Icon>
+          )}
           {isOpenSide && '새 폴더 추가'}
         </Button>
         <Button variant="icon">

@@ -1,46 +1,24 @@
-'use client'
-
-import { List } from '@/components/shared/List'
-import Title from '@/components/shared/Title'
-import cn from '@/lib/cn'
-import { Todo as TTodo, TodoFolder } from '@/types/todo'
 import { FormEvent, useEffect, useState } from 'react'
 import { useTodo } from '@/store/useTodo'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
+import TaskOptionDropDown from './TaskOptionDropDown'
 import useStateChange from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
+import Todo from './Todo'
 import Input from '@/components/shared/Input'
+import cn from '@/lib/cn'
 import { useInput } from '@/hooks/useInput'
-import TaskOptionDropDown from '../../_components/TaskOptionDropDown'
-import Todo from '../../_components/Todo'
-
-export default function TodoDashBoard() {
-  const { todoFolders } = useTodo()
-  return (
-    <>
-      <Title>할일 전체</Title>
-      <List className="flex flex-wrap gap-4">
-        {todoFolders.map((folder) => (
-          <TodoFolderCard key={folder.id} folder={folder} />
-        ))}
-      </List>
-    </>
-  )
-}
+import { Todo as TTodo, TodoFolder } from '@/types/todo'
+import Title from '@/components/shared/Title'
+import { List } from '@/components/shared/List'
 
 interface TodoFolderCardProps {
   folder: TodoFolder
 }
 
-function TodoFolderCard({ folder }: TodoFolderCardProps) {
-  const {
-    setTodos,
-    selectedFolder,
-    setSuccessTodos,
-    setSelectedFolder,
-    setSelectedFolderId,
-  } = useTodo()
+export default function TodoFolderCard({ folder }: TodoFolderCardProps) {
+  const { setTodos, setSuccessTodos, setSelectedFolderId } = useTodo()
   const { ref, onClick, onTransitionEnd, close } =
     useStateChange<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
@@ -56,7 +34,6 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
       updatedAt: Date.now(),
     }
     const nextSuccessTodos = [...localSuccessTodos, validateTodo]
-    setLocalSuccessTodos(nextSuccessTodos)
     setSuccessTodos(nextSuccessTodos)
 
     const nextTodos =
@@ -75,9 +52,7 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
       name: todoText,
       isSuccess: false,
       folderId: folder.id,
-      memo: null,
     }
-
     const nextTodos = [...localTodos, nextTodo]
     setSelectedFolderId(folder.id)
     setLocalTodos(nextTodos)
@@ -97,7 +72,7 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
   return (
     <List.Row
       className={cn(
-        'h-fit w-56 rounded-md p-4 shadow-md',
+        'h-fit max-w-52 rounded-md p-4 shadow-md',
         folder?.dotColor === 'yellow' &&
           'bg-var-yellow/15 dark:bg-var-yellow/25',
         folder?.dotColor === 'orange' &&
@@ -111,9 +86,7 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
       )}
     >
       <div className="relative flex items-center justify-between gap-4">
-        <Title size="sm" className="line-clamp-1">
-          {folder?.name}
-        </Title>
+        <Title size="sm">{folder?.name}</Title>
         <div className="flex">
           <Button
             variant="icon"

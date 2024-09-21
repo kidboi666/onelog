@@ -1,23 +1,12 @@
-'use client'
-
-import { useTheme } from '@/store/useTheme'
 import Icon from './Icon'
-import { formatColor } from '@/utils/formatColor'
-import Button from './Button'
 
 interface Props {
-  size?: 20 | 40 | 60
+  size?: 18 | 20 | 40 | 60
 }
 
 export default function Spinner({ size = 40 }: Props) {
-  const { color } = useTheme()
   return (
-    <Button
-      disabled
-      variant="emptyStyle"
-      size="emptyStyle"
-      className={formatColor(color)}
-    >
+    <div className="flex justify-center text-zinc-800 dark:text-zinc-200">
       <Icon size={size} view={100}>
         <circle
           cx="50"
@@ -38,6 +27,6 @@ export default function Spinner({ size = 40 }: Props) {
           ></animateTransform>
         </circle>
       </Icon>
-    </Button>
+    </div>
   )
 }

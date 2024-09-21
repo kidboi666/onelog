@@ -2,10 +2,10 @@
 
 import { useSentence } from '@/store/useSentence'
 import Title from '@/components/shared/Title'
-import SentenceItem from './SentenceItem'
 import { List } from '@/components/shared/List'
 import Empty from '@/components/shared/Empty'
 import { formatDateToMDY } from '@/utils/formatDate'
+import SentenceItem from '../../../_components/SentenceItem'
 
 export default function PrevOneSentence() {
   const { sentences } = useSentence()
