@@ -3,25 +3,54 @@
 import Input from '@/components/shared/Input'
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react'
+import { FormEvent, useEffect } from 'react'
 import useStateChange from '@/hooks/useStateChange'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import useOutsideClick from '@/hooks/useOutsideClick'
 
-import { useTodo } from '@/store/useTodo'
-import Todo from '../../_components/Todo'
-import TaskOptionDropDown from '../../_components/TaskOptionDropDown'
-import { Todo as TTodo } from '@/types/todo'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { todoQuery } from '@/services/queries/todo/todoQuery'
+import { supabase } from '@/lib/supabase/client'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import Todo from '../../../_components/Todo'
+import TaskOptionDropDown from '../../../_components/TaskOptionDropDown'
+import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
+import { useInput } from '@/hooks/useInput'
+import useDeleteTodo from '@/services/mutates/todo/useDeleteTodo'
+import useAddTodo from '@/services/mutates/todo/useAddTodo'
+import { Tables } from '@/types/supabase'
+import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
+import { useRouter } from 'next/navigation'
 
-export default function TaskForm() {
-  const { todos, setTodos, successTodos, selectedFolder, setSuccessTodos } =
-    useTodo()
-  const [todoText, setTodoText] = useState('')
+interface Props {
+  params: { folderId: string }
+}
+
+export default function TaskForm({ params }: Props) {
+  const router = useRouter()
+  const folderId = params.folderId
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: todoFolders } = useSuspenseQuery(
+    todoFolderQuery.getTodoFolder(supabase, me.userId),
+  )
+  const { data: FetchedTodos } = useSuspenseQuery(
+    todoQuery.getTodoFromFolder(supabase, Number(folderId), me.userId),
+  )
+  const [todoText, onChangeTodoText, setTodoText] = useInput('')
   const { onClick, ref, close, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
+  const { mutate: deleteTodo } = useDeleteTodo()
+  const { mutate: updateTodo } = useUpdateTodo()
+  const { mutate: addTodo } = useAddTodo()
+
+  const todos = FetchedTodos.filter((todo) => todo.is_complete === false)
+  const successTodos = FetchedTodos.filter((todo) => todo.is_complete === true)
+  const selectedFolder = todoFolders.find(
+    (folder) => folder.id === Number(folderId),
+  )
 
   const currentMonth = new Date().getMonth() + 1
   const currentDate = new Date().getDate()
@@ -29,64 +58,34 @@ export default function TaskForm() {
 
   const handleSubmitTodo = (e: FormEvent) => {
     e.preventDefault()
+    const currentIndex = localStorage.getItem('todo-index') || 0
+    const nextIndex = Number(currentIndex) + 1
     const nextTodo = {
-      id: Date.now(),
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
       name: todoText,
-      isSuccess: false,
       folderId: selectedFolder!.id,
-      memo: '',
+      userId: me.userId,
+      index: nextIndex,
     }
-
-    const nextTodos = [...todos, nextTodo]
-    setTodos(nextTodos)
-    setTodoText('')
+    addTodo(nextTodo, {
+      onSuccess: () => {
+        setTodoText('')
+      },
+    })
   }
 
-  const handleChangeTodo = (e: ChangeEvent<HTMLInputElement>) => {
-    setTodoText(e.target.value)
+  const handleDeleteButtonClick = (selectedTodo: Tables<'todo'>) => {
+    deleteTodo({ todoId: selectedTodo.id, folderId: selectedTodo.folder_id })
   }
 
-  const handleDeleteButtonClick = useCallback(
-    (selectedTodo: TTodo) => {
-      const nextTodos = todos.filter((todo) => todo.name !== selectedTodo.name)
-      setTodos(nextTodos)
-    },
-    [todos],
-  )
-
-  const handleSuccessButtonClick = (selectedTodo: TTodo) => {
-    const nextTodos = todos.filter((todo) => todo.id !== selectedTodo.id)
-    const validateTodo = {
-      ...selectedTodo,
-      isSuccess: true,
-      updatedAt: Date.now(),
-    }
-    const nextSuccessTodos = [...successTodos, validateTodo]
-    setTodos(nextTodos)
-    setSuccessTodos(nextSuccessTodos)
-  }
-
-  const handleResetTodoStatus = (selectedTodo: TTodo) => {
-    const validateTodo = { ...selectedTodo, isSuccess: false }
-    const nextTodos = [...todos, validateTodo]
-    const nextSuccessTodos = successTodos.filter(
-      (todo) => todo.id !== selectedTodo.id,
-    )
-    setTodos(nextTodos)
-    setSuccessTodos(nextSuccessTodos)
+  const handleUpdateButtonClick = (selectedTodo: Tables<'todo'>) => {
+    updateTodo(selectedTodo)
   }
 
   useEffect(() => {
-    if (selectedFolder) {
-      const selectedTodos = JSON.parse(
-        localStorage.getItem(selectedFolder.id.toString())!,
-      )
-      setTodos(selectedTodos?.pending ?? [])
-      setSuccessTodos(selectedTodos?.success ?? [])
+    if (!selectedFolder) {
+      router.push('/todo/main')
     }
-  }, [selectedFolder?.id])
+  }, [selectedFolder])
 
   return (
     <form
@@ -109,7 +108,7 @@ export default function TaskForm() {
       <div className="mt-4 flex flex-col gap-2">
         <Input
           value={todoText}
-          onChange={handleChangeTodo}
+          onChange={onChangeTodoText}
           placeholder="할일을 입력하세요."
           dimension="sm"
           className="sticky"
@@ -128,9 +127,9 @@ export default function TaskForm() {
                 <Todo
                   key={todo.id}
                   todo={todo}
-                  isSuccess={todo.isSuccess}
+                  isComplete={todo.is_complete}
                   onDelete={handleDeleteButtonClick}
-                  onSuccess={handleSuccessButtonClick}
+                  onUpdate={handleUpdateButtonClick}
                 />
               ))}
             </List>
@@ -144,8 +143,8 @@ export default function TaskForm() {
                 <Todo
                   key={todo.id}
                   todo={todo}
-                  isSuccess={todo.isSuccess}
-                  onSuccess={handleResetTodoStatus}
+                  isComplete={todo.is_complete}
+                  onUpdate={handleUpdateButtonClick}
                 />
               ))}
             </List>

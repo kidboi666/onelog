@@ -3,7 +3,7 @@
 import Button from '@/components/shared/Button'
 import Modal from '@/components/shared/Modal'
 import Title from '@/components/shared/Title'
-import { useTodo } from '@/store/useTodo'
+import useDeleteTodoFolder from '@/services/mutates/todo/useDeleteTodoFolder'
 import { useRouter } from 'next/navigation'
 
 interface Props {
@@ -13,18 +13,14 @@ interface Props {
 export default function DeleteTodoFolderModal({ params }: Props) {
   const folderId = params.folderId
   const router = useRouter()
-  const { todoFolders, setTodoFolders, setSelectedFolder } = useTodo()
+  const { mutate: deleteFolder } = useDeleteTodoFolder()
 
   const handleCancelButtonClick = () => {
     router.back()
   }
 
   const handleDeleteButtonClick = () => {
-    const nextFolders = todoFolders.filter(
-      (todoFolder) => todoFolder.id !== Number(folderId),
-    )
-    setTodoFolders(nextFolders)
-    setSelectedFolder(null)
+    deleteFolder(Number(folderId!))
     router.back()
   }
   return (

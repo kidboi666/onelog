@@ -1,8 +1,7 @@
 import cn from '@/lib/cn'
-import { TTodoColor } from '@/types/todo'
 
 interface Props {
-  color?: TTodoColor
+  color?: string
   isSelected: boolean
 }
 

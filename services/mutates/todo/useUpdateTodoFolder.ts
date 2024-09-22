@@ -1,11 +1,13 @@
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import { Tables } from '@/types/supabase'
 import { useMutation } from '@tanstack/react-query'
 
 interface ITodoFolder {
   name: string
   color: string
   index: number
+  id: number
 }
 
 export default function useUpdateTodoFolder() {
@@ -15,7 +17,12 @@ export default function useUpdateTodoFolder() {
     mutationFn: async (params: ITodoFolder) => {
       return supabase
         .from('todo_folder')
-        .update({ ...params })
+        .update({
+          name: params.name,
+          color: params.color,
+          index: params.index,
+        })
+        .eq('id', params.id)
         .select()
     },
     onSuccess: () => {

@@ -1,7 +1,7 @@
 'use client'
 
 import cn from '@/lib/cn'
-import { useEffect, useState, useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import TaskFolderSection from './_components/TaskFolderSection'
 import SideMenuButtonSection from './_components/SideMenuButtonSection'
 import { TodoFolder } from '@/types/todo'
@@ -14,6 +14,10 @@ import TodoMenuSection from './_components/TodoMenuSection'
 import { List } from '@/components/shared/List'
 import { TODO_MENU } from '../_constants'
 import Spinner from '@/components/shared/Spinner'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
+import { supabase } from '@/lib/supabase/client'
+import { meQuery } from '@/services/queries/auth/meQuery'
 
 export const INIT_TODO_FOLDER: TodoFolder = {
   id: 0,
@@ -28,13 +32,11 @@ export default function SideBarPage() {
   const router = useRouter()
   const [isLoading, startTransition] = useTransition()
   const [isOpenSide, setOpenSide] = useState(false)
-  const {
-    todoFolders,
-    setTodoFolders,
-    setSelectedFolder,
-    setSelectedMenu,
-    selectedMenu,
-  } = useTodo()
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: todoFolders } = useSuspenseQuery(
+    todoFolderQuery.getTodoFolder(supabase, me.userId),
+  )
+  const { setSelectedFolder, setSelectedMenu, selectedMenu } = useTodo()
 
   const handleSideMenu = () => {
     setOpenSide((prev) => !prev)
@@ -49,18 +51,6 @@ export default function SideBarPage() {
   const handleAddTodoFolder = () => {
     router.push('/add_todo_folder')
   }
-
-  useEffect(() => {
-    const prevTodos = JSON.parse(localStorage.getItem('todo-folder')!) || []
-    setTodoFolders([...prevTodos])
-  }, [])
-
-  useEffect(() => {
-    if (todoFolders.length >= 1) {
-      /** 마지막 남은 폴더를 삭제시엔 삭제하는 로직에서 직접 로컬 스토리지를 비움 */
-      localStorage.setItem('todo-folder', JSON.stringify(todoFolders))
-    }
-  }, [todoFolders])
 
   return (
     <div

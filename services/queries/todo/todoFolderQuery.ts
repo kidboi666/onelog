@@ -1,22 +1,18 @@
-import { supabase } from '@/lib/supabase/client'
+import { Tables } from '@/types/supabase'
+import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
 export const todoFolderQuery = {
-  getTodoFolder: (userId: string) =>
-    queryOptions({
+  getTodoFolder: (supabase: SupabaseClient, userId: string) =>
+    queryOptions<Tables<'todo_folder'>[]>({
       queryKey: ['todo_folder'],
       queryFn: async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('todo_folder')
           .select()
           .eq('user_id', userId)
-          .single()
 
-        if (error) {
-          throw error
-        }
-
-        return data
+        return data as Tables<'todo_folder'>[]
       },
     }),
 }

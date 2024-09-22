@@ -7,6 +7,7 @@ import { TODO_MENU } from '../../../_constants'
 import { TodoMenu } from '@/store/useTodo'
 import { useTransition } from 'react'
 import Spinner from '@/components/shared/Spinner'
+import { usePathname } from 'next/navigation'
 
 interface Props {
   isOpenSide: boolean
@@ -21,6 +22,9 @@ export default function TodoMenuSection({
   onMenuSelect,
   menu,
 }: Props) {
+  const pathname = usePathname()
+  const splitedPath = pathname.split('/')
+  const isSelected = splitedPath.includes(menu.name)
   const [isLoading, startTransition] = useTransition()
   return (
     <List.Row key={menu.id} className="size-full animate-fade-in">
@@ -32,7 +36,7 @@ export default function TodoMenuSection({
         <div
           className={cn(
             'relative flex size-2 items-center justify-center rounded-full text-zinc-400 transition',
-            selectedMenu === menu.name &&
+            isSelected &&
               'bg-zinc-200 ring-8 ring-zinc-200 dark:bg-zinc-700 dark:ring-zinc-700',
           )}
         >
@@ -51,7 +55,7 @@ export default function TodoMenuSection({
             type="caption"
             className={cn(
               'trasition',
-              selectedMenu === menu.name
+              isSelected
                 ? 'text-zinc-600 dark:text-zinc-200'
                 : 'text-zinc-400 dark:text-zinc-500',
             )}

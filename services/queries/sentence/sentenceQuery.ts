@@ -1,8 +1,9 @@
 import { Tables } from '@/types/supabase'
+import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
 export const sentenceQuery = {
-  getAllSentence: (supabase: any) =>
+  getAllSentence: (supabase: SupabaseClient) =>
     queryOptions<Tables<'sentence'>[]>({
       queryKey: ['all_sentence'],
       queryFn: async () => {
@@ -10,7 +11,7 @@ export const sentenceQuery = {
           .from('sentence')
           .select()
           .order('created_at', { ascending: false })
-        return data
+        return data as Tables<'sentence'>[]
       },
     }),
   getAllMySentence: (supabase: any, userId: string) =>

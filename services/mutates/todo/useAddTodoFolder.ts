@@ -6,6 +6,7 @@ interface ITodoFolder {
   name: string
   color: string
   index: number
+  userId: string
 }
 
 export default function useAddTodoFolder() {
@@ -15,7 +16,12 @@ export default function useAddTodoFolder() {
     mutationFn: async (params: ITodoFolder) => {
       return supabase
         .from('todo_folder')
-        .insert({ ...params })
+        .insert({
+          name: params.name,
+          color: params.color,
+          index: params.index,
+          user_id: params.userId,
+        })
         .select()
     },
     onSuccess: () => {

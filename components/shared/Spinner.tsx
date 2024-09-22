@@ -1,7 +1,7 @@
 import Icon from './Icon'
 
 interface Props {
-  size?: 18 | 20 | 40 | 60
+  size?: 8 | 18 | 20 | 40 | 60
 }
 
 export default function Spinner({ size = 40 }: Props) {

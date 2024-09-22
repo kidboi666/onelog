@@ -12,7 +12,12 @@ export default function useDeleteTodo() {
 
   return useMutation({
     mutationFn: async (params: IDeleteTodo) => {
-      return supabase.from('todo').delete().eq('id', params.todoId)
+      const { data } = await supabase
+        .from('todo')
+        .delete()
+        .eq('id', params.todoId)
+
+      return data
     },
     onSuccess(_, variables) {
       queryClient.invalidateQueries({ queryKey: ['todo', variables.folderId] })

@@ -1,6 +1,5 @@
 'use client'
 
-import { useTodo } from '@/store/useTodo'
 import Modal from '@/components/shared/Modal'
 import Text from '@/components/shared/Text'
 import Input from '@/components/shared/Input'
@@ -11,41 +10,44 @@ import { useInput } from '@/hooks/useInput'
 import { TTodoColor } from '@/types/todo'
 import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
+import useAddTodoFolder from '@/services/mutates/todo/useAddTodoFolder'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { supabase } from '@/lib/supabase/client'
+
+const colors: TTodoColor[] = [
+  'black',
+  'green',
+  'yellow',
+  'blue',
+  'orange',
+  'red',
+  'purple',
+]
 
 export default function AddTodoFolderModal() {
   const router = useRouter()
-  const { setTodoFolders, todoFolders } = useTodo()
-  const [folderName, onChangeFolderName] = useInput('')
-  const [folderColor, setFolderColor] = useState<TTodoColor>('black')
-  const colors: TTodoColor[] = [
-    'black',
-    'green',
-    'yellow',
-    'blue',
-    'orange',
-    'red',
-    'purple',
-  ]
+  const [name, onChangeName] = useInput('')
+  const [color, setColor] = useState<TTodoColor>('black')
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { mutate: addTodoFolder } = useAddTodoFolder()
 
   const handleColorClick = (selectedColor: TTodoColor) => {
-    setFolderColor(selectedColor)
+    setColor(selectedColor)
   }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    const currentIndex = localStorage.getItem('todo-index') || 0
+    const currentIndex = localStorage.getItem('todo-folder-index') || 0
     const nextIndex = Number(currentIndex) + 1
     const newFolder = {
-      name: folderName,
-      dotColor: folderColor,
-      id: Date.now(),
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      name,
+      color,
       index: nextIndex,
+      userId: me.userId,
     }
-    const nextFolders = [...todoFolders, newFolder]
-    localStorage.setItem('todo-index', nextIndex.toString())
-    setTodoFolders(nextFolders)
+    addTodoFolder(newFolder)
+    localStorage.setItem('todo-folder-index', nextIndex.toString())
     router.back()
   }
 
@@ -55,31 +57,31 @@ export default function AddTodoFolderModal() {
         <div className="flex flex-col gap-2">
           <Text>폴더명</Text>
           <Input
-            value={folderName}
-            onChange={onChangeFolderName}
+            value={name}
+            onChange={onChangeName}
             className="dark:bg-var-dark"
           />
         </div>
         <div className="flex flex-col gap-2">
           <Text>색상</Text>
           <div className="flex gap-2">
-            {colors.map((color) => (
+            {colors.map((prefaredColor) => (
               <Button
-                key={color}
+                key={prefaredColor}
                 variant="none"
-                onClick={() => handleColorClick(color)}
+                onClick={() => handleColorClick(prefaredColor)}
                 className={cn(
                   'relative size-4 rounded-full',
-                  color === 'yellow' && 'bg-var-yellow',
-                  color === 'orange' && 'bg-var-orange',
-                  color === 'black' && 'bg-var-black',
-                  color === 'blue' && 'bg-var-blue',
-                  color === 'green' && 'bg-var-green',
-                  color === 'red' && 'bg-red-500',
-                  color === 'purple' && 'bg-purple-500',
+                  prefaredColor === 'yellow' && 'bg-var-yellow',
+                  prefaredColor === 'orange' && 'bg-var-orange',
+                  prefaredColor === 'black' && 'bg-var-black',
+                  prefaredColor === 'blue' && 'bg-var-blue',
+                  prefaredColor === 'green' && 'bg-var-green',
+                  prefaredColor === 'red' && 'bg-red-500',
+                  prefaredColor === 'purple' && 'bg-purple-500',
                 )}
               >
-                {color === folderColor && (
+                {prefaredColor === color && (
                   <Icon size={18} view={20} className="absolute text-white">
                     <path
                       fillRule="evenodd"
@@ -92,7 +94,7 @@ export default function AddTodoFolderModal() {
             ))}
           </div>
         </div>
-        <Button type="submit" disabled={!folderName || !folderColor}>
+        <Button type="submit" disabled={!name || !color}>
           추가하기
         </Button>
       </form>

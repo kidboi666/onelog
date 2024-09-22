@@ -1,35 +1,29 @@
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import { Tables } from '@/types/supabase'
 import { useMutation } from '@tanstack/react-query'
-
-interface ITodo {
-  name: string
-  memo?: string
-  folderId: string
-  userId: string
-  isComplete?: boolean
-  index: number
-}
 
 export default function useUpdateTodo() {
   const queryClient = getQueryClient()
 
   return useMutation({
-    mutationFn: async (params: ITodo) => {
+    mutationFn: async (params: Tables<'todo'>) => {
       return supabase
         .from('todo')
         .update({
           name: params.name,
-          folder_id: params.folderId,
-          user_id: params.userId,
+          folder_id: params.folder_id,
+          user_id: params.user_id,
           memo: params.memo,
-          is_complete: params.isComplete,
+          is_complete: params.is_complete,
+          updated_at: params.updated_at,
           index: params.index,
         })
+        .eq('id', params.id)
         .select()
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['todo', variables.folderId] })
+      queryClient.invalidateQueries({ queryKey: ['todo', variables.folder_id] })
     },
   })
 }

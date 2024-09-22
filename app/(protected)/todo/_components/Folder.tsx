@@ -1,6 +1,12 @@
-import { MutableRefObject, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { MutableRefObject, useState, useTransition } from 'react'
 import cn from '@/lib/cn'
-import { useTodo } from '@/store/useTodo'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { supabase } from '@/lib/supabase/client'
+import { Tables } from '@/types/supabase'
+import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import useUpdateTodoFolder from '@/services/mutates/todo/useUpdateTodoFolder'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import useStateChange from '@/hooks/useStateChange'
 
@@ -8,27 +14,31 @@ import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import FolderDropDown from './FolderDropDown'
 import Icon from '@/components/shared/Icon'
-import { TodoFolder } from '@/types/todo'
 import { List } from '@/components/shared/List'
-import { useRouter } from 'next/navigation'
 import Dot from './Dot'
+import Spinner from '@/components/shared/Spinner'
 
 interface Props {
   isOpenSide: boolean
-  folder: TodoFolder
-  dragItem: MutableRefObject<TodoFolder | null>
-  dragOverItem: MutableRefObject<TodoFolder | null>
+  isSelected: boolean
+  folder: Tables<'todo_folder'>
+  dragItem: MutableRefObject<Tables<'todo_folder'> | null>
+  dragOverItem: MutableRefObject<Tables<'todo_folder'> | null>
 }
 
 export default function Folder({
   isOpenSide,
+  isSelected = false,
   folder,
   dragItem,
   dragOverItem,
 }: Props) {
   const router = useRouter()
-  const { selectedFolder, setSelectedFolder, todoFolders, setTodoFolders } =
-    useTodo()
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: todoFolders } = useSuspenseQuery(
+    todoFolderQuery.getTodoFolder(supabase, me.userId),
+  )
+  const { mutate: updateTodoFolder } = useUpdateTodoFolder()
   const {
     ref: dropdownRef,
     close,
@@ -36,21 +46,20 @@ export default function Folder({
     onTransitionEnd,
   } = useStateChange<HTMLDivElement>()
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(close)
-  const isSelected = folder.id === selectedFolder?.id
   const [showKebabButton, setShowKebabButton] = useState(false)
   const [isHover, setHover] = useState(false)
   const [isDraggingDown, setDraggingDown] = useState(false)
+  const [isLoading, startTransition] = useTransition()
 
   const handleFolderClick = () => {
-    setSelectedFolder(folder)
-    router.push('/todo/custom_task')
+    router.push(`/todo/custom_task/${folder.id}?color=${folder.color}`)
   }
 
   const dragStart = () => {
     dragItem.current = folder
   }
 
-  const dragEnter = (targetFolder: TodoFolder) => {
+  const dragEnter = (targetFolder: Tables<'todo_folder'>) => {
     dragOverItem.current = targetFolder
     setDraggingDown(dragItem.current!.index < dragOverItem.current!.index)
     setHover(true)
@@ -64,51 +73,60 @@ export default function Folder({
     setHover(false)
   }
 
-  const drop = () => {
+  const drop = async () => {
     setHover(false)
     setDraggingDown(false)
     const isEqual = dragItem.current!.index === dragOverItem.current!.index
     if (isEqual) return null
 
+    let targetItemList
+    let sortedList
+    let updatedIndexFolder
+
     if (dragItem.current!.index < dragOverItem.current!.index) {
-      const targetItemList = todoFolders.filter(
+      targetItemList = todoFolders.filter(
         (folder) =>
           folder.index !== dragItem.current!.index &&
           folder.index <= dragOverItem.current!.index,
       )
-      const restItemList = todoFolders.filter(
-        (folder) => folder.index > dragOverItem.current!.index,
-      )
-      const sortedList = targetItemList.map((item) => ({
+      sortedList = targetItemList.map((item) => ({
         ...item,
         index: item.index - 1,
       }))
-      const updatedIndexFolder = {
+      updatedIndexFolder = {
         ...dragItem.current!,
         index: dragOverItem.current!.index,
       }
-      const nextFolders = [...sortedList, updatedIndexFolder, ...restItemList]
-      setTodoFolders(nextFolders)
     } else {
-      const targetItemList = todoFolders.filter(
+      targetItemList = todoFolders.filter(
         (folder) =>
           folder.index !== dragItem.current!.index &&
           folder.index >= dragOverItem.current!.index,
       )
-      const restItemList = todoFolders.filter(
-        (folder) => folder.index < dragOverItem.current!.index,
-      )
-      const sortedList = targetItemList.map((item) => ({
+      sortedList = targetItemList.map((item) => ({
         ...item,
         index: item.index + 1,
       }))
-      const updatedIndexFolder = {
+      updatedIndexFolder = {
         ...dragItem.current!,
         index: dragOverItem.current!.index,
       }
-      const nextFolders = [...restItemList, updatedIndexFolder, ...sortedList]
-      setTodoFolders(nextFolders)
     }
+
+    sortedList.forEach((item) => {
+      updateTodoFolder({
+        name: item.name,
+        color: item.color,
+        index: item.index,
+        id: item.id,
+      })
+    })
+    updateTodoFolder({
+      name: updatedIndexFolder.name,
+      color: updatedIndexFolder.color,
+      index: updatedIndexFolder.index,
+      id: updatedIndexFolder.id,
+    })
     dragOverItem.current = null
   }
 
@@ -129,7 +147,7 @@ export default function Folder({
       >
         <Button
           variant="list"
-          onClick={handleFolderClick}
+          onClick={() => startTransition(() => handleFolderClick())}
           ref={dropdownButtonRef}
           className={cn(
             'flex h-10 w-full p-4',
@@ -138,7 +156,13 @@ export default function Folder({
           onMouseEnter={() => setShowKebabButton(true)}
           onMouseLeave={() => setShowKebabButton(false)}
         >
-          <Dot color={folder.dotColor} isSelected={isSelected} />
+          {isLoading ? (
+            <div className="absolute">
+              <Spinner size={18} />
+            </div>
+          ) : (
+            <Dot color={folder.color} isSelected={isSelected} />
+          )}
           {isOpenSide && (
             <div className="flex flex-1 items-center justify-between">
               <Text

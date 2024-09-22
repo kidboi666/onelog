@@ -8,66 +8,45 @@ import Button from '@/components/shared/Button'
 import { useInput } from '@/hooks/useInput'
 import cn from '@/lib/cn'
 import Icon from '@/components/shared/Icon'
-import { useTodo } from '@/store/useTodo'
-import { TodoFolder, TTodoColor } from '@/types/todo'
 import { useRouter } from 'next/navigation'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { supabase } from '@/lib/supabase/client'
+import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
+import useUpdateTodoFolder from '@/services/mutates/todo/useUpdateTodoFolder'
 
 interface Props {
   params: { folderId: string }
 }
 
+const colors = ['black', 'green', 'yellow', 'blue', 'orange', 'red', 'purple']
+
 export default function EditTodoFolderModal({ params }: Props) {
   const folderId = params.folderId
   const router = useRouter()
-  const { todoFolders, setTodoFolders } = useTodo()
-  const [foundedTargetFolder, setFoundedTargetFolder] = useState<TodoFolder>({
-    name: '',
-    id: 0,
-    dotColor: 'black',
-    createdAt: 0,
-    updatedAt: 0,
-    index: 0,
-  })
-  const [prevFolders, setPrevFolders] = useState<TodoFolder[]>([])
-  const [folderName, onChangeFolderName, setFolderName] = useInput<string>('')
-  const [folderColor, setFolderColor] = useState<TTodoColor>('black')
-  const colors: TTodoColor[] = [
-    'black',
-    'green',
-    'yellow',
-    'blue',
-    'orange',
-    'red',
-    'purple',
-  ]
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: folders } = useSuspenseQuery(
+    todoFolderQuery.getTodoFolder(supabase, me.userId),
+  )
+  const folder = folders.find((item) => item.id === Number(folderId))
+  const [name, onChangeName, setName] = useInput<string>('')
+  const [color, setColor] = useState<string>('black')
+  const { mutate: updateTodoFolder } = useUpdateTodoFolder()
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    const modifiedFolder = {
-      ...foundedTargetFolder,
-      name: folderName,
-      dotColor: folderColor,
-    }
-    const modifiedFolders = [...prevFolders, modifiedFolder]
-    setTodoFolders(modifiedFolders)
+    updateTodoFolder({ ...folder!, name, color })
     router.back()
   }
 
-  const handleColorClick = (selectedColor: TTodoColor) => {
-    setFolderColor(selectedColor)
+  const handleColorClick = (selectedColor: string) => {
+    setColor(selectedColor)
   }
 
   useEffect(() => {
-    const foundTodoFolder = todoFolders.find(
-      (folder) => folder.id === Number(folderId),
-    )
-    setPrevFolders(
-      todoFolders.filter((folder) => folder.id !== Number(folderId)),
-    )
-    setFolderName(foundTodoFolder!.name!)
-    setFolderColor(foundTodoFolder!.dotColor!)
-    setFoundedTargetFolder(foundTodoFolder!)
-  }, [])
+    setName(folder!.name)
+    setColor(folder!.color)
+  }, [folder])
 
   return (
     <Modal>
@@ -75,31 +54,31 @@ export default function EditTodoFolderModal({ params }: Props) {
         <div className="flex flex-col gap-2">
           <Text>폴더명</Text>
           <Input
-            value={folderName}
-            onChange={onChangeFolderName}
+            value={name}
+            onChange={onChangeName}
             className="dark:bg-var-dark"
           />
         </div>
         <div className="flex flex-col gap-2">
           <Text>색상</Text>
           <div className="flex gap-2">
-            {colors.map((color) => (
+            {colors.map((prefaredColor) => (
               <Button
-                key={color}
+                key={prefaredColor}
                 variant="none"
-                onClick={() => handleColorClick(color)}
+                onClick={() => handleColorClick(prefaredColor)}
                 className={cn(
                   'relative size-4 rounded-full',
-                  color === 'yellow' && 'bg-var-yellow',
-                  color === 'orange' && 'bg-var-orange',
-                  color === 'black' && 'bg-var-black',
-                  color === 'blue' && 'bg-var-blue',
-                  color === 'green' && 'bg-var-green',
-                  color === 'red' && 'bg-red-500',
-                  color === 'purple' && 'bg-purple-500',
+                  prefaredColor === 'yellow' && 'bg-var-yellow',
+                  prefaredColor === 'orange' && 'bg-var-orange',
+                  prefaredColor === 'black' && 'bg-var-black',
+                  prefaredColor === 'blue' && 'bg-var-blue',
+                  prefaredColor === 'green' && 'bg-var-green',
+                  prefaredColor === 'red' && 'bg-red-500',
+                  prefaredColor === 'purple' && 'bg-purple-500',
                 )}
               >
-                {color === folderColor && (
+                {prefaredColor === color && (
                   <Icon size={18} view={20} className="absolute text-white">
                     <path
                       fillRule="evenodd"
@@ -114,10 +93,7 @@ export default function EditTodoFolderModal({ params }: Props) {
         </div>
         <Button
           type="submit"
-          disabled={
-            foundedTargetFolder?.name === folderName &&
-            foundedTargetFolder?.dotColor === folderColor
-          }
+          disabled={folder?.name === name && folder?.color === color}
         >
           수정하기
         </Button>

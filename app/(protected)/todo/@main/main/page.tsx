@@ -3,9 +3,7 @@
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
 import cn from '@/lib/cn'
-import { Todo as TTodo, TodoFolder } from '@/types/todo'
-import { FormEvent, useEffect, useState } from 'react'
-import { useTodo } from '@/store/useTodo'
+import { FormEvent, useState } from 'react'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import useStateChange from '@/hooks/useStateChange'
@@ -14,15 +12,28 @@ import Input from '@/components/shared/Input'
 import { useInput } from '@/hooks/useInput'
 import TaskOptionDropDown from '../../_components/TaskOptionDropDown'
 import Todo from '../../_components/Todo'
+import { Tables } from '@/types/supabase'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
+import { supabase } from '@/lib/supabase/client'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { todoQuery } from '@/services/queries/todo/todoQuery'
+import useAddTodo from '@/services/mutates/todo/useAddTodo'
+import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
+import { getQueryClient } from '@/lib/tanstack/get-query-client'
 
 export default function TodoDashBoard() {
-  const { todoFolders } = useTodo()
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: todoFolders } = useSuspenseQuery(
+    todoFolderQuery.getTodoFolder(supabase, me.userId),
+  )
+
   return (
     <>
       <Title>할일 전체</Title>
       <List className="flex flex-wrap gap-4">
         {todoFolders.map((folder) => (
-          <TodoFolderCard key={folder.id} folder={folder} />
+          <TodoFolderCard key={folder.id} folder={folder} userId={me.userId} />
         ))}
       </List>
     </>
@@ -30,87 +41,61 @@ export default function TodoDashBoard() {
 }
 
 interface TodoFolderCardProps {
-  folder: TodoFolder
+  folder: Tables<'todo_folder'>
+  userId: string
 }
 
-function TodoFolderCard({ folder }: TodoFolderCardProps) {
-  const {
-    todos,
-    successTodos,
-    setTodos,
-    selectedFolder,
-    selectedFolderId,
-    setSuccessTodos,
-    setSelectedFolder,
-    setSelectedFolderId,
-  } = useTodo()
+function TodoFolderCard({ folder, userId }: TodoFolderCardProps) {
+  const queryClient = getQueryClient()
+  const { data: todos } = useSuspenseQuery(
+    todoQuery.getTodoInProgress(supabase, userId),
+  )
+  const localTodos = todos?.filter((todo) => todo.folder_id === folder.id)
   const { ref, onClick, onTransitionEnd, close } =
     useStateChange<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
-  const [todoText, onChangeTodoText, setTodoText] = useInput<string>('')
+  const [name, onChangeName, setName] = useInput<string>('')
   const [showInput, setShowInput] = useState(false)
-  const [localTodos, setLocalTodos] = useState<TTodo[]>([])
-  const [localSuccessTodos, setLocalSuccessTodos] = useState<TTodo[]>([])
+  const { mutate: addTodo } = useAddTodo()
+  const { mutate: updateTodo } = useUpdateTodo()
 
-  const handleSuccessButtonClick = (selectedTodo: TTodo) => {
-    const validateTodo = {
-      ...selectedTodo,
-      isSuccess: true,
-      updatedAt: Date.now(),
-    }
-    const nextSuccessTodos = [...localSuccessTodos, validateTodo]
-    setLocalSuccessTodos(nextSuccessTodos)
-    setSuccessTodos(nextSuccessTodos)
-
-    const nextTodos =
-      localTodos?.filter((todo) => todo.id !== selectedTodo.id) || []
-    setTodos(nextTodos)
-    setLocalTodos(nextTodos)
-    setSelectedFolderId(folder.id)
+  const handleUpdateButtonClick = (selectedTodo: Tables<'todo'>) => {
+    updateTodo(
+      { ...selectedTodo, is_complete: true },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['todo'] })
+        },
+      },
+    )
   }
 
   const handleSubmitTodo = (e: FormEvent) => {
+    const nextIndex = Number(localStorage.getItem('todo-index')) || 0
     e.preventDefault()
-    const nextTodo = {
-      id: Date.now(),
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      name: todoText,
-      isSuccess: false,
-      folderId: folder.id,
-      memo: '',
-    }
-
-    const nextTodos = [...localTodos, nextTodo]
-    setSelectedFolderId(folder.id)
-    setLocalTodos(nextTodos)
-    setTodos(nextTodos)
-    setTodoText('')
-  }
-
-  useEffect(() => {
-    const selectedTodos = JSON.parse(
-      localStorage.getItem(folder.id.toString())!,
+    addTodo(
+      { name, folderId: folder.id, userId, index: nextIndex + 1 },
+      {
+        onSuccess: () => {
+          setName('')
+          queryClient.invalidateQueries({ queryKey: ['todo'] })
+        },
+      },
     )
-
-    setLocalTodos(selectedTodos?.pending ?? [])
-    setLocalSuccessTodos(selectedTodos?.success ?? [])
-  }, [])
+    localStorage.setItem('todo-index', (nextIndex + 1).toString())
+  }
 
   return (
     <List.Row
       className={cn(
         'h-fit w-60 rounded-md p-4 shadow-md',
-        folder?.dotColor === 'yellow' &&
-          'bg-var-yellow/15 dark:bg-var-yellow/25',
-        folder?.dotColor === 'orange' &&
-          'bg-var-orange/15 dark:bg-var-orange/25',
-        folder?.dotColor === 'black' && 'bg-black/15 dark:bg-black/25',
-        folder?.dotColor === 'blue' && 'bg-var-blue/15 dark:bg-var-blue/25',
-        folder?.dotColor === 'green' && 'bg-var-green/15 dark:bg-var-green/25',
-        folder?.dotColor === 'red' && 'bg-red-500/15 dark:bg-red-500/25',
-        folder?.dotColor === 'purple' &&
-          'bg-purple-500/15 dark:bg-purple-500/25',
+        folder?.color === 'yellow' && 'bg-var-yellow/15 dark:bg-var-yellow/25',
+        folder?.color === 'orange' && 'bg-var-orange/15 dark:bg-var-orange/25',
+        folder?.color === 'black' && 'bg-black/15 dark:bg-black/25',
+        folder?.color === 'blue' && 'bg-var-blue/15 dark:bg-var-blue/25',
+        folder?.color === 'green' && 'bg-var-green/15 dark:bg-var-green/25',
+        folder?.color === 'red' && 'bg-red-500/15 dark:bg-red-500/25',
+        folder?.color === 'purple' && 'bg-purple-500/15 dark:bg-purple-500/25',
       )}
     >
       <div className="relative flex items-center justify-between gap-4">
@@ -152,8 +137,8 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
           className="relative mt-2 flex flex-col gap-2"
         >
           <Input
-            value={todoText}
-            onChange={onChangeTodoText}
+            value={name}
+            onChange={onChangeName}
             variant="primary"
             className="w-full pr-8 text-xs"
             placeholder="새로운 할일을 추가하세요."
@@ -178,9 +163,9 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
                 <Todo
                   key={todo.id}
                   todo={todo}
-                  isSuccess={todo.isSuccess}
+                  isComplete={todo.is_complete}
                   // onDelete={handleDeleteButtonClick}
-                  onSuccess={handleSuccessButtonClick}
+                  onUpdate={handleUpdateButtonClick}
                 />
               ))}
             </List>

@@ -1,47 +1,54 @@
-import { supabase } from '@/lib/supabase/client'
 import { Tables } from '@/types/supabase'
+import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
 export const todoQuery = {
-  getTodoInProgress: (userId: string) =>
-    queryOptions({
-      queryKey: ['todo'],
+  getTodoInProgress: (supabase: SupabaseClient, userId: string) =>
+    queryOptions<Tables<'todo'>[]>({
+      queryKey: ['todo', 'in_progress'],
       queryFn: async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('todo')
           .select()
           .eq('user_id', userId)
           .is('is_complete', false)
-          .single()
 
-        if (error) {
-          throw error
-        }
-
-        return data
+        return data as Tables<'todo'>[]
       },
     }),
-  getTodoFromFolder: (folderId: number, userId: string) =>
-    queryOptions({
+  getTodoInCompleted: (supabase: SupabaseClient, userId: string) =>
+    queryOptions<Tables<'todo'>[]>({
+      queryKey: ['todo', 'completed'],
+      queryFn: async () => {
+        const { data } = await supabase
+          .from('todo')
+          .select()
+          .eq('user_id', userId)
+          .is('is_complete', true)
+
+        return data as Tables<'todo'>[]
+      },
+    }),
+  getTodoFromFolder: (
+    supabase: SupabaseClient,
+    folderId: number,
+    userId: string,
+  ) =>
+    queryOptions<Tables<'todo'>[]>({
       queryKey: ['todo', folderId],
       queryFn: async () => {
         let myTodo
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('todo')
           .select()
-          .eq('id', folderId)
-          .single()
-
-        if (error) {
-          throw error
-        }
+          .eq('user_id', userId)
 
         if (data) {
           myTodo = data.filter(
-            (todoFolder: Tables<'todo'>) => todoFolder.user_id === userId,
+            (todoFolder: Tables<'todo'>) => todoFolder.folder_id === folderId,
           )
         }
-        return myTodo
+        return myTodo || []
       },
     }),
 }

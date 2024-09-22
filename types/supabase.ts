@@ -186,34 +186,82 @@ export type Database = {
       todo: {
         Row: {
           created_at: string
-          folder_id: string
+          folder_id: number
           id: number
+          index: number
           is_complete: boolean | null
           memo: string | null
           name: string
+          updated_at: string | null
           user_id: string | null
         }
         Insert: {
           created_at?: string
-          folder_id: string
+          folder_id: number
           id?: number
+          index: number
           is_complete?: boolean | null
           memo?: string | null
           name: string
+          updated_at?: string | null
           user_id?: string | null
         }
         Update: {
           created_at?: string
-          folder_id?: string
+          folder_id?: number
           id?: number
+          index?: number
           is_complete?: boolean | null
           memo?: string | null
           name?: string
+          updated_at?: string | null
           user_id?: string | null
         }
         Relationships: [
           {
+            foreignKeyName: "todo_folder_id_fkey"
+            columns: ["folder_id"]
+            isOneToOne: false
+            referencedRelation: "todo_folder"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "todo_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      todo_folder: {
+        Row: {
+          color: string
+          created_at: string
+          id: number
+          index: number
+          name: string
+          user_id: string
+        }
+        Insert: {
+          color: string
+          created_at?: string
+          id?: number
+          index: number
+          name: string
+          user_id: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          id?: number
+          index?: number
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "todo_folder_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
@@ -231,7 +279,6 @@ export type Database = {
           favorite_sentence_id: number[] | null
           favorite_words: string[] | null
           id: string
-          todo_folders: string[] | null
           user_name: string | null
         }
         Insert: {
@@ -243,7 +290,6 @@ export type Database = {
           favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
           id: string
-          todo_folders?: string[] | null
           user_name?: string | null
         }
         Update: {
@@ -255,7 +301,6 @@ export type Database = {
           favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
           id?: string
-          todo_folders?: string[] | null
           user_name?: string | null
         }
         Relationships: [

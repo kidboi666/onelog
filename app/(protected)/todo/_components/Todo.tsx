@@ -6,23 +6,23 @@ import cn from '@/lib/cn'
 import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Todo as TTodo } from '@/types/todo'
 import Spinner from '@/components/shared/Spinner'
+import { Tables } from '@/types/supabase'
 
 interface TodoProps {
-  todo: TTodo
-  isSuccess?: boolean
-  onDelete?: (selectedTodo: TTodo) => void
-  onSuccess?: (selectedTodo: TTodo) => void
+  todo: Tables<'todo'>
+  isComplete: boolean | null
+  onDelete?: (selectedTodo: Tables<'todo'>) => void
+  onUpdate?: (selectedTodo: Tables<'todo'>) => void
 }
 
-export default function Todo({ todo, isSuccess, onSuccess }: TodoProps) {
+export default function Todo({ todo, isComplete, onUpdate }: TodoProps) {
   const [isHover, setHover] = useState(false)
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
   const handleTodoClick = () => {
-    router.push(`/todo/${todo.id}?folder_id=${todo.folderId}`, {
+    router.push(`/todo/${todo.id}?folder_id=${todo.folder_id}`, {
       scroll: false,
     })
   }
@@ -40,14 +40,24 @@ export default function Todo({ todo, isSuccess, onSuccess }: TodoProps) {
           variant="icon"
           className={cn(
             'size-4 flex-shrink-0 rounded-full border border-zinc-400 text-white hover:text-zinc-400 dark:border-zinc-600 dark:text-white',
-            isSuccess ? 'bg-zinc-400 dark:bg-zinc-600' : '',
+            isComplete ? 'bg-zinc-400 dark:bg-zinc-600' : '',
           )}
           onClick={(e) => {
             e.stopPropagation()
-            onSuccess!(todo)
+            todo.is_complete
+              ? onUpdate!({
+                  ...todo,
+                  updated_at: new Date().toISOString(),
+                  is_complete: false,
+                })
+              : onUpdate!({
+                  ...todo,
+                  updated_at: new Date().toISOString(),
+                  is_complete: true,
+                })
           }}
         >
-          {isSuccess && (
+          {isComplete && (
             <Icon size={12} view={20} className="animate-grow-up">
               <path
                 fillRule="evenodd"
@@ -62,15 +72,15 @@ export default function Todo({ todo, isSuccess, onSuccess }: TodoProps) {
           <Text
             className={cn(
               'line-clamp-4 break-all text-xs',
-              isSuccess ? 'text-zinc-400 dark:text-zinc-600' : '',
+              isComplete ? 'text-zinc-400 dark:text-zinc-600' : '',
             )}
           >
             {todo.name}
           </Text>
           <Text type="caption" size="xs">
-            {isSuccess
-              ? `완료일 : ${formatDateToMDY(todo.updatedAt)} ${formatDateToHM(todo.updatedAt)}`
-              : `등록일 : ${formatDateToMDY(todo.createdAt)} ${formatDateToHM(todo.createdAt)}`}
+            {isComplete
+              ? `완료일 : ${formatDateToMDY(todo.updated_at ?? '')} ${formatDateToHM(todo.updated_at ?? '')}`
+              : `등록일 : ${formatDateToMDY(todo.created_at)} ${formatDateToHM(todo.created_at)}`}
           </Text>
         </div>
         {isPending && <Spinner size={20} />}

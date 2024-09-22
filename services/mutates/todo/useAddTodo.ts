@@ -1,14 +1,17 @@
 import { supabase } from '@/lib/supabase/client'
+import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { useMutation } from '@tanstack/react-query'
 
 interface ITodo {
   name: string
-  folderId: string
+  folderId: number
   userId: string
   index: number
 }
 
 export default function useAddTodo() {
+  const queryClient = getQueryClient()
+
   return useMutation({
     mutationFn: async (params: ITodo) => {
       return supabase
@@ -20,6 +23,9 @@ export default function useAddTodo() {
           index: params.index,
         })
         .select()
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['todo', variables.folderId] })
     },
   })
 }
