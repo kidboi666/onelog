@@ -18,7 +18,6 @@ import Todo from '../../../_components/Todo'
 import TaskOptionDropDown from '../../../_components/TaskOptionDropDown'
 import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
 import { useInput } from '@/hooks/useInput'
-import useDeleteTodo from '@/services/mutates/todo/useDeleteTodo'
 import useAddTodo from '@/services/mutates/todo/useAddTodo'
 import { Tables } from '@/types/supabase'
 import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
@@ -42,7 +41,6 @@ export default function TaskForm({ params }: Props) {
   const { onClick, ref, close, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
-  const { mutate: deleteTodo } = useDeleteTodo()
   const { mutate: updateTodo } = useUpdateTodo()
   const { mutate: addTodo } = useAddTodo()
 
@@ -71,10 +69,6 @@ export default function TaskForm({ params }: Props) {
         setTodoText('')
       },
     })
-  }
-
-  const handleDeleteButtonClick = (selectedTodo: Tables<'todo'>) => {
-    deleteTodo({ todoId: selectedTodo.id, folderId: selectedTodo.folder_id })
   }
 
   const handleUpdateButtonClick = (selectedTodo: Tables<'todo'>) => {
@@ -128,7 +122,6 @@ export default function TaskForm({ params }: Props) {
                   key={todo.id}
                   todo={todo}
                   isComplete={todo.is_complete}
-                  onDelete={handleDeleteButtonClick}
                   onUpdate={handleUpdateButtonClick}
                 />
               ))}

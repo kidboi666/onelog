@@ -12,7 +12,6 @@ import { Tables } from '@/types/supabase'
 interface TodoProps {
   todo: Tables<'todo'>
   isComplete: boolean | null
-  onDelete?: (selectedTodo: Tables<'todo'>) => void
   onUpdate?: (selectedTodo: Tables<'todo'>) => void
 }
 

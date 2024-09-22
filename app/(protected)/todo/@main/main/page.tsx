@@ -164,7 +164,6 @@ function TodoFolderCard({ folder, userId }: TodoFolderCardProps) {
                   key={todo.id}
                   todo={todo}
                   isComplete={todo.is_complete}
-                  // onDelete={handleDeleteButtonClick}
                   onUpdate={handleUpdateButtonClick}
                 />
               ))}
