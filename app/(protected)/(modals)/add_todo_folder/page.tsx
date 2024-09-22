@@ -93,7 +93,7 @@ export default function AddTodoFolderModal() {
           </div>
         </div>
         <Button type="submit" disabled={!folderName || !folderColor}>
-          수정하기
+          추가하기
         </Button>
       </form>
     </Modal>

@@ -16,18 +16,15 @@ interface TodoProps {
   onSuccess?: (selectedTodo: TTodo) => void
 }
 
-export default function Todo({
-  todo,
-  isSuccess,
-  onDelete,
-  onSuccess,
-}: TodoProps) {
+export default function Todo({ todo, isSuccess, onSuccess }: TodoProps) {
   const [isHover, setHover] = useState(false)
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
   const handleTodoClick = () => {
-    router.push(`/todo/${todo.id}?folder_id=${todo.folderId}`)
+    router.push(`/todo/${todo.id}?folder_id=${todo.folderId}`, {
+      scroll: false,
+    })
   }
 
   return (
@@ -35,8 +32,7 @@ export default function Todo({
       draggable
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => startTransition(() => handleTodoClick())}
-      className="flex animate-fade-in cursor-pointer items-center justify-between rounded-md bg-white p-2 shadow-sm transition hover:opacity-85 dark:bg-var-darkgray"
+      className="flex animate-fade-in items-center justify-between rounded-md bg-white p-2 shadow-sm transition hover:opacity-85 dark:bg-var-darkgray"
     >
       <div className="flex items-center gap-2">
         <Button
@@ -79,24 +75,29 @@ export default function Todo({
         </div>
         {isPending && <Spinner size={20} />}
       </div>
-
-      {onDelete && isHover ? (
-        <div className="flex gap-2">
-          <Button
-            size="none"
-            variant="icon"
-            onClick={() => onDelete!(todo)}
-            className="size-4 rounded-full text-red-500 dark:text-red-500"
-          >
-            <Icon size={20} view={27}>
-              <path
-                d="M8.31361 17.9346C7.94447 18.3037 7.92689 18.9629 8.3224 19.3408C8.70033 19.7363 9.3683 19.7188 9.73744 19.3496L14.0001 15.0869L18.2628 19.3496C18.6408 19.7275 19.2911 19.7363 19.6691 19.3408C20.0646 18.9629 20.0558 18.3037 19.6779 17.9258L15.4152 13.6631L19.6779 9.40918C20.0558 9.02246 20.0646 8.37207 19.6691 7.99414C19.2911 7.59863 18.6408 7.60742 18.2628 7.98535L14.0001 12.248L9.73744 7.98535C9.3683 7.61621 8.70033 7.59863 8.3224 7.99414C7.92689 8.37207 7.94447 9.03125 8.31361 9.40039L12.5763 13.6631L8.31361 17.9346Z"
-                fill="currentColor"
-              ></path>
+      <div className="flex gap-2">
+        {todo?.memo?.length! >= 1 && (
+          <Button disabled variant="icon" size="none">
+            <Icon view="0 -960 960 960" size={18}>
+              <path d="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
             </Icon>
           </Button>
-        </div>
-      ) : null}
+        )}
+        {isHover ? (
+          <div className="flex gap-2">
+            <Button
+              size="none"
+              variant="icon"
+              onClick={() => startTransition(() => handleTodoClick())}
+              className="rounded-full"
+            >
+              <Icon view="0 -960 960 960" size={18}>
+                <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
+              </Icon>
+            </Button>
+          </div>
+        ) : null}
+      </div>
     </List.Row>
   )
 }

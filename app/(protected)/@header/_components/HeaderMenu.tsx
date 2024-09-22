@@ -2,7 +2,7 @@ import Text from '@/components/shared/Text'
 import useStateChange from '@/hooks/useStateChange'
 import { useRouter } from 'next/navigation'
 import { HEADER_MENU } from '../_constants'
-import { useTransition } from 'react'
+import { useEffect, useTransition } from 'react'
 import Button from '@/components/shared/Button'
 import Spinner from '@/components/shared/Spinner'
 import Icon from '@/components/shared/Icon'
@@ -24,6 +24,7 @@ export default function HeaderMenu({ menu }: Props) {
   const [isLoading, startTransition] = useTransition()
 
   const handleMenuButtonClick = () => {
+    closeMenuInfo()
     if (menu.path === '/todo/main') {
       setSelectedFolder(null)
       setSelectedMenu('main')

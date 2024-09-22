@@ -126,7 +126,7 @@ export default function TaskForm() {
             <List className="flex flex-col gap-2">
               {todos.map((todo) => (
                 <Todo
-                  key={todo.name}
+                  key={todo.id}
                   todo={todo}
                   isSuccess={todo.isSuccess}
                   onDelete={handleDeleteButtonClick}
@@ -142,7 +142,7 @@ export default function TaskForm() {
             <List className="flex flex-col gap-2">
               {successTodos.map((todo) => (
                 <Todo
-                  key={todo.name}
+                  key={todo.id}
                   todo={todo}
                   isSuccess={todo.isSuccess}
                   onSuccess={handleResetTodoStatus}

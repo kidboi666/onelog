@@ -5,31 +5,11 @@ import { useTodo } from '@/store/useTodo'
 import cn from '@/lib/cn'
 
 export default function Layout({ children }: PropsWithChildren) {
-  const {
-    selectedFolder,
-    selectedFolderId,
-    todos,
-    setTodos,
-    setSuccessTodos,
-    successTodos,
-    setSelectedFolderId,
-  } = useTodo()
+  const { selectedFolder, setTodos, setSuccessTodos } = useTodo()
 
-  useEffect(() => {
-    if (todos.length >= 1 || successTodos.length >= 1) {
-      const nextTargetFolder = selectedFolderId
-        ? selectedFolderId
-        : selectedFolder?.id
-      if (nextTargetFolder) {
-        localStorage.setItem(
-          nextTargetFolder!.toString(),
-          JSON.stringify({ pending: todos, success: successTodos }),
-        )
-      }
-      setSelectedFolderId(null)
-    }
-  }, [todos, successTodos])
-
+  /**
+   * 선택된 폴더의 todo 목록 가져오기
+   */
   useEffect(() => {
     if (selectedFolder) {
       const selectedTodos = JSON.parse(
@@ -40,6 +20,7 @@ export default function Layout({ children }: PropsWithChildren) {
       setSuccessTodos(selectedTodos?.success ?? [])
     }
   }, [selectedFolder && selectedFolder.id])
+
   return (
     <div
       className={cn(

@@ -39,11 +39,12 @@ const BUTTON_VARIANTS = cva(
       disabled: {
         primary:
           'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
-        secondary: '',
+        secondary:
+          'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
         teritory: '',
         list: '',
         emptyStyle: '',
-        icon: '',
+        icon: 'rounded-md text-zinc-300 transition dark:text-zinc-600',
         none: '',
       },
       size: {

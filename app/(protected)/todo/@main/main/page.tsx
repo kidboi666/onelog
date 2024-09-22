@@ -35,8 +35,11 @@ interface TodoFolderCardProps {
 
 function TodoFolderCard({ folder }: TodoFolderCardProps) {
   const {
+    todos,
+    successTodos,
     setTodos,
     selectedFolder,
+    selectedFolderId,
     setSuccessTodos,
     setSelectedFolder,
     setSelectedFolderId,
@@ -97,7 +100,7 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
   return (
     <List.Row
       className={cn(
-        'h-fit w-56 rounded-md p-4 shadow-md',
+        'h-fit w-60 rounded-md p-4 shadow-md',
         folder?.dotColor === 'yellow' &&
           'bg-var-yellow/15 dark:bg-var-yellow/25',
         folder?.dotColor === 'orange' &&
@@ -173,7 +176,7 @@ function TodoFolderCard({ folder }: TodoFolderCardProps) {
             <List className="flex flex-col gap-2">
               {localTodos?.map((todo) => (
                 <Todo
-                  key={todo.name}
+                  key={todo.id}
                   todo={todo}
                   isSuccess={todo.isSuccess}
                   // onDelete={handleDeleteButtonClick}
