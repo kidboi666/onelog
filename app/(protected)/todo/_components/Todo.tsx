@@ -17,7 +17,7 @@ import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
 interface TodoProps {
   todo: Tables<'todo'>
   isComplete: boolean | null
-  onChangeHoverState: (section: 'inProgress' | 'completed' | 'off') => void
+  onChangeHoverState?: (section: 'inProgress' | 'completed' | 'off') => void
   dragItem: MutableRefObject<Tables<'todo'> | null>
   dragOverItem: MutableRefObject<Tables<'todo'> | null>
   onUpdate: (selectedTodo: Tables<'todo'>) => void
@@ -58,7 +58,7 @@ export default function Todo({
       const hoveredSection = dragOverItem.current.is_complete
         ? 'completed'
         : 'inProgress'
-      onChangeHoverState(hoveredSection)
+      onChangeHoverState!(hoveredSection)
     } else {
       setDraggingDown(dragItem.current!.index < dragOverItem.current!.index)
       setHover(true)
@@ -70,7 +70,7 @@ export default function Todo({
       const hoveredSection = dragOverItem.current?.is_complete
         ? 'completed'
         : 'inProgress'
-      onChangeHoverState(hoveredSection)
+      onChangeHoverState!(hoveredSection)
     } else {
       setHover(todo.index === dragOverItem.current!.index)
     }
@@ -78,13 +78,17 @@ export default function Todo({
 
   const dragLeave = () => {
     setHover(false)
-    onChangeHoverState('off')
+    if (onChangeHoverState) {
+      onChangeHoverState('off')
+    }
   }
 
   const drop = () => {
     setHover(false)
     setDraggingDown(false)
-    onChangeHoverState('off')
+    if (onChangeHoverState) {
+      onChangeHoverState('off')
+    }
     const isEqual = dragItem.current?.index === dragOverItem.current?.index
     if (isEqual) return null
     if (dragItem.current?.is_complete !== dragOverItem.current?.is_complete) {

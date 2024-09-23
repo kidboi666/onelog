@@ -3,7 +3,7 @@
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
 import cn from '@/lib/cn'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useRef, useState } from 'react'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import useStateChange from '@/hooks/useStateChange'
@@ -58,6 +58,8 @@ function TodoFolderCard({ folder, userId }: TodoFolderCardProps) {
   const [showInput, setShowInput] = useState(false)
   const { mutate: addTodo } = useAddTodo()
   const { mutate: updateTodo } = useUpdateTodo()
+  const dragItem = useRef(null)
+  const dragOverItem = useRef(null)
 
   const handleUpdateButtonClick = (selectedTodo: Tables<'todo'>) => {
     updateTodo(
@@ -162,6 +164,8 @@ function TodoFolderCard({ folder, userId }: TodoFolderCardProps) {
               {localTodos?.map((todo) => (
                 <Todo
                   key={todo.id}
+                  dragItem={dragItem}
+                  dragOverItem={dragOverItem}
                   todo={todo}
                   isComplete={todo.is_complete}
                   onUpdate={handleUpdateButtonClick}

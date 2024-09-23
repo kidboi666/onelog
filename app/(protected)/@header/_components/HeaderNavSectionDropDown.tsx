@@ -114,7 +114,7 @@ export default function HeaderNavSectionDropDown({
           한줄쓰기
         </LinkButton>
         <LinkButton
-          href="/todo"
+          href="/todo/main"
           variant="list"
           innerClassName="py-2 flex gap-2"
         >
