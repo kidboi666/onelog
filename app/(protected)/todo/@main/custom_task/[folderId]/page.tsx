@@ -3,7 +3,7 @@
 import Input from '@/components/shared/Input'
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
-import { FormEvent, useEffect } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import useStateChange from '@/hooks/useStateChange'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
@@ -22,6 +22,7 @@ import useAddTodo from '@/services/mutates/todo/useAddTodo'
 import { Tables } from '@/types/supabase'
 import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
 import { useRouter } from 'next/navigation'
+import cn from '@/lib/cn'
 
 interface Props {
   params: { folderId: string }
@@ -44,11 +45,17 @@ export default function TaskForm({ params }: Props) {
   const sortedTodos = fetchedTodos.sort((a, b) => a.index - b.index)
   const todos = sortedTodos.filter((todo) => todo.is_complete === false)
   const completedTodos = sortedTodos.filter((todo) => todo.is_complete === true)
-  const selectedFolder = todoFolders.find(
+  const currentFolder = todoFolders.find(
     (folder) => folder.id === Number(folderId),
   )
   const { mutate: addTodo } = useAddTodo()
   const { mutate: updateTodo } = useUpdateTodo()
+  const [isHover, setHover] = useState({
+    inProgress: false,
+    completed: false,
+  })
+  const dragItem = useRef<Tables<'todo'> | null>(null)
+  const dragOverItem = useRef<Tables<'todo'> | null>(null)
 
   const currentMonth = new Date().getMonth() + 1
   const currentDate = new Date().getDate()
@@ -61,7 +68,7 @@ export default function TaskForm({ params }: Props) {
     const nextIndex = Number(currentIndex) + 1
     const nextTodo = {
       name: todoText,
-      folderId: selectedFolder!.id,
+      folderId: currentFolder!.id,
       userId: me.userId,
       index: nextIndex,
     }
@@ -73,25 +80,47 @@ export default function TaskForm({ params }: Props) {
   }
 
   const handleUpdateButtonClick = (selectedTodo: Tables<'todo'>) => {
+    const folderIndex = JSON.parse(localStorage.getItem(folderId)!)
+    const inProgressLastIndex = folderIndex.in_progress ?? 0
+    const completedLastIndex = folderIndex.completed ?? 0
+
     if (selectedTodo.is_complete) {
       updateTodo({
         ...selectedTodo,
         updated_at: new Date().toISOString(),
+        index: inProgressLastIndex + 1,
         is_complete: false,
       })
     } else {
       updateTodo({
         ...selectedTodo,
         updated_at: new Date().toISOString(),
+        index: completedLastIndex + 1,
         is_complete: true,
       })
     }
   }
 
+  const handleChangeHoverState = (
+    hoverSection: 'inProgress' | 'completed' | 'off',
+  ) => {
+    if (hoverSection === 'off') {
+      setHover({
+        inProgress: false,
+        completed: false,
+      })
+    } else {
+      setHover((prev) => ({
+        ...prev,
+        [hoverSection]: !prev[hoverSection],
+      }))
+    }
+  }
+
   useEffect(() => {
     const prevIndex = JSON.parse(localStorage.getItem(folderId)!)
-    let inProgressLastIndex = prevIndex.in_progress ?? 0
-    let completedLastIndex = prevIndex.completed ?? 0
+    let inProgressLastIndex = prevIndex?.in_progress ?? 0
+    let completedLastIndex = prevIndex?.completed ?? 0
 
     if (completedTodos) {
       completedLastIndex = completedTodos[completedTodos.length - 1]?.index
@@ -108,10 +137,10 @@ export default function TaskForm({ params }: Props) {
   }, [todos, completedTodos])
 
   useEffect(() => {
-    if (!selectedFolder) {
+    if (!currentFolder) {
       router.push('/todo/main')
     }
-  }, [selectedFolder])
+  }, [currentFolder])
 
   return (
     <form
@@ -119,14 +148,14 @@ export default function TaskForm({ params }: Props) {
       className="flex w-80 flex-shrink-0 flex-col"
     >
       <div className="relative flex items-center justify-between">
-        <Title>{selectedFolder?.name}</Title>
+        <Title>{currentFolder?.name}</Title>
         <Button ref={dropdownRef} variant="icon" size="none" onClick={onClick}>
           <Icon view="0 -960 960 960" size={20}>
             <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
           </Icon>
         </Button>
         <TaskOptionDropDown
-          folderId={selectedFolder?.id}
+          folderId={currentFolder?.id}
           targetRef={ref}
           onTransitionEnd={onTransitionEnd}
         />
@@ -146,7 +175,12 @@ export default function TaskForm({ params }: Props) {
       </div>
       <div className="mt-4 flex flex-col gap-4 text-left">
         {todos.length >= 1 && (
-          <div className="flex animate-fade-in flex-col gap-4">
+          <div
+            className={cn(
+              'flex animate-fade-in flex-col gap-4 border border-transparent transition',
+              isHover.inProgress ? 'border-blue-500' : '',
+            )}
+          >
             <Title type="sub">할 일</Title>
             <List className="flex flex-col gap-2">
               {todos.map((todo) => (
@@ -155,13 +189,21 @@ export default function TaskForm({ params }: Props) {
                   todo={todo}
                   isComplete={todo.is_complete}
                   onUpdate={handleUpdateButtonClick}
+                  onChangeHoverState={handleChangeHoverState}
+                  dragItem={dragItem}
+                  dragOverItem={dragOverItem}
                 />
               ))}
             </List>
           </div>
         )}
         {completedTodos.length >= 1 && (
-          <div className="flex animate-fade-in flex-col gap-4">
+          <div
+            className={cn(
+              'flex animate-fade-in flex-col gap-4 border border-transparent transition',
+              isHover.completed ? 'border-blue-500' : '',
+            )}
+          >
             <Title type="sub">완료됨</Title>
             <List className="flex flex-col gap-2">
               {completedTodos.map((todo) => (
@@ -170,6 +212,9 @@ export default function TaskForm({ params }: Props) {
                   todo={todo}
                   isComplete={todo.is_complete}
                   onUpdate={handleUpdateButtonClick}
+                  onChangeHoverState={handleChangeHoverState}
+                  dragItem={dragItem}
+                  dragOverItem={dragOverItem}
                 />
               ))}
             </List>
