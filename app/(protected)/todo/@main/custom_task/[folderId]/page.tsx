@@ -30,25 +30,25 @@ interface Props {
 export default function TaskForm({ params }: Props) {
   const router = useRouter()
   const folderId = params.folderId
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: todoFolders } = useSuspenseQuery(
-    todoFolderQuery.getTodoFolder(supabase, me.userId),
-  )
-  const { data: FetchedTodos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, Number(folderId), me.userId),
-  )
   const [todoText, onChangeTodoText, setTodoText] = useInput('')
   const { onClick, ref, close, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
-  const { mutate: updateTodo } = useUpdateTodo()
-  const { mutate: addTodo } = useAddTodo()
-
-  const todos = FetchedTodos.filter((todo) => todo.is_complete === false)
-  const successTodos = FetchedTodos.filter((todo) => todo.is_complete === true)
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: todoFolders } = useSuspenseQuery(
+    todoFolderQuery.getTodoFolder(supabase, me.userId),
+  )
+  const { data: fetchedTodos } = useSuspenseQuery(
+    todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
+  )
+  const sortedTodos = fetchedTodos.sort((a, b) => a.index - b.index)
+  const todos = sortedTodos.filter((todo) => todo.is_complete === false)
+  const completedTodos = sortedTodos.filter((todo) => todo.is_complete === true)
   const selectedFolder = todoFolders.find(
     (folder) => folder.id === Number(folderId),
   )
+  const { mutate: addTodo } = useAddTodo()
+  const { mutate: updateTodo } = useUpdateTodo()
 
   const currentMonth = new Date().getMonth() + 1
   const currentDate = new Date().getDate()
@@ -56,7 +56,8 @@ export default function TaskForm({ params }: Props) {
 
   const handleSubmitTodo = (e: FormEvent) => {
     e.preventDefault()
-    const currentIndex = localStorage.getItem('todo-index') || 0
+    const folderIndex = JSON.parse(localStorage.getItem(folderId)!)
+    const currentIndex = folderIndex.in_progress ?? 0
     const nextIndex = Number(currentIndex) + 1
     const nextTodo = {
       name: todoText,
@@ -72,8 +73,39 @@ export default function TaskForm({ params }: Props) {
   }
 
   const handleUpdateButtonClick = (selectedTodo: Tables<'todo'>) => {
-    updateTodo(selectedTodo)
+    if (selectedTodo.is_complete) {
+      updateTodo({
+        ...selectedTodo,
+        updated_at: new Date().toISOString(),
+        is_complete: false,
+      })
+    } else {
+      updateTodo({
+        ...selectedTodo,
+        updated_at: new Date().toISOString(),
+        is_complete: true,
+      })
+    }
   }
+
+  useEffect(() => {
+    const prevIndex = JSON.parse(localStorage.getItem(folderId)!)
+    let inProgressLastIndex = prevIndex.in_progress ?? 0
+    let completedLastIndex = prevIndex.completed ?? 0
+
+    if (completedTodos) {
+      completedLastIndex = completedTodos[completedTodos.length - 1]?.index
+    }
+    if (todos) {
+      inProgressLastIndex = todos[todos.length - 1]?.index
+    }
+
+    const nextIndex = JSON.stringify({
+      completed: completedLastIndex,
+      in_progress: inProgressLastIndex,
+    })
+    localStorage.setItem(folderId, nextIndex)
+  }, [todos, completedTodos])
 
   useEffect(() => {
     if (!selectedFolder) {
@@ -128,11 +160,11 @@ export default function TaskForm({ params }: Props) {
             </List>
           </div>
         )}
-        {successTodos.length >= 1 && (
+        {completedTodos.length >= 1 && (
           <div className="flex animate-fade-in flex-col gap-4">
             <Title type="sub">완료됨</Title>
             <List className="flex flex-col gap-2">
-              {successTodos.map((todo) => (
+              {completedTodos.map((todo) => (
                 <Todo
                   key={todo.id}
                   todo={todo}

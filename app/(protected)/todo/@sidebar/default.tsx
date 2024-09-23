@@ -5,7 +5,6 @@ import { useState, useTransition } from 'react'
 import TaskFolderSection from './_components/TaskFolderSection'
 import SideMenuButtonSection from './_components/SideMenuButtonSection'
 import { TodoFolder } from '@/types/todo'
-import { TodoMenu, useTodo } from '@/store/useTodo'
 import { useRouter } from 'next/navigation'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
@@ -36,15 +35,12 @@ export default function SideBarPage() {
   const { data: todoFolders } = useSuspenseQuery(
     todoFolderQuery.getTodoFolder(supabase, me.userId),
   )
-  const { setSelectedFolder, setSelectedMenu, selectedMenu } = useTodo()
 
   const handleSideMenu = () => {
     setOpenSide((prev) => !prev)
   }
 
-  const handleMenuSelect = (menu: TodoMenu) => {
-    setSelectedFolder(null)
-    setSelectedMenu(menu)
+  const handleMenuSelect = (menu: (typeof TODO_MENU)[number]['name']) => {
     router.push(`/todo/${menu}`)
   }
 
@@ -71,7 +67,6 @@ export default function SideBarPage() {
               menu={menu}
               isOpenSide={isOpenSide}
               onMenuSelect={handleMenuSelect}
-              selectedMenu={selectedMenu}
             />
           ))}
         </List>

@@ -1,6 +1,5 @@
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import { Tables } from '@/types/supabase'
 import { useMutation } from '@tanstack/react-query'
 
 interface ITodoFolder {

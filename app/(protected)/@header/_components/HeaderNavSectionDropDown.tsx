@@ -1,4 +1,4 @@
-import { MouseEvent, RefObject } from 'react'
+import { RefObject } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import useSignOut from '@/services/mutates/auth/useSignOut'
@@ -16,11 +16,13 @@ import cn from '@/lib/cn'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>
+  open: () => void
   onTransitionEnd: () => void
 }
 
 export default function HeaderNavSectionDropDown({
   targetRef,
+  open,
   onTransitionEnd,
 }: Props) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -36,9 +38,8 @@ export default function HeaderNavSectionDropDown({
     }
   }
 
-  const handleThemeChange = (e: MouseEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
+  const handleThemeChange = () => {
+    open()
     const nextTheme = theme === 'dark' ? 'light' : 'dark'
     setTheme(nextTheme)
     localStorage.setItem('theme', nextTheme)
@@ -50,7 +51,7 @@ export default function HeaderNavSectionDropDown({
       ref={targetRef}
       data-status="closed"
       onTransitionEnd={onTransitionEnd}
-      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-60 origin-top-right rounded-md bg-white p-2 shadow-md dark:bg-var-darkgray"
+      className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-fit origin-top-right rounded-md bg-white p-2 shadow-md dark:bg-var-darkgray"
     >
       <LinkButton
         href="/mypage"
@@ -156,14 +157,14 @@ export default function HeaderNavSectionDropDown({
         </div>
         <div
           className={cn(
-            'h-fit w-8 rounded-full border border-zinc-400 dark:border-zinc-600',
+            'h-fit w-8 rounded-full p-[1px] transition',
             theme === 'dark' ? 'bg-green-500' : 'bg-zinc-400',
           )}
         >
           <div
             className={cn(
-              'size-4 rounded-full bg-zinc-200',
-              theme === 'dark' ? 'translate-x-4' : '',
+              'size-4 rounded-full bg-zinc-200 transition',
+              theme === 'dark' ? 'translate-x-[14px]' : '',
             )}
           />
         </div>

@@ -11,14 +11,12 @@ import { usePathname } from 'next/navigation'
 
 interface Props {
   isOpenSide: boolean
-  selectedMenu: TodoMenu | null
   onMenuSelect: (selectedMenu: TodoMenu) => any
   menu: (typeof TODO_MENU)[number]
 }
 
 export default function TodoMenuSection({
   isOpenSide,
-  selectedMenu,
   onMenuSelect,
   menu,
 }: Props) {

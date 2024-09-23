@@ -13,7 +13,7 @@ export default function Default() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <header className="sticky top-0 z-20 flex h-20 w-full items-center justify-between bg-white/60 p-4 shadow-sm backdrop-blur-xl lg:px-12 dark:bg-var-darkgray/60">
+      <header className="sticky top-0 z-40 flex h-20 w-full items-center justify-between bg-white/60 p-4 shadow-sm backdrop-blur-xl lg:px-12 dark:bg-var-darkgray/60">
         <HeaderLogoSection />
         <HeaderNavSection />
       </header>

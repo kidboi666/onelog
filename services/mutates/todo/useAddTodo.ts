@@ -26,6 +26,7 @@ export default function useAddTodo() {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['todo', variables.folderId] })
+      queryClient.invalidateQueries({ queryKey: ['todo', 'in_progress'] })
     },
   })
 }

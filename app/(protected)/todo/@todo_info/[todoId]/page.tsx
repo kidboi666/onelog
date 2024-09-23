@@ -30,7 +30,7 @@ export default function Page({ params }: Props) {
   const folderId = useSearchParams().get('folder_id') || ''
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoInProgress(supabase, me.userId),
+    todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
   )
   const todo = todos?.find((item) => item.id === Number(todoId))
   const [memo, onChangeMemo, setMemo] = useInput<string>('')
@@ -68,7 +68,7 @@ export default function Page({ params }: Props) {
           {
             onSuccess: () => {
               queryClient.invalidateQueries({
-                queryKey: ['todo', 'in_progress'],
+                queryKey: ['todo', folderId],
               })
               router.back()
             },
@@ -111,7 +111,7 @@ export default function Page({ params }: Props) {
     <div
       ref={outsideRef}
       onClick={handleOutsideClick}
-      className="fixed inset-0 z-30 animate-fade-in overflow-hidden bg-black/15"
+      className="fixed inset-0 z-40 animate-fade-in overflow-hidden bg-black/15"
     >
       <div
         ref={insideRef}
@@ -146,7 +146,8 @@ export default function Page({ params }: Props) {
           >
             메모 추가
           </Button>
-          <Title>완료 상태</Title>
+          <Line />
+          <Title size="xs">완료 상태</Title>
           <Text>{todo?.is_complete ? '완료' : '미완료'}</Text>
         </form>
         <div className="flex justify-between gap-4">

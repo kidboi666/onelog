@@ -19,6 +19,7 @@ export default function HeaderNavSection() {
     ref: dropdownRef,
     close,
     onClick,
+    open,
     onTransitionEnd,
   } = useStateChange<HTMLDivElement>()
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(close)
@@ -43,6 +44,7 @@ export default function HeaderNavSection() {
 
       <HeaderNavSectionDropDown
         onTransitionEnd={onTransitionEnd}
+        open={open}
         targetRef={dropdownRef}
       />
     </nav>

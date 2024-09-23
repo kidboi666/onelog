@@ -12,7 +12,7 @@ import { Tables } from '@/types/supabase'
 interface TodoProps {
   todo: Tables<'todo'>
   isComplete: boolean | null
-  onUpdate?: (selectedTodo: Tables<'todo'>) => void
+  onUpdate: (selectedTodo: Tables<'todo'>) => void
 }
 
 export default function Todo({ todo, isComplete, onUpdate }: TodoProps) {
@@ -41,20 +41,7 @@ export default function Todo({ todo, isComplete, onUpdate }: TodoProps) {
             'size-4 flex-shrink-0 rounded-full border border-zinc-400 text-white hover:text-zinc-400 dark:border-zinc-600 dark:text-white',
             isComplete ? 'bg-zinc-400 dark:bg-zinc-600' : '',
           )}
-          onClick={(e) => {
-            e.stopPropagation()
-            todo.is_complete
-              ? onUpdate!({
-                  ...todo,
-                  updated_at: new Date().toISOString(),
-                  is_complete: false,
-                })
-              : onUpdate!({
-                  ...todo,
-                  updated_at: new Date().toISOString(),
-                  is_complete: true,
-                })
-          }}
+          onClick={() => onUpdate(todo)}
         >
           {isComplete && (
             <Icon size={12} view={20} className="animate-grow-up">

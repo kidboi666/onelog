@@ -31,8 +31,8 @@ export const todoQuery = {
     }),
   getTodoFromFolder: (
     supabase: SupabaseClient,
-    folderId: number,
     userId: string,
+    folderId: number,
   ) =>
     queryOptions<Tables<'todo'>[]>({
       queryKey: ['todo', folderId],
@@ -49,6 +49,16 @@ export const todoQuery = {
           )
         }
         return myTodo || []
+      },
+    }),
+  getTodoIndex: (supabase: SupabaseClient, userId: string, folderId: number) =>
+    queryOptions({
+      queryKey: ['todo', 'index', folderId],
+      queryFn: async () => {
+        const { data } = await supabase
+          .from('todo')
+          .select()
+          .eq('user_id', userId)
       },
     }),
 }
