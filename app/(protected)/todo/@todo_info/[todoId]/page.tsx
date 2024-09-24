@@ -3,6 +3,7 @@
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import Line from '@/components/shared/Line'
+import Spinner from '@/components/shared/Spinner'
 import Text from '@/components/shared/Text'
 import TextArea from '@/components/shared/TextArea'
 import Title from '@/components/shared/Title'
@@ -17,7 +18,7 @@ import { todoQuery } from '@/services/queries/todo/todoQuery'
 import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { FormEvent, useEffect } from 'react'
+import { FormEvent, useEffect, useTransition } from 'react'
 
 interface Props {
   params: { todoId: string }
@@ -37,6 +38,7 @@ export default function Page({ params }: Props) {
   const { close, open, ref: insideRef } = useStateChange<HTMLDivElement>()
   const outsideRef = useOutsideClick<HTMLDivElement>(close)
   const { mutate: updateTodo } = useUpdateTodo()
+  const [isLoadingDelete, startTransitionDelete] = useTransition()
 
   const handleOutsideClick = () => {
     close()
@@ -77,9 +79,12 @@ export default function Page({ params }: Props) {
   }
 
   const handleDeleteButtonClick = () => {
-    router.push(`/delete_todo/${todoId}?folder_id=${folderId}`, {
-      scroll: false,
-    })
+    open()
+    startTransitionDelete(() =>
+      router.push(`/delete_todo/${todoId}?folder_id=${folderId}`, {
+        scroll: false,
+      }),
+    )
   }
 
   const handleSubmitMemo = (e: FormEvent) => {
@@ -119,6 +124,13 @@ export default function Page({ params }: Props) {
         data-status="closed"
         className="absolute bottom-0 right-0 flex h-full w-80 origin-right flex-col justify-between gap-4 overflow-hidden bg-white p-4 shadow-md transition data-[status=closed]:translate-x-20 data-[status=closed]:opacity-0 dark:bg-var-darkgray"
       >
+        <Button variant="icon" onClick={handleOutsideClick} className="w-fit">
+          <Icon>
+            <g>
+              <path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path>
+            </g>
+          </Icon>
+        </Button>
         <Title className="hyphens-auto break-all">{todo?.name}</Title>
         <form
           onSubmit={handleSubmitMemo}
@@ -161,9 +173,13 @@ export default function Page({ params }: Props) {
             </Icon>
           </Button>
           <Button onClick={handleDeleteButtonClick} variant="icon">
-            <Icon view="0 -960 960 960">
-              <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-            </Icon>
+            {isLoadingDelete ? (
+              <Spinner size={20} />
+            ) : (
+              <Icon view="0 -960 960 960">
+                <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+              </Icon>
+            )}
           </Button>
         </div>
       </div>

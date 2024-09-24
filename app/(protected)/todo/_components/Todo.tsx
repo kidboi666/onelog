@@ -4,7 +4,13 @@ import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
 import cn from '@/lib/cn'
 import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
-import { MutableRefObject, useState, useTransition } from 'react'
+import {
+  DragEvent,
+  MutableRefObject,
+  RefObject,
+  useState,
+  useTransition,
+} from 'react'
 import { useRouter } from 'next/navigation'
 import Spinner from '@/components/shared/Spinner'
 import { Tables } from '@/types/supabase'
@@ -20,6 +26,8 @@ interface TodoProps {
   onChangeHoverState?: (section: 'inProgress' | 'completed' | 'off') => void
   dragItem: MutableRefObject<Tables<'todo'> | null>
   dragOverItem: MutableRefObject<Tables<'todo'> | null>
+  inProgressZone?: RefObject<HTMLDivElement>
+  completedZone?: RefObject<HTMLDivElement>
   onUpdate: (selectedTodo: Tables<'todo'>) => void
 }
 
@@ -29,6 +37,8 @@ export default function Todo({
   onChangeHoverState,
   dragItem,
   dragOverItem,
+  inProgressZone,
+  completedZone,
   onUpdate,
 }: TodoProps) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -65,7 +75,8 @@ export default function Todo({
     }
   }
 
-  const dragOver = () => {
+  const dragOver = (e: DragEvent) => {
+    e.preventDefault()
     if (dragItem.current?.is_complete !== dragOverItem.current?.is_complete) {
       const hoveredSection = dragOverItem.current?.is_complete
         ? 'completed'
@@ -83,14 +94,19 @@ export default function Todo({
     }
   }
 
-  const drop = () => {
+  const drop = (e: DragEvent) => {
     setHover(false)
     setDraggingDown(false)
     if (onChangeHoverState) {
       onChangeHoverState('off')
     }
+
     const isEqual = dragItem.current?.index === dragOverItem.current?.index
-    if (isEqual) return null
+    if (isEqual) {
+      dragItem.current = null
+      dragOverItem.current = null
+      return null
+    }
     if (dragItem.current?.is_complete !== dragOverItem.current?.is_complete) {
       return onUpdate(todo)
     }
@@ -135,6 +151,7 @@ export default function Todo({
       })
     })
     updateTodo({ ...updatedIndexTodo })
+    dragItem.current = null
     dragOverItem.current = null
   }
 
@@ -200,21 +217,27 @@ export default function Todo({
               </Icon>
             </Button>
           )}
-          {showKebabButton ? (
-            <div className="flex gap-2">
-              <Button
-                size="none"
-                variant="icon"
-                onClick={() => startTransition(() => handleTodoClick())}
-                className="rounded-full"
-              >
-                <Icon view="0 -960 960 960" size={18}>
-                  <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
-                </Icon>
-              </Button>
-            </div>
-          ) : null}{' '}
-          {isPending && <Spinner size={20} />}
+          <div className="relative flex gap-2">
+            <Button
+              size="none"
+              variant="icon"
+              onClick={() => startTransition(() => handleTodoClick())}
+              className={cn(
+                'rounded-full',
+                showKebabButton ? 'opacity-100' : 'opacity-0',
+                isPending && 'opacity-0',
+              )}
+            >
+              <Icon view="0 -960 960 960" size={18}>
+                <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
+              </Icon>
+            </Button>
+            {isPending && (
+              <div className="absolute left-0 top-0">
+                <Spinner size={18} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </List.Row>

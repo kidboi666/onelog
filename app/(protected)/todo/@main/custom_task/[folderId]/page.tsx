@@ -54,8 +54,11 @@ export default function TaskForm({ params }: Props) {
     inProgress: false,
     completed: false,
   })
+  const [showCompletedZone, setShowCompletedZone] = useState(false)
   const dragItem = useRef<Tables<'todo'> | null>(null)
   const dragOverItem = useRef<Tables<'todo'> | null>(null)
+  const completedZone = useRef<HTMLDivElement>(null)
+  const inProgressZone = useRef<HTMLDivElement>(null)
 
   const currentMonth = new Date().getMonth() + 1
   const currentDate = new Date().getDate()
@@ -118,6 +121,10 @@ export default function TaskForm({ params }: Props) {
   }
 
   useEffect(() => {
+    const isCompletedTodo = completedTodos.length >= 1
+    const willCompleted = dragItem.current !== null
+    setShowCompletedZone(isCompletedTodo || willCompleted)
+
     const prevIndex = JSON.parse(localStorage.getItem(folderId)!)
     let inProgressLastIndex = prevIndex?.in_progress ?? 0
     let completedLastIndex = prevIndex?.completed ?? 0
@@ -145,7 +152,7 @@ export default function TaskForm({ params }: Props) {
   return (
     <form
       onSubmit={handleSubmitTodo}
-      className="flex w-80 flex-shrink-0 flex-col"
+      className="flex max-w-72 flex-shrink-0 flex-col"
     >
       <div className="relative flex items-center justify-between">
         <Title>{currentFolder?.name}</Title>
@@ -161,13 +168,26 @@ export default function TaskForm({ params }: Props) {
         />
       </div>
       <div className="mt-4 flex flex-col gap-2">
-        <Input
-          value={todoText}
-          onChange={onChangeTodoText}
-          placeholder="할일을 입력하세요."
-          dimension="sm"
-          className="sticky"
-        />
+        <div className="relative">
+          <Input
+            value={todoText}
+            onChange={onChangeTodoText}
+            placeholder="할일을 입력하세요."
+            dimension="sm"
+            className="sticky w-full"
+          />
+          <Button
+            variant="icon"
+            size="none"
+            type="submit"
+            disabled={!todoText}
+            className="absolute right-2 top-1/2 -translate-y-1/2 active:animate-none"
+          >
+            <Icon view="0 -960 960 960" size={18}>
+              <path d="M440-160v-326L336-382l-56-58 200-200 200 200-56 58-104-104v326h-80ZM160-600v-120q0-33 23.5-56.5T240-800h480q33 0 56.5 23.5T800-720v120h-80v-120H240v120h-80Z" />
+            </Icon>
+          </Button>
+        </div>
         <Text
           type="caption"
           size="sm"
@@ -176,6 +196,7 @@ export default function TaskForm({ params }: Props) {
       <div className="mt-4 flex flex-col gap-4 text-left">
         {todos.length >= 1 && (
           <div
+            ref={inProgressZone}
             className={cn(
               'flex animate-fade-in flex-col gap-4 border border-transparent transition',
               isHover.inProgress ? 'border-blue-500' : '',
@@ -192,13 +213,16 @@ export default function TaskForm({ params }: Props) {
                   onChangeHoverState={handleChangeHoverState}
                   dragItem={dragItem}
                   dragOverItem={dragOverItem}
+                  inProgressZone={inProgressZone}
+                  completedZone={completedZone}
                 />
               ))}
             </List>
           </div>
         )}
-        {completedTodos.length >= 1 && (
+        {showCompletedZone && (
           <div
+            ref={completedZone}
             className={cn(
               'flex animate-fade-in flex-col gap-4 border border-transparent transition',
               isHover.completed ? 'border-blue-500' : '',
@@ -215,6 +239,8 @@ export default function TaskForm({ params }: Props) {
                   onChangeHoverState={handleChangeHoverState}
                   dragItem={dragItem}
                   dragOverItem={dragOverItem}
+                  inProgressZone={inProgressZone}
+                  completedZone={completedZone}
                 />
               ))}
             </List>
