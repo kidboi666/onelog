@@ -25,7 +25,7 @@ export default function TodoMenuSection({
   const isSelected = splitedPath.includes(menu.name)
   const [isLoading, startTransition] = useTransition()
   return (
-    <List.Row key={menu.id} className="size-full animate-fade-in">
+    <List.Row key={menu.id} className="size-full">
       <Button
         variant="list"
         onClick={() => startTransition(() => onMenuSelect(menu.name))}
@@ -52,7 +52,7 @@ export default function TodoMenuSection({
           <Text
             type="caption"
             className={cn(
-              'trasition',
+              'trasition animate-fade-in',
               isSelected
                 ? 'text-zinc-600 dark:text-zinc-200'
                 : 'text-zinc-400 dark:text-zinc-500',

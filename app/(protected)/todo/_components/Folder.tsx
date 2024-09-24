@@ -155,19 +155,19 @@ export default function Folder({
         onMouseEnter={() => setShowKebabButton(true)}
         onMouseLeave={() => setShowKebabButton(false)}
       >
-        {isLoading ? (
-          <div className="absolute">
-            <Spinner size={18} />
-          </div>
-        ) : (
-          <Dot color={folder.color} isSelected={isSelected} />
-        )}
+        <div className="relative">
+          <Dot
+            color={folder.color}
+            isSelected={isSelected}
+            isLoading={isLoading}
+          />
+        </div>
         {isOpenSide && (
           <div className="flex flex-1 items-center justify-between">
             <Text
               type="caption"
               className={cn(
-                'transition',
+                'animate-fade-in transition',
                 isSelected ? 'text-zinc-600 dark:text-zinc-200' : '',
               )}
             >

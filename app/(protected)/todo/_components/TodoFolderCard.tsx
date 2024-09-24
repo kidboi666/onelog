@@ -78,7 +78,7 @@ export default function TodoFolderCard({
   return (
     <List.Row
       className={cn(
-        'h-fit w-72 rounded-md p-4 shadow-md',
+        'h-fit w-full max-w-72 rounded-md p-4 shadow-md',
         folder?.color === 'yellow' && 'bg-var-yellow/15 dark:bg-var-yellow/25',
         folder?.color === 'orange' && 'bg-var-orange/15 dark:bg-var-orange/25',
         folder?.color === 'black' && 'bg-black/15 dark:bg-black/25',

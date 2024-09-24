@@ -1,15 +1,17 @@
+import Spinner from '@/components/shared/Spinner'
 import cn from '@/lib/cn'
 
 interface Props {
   color?: string
   isSelected: boolean
+  isLoading: boolean
 }
 
-export default function Dot({ color, isSelected }: Props) {
+export default function Dot({ color, isSelected, isLoading }: Props) {
   return (
     <div
       className={cn(
-        'size-2 rounded-full bg-red-500 transition',
+        'relative size-2 rounded-full bg-red-500 transition',
         color === 'yellow' && 'bg-var-yellow',
         color === 'orange' && 'bg-var-orange',
         color === 'black' && 'bg-black',
@@ -18,7 +20,12 @@ export default function Dot({ color, isSelected }: Props) {
         color === 'red' && 'bg-red-500',
         color === 'purple' && 'bg-purple-500',
         isSelected ? 'ring-8 ring-zinc-200 dark:ring-zinc-600' : '',
+        isLoading ? 'opacity-0' : '',
       )}
-    />
+    >
+      {isLoading && (
+        <Spinner size={16} className="absolute -left-1/2 -top-1/2" />
+      )}
+    </div>
   )
 }

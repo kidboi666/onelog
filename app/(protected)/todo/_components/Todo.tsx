@@ -8,6 +8,7 @@ import {
   DragEvent,
   MutableRefObject,
   RefObject,
+  useEffect,
   useState,
   useTransition,
 } from 'react'
@@ -94,7 +95,7 @@ export default function Todo({
     }
   }
 
-  const drop = (e: DragEvent) => {
+  const drop = () => {
     setHover(false)
     setDraggingDown(false)
     if (onChangeHoverState) {
@@ -166,7 +167,7 @@ export default function Todo({
       onMouseEnter={() => setShowKebabButton(true)}
       onMouseLeave={() => setShowKebabButton(false)}
       className={cn(
-        'animate-fade-in border border-transparent transition',
+        'flex min-w-20 animate-fade-in border border-transparent transition',
         isHover && isDraggingDown === false && 'border-t-blue-500',
         isHover && isDraggingDown && 'border-b-blue-500',
       )}
@@ -202,7 +203,7 @@ export default function Todo({
             >
               {todo.name}
             </Text>
-            <Text type="caption" size="xs">
+            <Text type="caption" size="xs" className="text-nowrap">
               {isComplete
                 ? `완료일 : ${formatDateToMDY(todo.updated_at ?? '')} ${formatDateToHM(todo.updated_at ?? '')}`
                 : `등록일 : ${formatDateToMDY(todo.created_at)} ${formatDateToHM(todo.created_at)}`}

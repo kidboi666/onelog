@@ -150,12 +150,9 @@ export default function TaskForm({ params }: Props) {
   }, [currentFolder])
 
   return (
-    <form
-      onSubmit={handleSubmitTodo}
-      className="flex max-w-72 flex-shrink-0 flex-col"
-    >
+    <form onSubmit={handleSubmitTodo} className="max-w-72">
       <div className="relative flex items-center justify-between">
-        <Title>{currentFolder?.name}</Title>
+        <Title className="text-nowrap">{currentFolder?.name}</Title>
         <Button ref={dropdownRef} variant="icon" size="none" onClick={onClick}>
           <Icon view="0 -960 960 960" size={20}>
             <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
@@ -191,6 +188,7 @@ export default function TaskForm({ params }: Props) {
         <Text
           type="caption"
           size="sm"
+          className="text-nowrap"
         >{`${currentYear}년 ${currentMonth}월 ${currentDate}일 오늘 할 일`}</Text>
       </div>
       <div className="mt-4 flex flex-col gap-4 text-left">
@@ -202,7 +200,9 @@ export default function TaskForm({ params }: Props) {
               isHover.inProgress ? 'border-blue-500' : '',
             )}
           >
-            <Title type="sub">할 일</Title>
+            <Title type="sub" className="text-nowrap">
+              할 일
+            </Title>
             <List className="flex flex-col gap-2">
               {todos.map((todo) => (
                 <Todo
@@ -228,7 +228,9 @@ export default function TaskForm({ params }: Props) {
               isHover.completed ? 'border-blue-500' : '',
             )}
           >
-            <Title type="sub">완료됨</Title>
+            <Title type="sub" className="text-nowrap">
+              완료됨
+            </Title>
             <List className="flex flex-col gap-2">
               {completedTodos.map((todo) => (
                 <Todo

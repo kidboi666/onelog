@@ -5,7 +5,7 @@ import { useState, useTransition } from 'react'
 import TaskFolderSection from './_components/TaskFolderSection'
 import SideMenuButtonSection from './_components/SideMenuButtonSection'
 import { TodoFolder } from '@/types/todo'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import Line from '@/components/shared/Line'
@@ -17,6 +17,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
+import useStateChange from '@/hooks/useStateChange'
+import Text from '@/components/shared/Text'
 
 export const INIT_TODO_FOLDER: TodoFolder = {
   id: 0,
@@ -35,9 +37,16 @@ export default function SideBarPage() {
   const { data: todoFolders } = useSuspenseQuery(
     todoFolderQuery.getTodoFolder(supabase, me.userId),
   )
+  const { ref, open, close, onTransitionEnd } = useStateChange<HTMLDivElement>()
 
   const handleSideMenu = () => {
     setOpenSide((prev) => !prev)
+    if (isOpenSide) {
+      close()
+    } else {
+      open()
+    }
+    localStorage.setItem('open-side', (!isOpenSide).toString())
   }
 
   const handleMenuSelect = (menu: (typeof TODO_MENU)[number]['name']) => {
@@ -51,10 +60,17 @@ export default function SideBarPage() {
   return (
     <div
       className={cn(
-        'z-30 flex h-[calc(100dvh-80px)] w-80 flex-shrink-0 flex-col gap-4 bg-white p-4 shadow-md dark:bg-var-darkgray',
+        'relative z-30 flex h-[calc(100dvh-80px)] flex-shrink-0 flex-col gap-4 p-4 shadow-md transition',
         isOpenSide ? 'w-72' : 'w-fit',
       )}
     >
+      <div className="absolute left-0 top-0 -z-10 h-full w-[74px] bg-white dark:bg-var-darkgray" />
+      <div
+        ref={ref}
+        onTransitionEnd={onTransitionEnd}
+        data-status="closed"
+        className="absolute left-0 top-0 -z-10 hidden h-full w-72 origin-left bg-white transition ease-in-out data-[status=closed]:scale-x-75 data-[status=closed]:opacity-0 dark:bg-var-darkgray"
+      />
       <div className="flex h-full flex-col gap-2">
         <SideMenuButtonSection
           isOpenSide={isOpenSide}
@@ -91,7 +107,7 @@ export default function SideBarPage() {
               <path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
             </Icon>
           )}
-          {isOpenSide && '새 폴더 추가'}
+          {isOpenSide && <span className="animate-fade-in">새 폴더 추가</span>}
         </Button>
         <Button variant="icon">
           <Icon view="0 -960 960 960" size={18}>

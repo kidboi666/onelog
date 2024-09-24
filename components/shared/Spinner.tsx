@@ -1,12 +1,19 @@
+import cn from '@/lib/cn'
 import Icon from './Icon'
 
 interface Props {
-  size?: 8 | 18 | 20 | 40 | 60
+  size?: number
+  className?: string
 }
 
-export default function Spinner({ size = 40 }: Props) {
+export default function Spinner({ size = 40, className }: Props) {
   return (
-    <div className="flex justify-center text-zinc-800 dark:text-zinc-200">
+    <div
+      className={cn(
+        'flex justify-center text-zinc-800 dark:text-zinc-200',
+        className,
+      )}
+    >
       <Icon size={size} view={100}>
         <circle
           cx="50"

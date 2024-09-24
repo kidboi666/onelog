@@ -14,7 +14,7 @@ export default function Layout({
   todo_info,
 }: PropsWithChildren<Props>) {
   return (
-    <div className="flex w-full animate-fade-in flex-row">
+    <div className="flex w-full animate-fade-in flex-row overflow-hidden">
       {sidebar}
       {main}
       {todo_info}
