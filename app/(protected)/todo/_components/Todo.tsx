@@ -7,8 +7,7 @@ import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import {
   DragEvent,
   MutableRefObject,
-  RefObject,
-  useEffect,
+  useRef,
   useState,
   useTransition,
 } from 'react'
@@ -24,22 +23,18 @@ import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
 interface TodoProps {
   todo: Tables<'todo'>
   isComplete: boolean | null
-  onChangeHoverState?: (section: 'inProgress' | 'completed' | 'off') => void
   dragItem: MutableRefObject<Tables<'todo'> | null>
   dragOverItem: MutableRefObject<Tables<'todo'> | null>
-  inProgressZone?: RefObject<HTMLDivElement>
-  completedZone?: RefObject<HTMLDivElement>
+  folderColor?: string
   onUpdate: (selectedTodo: Tables<'todo'>) => void
 }
 
 export default function Todo({
   todo,
   isComplete,
-  onChangeHoverState,
   dragItem,
   dragOverItem,
-  inProgressZone,
-  completedZone,
+  folderColor,
   onUpdate,
 }: TodoProps) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -48,15 +43,17 @@ export default function Todo({
   )
   const { mutate: updateTodo } = useUpdateTodo()
   const [showKebabButton, setShowKebabButton] = useState(false)
-  const [isHover, setHover] = useState(false)
-  const [isDraggingDown, setDraggingDown] = useState(false)
+  const todoEle = useRef<HTMLLIElement>(null)
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
   const handleTodoClick = () => {
-    router.push(`/todo/${todo.id}?folder_id=${todo.folder_id}`, {
-      scroll: false,
-    })
+    router.push(
+      `/todo/${todo.id}?folder_id=${todo.folder_id}&color=${folderColor}`,
+      {
+        scroll: false,
+      },
+    )
   }
 
   const dragStart = () => {
@@ -65,42 +62,33 @@ export default function Todo({
 
   const dragEnter = () => {
     dragOverItem.current = todo
-    if (dragItem.current?.is_complete !== dragOverItem.current.is_complete) {
-      const hoveredSection = dragOverItem.current.is_complete
-        ? 'completed'
-        : 'inProgress'
-      onChangeHoverState!(hoveredSection)
-    } else {
-      setDraggingDown(dragItem.current!.index < dragOverItem.current!.index)
-      setHover(true)
+    const isDraggingDown = dragItem.current!.index < dragOverItem.current.index
+
+    if (isDraggingDown) {
+      todoEle.current?.classList.add('border-b-blue-500')
+    } else if (!isDraggingDown) {
+      todoEle.current?.classList.add('border-t-blue-500')
     }
   }
 
   const dragOver = (e: DragEvent) => {
     e.preventDefault()
-    if (dragItem.current?.is_complete !== dragOverItem.current?.is_complete) {
-      const hoveredSection = dragOverItem.current?.is_complete
-        ? 'completed'
-        : 'inProgress'
-      onChangeHoverState!(hoveredSection)
-    } else {
-      setHover(todo.index === dragOverItem.current!.index)
+    const isDraggingDown = dragItem.current!.index < dragOverItem.current!.index
+    if (isDraggingDown) {
+      todoEle.current?.classList.add('border-b-blue-500')
+    } else if (!isDraggingDown) {
+      todoEle.current?.classList.add('border-t-blue-500')
     }
   }
 
-  const dragLeave = () => {
-    setHover(false)
-    if (onChangeHoverState) {
-      onChangeHoverState('off')
-    }
+  const dragLeave = (e: DragEvent) => {
+    todoEle.current?.classList.remove('border-t-blue-500')
+    todoEle.current?.classList.remove('border-b-blue-500')
   }
 
-  const drop = () => {
-    setHover(false)
-    setDraggingDown(false)
-    if (onChangeHoverState) {
-      onChangeHoverState('off')
-    }
+  const drop = (e: DragEvent<HTMLLIElement>) => {
+    todoEle.current?.classList.remove('border-t-blue-500')
+    todoEle.current?.classList.remove('border-b-blue-500')
 
     const isEqual = dragItem.current?.index === dragOverItem.current?.index
     if (isEqual) {
@@ -108,8 +96,9 @@ export default function Todo({
       dragOverItem.current = null
       return null
     }
-    if (dragItem.current?.is_complete !== dragOverItem.current?.is_complete) {
-      return onUpdate(todo)
+
+    if (e.currentTarget.classList.contains('')) {
+      return onUpdate(dragItem.current!)
     }
 
     let targetItemList
@@ -156,21 +145,24 @@ export default function Todo({
     dragOverItem.current = null
   }
 
+  const dragEnd = () => {
+    dragItem.current = null
+    dragOverItem.current = null
+  }
+
   return (
     <List.Row
       draggable
+      targetRef={todoEle}
       onDragStart={dragStart}
-      onDragEnd={drop}
+      onDrop={drop}
+      onDragEnd={dragEnd}
       onDragLeave={dragLeave}
       onDragEnter={dragEnter}
       onDragOver={dragOver}
       onMouseEnter={() => setShowKebabButton(true)}
       onMouseLeave={() => setShowKebabButton(false)}
-      className={cn(
-        'flex min-w-20 animate-fade-in border border-transparent transition',
-        isHover && isDraggingDown === false && 'border-t-blue-500',
-        isHover && isDraggingDown && 'border-b-blue-500',
-      )}
+      className="flex min-w-20 animate-fade-in border border-transparent transition"
     >
       <div className="flex w-full items-center justify-between rounded-md bg-white p-2 shadow-sm hover:opacity-85 dark:bg-var-darkgray">
         <div className="flex items-center gap-2">

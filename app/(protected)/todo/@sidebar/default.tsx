@@ -5,7 +5,7 @@ import { useState, useTransition } from 'react'
 import TaskFolderSection from './_components/TaskFolderSection'
 import SideMenuButtonSection from './_components/SideMenuButtonSection'
 import { TodoFolder } from '@/types/todo'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import Line from '@/components/shared/Line'
@@ -18,7 +18,6 @@ import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useStateChange from '@/hooks/useStateChange'
-import Text from '@/components/shared/Text'
 
 export const INIT_TODO_FOLDER: TodoFolder = {
   id: 0,

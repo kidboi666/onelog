@@ -50,10 +50,7 @@ export default function TaskForm({ params }: Props) {
   )
   const { mutate: addTodo } = useAddTodo()
   const { mutate: updateTodo } = useUpdateTodo()
-  const [isHover, setHover] = useState({
-    inProgress: false,
-    completed: false,
-  })
+
   const [showCompletedZone, setShowCompletedZone] = useState(false)
   const dragItem = useRef<Tables<'todo'> | null>(null)
   const dragOverItem = useRef<Tables<'todo'> | null>(null)
@@ -101,22 +98,6 @@ export default function TaskForm({ params }: Props) {
         index: completedLastIndex + 1,
         is_complete: true,
       })
-    }
-  }
-
-  const handleChangeHoverState = (
-    hoverSection: 'inProgress' | 'completed' | 'off',
-  ) => {
-    if (hoverSection === 'off') {
-      setHover({
-        inProgress: false,
-        completed: false,
-      })
-    } else {
-      setHover((prev) => ({
-        ...prev,
-        [hoverSection]: !prev[hoverSection],
-      }))
     }
   }
 
@@ -197,7 +178,6 @@ export default function TaskForm({ params }: Props) {
             ref={inProgressZone}
             className={cn(
               'flex animate-fade-in flex-col gap-4 border border-transparent transition',
-              isHover.inProgress ? 'border-blue-500' : '',
             )}
           >
             <Title type="sub" className="text-nowrap">
@@ -209,12 +189,10 @@ export default function TaskForm({ params }: Props) {
                   key={todo.id}
                   todo={todo}
                   isComplete={todo.is_complete}
+                  folderColor={currentFolder?.color}
                   onUpdate={handleUpdateButtonClick}
-                  onChangeHoverState={handleChangeHoverState}
                   dragItem={dragItem}
                   dragOverItem={dragOverItem}
-                  inProgressZone={inProgressZone}
-                  completedZone={completedZone}
                 />
               ))}
             </List>
@@ -225,7 +203,6 @@ export default function TaskForm({ params }: Props) {
             ref={completedZone}
             className={cn(
               'flex animate-fade-in flex-col gap-4 border border-transparent transition',
-              isHover.completed ? 'border-blue-500' : '',
             )}
           >
             <Title type="sub" className="text-nowrap">
@@ -237,12 +214,10 @@ export default function TaskForm({ params }: Props) {
                   key={todo.id}
                   todo={todo}
                   isComplete={todo.is_complete}
+                  folderColor={currentFolder?.color}
                   onUpdate={handleUpdateButtonClick}
-                  onChangeHoverState={handleChangeHoverState}
                   dragItem={dragItem}
                   dragOverItem={dragOverItem}
-                  inProgressZone={inProgressZone}
-                  completedZone={completedZone}
                 />
               ))}
             </List>

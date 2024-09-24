@@ -4,6 +4,12 @@ import { PluginCreator } from 'tailwindcss/types/config'
 
 const pluginContainer: PluginCreator = ({ addUtilities }) => {
   addUtilities({
+    'dragdown-hovered': {
+      borderBottomColor: 'rgb(59 130 246)',
+    },
+    'dragup-hovered': {
+      borderTopColor: 'rgb(59 130 246)',
+    },
     '.no-scrollbar::-webkit-scrollbar': {
       display: 'none',
     },

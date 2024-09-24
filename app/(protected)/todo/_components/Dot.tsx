@@ -20,7 +20,7 @@ export default function Dot({ color, isSelected, isLoading }: Props) {
         color === 'red' && 'bg-red-500',
         color === 'purple' && 'bg-purple-500',
         isSelected ? 'ring-8 ring-zinc-200 dark:ring-zinc-600' : '',
-        isLoading ? 'opacity-0' : '',
+        isLoading ? 'bg-transparent' : '',
       )}
     >
       {isLoading && (

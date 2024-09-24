@@ -9,7 +9,7 @@ export default function Layout({ children }: PropsWithChildren) {
   return (
     <div
       className={cn(
-        'relative flex h-[calc(100dvh-80px)] w-full flex-col gap-4 p-4',
+        'relative flex h-[calc(100dvh-80px)] w-full flex-col gap-4 overflow-y-auto p-4',
         color === 'yellow' && 'bg-var-yellow/15 dark:bg-var-yellow/25',
         color === 'orange' && 'bg-var-orange/15 dark:bg-var-orange/25',
         color === 'black' && 'bg-black/15 dark:bg-black/25',
