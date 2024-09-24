@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { FormEvent, useRef, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
@@ -69,6 +69,12 @@ export default function TodoFolderCard({
     localStorage.setItem('todo-index', (nextIndex + 1).toString())
   }
 
+  useEffect(() => {
+    if (localTodos.length === 0) {
+      setShowInput(true)
+    }
+  }, [localTodos])
+
   return (
     <List.Row
       className={cn(
@@ -115,32 +121,31 @@ export default function TodoFolderCard({
           onTransitionEnd={onTransitionEnd}
         />
       </div>
-      {showInput ||
-        (localTodos.length === 0 && (
-          <form
-            onSubmit={handleSubmitTodo}
-            className="relative mt-2 flex flex-col gap-2"
+      {showInput && (
+        <form
+          onSubmit={handleSubmitTodo}
+          className="relative mt-2 flex flex-col gap-2"
+        >
+          <Input
+            value={name}
+            onChange={onChangeName}
+            variant="primary"
+            className="w-full pr-8 text-xs"
+            placeholder="새로운 할일을 추가하세요."
+          />
+          <Button
+            variant="icon"
+            size="none"
+            type="submit"
+            disabled={!name}
+            className="absolute right-2 top-1/2 -translate-y-1/2 active:animate-none"
           >
-            <Input
-              value={name}
-              onChange={onChangeName}
-              variant="primary"
-              className="w-full pr-8 text-xs"
-              placeholder="새로운 할일을 추가하세요."
-            />
-            <Button
-              variant="icon"
-              size="none"
-              type="submit"
-              disabled={!name}
-              className="absolute right-2 top-1/2 -translate-y-1/2 active:animate-none"
-            >
-              <Icon view="0 -960 960 960" size={18}>
-                <path d="M440-160v-326L336-382l-56-58 200-200 200 200-56 58-104-104v326h-80ZM160-600v-120q0-33 23.5-56.5T240-800h480q33 0 56.5 23.5T800-720v120h-80v-120H240v120h-80Z" />
-              </Icon>
-            </Button>
-          </form>
-        ))}
+            <Icon view="0 -960 960 960" size={18}>
+              <path d="M440-160v-326L336-382l-56-58 200-200 200 200-56 58-104-104v326h-80ZM160-600v-120q0-33 23.5-56.5T240-800h480q33 0 56.5 23.5T800-720v120h-80v-120H240v120h-80Z" />
+            </Icon>
+          </Button>
+        </form>
+      )}
       <div className="mt-4 flex flex-col gap-4 text-left">
         {localTodos?.length! >= 1 && (
           <div className="flex animate-fade-in flex-col gap-4">
