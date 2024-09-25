@@ -1,7 +1,7 @@
 'use client'
 
 import { List } from '@/components/shared/List'
-import { useMemo, useRef } from 'react'
+import { useRef } from 'react'
 import Folder from '../../../_components/Folder'
 import { Tables } from '@/types/supabase'
 import { useParams } from 'next/navigation'
@@ -15,10 +15,8 @@ export default function TaskFolderSection({ isOpenSide, todoFolders }: Props) {
   const { folderId } = useParams()
   const dragItem = useRef<Tables<'todo_folder'> | null>(null)
   const dragOverItem = useRef<Tables<'todo_folder'> | null>(null)
-  const sortedFolders = useMemo(
-    () => todoFolders?.sort((a, b) => a.index - b.index),
-    [todoFolders],
-  )
+  const sortedFolders = todoFolders?.sort((a, b) => a.index - b.index)
+
   return (
     <List className="flex flex-col gap-2">
       {sortedFolders?.map((folder) => (

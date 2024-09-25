@@ -186,6 +186,7 @@ export default function TaskForm({ params }: Props) {
             <List className="flex flex-col gap-2">
               {todos.map((todo) => (
                 <Todo
+                  isDraggable
                   key={todo.id}
                   todo={todo}
                   isComplete={todo.is_complete}
@@ -211,6 +212,7 @@ export default function TaskForm({ params }: Props) {
             <List className="flex flex-col gap-2">
               {completedTodos.map((todo) => (
                 <Todo
+                  isDraggable
                   key={todo.id}
                   todo={todo}
                   isComplete={todo.is_complete}

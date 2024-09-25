@@ -1,5 +1,11 @@
 import { useRouter } from 'next/navigation'
-import { MutableRefObject, useState, useTransition } from 'react'
+import {
+  DragEvent,
+  MutableRefObject,
+  useRef,
+  useState,
+  useTransition,
+} from 'react'
 import cn from '@/lib/cn'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
@@ -16,7 +22,6 @@ import FolderDropDown from './FolderDropDown'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Dot from './Dot'
-import Spinner from '@/components/shared/Spinner'
 
 interface Props {
   isOpenSide: boolean
@@ -47,8 +52,7 @@ export default function Folder({
   } = useStateChange<HTMLDivElement>()
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(close)
   const [showKebabButton, setShowKebabButton] = useState(false)
-  const [isHover, setHover] = useState(false)
-  const [isDraggingDown, setDraggingDown] = useState(false)
+  const folderRef = useRef<HTMLLIElement>(null)
   const [isLoading, startTransition] = useTransition()
 
   const handleFolderClick = () => {
@@ -61,21 +65,33 @@ export default function Folder({
 
   const dragEnter = (targetFolder: Tables<'todo_folder'>) => {
     dragOverItem.current = targetFolder
-    setDraggingDown(dragItem.current!.index < dragOverItem.current!.index)
-    setHover(true)
+
+    const isDraggingDown = dragItem.current!.index < dragOverItem.current!.index
+    if (isDraggingDown) {
+      folderRef.current?.classList.add('border-b-blue-500')
+    } else if (!isDraggingDown) {
+      folderRef.current?.classList.add('border-t-blue-500')
+    }
   }
 
-  const dragOver = () => {
-    setHover(folder.index === dragOverItem.current!.index)
+  const dragOver = (e: DragEvent) => {
+    e.preventDefault()
+    const isDraggingDown = dragItem.current!.index < dragOverItem.current!.index
+    if (isDraggingDown) {
+      folderRef.current?.classList.add('border-b-blue-500')
+    } else if (!isDraggingDown) {
+      folderRef.current?.classList.add('border-t-blue-500')
+    }
   }
 
   const dragLeave = () => {
-    setHover(false)
+    folderRef.current?.classList.remove('border-t-blue-500')
+    folderRef.current?.classList.remove('border-b-blue-500')
   }
 
   const drop = async () => {
-    setHover(false)
-    setDraggingDown(false)
+    folderRef.current?.classList.remove('border-t-blue-500')
+    folderRef.current?.classList.remove('border-b-blue-500')
     const isEqual = dragItem.current!.index === dragOverItem.current!.index
     if (isEqual) return null
 
@@ -130,19 +146,22 @@ export default function Folder({
     dragOverItem.current = null
   }
 
+  const dragEnd = () => {
+    dragItem.current = null
+    dragOverItem.current = null
+  }
+
   return (
     <List.Row
       draggable
+      targetRef={folderRef}
       onDragStart={dragStart}
       onDragEnter={() => dragEnter(folder)}
       onDragLeave={dragLeave}
-      onDragEnd={drop}
+      onDragEnd={dragEnd}
+      onDrop={drop}
       onDragOver={dragOver}
-      className={cn(
-        'relative size-full animate-fade-in border border-transparent transition',
-        isHover && isDraggingDown === false && 'border-t-blue-500',
-        isHover && isDraggingDown && 'border-b-blue-500',
-      )}
+      className="relative size-full animate-fade-in border border-transparent transition"
     >
       <Button
         variant="list"

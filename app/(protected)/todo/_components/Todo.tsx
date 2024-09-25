@@ -23,19 +23,21 @@ import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
 interface TodoProps {
   todo: Tables<'todo'>
   isComplete: boolean | null
-  dragItem: MutableRefObject<Tables<'todo'> | null>
-  dragOverItem: MutableRefObject<Tables<'todo'> | null>
   folderColor?: string
   onUpdate: (selectedTodo: Tables<'todo'>) => void
+  isDraggable?: boolean
+  dragItem: MutableRefObject<Tables<'todo'> | null>
+  dragOverItem: MutableRefObject<Tables<'todo'> | null>
 }
 
 export default function Todo({
   todo,
   isComplete,
-  dragItem,
-  dragOverItem,
   folderColor,
   onUpdate,
+  isDraggable = false,
+  dragItem,
+  dragOverItem,
 }: TodoProps) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todos } = useSuspenseQuery(
@@ -81,7 +83,7 @@ export default function Todo({
     }
   }
 
-  const dragLeave = (e: DragEvent) => {
+  const dragLeave = () => {
     todoEle.current?.classList.remove('border-t-blue-500')
     todoEle.current?.classList.remove('border-b-blue-500')
   }
@@ -92,8 +94,6 @@ export default function Todo({
 
     const isEqual = dragItem.current?.index === dragOverItem.current?.index
     if (isEqual) {
-      dragItem.current = null
-      dragOverItem.current = null
       return null
     }
 
@@ -152,7 +152,7 @@ export default function Todo({
 
   return (
     <List.Row
-      draggable
+      draggable={isDraggable}
       targetRef={todoEle}
       onDragStart={dragStart}
       onDrop={drop}
@@ -162,7 +162,8 @@ export default function Todo({
       onDragOver={dragOver}
       onMouseEnter={() => setShowKebabButton(true)}
       onMouseLeave={() => setShowKebabButton(false)}
-      className="flex min-w-20 animate-fade-in border border-transparent transition"
+      onClick={() => startTransition(() => handleTodoClick())}
+      className="flex min-w-20 animate-fade-in cursor-pointer gap-2 border border-transparent transition"
     >
       <div className="flex w-full items-center justify-between rounded-md bg-white p-2 shadow-sm hover:opacity-85 dark:bg-var-darkgray">
         <div className="flex items-center gap-2">
@@ -195,7 +196,7 @@ export default function Todo({
             >
               {todo.name}
             </Text>
-            <Text type="caption" size="xs" className="text-nowrap">
+            <Text type="caption" size="xs" className="line-clamp-1">
               {isComplete
                 ? `완료일 : ${formatDateToMDY(todo.updated_at ?? '')} ${formatDateToHM(todo.updated_at ?? '')}`
                 : `등록일 : ${formatDateToMDY(todo.created_at)} ${formatDateToHM(todo.created_at)}`}

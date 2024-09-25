@@ -32,9 +32,13 @@ export default function Title({
   type = 'title',
   size = 'md',
   as: Component = 'h1',
+  ...props
 }: PropsWithChildren<Props>) {
   return (
-    <Component className={cn(TITLE_VARIANTS({ type, size }), className)}>
+    <Component
+      className={cn(TITLE_VARIANTS({ type, size }), className)}
+      {...props}
+    >
       {children}
     </Component>
   )

@@ -43,7 +43,7 @@ export default function Modal({
       >
         <div
           className={cn(
-            'flex w-full flex-col items-center justify-center gap-12 rounded-md bg-var-lightgray px-2 py-8 md:px-8 dark:bg-var-darkgray',
+            'flex w-full flex-col items-center justify-center gap-12 rounded-md bg-var-lightgray px-4 py-8 md:px-8 dark:bg-var-darkgray',
             className,
           )}
         >
