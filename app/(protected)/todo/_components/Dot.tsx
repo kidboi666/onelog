@@ -7,7 +7,7 @@ interface Props {
   isLoading: boolean
 }
 
-export default function Dot({ color, isSelected, isLoading }: Props) {
+export function Dot({ color, isSelected, isLoading }: Props) {
   return (
     <div
       className={cn(

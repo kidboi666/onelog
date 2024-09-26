@@ -1,5 +1,12 @@
 'use client'
 
+import React, {
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+  useTransition,
+} from 'react'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import Line from '@/components/shared/Line'
@@ -17,13 +24,6 @@ import { todoQuery } from '@/services/queries/todo/todoQuery'
 import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, {
-  FormEvent,
-  useEffect,
-  useRef,
-  useState,
-  useTransition,
-} from 'react'
 
 interface Props {
   params: { todoId: string }

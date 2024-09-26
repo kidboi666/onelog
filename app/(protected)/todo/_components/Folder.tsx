@@ -21,7 +21,7 @@ import Button from '@/components/shared/Button'
 import FolderDropDown from './FolderDropDown'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
-import Dot from './Dot'
+import { Dot } from './Dot'
 
 interface Props {
   isOpenSide: boolean
