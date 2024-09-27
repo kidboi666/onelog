@@ -1,6 +1,6 @@
 import Text from '@/components/shared/Text'
 import useStateChange from '@/hooks/useStateChange'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { HEADER_MENU } from '../_constants'
 import { useEffect, useTransition } from 'react'
 import Button from '@/components/shared/Button'
@@ -21,6 +21,7 @@ export default function HeaderMenu({ menu }: Props) {
   } = useStateChange<HTMLDivElement>()
   const { setSelectedFolder, setSelectedMenu } = useTodo()
   const router = useRouter()
+  const pathname = usePathname()
   const [isLoading, startTransition] = useTransition()
 
   const handleMenuButtonClick = () => {
@@ -31,6 +32,10 @@ export default function HeaderMenu({ menu }: Props) {
     }
     router.push(menu.path)
   }
+
+  useEffect(() => {
+    closeMenuInfo()
+  }, [pathname])
 
   return (
     <div className="relative">
