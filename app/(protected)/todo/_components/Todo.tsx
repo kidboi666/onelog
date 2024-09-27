@@ -11,7 +11,7 @@ import {
   useState,
   useTransition,
 } from 'react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import Spinner from '@/components/shared/Spinner'
 import { Tables } from '@/types/supabase'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -50,12 +50,10 @@ export default function Todo({
   const [isPending, startTransition] = useTransition()
 
   const handleTodoClick = () => {
-    router.push(
-      `/todo/${todo.id}?folder_id=${todo.folder_id}&color=${folderColor}`,
-      {
-        scroll: false,
-      },
-    )
+    const colorParams = folderColor ? `&color=${folderColor}` : ''
+    router.push(`/todo/${todo.id}?folder_id=${todo.folder_id}${colorParams}`, {
+      scroll: false,
+    })
   }
 
   const dragStart = () => {
