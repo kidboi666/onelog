@@ -1,30 +1,30 @@
 import { wait } from '@/utils/wait'
-import { useCallback, useRef } from 'react'
+import { useRef } from 'react'
 
 export default function useStateChange<T extends HTMLElement>() {
   const ref = useRef<T>(null)
 
-  const open = useCallback(async () => {
+  const open = async () => {
     if (ref.current) {
       ref.current.classList.remove('hidden')
       await wait(0)
       ref.current.setAttribute('data-status', 'opened')
     }
-  }, [])
+  }
 
-  const close = useCallback(() => {
+  const close = () => {
     if (ref.current) {
       ref.current.setAttribute('data-status', 'closed')
     }
-  }, [])
+  }
 
-  const handleTransitionEnd = useCallback(() => {
+  const handleTransitionEnd = () => {
     if (ref?.current?.getAttribute('data-status') === 'closed') {
       ref.current.classList.add('hidden')
     }
-  }, [])
+  }
 
-  const handleButtonClick = useCallback(() => {
+  const handleButtonClick = () => {
     const isOpen = ref.current?.getAttribute('data-status')
 
     if (isOpen === 'opened') {
@@ -34,7 +34,7 @@ export default function useStateChange<T extends HTMLElement>() {
     if (isOpen === 'closed') {
       open()
     }
-  }, [])
+  }
 
   return {
     ref,

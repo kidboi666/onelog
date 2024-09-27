@@ -8,6 +8,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { todoQuery } from '@/services/queries/todo/todoQuery'
 import { supabase } from '@/lib/supabase/client'
+import { Tables } from '@/types/supabase'
 
 interface Props {
   todoId: string
@@ -24,10 +25,13 @@ export default function MouseEventSection({
   const { data: todos } = useSuspenseQuery(
     todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
   )
-  const todo = todos?.find((item) => item.id === Number(todoId))
-
   const isMouseDown = useRef<boolean>(false)
   const { close, open, ref: insideRef } = useStateChange<HTMLDivElement>()
+  let todo: Tables<'todo'>
+
+  if (todos) {
+    todo = todos.find((item) => item.id === Number(todoId))!
+  }
 
   const handleCloseTodoInfo = () => {
     close()
@@ -52,12 +56,6 @@ export default function MouseEventSection({
       open()
     }, 100)
   }, [])
-
-  useEffect(() => {
-    if (!todo) {
-      handleCloseTodoInfo()
-    }
-  }, [todo])
 
   return (
     <>

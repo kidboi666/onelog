@@ -2,24 +2,14 @@
 
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import { supabase } from '@/lib/supabase/client'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { todoQuery } from '@/services/queries/todo/todoQuery'
+import { Tables } from '@/types/supabase'
 import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
-import { useSuspenseQuery } from '@tanstack/react-query'
 
 interface Props {
-  todoId: string
-  folderId: string
+  todo?: Tables<'todo'>
 }
 
-export default function DateSection({ todoId, folderId }: Props) {
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
-  )
-  const todo = todos?.find((item) => item.id === Number(todoId))
-
+export default function DateSection({ todo }: Props) {
   return (
     <>
       <Title size="xs">등록일</Title>

@@ -3,29 +3,21 @@
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import Spinner from '@/components/shared/Spinner'
-import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { todoQuery } from '@/services/queries/todo/todoQuery'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { Tables } from '@/types/supabase'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 
 interface Props {
   todoId: string
   folderId: string
+  todo?: Tables<'todo'>
 }
 
-export default function ButtonSection({ todoId, folderId }: Props) {
+export default function ButtonSection({ todoId, folderId, todo }: Props) {
   const router = useRouter()
   const queryClient = getQueryClient()
-
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
-  )
-  const todo = todos?.find((item) => item.id === Number(todoId))
 
   const [isLoadingDelete, startTransitionDelete] = useTransition()
 

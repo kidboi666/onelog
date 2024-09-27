@@ -4,26 +4,17 @@ import Button from '@/components/shared/Button'
 import TextArea from '@/components/shared/TextArea'
 import Title from '@/components/shared/Title'
 import { useInput } from '@/hooks/useInput'
-import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { todoQuery } from '@/services/queries/todo/todoQuery'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { Tables } from '@/types/supabase'
 import { FormEvent, useEffect } from 'react'
 
 interface Props {
-  todoId: string
-  folderId: string
+  todo?: Tables<'todo'>
 }
 
-export default function MemoSection({ todoId, folderId }: Props) {
+export default function MemoSection({ todo }: Props) {
   const queryClient = getQueryClient()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
-  )
-  const todo = todos?.find((item) => item.id === Number(todoId))
 
   const [memo, onChangeMemo, setMemo] = useInput<string>('')
 

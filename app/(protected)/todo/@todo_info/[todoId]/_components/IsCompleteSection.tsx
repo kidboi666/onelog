@@ -2,22 +2,13 @@
 
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import { supabase } from '@/lib/supabase/client'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { todoQuery } from '@/services/queries/todo/todoQuery'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { Tables } from '@/types/supabase'
 
 interface Props {
-  todoId: string
-  folderId: string
+  todo?: Tables<'todo'>
 }
 
-export default function IsCompleteSection({ todoId, folderId }: Props) {
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
-  )
-  const todo = todos?.find((item) => item.id === Number(todoId))
+export default function IsCompleteSection({ todo }: Props) {
   return (
     <>
       <Title size="xs">완료 상태</Title>
