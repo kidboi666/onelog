@@ -8,6 +8,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { todoQuery } from '@/services/queries/todo/todoQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
+import { useMemo } from 'react'
 
 interface Props {
   todoId: string
@@ -19,7 +20,10 @@ export default function DataAccess({ todoId, folderId }: Props) {
   const { data: todos } = useSuspenseQuery(
     todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
   )
-  const todo = todos?.find((item) => item.id === Number(todoId))
+  const todo = useMemo(
+    () => todos?.find((item) => item.id === Number(todoId)),
+    [todos],
+  )
   return (
     <>
       <TitleSection todo={todo} />
