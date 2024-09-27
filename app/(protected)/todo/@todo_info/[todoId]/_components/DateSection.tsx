@@ -19,6 +19,7 @@ export default function DateSection({ todoId, folderId }: Props) {
     todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
   )
   const todo = todos?.find((item) => item.id === Number(todoId))
+
   return (
     <>
       <Title size="xs">등록일</Title>

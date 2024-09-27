@@ -23,10 +23,12 @@ export default function TitleSection({ todoId, folderId }: Props) {
     todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
   )
   const todo = todos?.find((item) => item.id === Number(todoId))
+
   const [showInput, setShowInput] = useState(false)
-  const [name, onChangeName, setName] = useInput<string>(todo?.name ?? '')
-  const { mutate: updateTodo } = useUpdateTodo()
+  const [name, onChangeName] = useInput<string>(todo?.name ?? '')
   const ref = useRef<HTMLTextAreaElement>(null)
+
+  const { mutate: updateTodo } = useUpdateTodo()
 
   const handleChangeInput = (e: React.MouseEvent) => {
     e.stopPropagation()

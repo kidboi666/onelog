@@ -20,13 +20,16 @@ interface Props {
 export default function ButtonSection({ todoId, folderId }: Props) {
   const router = useRouter()
   const queryClient = getQueryClient()
+
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todos } = useSuspenseQuery(
     todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
   )
   const todo = todos?.find((item) => item.id === Number(todoId))
-  const { mutate: updateTodo } = useUpdateTodo()
+
   const [isLoadingDelete, startTransitionDelete] = useTransition()
+
+  const { mutate: updateTodo } = useUpdateTodo()
 
   const handleDeleteButtonClick = () => {
     startTransitionDelete(() =>
@@ -35,6 +38,7 @@ export default function ButtonSection({ todoId, folderId }: Props) {
       }),
     )
   }
+
   const handleUpdateButtonClick = () => {
     todo!.is_complete
       ? updateTodo(
@@ -65,6 +69,7 @@ export default function ButtonSection({ todoId, folderId }: Props) {
           },
         )
   }
+
   return (
     <div
       onMouseDown={(e) => e.stopPropagation()}

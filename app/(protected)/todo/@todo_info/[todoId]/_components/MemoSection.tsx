@@ -24,7 +24,9 @@ export default function MemoSection({ todoId, folderId }: Props) {
     todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
   )
   const todo = todos?.find((item) => item.id === Number(todoId))
+
   const [memo, onChangeMemo, setMemo] = useInput<string>('')
+
   const { mutate: updateTodo } = useUpdateTodo()
 
   const handleSubmitMemo = (e: FormEvent) => {
