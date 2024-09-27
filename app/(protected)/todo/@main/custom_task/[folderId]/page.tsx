@@ -26,11 +26,13 @@ import cn from '@/lib/cn'
 
 interface Props {
   params: { folderId: string }
+  searchParams: { color: string }
 }
 
-export default function TaskForm({ params }: Props) {
+export default function TaskForm({ params, searchParams }: Props) {
   const router = useRouter()
   const folderId = params.folderId
+  const color = searchParams.color
   const [todoText, onChangeTodoText, setTodoText] = useInput('')
   const { onClick, ref, close, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
@@ -131,101 +133,119 @@ export default function TaskForm({ params }: Props) {
   }, [currentFolder])
 
   return (
-    <form onSubmit={handleSubmitTodo} className="max-w-72">
-      <div className="relative flex items-center justify-between">
-        <Title className="text-nowrap">{currentFolder?.name}</Title>
-        <Button ref={dropdownRef} variant="icon" size="none" onClick={onClick}>
-          <Icon view="0 -960 960 960" size={20}>
-            <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
-          </Icon>
-        </Button>
-        <TaskOptionDropDown
-          folderId={currentFolder?.id}
-          targetRef={ref}
-          onTransitionEnd={onTransitionEnd}
-        />
-      </div>
-      <div className="mt-4 flex flex-col gap-2">
-        <div className="relative">
-          <Input
-            value={todoText}
-            onChange={onChangeTodoText}
-            placeholder="할일을 입력하세요."
-            dimension="sm"
-            className="sticky w-full"
-          />
+    <div
+      className={cn(
+        'relative flex h-[calc(100dvh-80px)] w-full flex-col gap-4 overflow-y-auto p-4',
+        color === 'yellow' && 'bg-var-yellow/15 dark:bg-var-yellow/25',
+        color === 'orange' && 'bg-var-orange/15 dark:bg-var-orange/25',
+        color === 'black' && 'bg-black/15 dark:bg-black/25',
+        color === 'blue' && 'bg-var-blue/15 dark:bg-var-blue/25',
+        color === 'green' && 'bg-var-green/15 dark:bg-var-green/25',
+        color === 'red' && 'bg-red-500/15 dark:bg-red-500/25',
+        color === 'purple' && 'bg-purple-500/15 dark:bg-purple-500/25',
+      )}
+    >
+      <form onSubmit={handleSubmitTodo} className={cn('max-w-72')}>
+        <div className="relative flex items-center justify-between">
+          <Title className="text-nowrap">{currentFolder?.name}</Title>
           <Button
+            ref={dropdownRef}
             variant="icon"
             size="none"
-            type="submit"
-            disabled={!todoText}
-            className="absolute right-2 top-1/2 -translate-y-1/2 active:animate-none"
+            onClick={onClick}
           >
-            <Icon view="0 -960 960 960" size={18}>
-              <path d="M440-160v-326L336-382l-56-58 200-200 200 200-56 58-104-104v326h-80ZM160-600v-120q0-33 23.5-56.5T240-800h480q33 0 56.5 23.5T800-720v120h-80v-120H240v120h-80Z" />
+            <Icon view="0 -960 960 960" size={20}>
+              <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
             </Icon>
           </Button>
+          <TaskOptionDropDown
+            folderId={currentFolder?.id}
+            targetRef={ref}
+            onTransitionEnd={onTransitionEnd}
+          />
         </div>
-        <Text
-          type="caption"
-          size="sm"
-          className="text-nowrap"
-        >{`${currentYear}년 ${currentMonth}월 ${currentDate}일 오늘 할 일`}</Text>
-      </div>
-      <div className="mt-4 flex flex-col gap-4 text-left">
-        {todos.length >= 1 && (
-          <div
-            ref={inProgressZone}
-            className={cn(
-              'flex animate-fade-in flex-col gap-4 border border-transparent transition',
-            )}
-          >
-            <Title type="sub" className="text-nowrap">
-              할 일
-            </Title>
-            <List className="flex flex-col gap-2">
-              {todos.map((todo) => (
-                <Todo
-                  isDraggable
-                  key={todo.id}
-                  todo={todo}
-                  isComplete={todo.is_complete}
-                  folderColor={currentFolder?.color}
-                  onUpdate={handleUpdateButtonClick}
-                  dragItem={dragItem}
-                  dragOverItem={dragOverItem}
-                />
-              ))}
-            </List>
+        <div className="mt-4 flex flex-col gap-2">
+          <div className="relative">
+            <Input
+              value={todoText}
+              onChange={onChangeTodoText}
+              placeholder="할일을 입력하세요."
+              dimension="sm"
+              className="sticky w-full"
+            />
+            <Button
+              variant="icon"
+              size="none"
+              type="submit"
+              disabled={!todoText}
+              className="absolute right-2 top-1/2 -translate-y-1/2 active:animate-none"
+            >
+              <Icon view="0 -960 960 960" size={18}>
+                <path d="M440-160v-326L336-382l-56-58 200-200 200 200-56 58-104-104v326h-80ZM160-600v-120q0-33 23.5-56.5T240-800h480q33 0 56.5 23.5T800-720v120h-80v-120H240v120h-80Z" />
+              </Icon>
+            </Button>
           </div>
-        )}
-        {showCompletedZone && (
-          <div
-            ref={completedZone}
-            className={cn(
-              'flex animate-fade-in flex-col gap-4 border border-transparent transition',
-            )}
-          >
-            <Title type="sub" className="text-nowrap">
-              완료됨
-            </Title>
-            <List className="flex flex-col gap-2">
-              {completedTodos.map((todo) => (
-                <Todo
-                  isDraggable
-                  key={todo.id}
-                  todo={todo}
-                  isComplete={todo.is_complete}
-                  folderColor={currentFolder?.color}
-                  onUpdate={handleUpdateButtonClick}
-                  dragItem={dragItem}
-                  dragOverItem={dragOverItem}
-                />
-              ))}
-            </List>
-          </div>
-        )}
-      </div>
-    </form>
+          <Text
+            type="caption"
+            size="sm"
+            className="text-nowrap"
+          >{`${currentYear}년 ${currentMonth}월 ${currentDate}일 오늘 할 일`}</Text>
+        </div>
+        <div className="mt-4 flex flex-col gap-4 text-left">
+          {todos.length >= 1 && (
+            <div
+              ref={inProgressZone}
+              className={cn(
+                'flex animate-fade-in flex-col gap-4 border border-transparent transition',
+              )}
+            >
+              <Title type="sub" className="text-nowrap">
+                할 일
+              </Title>
+              <List className="flex flex-col gap-2">
+                {todos.map((todo) => (
+                  <Todo
+                    isDraggable
+                    key={todo.id}
+                    todo={todo}
+                    isComplete={todo.is_complete}
+                    folderColor={currentFolder?.color}
+                    onUpdate={handleUpdateButtonClick}
+                    dragItem={dragItem}
+                    dragOverItem={dragOverItem}
+                  />
+                ))}
+              </List>
+            </div>
+          )}
+          {showCompletedZone && (
+            <div
+              ref={completedZone}
+              className={cn(
+                'flex animate-fade-in flex-col gap-4 border border-transparent transition',
+              )}
+            >
+              <Title type="sub" className="text-nowrap">
+                완료됨
+              </Title>
+              <List className="flex flex-col gap-2">
+                {completedTodos.map((todo) => (
+                  <Todo
+                    isDraggable
+                    key={todo.id}
+                    todo={todo}
+                    isComplete={todo.is_complete}
+                    folderColor={currentFolder?.color}
+                    onUpdate={handleUpdateButtonClick}
+                    dragItem={dragItem}
+                    dragOverItem={dragOverItem}
+                  />
+                ))}
+              </List>
+            </div>
+          )}
+        </div>
+      </form>
+    </div>
   )
 }

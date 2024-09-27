@@ -22,8 +22,10 @@ export default async function TodoDashBoard() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Title>할일 전체</Title>
-      <TodoFoldersSection />
+      <div className="relative flex h-[calc(100dvh-80px)] w-full flex-col gap-4 overflow-y-auto p-4">
+        <Title>할일 전체</Title>
+        <TodoFoldersSection />
+      </div>
     </HydrationBoundary>
   )
 }

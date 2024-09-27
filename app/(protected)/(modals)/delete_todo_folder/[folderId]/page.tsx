@@ -23,6 +23,7 @@ export default function DeleteTodoFolderModal({ params }: Props) {
     deleteFolder(Number(folderId!))
     router.back()
   }
+
   return (
     <Modal>
       <div className="flex flex-col gap-4">

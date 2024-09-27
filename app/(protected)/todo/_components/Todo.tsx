@@ -1,3 +1,5 @@
+'use client'
+
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
@@ -11,7 +13,7 @@ import {
   useState,
   useTransition,
 } from 'react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Spinner from '@/components/shared/Spinner'
 import { Tables } from '@/types/supabase'
 import { useSuspenseQuery } from '@tanstack/react-query'
