@@ -5,12 +5,17 @@ import Modal from '@/components/shared/Modal'
 import Title from '@/components/shared/Title'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import useDeleteTodo from '@/services/mutates/todo/useDeleteTodo'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
-export default function DeleteTodoModal() {
-  const { todoId } = useParams()
+interface Props {
+  params: { todoId: string }
+  searchParams: { folder_id: string }
+}
+
+export default function DeleteTodoModal({ params, searchParams }: Props) {
   const queryClient = getQueryClient()
-  const folderId = useSearchParams().get('folder_id')
+  const todoId = params.todoId
+  const folderId = searchParams.folder_id
   const router = useRouter()
   const { mutate: deleteTodo } = useDeleteTodo()
 
@@ -22,7 +27,7 @@ export default function DeleteTodoModal() {
     deleteTodo(
       { todoId: Number(todoId!), folderId: Number(folderId!) },
       {
-        onSettled: (data, error, variables, context) => {
+        onSettled: () => {
           queryClient.invalidateQueries({ queryKey: ['todo', 'in_progress'] })
           router.back()
         },

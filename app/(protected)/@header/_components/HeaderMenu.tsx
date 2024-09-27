@@ -30,6 +30,7 @@ export default function HeaderMenu({ menu }: Props) {
     if (menu.path === '/todo/main') {
       setSelectedFolder(null)
       setSelectedMenu('main')
+      return router.push('/todo/main')
     }
     const params = searchParams.toString()
     router.push(`${menu.path}?${params}`)

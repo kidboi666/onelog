@@ -70,10 +70,20 @@ export default function TodoFolderCard({
   }
 
   useEffect(() => {
-    if (localTodos.length === 0) {
-      setShowInput(true)
+    const prevIndex = JSON.parse(localStorage.getItem(folder.id.toString())!)
+    let inProgressLastIndex = prevIndex?.in_progress ?? 0
+    let completedLastIndex = prevIndex?.completed ?? 0
+
+    if (todos) {
+      inProgressLastIndex = todos[todos.length - 1]?.index
     }
-  }, [localTodos])
+
+    const nextIndex = JSON.stringify({
+      completed: completedLastIndex,
+      in_progress: inProgressLastIndex,
+    })
+    localStorage.setItem(folder.id.toString(), nextIndex)
+  }, [todos])
 
   return (
     <List.Row
@@ -121,7 +131,7 @@ export default function TodoFolderCard({
           onTransitionEnd={onTransitionEnd}
         />
       </div>
-      {showInput && (
+      {(showInput || localTodos.length === 0) && (
         <form
           onSubmit={handleSubmitTodo}
           className="relative mt-2 flex flex-col gap-2"
