@@ -1,3 +1,5 @@
+'use client'
+
 import Line from '@/components/shared/Line'
 import TitleSection from './TitleSection'
 import DateSection from './DateSection'
@@ -8,7 +10,6 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { todoQuery } from '@/services/queries/todo/todoQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
-import { useMemo } from 'react'
 
 interface Props {
   todoId: string
@@ -20,10 +21,10 @@ export default function DataAccess({ todoId, folderId }: Props) {
   const { data: todos } = useSuspenseQuery(
     todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
   )
-  const todo = useMemo(
-    () => todos?.find((item) => item.id === Number(todoId)),
-    [todos],
-  )
+  const todo = todos ? todos?.find((item) => item.id === Number(todoId)) : null
+
+  if (!todo) return null
+
   return (
     <>
       <TitleSection todo={todo} />
