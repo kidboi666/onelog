@@ -1,6 +1,6 @@
 import Text from '@/components/shared/Text'
 import useStateChange from '@/hooks/useStateChange'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { HEADER_MENU } from '../_constants'
 import { useEffect, useTransition } from 'react'
 import Button from '@/components/shared/Button'
@@ -22,6 +22,7 @@ export default function HeaderMenu({ menu }: Props) {
   const { setSelectedFolder, setSelectedMenu } = useTodo()
   const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [isLoading, startTransition] = useTransition()
 
   const handleMenuButtonClick = () => {
@@ -30,7 +31,8 @@ export default function HeaderMenu({ menu }: Props) {
       setSelectedFolder(null)
       setSelectedMenu('main')
     }
-    router.push(menu.path)
+    const params = searchParams.toString()
+    router.push(`${menu.path}?${params}`)
   }
 
   useEffect(() => {

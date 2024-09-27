@@ -10,7 +10,7 @@ export default function Spinner({ size = 40, className }: Props) {
   return (
     <div
       className={cn(
-        'flex justify-center text-zinc-800 dark:text-zinc-200',
+        'flex animate-spin justify-center text-zinc-800 dark:text-zinc-200',
         className,
       )}
     >
@@ -23,16 +23,7 @@ export default function Spinner({ size = 40, className }: Props) {
           strokeWidth="10"
           r="35"
           strokeDasharray="164.93485265729915 56.972477469788485"
-          transform="rotate(360 50 50)"
-        >
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            dur="1s"
-            repeatCount="indefinite"
-            values="0 50 50;360 50 50"
-          ></animateTransform>
-        </circle>
+        ></circle>
       </Icon>
     </div>
   )

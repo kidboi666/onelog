@@ -1,27 +1,29 @@
-'use client'
-
-import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
-import { useSuspenseQuery } from '@tanstack/react-query'
 import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
-import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
-import TodoFolderCard from '../../_components/TodoFolderCard'
+import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import { ISessionInfo } from '@/types/auth'
+import { createServerClient } from '@/lib/supabase/server'
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+import TodoFoldersSection from '../_components/TodoFoldersSection'
 
-export default function TodoDashBoard() {
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: todoFolders } = useSuspenseQuery(
-    todoFolderQuery.getTodoFolder(supabase, me.userId),
-  )
+export default async function TodoDashBoard() {
+  const supabase = createServerClient()
+  const queryClient = getQueryClient()
+
+  await queryClient.prefetchQuery(meQuery.getUserSession(supabase))
+  const res = queryClient.getQueryData<ISessionInfo>(['me', 'session'])
+
+  if (res) {
+    queryClient.prefetchQuery(
+      todoFolderQuery.getTodoFolder(supabase, res.userId),
+    )
+  }
 
   return (
-    <>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <Title>할일 전체</Title>
-      <List className="flex flex-wrap gap-4">
-        {todoFolders.map((folder) => (
-          <TodoFolderCard key={folder.id} folder={folder} userId={me.userId} />
-        ))}
-      </List>
-    </>
+      <TodoFoldersSection />
+    </HydrationBoundary>
   )
 }
