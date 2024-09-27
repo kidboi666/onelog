@@ -2,10 +2,11 @@
 
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
-import { ComponentProps } from 'react'
+import { ComponentProps, RefObject } from 'react'
 
 interface Props extends ComponentProps<'textarea'> {
   className?: string
+  targetRef?: RefObject<HTMLTextAreaElement>
   variant?: 'primary' | 'secondary' | 'none'
   dimension?: 'sm' | 'md' | 'lg' | 'none'
 }
@@ -29,12 +30,14 @@ const TEXTAREA_VARIANTS = cva('w-full outline-none transition', {
 
 export default function TextArea({
   className,
+  targetRef,
   variant = 'primary',
   dimension = 'md',
   ...props
 }: Props) {
   return (
     <textarea
+      ref={targetRef}
       className={cn(TEXTAREA_VARIANTS({ variant, dimension }), className)}
       {...props}
     />

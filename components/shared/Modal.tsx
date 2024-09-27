@@ -1,8 +1,9 @@
 'use client'
 
+import useStateChange from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
-import { ComponentProps, PropsWithChildren, useEffect } from 'react'
+import { ComponentProps, PropsWithChildren, useEffect, useRef } from 'react'
 
 interface Props extends ComponentProps<'div'> {
   className?: string
@@ -16,29 +17,57 @@ export default function Modal({
   ...props
 }: PropsWithChildren<Props>) {
   const router = useRouter()
+  const isMouseDown = useRef<boolean>(false)
+  const {
+    close: insideClose,
+    open: insideOpen,
+    ref: insideRef,
+    onTransitionEnd: insideOnTransitionEnd,
+  } = useStateChange<HTMLDivElement>()
+  const {
+    close: outsideClose,
+    open: outsideOpen,
+    ref: outsideRef,
+    onTransitionEnd: outsideOnTransitionEnd,
+  } = useStateChange<HTMLDivElement>()
 
-  const handleKeydown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      router.back()
+  const handleMouseDown = () => {
+    isMouseDown.current = true
+  }
+
+  const handleMouseUp = () => {
+    if (isMouseDown.current) {
+      insideClose()
+      outsideClose()
+      setTimeout(() => {
+        router.back()
+      }, 100)
     }
+    isMouseDown.current = false
   }
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeydown)
-
-    return () => {
-      document.removeEventListener('keydown', handleKeydown)
-    }
+    setTimeout(() => {
+      insideOpen()
+      outsideOpen()
+    }, 0)
   }, [])
 
   return (
-    <div
-      onClick={() => router.back()}
-      className="fixed inset-0 z-50 animate-fade-in bg-var-dark/25 backdrop-blur-sm dark:bg-var-dark/25"
-    >
+    <>
       <div
-        onClick={(e) => e.stopPropagation()}
-        className="fixed left-1/2 top-1/2 flex h-fit w-full max-w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 rounded-md shadow-lg md:max-w-[480px]"
+        ref={outsideRef}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        data-status="closed"
+        onTransitionEnd={outsideOnTransitionEnd}
+        className="fixed inset-0 z-40 bg-var-dark/25 backdrop-blur-sm transition ease-in-out data-[status=closed]:opacity-0 dark:bg-var-dark/25"
+      />
+      <div
+        ref={insideRef}
+        data-status="closed"
+        onTransitionEnd={insideOnTransitionEnd}
+        className="fixed left-1/2 top-1/2 z-50 flex h-fit w-full max-w-[calc(100%-12px)] origin-top -translate-x-1/2 -translate-y-1/2 rounded-md shadow-lg transition ease-in-out data-[status=closed]:scale-90 data-[status=closed]:opacity-0 md:max-w-[480px]"
         {...props}
       >
         <div
@@ -50,6 +79,6 @@ export default function Modal({
           {children}
         </div>
       </div>
-    </div>
+    </>
   )
 }
