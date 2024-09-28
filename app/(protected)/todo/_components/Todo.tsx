@@ -162,7 +162,7 @@ export default function Todo({
       onDragOver={dragOver}
       onMouseEnter={() => setShowKebabButton(true)}
       onMouseLeave={() => setShowKebabButton(false)}
-      onClick={() => startTransition(() => handleTodoClick())}
+      onClick={() => handleTodoClick()}
       className="flex min-w-20 animate-fade-in cursor-pointer gap-2 border border-transparent transition"
     >
       <div className="flex w-full items-center justify-between rounded-md bg-white p-2 shadow-sm hover:opacity-85 dark:bg-var-darkgray">
