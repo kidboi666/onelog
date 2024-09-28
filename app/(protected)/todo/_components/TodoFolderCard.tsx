@@ -158,20 +158,18 @@ export default function TodoFolderCard({
       )}
       <div className="mt-4 flex flex-col gap-4 text-left">
         {localTodos?.length! >= 1 && (
-          <div className="flex animate-fade-in flex-col gap-4">
-            <List className="flex flex-col gap-2">
-              {localTodos?.map((todo) => (
-                <Todo
-                  key={todo.id}
-                  dragItem={dragItem}
-                  dragOverItem={dragOverItem}
-                  todo={todo}
-                  isComplete={todo.is_complete}
-                  onUpdate={handleUpdateButtonClick}
-                />
-              ))}
-            </List>
-          </div>
+          <List className="flex animate-fade-in flex-col gap-2">
+            {localTodos?.map((todo) => (
+              <Todo
+                key={todo.id}
+                dragItem={dragItem}
+                dragOverItem={dragOverItem}
+                todo={todo}
+                isComplete={todo.is_complete}
+                onUpdate={handleUpdateButtonClick}
+              />
+            ))}
+          </List>
         )}
       </div>
     </List.Row>
