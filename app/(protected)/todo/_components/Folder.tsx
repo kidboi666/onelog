@@ -22,6 +22,7 @@ import FolderDropDown from './FolderDropDown'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import { Dot } from './Dot'
+import Spinner from '@/components/shared/Spinner'
 
 interface Props {
   isOpenSide: boolean
@@ -174,12 +175,12 @@ export default function Folder({
         onMouseEnter={() => setShowKebabButton(true)}
         onMouseLeave={() => setShowKebabButton(false)}
       >
-        <div className="relative">
-          <Dot
-            color={folder.color}
-            isSelected={isSelected}
-            isLoading={isLoading}
-          />
+        <div className="absolute">
+          {isLoading ? (
+            <Spinner size={18} />
+          ) : (
+            <Dot color={folder.color} isSelected={isSelected} />
+          )}
         </div>
         {isOpenSide && (
           <div className="flex flex-1 items-center justify-between">
