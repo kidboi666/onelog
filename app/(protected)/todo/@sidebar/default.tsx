@@ -5,7 +5,7 @@ import { useState, useTransition } from 'react'
 import TaskFolderSection from './_components/TaskFolderSection'
 import SideMenuButtonSection from './_components/SideMenuButtonSection'
 import { TodoFolder } from '@/types/todo'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import Line from '@/components/shared/Line'
@@ -28,9 +28,12 @@ export const INIT_TODO_FOLDER: TodoFolder = {
   index: 0,
 }
 
-export default function SideBarPage() {
+interface Props {
+  searchParams: { folder_id: string; color?: string }
+}
+
+export default function SideBarPage({ searchParams }: Props) {
   const router = useRouter()
-  const params = useSearchParams()
   const [isLoading, startTransition] = useTransition()
   const [isOpenSide, setOpenSide] = useState(false)
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -54,7 +57,7 @@ export default function SideBarPage() {
   }
 
   const handleAddTodoFolder = () => {
-    router.push(`/add_todo_folder?${params.toString()}`)
+    router.push(`/add_todo_folder?${searchParams.toString()}`)
   }
 
   return (
