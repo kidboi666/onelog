@@ -89,15 +89,15 @@ export default function SignInPage() {
         가입하러 가기
       </LinkButton>
       <Button
-        isLoading={isPending || isSuccess}
-        disabled={isSuccess}
+        isLoading={isNormalAuthPending || isNormalAuthSuccess}
+        disabled={isPending || isSuccess}
         type="submit"
       >
         로그인
       </Button>
       <Button
-        isLoading={isPending || isSuccess}
-        disabled={isSuccess}
+        isLoading={isOAuthPending || isOAuthSuccess}
+        disabled={isPending || isSuccess}
         onClick={handleSubmitOAuthSignIn}
         className={cn(
           'bg-var-yellow text-white dark:bg-var-yellow',
