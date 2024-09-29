@@ -1,3 +1,4 @@
+import Portal from '@/components/shared/Portal'
 import { PropsWithChildren, ReactNode } from 'react'
 
 interface Props {
@@ -15,7 +16,7 @@ export default function Layout({
     <div className="flex w-full animate-fade-in flex-row overflow-hidden">
       {sidebar}
       {main}
-      {todo_info}
+      <Portal>{todo_info}</Portal>
     </div>
   )
 }

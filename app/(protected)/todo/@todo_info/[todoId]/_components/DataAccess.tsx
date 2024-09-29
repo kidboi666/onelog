@@ -27,7 +27,7 @@ export default function DataAccess({ todoId, folderId }: Props) {
 
   return (
     <>
-      {/* <TitleSection todo={todo} />
+      <TitleSection todo={todo} />
       <div className="flex flex-1 flex-col gap-4">
         <Line />
         <DateSection todo={todo} />
@@ -36,7 +36,7 @@ export default function DataAccess({ todoId, folderId }: Props) {
         <Line />
         <IsCompleteSection todo={todo} />
       </div>
-      <ButtonSection todoId={todoId} folderId={folderId} todo={todo} /> */}
+      <ButtonSection todoId={todoId} folderId={folderId} todo={todo} />
     </>
   )
 }
