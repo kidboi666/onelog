@@ -175,12 +175,15 @@ export default function Folder({
         onMouseEnter={() => setShowKebabButton(true)}
         onMouseLeave={() => setShowKebabButton(false)}
       >
-        <div className="absolute">
-          {isLoading ? (
-            <Spinner size={18} />
-          ) : (
-            <Dot color={folder.color} isSelected={isSelected} />
+        <div
+          className={cn(
+            'relative flex size-2 items-center justify-center rounded-full text-zinc-400 transition',
+            isSelected && 'ring-8 ring-zinc-200 dark:ring-zinc-600',
           )}
+        >
+          <div className="absolute">
+            {isLoading ? <Spinner size={18} /> : <Dot color={folder.color} />}
+          </div>
         </div>
         {isOpenSide && (
           <div className="flex flex-1 items-center justify-between">
