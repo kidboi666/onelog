@@ -1,4 +1,3 @@
-import cn from '@/lib/cn'
 import Icon from './Icon'
 
 interface Props {
@@ -6,15 +5,14 @@ interface Props {
   className?: string
 }
 
-export default function Spinner({ size = 40, className }: Props) {
+export default function Spinner({ size = 40 }: Props) {
   return (
-    <div
-      className={cn(
-        'flex animate-spin justify-center text-zinc-800 dark:text-zinc-200',
-        className,
-      )}
-    >
-      <Icon size={size} view={100}>
+    <div className="flex size-full items-center justify-center">
+      <Icon
+        size={size}
+        view={100}
+        className="animate-spin text-zinc-800 dark:text-zinc-200"
+      >
         <circle
           cx="50"
           cy="50"
