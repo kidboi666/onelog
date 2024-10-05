@@ -8,8 +8,8 @@ import { List } from '@/components/shared/List'
 
 interface Props {
   emotion: (typeof EMOTION_STATUS)[number]
-  onChangeEmotion: (emotion: string) => void
-  selectedEmotion: string
+  onChangeEmotion?: (emotion: string) => void
+  selectedEmotion?: string
 }
 
 export default function EmotionPicker({
@@ -19,13 +19,13 @@ export default function EmotionPicker({
 }: Props) {
   return (
     <List.Row
-      onClick={() => onChangeEmotion(emotion.percent)}
+      onClick={() => onChangeEmotion && onChangeEmotion(emotion.percent)}
       className="group relative flex size-10 cursor-pointer justify-center"
     >
       <Button
         variant="emptyStyle"
         size="sm"
-        onClick={() => onChangeEmotion(emotion.percent)}
+        onClick={() => onChangeEmotion && onChangeEmotion(emotion.percent)}
         className="absolute flex flex-col gap-2 font-medium text-zinc-400 hover:opacity-100"
       >
         <Text type="caption" size="sm" className="absolute top-4">

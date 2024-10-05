@@ -41,7 +41,6 @@ export default function HeaderNavSection() {
           <Avatar src={me?.avatar_url} size="sm" ring="xs" shadow="sm" />
         </Button>
       </Suspense>
-
       <HeaderNavSectionDropDown
         onTransitionEnd={onTransitionEnd}
         open={open}

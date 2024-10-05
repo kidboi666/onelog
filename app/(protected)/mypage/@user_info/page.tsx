@@ -10,7 +10,6 @@ import FavoriteWords from './_components/favorite_word'
 import Garden from './_components/garden'
 import PrevOneSentence from './_components/one_sentence'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import PostSentence from './_components/post_sentence'
 // import MyFavoriteSentence from './_components/my_favorite_sentence'
 
 export default async function UserInfoSection() {
@@ -26,7 +25,6 @@ export default async function UserInfoSection() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PostSentence />
       <Summary />
       <FavoriteWords />
       <Garden />

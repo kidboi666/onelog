@@ -35,13 +35,14 @@ export default function NavigatorSection() {
               {isLoadingProfile ? <Spinner size={20} /> : '프로필 수정'}
             </Button>
             <Button
-              onClick={() => startTransitionWrite(() => router.push('/post'))}
+              onClick={() =>
+                startTransitionWrite(() => router.push('/post/sentence'))
+              }
               className="flex-1"
             >
-              {isLoadingWrite ? <Spinner size={20} /> : '글쓰기'}
+              {isLoadingWrite ? <Spinner size={20} /> : '한줄쓰기'}
             </Button>
           </div>
-          <Button className="w-full">루틴 계획하기</Button>
         </div>
       </div>
     </>

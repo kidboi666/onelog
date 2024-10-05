@@ -5,6 +5,7 @@ export interface ISentence {
   user_name: string
   email: string
   avatar_url: string | null
+  tags: string[]
 }
 
 export interface IFavoriteWord {

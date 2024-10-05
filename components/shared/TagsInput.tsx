@@ -1,10 +1,17 @@
 /* eslint-disable react/no-array-index-key */
-import { Dispatch, KeyboardEvent, SetStateAction, useState } from 'react'
+import {
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
+  useRef,
+  useState,
+} from 'react'
 import { List } from './List'
 import Button from './Button'
 import Text from './Text'
 import { useInput } from '@/hooks/useInput'
 import cn from '@/lib/cn'
+import Tag from './Tag'
 
 interface Props {
   tags: string[]
@@ -14,6 +21,7 @@ interface Props {
 export const TagsInput = ({ tags, setTags }: Props) => {
   const [text, onChangeText, setText] = useInput('')
   const [error, setError] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleDelete = (idx: number) => {
     const filterTag = tags?.filter((tag) => tag !== tags[idx])
@@ -48,37 +56,34 @@ export const TagsInput = ({ tags, setTags }: Props) => {
     }
   }
 
+  const handleInputClick = () => {
+    if (!inputRef.current) return null
+
+    inputRef.current.focus()
+  }
+
   return (
     <>
       <div
+        onClick={handleInputClick}
         className={cn(
-          'group flex flex-wrap gap-2 rounded-lg px-2 py-3 text-sm ring-1 ring-zinc-300 transition dark:ring-zinc-600',
+          'group flex w-full cursor-text flex-wrap gap-2 rounded-lg p-2 text-xs ring-1 ring-zinc-300 transition dark:ring-zinc-600',
           error && 'border-red-500',
         )}
       >
         {tags.length !== 0 && (
           <List className="flex flex-wrap gap-2">
-            {tags?.map((tag, idx) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <List.Row key={tag + idx}>
-                <Button
-                  variant="secondary"
-                  onClick={() => handleDelete(idx)}
-                  className="animate-grow-up rounded-xl border-0 px-2 py-[2px] text-xs font-medium text-zinc-600 ring-1 ring-zinc-300 dark:text-zinc-200 dark:ring-zinc-600"
-                >
-                  {tag}
-                </Button>
-              </List.Row>
-            ))}
+            {tags?.map((tag, idx) => <Tag key={idx} tag={tag} index={idx} />)}
           </List>
         )}
         <input
           name="tags"
+          ref={inputRef}
           placeholder="태그를 추가하세요. 입력후 Enter. 삭제는 BackSpace"
           value={text}
           onChange={onChangeText}
           onKeyDown={handleKeyDown}
-          className="w-full bg-transparent text-zinc-600 outline-none transition dark:text-zinc-200 dark:placeholder:text-zinc-600"
+          className="w-72 bg-transparent text-zinc-600 outline-none transition dark:text-zinc-200 dark:placeholder:text-zinc-600"
         />
       </div>
       {error && (

@@ -144,6 +144,7 @@ export type Database = {
           favorite: number | null
           favorited_user_id: string[] | null
           id: number
+          tags: string[] | null
           user_id: string
           user_name: string | null
         }
@@ -157,6 +158,7 @@ export type Database = {
           favorite?: number | null
           favorited_user_id?: string[] | null
           id?: number
+          tags?: string[] | null
           user_id: string
           user_name?: string | null
         }
@@ -170,6 +172,7 @@ export type Database = {
           favorite?: number | null
           favorited_user_id?: string[] | null
           id?: number
+          tags?: string[] | null
           user_id?: string
           user_name?: string | null
         }

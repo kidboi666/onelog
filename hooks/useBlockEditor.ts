@@ -1,6 +1,6 @@
 'use client'
 
-import Link from '@tiptap/extension-link'
+import Placeholder from '@tiptap/extension-placeholder'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { Dispatch, SetStateAction } from 'react'
@@ -8,33 +8,36 @@ import { Markdown } from 'tiptap-markdown'
 
 interface Props {
   content: string
-  setContent: Dispatch<SetStateAction<string>>
+  setContent?: Dispatch<SetStateAction<string>>
+  editable?: boolean
+  placeholder?: string
 }
 
-export default function useBlockEditor({ content, setContent }: Props) {
+export default function useBlockEditor({
+  content,
+  setContent,
+  editable,
+  placeholder,
+}: Props) {
   const editor = useEditor({
     immediatelyRender: false,
-    autofocus: true,
-    content: content,
+    autofocus: editable ? true : false,
+    editable: editable ? true : false,
+    content,
     extensions: [
-      StarterKit.configure({
-        history: false,
-        heading: {
-          levels: [1, 2, 3],
-        },
-      }),
-      Link.extend({ inclusive: false }).configure({
-        openOnClick: false,
+      StarterKit,
+      Placeholder.configure({
+        placeholder,
+        showOnlyCurrent: false,
       }),
       Markdown,
     ],
     onUpdate({ editor }) {
-      setContent(editor.getHTML())
+      setContent && setContent(editor.getHTML())
     },
     editorProps: {
       attributes: {
-        spellcheck: 'false',
-        class: 'w-full m-5 outline-none',
+        class: `${editable ? 'min-h-40' : ''} size-full prose sm:prose-base lg:prose-lg xl:prose-2xl outline-none`,
       },
     },
   })

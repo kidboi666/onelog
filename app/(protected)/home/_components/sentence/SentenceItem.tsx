@@ -11,6 +11,10 @@ import Spinner from '@/components/shared/Spinner'
 import useIntersect from '@/hooks/useIntersect'
 import cn from '@/lib/cn'
 import Comments from '../comment/Comments'
+import { EditorContent } from '@tiptap/react'
+import useBlockEditor from '@/hooks/useBlockEditor'
+import Tag from '@/components/shared/Tag'
+import { List } from '@/components/shared/List'
 
 interface Props {
   sentence: Tables<'sentence'>
@@ -19,8 +23,12 @@ interface Props {
 
 export default function SentenceItem({ sentence, userId }: Props) {
   const [showComment, setShowComment] = useState(false)
+  const { editor } = useBlockEditor({ content: sentence.content })
   const [ref, inView] = useIntersect<HTMLDivElement>({ threshold: 0.2 }, true)
   const { mutate: favoriteSentence } = useFavoriteSentence()
+  const tags = sentence.tags
+
+  if (!sentence) return null
 
   const handleFavoriteSentence = (sentenceId: number) => {
     favoriteSentence({ userId, sentenceId })
@@ -33,7 +41,10 @@ export default function SentenceItem({ sentence, userId }: Props) {
     <div
       ref={ref}
       key={sentence.id}
-      className={cn('my-4 flex flex-col gap-4', inView ? 'animate-' : '')}
+      className={cn(
+        'my-4 flex flex-col gap-4',
+        inView ? 'animate-fade-in' : '',
+      )}
     >
       <div className="flex gap-2">
         <Avatar src={sentence?.avatar_url!} size="sm" shadow="sm" />
@@ -64,7 +75,12 @@ export default function SentenceItem({ sentence, userId }: Props) {
       </div>
       <div className="flex flex-col">
         <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg dark:bg-var-darkgray">
-          <Text>{sentence.content}</Text>
+          {tags?.length! > 0 && (
+            <List className="flex flex-wrap gap-2">
+              {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
+            </List>
+          )}
+          <EditorContent editor={editor} />
           <div className="flex flex-1">
             <FavoriteButton
               item={sentence}
