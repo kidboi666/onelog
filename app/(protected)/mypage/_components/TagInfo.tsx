@@ -28,7 +28,7 @@ export default function TagInfo({
       data-status="closed"
       onTransitionEnd={onTransitionEnd}
       ref={targetRef}
-      className="data-slideDown status-slideDown absolute -top-10 z-10 origin-bottom-left text-nowrap bg-white p-2 shadow-md dark:bg-var-darkgray"
+      className="data-slideDown status-slideDown absolute -top-10 z-10 hidden origin-bottom-left text-nowrap bg-white p-2 shadow-md dark:bg-var-darkgray"
     >
       {isFetching ? (
         <Spinner size={20} />
