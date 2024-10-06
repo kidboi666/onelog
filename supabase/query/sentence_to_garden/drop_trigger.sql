@@ -1,0 +1,1 @@
+DROP TRIGGER after_insert_on_sentence ON public.sentence;

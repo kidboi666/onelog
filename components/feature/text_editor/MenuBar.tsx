@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 import MenuItem from './MenuItem'
 
 interface Props {
-  editor: Editor
+  editor?: Editor
 }
 
 export default function MenuBar({ editor }: Props) {

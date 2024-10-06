@@ -77,9 +77,9 @@ export default function SentenceModal() {
               <BubbleMenuBar editor={editor} />
             </BubbleMenu>
           )}
-          <MenuBar editor={editor!} />
+          <MenuBar editor={editor} />
           <EditorContent editor={editor} className="h-full overflow-y-auto" />
-          <TextLength content={editor?.getText()} />
+          <TextLength content={editor.getText()} />
           <TagsInput tags={tags} setTags={setTags} />
           <div className="flex flex-col gap-2">
             <List className="relative flex flex-1 items-start justify-between gap-2">

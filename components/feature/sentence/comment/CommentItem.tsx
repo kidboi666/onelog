@@ -10,9 +10,6 @@ import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import CommentInput from './CommentInput'
 import Spinner from '@/components/shared/Spinner'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import { ISessionInfo } from '@/types/auth'
 import CommentInputButton from '../button/CommentInputButton'
 import CommentButton from '../button/CommentButton'
 import FavoriteButton from '../button/FavoriteButton'
@@ -20,16 +17,10 @@ import FavoriteButton from '../button/FavoriteButton'
 interface Props {
   comment: Tables<'comment'>
   sentenceId: number
+  me: Tables<'user_info'>
 }
 
-export default function CommentItem({ comment, sentenceId }: Props) {
-  const cachedMe = getQueryClient().getQueryData<ISessionInfo>([
-    'me',
-    'session',
-  ])
-  const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, cachedMe!.userId),
-  )
+export default function CommentItem({ comment, sentenceId, me }: Props) {
   const [showComment, setShowComment] = useState(false)
   const [showCommentInput, setShowCommentInput] = useState(false)
   const { data: commentToComments } = useSuspenseQuery(
@@ -92,7 +83,7 @@ export default function CommentItem({ comment, sentenceId }: Props) {
           commentToComments.length >= 1 &&
           commentToComments.map((comment) => (
             <Suspense key={comment.id} fallback={<Spinner size={40} />}>
-              <CommentItem sentenceId={sentenceId} comment={comment} />
+              <CommentItem sentenceId={sentenceId} comment={comment} me={me} />
             </Suspense>
           ))}
       </div>

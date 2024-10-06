@@ -6,8 +6,8 @@ import { meQuery } from '@/services/queries/auth/meQuery'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import Empty from '@/components/shared/Empty'
 import Title from '@/components/shared/Title'
-import Tag from '../../../_components/Tag'
 import { IFavoriteWord } from '@/types/sentence'
+import Tag from '@/components/feature/my_sentence/Tag'
 
 export default function FavoriteWords() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))

@@ -10,10 +10,10 @@ import { IDateBlock } from '@/types/garden'
 import { getDaysInYear, getFirstDayInYear } from '@/utils/formatDate'
 
 import Title from '@/components/shared/Title'
-import GardenBlockSection from '../../../_components/GardenBlockSection'
-import ColorInfoDisplay from '../../../_components/ColorInfoDisplay'
-import SortOptionMenu from '../../../_components/SortOptionMenu'
-import Block from '../../../_components/Block'
+import SortOptionMenu from '@/components/feature/my_sentence/SortOptionMenu'
+import GardenBlockSection from '@/components/feature/my_sentence/GardenBlockSection'
+import ColorInfoDisplay from '@/components/feature/my_sentence/ColorInfoDisplay'
+import Block from '@/components/feature/my_sentence/Block'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 작성 갯수 기준 색칠)
@@ -131,7 +131,7 @@ export default function Garden() {
     gardenQuery.getGarden(supabase, me?.userId),
   )
   const [orderBy, setOrderBy] = useState('length')
-
+  console.log(garden)
   const currentYear = new Date().getFullYear()
   const firstDayIndex = getFirstDayInYear(currentYear)
   const shouldRenderElement =

@@ -1,20 +1,22 @@
+import { Suspense, useState } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { EditorContent } from '@tiptap/react'
+import useBlockEditor from '@/hooks/useBlockEditor'
+import { supabase } from '@/lib/supabase/client'
+import cn from '@/lib/cn'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
+import { Tables } from '@/types/supabase'
+import { formatDateToHM, formatDateToYMD } from '@/utils/formatDate'
+import Spinner from '@/components/shared/Spinner'
+import Tag from '@/components/shared/Tag'
+import { List } from '@/components/shared/List'
 import Avatar from '@/components/feature/user/Avatar'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import { Tables } from '@/types/supabase'
-import { Suspense, useState } from 'react'
 import FavoriteButton from '../button/FavoriteButton'
 import CommentButton from '../button/CommentButton'
-import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
-import { formatDateToHM, formatDateToYMD } from '@/utils/formatDate'
-import Spinner from '@/components/shared/Spinner'
-import useIntersect from '@/hooks/useIntersect'
-import cn from '@/lib/cn'
 import Comments from '../comment/Comments'
-import { EditorContent } from '@tiptap/react'
-import useBlockEditor from '@/hooks/useBlockEditor'
-import Tag from '@/components/shared/Tag'
-import { List } from '@/components/shared/List'
 
 interface Props {
   sentence: Tables<'sentence'>
@@ -23,8 +25,8 @@ interface Props {
 
 export default function SentenceItem({ sentence, userId }: Props) {
   const [showComment, setShowComment] = useState(false)
+  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, userId))
   const { editor } = useBlockEditor({ content: sentence.content })
-  const [ref, inView] = useIntersect<HTMLDivElement>({ threshold: 0.2 }, true)
   const { mutate: favoriteSentence } = useFavoriteSentence()
   const tags = sentence.tags
 
@@ -38,14 +40,7 @@ export default function SentenceItem({ sentence, userId }: Props) {
   }
 
   return (
-    <div
-      ref={ref}
-      key={sentence.id}
-      className={cn(
-        'my-4 flex flex-col gap-4',
-        inView ? 'animate-fade-in' : '',
-      )}
-    >
+    <div key={sentence.id} className={cn('my-4 flex flex-col gap-4')}>
       <div className="flex gap-2">
         <Avatar src={sentence?.avatar_url!} size="sm" shadow="sm" />
         <div className="flex flex-col">
@@ -97,7 +92,7 @@ export default function SentenceItem({ sentence, userId }: Props) {
       </div>
       {showComment && (
         <Suspense fallback={<Spinner size={40} />}>
-          <Comments sentenceId={sentence?.id} />
+          <Comments sentenceId={sentence?.id} me={me} />
         </Suspense>
       )}
     </div>
