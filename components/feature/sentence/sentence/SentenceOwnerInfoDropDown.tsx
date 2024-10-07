@@ -22,9 +22,9 @@ export default function SentenceOwnerInfoDropDown({
       ref={targetRef}
       data-status="closed"
       onTransitionEnd={onTransitionEnd}
-      className="absolute left-1/2 top-full z-30 hidden size-fit origin-top -translate-x-1/2 transition data-[status=closed]:scale-95 data-[status=closed]:opacity-0"
+      className="absolute left-0 top-full z-30 hidden size-fit origin-top transition data-[status=closed]:scale-95 data-[status=closed]:opacity-0"
     >
-      <div className="flex flex-col gap-2 text-nowrap bg-white p-2 shadow-md dark:bg-var-darkgray">
+      <div className="flex flex-col gap-4 text-nowrap rounded-md bg-white p-4 shadow-lg dark:bg-var-darkgray">
         <div className="flex flex-col items-center gap-2">
           <Avatar src={avatarUrl} size="sm" hoverEffect="none" />
           <Title type="sub" size="sm">

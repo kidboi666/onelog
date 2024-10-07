@@ -54,7 +54,7 @@ export default function HeaderNavSectionDropDown({
       className="data-slideDown status-slideDown absolute right-0 top-[calc(100%--4px)] hidden h-fit w-fit origin-top-right rounded-md bg-white p-2 shadow-md dark:bg-var-darkgray"
     >
       <LinkButton
-        href="/mypage"
+        href={`/${me.userId}/userinfo_summary`}
         variant="list"
         className="flex"
         innerClassName="flex gap-4"

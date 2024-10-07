@@ -3,6 +3,7 @@ import useStateChange from '@/hooks/useStateChange'
 import { IFavoriteWord } from '@/types/sentence'
 import TagInfo from './TagInfo'
 import { useState } from 'react'
+import { List } from '@/components/shared/List'
 
 interface Props {
   word: IFavoriteWord
@@ -14,7 +15,7 @@ export default function FavoriteWordTag({ word }: Props) {
     useStateChange<HTMLDivElement>()
 
   return (
-    <div className="relative">
+    <List.Row className="relative">
       <Button
         variant="secondary"
         size="sm"
@@ -27,7 +28,7 @@ export default function FavoriteWordTag({ word }: Props) {
           setHover(false)
         }}
         onClick={onClick}
-        className="relative text-xs font-light text-gray-600 shadow-md"
+        className="relative bg-white text-xs font-light text-gray-600 shadow-md dark:bg-var-darkgray"
       >
         {word.word}
       </Button>
@@ -37,6 +38,6 @@ export default function FavoriteWordTag({ word }: Props) {
         onTransitionEnd={onTransitionEnd}
         targetRef={ref}
       />
-    </div>
+    </List.Row>
   )
 }

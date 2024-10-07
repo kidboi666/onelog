@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react'
+import { MouseEvent, Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import useFavoriteComment from '@/services/mutates/comment/useFavoriteComment'
@@ -37,7 +37,7 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
     setShowCommentInput((prev) => !prev)
   }
 
-  const handleFavoriteComment = (commentId: number) => {
+  const handleFavoriteComment = (e: MouseEvent, commentId: number) => {
     favoriteComment({ commentId, userId: me?.id!, sentenceId })
   }
 

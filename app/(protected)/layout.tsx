@@ -4,16 +4,19 @@ import { PropsWithChildren, ReactNode } from 'react'
 interface Props {
   modal: ReactNode
   header: ReactNode
+  side_menu: ReactNode
 }
 
 export default function Layout({
-  children,
-  modal,
   header,
+  side_menu,
+  modal,
+  children,
 }: PropsWithChildren<Props>) {
   return (
     <>
       {header}
+      {side_menu}
       <Portal>{modal}</Portal>
       {children}
     </>

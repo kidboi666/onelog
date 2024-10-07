@@ -10,7 +10,7 @@ export interface ISentenceState {
 
 interface SentenceState {
   sentences: ISentenceState[] | null
-  setSentences: (sentences: ISentenceState[]) => void
+  setSentences: (sentences: ISentenceState[] | null) => void
 }
 
 export const useSentence = create<SentenceState>((set) => ({

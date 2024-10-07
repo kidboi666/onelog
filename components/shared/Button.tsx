@@ -48,7 +48,7 @@ const BUTTON_VARIANTS = cva(
         none: '',
       },
       size: {
-        sm: 'px-3 py-1 text-xs',
+        sm: 'px-3 py-2 text-xs',
         md: 'px-3 py-3 text-sm',
         lg: 'px-4 py-4 text-lg',
         emptyStyle: '',

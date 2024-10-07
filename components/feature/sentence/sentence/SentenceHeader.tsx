@@ -11,6 +11,7 @@ interface Props {
   userName: string | null
   emotionLevel: string
   createdAt: string
+  onClick?: () => void
 }
 
 export default function SentenceHeader({
@@ -18,6 +19,7 @@ export default function SentenceHeader({
   userName,
   emotionLevel,
   createdAt,
+  onClick,
 }: Props) {
   const { open, close, ref, onTransitionEnd } = useStateChange<HTMLDivElement>()
   return (
@@ -27,7 +29,7 @@ export default function SentenceHeader({
         onMouseEnter={open}
         onMouseLeave={close}
       >
-        <Button variant="emptyStyle" className="p-0">
+        <Button variant="emptyStyle" onClick={onClick} className="p-0">
           <Avatar src={avatarUrl} size="sm" shadow="sm" />
         </Button>
         <SentenceOwnerInfoDropDown

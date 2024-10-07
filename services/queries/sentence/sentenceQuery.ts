@@ -16,7 +16,7 @@ export const sentenceQuery = {
     }),
   getAllMySentence: (supabase: any, userId: string) =>
     queryOptions({
-      queryKey: ['sentence'],
+      queryKey: ['sentence', userId],
       queryFn: async () => {
         const { data } = await supabase
           .from('sentence')
@@ -45,7 +45,7 @@ export const sentenceQuery = {
 
   getMyFavoriteSentence: (supabase: any, userId: string) =>
     queryOptions({
-      queryKey: ['favorite_sentences'],
+      queryKey: ['favorite_sentences', userId],
       queryFn: async () => {
         const { data } = await supabase
           .from('user_info')

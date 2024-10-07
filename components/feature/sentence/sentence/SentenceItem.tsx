@@ -52,10 +52,15 @@ export default function SentenceItem({
     router.push(`/sentence_info/${sentenceId}`, { scroll: false })
   }
 
+  const handleAvatarClick = () => {
+    router.push(`/${sentence?.user_id}/userinfo_summary`)
+  }
+
   return (
     <div className={cn('my-4 flex flex-col gap-4', className)}>
       {sentence ? (
         <SentenceHeader
+          onClick={handleAvatarClick}
           avatarUrl={sentence.avatar_url}
           userName={sentence.user_name}
           emotionLevel={sentence.emotion_level}

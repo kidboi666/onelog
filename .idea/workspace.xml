@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="964f878d-eec9-4efe-a437-3a29adf4c9d4" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/app/(protected)/mypage/@user_info/_components/one_sentence/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(protected)/mypage/@user_info/_components/one_sentence/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/feature/my_sentence/SentenceItem.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/feature/sentence/button/FavoriteButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/feature/sentence/button/FavoriteButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceHeader.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/useBlockEditor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/useBlockEditor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/useSentence.ts" beforeDir="false" afterPath="$PROJECT_DIR$/store/useSentence.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceOwnerInfoDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceOwnerInfoDropDown.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +60,7 @@
       <workItem from="1727327835991" duration="254000" />
       <workItem from="1727615637173" duration="740000" />
       <workItem from="1728189569113" duration="41000" />
+      <workItem from="1728286828985" duration="39000" />
     </task>
     <servers />
   </component>

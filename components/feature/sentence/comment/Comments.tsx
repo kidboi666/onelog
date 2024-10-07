@@ -1,4 +1,3 @@
-import Line from '@/components/shared/Line'
 import CommentItem from './CommentItem'
 import CommentInput from './CommentInput'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -28,7 +27,6 @@ export default function Comments({ sentenceId, me }: Props) {
           </Suspense>
         ))}
       </List>
-      <Line className="mb-8 mt-4" />
     </>
   )
 }

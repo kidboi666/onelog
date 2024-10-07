@@ -21,9 +21,12 @@ export default function useUpdateUserInfo() {
       return data
     },
 
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['me', 'info'] })
       queryClient.invalidateQueries({ queryKey: ['me', 'session'] })
+      queryClient.invalidateQueries({
+        queryKey: ['user', variables.userId],
+      })
       router.replace('success')
     },
   })
