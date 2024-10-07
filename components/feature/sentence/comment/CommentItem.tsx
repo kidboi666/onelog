@@ -13,6 +13,7 @@ import Spinner from '@/components/shared/Spinner'
 import CommentInputButton from '../button/CommentInputButton'
 import CommentButton from '../button/CommentButton'
 import FavoriteButton from '../button/FavoriteButton'
+import { List } from '@/components/shared/List'
 
 interface Props {
   comment: Tables<'comment'>
@@ -41,7 +42,7 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
   }
 
   return (
-    <div className="flex w-full gap-2">
+    <List.Row className="flex w-full gap-2">
       <Avatar src={comment?.avatar_url} size="sm" shadow="sm" />
       <div className="flex flex-1 flex-col gap-2">
         <div>
@@ -63,7 +64,9 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
         </div>
         <div className="flex flex-1">
           <FavoriteButton
-            item={comment}
+            sentenceId={sentenceId}
+            favoritedCount={comment.favorite!}
+            favoritedUserId={comment.favorited_user_id!}
             onFavorite={handleFavoriteComment}
             userId={me?.id!}
           />
@@ -87,6 +90,6 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
             </Suspense>
           ))}
       </div>
-    </div>
+    </List.Row>
   )
 }

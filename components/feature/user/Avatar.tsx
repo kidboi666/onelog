@@ -7,6 +7,7 @@ interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   ring?: 'none' | 'xs' | 'sm' | 'md' | 'lg'
   shadow?: 'none' | 'sm' | 'md' | 'lg'
+  hoverEffect?: 'none' | 'ring'
   className?: string
 }
 
@@ -32,6 +33,10 @@ const avatarVariants = cva('', {
       md: 'shadow-md',
       lg: 'shadow-lg',
     },
+    hoverEffect: {
+      none: '',
+      ring: 'ring-zinc-400 transition duration-300 ease-in-out hover:ring-4',
+    },
   },
 })
 
@@ -40,12 +45,13 @@ export default function Avatar({
   size = 'md',
   ring = 'none',
   shadow = 'none',
+  hoverEffect = 'ring',
   className,
 }: Props) {
   return (
     <div
       className={cn(
-        avatarVariants({ size, ring, shadow }),
+        avatarVariants({ size, ring, shadow, hoverEffect }),
         'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 dark:bg-var-darkgray',
         className,
       )}

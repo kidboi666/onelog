@@ -8,7 +8,7 @@ interface Props {
   word: IFavoriteWord
 }
 
-export default function Tag({ word }: Props) {
+export default function FavoriteWordTag({ word }: Props) {
   const [isHover, setHover] = useState(false)
   const { onClick, ref, open, close, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
@@ -27,7 +27,7 @@ export default function Tag({ word }: Props) {
           setHover(false)
         }}
         onClick={onClick}
-        className="relative text-xs font-light text-gray-600"
+        className="relative text-xs font-light text-gray-600 shadow-md"
       >
         {word.word}
       </Button>

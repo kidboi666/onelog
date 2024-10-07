@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction } from 'react'
 import { Markdown } from 'tiptap-markdown'
 
 interface Props {
-  content: string
+  content?: string
   setContent?: Dispatch<SetStateAction<string>>
   editable?: boolean
   placeholder?: string

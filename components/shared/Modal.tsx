@@ -4,6 +4,8 @@ import useStateChange from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect, useRef } from 'react'
+import Button from './Button'
+import Icon from './Icon'
 
 interface Props extends ComponentProps<'div'> {
   className?: string
@@ -53,6 +55,10 @@ export default function Modal({
     }, 0)
   }, [])
 
+  const handleCloseModal = () => {
+    router.back()
+  }
+
   return (
     <>
       <div
@@ -61,7 +67,7 @@ export default function Modal({
         onMouseUp={handleMouseUp}
         data-status="closed"
         onTransitionEnd={outsideOnTransitionEnd}
-        className="fixed inset-0 z-40 bg-var-dark/25 backdrop-blur-sm transition ease-in-out data-[status=closed]:opacity-0 dark:bg-var-dark/25"
+        className="fixed inset-0 z-40 overflow-hidden bg-var-dark/25 backdrop-blur-sm transition ease-in-out data-[status=closed]:opacity-0 dark:bg-var-dark/25"
       />
       <div
         ref={insideRef}
@@ -73,6 +79,15 @@ export default function Modal({
         )}
         {...props}
       >
+        <Button
+          variant="icon"
+          onClick={handleCloseModal}
+          className="absolute right-0 top-0 rounded-full"
+        >
+          <Icon view="0 -960 960 960" size={18}>
+            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </Icon>
+        </Button>
         {children}
       </div>
     </>

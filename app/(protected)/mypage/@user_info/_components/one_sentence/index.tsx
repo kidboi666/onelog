@@ -6,9 +6,13 @@ import { List } from '@/components/shared/List'
 import Empty from '@/components/shared/Empty'
 import { formatDateToMDY } from '@/utils/formatDate'
 import SentenceItem from '@/components/feature/sentence/sentence/SentenceItem'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { supabase } from '@/lib/supabase/client'
 
 export default function PrevOneSentence() {
   const { sentences } = useSentence()
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
 
   return (
     <div className="flex flex-col gap-4">
@@ -19,7 +23,12 @@ export default function PrevOneSentence() {
             {formatDateToMDY(sentences[0].created_at)}
           </Title>
           {sentences?.map((item) => (
-            <SentenceItem key={item.id} sentence={item} />
+            <SentenceItem
+              key={item.id}
+              sentenceSummary={item}
+              userId={me?.userId}
+              isMyPage
+            />
           ))}
         </List>
       ) : (

@@ -4,9 +4,8 @@ export interface ISentenceState {
   created_at: string
   content: string
   emotion_level: string
-  id: string
-  favorite?: number
-  comment?: any[]
+  id: number
+  tags: string[]
 }
 
 interface SentenceState {

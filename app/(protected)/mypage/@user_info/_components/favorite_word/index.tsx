@@ -7,7 +7,7 @@ import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import Empty from '@/components/shared/Empty'
 import Title from '@/components/shared/Title'
 import { IFavoriteWord } from '@/types/sentence'
-import Tag from '@/components/feature/my_sentence/Tag'
+import FavoriteWordTag from '@/components/feature/my_sentence/FavoriteWordTag'
 
 export default function FavoriteWords() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -24,7 +24,7 @@ export default function FavoriteWords() {
       {shouldRenderWords?.length! >= 1 ? (
         <div className="flex flex-wrap gap-2 rounded-md bg-white p-4 dark:bg-var-darkgray">
           {shouldRenderWords?.map((word) => (
-            <Tag key={word.word} word={word} />
+            <FavoriteWordTag key={word.word} word={word} />
           ))}
         </div>
       ) : (

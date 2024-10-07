@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase/client'
 import { Suspense } from 'react'
 import Spinner from '@/components/shared/Spinner'
 import { Tables } from '@/types/supabase'
+import { List } from '@/components/shared/List'
 
 interface Props {
   sentenceId: number
@@ -20,11 +21,13 @@ export default function Comments({ sentenceId, me }: Props) {
   return (
     <>
       <CommentInput sentenceId={sentenceId} />
-      {comments.map((comment) => (
-        <Suspense key={comment.id} fallback={<Spinner size={40} />}>
-          <CommentItem comment={comment} sentenceId={sentenceId} me={me} />
-        </Suspense>
-      ))}
+      <List className="w-full overflow-y-auto">
+        {comments.map((comment) => (
+          <Suspense key={comment.id} fallback={<Spinner size={40} />}>
+            <CommentItem comment={comment} sentenceId={sentenceId} me={me} />
+          </Suspense>
+        ))}
+      </List>
       <Line className="mb-8 mt-4" />
     </>
   )

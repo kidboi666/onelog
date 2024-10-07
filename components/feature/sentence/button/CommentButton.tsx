@@ -6,17 +6,20 @@ interface Props {
   onShowComment: () => void
   commentCount?: number
   showComment?: boolean
+  disabled?: boolean
 }
 
 export default function CommentButton({
   onShowComment,
   commentCount,
   showComment,
+  disabled,
 }: Props) {
   return (
     <Button
       variant="icon"
       size="icon"
+      disabled={disabled}
       onClick={onShowComment}
       className={cn(
         'flex gap-2 border-none text-xs font-light transition hover:text-blue-400',
