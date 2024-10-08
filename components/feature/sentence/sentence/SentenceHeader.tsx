@@ -47,28 +47,28 @@ export default function SentenceHeader({
       <div className="flex flex-col">
         <Title size="xs" type="sub">
           {userName}
-          <Text as="span" size="sm" type="caption">
+          {/* <Text as="span" size="sm" type="caption">
             {' '}
             님의 하루 한줄
-          </Text>
+          </Text> */}
         </Title>
         <div className="flex items-center gap-2">
           <Text type="caption" size="sm">
             {email}
           </Text>
-          <Text size="sm">
+          {/* <Text size="sm">
             감정 농도
             <Text as="span" className="text-var-blue opacity-50">
               {' '}
               {emotionLevel}
             </Text>
-          </Text>
-          <Text as="span" size="sm" type="caption">
+          </Text> */}
+          {/* <Text as="span" size="xs" type="caption">
             {' '}
             {formatDateToYMD(createdAt)}
             {' ・ '}
             {formatDateToHM(createdAt)}
-          </Text>
+          </Text> */}
         </div>
       </div>
     </div>
