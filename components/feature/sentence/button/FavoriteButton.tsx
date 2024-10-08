@@ -8,7 +8,10 @@ interface Props {
   commentId?: number
   favoritedCount?: number
   favoritedUserId?: string[]
-  onFavorite: (e: MouseEvent, sentenceId: number) => void
+  onFavorite: (
+    e: MouseEvent,
+    { commentId, sentenceId }: { commentId?: number; sentenceId: number },
+  ) => void
   userId: string
 }
 

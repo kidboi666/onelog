@@ -34,8 +34,11 @@ export default function useFavoriteSentence() {
             user_uuid: params.userId,
           })
     },
-    onSettled: () => {
+    onSettled: (_, __, variables) => {
       queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
+      queryClient.invalidateQueries({
+        queryKey: ['sentence', variables.sentenceId],
+      })
     },
   })
 }

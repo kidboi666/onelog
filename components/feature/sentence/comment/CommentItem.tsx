@@ -38,10 +38,10 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
 
   const handleFavoriteComment = (
     e: MouseEvent,
-    { commentId, sentenceId }: { commentId: number; sentenceId: number },
+    { commentId, sentenceId }: { commentId?: number; sentenceId: number },
   ) => {
     e.stopPropagation()
-    favoriteComment({ commentId, userId: me?.id!, sentenceId })
+    favoriteComment({ commentId: commentId!, userId: me?.id!, sentenceId })
   }
 
   return (

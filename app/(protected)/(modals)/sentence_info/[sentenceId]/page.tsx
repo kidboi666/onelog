@@ -1,5 +1,7 @@
 'use client'
 
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { MouseEvent } from 'react'
 import Modal from '@/components/shared/Modal'
 import { supabase } from '@/lib/supabase/client'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
@@ -8,8 +10,6 @@ import SentenceHeader from '@/components/feature/sentence/sentence/SentenceHeade
 import SentenceContent from '@/components/feature/sentence/sentence/SentenceContent'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { MouseEvent } from 'react'
 
 interface Props {
   params: { sentenceId: string }
@@ -29,7 +29,10 @@ export default function SentenceInfoModal({ params }: Props) {
 
   if (!editor) return null
 
-  const handleFavoriteSentence = (e: MouseEvent, sentenceId: number) => {
+  const handleFavoriteSentence = (
+    e: MouseEvent,
+    { sentenceId }: { sentenceId: number },
+  ) => {
     e.stopPropagation()
     favoriteSentence({ userId: me.id || '', sentenceId })
   }

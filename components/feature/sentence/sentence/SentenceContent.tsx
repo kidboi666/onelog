@@ -8,7 +8,6 @@ import FavoriteButton from '../button/FavoriteButton'
 import CommentButton from '../button/CommentButton'
 import { Tables } from '@/types/supabase'
 import { usePathname } from 'next/navigation'
-import cn from '@/lib/cn'
 
 interface Props {
   tags?: string[]
@@ -18,7 +17,7 @@ interface Props {
   commentCount?: number
   sentenceId: number
   isMyPage?: boolean
-  onFavorite: (e: MouseEvent, sentenceId: number) => void
+  onFavorite: (e: MouseEvent, { sentenceId }: { sentenceId: number }) => void
   disabled?: boolean
   me: Tables<'user_info'>
   userId: string

@@ -43,7 +43,10 @@ export default function SentenceItem({
 
   if (!editor) return null
 
-  const handleFavoriteSentence = (e: MouseEvent, sentenceId: number) => {
+  const handleFavoriteSentence = (
+    e: MouseEvent,
+    { sentenceId }: { sentenceId: number },
+  ) => {
     e.stopPropagation()
     favoriteSentence({ userId: userId || '', sentenceId })
   }
@@ -60,13 +63,13 @@ export default function SentenceItem({
     <div className={cn('my-4 flex flex-col gap-4', className)}>
       {sentence ? (
         <SentenceHeader
-          onClick={handleAvatarClick}
+          isMe={me?.id === sentence.user_id}
+          email={sentence.email}
           avatarUrl={sentence.avatar_url}
           userName={sentence.user_name}
-          email={sentence.email}
-          isMe={me?.id === sentence.user_id}
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
+          onClick={handleAvatarClick}
         />
       ) : null}
       <div
@@ -76,15 +79,15 @@ export default function SentenceItem({
         <SentenceContent
           tags={tags}
           editor={editor}
-          disabled={disabled}
           favoritedCount={sentence?.favorite || 0}
           favoritedUserId={sentence?.favorited_user_id || []}
           commentCount={sentence?.comment || 0}
           sentenceId={sentenceId!}
-          isMyPage={isMyPage}
           onFavorite={handleFavoriteSentence}
           userId={userId}
           me={me}
+          isMyPage={isMyPage}
+          disabled={disabled}
         />
       </div>
     </div>
