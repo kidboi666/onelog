@@ -31,6 +31,9 @@ export default function useFavoriteComment() {
     },
     onSettled: (_, __, variables) => {
       queryClient.invalidateQueries({
+        queryKey: ['sentence', variables.sentenceId],
+      })
+      queryClient.invalidateQueries({
         queryKey: ['comment', variables.sentenceId],
       })
       queryClient.invalidateQueries({

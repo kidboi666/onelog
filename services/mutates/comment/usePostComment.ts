@@ -36,6 +36,9 @@ export const usePostComment = () => {
         queryKey: ['all_sentence'],
       })
       queryClient.invalidateQueries({
+        queryKey: ['sentence', variables.sentenceId],
+      })
+      queryClient.invalidateQueries({
         queryKey: ['comment', variables.sentenceId],
       })
       queryClient.invalidateQueries({

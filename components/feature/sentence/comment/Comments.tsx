@@ -7,6 +7,7 @@ import { Suspense } from 'react'
 import Spinner from '@/components/shared/Spinner'
 import { Tables } from '@/types/supabase'
 import { List } from '@/components/shared/List'
+import { comment } from 'postcss'
 
 interface Props {
   sentenceId: number

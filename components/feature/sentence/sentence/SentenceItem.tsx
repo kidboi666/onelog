@@ -63,6 +63,8 @@ export default function SentenceItem({
           onClick={handleAvatarClick}
           avatarUrl={sentence.avatar_url}
           userName={sentence.user_name}
+          email={sentence.email}
+          isMe={me?.id === sentence.user_id}
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
         />

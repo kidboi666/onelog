@@ -46,20 +46,24 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
       <Avatar src={comment?.avatar_url} size="sm" shadow="sm" />
       <div className="flex flex-1 flex-col gap-2">
         <div>
-          <Title size="xs" type="sub">
-            {comment.user_name}
+          <div className="flex items-end gap-2">
+            <Text>{comment.user_name}</Text>
             <Text as="span" type="caption" size="sm">
-              {' '}
               님의 댓글
             </Text>
-          </Title>
-          <Text type="caption" size="sm">
-            {formatDateToYMD(comment.created_at)}
-            {' ・ '}
-            {formatDateToHM(comment.created_at)}
-          </Text>
+          </div>
+          <div className="flex gap-2">
+            <Text type="caption" size="sm">
+              {comment.email}
+            </Text>
+            <Text type="caption" size="sm">
+              {formatDateToYMD(comment.created_at)}
+              {' ・ '}
+              {formatDateToHM(comment.created_at)}
+            </Text>
+          </div>
         </div>
-        <div className="w-fit rounded-md bg-white p-2 dark:bg-var-darkgray">
+        <div className="w-fit rounded-md bg-white p-2 dark:bg-var-dark">
           <Text>{comment.content}</Text>
         </div>
         <div className="flex flex-1">

@@ -38,6 +38,8 @@ export default function SentenceInfoModal({ params }: Props) {
     <Modal className="gap-4">
       {sentence ? (
         <SentenceHeader
+          isMe={sentence.user_id === me.id}
+          email={sentence.email}
           avatarUrl={sentence.avatar_url}
           userName={sentence.user_name}
           emotionLevel={sentence.emotion_level}

@@ -9,6 +9,7 @@ interface Props {
   onTransitionEnd: () => void
   avatarUrl: string | null
   userName: string | null
+  isMe: boolean
 }
 
 export default function SentenceOwnerInfoDropDown({
@@ -16,6 +17,7 @@ export default function SentenceOwnerInfoDropDown({
   onTransitionEnd,
   avatarUrl,
   userName,
+  isMe,
 }: Props) {
   return (
     <div
@@ -46,7 +48,16 @@ export default function SentenceOwnerInfoDropDown({
               </Text>
             </Text>
           </div>
-          <Button size="sm">팔로우 하기</Button>
+          {isMe ? (
+            <div className="flex gap-2">
+              <Button size="sm" variant="secondary">
+                프로필 수정
+              </Button>
+              <Button size="sm">한줄 쓰기</Button>
+            </div>
+          ) : (
+            <Button size="sm">팔로우 하기</Button>
+          )}
         </div>
       </div>
     </div>

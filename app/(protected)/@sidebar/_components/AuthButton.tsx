@@ -18,7 +18,7 @@ export default function AuthButton({ isOpen }: Props) {
     <List.Row className="group w-full">
       <LinkButton
         href={`/${me.userId}`}
-        variant="icon"
+        variant="none"
         innerClassName="justify-start gap-4 px-1 py-0"
       >
         <Avatar src={me?.avatar_url} size="xs" ring="xs" shadow="sm" />
@@ -28,7 +28,13 @@ export default function AuthButton({ isOpen }: Props) {
             isOpen ? '' : 'scale-x-0 opacity-0',
           )}
         >
-          <Text size="sm">{me.email}</Text>
+          <Text
+            size="sm"
+            type="caption"
+            className="transition group-hover:text-zinc-500 dark:group-hover:text-zinc-400"
+          >
+            {me.email}
+          </Text>
         </div>
       </LinkButton>
     </List.Row>

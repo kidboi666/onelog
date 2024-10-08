@@ -7,6 +7,7 @@ import Spinner from '@/components/shared/Spinner'
 import FavoriteButton from '../button/FavoriteButton'
 import CommentButton from '../button/CommentButton'
 import { Tables } from '@/types/supabase'
+import { usePathname } from 'next/navigation'
 
 interface Props {
   tags?: string[]
@@ -35,10 +36,15 @@ export default function SentenceContent({
   me,
   userId,
 }: Props) {
+  const pathname = usePathname()
   const [showComment, setShowComment] = useState(false)
 
-  const handleShowComment = () => {
-    setShowComment((prev) => !prev)
+  const handleShowComment = (): void => {
+    if (pathname.includes('home')) {
+      return
+    } else {
+      setShowComment((prev) => !prev)
+    }
   }
 
   return (

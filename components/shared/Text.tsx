@@ -1,6 +1,6 @@
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
-import { ElementType, PropsWithChildren, RefObject } from 'react'
+import { ElementType, PropsWithChildren } from 'react'
 
 interface Props {
   as?: ElementType

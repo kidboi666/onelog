@@ -9,16 +9,20 @@ import SentenceOwnerInfoDropDown from './SentenceOwnerInfoDropDown'
 interface Props {
   avatarUrl: string | null
   userName: string | null
+  email: string | null
   emotionLevel: string
   createdAt: string
+  isMe: boolean
   onClick?: () => void
 }
 
 export default function SentenceHeader({
   avatarUrl,
   userName,
+  email,
   emotionLevel,
   createdAt,
+  isMe,
   onClick,
 }: Props) {
   const { open, close, ref, onTransitionEnd } = useStateChange<HTMLDivElement>()
@@ -34,6 +38,7 @@ export default function SentenceHeader({
         </Button>
         <SentenceOwnerInfoDropDown
           targetRef={ref}
+          isMe={isMe}
           avatarUrl={avatarUrl}
           userName={userName}
           onTransitionEnd={onTransitionEnd}
@@ -48,6 +53,9 @@ export default function SentenceHeader({
           </Text>
         </Title>
         <div className="flex items-center gap-2">
+          <Text type="caption" size="sm">
+            {email}
+          </Text>
           <Text size="sm">
             감정 농도
             <Text as="span" className="text-var-blue opacity-50">
