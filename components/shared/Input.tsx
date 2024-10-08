@@ -23,7 +23,7 @@ const INPUT_VARIANTS = cva('min-w-4 outline-none', {
       none: '',
     },
     dimension: {
-      sm: 'p-2 text-sm',
+      sm: 'p-3 text-sm',
       md: 'p-4 text-sm',
       lg: 'p-4 text-base',
       none: '',

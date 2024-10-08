@@ -5,6 +5,7 @@ import { MouseEvent } from 'react'
 
 interface Props {
   sentenceId: number
+  commentId?: number
   favoritedCount?: number
   favoritedUserId?: string[]
   onFavorite: (e: MouseEvent, sentenceId: number) => void
@@ -13,6 +14,7 @@ interface Props {
 
 export default function FavoriteButton({
   sentenceId,
+  commentId,
   favoritedCount,
   favoritedUserId,
   onFavorite,
@@ -22,7 +24,7 @@ export default function FavoriteButton({
     <Button
       variant="icon"
       size="icon"
-      onClick={(e) => onFavorite(e, sentenceId)}
+      onClick={(e) => onFavorite(e, { commentId, sentenceId })}
       className={cn(
         'flex gap-2 border-none text-xs font-light hover:text-red-500',
         favoritedUserId?.includes(userId) && 'text-red-500 dark:text-red-500',

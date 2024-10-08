@@ -8,6 +8,7 @@ import FavoriteButton from '../button/FavoriteButton'
 import CommentButton from '../button/CommentButton'
 import { Tables } from '@/types/supabase'
 import { usePathname } from 'next/navigation'
+import cn from '@/lib/cn'
 
 interface Props {
   tags?: string[]

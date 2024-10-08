@@ -7,13 +7,12 @@ import { Tables } from '@/types/supabase'
 import { formatDateToHM, formatDateToYMD } from '@/utils/formatDate'
 import Avatar from '@/components/feature/user/Avatar'
 import Text from '@/components/shared/Text'
-import Title from '@/components/shared/Title'
-import CommentInput from './CommentInput'
+import { List } from '@/components/shared/List'
 import Spinner from '@/components/shared/Spinner'
 import CommentInputButton from '../button/CommentInputButton'
 import CommentButton from '../button/CommentButton'
 import FavoriteButton from '../button/FavoriteButton'
-import { List } from '@/components/shared/List'
+import CommentInput from './CommentInput'
 
 interface Props {
   comment: Tables<'comment'>
@@ -37,7 +36,11 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
     setShowCommentInput((prev) => !prev)
   }
 
-  const handleFavoriteComment = (e: MouseEvent, commentId: number) => {
+  const handleFavoriteComment = (
+    e: MouseEvent,
+    { commentId, sentenceId }: { commentId: number; sentenceId: number },
+  ) => {
+    e.stopPropagation()
     favoriteComment({ commentId, userId: me?.id!, sentenceId })
   }
 
@@ -63,12 +66,13 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
             </Text>
           </div>
         </div>
-        <div className="w-fit rounded-md bg-white p-2 dark:bg-var-dark">
+        <div className="w-fit rounded-md bg-white p-2 dark:bg-var-darkgray">
           <Text>{comment.content}</Text>
         </div>
         <div className="flex flex-1">
           <FavoriteButton
             sentenceId={sentenceId}
+            commentId={comment.id}
             favoritedCount={comment.favorite!}
             favoritedUserId={comment.favorited_user_id!}
             onFavorite={handleFavoriteComment}

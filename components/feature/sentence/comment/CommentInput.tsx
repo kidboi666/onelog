@@ -54,7 +54,7 @@ export default function CommentInput({ sentenceId, commentId }: Props) {
         onChange={onChangeContent}
         dimension="sm"
         placeholder="댓글을 달아주세요."
-        className="w-full dark:bg-var-dark"
+        className="w-full"
       />
       <Button
         type="submit"
