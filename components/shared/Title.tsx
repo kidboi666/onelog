@@ -9,7 +9,7 @@ interface Props {
   size?: 'sm' | 'md' | 'lg' | 'bigger' | 'xs'
 }
 
-const TITLE_VARIANTS = cva('', {
+const TITLE_VARIANTS = cva('text-nowrap', {
   variants: {
     type: {
       title: 'font-semibold text-zinc-600 dark:text-zinc-200',

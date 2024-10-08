@@ -1,6 +1,5 @@
 import { IDateBlock } from '@/types/garden'
 import Text from '@/components/shared/Text'
-import cn from '@/lib/cn'
 import { DAYS_OF_WEEK } from '@/app/(protected)/[userId]/_constants'
 import { createEmptySpaceByWeekday } from '@/app/(protected)/[userId]/@user_info/sentence_summary/_components/Garden'
 
@@ -14,12 +13,8 @@ export default function GardenBlockSection({
   firstDayIndex,
 }: GardenBlockSectionProps) {
   return (
-    <div
-      className={cn(
-        'flex h-fit flex-col gap-2 overflow-x-auto py-1 garden-scrollbar-light dark:gardent-scrollbar-dark',
-      )}
-    >
-      <div className="mt-4 flex w-full gap-2">
+    <div className="flex h-fit flex-col gap-2 overflow-x-auto p-1 garden-scrollbar-light dark:gardent-scrollbar-dark">
+      <div className="mt-4 flex gap-2">
         <div className="grid grid-rows-7 gap-1">
           {DAYS_OF_WEEK.map((day) => (
             <Text key={day} type="caption" className="h-1 text-[10px]">

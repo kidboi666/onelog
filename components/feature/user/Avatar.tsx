@@ -35,7 +35,7 @@ const avatarVariants = cva('', {
     },
     hoverEffect: {
       none: '',
-      ring: 'ring-zinc-400 transition duration-300 ease-in-out hover:ring-4',
+      ring: 'ring-zinc-400 transition duration-300 ease-in-out hover:ring-4 group-hover:ring-4',
     },
   },
 })
@@ -59,7 +59,7 @@ export default function Avatar({
       {src ? (
         <Image src={src} fill className="object-cover" alt="프로필 이미지" />
       ) : (
-        <Image src="profile.svg" fill className="" alt="프로필 이미지 없음" />
+        <Image src="profile.svg" fill alt="프로필 이미지 없음" />
       )}
     </div>
   )

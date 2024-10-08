@@ -11,7 +11,7 @@ export default function ReactQueryProvider({ children }: PropsWithChildren) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <ReactQueryDevtools buttonPosition="top-left" />
+      <ReactQueryDevtools buttonPosition="bottom-right" />
     </QueryClientProvider>
   )
 }

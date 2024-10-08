@@ -1,6 +1,6 @@
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
-import { ElementType, PropsWithChildren } from 'react'
+import { ElementType, PropsWithChildren, RefObject } from 'react'
 
 interface Props {
   as?: ElementType
@@ -9,7 +9,7 @@ interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg'
 }
 
-const TEXT_VARIANTS = cva('', {
+const TEXT_VARIANTS = cva('text-nowrap', {
   variants: {
     type: {
       body: 'text-zinc-600 dark:text-zinc-200',
@@ -27,11 +27,11 @@ const TEXT_VARIANTS = cva('', {
 })
 
 export default function Text({
+  as: Component = 'p',
   children,
   className,
   type = 'body',
   size = 'md',
-  as: Component = 'p',
 }: PropsWithChildren<Props>) {
   return (
     <Component className={cn(TEXT_VARIANTS({ type, size }), className)}>

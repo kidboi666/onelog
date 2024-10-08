@@ -1,7 +1,7 @@
 'use client'
 
-import { PropsWithChildren, useEffect } from 'react'
-import { useRouter, useSelectedLayoutSegment } from 'next/navigation'
+import { PropsWithChildren } from 'react'
+import { useSelectedLayoutSegment } from 'next/navigation'
 import cn from '@/lib/cn'
 import LinkButton from '@/components/shared/LinkButton'
 import Container from '../_components/Container'
@@ -12,16 +12,11 @@ interface Props {
 
 export default function Layout({ params, children }: PropsWithChildren<Props>) {
   const userId = params.userId
-  const router = useRouter()
   const segment = useSelectedLayoutSegment()
-
-  useEffect(() => {
-    router.push(`/${userId}/userinfo_summary`)
-  }, [])
 
   return (
     <Container>
-      <Container isBackground className="flex-row gap-0 gap-1 p-1 max-md:px-1">
+      <Container isBackground className="flex-row gap-1 p-1 max-lg:px-1">
         <LinkButton
           href={`/${userId}/userinfo_summary`}
           variant="list"

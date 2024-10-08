@@ -18,6 +18,7 @@ import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useStateChange from '@/hooks/useStateChange'
+import Title from '@/components/shared/Title'
 
 export const INIT_TODO_FOLDER: TodoFolder = {
   id: 0,
@@ -40,7 +41,8 @@ export default function SideBarPage({ searchParams }: Props) {
   const { data: todoFolders } = useSuspenseQuery(
     todoFolderQuery.getTodoFolder(supabase, me.userId),
   )
-  const { ref, open, close, onTransitionEnd } = useStateChange<HTMLDivElement>()
+  const { ref, open, close, onClick, onTransitionEnd } =
+    useStateChange<HTMLDivElement>()
 
   const handleSideMenu = () => {
     setOpenSide((prev) => !prev)
@@ -75,10 +77,20 @@ export default function SideBarPage({ searchParams }: Props) {
         className="absolute left-0 top-0 -z-10 hidden h-full w-72 origin-left bg-white transition ease-in-out data-[status=closed]:scale-x-75 data-[status=closed]:opacity-0 dark:bg-var-darkgray"
       />
       <div className="flex h-full flex-col gap-2">
-        <SideMenuButtonSection
-          isOpenSide={isOpenSide}
-          onSideMenu={handleSideMenu}
-        />
+        <div className="flex justify-between">
+          {isOpenSide && <Title>할일</Title>}
+          <Button variant="icon" onClick={onClick} className="self-end">
+            {isOpenSide ? (
+              <Icon view="0 -960 960 960" size={18}>
+                <path d="M660-320v-320L500-480l160 160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm120-80v-560H200v560h120Zm80 0h360v-560H400v560Zm-80 0H200h120Z" />
+              </Icon>
+            ) : (
+              <Icon view="0 -960 960 960" size={18}>
+                <path d="M500-640v320l160-160-160-160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm120-80v-560H200v560h120Zm80 0h360v-560H400v560Zm-80 0H200h120Z" />
+              </Icon>
+            )}
+          </Button>
+        </div>
         <List className="flex flex-col gap-2">
           {TODO_MENU.map((menu) => (
             <TodoMenuSection

@@ -24,7 +24,7 @@ export default function AboutMe({ userId }: Props) {
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),
   )
-  const isMyProfilePage = me.userId === user.id
+  const isMyProfilePage = me?.userId === user?.id
   const [isLoadingProfile, startTransitionProfile] = useTransition()
   const [isLoadingWrite, startTransitionWrite] = useTransition()
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
@@ -34,13 +34,19 @@ export default function AboutMe({ userId }: Props) {
   }
 
   return (
-    <Container isBackground className="flex-row items-center gap-8 p-8">
-      <Avatar src={user?.avatar_url} size="lg" ring="md" shadow="sm" />
-      <div className="flex w-full flex-col gap-4 self-end">
-        <div className="w-full">
-          <Title className="text-2xl font-medium">{user?.user_name}</Title>
-          <Line className="border-zinc-400 dark:border-zinc-500" />
-        </div>
+    <Container
+      isBackground
+      className="items-center justify-center gap-4 p-8 max-lg:py-4"
+    >
+      <Avatar src={user?.avatar_url} size="md" ring="md" shadow="sm" />
+      <div className="flex w-full flex-col items-center gap-4">
+        <Title className="flex flex-col items-center gap-2 sm:flex-row sm:items-end">
+          {user?.user_name}
+          <Text as="span" type="caption">
+            {user?.email}
+          </Text>
+        </Title>
+        <Line className="w-full" />
         <div className="relative flex flex-col gap-4">
           <Text type="caption">
             {user?.about_me ? user.about_me : '자기 소개를 작성해주세요.'}

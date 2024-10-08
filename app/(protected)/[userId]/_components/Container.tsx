@@ -14,7 +14,7 @@ export default function Container({
   return (
     <div
       className={cn(
-        'flex w-full flex-col gap-12 rounded-md max-md:px-4 md:w-[768px]',
+        'flex w-full flex-col gap-12 rounded-md max-lg:px-4 lg:w-[768px]',
         isBackground ? 'bg-white shadow-md dark:bg-var-darkgray' : '',
         className,
       )}

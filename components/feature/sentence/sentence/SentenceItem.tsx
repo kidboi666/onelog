@@ -53,7 +53,7 @@ export default function SentenceItem({
   }
 
   const handleAvatarClick = () => {
-    router.push(`/${sentence?.user_id}/userinfo_summary`)
+    router.push(`/${sentence?.user_id}`)
   }
 
   return (

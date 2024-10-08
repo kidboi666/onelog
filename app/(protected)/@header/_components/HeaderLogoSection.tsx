@@ -13,7 +13,7 @@ export default function HeaderLogoSection() {
       variant="emptyStyle"
       className={cn('w-fit', theme === 'dark' ? 'text-white' : 'text-black')}
     >
-      <Icon name="logo" sizeX={160} sizeY={112} viewX={323.33} viewY={160}>
+      <Icon name="logo" sizeX={80} sizeY={48} viewX={323.33} viewY={200}>
         <path d="M181.76,65.27h-6.64V10.83h6.64v24.57h11.2v6.22h-11.2v23.65Z" />
         <g>
           <g>
