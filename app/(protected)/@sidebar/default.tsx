@@ -11,10 +11,11 @@ import {
   TOP_NAVIGATE_MENUS,
 } from './_constants/Navigate'
 import AuthButton from './_components/AuthButton'
+import OpenButton from './_components/OpenButton'
 
 export default function Default() {
   const [isOpen, setOpen] = useState(false)
-  const { ref, open, close } = useStateChange<HTMLDivElement>()
+  const { ref, close, onClick } = useStateChange<HTMLDivElement>()
 
   const handleTransitionEnd = () => {
     if (ref?.current?.getAttribute('data-status') === 'closed') {
@@ -22,12 +23,12 @@ export default function Default() {
     }
   }
 
-  const handleSideOpen = () => {
-    setOpen(true)
-    open()
+  const handlePanelState = () => {
+    setOpen((prev) => !prev)
+    onClick()
   }
 
-  const handleSideClose = () => {
+  const handlePanelClose = () => {
     setOpen(false)
     close()
   }
@@ -35,14 +36,20 @@ export default function Default() {
   return (
     <div
       ref={ref}
-      onMouseEnter={handleSideOpen}
-      onMouseLeave={handleSideClose}
       onTransitionEnd={handleTransitionEnd}
       data-status="closed"
       className={cn(
-        'fixed top-[48px] z-30 flex h-[calc(100dvh-48px)] w-72 flex-shrink-0 flex-col bg-white p-4 shadow-md transition-all duration-300 ease-in-out data-[status=closed]:w-[74px] dark:bg-var-darkgray',
+        'fixed top-[48px] z-30 flex h-[calc(100dvh-48px)] w-72 flex-shrink-0 flex-col gap-2 bg-white p-4 shadow-md transition-all duration-300 ease-in-out data-[status=closed]:w-[74px] dark:bg-var-darkgray',
       )}
     >
+      {isOpen && (
+        <div
+          className="fixed inset-0 -z-10 bg-transparent"
+          onClick={handlePanelClose}
+        />
+      )}
+      <OpenButton isOpen={isOpen} onClick={handlePanelState} />
+      <Line />
       <List className="flex h-full w-full flex-col gap-2">
         {TOP_NAVIGATE_MENUS.map((menu) => (
           <MenuButton

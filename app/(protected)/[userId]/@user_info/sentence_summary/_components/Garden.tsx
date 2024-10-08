@@ -153,7 +153,7 @@ export default function Garden() {
 
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex flex-col justify-between sm:flex-row">
         <Title>한 눈에 보기</Title>
         <SortOptionMenu orderBy={orderBy} onSortOrder={handleSortOrder} />
       </div>

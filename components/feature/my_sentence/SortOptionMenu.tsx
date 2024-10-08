@@ -7,7 +7,7 @@ interface Props {
 
 export default function SortOptionMenu({ orderBy, onSortOrder }: Props) {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 self-end">
       <Button
         size="sm"
         variant={orderBy === 'length' ? 'primary' : 'secondary'}
