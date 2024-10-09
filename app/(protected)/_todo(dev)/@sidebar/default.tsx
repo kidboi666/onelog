@@ -3,7 +3,6 @@
 import cn from '@/lib/cn'
 import { useState, useTransition } from 'react'
 import TaskFolderSection from './_components/TaskFolderSection'
-import SideMenuButtonSection from './_components/SideMenuButtonSection'
 import { TodoFolder } from '@/types/todo'
 import { useRouter } from 'next/navigation'
 import Button from '@/components/shared/Button'

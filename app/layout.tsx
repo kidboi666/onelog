@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import ReactQueryProvider from '@/lib/tanstack/query-client-provider'
 import './globals.css'
+import ReactQueryProvider from '@/store/context/query-client-provider'
+import ThemeProvider from '@/store/context/theme-provider'
 
 export const metadata: Metadata = {
   title: 'One Sentence',
@@ -9,18 +10,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  background,
 }: Readonly<{
   children: React.ReactNode
-  background: React.ReactNode
 }>) {
   return (
     <html lang="ko">
-      <body className="hidden">
-        <ReactQueryProvider>{children}</ReactQueryProvider>
-        {background}
-        <div id="portal" />
-      </body>
+      <ThemeProvider>
+        <body className="hidden bg-var-lightgray dark:bg-var-dark">
+          <ReactQueryProvider>
+            {children}
+            <div id="portal" />
+          </ReactQueryProvider>
+        </body>
+      </ThemeProvider>
     </html>
   )
 }

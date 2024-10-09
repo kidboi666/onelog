@@ -55,8 +55,8 @@ export default function Block({
         </div>
       )}
       <Button
-        variant="emptyStyle"
-        size="emptyStyle"
+        variant="none"
+        size="none"
         onMouseEnter={() =>
           infoRef.current?.setAttribute('data-status', 'opened')
         }

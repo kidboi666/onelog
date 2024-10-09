@@ -13,8 +13,8 @@ export default function Emotion({ level }: Props) {
   return (
     <div className="flex items-center gap-2">
       <Button
-        variant="emptyStyle"
-        size="emptyStyle"
+        variant="none"
+        size="none"
         className="size-3 overflow-hidden rounded-[4px] border-[1.4px] border-gray-400 dark:border-gray-400"
       >
         <div

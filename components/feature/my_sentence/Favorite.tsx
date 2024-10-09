@@ -6,8 +6,8 @@ export default function Favorite({ count }: { count: number }) {
   return (
     <>
       <Button
-        variant="emptyStyle"
-        size="emptyStyle"
+        variant="none"
+        size="none"
         className="items-start gap-1 text-xs text-gray-400 dark:text-gray-400"
       >
         <Icon name="heart" size={14}>

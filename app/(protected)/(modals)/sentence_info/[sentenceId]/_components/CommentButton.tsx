@@ -4,8 +4,8 @@ import Icon from '@/components/shared/Icon'
 export default function CommentButton({ size = 24 }: { size?: number }) {
   return (
     <Button
-      variant="emptyStyle"
-      size="emptyStyle"
+      variant="none"
+      size="none"
       className="items-start gap-1 text-xs text-gray-400 dark:text-gray-400"
     >
       <Icon name="comment" size={size}>

@@ -10,7 +10,7 @@ export default function AuthLogoSection() {
   return (
     <LinkButton
       href="/"
-      variant="emptyStyle"
+      variant="none"
       className={cn(
         'h-fit w-full',
         theme === 'dark' ? 'text-white' : 'text-black',

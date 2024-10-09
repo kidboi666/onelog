@@ -10,15 +10,8 @@ import { formatButtonColor } from '@/utils/formatColor'
 export interface ButtonProps extends ComponentProps<'button'> {
   isLoading?: boolean
   dataStatus?: string
-  variant?:
-    | 'primary'
-    | 'secondary'
-    | 'teritory'
-    | 'list'
-    | 'emptyStyle'
-    | 'icon'
-    | 'none'
-  size?: 'sm' | 'md' | 'lg' | 'emptyStyle' | 'icon' | 'none'
+  variant?: 'primary' | 'secondary' | 'teritory' | 'list' | 'icon' | 'none'
+  size?: 'sm' | 'md' | 'lg' | 'icon' | 'none'
 }
 
 const BUTTON_VARIANTS = cva(
@@ -32,7 +25,6 @@ const BUTTON_VARIANTS = cva(
         teritory:
           'underline hover:opacity-65 active:animate-click dark:text-zinc-200',
         list: 'justify-start rounded-md font-normal text-zinc-600 hover:bg-var-lightgray dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
-        emptyStyle: 'hover:opacity-65',
         none: '',
         icon: 'rounded-md text-zinc-400 transition hover:bg-var-lightgray active:animate-click dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
       },
@@ -43,7 +35,6 @@ const BUTTON_VARIANTS = cva(
           'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
         teritory: '',
         list: '',
-        emptyStyle: '',
         icon: 'rounded-md text-zinc-300 transition dark:text-zinc-600',
         none: '',
       },
@@ -51,7 +42,6 @@ const BUTTON_VARIANTS = cva(
         sm: 'px-3 py-2 text-xs',
         md: 'px-3 py-3 text-sm',
         lg: 'px-4 py-4 text-lg',
-        emptyStyle: '',
         icon: 'p-2',
         none: '',
       },

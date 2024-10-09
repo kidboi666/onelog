@@ -8,7 +8,7 @@ export default function HomeLogoSection() {
       <LinkButton
         href="/"
         disabled
-        variant="emptyStyle"
+        variant="none"
         className={cn('h-fit w-full')}
       >
         <Icon

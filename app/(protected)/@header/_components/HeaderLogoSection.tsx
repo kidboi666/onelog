@@ -10,7 +10,7 @@ export default function HeaderLogoSection() {
   return (
     <LinkButton
       href="/home"
-      variant="emptyStyle"
+      variant="none"
       className={cn('w-fit', theme === 'dark' ? 'text-white' : 'text-black')}
     >
       <Icon name="logo" sizeX={80} sizeY={48} viewX={323.33} viewY={200}>

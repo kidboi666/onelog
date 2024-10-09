@@ -33,7 +33,7 @@ export default function SentenceHeader({
         onMouseEnter={open}
         onMouseLeave={close}
       >
-        <Button variant="emptyStyle" onClick={onClick} className="p-0">
+        <Button variant="none" onClick={onClick} className="p-0">
           <Avatar src={avatarUrl} size="sm" shadow="sm" />
         </Button>
         <SentenceOwnerInfoDropDown

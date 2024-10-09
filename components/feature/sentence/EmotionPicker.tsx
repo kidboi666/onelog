@@ -23,7 +23,7 @@ export default function EmotionPicker({
       className="group relative flex size-10 cursor-pointer justify-center"
     >
       <Button
-        variant="emptyStyle"
+        variant="none"
         size="sm"
         onClick={() => onChangeEmotion && onChangeEmotion(emotion.percent)}
         className="absolute flex flex-col gap-2 font-medium text-zinc-400 hover:opacity-100"

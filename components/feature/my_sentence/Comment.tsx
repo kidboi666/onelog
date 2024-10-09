@@ -6,8 +6,8 @@ export default function Comment({ count }: { count: number }) {
   return (
     <>
       <Button
-        variant="emptyStyle"
-        size="emptyStyle"
+        variant="none"
+        size="none"
         className="items-start gap-1 text-gray-400 dark:text-gray-400"
       >
         <Icon name="comment" size={14}>
