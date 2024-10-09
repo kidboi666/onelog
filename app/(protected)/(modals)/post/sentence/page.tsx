@@ -2,21 +2,20 @@
 
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
+import { BubbleMenu, EditorContent } from '@tiptap/react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { useInput } from '@/hooks/useInput'
 import { EMOTION_STATUS } from './_constants'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
+import useBlockEditor from '@/hooks/useBlockEditor'
 
 import Modal from '@/components/shared/Modal'
 import Button from '@/components/shared/Button'
 import { List } from '@/components/shared/List'
 import EmotionPicker from '@/components/feature/sentence/EmotionPicker'
-import { BubbleMenu, EditorContent } from '@tiptap/react'
 import { TagsInput } from '@/components/shared/TagsInput'
-import useBlockEditor from '@/hooks/useBlockEditor'
-import MenuBar from '@/components/feature/text_editor/MenuBar'
 import BubbleMenuBar from '@/components/feature/text_editor/BubbleMenuBar'
 import TextLength from '@/components/feature/text_editor/TextLength'
 
@@ -77,7 +76,6 @@ export default function SentenceModal() {
               <BubbleMenuBar editor={editor} />
             </BubbleMenu>
           )}
-          <MenuBar editor={editor} />
           <EditorContent editor={editor} className="h-full overflow-y-auto" />
           <TextLength content={editor.getText()} />
           <TagsInput tags={tags} setTags={setTags} />

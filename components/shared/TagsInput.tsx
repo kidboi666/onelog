@@ -7,7 +7,6 @@ import {
   useState,
 } from 'react'
 import { List } from './List'
-import Button from './Button'
 import Text from './Text'
 import { useInput } from '@/hooks/useInput'
 import cn from '@/lib/cn'
@@ -67,7 +66,7 @@ export const TagsInput = ({ tags, setTags }: Props) => {
       <div
         onClick={handleInputClick}
         className={cn(
-          'group flex w-full cursor-text flex-wrap gap-2 rounded-lg p-2 text-xs ring-1 ring-zinc-300 transition dark:ring-zinc-600',
+          'group flex w-full cursor-text flex-wrap gap-2 rounded-lg py-2 text-xs transition dark:ring-zinc-600',
           error && 'border-red-500',
         )}
       >
