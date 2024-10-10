@@ -124,7 +124,7 @@ export default function SentenceModal() {
                   variant="secondary"
                   onClick={handleAccessTypeClick}
                   size="sm"
-                  className="w-fit gap-2 font-normal"
+                  className="w-fit gap-2 font-normal dark:bg-var-darkgray"
                 >
                   {accessType === 'public' ? '공개' : '비공개'}
                   <div

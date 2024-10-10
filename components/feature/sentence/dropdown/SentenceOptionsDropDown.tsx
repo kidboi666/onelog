@@ -22,7 +22,7 @@ export default function SentenceOptionsDropDown({
       targetRef={targetRef}
       dataStatus="closed"
       onTransitionEnd={onTransitionEnd}
-      className="absolute bottom-full right-0 z-30 hidden w-28 origin-top-right rounded-md bg-white shadow-md transition data-[status=closed]:scale-90 data-[status=closed]:opacity-0 dark:bg-var-dark"
+      className="absolute bottom-full right-0 z-30 hidden w-28 origin-bottom-right rounded-md bg-white shadow-md transition data-[status=closed]:scale-90 data-[status=closed]:opacity-0 dark:bg-var-dark"
     >
       <List.Row className="w-full">
         <Button

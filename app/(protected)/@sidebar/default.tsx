@@ -12,10 +12,12 @@ import {
 } from './_constants/Navigate'
 import AuthButton from './_components/AuthButton'
 import OpenButton from './_components/OpenButton'
+import { usePathname, useSelectedLayoutSegment } from 'next/navigation'
 
 export default function Default() {
   const [isOpen, setOpen] = useState(false)
   const { ref, close, onClick } = useStateChange<HTMLDivElement>()
+  const pathname = usePathname()
 
   const handleTransitionEnd = () => {
     if (ref?.current?.getAttribute('data-status') === 'closed') {
@@ -54,6 +56,7 @@ export default function Default() {
         {TOP_NAVIGATE_MENUS.map((menu) => (
           <MenuButton
             key={menu.id}
+            isSelected={pathname === menu.path}
             isOpen={isOpen}
             icon={menu.icon}
             name={menu.name}
@@ -65,6 +68,7 @@ export default function Default() {
         {BOTTOM_NAVIGATE_MENUS.map((menu) => (
           <MenuButton
             key={menu.id}
+            isSelected={pathname === menu.path}
             isOpen={isOpen}
             icon={menu.icon}
             name={menu.name}

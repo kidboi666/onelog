@@ -4,21 +4,46 @@ import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
 import LinkButton from '@/components/shared/LinkButton'
+import useStateChange from '@/hooks/useStateChange'
 
 interface Props {
   isOpen: boolean
+  isSelected: boolean
   icon: ReactNode
   name: string
   path: string
 }
 
-export default function MenuButton({ isOpen, icon, name, path }: Props) {
+export default function MenuButton({
+  isOpen,
+  isSelected,
+  icon,
+  name,
+  path,
+}: Props) {
+  const { open, close, ref, onTransitionEnd } = useStateChange<HTMLDivElement>()
+  if (isSelected) {
+    open()
+  } else {
+    close()
+  }
   return (
-    <List.Row>
+    <List.Row className="relative">
+      <div
+        ref={ref}
+        data-status="closed"
+        onTransitionEnd={onTransitionEnd}
+        className="absolute -left-2 top-1/2 h-full w-1 -translate-y-1/2 rounded-r-md bg-var-lightgray transition duration-500 data-[status=closed]:scale-0 dark:bg-var-dark"
+      />
       <LinkButton
         href={path}
         variant="icon"
-        innerClassName="justify-start gap-4"
+        innerClassName={cn(
+          'justify-start gap-4 relative',
+          isSelected
+            ? ' bg-var-lightgray text-zinc-500 dark:text-zinc-300 dark:bg-var-dark'
+            : '',
+        )}
       >
         <Icon view="0 -960 960 960" size={16} className="flex flex-shrink-0">
           {icon}
