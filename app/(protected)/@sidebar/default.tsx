@@ -39,7 +39,7 @@ export default function Default() {
       onTransitionEnd={handleTransitionEnd}
       data-status="closed"
       className={cn(
-        'fixed top-[48px] z-30 flex h-[calc(100dvh-48px)] w-72 flex-shrink-0 flex-col gap-2 bg-white p-4 shadow-md transition-all duration-300 ease-in-out data-[status=closed]:w-[74px] dark:bg-var-darkgray',
+        'fixed top-[48px] z-30 m-4 flex h-[calc(100dvh-80px)] w-72 flex-shrink-0 flex-col gap-2 rounded-lg bg-white p-2 shadow-md transition-all duration-300 ease-in-out data-[status=closed]:w-14 dark:bg-var-darkgray',
       )}
     >
       {isOpen && (

@@ -19,7 +19,7 @@ export default function AuthButton({ isOpen }: Props) {
       <LinkButton
         href={`/${me.userId}`}
         variant="none"
-        innerClassName="justify-start gap-4 px-1 py-0"
+        innerClassName="justify-start gap-4 py-1 px-1"
       >
         <Avatar src={me?.avatar_url} size="xs" ring="xs" shadow="sm" />
         <div

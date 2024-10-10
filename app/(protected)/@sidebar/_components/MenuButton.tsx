@@ -20,13 +20,13 @@ export default function MenuButton({ isOpen, icon, name, path }: Props) {
         variant="icon"
         innerClassName="justify-start gap-4"
       >
-        <Icon view="0 -960 960 960" size={18} className="flex flex-shrink-0">
+        <Icon view="0 -960 960 960" size={16} className="flex flex-shrink-0">
           {icon}
         </Icon>
         <div
           className={cn(
             'origin-left transition',
-            isOpen ? 'scale-x-100' : 'scale-x-0 opacity-0',
+            isOpen ? '' : 'scale-x-0 opacity-0',
           )}
         >
           <Text type="caption" size="sm">
