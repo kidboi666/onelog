@@ -27,7 +27,7 @@ export default function SentenceModal() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [content, _, setContent] = useInput<string>('')
   const [selectedEmotion, setSelectedEmotion] = useState('')
-  const [viewOrder, setViewOrder] = useState('public')
+  const [accessType, setAccessType] = useState<'public' | 'private'>('public')
   const { editor } = useBlockEditor({
     setContent,
     content,
@@ -63,6 +63,7 @@ export default function SentenceModal() {
         email: me.email,
         avatar_url: me.avatar_url,
         tags,
+        access_type: accessType,
       },
       {
         onSuccess: () => {
@@ -75,8 +76,8 @@ export default function SentenceModal() {
     )
   }
 
-  const changeViewOrder = (order: 'private' | 'public') => {
-    setViewOrder(order)
+  const changeAccessType = (order: 'private' | 'public') => {
+    setAccessType(order)
   }
 
   return (
@@ -112,7 +113,7 @@ export default function SentenceModal() {
                   size="sm"
                   className="w-fit gap-2 font-normal"
                 >
-                  {viewOrder === 'public' ? '공개' : '비공개'}
+                  {accessType === 'public' ? '공개' : '비공개'}
                   <Icon view="0 -960 960 960" size={18}>
                     <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
                   </Icon>
@@ -120,7 +121,7 @@ export default function SentenceModal() {
                 <DropDown
                   targetRef={ref}
                   onTransitionEnd={onTransitionEnd}
-                  onClick={changeViewOrder}
+                  onClick={changeAccessType}
                 />
               </div>
               <Button

@@ -24,7 +24,7 @@ const BUTTON_VARIANTS = cva(
           'rounded-md text-var-black ring-1 ring-zinc-400 hover:opacity-65 active:animate-click dark:text-zinc-200 dark:ring-zinc-500',
         teritory:
           'underline hover:opacity-65 active:animate-click dark:text-zinc-200',
-        list: 'justify-start font-normal text-zinc-600 hover:bg-var-lightgray dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
+        list: 'justify-start rounded-md font-normal text-zinc-600 hover:bg-var-lightgray dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
         none: '',
         icon: 'rounded-md text-zinc-400 transition hover:bg-var-lightgray active:animate-click dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
       },

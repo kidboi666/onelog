@@ -70,6 +70,7 @@ export default function SentenceItem({
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
           onClick={handleAvatarClick}
+          accessType={sentence.access_type}
         />
       ) : null}
       <SentenceContent

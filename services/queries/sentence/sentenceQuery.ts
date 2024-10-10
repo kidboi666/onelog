@@ -10,6 +10,7 @@ export const sentenceQuery = {
         const { data } = await supabase
           .from('sentence')
           .select()
+          .eq('access_type', 'public')
           .order('created_at', { ascending: false })
         return data as Tables<'sentence'>[]
       },

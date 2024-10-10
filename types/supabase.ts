@@ -135,6 +135,7 @@ export type Database = {
       }
       sentence: {
         Row: {
+          access_type: string | null
           avatar_url: string | null
           comment: number | null
           content: string
@@ -149,6 +150,7 @@ export type Database = {
           user_name: string | null
         }
         Insert: {
+          access_type?: string | null
           avatar_url?: string | null
           comment?: number | null
           content: string
@@ -163,6 +165,7 @@ export type Database = {
           user_name?: string | null
         }
         Update: {
+          access_type?: string | null
           avatar_url?: string | null
           comment?: number | null
           content?: string
@@ -281,6 +284,8 @@ export type Database = {
           favorite_comment_id: number[] | null
           favorite_sentence_id: number[] | null
           favorite_words: string[] | null
+          followees_user_id: string[] | null
+          followers_user_id: string[] | null
           id: string
           user_name: string | null
         }
@@ -292,6 +297,8 @@ export type Database = {
           favorite_comment_id?: number[] | null
           favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
+          followees_user_id?: string[] | null
+          followers_user_id?: string[] | null
           id: string
           user_name?: string | null
         }
@@ -303,6 +310,8 @@ export type Database = {
           favorite_comment_id?: number[] | null
           favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
+          followees_user_id?: string[] | null
+          followers_user_id?: string[] | null
           id?: string
           user_name?: string | null
         }

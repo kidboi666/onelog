@@ -6,6 +6,7 @@ export interface ISentence {
   email: string
   avatar_url: string | null
   tags: string[]
+  access_type: 'private' | 'public'
 }
 
 export interface IFavoriteWord {

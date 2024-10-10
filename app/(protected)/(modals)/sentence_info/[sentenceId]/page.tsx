@@ -47,6 +47,7 @@ export default function SentenceInfoModal({ params }: Props) {
           userName={sentence.user_name}
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
+          accessType={sentence.access_type}
         />
       ) : null}
       <SentenceContent
