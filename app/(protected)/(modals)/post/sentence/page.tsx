@@ -18,11 +18,16 @@ import EmotionPicker from '@/components/feature/sentence/EmotionPicker'
 import { TagsInput } from '@/components/shared/TagsInput'
 import BubbleMenuBar from '@/components/feature/text_editor/BubbleMenuBar'
 import TextLength from '@/components/feature/text_editor/TextLength'
+import DropDown from './_components/DropDown'
+import Icon from '@/components/shared/Icon'
+import useStateChange from '@/hooks/useStateChange'
+import useOutsideClick from '@/hooks/useOutsideClick'
 
 export default function SentenceModal() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [content, _, setContent] = useInput<string>('')
   const [selectedEmotion, setSelectedEmotion] = useState('')
+  const [viewOrder, setViewOrder] = useState('public')
   const { editor } = useBlockEditor({
     setContent,
     content,
@@ -32,6 +37,9 @@ export default function SentenceModal() {
   const [tags, setTags] = useState<string[]>([])
   const { mutate: addSentence, isPending } = useAddSentence()
   const router = useRouter()
+  const { close, onClick, onTransitionEnd, ref } =
+    useStateChange<HTMLUListElement>()
+  const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   if (!editor) return null
 
@@ -67,6 +75,10 @@ export default function SentenceModal() {
     )
   }
 
+  const changeViewOrder = (order: 'private' | 'public') => {
+    setViewOrder(order)
+  }
+
   return (
     <Modal className="top-10 -translate-y-0 bg-white">
       <form onSubmit={handleSubmitSentence} className="size-full">
@@ -91,14 +103,36 @@ export default function SentenceModal() {
                 />
               ))}
             </List>
-            <Button
-              isLoading={isPending}
-              disabled={editor.getText().length === 0 || !selectedEmotion}
-              type="submit"
-              className="self-end text-nowrap"
-            >
-              등록하기
-            </Button>
+            <div className="flex justify-between">
+              <div className="relative">
+                <Button
+                  ref={buttonRef}
+                  variant="secondary"
+                  onClick={onClick}
+                  size="sm"
+                  className="w-fit gap-2 font-normal"
+                >
+                  {viewOrder === 'public' ? '공개' : '비공개'}
+                  <Icon view="0 -960 960 960" size={18}>
+                    <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+                  </Icon>
+                </Button>
+                <DropDown
+                  targetRef={ref}
+                  onTransitionEnd={onTransitionEnd}
+                  onClick={changeViewOrder}
+                />
+              </div>
+              <Button
+                isLoading={isPending}
+                disabled={editor.getText().length === 0 || !selectedEmotion}
+                type="submit"
+                size="sm"
+                className="self-end text-nowrap"
+              >
+                등록하기
+              </Button>
+            </div>
           </div>
         </div>
       </form>

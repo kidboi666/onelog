@@ -72,24 +72,21 @@ export default function SentenceItem({
           onClick={handleAvatarClick}
         />
       ) : null}
-      <div
+      <SentenceContent
+        tags={tags}
+        editor={editor}
+        emotionLevel={sentence?.emotion_level}
+        favoritedCount={sentence?.favorite || 0}
+        favoritedUserId={sentence?.favorited_user_id || []}
+        commentCount={sentence?.comment || 0}
+        sentenceId={sentenceId!}
+        onFavorite={handleFavoriteSentence}
         onClick={handleSentenceItemClick}
-        className="cursor-pointer transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
-      >
-        <SentenceContent
-          tags={tags}
-          editor={editor}
-          favoritedCount={sentence?.favorite || 0}
-          favoritedUserId={sentence?.favorited_user_id || []}
-          commentCount={sentence?.comment || 0}
-          sentenceId={sentenceId!}
-          onFavorite={handleFavoriteSentence}
-          userId={userId}
-          me={me}
-          isMyPage={isMyPage}
-          disabled={disabled}
-        />
-      </div>
+        userId={userId}
+        me={me}
+        isMyPage={isMyPage}
+        disabled={disabled}
+      />
     </div>
   )
 }

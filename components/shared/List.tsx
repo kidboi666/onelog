@@ -6,6 +6,7 @@ interface Props extends ComponentProps<'ul'> {
   targetRef?: RefObject<HTMLUListElement>
   isRounded?: boolean
   isBackground?: boolean
+  onTransitionEnd?: () => void
   dataStatus?: string
 }
 
@@ -16,21 +17,18 @@ export const List = ({
   dataStatus,
   isRounded,
   isBackground,
+  onTransitionEnd,
   ...props
 }: PropsWithChildren<Props>) => {
   return (
     <ul
       ref={targetRef}
       data-status={dataStatus}
-      onTransitionEnd={() => {
-        if (targetRef?.current?.getAttribute('data-status') === 'closed') {
-          targetRef.current.classList.add('hidden')
-        }
-      }}
+      onTransitionEnd={onTransitionEnd}
       className={cn(
         'list-none',
         isRounded && 'rounded-md',
-        isBackground && 'dark:bg-var-darkgray bg-white',
+        isBackground && 'bg-white dark:bg-var-darkgray',
         className,
       )}
       {...props}

@@ -82,7 +82,7 @@ export const TagsInput = ({ tags, setTags }: Props) => {
           value={text}
           onChange={onChangeText}
           onKeyDown={handleKeyDown}
-          className="w-72 bg-transparent text-zinc-600 outline-none transition dark:text-zinc-200 dark:placeholder:text-zinc-600"
+          className="w-72 bg-transparent text-zinc-600 outline-none transition placeholder:text-zinc-400 dark:text-zinc-200 dark:placeholder:text-zinc-600"
         />
       </div>
       {error && (

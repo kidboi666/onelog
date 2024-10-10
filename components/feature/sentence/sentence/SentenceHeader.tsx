@@ -1,7 +1,6 @@
 import Title from '@/components/shared/Title'
 import Avatar from '../../user/Avatar'
 import Text from '@/components/shared/Text'
-import { formatDateToHM, formatDateToYMD } from '@/utils/formatDate'
 import Button from '@/components/shared/Button'
 import useStateChange from '@/hooks/useStateChange'
 import SentenceOwnerInfoDropDown from './SentenceOwnerInfoDropDown'
@@ -20,8 +19,6 @@ export default function SentenceHeader({
   avatarUrl,
   userName,
   email,
-  emotionLevel,
-  createdAt,
   isMe,
   onClick,
 }: Props) {
@@ -47,28 +44,11 @@ export default function SentenceHeader({
       <div className="flex flex-col">
         <Title size="xs" type="sub">
           {userName}
-          {/* <Text as="span" size="sm" type="caption">
-            {' '}
-            님의 하루 한줄
-          </Text> */}
         </Title>
         <div className="flex items-center gap-2">
           <Text type="caption" size="sm">
             {email}
           </Text>
-          {/* <Text size="sm">
-            감정 농도
-            <Text as="span" className="text-var-blue opacity-50">
-              {' '}
-              {emotionLevel}
-            </Text>
-          </Text> */}
-          {/* <Text as="span" size="xs" type="caption">
-            {' '}
-            {formatDateToYMD(createdAt)}
-            {' ・ '}
-            {formatDateToHM(createdAt)}
-          </Text> */}
         </div>
       </div>
     </div>
