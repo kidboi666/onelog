@@ -4,8 +4,8 @@ import useStateChange from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect, useRef } from 'react'
-import Button from './Button'
 import Icon from './Icon'
+import BackButton from './BackButton'
 
 interface Props extends ComponentProps<'div'> {
   className?: string
@@ -55,10 +55,6 @@ export default function Modal({
     }, 0)
   }, [])
 
-  const handleCloseModal = () => {
-    router.back()
-  }
-
   return (
     <>
       <div
@@ -74,20 +70,16 @@ export default function Modal({
         data-status="closed"
         onTransitionEnd={insideOnTransitionEnd}
         className={cn(
-          'fixed left-1/2 top-1/2 z-50 flex h-fit max-h-[calc(100%-40px)] w-full max-w-[calc(100%-20px)] origin-top -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-12 rounded-md bg-var-lightgray p-4 shadow-lg transition ease-in-out data-[status=closed]:scale-90 data-[status=closed]:opacity-0 md:max-w-[768px] dark:bg-var-dark',
+          'absolute left-1/2 top-1/2 z-50 flex h-fit max-h-[calc(100%-40px)] w-full max-w-[calc(100%-20px)] origin-top -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-12 rounded-md bg-var-lightgray p-4 shadow-lg transition ease-in-out data-[status=closed]:scale-90 data-[status=closed]:opacity-0 md:max-w-[768px] dark:bg-var-dark',
           className,
         )}
         {...props}
       >
-        <Button
-          variant="icon"
-          onClick={handleCloseModal}
-          className="absolute right-0 top-0 rounded-full"
-        >
+        <BackButton>
           <Icon view="0 -960 960 960" size={18}>
             <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
           </Icon>
-        </Button>
+        </BackButton>
         {children}
       </div>
     </>

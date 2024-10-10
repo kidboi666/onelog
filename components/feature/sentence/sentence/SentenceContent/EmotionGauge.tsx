@@ -42,21 +42,15 @@ export default function EmotionGauge({ emotionLevel }: Props) {
     <List
       onMouseEnter={open}
       onMouseLeave={close}
-      className="relative flex h-full items-center justify-between gap-px"
+      className="relative flex flex-1 items-end justify-between gap-px"
     >
-      <Button
-        variant="icon"
-        size="none"
-        onClick={onClick}
-        className="h-full gap-px"
-      >
+      <Button variant="icon" size="none" onClick={onClick} className="gap-px">
         {emotionLevel &&
           emotionBlock!.map((shouldRender, index) => (
             <EmotionBlock
               key={index}
               shouldRender={shouldRender}
               color={color}
-              index={index}
             />
           ))}
       </Button>
@@ -72,27 +66,26 @@ export default function EmotionGauge({ emotionLevel }: Props) {
 interface EmotionBlockProps {
   shouldRender: number
   color: TColor
-  index: number
 }
 
-function EmotionBlock({ shouldRender, color, index }: EmotionBlockProps) {
+function EmotionBlock({ shouldRender, color }: EmotionBlockProps) {
   return (
     <List.Row
       className={cn(
-        'size-2 rounded-full bg-zinc-300/15 shadow-sm dark:bg-zinc-300/25',
+        'size-2 rounded-full bg-zinc-300/45 shadow-sm dark:bg-zinc-300/25',
         shouldRender &&
           color === 'yellow' &&
-          'bg-var-yellow/45 dark:bg-var-yellow/25',
+          'bg-var-yellow/45 dark:bg-var-yellow/45',
         shouldRender &&
           color === 'orange' &&
-          'bg-var-orange/45 dark:bg-var-orange/25',
-        shouldRender && color === 'black' && 'bg-black/60 dark:bg-black/60',
+          'bg-var-orange/45 dark:bg-var-orange/45',
+        shouldRender && color === 'black' && 'bg-black/60 dark:bg-white/60',
         shouldRender &&
           color === 'blue' &&
-          'bg-var-blue/45 dark:bg-var-blue/60',
+          'bg-var-blue/45 dark:bg-var-blue/45',
         shouldRender &&
           color === 'green' &&
-          'bg-var-green/45 dark:bg-var-green/60',
+          'bg-var-green/45 dark:bg-var-green/45',
       )}
     ></List.Row>
   )

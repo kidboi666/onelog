@@ -47,7 +47,6 @@ export default function SentenceInfoModal({ params }: Props) {
           userName={sentence.user_name}
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
-          accessType={sentence.access_type}
         />
       ) : null}
       <SentenceContent
@@ -57,6 +56,7 @@ export default function SentenceInfoModal({ params }: Props) {
         favoritedUserId={sentence?.favorited_user_id || []}
         commentCount={sentence?.comment || 0}
         sentenceId={sentence?.id!}
+        accessType={sentence?.access_type}
         onFavorite={handleFavoriteSentence}
         userId={me?.id}
         me={me!}

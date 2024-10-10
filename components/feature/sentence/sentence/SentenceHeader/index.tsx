@@ -41,7 +41,7 @@ export default function SentenceHeader({
           onTransitionEnd={onTransitionEnd}
         />
       </div>
-      <div className="flex w-full flex-col">
+      <div className="flex h-full w-full flex-col">
         <Title size="xs" type="sub" className="line-clamp-1">
           {userName}
         </Title>

@@ -17,7 +17,7 @@ export default function EmotionDropDown({
       ref={targetRef}
       data-status="closed"
       onTransitionEnd={onTransitionEnd}
-      className="absolute bottom-full right-0 hidden origin-bottom-right rounded-md bg-white p-2 shadow-md transition data-[status=closed]:scale-90 data-[status=closed]:opacity-0 dark:bg-var-dark"
+      className="absolute -bottom-full right-0 hidden origin-bottom-right rounded-md bg-white p-2 shadow-md transition data-[status=closed]:scale-90 data-[status=closed]:opacity-0 dark:bg-var-dark"
     >
       <Text size="sm">감정 농도 : {emotionLevel}</Text>
     </div>
