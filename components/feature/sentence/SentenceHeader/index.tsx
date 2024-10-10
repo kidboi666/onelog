@@ -3,7 +3,7 @@ import Title from '@/components/shared/Title'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import Avatar from '@/components/feature/user/Avatar'
-import SentenceOwnerInfoDropDown from '../../dropdown/SentenceOwnerInfoDropDown'
+import SentenceOwnerInfoDropDown from '../dropdown/SentenceOwnerInfoDropDown'
 import EmotionGauge from '../SentenceContent/EmotionGauge'
 
 interface Props {

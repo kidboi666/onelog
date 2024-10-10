@@ -22,7 +22,7 @@ export default function CommentButton({
       disabled={disabled}
       onClick={onShowComment}
       className={cn(
-        'flex gap-2 border-none text-xs font-light transition hover:text-blue-400',
+        'flex gap-2 border-none text-xs font-light transition hover:text-blue-400 dark:hover:text-blue-400',
         showComment ? 'text-blue-400 dark:text-blue-400' : '',
       )}
     >

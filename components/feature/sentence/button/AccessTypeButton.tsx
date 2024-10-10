@@ -26,6 +26,7 @@ export default function AccessTypeButton({ accessType }: Props) {
         onMouseEnter={open}
         onMouseLeave={close}
         onClick={handleButtonClick}
+        className="hover:text-green-400 dark:hover:text-green-400"
       >
         <Icon view="0 -960 960 960" size={18}>
           {accessType === 'public' ? (

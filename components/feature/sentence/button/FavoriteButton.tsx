@@ -29,7 +29,7 @@ export default function FavoriteButton({
       size="icon"
       onClick={(e) => onFavorite(e, { commentId, sentenceId })}
       className={cn(
-        'flex gap-2 border-none text-xs font-light hover:text-red-500',
+        'flex gap-2 border-none text-xs font-light hover:text-red-500 dark:hover:text-red-500',
         favoritedUserId?.includes(userId) && 'text-red-500 dark:text-red-500',
       )}
     >

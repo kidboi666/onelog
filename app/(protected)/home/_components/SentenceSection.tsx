@@ -4,7 +4,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import SentenceItem from '@/components/feature/sentence/sentence/SentenceItem'
+import SentenceItem from '@/components/feature/sentence/SentenceItem'
 
 export default function SentenceSection() {
   const { data: sentences } = useSuspenseQuery(

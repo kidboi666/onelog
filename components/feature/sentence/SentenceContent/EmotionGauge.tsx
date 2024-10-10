@@ -1,7 +1,7 @@
 import { List } from '@/components/shared/List'
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
-import EmotionDropDown from '../../dropdown/EmotionDropDown'
+import EmotionDropDown from '../dropdown/EmotionDropDown'
 import useStateChange from '@/hooks/useStateChange'
 import Button from '@/components/shared/Button'
 import { TColor } from '@/types/theme'
@@ -46,12 +46,13 @@ export default function EmotionGauge({ emotionLevel }: Props) {
         variant="icon"
         size="none"
         onClick={onClick}
-        className="gap-px"
+        className="gap-px bg-white p-2 shadow-sm dark:bg-var-darkgray"
       >
         {emotionLevel &&
           emotionBlock!.map((shouldRender, index) => (
             <EmotionBlock
               key={index}
+              index={index}
               shouldRender={shouldRender}
               color={color}
             />
@@ -69,27 +70,51 @@ export default function EmotionGauge({ emotionLevel }: Props) {
 interface EmotionBlockProps {
   shouldRender: number
   color: TColor
+  index: number
 }
 
-function EmotionBlock({ shouldRender, color }: EmotionBlockProps) {
+function EmotionBlock({ shouldRender, color, index }: EmotionBlockProps) {
+  let blockOpacity: string
+  switch (index) {
+    case 0:
+      blockOpacity = 'opacity-20'
+      break
+    case 1:
+      blockOpacity = 'opacity-40'
+      break
+    case 2:
+      blockOpacity = 'opacity-60'
+      break
+    case 3:
+      blockOpacity = 'opacity-80'
+      break
+    case 4:
+      blockOpacity = 'opacity-100'
+      break
+    default:
+      break
+  }
   return (
     <List.Row
       className={cn(
-        'size-2 rounded-full bg-zinc-300/45 shadow-sm dark:bg-zinc-300/25',
-        shouldRender &&
-          color === 'yellow' &&
-          'bg-var-yellow/45 dark:bg-var-yellow/45',
-        shouldRender &&
-          color === 'orange' &&
-          'bg-var-orange/45 dark:bg-var-orange/45',
-        shouldRender && color === 'black' && 'bg-black/60 dark:bg-white/60',
-        shouldRender &&
-          color === 'blue' &&
-          'bg-var-blue/45 dark:bg-var-blue/45',
-        shouldRender &&
-          color === 'green' &&
-          'bg-var-green/45 dark:bg-var-green/45',
+        'size-2 overflow-hidden rounded-full bg-zinc-300/35 shadow-sm dark:bg-zinc-300/15',
       )}
-    ></List.Row>
+    >
+      <div
+        className={cn(
+          'size-full',
+          blockOpacity!,
+          shouldRender &&
+            color === 'yellow' &&
+            'bg-var-yellow dark:bg-var-yellow',
+          shouldRender &&
+            color === 'orange' &&
+            'bg-var-orange dark:bg-var-orange',
+          shouldRender && color === 'black' && 'bg-black/60 dark:bg-white/60',
+          shouldRender && color === 'blue' && 'bg-var-blue dark:bg-var-blue',
+          shouldRender && color === 'green' && 'bg-var-green dark:bg-var-green',
+        )}
+      />
+    </List.Row>
   )
 }

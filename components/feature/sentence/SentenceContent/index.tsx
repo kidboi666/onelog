@@ -6,11 +6,11 @@ import Spinner from '@/components/shared/Spinner'
 import { Tables } from '@/types/supabase'
 import { usePathname } from 'next/navigation'
 import EmotionGauge from './EmotionGauge'
-import FavoriteButton from '../../button/FavoriteButton'
-import CommentButton from '../../button/CommentButton'
-import Comments from '../../comment/Comments'
-import AccessTypeButton from '../../button/AccessTypeButton'
-import OptionsButton from '../../button/OptionsButton'
+import FavoriteButton from '../button/FavoriteButton'
+import CommentButton from '../button/CommentButton'
+import Comments from '../comment/Comments'
+import AccessTypeButton from '../button/AccessTypeButton'
+import OptionsButton from '../button/OptionsButton'
 
 interface Props {
   tags?: string[]

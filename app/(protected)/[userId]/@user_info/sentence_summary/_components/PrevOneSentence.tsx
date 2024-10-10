@@ -1,13 +1,13 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
+import { useEffect } from 'react'
 import { useSentence } from '@/store/useSentence'
 import Title from '@/components/shared/Title'
 import { List } from '@/components/shared/List'
 import Empty from '@/components/shared/Empty'
 import { formatDateToMDY } from '@/utils/formatDate'
-import SentenceItem from '@/components/feature/sentence/sentence/SentenceItem'
-import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
+import SentenceItem from '@/components/feature/sentence/SentenceItem'
 
 export default function PrevOneSentence() {
   const pathname = usePathname()

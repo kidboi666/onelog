@@ -9,8 +9,8 @@ import useBlockEditor from '@/hooks/useBlockEditor'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
 import { Tables } from '@/types/supabase'
+import SentenceHeader from './SentenceHeader'
 import SentenceContent from './SentenceContent'
-import SentenceHeader from './SentenceHeader/index'
 
 interface Props {
   sentence?: Tables<'sentence'>

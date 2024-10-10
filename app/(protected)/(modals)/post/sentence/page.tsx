@@ -7,14 +7,11 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { useInput } from '@/hooks/useInput'
-import { EMOTION_STATUS } from './_constants'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 import useBlockEditor from '@/hooks/useBlockEditor'
 
 import Modal from '@/components/shared/Modal'
 import Button from '@/components/shared/Button'
-import { List } from '@/components/shared/List'
-import EmotionPicker from '@/components/feature/sentence/EmotionPicker'
 import { TagsInput } from '@/components/shared/TagsInput'
 import BubbleMenuBar from '@/components/feature/text_editor/BubbleMenuBar'
 import TextLength from '@/components/feature/text_editor/TextLength'
@@ -22,6 +19,7 @@ import DropDown from './_components/DropDown'
 import Icon from '@/components/shared/Icon'
 import useStateChange from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
+import EmotionPicker from '@/components/feature/sentence/EmotionPicker'
 
 export default function SentenceModal() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -103,46 +101,54 @@ export default function SentenceModal() {
             </BubbleMenu>
           )}
           <EditorContent editor={editor} className="h-full overflow-y-auto" />
-          <TextLength content={editor.getText()} />
+          <TextLength content={editor.storage.characterCount.characters()} />
           <TagsInput tags={tags} setTags={setTags} />
           <div className="flex flex-col gap-2">
-            {/* <List className="relative flex flex-1 items-start justify-between gap-2">
-              <div className="absolute left-1/2 top-[7.5px] w-[calc(100%-30px)] -translate-x-1/2 border-b border-zinc-200 dark:border-zinc-600" />
-              {EMOTION_STATUS.map((emotion) => (
-                <EmotionPicker
-                  key={emotion.status}
-                  emotion={emotion}
-                  selectedEmotion={selectedEmotion}
-                  onChangeEmotion={handleChangeEmotion}
-                />
-              ))}
-            </List> */}
             <div className="flex justify-between">
-              <div className="relative">
-                <Button
-                  ref={buttonRef}
-                  variant="secondary"
-                  onClick={handleAccessTypeClick}
-                  size="sm"
-                  className="w-fit gap-2 font-normal dark:bg-var-darkgray"
-                >
-                  {accessType === 'public' ? '공개' : '비공개'}
-                  <div
-                    ref={arrowRef}
-                    data-status="closed"
-                    className="rotate-180 transition data-[status=closed]:rotate-0"
+              <div className="flex gap-2">
+                <div className="relative">
+                  <Button
+                    ref={buttonRef}
+                    variant="secondary"
+                    onClick={handleAccessTypeClick}
+                    size="sm"
+                    className="w-fit gap-2 font-normal dark:bg-var-darkgray"
                   >
-                    <Icon view="0 -960 960 960" size={18}>
-                      <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
-                    </Icon>
-                  </div>
-                </Button>
-                <DropDown
-                  targetRef={ref}
-                  onTransitionEnd={onTransitionEnd}
-                  onClick={changeAccessType}
-                />
+                    {accessType === 'public' ? '공개' : '비공개'}
+                    <div
+                      ref={arrowRef}
+                      data-status="closed"
+                      className="rotate-180 transition data-[status=closed]:rotate-0"
+                    >
+                      <Icon view="0 -960 960 960" size={18}>
+                        <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+                      </Icon>
+                    </div>
+                  </Button>
+                  <DropDown
+                    targetRef={ref}
+                    onTransitionEnd={onTransitionEnd}
+                    onClick={changeAccessType}
+                  />
+                </div>
+                <div>
+                  <EmotionPicker
+                    selectedEmotion={selectedEmotion}
+                    onChangeEmotion={handleChangeEmotion}
+                  />
+                </div>
+                {/* <List className="relative flex items-start justify-between gap-2">
+                  {EMOTION_STATUS.map((emotion) => (
+                    <EmotionPicker
+                      key={emotion.status}
+                      emotion={emotion}
+                      selectedEmotion={selectedEmotion}
+                      onChangeEmotion={handleChangeEmotion}
+                    />
+                  ))}
+                </List> */}
               </div>
+
               <Button
                 isLoading={isPending}
                 disabled={editor.getText().length === 0 || !selectedEmotion}

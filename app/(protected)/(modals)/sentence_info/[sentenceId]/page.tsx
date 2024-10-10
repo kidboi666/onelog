@@ -7,9 +7,9 @@ import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
 import useBlockEditor from '@/hooks/useBlockEditor'
-import SentenceHeader from '@/components/feature/sentence/sentence/SentenceHeader'
+import SentenceHeader from '@/components/feature/sentence/SentenceHeader'
 import Modal from '@/components/shared/Modal'
-import SentenceContent from '@/components/feature/sentence/sentence/SentenceContent'
+import SentenceContent from '@/components/feature/sentence/SentenceContent'
 
 interface Props {
   params: { sentenceId: string }

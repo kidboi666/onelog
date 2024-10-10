@@ -2,7 +2,7 @@ import Text from '@/components/shared/Text'
 import cn from '@/lib/cn'
 
 interface Props {
-  content: any
+  content: number
 }
 
 export default function TextLength({ content }: Props) {
@@ -10,9 +10,12 @@ export default function TextLength({ content }: Props) {
     <Text
       type="caption"
       size="xs"
-      className={cn('self-end', content?.length >= 300 ? 'text-red-500' : '')}
+      className={cn(
+        'self-end',
+        content >= 300 ? 'text-red-500 dark:text-red-500' : '',
+      )}
     >
-      {content?.length} / 300
+      {content} / 300
     </Text>
   )
 }
