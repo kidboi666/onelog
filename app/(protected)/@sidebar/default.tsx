@@ -16,14 +16,9 @@ import { usePathname } from 'next/navigation'
 
 export default function Default() {
   const [isOpen, setOpen] = useState(false)
-  const { ref, close, onClick } = useStateChange<HTMLDivElement>()
+  const { ref, close, onClick, onTransitionEnd } =
+    useStateChange<HTMLDivElement>('w-14')
   const pathname = usePathname()
-
-  const handleTransitionEnd = () => {
-    if (ref?.current?.getAttribute('data-status') === 'closed') {
-      ref.current.classList.add('w-72')
-    }
-  }
 
   const handlePanelState = () => {
     setOpen((prev) => !prev)
@@ -38,7 +33,7 @@ export default function Default() {
   return (
     <div
       ref={ref}
-      onTransitionEnd={handleTransitionEnd}
+      onTransitionEnd={onTransitionEnd}
       data-status="closed"
       className={cn(
         'fixed top-[48px] z-30 m-4 flex h-[calc(100dvh-80px)] w-72 flex-shrink-0 flex-col gap-2 rounded-lg bg-white p-2 shadow-md transition-all duration-300 ease-in-out data-[status=closed]:w-14 dark:bg-var-darkgray',
@@ -76,7 +71,7 @@ export default function Default() {
           />
         ))}
         <Line className="mb-2" />
-        <AuthButton isOpen={isOpen} />
+        <AuthButton isOpen={isOpen} pathname={pathname.split('/')[2]} />
       </List>
     </div>
   )
