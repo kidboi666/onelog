@@ -39,7 +39,15 @@ export default function SentenceModal() {
   const router = useRouter()
   const { close, onClick, onTransitionEnd, ref } =
     useStateChange<HTMLUListElement>()
-  const buttonRef = useOutsideClick<HTMLButtonElement>(close)
+  const {
+    ref: arrowRef,
+    close: arrowDown,
+    onClick: onClickArrow,
+  } = useStateChange<HTMLDivElement>('rotate-0')
+  const buttonRef = useOutsideClick<HTMLButtonElement>(() => {
+    close()
+    arrowDown()
+  })
 
   if (!editor) return null
 
@@ -80,6 +88,11 @@ export default function SentenceModal() {
     setAccessType(order)
   }
 
+  const handleAccessTypeClick = () => {
+    onClick()
+    onClickArrow()
+  }
+
   return (
     <Modal className="top-10 -translate-y-0 bg-white">
       <form onSubmit={handleSubmitSentence} className="size-full">
@@ -109,14 +122,20 @@ export default function SentenceModal() {
                 <Button
                   ref={buttonRef}
                   variant="secondary"
-                  onClick={onClick}
+                  onClick={handleAccessTypeClick}
                   size="sm"
                   className="w-fit gap-2 font-normal"
                 >
                   {accessType === 'public' ? '공개' : '비공개'}
-                  <Icon view="0 -960 960 960" size={18}>
-                    <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
-                  </Icon>
+                  <div
+                    ref={arrowRef}
+                    data-status="closed"
+                    className="rotate-180 transition data-[status=closed]:rotate-0"
+                  >
+                    <Icon view="0 -960 960 960" size={18}>
+                      <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+                    </Icon>
+                  </div>
                 </Button>
                 <DropDown
                   targetRef={ref}

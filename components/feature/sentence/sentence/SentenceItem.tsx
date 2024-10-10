@@ -9,8 +9,8 @@ import useBlockEditor from '@/hooks/useBlockEditor'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
 import { Tables } from '@/types/supabase'
-import SentenceHeader from './SentenceHeader'
 import SentenceContent from './SentenceContent'
+import SentenceHeader from './SentenceHeader/index'
 
 interface Props {
   sentence?: Tables<'sentence'>
@@ -70,13 +70,12 @@ export default function SentenceItem({
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
           onClick={handleAvatarClick}
-          accessType={sentence.access_type}
         />
       ) : null}
       <SentenceContent
         tags={tags}
         editor={editor}
-        emotionLevel={sentence?.emotion_level}
+        accessType={sentence?.access_type}
         favoritedCount={sentence?.favorite || 0}
         favoritedUserId={sentence?.favorited_user_id || []}
         commentCount={sentence?.comment || 0}

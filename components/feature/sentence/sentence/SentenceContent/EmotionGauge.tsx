@@ -1,6 +1,10 @@
 import { List } from '@/components/shared/List'
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
+import EmotionDropDown from '../../dropdown/EmotionDropDown'
+import useStateChange from '@/hooks/useStateChange'
+import Button from '@/components/shared/Button'
+import { TColor } from '@/types/theme'
 
 interface Props {
   emotionLevel?: string
@@ -8,6 +12,9 @@ interface Props {
 
 export default function EmotionGauge({ emotionLevel }: Props) {
   const { color } = useTheme()
+  const { open, close, onClick, ref, onTransitionEnd } =
+    useStateChange<HTMLDivElement>()
+
   let emotionBlock = [0, 0, 0, 0, 0]
   const [emotion] = emotionLevel?.split('%') || []
 
@@ -32,43 +39,61 @@ export default function EmotionGauge({ emotionLevel }: Props) {
   }
 
   return (
-    <div className="absolute left-0 top-0 z-10 h-px w-full">
-      <List className="flex w-full justify-between">
+    <List
+      onMouseEnter={open}
+      onMouseLeave={close}
+      className="relative flex h-full items-center justify-between gap-px"
+    >
+      <Button
+        variant="icon"
+        size="none"
+        onClick={onClick}
+        className="h-full gap-px"
+      >
         {emotionLevel &&
           emotionBlock!.map((shouldRender, index) => (
-            <EmotionBlock key={index} color={color} isOn={!!shouldRender} />
+            <EmotionBlock
+              key={index}
+              shouldRender={shouldRender}
+              color={color}
+              index={index}
+            />
           ))}
-      </List>
-    </div>
+      </Button>
+      <EmotionDropDown
+        targetRef={ref}
+        onTransitionEnd={onTransitionEnd}
+        emotionLevel={emotionLevel}
+      />
+    </List>
   )
 }
 
 interface EmotionBlockProps {
-  isOn: boolean
-  color: string
+  shouldRender: number
+  color: TColor
+  index: number
 }
 
-function EmotionBlock({ isOn, color }: EmotionBlockProps) {
+function EmotionBlock({ shouldRender, color, index }: EmotionBlockProps) {
   return (
-    <List.Row className="flex w-full">
-      <div
-        className={cn(
-          'h-1 w-full border-r-2 border-var-lightgray bg-zinc-300/15 dark:border-var-black dark:bg-zinc-300/25',
-          isOn &&
-            color === 'yellow' &&
-            'bg-var-yellow/15 dark:bg-var-yellow/25',
-          isOn &&
-            color === 'orange' &&
-            'bg-var-orange/15 dark:bg-var-orange/25',
-          isOn && color === 'black' && 'bg-black/60 dark:bg-black/60',
-          isOn && color === 'blue' && 'bg-var-blue/15 dark:bg-var-blue/60',
-          isOn && color === 'green' && 'bg-var-green/15 dark:bg-var-green/60',
-          isOn && color === 'red' && 'bg-red-500/15 dark:bg-red-500/60',
-          isOn &&
-            color === 'purple' &&
-            'bg-purple-500/15 dark:bg-purple-500/60',
-        )}
-      />
-    </List.Row>
+    <List.Row
+      className={cn(
+        'size-2 rounded-full bg-zinc-300/15 shadow-sm dark:bg-zinc-300/25',
+        shouldRender &&
+          color === 'yellow' &&
+          'bg-var-yellow/45 dark:bg-var-yellow/25',
+        shouldRender &&
+          color === 'orange' &&
+          'bg-var-orange/45 dark:bg-var-orange/25',
+        shouldRender && color === 'black' && 'bg-black/60 dark:bg-black/60',
+        shouldRender &&
+          color === 'blue' &&
+          'bg-var-blue/45 dark:bg-var-blue/60',
+        shouldRender &&
+          color === 'green' &&
+          'bg-var-green/45 dark:bg-var-green/60',
+      )}
+    ></List.Row>
   )
 }

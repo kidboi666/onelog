@@ -9,11 +9,12 @@ import EmotionGauge from './EmotionGauge'
 import FavoriteButton from '../../button/FavoriteButton'
 import CommentButton from '../../button/CommentButton'
 import Comments from '../../comment/Comments'
+import AccessTypeButton from '../../button/AccessTypeButton'
+import OptionsButton from '../../button/OptionsButton'
 
 interface Props {
   tags?: string[]
   editor: Editor
-  emotionLevel?: string
   favoritedUserId?: string[]
   favoritedCount?: number
   commentCount?: number
@@ -24,12 +25,12 @@ interface Props {
   disabled?: boolean
   me: Tables<'user_info'>
   userId: string
+  accessType?: string | null
 }
 
 export default function SentenceContent({
   tags,
   editor,
-  emotionLevel,
   favoritedUserId,
   favoritedCount,
   commentCount,
@@ -40,6 +41,7 @@ export default function SentenceContent({
   disabled = false,
   me,
   userId,
+  accessType,
 }: Props) {
   const pathname = usePathname()
   const [showComment, setShowComment] = useState(false)
@@ -54,10 +56,9 @@ export default function SentenceContent({
 
   return (
     <div
-      className="flex size-full w-full cursor-pointer flex-col gap-4 overflow-hidden overflow-y-auto rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg dark:bg-var-darkgray"
+      className="flex size-full w-full cursor-pointer flex-col gap-4 overflow-hidden overflow-y-auto rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:shadow-lg dark:bg-var-darkgray"
       onClick={onClick}
     >
-      <EmotionGauge emotionLevel={emotionLevel} />
       {tags?.length! > 0 && (
         <List className="flex flex-wrap gap-2">
           {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
@@ -65,7 +66,7 @@ export default function SentenceContent({
       )}
       <EditorContent editor={editor} />
       {isMyPage ? null : (
-        <div className="flex flex-1">
+        <List className="flex items-center justify-between">
           <FavoriteButton
             favoritedUserId={favoritedUserId}
             favoritedCount={favoritedCount}
@@ -79,7 +80,9 @@ export default function SentenceContent({
             commentCount={commentCount!}
             onShowComment={handleShowComment}
           />
-        </div>
+          <AccessTypeButton accessType={accessType} />
+          <OptionsButton />
+        </List>
       )}
       {showComment && !isMyPage && (
         <Suspense fallback={<Spinner size={40} />}>
