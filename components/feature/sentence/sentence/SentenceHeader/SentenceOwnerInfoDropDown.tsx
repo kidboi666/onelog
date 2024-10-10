@@ -1,8 +1,8 @@
 import Button from '@/components/shared/Button'
 import Text from '@/components/shared/Text'
 import { RefObject } from 'react'
-import Avatar from '../../user/Avatar'
 import Title from '@/components/shared/Title'
+import Avatar from '@/components/feature/user/Avatar'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>

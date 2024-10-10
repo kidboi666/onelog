@@ -2,13 +2,13 @@ import { List } from '@/components/shared/List'
 import Tag from '@/components/shared/Tag'
 import { Editor, EditorContent } from '@tiptap/react'
 import { MouseEvent, Suspense, useState } from 'react'
-import Comments from '../comment/Comments'
 import Spinner from '@/components/shared/Spinner'
-import FavoriteButton from '../button/FavoriteButton'
-import CommentButton from '../button/CommentButton'
 import { Tables } from '@/types/supabase'
 import { usePathname } from 'next/navigation'
 import EmotionGauge from './EmotionGauge'
+import FavoriteButton from '../../button/FavoriteButton'
+import CommentButton from '../../button/CommentButton'
+import Comments from '../../comment/Comments'
 
 interface Props {
   tags?: string[]

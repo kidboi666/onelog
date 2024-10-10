@@ -7,7 +7,7 @@ export default function useStateChange<T extends HTMLElement>() {
   const open = async () => {
     if (ref.current) {
       ref.current.classList.remove('hidden')
-      await wait(0)
+      await wait(10)
       ref.current.setAttribute('data-status', 'opened')
     }
   }

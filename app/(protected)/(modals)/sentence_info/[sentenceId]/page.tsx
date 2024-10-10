@@ -1,15 +1,15 @@
 'use client'
 
-import { meQuery } from '@/services/queries/auth/meQuery'
 import { MouseEvent } from 'react'
-import Modal from '@/components/shared/Modal'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import SentenceHeader from '@/components/feature/sentence/sentence/SentenceHeader'
-import SentenceContent from '@/components/feature/sentence/sentence/SentenceContent'
-import useBlockEditor from '@/hooks/useBlockEditor'
+import { meQuery } from '@/services/queries/auth/meQuery'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
+import useBlockEditor from '@/hooks/useBlockEditor'
+import SentenceHeader from '@/components/feature/sentence/sentence/SentenceHeader'
+import Modal from '@/components/shared/Modal'
+import SentenceContent from '@/components/feature/sentence/sentence/SentenceContent'
 
 interface Props {
   params: { sentenceId: string }

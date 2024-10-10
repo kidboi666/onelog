@@ -4,8 +4,8 @@ import { List } from './List'
 import cn from '@/lib/cn'
 
 interface Props {
-  border: 'border' | 'none'
-  background: 'background' | 'none'
+  border?: 'border' | 'none'
+  background?: 'background' | 'none'
   tag: any
   index?: number
   onDelete?: (index: number) => void
