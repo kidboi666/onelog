@@ -13,7 +13,7 @@ export default function SentenceSection() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-8">
       {sentences.map((sentence) => (
         <SentenceItem
           key={sentence.id}

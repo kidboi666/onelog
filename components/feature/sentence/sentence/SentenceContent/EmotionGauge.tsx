@@ -39,12 +39,15 @@ export default function EmotionGauge({ emotionLevel }: Props) {
   }
 
   return (
-    <List
-      onMouseEnter={open}
-      onMouseLeave={close}
-      className="relative flex flex-1 items-end justify-between gap-px"
-    >
-      <Button variant="icon" size="none" onClick={onClick} className="gap-px">
+    <List className="relative flex flex-1 cursor-default items-end justify-between gap-px">
+      <Button
+        onMouseEnter={open}
+        onMouseLeave={close}
+        variant="icon"
+        size="none"
+        onClick={onClick}
+        className="gap-px"
+      >
         {emotionLevel &&
           emotionBlock!.map((shouldRender, index) => (
             <EmotionBlock

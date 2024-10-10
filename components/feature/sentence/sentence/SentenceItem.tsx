@@ -60,7 +60,7 @@ export default function SentenceItem({
   }
 
   return (
-    <div className={cn('my-4 flex flex-col gap-4', className)}>
+    <div className={cn('flex flex-col gap-4', className)}>
       {sentence ? (
         <SentenceHeader
           isMe={me?.id === sentence.user_id}

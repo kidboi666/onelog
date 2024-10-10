@@ -21,7 +21,7 @@ export default function BackButton({
       variant={variant}
       onClick={handleButtonClick}
       className={cn(
-        'absolute right-0 top-0 w-10 self-end rounded-full hover:bg-zinc-300',
+        'absolute right-0 top-0 z-30 w-10 self-end rounded-full',
         className,
       )}
     >

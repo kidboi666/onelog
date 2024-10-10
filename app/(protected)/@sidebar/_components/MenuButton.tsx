@@ -33,16 +33,14 @@ export default function MenuButton({
         ref={ref}
         data-status="closed"
         onTransitionEnd={onTransitionEnd}
-        className="absolute -left-2 top-1/2 h-full w-1 -translate-y-1/2 rounded-r-md bg-var-lightgray transition duration-500 data-[status=closed]:scale-0 dark:bg-var-dark"
+        className="absolute -left-2 top-1/2 h-full w-1 -translate-y-1/2 rounded-r-md bg-var-gray transition duration-500 data-[status=closed]:scale-0"
       />
       <LinkButton
         href={path}
         variant="icon"
         innerClassName={cn(
           'justify-start gap-4 relative',
-          isSelected
-            ? ' bg-var-lightgray text-zinc-500 dark:text-zinc-300 dark:bg-var-dark'
-            : '',
+          isSelected ? 'text-zinc-500 dark:text-zinc-300' : '',
         )}
       >
         <Icon view="0 -960 960 960" size={16} className="flex flex-shrink-0">

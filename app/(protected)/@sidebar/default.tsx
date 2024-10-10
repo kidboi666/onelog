@@ -12,7 +12,7 @@ import {
 } from './_constants/Navigate'
 import AuthButton from './_components/AuthButton'
 import OpenButton from './_components/OpenButton'
-import { usePathname, useSelectedLayoutSegment } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 export default function Default() {
   const [isOpen, setOpen] = useState(false)
