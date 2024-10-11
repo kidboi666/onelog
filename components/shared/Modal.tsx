@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect, useRef } from 'react'
 import Icon from './Icon'
 import BackButton from './BackButton'
+import ExpandButton from './ExpandButton'
 
 interface Props extends ComponentProps<'div'> {
   className?: string
@@ -75,11 +76,10 @@ export default function Modal({
         )}
         {...props}
       >
-        <BackButton>
-          <Icon view="0 -960 960 960" size={18}>
-            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-          </Icon>
-        </BackButton>
+        <div className="absolute right-2 top-0 flex gap-2">
+          <ExpandButton />
+          <BackButton />
+        </div>
         {children}
       </div>
     </>

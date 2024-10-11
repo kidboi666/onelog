@@ -3,8 +3,8 @@ import Title from '@/components/shared/Title'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import Avatar from '@/components/feature/user/Avatar'
-import SentenceOwnerInfoDropDown from '../dropdown/SentenceOwnerInfoDropDown'
 import EmotionGauge from '../SentenceContent/EmotionGauge'
+import AvatarOwnerInfoDropDown from '../dropdown/AvatarOwnerInfoDropDown'
 
 interface Props {
   avatarUrl: string | null
@@ -12,6 +12,7 @@ interface Props {
   email: string | null
   emotionLevel: string
   createdAt: string
+  userId: string
   isMe: boolean
   onClick?: () => void
 }
@@ -21,6 +22,7 @@ export default function SentenceHeader({
   userName,
   email,
   emotionLevel,
+  userId,
   createdAt,
   isMe,
   onClick,
@@ -33,9 +35,10 @@ export default function SentenceHeader({
         <Button variant="none" onClick={onClick} className="p-0">
           <Avatar src={avatarUrl} size="sm" shadow="sm" />
         </Button>
-        <SentenceOwnerInfoDropDown
+        <AvatarOwnerInfoDropDown
           targetRef={ref}
           isMe={isMe}
+          userId={userId}
           avatarUrl={avatarUrl}
           userName={userName}
           onTransitionEnd={onTransitionEnd}

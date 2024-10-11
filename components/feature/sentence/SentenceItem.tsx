@@ -52,7 +52,7 @@ export default function SentenceItem({
   }
 
   const handleSentenceItemClick = () => {
-    router.push(`/sentence_info/${sentenceId}`, { scroll: false })
+    router.push(`/sentence_page/${sentenceId}`, { scroll: false })
   }
 
   const handleAvatarClick = () => {
@@ -63,6 +63,7 @@ export default function SentenceItem({
     <div className={cn('flex flex-col gap-4', className)}>
       {sentence ? (
         <SentenceHeader
+          userId={sentence.user_id}
           isMe={me?.id === sentence.user_id}
           email={sentence.email}
           avatarUrl={sentence.avatar_url}

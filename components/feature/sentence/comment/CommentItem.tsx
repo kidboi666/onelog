@@ -13,6 +13,8 @@ import CommentInputButton from '../button/CommentInputButton'
 import CommentButton from '../button/CommentButton'
 import FavoriteButton from '../button/FavoriteButton'
 import CommentInput from './CommentInput'
+import { useRouter } from 'next/navigation'
+import Button from '@/components/shared/Button'
 
 interface Props {
   comment: Tables<'comment'>
@@ -21,6 +23,7 @@ interface Props {
 }
 
 export default function CommentItem({ comment, sentenceId, me }: Props) {
+  const router = useRouter()
   const [showComment, setShowComment] = useState(false)
   const [showCommentInput, setShowCommentInput] = useState(false)
   const { data: commentToComments } = useSuspenseQuery(
@@ -44,9 +47,17 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
     favoriteComment({ commentId: commentId!, userId: me?.id!, sentenceId })
   }
 
+  const handleAvatarClick = () => {
+    router.replace(`/${comment?.user_id}`)
+  }
+
   return (
     <List.Row className="flex w-full gap-2">
-      <Avatar src={comment?.avatar_url} size="sm" shadow="sm" />
+      <div className="h-fit">
+        <Button variant="none" onClick={handleAvatarClick} className="p-0">
+          <Avatar src={comment?.avatar_url} size="sm" shadow="sm" />
+        </Button>
+      </div>
       <div className="flex flex-1 flex-col gap-2">
         <div>
           <div className="flex items-end gap-2">
@@ -66,7 +77,7 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
             </Text>
           </div>
         </div>
-        <div className="w-fit rounded-md bg-white p-2 dark:bg-var-darkgray">
+        <div className="w-fit rounded-md bg-var-lightgray p-2 dark:bg-var-dark">
           <Text>{comment.content}</Text>
         </div>
         <div className="flex flex-1">

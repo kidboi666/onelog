@@ -8,14 +8,15 @@ import { meQuery } from '@/services/queries/auth/meQuery'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import SentenceHeader from '@/components/feature/sentence/SentenceHeader'
-import Modal from '@/components/shared/Modal'
 import SentenceContent from '@/components/feature/sentence/SentenceContent'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   params: { sentenceId: string }
 }
 
-export default function SentenceInfoModal({ params }: Props) {
+export default function SentencePage({ params }: Props) {
+  const router = useRouter()
   const sentenceId = params.sentenceId
   const { data: sentence } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, sentenceId),
@@ -37,16 +38,22 @@ export default function SentenceInfoModal({ params }: Props) {
     favoriteSentence({ userId: me.id || '', sentenceId })
   }
 
+  const handleAvatarClick = () => {
+    router.push(`/${sentence?.user_id}`)
+  }
+
   return (
-    <Modal className="gap-4">
+    <div className="m-4 flex flex-col gap-4">
       {sentence ? (
         <SentenceHeader
+          userId={sentence.user_id}
           isMe={sentence.user_id === me.id}
           email={sentence.email}
           avatarUrl={sentence.avatar_url}
           userName={sentence.user_name}
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
+          onClick={handleAvatarClick}
         />
       ) : null}
       <SentenceContent
@@ -61,6 +68,6 @@ export default function SentenceInfoModal({ params }: Props) {
         userId={me?.id}
         me={me!}
       />
-    </Modal>
+    </div>
   )
 }

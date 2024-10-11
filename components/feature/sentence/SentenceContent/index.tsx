@@ -5,7 +5,6 @@ import { MouseEvent, Suspense, useState } from 'react'
 import Spinner from '@/components/shared/Spinner'
 import { Tables } from '@/types/supabase'
 import { usePathname } from 'next/navigation'
-import EmotionGauge from './EmotionGauge'
 import FavoriteButton from '../button/FavoriteButton'
 import CommentButton from '../button/CommentButton'
 import Comments from '../comment/Comments'
@@ -56,7 +55,7 @@ export default function SentenceContent({
 
   return (
     <div
-      className="flex size-full w-full cursor-pointer flex-col gap-4 overflow-hidden overflow-y-auto rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:shadow-lg dark:bg-var-darkgray"
+      className="flex size-full w-full cursor-pointer flex-col gap-4 overflow-y-auto rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:shadow-lg dark:bg-var-darkgray"
       onClick={onClick}
     >
       {tags?.length! > 0 && (
