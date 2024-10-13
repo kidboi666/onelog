@@ -48,6 +48,8 @@ export default function SentencePage({ params }: Props) {
       {sentence ? (
         <SentenceHeader
           userId={sentence.user_id}
+          meId={me.id}
+          isFollowing
           isMe={sentence.user_id === me.id}
           email={sentence.email}
           avatarUrl={sentence.avatar_url}

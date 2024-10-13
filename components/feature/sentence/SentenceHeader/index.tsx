@@ -15,6 +15,7 @@ interface Props {
   userId: string
   meId: string
   isMe: boolean
+  isFollowing: boolean
   onClick?: () => void
 }
 
@@ -27,6 +28,7 @@ export default function SentenceHeader({
   createdAt,
   meId,
   isMe,
+  isFollowing,
   onClick,
 }: Props) {
   const { open, close, ref, onTransitionEnd } = useStateChange<HTMLDivElement>()
@@ -40,6 +42,7 @@ export default function SentenceHeader({
         <AvatarOwnerInfoDropDown
           targetRef={ref}
           isMe={isMe}
+          isFollowing={isFollowing}
           userId={userId}
           meId={meId}
           avatarUrl={avatarUrl}
