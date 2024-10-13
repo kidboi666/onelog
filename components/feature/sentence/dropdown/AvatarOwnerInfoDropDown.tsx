@@ -4,6 +4,8 @@ import { RefObject } from 'react'
 import Title from '@/components/shared/Title'
 import Avatar from '@/components/feature/user/Avatar'
 import LinkButton from '@/components/shared/LinkButton'
+import useFollow from '@/services/mutates/follow/useFollow'
+import useUnFollow from '@/services/mutates/follow/useUnFollow'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>
@@ -11,7 +13,9 @@ interface Props {
   avatarUrl: string | null
   userName: string | null
   userId: string
+  meId: string
   isMe: boolean
+  isFollowing: boolean
 }
 
 export default function AvatarOwnerInfoDropDown({
@@ -20,8 +24,20 @@ export default function AvatarOwnerInfoDropDown({
   avatarUrl,
   userName,
   userId,
+  meId,
   isMe,
+  isFollowing,
 }: Props) {
+  const { mutate: follow } = useFollow()
+  const { mutate: unfollow } = useUnFollow()
+
+  const handleFollowButtonClick = () => {
+    follow({ follower_user_id: meId, followed_user_id: userId })
+  }
+
+  const handleUnFollowButtonClick = () => {
+    unfollow({ follower_user_id: meId, followed_user_id: userId })
+  }
   return (
     <div
       ref={targetRef}
@@ -62,7 +78,11 @@ export default function AvatarOwnerInfoDropDown({
             </div>
           ) : (
             <div className="flex gap-2">
-              <Button size="sm" variant="secondary">
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={handleFollowButtonClick}
+              >
                 팔로우 하기
               </Button>
               <LinkButton href={`/${userId}`} size="sm">

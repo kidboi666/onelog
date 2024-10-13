@@ -64,6 +64,7 @@ export default function SentenceItem({
       {sentence ? (
         <SentenceHeader
           userId={sentence.user_id}
+          meId={me.id}
           isMe={me?.id === sentence.user_id}
           email={sentence.email}
           avatarUrl={sentence.avatar_url}

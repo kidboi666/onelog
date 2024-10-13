@@ -13,6 +13,7 @@ interface Props {
   emotionLevel: string
   createdAt: string
   userId: string
+  meId: string
   isMe: boolean
   onClick?: () => void
 }
@@ -24,6 +25,7 @@ export default function SentenceHeader({
   emotionLevel,
   userId,
   createdAt,
+  meId,
   isMe,
   onClick,
 }: Props) {
@@ -39,6 +41,7 @@ export default function SentenceHeader({
           targetRef={ref}
           isMe={isMe}
           userId={userId}
+          meId={meId}
           avatarUrl={avatarUrl}
           userName={userName}
           onTransitionEnd={onTransitionEnd}
