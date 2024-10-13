@@ -11,6 +11,7 @@ import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence
 import { Tables } from '@/types/supabase'
 import SentenceHeader from './SentenceHeader'
 import SentenceContent from './SentenceContent'
+import { followQuery } from '@/services/queries/follow/followQuery'
 
 interface Props {
   sentence?: Tables<'sentence'>
@@ -36,6 +37,7 @@ export default function SentenceItem({
   const { data: me } = useSuspenseQuery(
     meQuery.getUserInfo(supabase, userId || ''),
   )
+
   const { editor } = useBlockEditor({
     content,
   })

@@ -12,10 +12,21 @@ export default function useFollow() {
 
   return useMutation({
     mutationFn: async (params: Params) => {
-      return supabase
+      const { data, error } = await supabase
         .from('follow')
         .insert({ ...params })
         .select()
+
+      if (error) {
+        console.error('팔로우 실패:', error)
+      }
+
+      return data
+    },
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['follower', variables.followed_user_id],
+      })
     },
   })
 }

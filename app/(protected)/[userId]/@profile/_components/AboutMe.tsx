@@ -4,8 +4,11 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
+
 import { userQuery } from '@/services/queries/auth/userQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
+import { followQuery } from '@/services/queries/follow/followQuery'
+
 import Avatar from '@/components/feature/user/Avatar'
 import Button from '@/components/shared/Button'
 import Line from '@/components/shared/Line'
@@ -13,6 +16,8 @@ import Spinner from '@/components/shared/Spinner'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import Container from '../../_components/Container'
+import useFollow from '@/services/mutates/follow/useFollow'
+import useUnFollow from '@/services/mutates/follow/useUnFollow'
 
 interface Props {
   userId: string
@@ -25,13 +30,26 @@ export default function AboutMe({ userId }: Props) {
     userQuery.getUserInfo(supabase, userId),
   )
   const isMyProfilePage = me?.userId === user?.id
+  const { data: followers } = useSuspenseQuery(
+    followQuery.getFollowers(supabase, userId),
+  )
+  const { data: following } = useSuspenseQuery(
+    followQuery.getFollwing(supabase, userId),
+  )
+  const isFollowing = isMyProfilePage
+    ? null
+    : followers?.find((user) => user.follower_user_id === me.userId)
+  const { mutate: followUser } = useFollow()
+  const { mutate: unfollowUser } = useUnFollow()
   const [isLoadingProfile, startTransitionProfile] = useTransition()
   const [isLoadingWrite, startTransitionWrite] = useTransition()
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
   const [isLoadingSendMessage, startTransitionSendMessage] = useTransition()
 
   const handleFollowButtonClick = () => {
-    return
+    isFollowing
+      ? unfollowUser({ followed_user_id: userId, follower_user_id: me.userId })
+      : followUser({ followed_user_id: userId, follower_user_id: me.userId })
   }
 
   const handleSendMessageButtonClick = () => {
@@ -59,10 +77,10 @@ export default function AboutMe({ userId }: Props) {
         </div>
         <div className="flex gap-2">
           <Text type="caption" size="sm">
-            팔로우 20명
+            팔로우 {followers && followers.length >= 1 ? followers.length : 0}명
           </Text>
           <Text type="caption" size="sm">
-            팔로잉 8명
+            팔로잉 {following && following.length >= 1 ? following.length : 0}명
           </Text>
         </div>
         <div className="flex gap-4">
@@ -95,7 +113,17 @@ export default function AboutMe({ userId }: Props) {
                   startTransitionFollowing(() => handleFollowButtonClick())
                 }
               >
-                {isLoadingFollowing ? <Spinner size={16} /> : '팔로우 하기'}
+                {isFollowing ? (
+                  isLoadingFollowing ? (
+                    <Spinner size={16} />
+                  ) : (
+                    '팔로우 취소'
+                  )
+                ) : isLoadingFollowing ? (
+                  <Spinner size={16} />
+                ) : (
+                  '팔로우 하기'
+                )}
               </Button>
               <Button
                 size="sm"
