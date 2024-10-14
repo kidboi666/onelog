@@ -1,11 +1,12 @@
 import Button from '@/components/shared/Button'
 import Text from '@/components/shared/Text'
-import { RefObject } from 'react'
+import { RefObject, useTransition } from 'react'
 import Title from '@/components/shared/Title'
 import Avatar from '@/components/feature/user/Avatar'
 import LinkButton from '@/components/shared/LinkButton'
 import useFollow from '@/services/mutates/follow/useFollow'
 import useUnFollow from '@/services/mutates/follow/useUnFollow'
+import Spinner from '@/components/shared/Spinner'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>
@@ -14,6 +15,8 @@ interface Props {
   userName: string | null
   userId: string
   meId: string
+  followers: any
+  followings: any
   isMe: boolean
   isFollowing: boolean
 }
@@ -25,19 +28,21 @@ export default function AvatarOwnerInfoDropDown({
   userName,
   userId,
   meId,
+  followers,
+  followings,
   isMe,
   isFollowing,
 }: Props) {
   const { mutate: follow } = useFollow()
   const { mutate: unfollow } = useUnFollow()
+  const [isLoadingFollowing, startTransitionFollowing] = useTransition()
 
   const handleFollowButtonClick = () => {
-    follow({ follower_user_id: meId, followed_user_id: userId })
+    isFollowing
+      ? unfollow({ followed_user_id: userId, follower_user_id: meId })
+      : follow({ followed_user_id: userId, follower_user_id: meId })
   }
 
-  const handleUnFollowButtonClick = () => {
-    unfollow({ follower_user_id: meId, followed_user_id: userId })
-  }
   return (
     <div
       ref={targetRef}
@@ -54,17 +59,13 @@ export default function AvatarOwnerInfoDropDown({
         </div>
         <div className="flex flex-col items-center gap-2">
           <div className="flex gap-2">
-            <Text size="sm" type="caption">
-              팔로잉
-              <Text as="span" size="sm">
-                4명
-              </Text>
+            <Text type="caption" size="sm">
+              팔로우 {followers && followers.length >= 1 ? followers.length : 0}
+              명
             </Text>
-            <Text size="sm" type="caption">
-              팔로워
-              <Text as="span" size="sm">
-                24명
-              </Text>
+            <Text type="caption" size="sm">
+              팔로잉{' '}
+              {followings && followings.length >= 1 ? followings.length : 0}명
             </Text>
           </div>
           {isMe ? (
@@ -83,7 +84,17 @@ export default function AvatarOwnerInfoDropDown({
                 variant="secondary"
                 onClick={handleFollowButtonClick}
               >
-                팔로우 하기
+                {isFollowing ? (
+                  isLoadingFollowing ? (
+                    <Spinner size={16} />
+                  ) : (
+                    '팔로우 취소'
+                  )
+                ) : isLoadingFollowing ? (
+                  <Spinner size={16} />
+                ) : (
+                  '팔로우 하기'
+                )}
               </Button>
               <LinkButton href={`/${userId}`} size="sm">
                 프로필 페이지

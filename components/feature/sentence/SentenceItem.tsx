@@ -2,13 +2,14 @@ import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
-import { ISentenceState } from '@/store/useSentence'
 import cn from '@/lib/cn'
 
+import { ISentenceState } from '@/store/useSentence'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
 import { Tables } from '@/types/supabase'
+
 import SentenceHeader from './SentenceHeader'
 import SentenceContent from './SentenceContent'
 import { followQuery } from '@/services/queries/follow/followQuery'
@@ -36,6 +37,15 @@ export default function SentenceItem({
   const router = useRouter()
   const { data: me } = useSuspenseQuery(
     meQuery.getUserInfo(supabase, userId || ''),
+  )
+  const { data: followers } = useSuspenseQuery(
+    followQuery.getFollowers(supabase, sentence?.user_id),
+  )
+  const { data: followings } = useSuspenseQuery(
+    followQuery.getFollwing(supabase, sentence?.user_id),
+  )
+  const isFollowing = followers?.find(
+    (user) => user.follower_user_id === userId,
   )
 
   const { editor } = useBlockEditor({
@@ -68,7 +78,9 @@ export default function SentenceItem({
           userId={sentence.user_id}
           meId={me.id}
           isMe={me?.id === sentence.user_id}
-          isFollowing
+          isFollowing={!!isFollowing}
+          followers={followers}
+          followings={followings}
           email={sentence.email}
           avatarUrl={sentence.avatar_url}
           userName={sentence.user_name}

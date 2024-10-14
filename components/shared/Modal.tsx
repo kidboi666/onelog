@@ -76,10 +76,7 @@ export default function Modal({
         )}
         {...props}
       >
-        <div className="absolute right-2 top-0 flex gap-2">
-          <ExpandButton />
-          <BackButton />
-        </div>
+        <div className="absolute right-2 top-0 flex gap-2"></div>
         {children}
       </div>
     </>

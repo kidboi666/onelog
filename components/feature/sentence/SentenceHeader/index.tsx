@@ -5,6 +5,8 @@ import Button from '@/components/shared/Button'
 import Avatar from '@/components/feature/user/Avatar'
 import EmotionGauge from '../SentenceContent/EmotionGauge'
 import AvatarOwnerInfoDropDown from '../dropdown/AvatarOwnerInfoDropDown'
+import ExpandButton from '@/components/shared/ExpandButton'
+import BackButton from '@/components/shared/BackButton'
 
 interface Props {
   avatarUrl: string | null
@@ -14,8 +16,11 @@ interface Props {
   createdAt: string
   userId: string
   meId: string
+  followers: any
+  followings: any
   isMe: boolean
   isFollowing: boolean
+  isModal?: boolean
   onClick?: () => void
 }
 
@@ -27,8 +32,11 @@ export default function SentenceHeader({
   userId,
   createdAt,
   meId,
+  followers,
+  followings,
   isMe,
   isFollowing,
+  isModal = false,
   onClick,
 }: Props) {
   const { open, close, ref, onTransitionEnd } = useStateChange<HTMLDivElement>()
@@ -43,6 +51,8 @@ export default function SentenceHeader({
           targetRef={ref}
           isMe={isMe}
           isFollowing={isFollowing}
+          followers={followers}
+          followings={followings}
           userId={userId}
           meId={meId}
           avatarUrl={avatarUrl}
@@ -60,7 +70,15 @@ export default function SentenceHeader({
           </Text>
         </div>
       </div>
-      <EmotionGauge emotionLevel={emotionLevel} />
+      <div className="flex flex-col gap-2">
+        {isModal && (
+          <div className="flex w-full justify-end gap-2">
+            <ExpandButton />
+            <BackButton />
+          </div>
+        )}
+        <EmotionGauge emotionLevel={emotionLevel} />
+      </div>
     </div>
   )
 }
