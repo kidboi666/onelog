@@ -5,7 +5,7 @@ import { Tables } from '@/types/supabase'
 
 export const sentenceQuery = {
   getAllSentence: (supabase: SupabaseClient) =>
-    queryOptions<ISentenceWithUserInfo[]>({
+    queryOptions<ISentenceWithUserInfo[] | null>({
       queryKey: ['all_sentence'],
       queryFn: async () => {
         const { data, error } = await supabase
@@ -23,16 +23,12 @@ export const sentenceQuery = {
           .eq('access_type', 'public')
           .order('created_at', { ascending: false })
 
-        if (error) {
-          throw error
-        }
-
         return data
       },
     }),
 
   getAllMySentence: (supabase: SupabaseClient, userId: string) =>
-    queryOptions<ISentenceWithUserInfo[]>({
+    queryOptions<ISentenceWithUserInfo[] | null>({
       queryKey: ['sentence', userId],
       queryFn: async () => {
         const { data, error } = await supabase
@@ -50,17 +46,13 @@ export const sentenceQuery = {
           .eq('user_id', userId)
           .order('created_at', { ascending: false })
 
-        if (error) {
-          throw error
-        }
-
         return data
       },
       enabled: !!userId,
     }),
 
   getSentence: (supabase: SupabaseClient, sentenceId: string) =>
-    queryOptions<ISentenceWithUserInfo>({
+    queryOptions<ISentenceWithUserInfo | null>({
       queryKey: ['sentence', sentenceId],
       queryFn: async () => {
         const { data, error } = await supabase
@@ -78,10 +70,6 @@ export const sentenceQuery = {
           .eq('id', sentenceId)
           .single()
 
-        if (error) {
-          throw error
-        }
-
         return data
       },
     }),
@@ -95,10 +83,6 @@ export const sentenceQuery = {
           .select('favorite_sentence_id')
           .eq('id', userId)
           .single()
-
-        if (error) {
-          throw error
-        }
 
         return data
       },
@@ -114,10 +98,6 @@ export const sentenceQuery = {
           .eq('user_id', userId)
           .single()
 
-        if (error) {
-          throw error
-        }
-
         return data
       },
     }),
@@ -132,13 +112,8 @@ export const sentenceQuery = {
           .eq('word', word)
           .single()
 
-        if (error) {
-          throw error
-        }
-
         return data
       },
-      staleTime: 0,
       enabled: trigger,
     }),
 }

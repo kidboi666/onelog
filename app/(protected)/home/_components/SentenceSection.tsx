@@ -14,7 +14,7 @@ export default function SentenceSection() {
 
   return (
     <div className="flex flex-col gap-8">
-      {sentences.map((sentence) => (
+      {sentences?.map((sentence) => (
         <SentenceItem
           key={sentence.id}
           sentence={sentence}

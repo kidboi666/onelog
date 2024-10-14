@@ -1,10 +1,10 @@
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import { EMOTION_STATUS } from '../_constants'
 import { List } from '@/components/shared/List'
 import Icon from '@/components/shared/Icon'
 import EmotionBlock from '@/components/shared/EmotionBlock'
 import cn from '@/lib/cn'
+import { EMOTION_STATUS } from '../_constants'
 
 interface Props {
   selectedStatus: any

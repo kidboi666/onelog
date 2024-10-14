@@ -2,26 +2,27 @@
 
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
-import { BubbleMenu, EditorContent } from '@tiptap/react'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { BubbleMenu, EditorContent } from '@tiptap/react'
 import { supabase } from '@/lib/supabase/client'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { useInput } from '@/hooks/useInput'
-import useAddSentence from '@/services/mutates/sentence/useAddSentence'
-import useBlockEditor from '@/hooks/useBlockEditor'
 
-import Modal from '@/components/shared/Modal'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import useAddSentence from '@/services/mutates/sentence/useAddSentence'
+import { useInput } from '@/hooks/useInput'
+import useBlockEditor from '@/hooks/useBlockEditor'
+import useStateChange from '@/hooks/useStateChange'
+import useOutsideClick from '@/hooks/useOutsideClick'
+
 import Button from '@/components/shared/Button'
 import { TagsInput } from '@/components/shared/TagsInput'
 import BubbleMenuBar from '@/components/feature/text_editor/BubbleMenuBar'
 import TextLength from '@/components/feature/text_editor/TextLength'
-import DropDown from './_components/DropDown'
 import Icon from '@/components/shared/Icon'
-import useStateChange from '@/hooks/useStateChange'
-import useOutsideClick from '@/hooks/useOutsideClick'
 import EmotionPicker from '@/components/feature/sentence/EmotionPicker'
+import { List } from '@/components/shared/List'
+import DropDown from './_components/DropDown'
 
-export default function SentenceModal() {
+export default function PostSentencePage() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [content, _, setContent] = useInput<string>('')
   const [selectedEmotion, setSelectedEmotion] = useState('')
@@ -92,52 +93,51 @@ export default function SentenceModal() {
   }
 
   return (
-    <Modal className="top-10 -translate-y-0 bg-white">
-      <form onSubmit={handleSubmitSentence} className="size-full">
-        <div className="flex max-h-[600px] w-full flex-col gap-4">
-          {editor && (
-            <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-              <BubbleMenuBar editor={editor} />
-            </BubbleMenu>
-          )}
-          <EditorContent editor={editor} className="h-full overflow-y-auto" />
-          <TextLength content={editor.storage.characterCount.characters()} />
-          <TagsInput tags={tags} setTags={setTags} />
-          <div className="flex flex-col gap-2">
-            <div className="flex justify-between">
-              <div className="flex gap-2">
-                <div className="relative">
-                  <Button
-                    ref={buttonRef}
-                    variant="secondary"
-                    onClick={handleAccessTypeClick}
-                    size="sm"
-                    className="w-fit gap-2 font-normal dark:bg-var-darkgray"
+    <form onSubmit={handleSubmitSentence} className="size-full">
+      <div className="flex max-h-[600px] w-full flex-col gap-4">
+        {editor && (
+          <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+            <BubbleMenuBar editor={editor} />
+          </BubbleMenu>
+        )}
+        <EditorContent editor={editor} className="h-full overflow-y-auto" />
+        <TextLength content={editor.storage.characterCount.characters()} />
+        <TagsInput tags={tags} setTags={setTags} />
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between">
+            <div className="flex gap-2">
+              <div className="relative">
+                <Button
+                  ref={buttonRef}
+                  variant="secondary"
+                  onClick={handleAccessTypeClick}
+                  size="sm"
+                  className="w-fit gap-2 font-normal dark:bg-var-darkgray"
+                >
+                  {accessType === 'public' ? '공개' : '비공개'}
+                  <div
+                    ref={arrowRef}
+                    data-status="closed"
+                    className="rotate-180 transition data-[status=closed]:rotate-0"
                   >
-                    {accessType === 'public' ? '공개' : '비공개'}
-                    <div
-                      ref={arrowRef}
-                      data-status="closed"
-                      className="rotate-180 transition data-[status=closed]:rotate-0"
-                    >
-                      <Icon view="0 -960 960 960" size={18}>
-                        <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
-                      </Icon>
-                    </div>
-                  </Button>
-                  <DropDown
-                    targetRef={ref}
-                    onTransitionEnd={onTransitionEnd}
-                    onClick={changeAccessType}
-                  />
-                </div>
-                <div>
-                  <EmotionPicker
+                    <Icon view="0 -960 960 960" size={18}>
+                      <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+                    </Icon>
+                  </div>
+                </Button>
+                <DropDown
+                  targetRef={ref}
+                  onTransitionEnd={onTransitionEnd}
+                  onClick={changeAccessType}
+                />
+              </div>
+              <div>
+                {/* <EmotionPicker
                     selectedEmotion={selectedEmotion}
                     onChangeEmotion={handleChangeEmotion}
-                  />
-                </div>
-                {/* <List className="relative flex items-start justify-between gap-2">
+                  /> */}
+              </div>
+              {/* <List className="relative flex items-start justify-between gap-2">
                   {EMOTION_STATUS.map((emotion) => (
                     <EmotionPicker
                       key={emotion.status}
@@ -147,21 +147,20 @@ export default function SentenceModal() {
                     />
                   ))}
                 </List> */}
-              </div>
-
-              <Button
-                isLoading={isPending}
-                disabled={editor.getText().length === 0 || !selectedEmotion}
-                type="submit"
-                size="sm"
-                className="self-end text-nowrap"
-              >
-                등록하기
-              </Button>
             </div>
+
+            <Button
+              isLoading={isPending}
+              disabled={editor.getText().length === 0 || !selectedEmotion}
+              type="submit"
+              size="sm"
+              className="self-end text-nowrap"
+            >
+              등록하기
+            </Button>
           </div>
         </div>
-      </form>
-    </Modal>
+      </div>
+    </form>
   )
 }

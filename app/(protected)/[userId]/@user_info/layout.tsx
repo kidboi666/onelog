@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import cn from '@/lib/cn'
 import LinkButton from '@/components/shared/LinkButton'
-import Container from '../_components/Container'
+import Container from '@/components/shared/Container'
 
 interface Props {
   params: { userId: string }

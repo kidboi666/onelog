@@ -15,9 +15,9 @@ import Line from '@/components/shared/Line'
 import Spinner from '@/components/shared/Spinner'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import Container from '../../_components/Container'
 import useFollow from '@/services/mutates/follow/useFollow'
 import useUnFollow from '@/services/mutates/follow/useUnFollow'
+import Container from '@/components/shared/Container'
 
 interface Props {
   userId: string
