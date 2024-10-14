@@ -1,31 +1,43 @@
 'use client'
 
 import cn from '@/lib/cn'
-import { EMOTION_STATUS } from '@/app/(protected)/(modals)/post/sentence/_constants'
 import Text from '@/components/shared/Text'
 import { List } from '@/components/shared/List'
 import useStateChange from '@/hooks/useStateChange'
+import { EMOTION_STATUS } from '@/app/(protected)/post/sentence/_constants'
+import { RefObject } from 'react'
 
 interface Props {
   selectedEmotion: string
+  targetRef: RefObject<HTMLDivElement>
   onChangeEmotion: (emotion: string) => void
+  onTransitionEnd: () => void
 }
 
 export default function EmotionPicker({
   selectedEmotion,
   onChangeEmotion,
+  targetRef,
+  onTransitionEnd,
 }: Props) {
   return (
-    <List className="relative flex items-start justify-between gap-2">
-      {EMOTION_STATUS.map((emotion) => (
-        <EmotionBlock
-          key={emotion.status}
-          emotion={emotion}
-          selectedEmotion={selectedEmotion}
-          onChangeEmotion={onChangeEmotion}
-        />
-      ))}
-    </List>
+    <div
+      ref={targetRef}
+      data-status="closed"
+      onTransitionEnd={onTransitionEnd}
+      className="absolute top-[calc(100%--6px)] origin-top-left transition data-[status=closed]:scale-90 data-[status=closed]:opacity-0"
+    >
+      <List className="flex items-start justify-between gap-2 rounded-md bg-white p-2 shadow-md ring-1 ring-zinc-200 dark:bg-var-dark dark:ring-zinc-700">
+        {EMOTION_STATUS.map((emotion) => (
+          <EmotionBlock
+            key={emotion.status}
+            emotion={emotion}
+            selectedEmotion={selectedEmotion}
+            onChangeEmotion={onChangeEmotion}
+          />
+        ))}
+      </List>
+    </div>
   )
 }
 
