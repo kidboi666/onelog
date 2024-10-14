@@ -9,39 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      _prisma_migrations: {
-        Row: {
-          applied_steps_count: number
-          checksum: string
-          finished_at: string | null
-          id: string
-          logs: string | null
-          migration_name: string
-          rolled_back_at: string | null
-          started_at: string
-        }
-        Insert: {
-          applied_steps_count?: number
-          checksum: string
-          finished_at?: string | null
-          id: string
-          logs?: string | null
-          migration_name: string
-          rolled_back_at?: string | null
-          started_at?: string
-        }
-        Update: {
-          applied_steps_count?: number
-          checksum?: string
-          finished_at?: string | null
-          id?: string
-          logs?: string | null
-          migration_name?: string
-          rolled_back_at?: string | null
-          started_at?: string
-        }
-        Relationships: []
-      }
       comment: {
         Row: {
           avatar_url: string | null
@@ -109,6 +76,42 @@ export type Database = {
           },
         ]
       }
+      follow: {
+        Row: {
+          created_at: string
+          followed_user_id: string | null
+          follower_user_id: string | null
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          followed_user_id?: string | null
+          follower_user_id?: string | null
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          followed_user_id?: string | null
+          follower_user_id?: string | null
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "follow_followed_user_id_fkey"
+            columns: ["followed_user_id"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "follow_follower_user_id_fkey"
+            columns: ["follower_user_id"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       garden: {
         Row: {
           created_at: string
@@ -136,55 +139,46 @@ export type Database = {
       sentence: {
         Row: {
           access_type: string | null
-          avatar_url: string | null
           comment: number | null
           content: string
           created_at: string
-          email: string | null
           emotion_level: string
           favorite: number | null
           favorited_user_id: string[] | null
           id: number
           tags: string[] | null
           user_id: string
-          user_name: string | null
         }
         Insert: {
           access_type?: string | null
-          avatar_url?: string | null
           comment?: number | null
           content: string
           created_at?: string
-          email?: string | null
           emotion_level: string
           favorite?: number | null
           favorited_user_id?: string[] | null
           id?: number
           tags?: string[] | null
           user_id: string
-          user_name?: string | null
         }
         Update: {
           access_type?: string | null
-          avatar_url?: string | null
           comment?: number | null
           content?: string
           created_at?: string
-          email?: string | null
           emotion_level?: string
           favorite?: number | null
           favorited_user_id?: string[] | null
           id?: number
           tags?: string[] | null
           user_id?: string
-          user_name?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "sentence_user_id_fkey"
+            foreignKeyName: "sentence_user_id_fkey1"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "user_info"
             referencedColumns: ["id"]
           },
         ]
@@ -284,8 +278,6 @@ export type Database = {
           favorite_comment_id: number[] | null
           favorite_sentence_id: number[] | null
           favorite_words: string[] | null
-          followees_user_id: string[] | null
-          followers_user_id: string[] | null
           id: string
           user_name: string | null
         }
@@ -297,8 +289,6 @@ export type Database = {
           favorite_comment_id?: number[] | null
           favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
-          followees_user_id?: string[] | null
-          followers_user_id?: string[] | null
           id: string
           user_name?: string | null
         }
@@ -310,8 +300,6 @@ export type Database = {
           favorite_comment_id?: number[] | null
           favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
-          followees_user_id?: string[] | null
-          followers_user_id?: string[] | null
           id?: string
           user_name?: string | null
         }

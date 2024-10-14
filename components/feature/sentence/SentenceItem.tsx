@@ -8,14 +8,14 @@ import { ISentenceState } from '@/store/useSentence'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
-import { Tables } from '@/types/supabase'
 
 import SentenceHeader from './SentenceHeader'
 import SentenceContent from './SentenceContent'
 import { followQuery } from '@/services/queries/follow/followQuery'
+import { ISentenceWithUserInfo } from '@/types/sentence'
 
 interface Props {
-  sentence?: Tables<'sentence'>
+  sentence?: ISentenceWithUserInfo
   sentenceSummary?: ISentenceState
   userId: string
   isMyPage?: boolean
@@ -76,14 +76,14 @@ export default function SentenceItem({
       {sentence ? (
         <SentenceHeader
           userId={sentence.user_id}
-          meId={me.id}
+          meId={me?.id}
           isMe={me?.id === sentence.user_id}
           isFollowing={!!isFollowing}
           followers={followers}
           followings={followings}
-          email={sentence.email}
-          avatarUrl={sentence.avatar_url}
-          userName={sentence.user_name}
+          email={sentence.user_info.email}
+          avatarUrl={sentence.user_info.avatar_url}
+          userName={sentence.user_info.user_name}
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
           onClick={handleAvatarClick}

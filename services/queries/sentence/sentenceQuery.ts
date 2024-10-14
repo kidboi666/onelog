@@ -1,18 +1,33 @@
+import { ISentenceWithUserInfo } from '@/types/sentence'
 import { Tables } from '@/types/supabase'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
 export const sentenceQuery = {
   getAllSentence: (supabase: SupabaseClient) =>
-    queryOptions<Tables<'sentence'>[]>({
+    queryOptions({
       queryKey: ['all_sentence'],
       queryFn: async () => {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('sentence')
-          .select()
+          .select(
+            `
+            *,  
+            user_info(
+              email,
+              user_name,
+              avatar_url
+            )
+            `,
+          )
           .eq('access_type', 'public')
           .order('created_at', { ascending: false })
-        return data as Tables<'sentence'>[]
+
+        if (error) {
+          throw error
+        }
+
+        return data as ISentenceWithUserInfo[]
       },
     }),
   getAllMySentence: (supabase: any, userId: string) =>

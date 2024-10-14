@@ -1,13 +1,23 @@
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import { ISentence } from '@/types/sentence'
 import { useMutation } from '@tanstack/react-query'
+
+interface IAddSentence {
+  user_id: string
+  content: string
+  emotion_level: string
+  user_name: string
+  email: string
+  avatar_url: string | null
+  tags: string[]
+  access_type: 'private' | 'public'
+}
 
 export default function useAddSentence() {
   const queryClient = getQueryClient()
 
   return useMutation({
-    mutationFn: async (params: ISentence) => {
+    mutationFn: async (params: IAddSentence) => {
       return supabase
         .from('sentence')
         .insert({ ...params })

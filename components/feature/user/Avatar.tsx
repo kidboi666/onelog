@@ -1,6 +1,7 @@
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
 import Image from 'next/image'
+import profileImage from '@/public/profile.svg'
 
 interface Props {
   src?: string | null
@@ -22,10 +23,10 @@ const avatarVariants = cva('', {
     },
     ring: {
       none: '',
-      xs: 'border border-white ring-1 ring-zinc-400',
-      sm: 'border-2 border-white ring-1 ring-zinc-400',
-      md: 'border-4 border-white ring-1 ring-zinc-400',
-      lg: 'border-8 border-white ring-1 ring-zinc-400',
+      xs: 'border border-zinc-200 ring-1 ring-zinc-400',
+      sm: 'border-2 border-zinc-200 ring-1 ring-zinc-400',
+      md: 'border-4 border-zinc-200 ring-1 ring-zinc-400',
+      lg: 'border-8 border-zinc-200 ring-1 ring-zinc-400',
     },
     shadow: {
       none: '',
@@ -59,7 +60,12 @@ export default function Avatar({
       {src ? (
         <Image src={src} fill className="object-cover" alt="프로필 이미지" />
       ) : (
-        <Image src="profile.svg" fill alt="프로필 이미지 없음" />
+        <Image
+          src={profileImage}
+          fill
+          alt="프로필 이미지 없음"
+          className="object-cover"
+        />
       )}
     </div>
   )
