@@ -1,11 +1,11 @@
+import { queryOptions } from '@tanstack/react-query'
+import { SupabaseClient } from '@supabase/supabase-js'
 import { ISentenceWithUserInfo } from '@/types/sentence'
 import { Tables } from '@/types/supabase'
-import { SupabaseClient } from '@supabase/supabase-js'
-import { queryOptions } from '@tanstack/react-query'
 
 export const sentenceQuery = {
   getAllSentence: (supabase: SupabaseClient) =>
-    queryOptions({
+    queryOptions<ISentenceWithUserInfo[]>({
       queryKey: ['all_sentence'],
       queryFn: async () => {
         const { data, error } = await supabase
@@ -27,75 +27,114 @@ export const sentenceQuery = {
           throw error
         }
 
-        return data as ISentenceWithUserInfo[]
+        return data
       },
     }),
-  getAllMySentence: (supabase: any, userId: string) =>
-    queryOptions({
+
+  getAllMySentence: (supabase: SupabaseClient, userId: string) =>
+    queryOptions<ISentenceWithUserInfo[]>({
       queryKey: ['sentence', userId],
       queryFn: async () => {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('sentence')
-          .select()
+          .select(
+            `
+            *,  
+            user_info(
+              email,
+              user_name,
+              avatar_url
+            )
+            `,
+          )
           .eq('user_id', userId)
           .order('created_at', { ascending: false })
+
+        if (error) {
+          throw error
+        }
 
         return data
       },
       enabled: !!userId,
     }),
 
-  getSentence: (supabase: any, sentenceId: string) =>
-    queryOptions<Tables<'sentence'>>({
+  getSentence: (supabase: SupabaseClient, sentenceId: string) =>
+    queryOptions<ISentenceWithUserInfo>({
       queryKey: ['sentence', sentenceId],
       queryFn: async () => {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('sentence')
-          .select()
+          .select(
+            `
+            *,  
+            user_info(
+              email,
+              user_name,
+              avatar_url
+            )
+            `,
+          )
           .eq('id', sentenceId)
           .single()
+
+        if (error) {
+          throw error
+        }
 
         return data
       },
     }),
 
-  getMyFavoriteSentence: (supabase: any, userId: string) =>
+  getMyFavoriteSentence: (supabase: SupabaseClient, userId: string) =>
     queryOptions({
       queryKey: ['favorite_sentences', userId],
       queryFn: async () => {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('user_info')
           .select('favorite_sentence_id')
           .eq('id', userId)
           .single()
 
+        if (error) {
+          throw error
+        }
+
         return data
       },
     }),
 
-  getMyUsedWords: (supabase: any, userId: string) =>
+  getMyUsedWords: (supabase: SupabaseClient, userId: string) =>
     queryOptions<Tables<'user_words'>>({
       queryKey: ['favorite_words', userId],
       queryFn: async () => {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('user_words')
           .select()
           .eq('user_id', userId)
           .single()
 
+        if (error) {
+          throw error
+        }
+
         return data
       },
     }),
 
-  getUsedWords: (supabase: any, word: string, trigger: boolean) =>
+  getUsedWords: (supabase: SupabaseClient, word: string, trigger: boolean) =>
     queryOptions<Tables<'word_dictionary'>>({
       queryKey: ['words', word],
       queryFn: async () => {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('word_dictionary')
           .select()
           .eq('word', word)
           .single()
+
+        if (error) {
+          throw error
+        }
 
         return data
       },

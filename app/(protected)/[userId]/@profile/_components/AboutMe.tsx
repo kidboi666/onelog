@@ -38,7 +38,7 @@ export default function AboutMe({ userId }: Props) {
   )
   const isFollowing = isMyProfilePage
     ? null
-    : followers?.find((user) => user.follower_user_id === me.userId)
+    : followers?.find((user) => user.follower_user_id === me!.userId)
   const { mutate: followUser } = useFollow()
   const { mutate: unfollowUser } = useUnFollow()
   const [isLoadingProfile, startTransitionProfile] = useTransition()
@@ -48,8 +48,8 @@ export default function AboutMe({ userId }: Props) {
 
   const handleFollowButtonClick = () => {
     isFollowing
-      ? unfollowUser({ followed_user_id: userId, follower_user_id: me.userId })
-      : followUser({ followed_user_id: userId, follower_user_id: me.userId })
+      ? unfollowUser({ followed_user_id: userId, follower_user_id: me!.userId })
+      : followUser({ followed_user_id: userId, follower_user_id: me!.userId })
   }
 
   const handleSendMessageButtonClick = () => {

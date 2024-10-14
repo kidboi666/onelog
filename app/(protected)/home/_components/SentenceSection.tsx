@@ -18,7 +18,7 @@ export default function SentenceSection() {
         <SentenceItem
           key={sentence.id}
           sentence={sentence}
-          userId={me?.userId}
+          userId={me!.userId}
         />
       ))}
     </div>

@@ -7,12 +7,16 @@ export const todoFolderQuery = {
     queryOptions<Tables<'todo_folder'>[]>({
       queryKey: ['todo_folder'],
       queryFn: async () => {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('todo_folder')
           .select()
           .eq('user_id', userId)
 
-        return data as Tables<'todo_folder'>[]
+        if (error) {
+          throw error
+        }
+
+        return data
       },
     }),
 }

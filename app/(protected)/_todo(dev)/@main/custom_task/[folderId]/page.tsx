@@ -39,10 +39,10 @@ export default function TaskForm({ params, searchParams }: Props) {
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todoFolders } = useSuspenseQuery(
-    todoFolderQuery.getTodoFolder(supabase, me.userId),
+    todoFolderQuery.getTodoFolder(supabase, me!.userId),
   )
   const { data: fetchedTodos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
+    todoQuery.getTodoFromFolder(supabase, me!.userId, Number(folderId)),
   )
   const sortedTodos = fetchedTodos.sort((a, b) => a.index - b.index)
   const todos = sortedTodos.filter((todo) => todo.is_complete === false)
@@ -71,7 +71,7 @@ export default function TaskForm({ params, searchParams }: Props) {
     const nextTodo = {
       name: todoText,
       folderId: currentFolder!.id,
-      userId: me.userId,
+      userId: me!.userId,
       index: nextIndex,
     }
     addTodo(nextTodo, {

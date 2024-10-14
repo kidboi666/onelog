@@ -1,15 +1,21 @@
 import { Tables } from '@/types/supabase'
+import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
 export const gardenQuery = {
-  getGarden: (supabase: any, userId: string) =>
+  getGarden: (supabase: SupabaseClient, userId: string) =>
     queryOptions<Tables<'garden'>[]>({
       queryKey: ['garden', userId],
       queryFn: async () => {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('garden')
           .select()
           .eq('user_id', userId)
+
+        if (error) {
+          throw error
+        }
+
         return data
       },
     }),

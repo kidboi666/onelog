@@ -23,7 +23,7 @@ export default function MouseEventSection({
   const router = useRouter()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
+    todoQuery.getTodoFromFolder(supabase, me!.userId, Number(folderId)),
   )
   const isMouseDown = useRef<boolean>(false)
   const { close, open, ref: insideRef } = useStateChange<HTMLDivElement>()

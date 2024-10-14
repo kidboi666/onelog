@@ -1,8 +1,7 @@
 import Title from '@/components/shared/Title'
 import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
-import { meQuery } from '@/services/queries/auth/meQuery'
+import { IUserSession, meQuery } from '@/services/queries/auth/meQuery'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import { ISessionInfo } from '@/types/auth'
 import { createServerClient } from '@/lib/supabase/server'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import TodoFoldersSection from '../_components/TodoFoldersSection'
@@ -12,7 +11,7 @@ export default async function TodoDashBoard() {
   const queryClient = getQueryClient()
 
   await queryClient.prefetchQuery(meQuery.getUserSession(supabase))
-  const res = queryClient.getQueryData<ISessionInfo>(['me', 'session'])
+  const res = queryClient.getQueryData<IUserSession>(['me', 'session'])
 
   if (res) {
     queryClient.prefetchQuery(

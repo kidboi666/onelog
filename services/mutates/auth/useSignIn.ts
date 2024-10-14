@@ -12,9 +12,11 @@ export default function useSignIn() {
         email: authData.email,
         password: authData.password,
       })
+
       if (error) {
         throw error
       }
+
       return data
     },
     onSuccess: () => {

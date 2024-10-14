@@ -32,11 +32,11 @@ export default function AuthButton({ isOpen, pathname }: Props) {
         className="absolute -left-2 top-1/2 h-full w-1 -translate-y-1/2 rounded-r-md bg-var-gray transition duration-500 data-[status=closed]:scale-0"
       />
       <LinkButton
-        href={`/${me.userId}`}
+        href={`/${me!.userId}`}
         variant="none"
         innerClassName="justify-start gap-4 py-1 px-1"
       >
-        <Avatar src={me?.avatar_url} size="xs" ring="xs" shadow="sm" />
+        <Avatar src={me!.avatar_url} size="xs" ring="xs" shadow="sm" />
         <div
           className={cn(
             'origin-left transition',
@@ -48,7 +48,7 @@ export default function AuthButton({ isOpen, pathname }: Props) {
             type="caption"
             className="transition group-hover:text-zinc-500 dark:group-hover:text-zinc-400"
           >
-            {me.email}
+            {me!.email}
           </Text>
         </div>
       </LinkButton>

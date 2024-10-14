@@ -42,7 +42,7 @@ export default function Folder({
   const router = useRouter()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todoFolders } = useSuspenseQuery(
-    todoFolderQuery.getTodoFolder(supabase, me.userId),
+    todoFolderQuery.getTodoFolder(supabase, me!.userId),
   )
   const { mutate: updateTodoFolder } = useUpdateTodoFolder()
   const {

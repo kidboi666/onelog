@@ -43,7 +43,7 @@ export default function Todo({
 }: TodoProps) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me.userId, todo.folder_id),
+    todoQuery.getTodoFromFolder(supabase, me!.userId, todo.folder_id),
   )
   const { mutate: updateTodo } = useUpdateTodo()
   const [showKebabButton, setShowKebabButton] = useState(false)

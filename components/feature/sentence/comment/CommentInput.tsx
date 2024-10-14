@@ -5,8 +5,7 @@ import { useInput } from '@/hooks/useInput'
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { usePostComment } from '@/services/mutates/comment/usePostComment'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { ISessionInfo } from '@/types/auth'
+import { IUserSession, meQuery } from '@/services/queries/auth/meQuery'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { FormEvent } from 'react'
 
@@ -17,7 +16,7 @@ interface Props {
 
 export default function CommentInput({ sentenceId, commentId }: Props) {
   const [content, onChangeContent, setContent] = useInput('')
-  const cachedMe = getQueryClient().getQueryData<ISessionInfo>([
+  const cachedMe = getQueryClient().getQueryData<IUserSession>([
     'me',
     'session',
   ])

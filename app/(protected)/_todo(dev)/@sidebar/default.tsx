@@ -38,7 +38,7 @@ export default function SideBarPage({ searchParams }: Props) {
   const [isOpenSide, setOpenSide] = useState(false)
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todoFolders } = useSuspenseQuery(
-    todoFolderQuery.getTodoFolder(supabase, me.userId),
+    todoFolderQuery.getTodoFolder(supabase, me!.userId),
   )
   const { ref, open, close, onClick, onTransitionEnd } =
     useStateChange<HTMLDivElement>()

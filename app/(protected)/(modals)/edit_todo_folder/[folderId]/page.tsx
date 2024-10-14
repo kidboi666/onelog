@@ -26,7 +26,7 @@ export default function EditTodoFolderModal({ params }: Props) {
   const router = useRouter()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: folders } = useSuspenseQuery(
-    todoFolderQuery.getTodoFolder(supabase, me.userId),
+    todoFolderQuery.getTodoFolder(supabase, me!.userId),
   )
   const folder = folders.find((item) => item.id === Number(folderId))
   const [name, onChangeName, setName] = useInput<string>('')

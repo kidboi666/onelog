@@ -11,6 +11,7 @@ import useBlockEditor from '@/hooks/useBlockEditor'
 import SentenceHeader from '@/components/feature/sentence/SentenceHeader'
 import SentenceContent from '@/components/feature/sentence/SentenceContent'
 import { useRouter } from 'next/navigation'
+import { followQuery } from '@/services/queries/follow/followQuery'
 
 interface Props {
   params: { sentenceId: string }
@@ -24,7 +25,16 @@ export default function SentencePage({ params }: Props) {
   )
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data?.userId),
+    meQuery.getUserInfo(supabase, data!.userId),
+  )
+  const { data: followers } = useSuspenseQuery(
+    followQuery.getFollowers(supabase, sentence?.user_id),
+  )
+  const { data: followings } = useSuspenseQuery(
+    followQuery.getFollwing(supabase, sentence?.user_id),
+  )
+  const isFollowing = followers?.find(
+    (user) => user.follower_user_id === data!.userId,
   )
   const { editor } = useBlockEditor({ content: sentence?.content })
   const { mutate: favoriteSentence } = useFavoriteSentence()
@@ -49,12 +59,14 @@ export default function SentencePage({ params }: Props) {
         <SentenceHeader
           userId={sentence.user_id}
           meId={me.id}
-          isFollowing
+          isFollowing={!!isFollowing}
+          followers={followers}
+          followings={followings}
           isModal
           isMe={sentence.user_id === me.id}
-          email={sentence.email}
-          avatarUrl={sentence.avatar_url}
-          userName={sentence.user_name}
+          email={sentence.user_info.email}
+          avatarUrl={sentence.user_info.avatar_url}
+          userName={sentence.user_info.user_name}
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
           onClick={handleAvatarClick}

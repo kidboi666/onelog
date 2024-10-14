@@ -19,7 +19,7 @@ interface Props {
 export default function DataAccess({ todoId, folderId }: Props) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me.userId, Number(folderId)),
+    todoQuery.getTodoFromFolder(supabase, me!.userId, Number(folderId)),
   )
   const todo = todos ? todos?.find((item) => item.id === Number(todoId)) : null
 

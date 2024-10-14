@@ -1,10 +1,9 @@
 import React from 'react'
 import MouseEventSection from './_components/MouseEventSection'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import { meQuery } from '@/services/queries/auth/meQuery'
+import { IUserSession, meQuery } from '@/services/queries/auth/meQuery'
 import { createServerClient } from '@/lib/supabase/server'
 import { todoQuery } from '@/services/queries/todo/todoQuery'
-import { ISessionInfo } from '@/types/auth'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import DataAccess from './_components/DataAccess'
 
@@ -20,7 +19,7 @@ export default async function Page({ params, searchParams }: Props) {
   const queryClient = getQueryClient()
   const supabase = createServerClient()
   await queryClient.prefetchQuery(meQuery.getUserSession(supabase))
-  const res = queryClient.getQueryData<ISessionInfo>(['me', 'session'])
+  const res = queryClient.getQueryData<IUserSession>(['me', 'session'])
 
   if (res) {
     queryClient.prefetchQuery(

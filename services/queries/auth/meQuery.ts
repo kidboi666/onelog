@@ -1,10 +1,21 @@
-import { ISessionInfo } from '@/types/auth'
 import { Tables } from '@/types/supabase'
+import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
+export interface IUserSession {
+  about_me: string
+  avatar_url: string | null
+  email: string
+  email_verified: boolean
+  user_name: string
+  phone_verified: boolean
+  sub: string
+  userId: string
+}
+
 export const meQuery = {
-  getUserSession: (supabase: any) =>
-    queryOptions<ISessionInfo>({
+  getUserSession: (supabase: SupabaseClient) =>
+    queryOptions<IUserSession | null>({
       queryKey: ['me', 'session'],
       queryFn: async () => {
         const { data, error } = await supabase.auth.getUser()
@@ -13,10 +24,13 @@ export const meQuery = {
           return null
         }
 
-        return { ...data.user?.user_metadata, userId: data.user?.id }
+        return {
+          ...data.user?.user_metadata,
+          userId: data.user?.id,
+        } as IUserSession
       },
     }),
-  getUserInfo: (supabase: any, userId: string) =>
+  getUserInfo: (supabase: SupabaseClient, userId: string) =>
     queryOptions<Tables<'user_info'>>({
       queryKey: ['me', 'info'],
       queryFn: async () => {

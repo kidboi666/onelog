@@ -16,7 +16,7 @@ export const userQuery = {
         return data
       },
     }),
-  getUsedWords: (supabase: any, userId: string) =>
+  getUsedWords: (supabase: SupabaseClient, userId: string) =>
     queryOptions<Tables<'user_words'>>({
       queryKey: ['favorite_words', userId],
       queryFn: async () => {

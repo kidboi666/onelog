@@ -15,7 +15,7 @@ export default function ResetPasswordConfirmModal() {
   const { mutate: resetPassword } = useResetPassword()
 
   const handleResetPassword = () => {
-    resetPassword(me.email)
+    resetPassword(me!.email)
   }
 
   return (

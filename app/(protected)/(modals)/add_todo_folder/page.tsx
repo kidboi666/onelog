@@ -44,7 +44,7 @@ export default function AddTodoFolderModal() {
       name,
       color,
       index: nextIndex,
-      userId: me.userId,
+      userId: me!.userId,
     }
     addTodoFolder(newFolder)
     localStorage.setItem('todo-folder-index', nextIndex.toString())
