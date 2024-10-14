@@ -117,7 +117,7 @@ export default function BubbleMenuBar({ editor }: Props) {
   ]
 
   return (
-    <div className="flex w-fit gap-1 rounded-md bg-white p-1 shadow-lg ring-1 ring-zinc-200 dark:bg-var-darkgray dark:ring-zinc-600">
+    <div className="flex w-fit gap-1 rounded-md bg-white p-1 shadow-lg ring-1 ring-zinc-200 dark:bg-var-dark dark:ring-zinc-700">
       {items.map((item, idx) => (
         <Fragment key={idx}>
           <MenuItem {...item} />

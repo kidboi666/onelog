@@ -5,13 +5,14 @@ import LinkButton from '@/components/shared/LinkButton'
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
 
-export default function HeaderLogoSection() {
+export default function Logo() {
   const { theme } = useTheme()
   return (
     <LinkButton
       href="/home"
       variant="none"
       className={cn('w-fit', theme === 'dark' ? 'text-white' : 'text-black')}
+      innerClassName="block h-fit"
     >
       <Icon name="logo" sizeX={80} sizeY={48} viewX={323.33} viewY={200}>
         <path d="M181.76,65.27h-6.64V10.83h6.64v24.57h11.2v6.22h-11.2v23.65Z" />

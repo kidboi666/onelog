@@ -14,7 +14,7 @@ import AuthButton from './_components/AuthButton'
 import OpenButton from './_components/OpenButton'
 import { usePathname } from 'next/navigation'
 
-export default function Default() {
+export default function Sidebar() {
   const [isOpen, setOpen] = useState(false)
   const { ref, close, onClick, onTransitionEnd } =
     useStateChange<HTMLDivElement>('w-14')
@@ -36,7 +36,7 @@ export default function Default() {
       onTransitionEnd={onTransitionEnd}
       data-status="closed"
       className={cn(
-        'fixed top-[48px] z-30 m-4 flex h-[calc(100dvh-80px)] w-72 flex-shrink-0 flex-col gap-2 rounded-lg bg-white p-2 shadow-md transition-all duration-300 ease-in-out data-[status=closed]:w-14 dark:bg-var-darkgray',
+        'fixed top-[56px] z-30 m-4 flex h-[calc(100dvh-88px)] w-72 flex-shrink-0 flex-col gap-2 rounded-lg bg-white p-2 shadow-md transition-all duration-300 ease-in-out data-[status=closed]:w-14 dark:bg-var-darkgray',
       )}
     >
       {isOpen && (

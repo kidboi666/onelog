@@ -12,6 +12,7 @@ interface Props {
   icon: ReactNode
   name: string
   path: string
+  className?: string
 }
 
 export default function MenuButton({
@@ -20,6 +21,7 @@ export default function MenuButton({
   icon,
   name,
   path,
+  className,
 }: Props) {
   const { open, close, ref, onTransitionEnd } = useStateChange<HTMLDivElement>()
   if (isSelected) {
@@ -28,7 +30,7 @@ export default function MenuButton({
     close()
   }
   return (
-    <List.Row className="relative">
+    <List.Row className={cn('relative', className)}>
       <div
         ref={ref}
         data-status="closed"

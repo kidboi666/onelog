@@ -17,8 +17,8 @@ export default function Layout({
     <>
       {header}
       <Portal>{modal}</Portal>
-      {sidebar}
-      <div className="ml-[74px]">{children}</div>
+      <div className="invisible sm:visible">{sidebar}</div>
+      <div className="sm:ml-[74px]">{children}</div>
     </>
   )
 }
