@@ -43,7 +43,6 @@ export default function MobileMenu({ targetRef, onTransitionEnd }: Props) {
             />
           ))}
         </List>
-        <Line className="my-2" />
         <List className="flex flex-col gap-2">
           {BOTTOM_NAVIGATE_MENUS.map((menu) => (
             <MenuButton

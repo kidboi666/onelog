@@ -18,7 +18,9 @@ export default function AvatarSection({ userId, avatarUrl, email }: Props) {
       innerClassName="flex items-center gap-2"
     >
       <Avatar src={avatarUrl} size="sm" shadow="sm" ring="xs" />
-      <Text>{email}</Text>
+      <Text type="caption" size="md">
+        {email}
+      </Text>
     </LinkButton>
   )
 }
