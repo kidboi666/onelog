@@ -12,9 +12,9 @@ export default function Logo() {
       href="/home"
       variant="none"
       className={cn('w-fit', theme === 'dark' ? 'text-white' : 'text-black')}
-      innerClassName="block h-fit"
+      innerClassName="py-0"
     >
-      <Icon name="logo" sizeX={80} sizeY={48} viewX={323.33} viewY={200}>
+      <Icon name="logo" sizeX={80} sizeY={40} viewX={323.33} viewY={150}>
         <path d="M181.76,65.27h-6.64V10.83h6.64v24.57h11.2v6.22h-11.2v23.65Z" />
         <g>
           <g>

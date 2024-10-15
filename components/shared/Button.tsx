@@ -26,7 +26,7 @@ const BUTTON_VARIANTS = cva(
           'underline hover:opacity-65 active:animate-click dark:text-zinc-200',
         list: 'justify-start rounded-md font-normal text-zinc-600 hover:bg-var-lightgray dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
         none: '',
-        icon: 'rounded-md text-zinc-400 transition hover:bg-var-lightgray active:animate-click dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
+        icon: 'rounded-md text-zinc-400 transition hover:bg-var-lightgray dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
       },
       disabled: {
         primary:
@@ -87,7 +87,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         {children}
         {isLoading && (
           <div>
-            <Spinner size={20} />
+            <Spinner size={size === 'sm' ? 16 : 20} />
           </div>
         )}
       </button>

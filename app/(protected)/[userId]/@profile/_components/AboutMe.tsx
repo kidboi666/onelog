@@ -43,8 +43,6 @@ export default function AboutMe({ userId }: Props) {
   const { mutate: unfollowUser } = useUnFollow()
   const [isLoadingProfile, startTransitionProfile] = useTransition()
   const [isLoadingWrite, startTransitionWrite] = useTransition()
-  const [isLoadingFollowing, startTransitionFollowing] = useTransition()
-  const [isLoadingSendMessage, startTransitionSendMessage] = useTransition()
 
   const handleFollowButtonClick = () => {
     isFollowing
@@ -107,34 +105,15 @@ export default function AboutMe({ userId }: Props) {
             </>
           ) : (
             <>
-              <Button
-                size="sm"
-                onClick={() =>
-                  startTransitionFollowing(() => handleFollowButtonClick())
-                }
-              >
-                {isFollowing ? (
-                  isLoadingFollowing ? (
-                    <Spinner size={16} />
-                  ) : (
-                    '팔로우 취소'
-                  )
-                ) : isLoadingFollowing ? (
-                  <Spinner size={16} />
-                ) : (
-                  '팔로우 하기'
-                )}
+              <Button size="sm" onClick={handleFollowButtonClick}>
+                {isFollowing ? '팔로우 취소' : '팔로우 하기'}
               </Button>
               <Button
                 size="sm"
                 variant="secondary"
-                onClick={() =>
-                  startTransitionSendMessage(() =>
-                    handleSendMessageButtonClick(),
-                  )
-                }
+                onClick={handleSendMessageButtonClick}
               >
-                {isLoadingSendMessage ? <Spinner size={16} /> : '메시지 보내기'}
+                메시지 보내기
               </Button>
             </>
           )}

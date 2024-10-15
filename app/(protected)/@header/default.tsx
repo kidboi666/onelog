@@ -17,7 +17,7 @@ export default function Default() {
       <header className="sticky top-0 z-40 px-2 py-2 sm:px-4">
         <div className="flex h-12 w-full items-center justify-between rounded-lg bg-white/60 p-2 shadow-md backdrop-blur-xl sm:p-4 lg:px-12 dark:bg-var-darkgray/60">
           <MenuButton />
-          <div className="hidden sm:block">
+          <div className="hidden sm:flex sm:h-full">
             <Logo />
           </div>
           <ThemeToggleButton />
