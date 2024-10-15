@@ -36,14 +36,6 @@ export default function BubbleMenuBar({ editor }: Props) {
     },
     {
       icon: (
-        <path d="M360-160v-240q-83 0-141.5-58.5T160-600q0-83 58.5-141.5T360-800h360v80h-80v560h-80v-560H440v560h-80Z" />
-      ),
-      title: 'Paragraph',
-      action: () => editor.chain().focus().setParagraph().run(),
-      isActive: () => editor.isActive('paragraph'),
-    },
-    {
-      icon: (
         <path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z" />
       ),
       title: 'Bullet List',
@@ -117,10 +109,14 @@ export default function BubbleMenuBar({ editor }: Props) {
   ]
 
   return (
-    <div className="flex w-fit gap-1 rounded-md bg-white p-1 shadow-lg ring-1 ring-zinc-200 dark:bg-var-dark dark:ring-zinc-700">
+    <div className="flex w-fit items-center gap-1 rounded-md bg-white p-1 shadow-lg ring-1 ring-zinc-200 dark:bg-var-dark dark:ring-zinc-700">
       {items.map((item, idx) => (
         <Fragment key={idx}>
-          <MenuItem {...item} />
+          {item.type === 'divider' ? (
+            <div className="h-4 w-px bg-zinc-200" />
+          ) : (
+            <MenuItem {...item} />
+          )}
         </Fragment>
       ))}
     </div>

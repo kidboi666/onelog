@@ -15,7 +15,7 @@ export default function TextLength({ content }: Props) {
         content >= 300 ? 'text-red-500 dark:text-red-500' : '',
       )}
     >
-      {content} / 300
+      {content}
     </Text>
   )
 }

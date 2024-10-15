@@ -16,10 +16,10 @@ import useOutsideClick from '@/hooks/useOutsideClick'
 import Button from '@/components/shared/Button'
 import { TagsInput } from '@/components/shared/TagsInput'
 import BubbleMenuBar from '@/components/feature/text_editor/BubbleMenuBar'
-import TextLength from '@/components/feature/text_editor/TextLength'
 import Icon from '@/components/shared/Icon'
 import EmotionPicker from '@/components/feature/sentence/EmotionPicker'
 import DropDown from './_components/DropDown'
+import Text from '@/components/shared/Text'
 
 export default function PostSentencePage() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -30,7 +30,7 @@ export default function PostSentencePage() {
     setContent,
     content,
     editable: true,
-    placeholder: '오늘 당신의 생각을 한 줄로 기록하세요.',
+    placeholder: '오늘 당신의 생각과 감정을 기록하세요.',
   })
   const [tags, setTags] = useState<string[]>([])
   const { mutate: addSentence, isPending } = useAddSentence()
@@ -54,21 +54,22 @@ export default function PostSentencePage() {
     setSelectedEmotion(emotion)
   }
 
+  const changeAccessType = (order: 'private' | 'public') => {
+    setAccessType(order)
+  }
+
+  const handleInputFocus = () => {
+    editor.commands.focus('end')
+  }
+
   const handleSubmitSentence = (e: FormEvent) => {
     e.preventDefault()
-
-    if (editor.getText().length >= 300) {
-      return null
-    }
 
     addSentence(
       {
         content,
         emotion_level: selectedEmotion,
         user_id: me!.userId,
-        user_name: me!.user_name,
-        email: me!.email,
-        avatar_url: me!.avatar_url,
         tags,
         access_type: accessType,
       },
@@ -83,20 +84,18 @@ export default function PostSentencePage() {
     )
   }
 
-  const changeAccessType = (order: 'private' | 'public') => {
-    setAccessType(order)
-  }
-
   return (
-    <form onSubmit={handleSubmitSentence} className="size-full">
-      <div className="flex max-h-[600px] w-full flex-col gap-4">
-        {editor && (
-          <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-            <BubbleMenuBar editor={editor} />
-          </BubbleMenu>
-        )}
-        <EditorContent editor={editor} className="h-full overflow-y-auto" />
-        <TextLength content={editor.storage.characterCount.characters()} />
+    <form onSubmit={handleSubmitSentence} className="h-full">
+      <div className="flex h-full flex-col gap-4">
+        <div className="flex h-full cursor-text flex-col overflow-y-auto">
+          {editor && (
+            <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+              <BubbleMenuBar editor={editor} />
+            </BubbleMenu>
+          )}
+          <EditorContent editor={editor} className="" />
+          <div onClick={handleInputFocus} className="size-full" />
+        </div>
         <TagsInput tags={tags} setTags={setTags} />
         <div className="flex flex-col gap-2">
           <div className="flex justify-between">
@@ -123,10 +122,14 @@ export default function PostSentencePage() {
                 />
               </div>
 
-              <div className="relative place-self-center">
+              <div className="relative flex items-center gap-2 place-self-center">
                 <Button variant="icon" size="none" onClick={emotionClick}>
                   <Icon view="0 -960 960 960" size={20}>
-                    <path d="M620-520q25 0 42.5-17.5T680-580q0-25-17.5-42.5T620-640q-25 0-42.5 17.5T560-580q0 25 17.5 42.5T620-520Zm-280 0q25 0 42.5-17.5T400-580q0-25-17.5-42.5T340-640q-25 0-42.5 17.5T280-580q0 25 17.5 42.5T340-520Zm140 260q68 0 123.5-38.5T684-400h-66q-22 37-58.5 58.5T480-320q-43 0-79.5-21.5T342-400h-66q25 63 80.5 101.5T480-260Zm0 180q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z" />
+                    {selectedEmotion ? (
+                      <path d="M480-800q134 0 227 93t93 227q0 134-93 227t-227 93q-134 0-227-93t-93-227q0-134 93-227t227-93Zm0 560q100 0 170-70t70-170q0-100-70-170t-170-70q-100 0-170 70t-70 170q0 100 70 170t170 70Zm0-100q48 0 86-27.5t54-72.5H340q16 45 54 72.5t86 27.5ZM340-560q0 17 11.5 28.5T380-520q17 0 28.5-11.5T420-560q0-17-11.5-28.5T380-600q-17 0-28.5 11.5T340-560Zm200 0q0 17 11.5 28.5T580-520q17 0 28.5-11.5T620-560q0-17-11.5-28.5T580-600q-17 0-28.5 11.5T540-560ZM40-720v-120q0-33 23.5-56.5T120-920h120v80H120v120H40ZM240-40H120q-33 0-56.5-23.5T40-120v-120h80v120h120v80Zm480 0v-80h120v-120h80v120q0 33-23.5 56.5T840-40H720Zm120-680v-120H720v-80h120q33 0 56.5 23.5T920-840v120h-80ZM480-480Z" />
+                    ) : (
+                      <path d="M620-520q25 0 42.5-17.5T680-580q0-25-17.5-42.5T620-640q-25 0-42.5 17.5T560-580q0 25 17.5 42.5T620-520Zm-280 0q25 0 42.5-17.5T400-580q0-25-17.5-42.5T340-640q-25 0-42.5 17.5T280-580q0 25 17.5 42.5T340-520Zm140 260q68 0 123.5-38.5T684-400H276q25 63 80.5 101.5T480-260Zm0 180q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z" />
+                    )}
                   </Icon>
                 </Button>
                 <EmotionPicker
@@ -135,12 +138,25 @@ export default function PostSentencePage() {
                   selectedEmotion={selectedEmotion}
                   onChangeEmotion={handleChangeEmotion}
                 />
+                {selectedEmotion && (
+                  <Text type="caption" size="xs">
+                    선택된 감정 상태 :
+                    {(selectedEmotion === '0%' && '매우나쁨') ||
+                      (selectedEmotion === '25%' && '나쁨') ||
+                      (selectedEmotion === '50%' && '보통') ||
+                      (selectedEmotion === '75%' && '좋음') ||
+                      (selectedEmotion === '100%' && '매우좋음')}
+                  </Text>
+                )}
               </div>
             </div>
 
             <Button
               isLoading={isPending}
-              disabled={editor.getText().length === 0 || !selectedEmotion}
+              disabled={
+                editor.storage.characterCount.characters() === 0 ||
+                !selectedEmotion
+              }
               type="submit"
               size="sm"
               className="self-end text-nowrap"

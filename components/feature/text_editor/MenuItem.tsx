@@ -20,7 +20,7 @@ export default function MenuItem({
       title={title}
       variant="icon"
       className={cn(
-        'size-8 p-0',
+        'size-6 p-0',
         isActive && isActive() ? 'bg-zinc-300 dark:bg-zinc-600' : '',
       )}
     >

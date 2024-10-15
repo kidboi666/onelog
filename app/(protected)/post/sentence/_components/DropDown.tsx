@@ -20,7 +20,7 @@ export default function DropDown({
       isRounded
       isBackground
       dataStatus="closed"
-      className="absolute top-[calc(100%--6px)] hidden w-20 origin-top overflow-hidden shadow-md ring-1 ring-zinc-200 transition data-[status=closed]:scale-90 data-[status=closed]:opacity-0 dark:ring-zinc-700"
+      className="absolute bottom-[calc(100%--6px)] hidden w-20 origin-top overflow-hidden shadow-md ring-1 ring-zinc-200 transition data-[status=closed]:scale-90 data-[status=closed]:opacity-0 dark:ring-zinc-700"
     >
       <List.Row onClick={() => onClick('public')} className="w-full">
         <Button variant="list" size="sm" className="w-full">
