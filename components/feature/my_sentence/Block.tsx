@@ -38,7 +38,7 @@ export default function Block({
   }
   const calculateMonthPoint = (blockInfo: IBlockInfo) => {
     const targetDate = blockInfo.weekDay
-    const calculateMargin = 14 * (targetDate + 1) + 2
+    const calculateMargin = 16 * (targetDate + 1) + 2
     return calculateMargin
   }
 
@@ -66,7 +66,7 @@ export default function Block({
         disabled={disabled}
         onClick={() => setSentences(summary)}
         className={cn(
-          'size-2.5 cursor-auto select-none overflow-hidden rounded-[4px] border border-zinc-300 shadow-sm dark:border-zinc-700 dark:shadow-zinc-800',
+          'size-3 select-none overflow-hidden rounded-[4px] border border-zinc-300 shadow-sm dark:border-zinc-700 dark:shadow-zinc-800',
           className,
         )}
       >
