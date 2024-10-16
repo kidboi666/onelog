@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 
 export default async function PostPageLayout({ children }: PropsWithChildren) {
   return (
-    <div className="absolute right-0 top-[56px] z-30 mx-auto my-4 h-[calc(100dvh-88px)] w-full animate-fade-in gap-8 sm:w-[calc(100%-72px)] lg:left-1/2 lg:max-w-[768px] lg:-translate-x-1/2">
+    <div className="z-30 my-4 flex h-[calc(100dvh-102px)] w-full animate-fade-in justify-center gap-8 sm:h-[calc(100dvh-32px)]">
       <Container className="h-full">{children}</Container>
     </div>
   )

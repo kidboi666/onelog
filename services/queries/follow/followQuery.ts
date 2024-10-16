@@ -2,7 +2,7 @@ import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
 export const followQuery = {
-  /** 유저를 따라가는 사람 */
+  /** 유저를 팔로우하는 유저의 Id들 */
   getFollowers: (supabase: SupabaseClient, userId?: string) =>
     queryOptions({
       queryKey: ['follower', userId],
@@ -20,7 +20,7 @@ export const followQuery = {
       },
     }),
 
-  /** 유저가 따라가는 사람 */
+  /** 유저가 팔로우하는 유저의 Id들 */
   getFollwing: (supabase: SupabaseClient, userId?: string) =>
     queryOptions({
       queryKey: ['following', userId],
@@ -35,6 +35,18 @@ export const followQuery = {
         }
 
         return data
+      },
+    }),
+
+  /** 유저를 팔로우하는 사람들 정보 */
+  getMyFollowers: (supabase: SupabaseClient, userId?: string) =>
+    queryOptions({
+      queryKey: ['followers', userId],
+      queryFn: async () => {
+        const { data, error } = await supabase
+          .from('follow')
+          .select('followed_user_id')
+          .eq('follower_user_id', userId)
       },
     }),
 }
