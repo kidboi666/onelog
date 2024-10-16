@@ -5,6 +5,7 @@ import EmotionDropDown from '../dropdown/EmotionDropDown'
 import useStateChange from '@/hooks/useStateChange'
 import Button from '@/components/shared/Button'
 import { TColor } from '@/types/theme'
+import useOutsideClick from '@/hooks/useOutsideClick'
 
 interface Props {
   emotionLevel?: string
@@ -12,8 +13,9 @@ interface Props {
 
 export default function EmotionGauge({ emotionLevel }: Props) {
   const { color } = useTheme()
-  const { open, close, onClick, ref, onTransitionEnd } =
+  const { close, onClick, ref, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
+  const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   let emotionBlock = [0, 0, 0, 0, 0]
   const [emotion] = emotionLevel?.split('%') || []
@@ -43,6 +45,7 @@ export default function EmotionGauge({ emotionLevel }: Props) {
       <Button
         variant="icon"
         size="none"
+        ref={buttonRef}
         onClick={onClick}
         className="gap-px bg-white p-2 shadow-sm dark:bg-var-darkgray"
       >

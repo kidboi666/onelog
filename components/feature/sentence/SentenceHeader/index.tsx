@@ -39,7 +39,7 @@ export default function SentenceHeader({
   isFollowing,
   isModal = false,
 }: Props) {
-  const { open, close, ref, onClick, onTransitionEnd } =
+  const { close, ref, onClick, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 

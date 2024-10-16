@@ -24,7 +24,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
           innerClassName={cn(
             'justify-center',
             segment === 'userinfo_summary'
-              ? 'bg-zinc-200 dark:bg-zinc-600'
+              ? 'bg-zinc-200 dark:bg-zinc-700'
               : '',
           )}
         >
@@ -37,7 +37,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
           innerClassName={cn(
             'justify-center',
             segment === 'sentence_summary'
-              ? 'bg-zinc-200 dark:bg-zinc-600'
+              ? 'bg-zinc-200 dark:bg-zinc-700'
               : '',
           )}
         >

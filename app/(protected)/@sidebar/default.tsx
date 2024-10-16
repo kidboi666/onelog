@@ -13,6 +13,7 @@ import {
 import AuthButton from './_components/AuthButton'
 import OpenButton from './_components/OpenButton'
 import { usePathname } from 'next/navigation'
+import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
 
 export default function Sidebar() {
   const [isOpen, setOpen] = useState(false)
@@ -70,6 +71,8 @@ export default function Sidebar() {
             path={menu.path}
           />
         ))}
+        <ThemeToggleButton isOpen={isOpen} />
+
         <Line className="mb-2" />
         <AuthButton isOpen={isOpen} pathname={pathname.split('/')[2]} />
       </List>
