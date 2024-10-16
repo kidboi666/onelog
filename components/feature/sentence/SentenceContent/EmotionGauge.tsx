@@ -41,8 +41,6 @@ export default function EmotionGauge({ emotionLevel }: Props) {
   return (
     <List className="relative flex flex-1 cursor-default items-end justify-between gap-px">
       <Button
-        onMouseEnter={open}
-        onMouseLeave={close}
         variant="icon"
         size="none"
         onClick={onClick}

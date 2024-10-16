@@ -15,7 +15,7 @@ export default function useAddTodoFolder() {
   return useMutation({
     mutationFn: async (params: ITodoFolder) => {
       return supabase
-        .from('todo_folder')
+        .from('sentence_folder')
         .insert({
           name: params.name,
           color: params.color,
@@ -25,7 +25,7 @@ export default function useAddTodoFolder() {
         .select()
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todo_folder'] })
+      queryClient.invalidateQueries({ queryKey: ['sentence_folder'] })
     },
   })
 }
