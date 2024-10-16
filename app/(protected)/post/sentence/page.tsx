@@ -87,14 +87,14 @@ export default function PostSentencePage() {
   return (
     <form onSubmit={handleSubmitSentence} className="h-full">
       <div className="flex h-full flex-col gap-4">
-        <div className="flex h-full cursor-text flex-col overflow-y-auto">
+        <div className="flex max-h-full cursor-text flex-col overflow-y-auto">
           {editor && (
             <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
               <BubbleMenuBar editor={editor} />
             </BubbleMenu>
           )}
           <EditorContent editor={editor} className="" />
-          <div onClick={handleInputFocus} className="size-full" />
+          <div onClick={handleInputFocus} className="h-10 max-h-full w-full" />
         </div>
         <TagsInput tags={tags} setTags={setTags} />
         <div className="flex flex-col gap-2">
