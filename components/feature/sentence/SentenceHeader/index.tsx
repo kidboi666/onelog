@@ -7,6 +7,7 @@ import EmotionGauge from '../SentenceContent/EmotionGauge'
 import AvatarOwnerInfoDropDown from '../dropdown/AvatarOwnerInfoDropDown'
 import ExpandButton from '@/components/shared/ExpandButton'
 import BackButton from '@/components/shared/BackButton'
+import useOutsideClick from '@/hooks/useOutsideClick'
 
 interface Props {
   avatarUrl: string | null
@@ -37,14 +38,20 @@ export default function SentenceHeader({
   isMe,
   isFollowing,
   isModal = false,
-  onClick,
 }: Props) {
-  const { open, close, ref, onTransitionEnd } = useStateChange<HTMLDivElement>()
+  const { open, close, ref, onClick, onTransitionEnd } =
+    useStateChange<HTMLDivElement>()
+  const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   return (
     <div className="flex w-full gap-2">
-      <div onMouseEnter={open} onMouseLeave={close} className="relative">
-        <Button variant="none" onClick={onClick} className="p-0">
+      <div className="relative">
+        <Button
+          ref={buttonRef}
+          variant="none"
+          onClick={onClick}
+          className="p-0"
+        >
           <Avatar src={avatarUrl} size="sm" shadow="sm" />
         </Button>
         <AvatarOwnerInfoDropDown

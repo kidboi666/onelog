@@ -4,14 +4,16 @@ import { List } from '@/components/shared/List'
 import SentenceAccessTypeDropDown from '../dropdown/SentenceAccessTypeDropDown'
 import useStateChange from '@/hooks/useStateChange'
 import { MouseEvent } from 'react'
+import useOutsideClick from '@/hooks/useOutsideClick'
 
 interface Props {
   accessType?: string | null
 }
 
 export default function AccessTypeButton({ accessType }: Props) {
-  const { open, close, ref, onClick, onTransitionEnd } =
+  const { close, ref, onClick, onTransitionEnd } =
     useStateChange<HTMLDivElement>()
+  const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   const handleButtonClick = (e: MouseEvent) => {
     e.stopPropagation()
@@ -21,10 +23,9 @@ export default function AccessTypeButton({ accessType }: Props) {
   return (
     <List.Row className="relative">
       <Button
+        ref={buttonRef}
         variant="icon"
         size="icon"
-        onMouseEnter={open}
-        onMouseLeave={close}
         onClick={handleButtonClick}
         className="hover:text-green-400 dark:hover:text-green-400"
       >

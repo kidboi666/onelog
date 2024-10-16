@@ -49,10 +49,6 @@ export default function SentencePage({ params }: Props) {
     favoriteSentence({ userId: me.id || '', sentenceId })
   }
 
-  const handleAvatarClick = () => {
-    router.push(`/${sentence?.user_id}`)
-  }
-
   return (
     <Modal className="gap-4">
       {sentence ? (
@@ -69,7 +65,6 @@ export default function SentencePage({ params }: Props) {
           userName={sentence.user_info.user_name}
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
-          onClick={handleAvatarClick}
         />
       ) : null}
       <SentenceContent

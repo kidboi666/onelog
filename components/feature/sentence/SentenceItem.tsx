@@ -67,10 +67,6 @@ export default function SentenceItem({
     router.push(`/sentence_page/${sentenceId}`, { scroll: false })
   }
 
-  const handleAvatarClick = () => {
-    router.push(`/${sentence?.user_id}`)
-  }
-
   return (
     <div className={cn('flex flex-col gap-4', className)}>
       {sentence ? (
@@ -86,7 +82,6 @@ export default function SentenceItem({
           userName={sentence.user_info.user_name}
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
-          onClick={handleAvatarClick}
         />
       ) : null}
       <SentenceContent
