@@ -1,4 +1,4 @@
-import Avatar from '@/components/feature/user/Avatar'
+import Avatar from '@/components/shared/Avatar'
 import { ComponentProps, useRef } from 'react'
 
 interface Props extends ComponentProps<'input'> {

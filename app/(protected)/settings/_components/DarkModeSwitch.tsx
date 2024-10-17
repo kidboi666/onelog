@@ -58,6 +58,7 @@ function DarkModeBlock({
     <Button
       onClick={() => onBlockClick(theme)}
       variant="none"
+      size="sm"
       className={cn(
         'flex gap-2 rounded-md font-semibold ring-1',
         theme === 'light'

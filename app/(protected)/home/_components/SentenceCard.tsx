@@ -1,30 +1,42 @@
-'use client'
-
+import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
+import cn from '@/lib/cn'
+
+import { ISentenceState } from '@/store/useSentence'
 import useBlockEditor from '@/hooks/useBlockEditor'
-import { useRouter } from 'next/navigation'
+import { meQuery } from '@/services/queries/auth/meQuery'
 import { followQuery } from '@/services/queries/follow/followQuery'
-import SentenceHeader from '@/app/(protected)/home/_components/SentenceHeader'
-import SentenceContent from '@/app/(protected)/home/_components/SentenceContent'
+import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
+import { ISentenceWithUserInfo } from '@/types/sentence'
+
+import SentenceHeader from './SentenceHeader'
+import SentenceContent from './SentenceContent'
 
 interface Props {
-  params: { sentenceId: string }
+  sentence?: ISentenceWithUserInfo
+  sentenceSummary?: ISentenceState
+  userId: string
+  isMyPage?: boolean
+  className?: string
+  disabled?: boolean
 }
 
-export default function SentencePage({ params }: Props) {
+export default function SentenceCard({
+  sentence,
+  userId,
+  isMyPage,
+  sentenceSummary,
+  className,
+  disabled,
+}: Props) {
+  const sentenceId = sentence?.id || sentenceSummary?.id
+  const content = sentence?.content || sentenceSummary?.content
+  const tags = sentence?.tags || sentenceSummary?.tags
   const router = useRouter()
-  const sentenceId = params.sentenceId
-  const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getSentence(supabase, sentenceId),
-  )
-  const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data!.userId),
+    meQuery.getUserInfo(supabase, userId || ''),
   )
   const { data: followers } = useSuspenseQuery(
     followQuery.getFollowers(supabase, sentence?.user_id),
@@ -33,9 +45,12 @@ export default function SentencePage({ params }: Props) {
     followQuery.getFollwing(supabase, sentence?.user_id),
   )
   const isFollowing = followers?.find(
-    (user) => user.follower_user_id === data!.userId,
+    (user) => user.follower_user_id === userId,
   )
-  const { editor } = useBlockEditor({ content: sentence?.content })
+
+  const { editor } = useBlockEditor({
+    content,
+  })
   const { mutate: favoriteSentence } = useFavoriteSentence()
 
   if (!editor) return null
@@ -45,42 +60,44 @@ export default function SentencePage({ params }: Props) {
     { sentenceId }: { sentenceId: number },
   ) => {
     e.stopPropagation()
-    favoriteSentence({ userId: me.id || '', sentenceId })
+    favoriteSentence({ userId: userId || '', sentenceId })
   }
 
-  const handleAvatarClick = () => {
-    router.push(`/${sentence?.user_id}`)
+  const handleSentenceItemClick = () => {
+    router.push(`/sentence_page/${sentenceId}`, { scroll: false })
   }
 
   return (
-    <div className="m-4 flex flex-col gap-4">
+    <div className={cn('flex flex-col gap-4', className)}>
       {sentence ? (
         <SentenceHeader
           userId={sentence.user_id}
-          isMe={sentence.user_id === me.id}
+          meId={me?.id}
+          isMe={me?.id === sentence.user_id}
           isFollowing={!!isFollowing}
           followers={followers}
           followings={followings}
-          meId={me.id}
           email={sentence.user_info.email}
           avatarUrl={sentence.user_info.avatar_url}
           userName={sentence.user_info.user_name}
           emotionLevel={sentence.emotion_level}
           createdAt={sentence.created_at}
-          onClick={handleAvatarClick}
         />
       ) : null}
       <SentenceContent
-        tags={sentence?.tags!}
+        tags={tags}
         editor={editor}
+        accessType={sentence?.access_type}
         favoritedCount={sentence?.favorite || 0}
         favoritedUserId={sentence?.favorited_user_id || []}
         commentCount={sentence?.comment || 0}
-        sentenceId={sentence?.id!}
-        accessType={sentence?.access_type}
+        sentenceId={sentenceId!}
         onFavorite={handleFavoriteSentence}
-        userId={me?.id}
-        me={me!}
+        onClick={handleSentenceItemClick}
+        userId={userId}
+        me={me}
+        isMyPage={isMyPage}
+        disabled={disabled}
       />
     </div>
   )

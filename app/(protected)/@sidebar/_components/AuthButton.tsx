@@ -1,4 +1,4 @@
-import Avatar from '@/components/feature/user/Avatar'
+import Avatar from '@/components/shared/Avatar'
 import LinkButton from '@/components/shared/LinkButton'
 import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
@@ -13,7 +13,7 @@ interface Props {
   pathname: string
 }
 
-const AUTH_PATHS = ['userinfo_summary', 'sentence_summary']
+const AUTH_PATHS = ['summary', 'sentence']
 
 export default function AuthButton({ isOpen, pathname }: Props) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -33,7 +33,7 @@ export default function AuthButton({ isOpen, pathname }: Props) {
         className="absolute -left-2 top-1/2 h-full w-1 -translate-y-1/2 rounded-r-md bg-var-gray transition duration-500 data-[status=closed]:scale-0"
       />
       <LinkButton
-        href={`/${me!.userId}`}
+        href={`/profile/${me!.userId}`}
         variant="none"
         innerClassName="justify-start gap-4 py-1 px-1"
       >

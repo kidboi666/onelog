@@ -26,7 +26,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/(protected)/[userId]/@user_info/routetsx"
+    "app/(protected)/profile/[userId]/@user_info/routetsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "app/(protected)/_todo(dev)"]
 }

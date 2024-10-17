@@ -1,9 +1,22 @@
 import { forwardRef, PropsWithChildren, RefObject } from 'react'
 import Button, { ButtonProps } from './Button'
 import cn from '@/lib/cn'
+import Link from 'next/link'
+
+interface DropDownRootProps {
+  className?: string
+}
+
+const DropDownRoot = ({
+  children,
+  className,
+}: PropsWithChildren<DropDownRootProps>) => {
+  return <div className={cn('relative', className)}>{children}</div>
+}
 
 interface DropDownTriggerProps extends ButtonProps {
   targetRef?: RefObject<HTMLButtonElement>
+  className?: string
 }
 
 const DropDownTrigger = ({
@@ -13,6 +26,7 @@ const DropDownTrigger = ({
   variant = 'icon',
   size,
   targetRef,
+  className,
 }: DropDownTriggerProps) => {
   return (
     <Button
@@ -21,28 +35,31 @@ const DropDownTrigger = ({
       size={size}
       onTransitionEnd={onTransitionEnd}
       onClick={onClick}
+      className={className}
     >
       {children}
     </Button>
   )
 }
 
-interface DropDownWrapperProps {
+interface DropDownContentProps {
   onTransitionEnd: () => void
   initStatus: string
   onClick?: (params: any) => void
   className?: string
-  position?: 'up' | 'down'
+  position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
 }
 
 const DROPDOWN_POSITION = {
-  up: 'bottom-[calc(100%--6px)]',
-  down: 'top-[calc(100%--6px)]',
+  topLeft: 'bottom-[calc(100%--6px)] right-0 origin-bottom-right',
+  topRight: 'bottom-[calc(100%--6px)] left-0 origin-bottom-left',
+  bottomLeft: 'top-[calc(100%--6px)] right-0 origin-top-right',
+  bottomRight: 'top-[calc(100%--6px)] left-0 origin-top-left',
 }
 
-const DropDownWrapper = forwardRef<
+const DropDownContent = forwardRef<
   HTMLDivElement,
-  PropsWithChildren<DropDownWrapperProps>
+  PropsWithChildren<DropDownContentProps>
 >(
   (
     {
@@ -51,7 +68,7 @@ const DropDownWrapper = forwardRef<
       initStatus,
       onClick,
       className,
-      position = 'up',
+      position = 'topRight',
     },
     ref,
   ) => {
@@ -62,7 +79,7 @@ const DropDownWrapper = forwardRef<
         data-status={initStatus}
         onClick={onClick}
         className={cn(
-          'absolute hidden origin-top rounded-md bg-white shadow-md ring-1 ring-zinc-200 transition data-[status=closed]:scale-90 data-[status=closed]:opacity-0 dark:bg-var-dark dark:ring-zinc-700',
+          'absolute z-40 hidden rounded-md bg-white p-2 shadow-md ring-1 ring-zinc-200 transition data-[status=closed]:scale-90 data-[status=closed]:opacity-0 dark:bg-var-dark dark:ring-zinc-700',
           DROPDOWN_POSITION[position],
           className,
         )}
@@ -78,7 +95,7 @@ interface DropDownButtonProps extends ButtonProps {
 }
 
 const DropDownButton = ({
-  variant = 'list',
+  variant = 'icon',
   size = 'sm',
   className,
   children,
@@ -96,8 +113,31 @@ const DropDownButton = ({
   )
 }
 
+interface DropDownLinkButtonProps extends ButtonProps {
+  href: string
+  className?: string
+}
+
+const DropDownLinkButton = ({
+  href,
+  variant = 'primary',
+  size = 'sm',
+  onClick,
+  children,
+}: PropsWithChildren<DropDownLinkButtonProps>) => {
+  return (
+    <Link href={href}>
+      <Button variant={variant} size={size} onClick={onClick}>
+        {children}
+      </Button>
+    </Link>
+  )
+}
+
 export const DropDown = {
+  Root: DropDownRoot,
   Trigger: DropDownTrigger,
-  Wrapper: DropDownWrapper,
+  Content: DropDownContent,
   Button: DropDownButton,
+  LinkButton: DropDownLinkButton,
 }

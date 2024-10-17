@@ -1,4 +1,4 @@
-import Avatar from '@/components/feature/user/Avatar'
+import Avatar from '@/components/shared/Avatar'
 import LinkButton from '@/components/shared/LinkButton'
 import Text from '@/components/shared/Text'
 

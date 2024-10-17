@@ -9,7 +9,7 @@ export default function LogoutButton() {
   return (
     <div className="flex flex-col gap-2">
       <Title>로그아웃</Title>
-      <Button onClick={() => signOut()} className="w-fit">
+      <Button size="sm" onClick={() => signOut()} className="w-fit">
         로그아웃 하기
       </Button>
     </div>

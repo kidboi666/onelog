@@ -15,7 +15,7 @@ export interface ButtonProps extends ComponentProps<'button'> {
 }
 
 const BUTTON_VARIANTS = cva(
-  'flex items-center justify-center font-semibold transition',
+  'flex items-center justify-center text-nowrap font-semibold transition',
   {
     variants: {
       active: {

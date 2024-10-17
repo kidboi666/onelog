@@ -2,8 +2,8 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { createServerClient } from '@/lib/supabase/server'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import SentenceSection from './_components/SentenceSection'
-import PostSentence from '@/components/feature/sentence/PostSentence'
+import PostSentenceContainer from './_container/PostSentenceContainer'
+import SentenceContainer from './_container/SentenceContainer'
 
 export default function HomePage() {
   const supabase = createServerClient()
@@ -12,8 +12,8 @@ export default function HomePage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PostSentence />
-      <SentenceSection />
+      <PostSentenceContainer />
+      <SentenceContainer />
     </HydrationBoundary>
   )
 }

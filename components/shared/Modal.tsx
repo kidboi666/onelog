@@ -4,9 +4,6 @@ import useDataDrivenAnimation from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect, useRef } from 'react'
-import Icon from './Icon'
-import BackButton from './BackButton'
-import ExpandButton from './ExpandButton'
 
 interface Props extends ComponentProps<'div'> {
   className?: string
@@ -71,12 +68,11 @@ export default function Modal({
         data-status="closed"
         onTransitionEnd={insideOnTransitionEnd}
         className={cn(
-          'fixed left-1/2 top-1/2 z-50 flex h-fit max-h-[calc(100%-40px)] w-full max-w-[calc(100%-20px)] origin-top -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-12 rounded-md bg-var-lightgray p-4 shadow-lg transition ease-in-out data-[status=closed]:scale-90 data-[status=closed]:opacity-0 md:max-w-[768px] dark:bg-var-dark',
+          'fixed left-1/2 top-1/2 z-50 flex h-fit max-h-[calc(100%-40px)] w-full max-w-[calc(100%-20px)] origin-top -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-12 rounded-md bg-var-lightgray p-8 shadow-lg transition ease-in-out data-[status=closed]:scale-90 data-[status=closed]:opacity-0 sm:max-w-[425px] dark:bg-var-dark',
           className,
         )}
         {...props}
       >
-        <div className="absolute right-2 top-0 flex gap-2"></div>
         {children}
       </div>
     </>

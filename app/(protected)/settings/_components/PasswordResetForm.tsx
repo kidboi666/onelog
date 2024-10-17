@@ -25,7 +25,7 @@ export default function PasswordResetForm() {
           {data?.email}
         </Text>
       </Text>
-      <Button onClick={handlePasswordReset} className="w-fit">
+      <Button onClick={handlePasswordReset} size="sm" className="w-fit">
         현재 이메일로 비밀번호 변경 이메일 보내기
       </Button>
     </div>
