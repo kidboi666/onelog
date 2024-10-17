@@ -2,13 +2,13 @@ import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import SentenceOptionsDropDown from '../dropdown/SentenceOptionsDropDown'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import { MouseEvent } from 'react'
 
 export default function OptionsButton() {
   const { close, ref, onClick, onTransitionEnd } =
-    useStateChange<HTMLUListElement>()
+    useDataDrivenAnimation<HTMLUListElement>()
   const optionButtonRef = useOutsideClick<HTMLButtonElement>(close)
 
   const handleButtonClick = (e: MouseEvent) => {

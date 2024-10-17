@@ -4,7 +4,7 @@ import Input from '@/components/shared/Input'
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
 import { FormEvent, useEffect, useRef, useState } from 'react'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
@@ -35,7 +35,7 @@ export default function TaskForm({ params, searchParams }: Props) {
   const color = searchParams.color
   const [todoText, onChangeTodoText, setTodoText] = useInput('')
   const { onClick, ref, close, onTransitionEnd } =
-    useStateChange<HTMLDivElement>()
+    useDataDrivenAnimation<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todoFolders } = useSuspenseQuery(

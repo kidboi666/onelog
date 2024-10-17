@@ -1,6 +1,6 @@
 'use client'
 
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import { useRouter } from 'next/navigation'
 import { PropsWithChildren, useEffect, useRef } from 'react'
 import BackButtonSection from './BackButtonSection'
@@ -26,7 +26,11 @@ export default function MouseEventSection({
     todoQuery.getTodoFromFolder(supabase, me!.userId, Number(folderId)),
   )
   const isMouseDown = useRef<boolean>(false)
-  const { close, open, ref: insideRef } = useStateChange<HTMLDivElement>()
+  const {
+    close,
+    open,
+    ref: insideRef,
+  } = useDataDrivenAnimation<HTMLDivElement>()
   let todo: Tables<'todo'>
 
   if (todos) {

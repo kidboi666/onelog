@@ -1,6 +1,6 @@
 'use client'
 
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect, useRef } from 'react'
@@ -26,13 +26,13 @@ export default function Modal({
     open: insideOpen,
     ref: insideRef,
     onTransitionEnd: insideOnTransitionEnd,
-  } = useStateChange<HTMLDivElement>()
+  } = useDataDrivenAnimation<HTMLDivElement>()
   const {
     close: outsideClose,
     open: outsideOpen,
     ref: outsideRef,
     onTransitionEnd: outsideOnTransitionEnd,
-  } = useStateChange<HTMLDivElement>()
+  } = useDataDrivenAnimation<HTMLDivElement>()
 
   const handleMouseDown = () => {
     isMouseDown.current = true

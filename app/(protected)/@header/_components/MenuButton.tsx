@@ -2,13 +2,13 @@
 
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import MobileMenu from './MobileMenu'
 import useOutsideClick from '@/hooks/useOutsideClick'
 
 export default function MenuButton() {
   const { close, onClick, ref, onTransitionEnd } =
-    useStateChange<HTMLDivElement>()
+    useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   return (

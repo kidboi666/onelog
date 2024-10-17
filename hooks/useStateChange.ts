@@ -1,7 +1,7 @@
 import { wait } from '@/utils/wait'
 import { useRef } from 'react'
 
-export default function useStateChange<T extends HTMLElement>(
+export default function useDataDrivenAnimation<T extends HTMLElement>(
   initClass: string = 'hidden',
 ) {
   const ref = useRef<T>(null)

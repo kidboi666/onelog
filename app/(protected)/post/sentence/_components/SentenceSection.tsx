@@ -1,7 +1,7 @@
 import Button from '@/components/shared/Button'
 import Input from '@/components/shared/Input'
 import Title from '@/components/shared/Title'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import { ChangeEvent } from 'react'
 
 interface Props {
@@ -17,7 +17,7 @@ export default function SentenceSection({
   selectedStatusPercent,
   isPending,
 }: Props) {
-  const { ref, open, close } = useStateChange<HTMLDivElement>()
+  const { ref, open, close } = useDataDrivenAnimation<HTMLDivElement>()
   return (
     <div className="flex w-full flex-col items-center gap-8 md:w-[400px]">
       <Title type="sub" size="sm">

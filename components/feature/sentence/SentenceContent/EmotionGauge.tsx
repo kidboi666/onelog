@@ -2,7 +2,7 @@ import { List } from '@/components/shared/List'
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
 import EmotionDropDown from '../dropdown/EmotionDropDown'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import Button from '@/components/shared/Button'
 import { TColor } from '@/types/theme'
 import useOutsideClick from '@/hooks/useOutsideClick'
@@ -14,7 +14,7 @@ interface Props {
 export default function EmotionGauge({ emotionLevel }: Props) {
   const { color } = useTheme()
   const { close, onClick, ref, onTransitionEnd } =
-    useStateChange<HTMLDivElement>()
+    useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   let emotionBlock = [0, 0, 0, 0, 0]

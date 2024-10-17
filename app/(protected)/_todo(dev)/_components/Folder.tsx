@@ -14,7 +14,7 @@ import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useUpdateTodoFolder from '@/services/mutates/todo/useUpdateTodoFolder'
 import useOutsideClick from '@/hooks/useOutsideClick'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
@@ -50,7 +50,7 @@ export default function Folder({
     close,
     onClick,
     onTransitionEnd,
-  } = useStateChange<HTMLDivElement>()
+  } = useDataDrivenAnimation<HTMLDivElement>()
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(close)
   const [showKebabButton, setShowKebabButton] = useState(false)
   const folderRef = useRef<HTMLLIElement>(null)

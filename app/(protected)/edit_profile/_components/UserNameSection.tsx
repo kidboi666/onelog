@@ -1,7 +1,7 @@
 import Input from '@/components/shared/Input'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
 import { ComponentProps } from 'react'
 
@@ -10,7 +10,7 @@ interface Props extends ComponentProps<'input'> {
 }
 
 export default function UserNameSection({ value, onChange }: Props) {
-  const { ref, open, close } = useStateChange<HTMLInputElement>()
+  const { ref, open, close } = useDataDrivenAnimation<HTMLInputElement>()
   return (
     <div className="flex w-full max-w-52 flex-col gap-8">
       <Title>필명</Title>

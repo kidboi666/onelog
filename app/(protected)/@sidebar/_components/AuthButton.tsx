@@ -2,7 +2,7 @@ import Avatar from '@/components/feature/user/Avatar'
 import LinkButton from '@/components/shared/LinkButton'
 import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
@@ -17,7 +17,8 @@ const AUTH_PATHS = ['userinfo_summary', 'sentence_summary']
 
 export default function AuthButton({ isOpen, pathname }: Props) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { open, close, ref, onTransitionEnd } = useStateChange<HTMLDivElement>()
+  const { open, close, ref, onTransitionEnd } =
+    useDataDrivenAnimation<HTMLDivElement>()
   if (AUTH_PATHS.includes(pathname)) {
     open()
   } else {

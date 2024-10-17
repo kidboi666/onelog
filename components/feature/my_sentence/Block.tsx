@@ -36,6 +36,7 @@ export default function Block({
   if (empty) {
     return <div className="size-2.5 select-none opacity-0" />
   }
+
   const calculateMonthPoint = (blockInfo: IBlockInfo) => {
     const targetDate = blockInfo.weekDay
     const calculateMargin = 16 * (targetDate + 1) + 2

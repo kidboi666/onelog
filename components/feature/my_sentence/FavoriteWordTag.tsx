@@ -1,5 +1,5 @@
 import Button from '@/components/shared/Button'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import { IFavoriteWord } from '@/types/sentence'
 import TagInfo from './TagInfo'
 import { useState } from 'react'
@@ -12,7 +12,7 @@ interface Props {
 export default function FavoriteWordTag({ word }: Props) {
   const [isHover, setHover] = useState(false)
   const { onClick, ref, open, close, onTransitionEnd } =
-    useStateChange<HTMLDivElement>()
+    useDataDrivenAnimation<HTMLDivElement>()
 
   return (
     <List.Row className="relative">

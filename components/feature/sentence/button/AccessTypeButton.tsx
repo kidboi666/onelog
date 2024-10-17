@@ -2,7 +2,7 @@ import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import SentenceAccessTypeDropDown from '../dropdown/SentenceAccessTypeDropDown'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import { MouseEvent } from 'react'
 import useOutsideClick from '@/hooks/useOutsideClick'
 
@@ -12,7 +12,7 @@ interface Props {
 
 export default function AccessTypeButton({ accessType }: Props) {
   const { close, ref, onClick, onTransitionEnd } =
-    useStateChange<HTMLDivElement>()
+    useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   const handleButtonClick = (e: MouseEvent) => {

@@ -16,7 +16,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { todoFolderQuery } from '@/services/queries/todo/todoFolderQuery'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import Title from '@/components/shared/Title'
 
 export const INIT_TODO_FOLDER: TodoFolder = {
@@ -41,7 +41,7 @@ export default function SideBarPage({ searchParams }: Props) {
     todoFolderQuery.getTodoFolder(supabase, me!.userId),
   )
   const { ref, open, close, onClick, onTransitionEnd } =
-    useStateChange<HTMLDivElement>()
+    useDataDrivenAnimation<HTMLDivElement>()
 
   const handleSideMenu = () => {
     setOpenSide((prev) => !prev)

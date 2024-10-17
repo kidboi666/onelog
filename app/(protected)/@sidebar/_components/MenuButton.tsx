@@ -4,7 +4,7 @@ import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
 import LinkButton from '@/components/shared/LinkButton'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 
 interface Props {
   isOpen: boolean
@@ -23,7 +23,8 @@ export default function MenuButton({
   path,
   className,
 }: Props) {
-  const { open, close, ref, onTransitionEnd } = useStateChange<HTMLDivElement>()
+  const { open, close, ref, onTransitionEnd } =
+    useDataDrivenAnimation<HTMLDivElement>()
   if (isSelected) {
     open()
   } else {

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import cn from '@/lib/cn'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import Line from '@/components/shared/Line'
 import { List } from '@/components/shared/List'
 import MenuButton from './_components/MenuButton'
@@ -18,7 +18,7 @@ import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
 export default function Sidebar() {
   const [isOpen, setOpen] = useState(false)
   const { ref, close, onClick, onTransitionEnd } =
-    useStateChange<HTMLDivElement>('w-14')
+    useDataDrivenAnimation<HTMLDivElement>('w-14')
   const pathname = usePathname()
 
   const handlePanelState = () => {

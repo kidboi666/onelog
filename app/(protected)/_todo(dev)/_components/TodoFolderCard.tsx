@@ -6,7 +6,7 @@ import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
 import { useInput } from '@/hooks/useInput'
 import useOutsideClick from '@/hooks/useOutsideClick'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
@@ -33,7 +33,7 @@ export default function TodoFolderCard({
   )
   const localTodos = todos?.filter((todo) => todo.folder_id === folder.id)
   const { ref, onClick, onTransitionEnd, close } =
-    useStateChange<HTMLDivElement>()
+    useDataDrivenAnimation<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
   const [name, onChangeName, setName] = useInput<string>('')
 

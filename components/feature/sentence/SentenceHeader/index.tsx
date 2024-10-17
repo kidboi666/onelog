@@ -1,4 +1,4 @@
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import Title from '@/components/shared/Title'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
@@ -40,7 +40,7 @@ export default function SentenceHeader({
   isModal = false,
 }: Props) {
   const { close, ref, onClick, onTransitionEnd } =
-    useStateChange<HTMLDivElement>()
+    useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   return (

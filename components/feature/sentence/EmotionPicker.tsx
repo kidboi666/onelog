@@ -3,7 +3,7 @@
 import cn from '@/lib/cn'
 import Text from '@/components/shared/Text'
 import { List } from '@/components/shared/List'
-import useStateChange from '@/hooks/useStateChange'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
 import { EMOTION_STATUS } from '@/app/(protected)/post/sentence/_constants'
 import { RefObject } from 'react'
 import { useTheme } from '@/store/useTheme'
