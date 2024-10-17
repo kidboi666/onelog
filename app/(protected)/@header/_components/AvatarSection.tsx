@@ -11,7 +11,7 @@ interface Props {
 export default function AvatarSection({ userId, avatarUrl, email }: Props) {
   return (
     <LinkButton
-      href={`/${userId}`}
+      href={`/profile/${userId}`}
       variant="list"
       size="icon"
       className="h-fit"

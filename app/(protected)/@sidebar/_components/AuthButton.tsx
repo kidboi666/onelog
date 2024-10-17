@@ -11,19 +11,20 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 interface Props {
   isOpen: boolean
   pathname: string
+  userId: string
 }
 
-const AUTH_PATHS = ['summary', 'sentence']
-
-export default function AuthButton({ isOpen, pathname }: Props) {
+export default function AuthButton({ isOpen, pathname, userId }: Props) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { open, close, ref, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
-  if (AUTH_PATHS.includes(pathname)) {
+
+  if (pathname === 'profile' && userId === me?.userId) {
     open()
   } else {
     close()
   }
+
   return (
     <List.Row className="group relative w-full">
       <div

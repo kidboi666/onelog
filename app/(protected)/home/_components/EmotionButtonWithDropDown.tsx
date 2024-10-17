@@ -51,9 +51,7 @@ export default function EmotionButtonWithDropDown({ emotionLevel }: Props) {
         onTransitionEnd={onTransitionEnd}
         className="p-2"
       >
-        <Text type="caption" size="sm">
-          감정 상태 : {emotionState!}
-        </Text>
+        <Text size="sm">감정 상태 : {emotionState!}</Text>
       </DropDown.Content>
     </DropDown.Root>
   )

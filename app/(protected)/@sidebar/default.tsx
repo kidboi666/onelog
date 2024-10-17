@@ -74,7 +74,11 @@ export default function Sidebar() {
         <ThemeToggleButton isOpen={isOpen} />
 
         <Line className="mb-2" />
-        <AuthButton isOpen={isOpen} pathname={pathname.split('/')[2]} />
+        <AuthButton
+          isOpen={isOpen}
+          pathname={pathname.split('/')[1]}
+          userId={pathname.split('/')[2]}
+        />
       </List>
     </div>
   )
