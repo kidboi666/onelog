@@ -10,7 +10,7 @@ interface Props extends ComponentProps<'ul'> {
   dataStatus?: string
 }
 
-export const List = ({
+export function List({
   children,
   className,
   targetRef,
@@ -19,7 +19,7 @@ export const List = ({
   isBackground,
   onTransitionEnd,
   ...props
-}: PropsWithChildren<Props>) => {
+}: PropsWithChildren<Props>) {
   return (
     <ul
       ref={targetRef}

@@ -17,9 +17,10 @@ import Button from '@/components/shared/Button'
 import { TagsInput } from '@/components/shared/TagsInput'
 import BubbleMenuBar from '@/components/feature/text_editor/BubbleMenuBar'
 import Icon from '@/components/shared/Icon'
-import EmotionPicker from '@/components/feature/sentence/EmotionPicker'
-import DropDown from './_components/DropDown'
 import Text from '@/components/shared/Text'
+import AccessTypeDropDown from './_components/AccessTypeDropDown'
+import { DropDown } from '@/components/shared/DropDown'
+import EmotionPickerDropDown from './_components/EmotionPickerDropDown'
 
 export default function PostSentencePage() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -36,7 +37,7 @@ export default function PostSentencePage() {
   const { mutate: addSentence, isPending } = useAddSentence()
   const router = useRouter()
   const { close, onClick, onTransitionEnd, ref } =
-    useDataDrivenAnimation<HTMLUListElement>()
+    useDataDrivenAnimation<HTMLDivElement>()
   const {
     close: emotionClose,
     onClick: emotionClick,
@@ -99,9 +100,8 @@ export default function PostSentencePage() {
           <div className="flex justify-between">
             <div className="flex gap-4">
               <div className="relative place-self-center">
-                <Button
-                  ref={accessTypeRef}
-                  variant="icon"
+                <DropDown.Trigger
+                  targetRef={accessTypeRef}
                   size="none"
                   onClick={onClick}
                 >
@@ -112,8 +112,8 @@ export default function PostSentencePage() {
                       <path d="M819-28 701-146q-48 32-103.5 49T480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-62 17-117.5T146-701L27-820l57-57L876-85l-57 57ZM440-162v-78q-33 0-56.5-23.5T360-320v-40L168-552q-3 18-5.5 36t-2.5 36q0 121 79.5 212T440-162Zm374-99-58-58q21-37 32.5-77.5T800-480q0-98-54.5-179T600-776v16q0 33-23.5 56.5T520-680h-80v45L261-814q48-31 103-48.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 61-17.5 116T814-261Z" />
                     )}
                   </Icon>
-                </Button>
-                <DropDown
+                </DropDown.Trigger>
+                <AccessTypeDropDown
                   targetRef={ref}
                   onTransitionEnd={onTransitionEnd}
                   onClick={changeAccessType}
@@ -121,9 +121,8 @@ export default function PostSentencePage() {
               </div>
 
               <div className="relative flex items-center gap-2 place-self-center">
-                <Button
-                  ref={emotionButtonRef}
-                  variant="icon"
+                <DropDown.Trigger
+                  targetRef={emotionButtonRef}
                   size="none"
                   onClick={emotionClick}
                 >
@@ -134,8 +133,8 @@ export default function PostSentencePage() {
                       <path d="M620-520q25 0 42.5-17.5T680-580q0-25-17.5-42.5T620-640q-25 0-42.5 17.5T560-580q0 25 17.5 42.5T620-520Zm-280 0q25 0 42.5-17.5T400-580q0-25-17.5-42.5T340-640q-25 0-42.5 17.5T280-580q0 25 17.5 42.5T340-520Zm140 260q68 0 123.5-38.5T684-400H276q25 63 80.5 101.5T480-260Zm0 180q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z" />
                     )}
                   </Icon>
-                </Button>
-                <EmotionPicker
+                </DropDown.Trigger>
+                <EmotionPickerDropDown
                   targetRef={emotionRef}
                   onTransitionEnd={emotionTransitionEnd}
                   selectedEmotion={selectedEmotion}
