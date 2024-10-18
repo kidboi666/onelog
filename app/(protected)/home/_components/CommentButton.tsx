@@ -5,7 +5,7 @@ import { MouseEvent } from 'react'
 
 interface Props {
   onShowComment: (e: MouseEvent) => void
-  commentCount?: number
+  commentCount?: number | null
   showComment?: boolean
   disabled?: boolean
 }

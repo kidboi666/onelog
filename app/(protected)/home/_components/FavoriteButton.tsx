@@ -6,8 +6,8 @@ import { MouseEvent } from 'react'
 interface Props {
   sentenceId: number
   commentId?: number
-  favoritedCount?: number
-  favoritedUserId?: string[]
+  favoritedCount?: number | null
+  favoritedUserId?: string[] | null
   onFavorite: (
     e: MouseEvent,
     { commentId, sentenceId }: { commentId?: number; sentenceId: number },

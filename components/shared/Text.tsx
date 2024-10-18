@@ -9,7 +9,7 @@ export interface TextProps {
   size?: 'xs' | 'sm' | 'md' | 'lg'
 }
 
-const TEXT_VARIANTS = cva('text-nowrap', {
+const TEXT_VARIANTS = cva('', {
   variants: {
     type: {
       body: 'text-zinc-600 dark:text-zinc-200',

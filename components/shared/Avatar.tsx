@@ -10,6 +10,7 @@ interface Props {
   shadow?: 'none' | 'sm' | 'md' | 'lg'
   hoverEffect?: 'none' | 'ring'
   className?: string
+  onClick?: () => void
 }
 
 const avatarVariants = cva('', {
@@ -47,10 +48,12 @@ export default function Avatar({
   ring = 'none',
   shadow = 'none',
   hoverEffect = 'ring',
+  onClick,
   className,
 }: Props) {
   return (
     <div
+      onClick={onClick}
       className={cn(
         avatarVariants({ size, ring, shadow, hoverEffect }),
         'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 dark:bg-var-darkgray',

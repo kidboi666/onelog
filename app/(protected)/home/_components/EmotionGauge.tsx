@@ -4,9 +4,11 @@ import { TColor } from '@/types/theme'
 
 interface Props {
   emotionLevel?: string
+  className?: string
+  size?: number
 }
 
-export default function EmotionGauge({ emotionLevel }: Props) {
+export default function EmotionGauge({ emotionLevel, className }: Props) {
   const { color } = useTheme()
 
   let emotionBlock = [0, 0, 0, 0, 0]
@@ -33,15 +35,18 @@ export default function EmotionGauge({ emotionLevel }: Props) {
   }
 
   return (
-    emotionLevel &&
-    emotionBlock!.map((shouldRender, index) => (
-      <EmotionBlock
-        key={index}
-        index={index}
-        shouldRender={shouldRender}
-        color={color}
-      />
-    ))
+    emotionLevel && (
+      <div className={cn('flex items-end gap-1', className)}>
+        {emotionBlock!.map((shouldRender, index) => (
+          <EmotionBlock
+            key={index}
+            index={index}
+            shouldRender={shouldRender}
+            color={color}
+          />
+        ))}
+      </div>
+    )
   )
 }
 
@@ -53,21 +58,26 @@ interface EmotionBlockProps {
 
 function EmotionBlock({ shouldRender, color, index }: EmotionBlockProps) {
   let blockOpacity: string
+  let sizeString: string
   switch (index) {
     case 0:
-      blockOpacity = 'opacity-20'
+      blockOpacity = `opacity-20`
       break
     case 1:
-      blockOpacity = 'opacity-40'
+      blockOpacity = `opacity-40`
+      sizeString = shouldRender ? 'h-[12px]' : ''
       break
     case 2:
       blockOpacity = 'opacity-60'
+      sizeString = shouldRender ? 'h-[16px]' : ''
       break
     case 3:
       blockOpacity = 'opacity-80'
+      sizeString = shouldRender ? 'h-[20px]' : ''
       break
     case 4:
       blockOpacity = 'opacity-100'
+      sizeString = shouldRender ? 'h-[24px]' : ''
       break
     default:
       break
@@ -75,7 +85,8 @@ function EmotionBlock({ shouldRender, color, index }: EmotionBlockProps) {
   return (
     <div
       className={cn(
-        'size-2 overflow-hidden rounded-full bg-zinc-300/35 shadow-sm dark:bg-zinc-300/15',
+        'size-2 overflow-hidden rounded-full bg-zinc-300/35 shadow-sm transition-all dark:bg-zinc-300/15',
+        sizeString!,
       )}
     >
       <div

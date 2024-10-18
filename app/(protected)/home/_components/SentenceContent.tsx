@@ -59,25 +59,23 @@ export default function SentenceContent({
         </List>
       )}
       <EditorContent editor={editor} className="line-clamp-6 max-h-64" />
-      {isMyPage ? null : (
-        <nav className="flex items-center justify-between">
-          <FavoriteButton
-            favoritedUserId={favoritedUserId}
-            favoritedCount={favoritedCount}
-            sentenceId={sentenceId}
-            onFavorite={onFavorite}
-            userId={userId}
-          />
-          <CommentButton
-            disabled={disabled}
-            showComment={showComment}
-            commentCount={commentCount!}
-            onShowComment={handleShowComment}
-          />
-          <AccessTypeButtonWithDropDown accessType={accessType} />
-          <OptionButtonWithDropDown />
-        </nav>
-      )}
+      <nav className="flex items-center justify-between">
+        <FavoriteButton
+          favoritedUserId={favoritedUserId}
+          favoritedCount={favoritedCount}
+          sentenceId={sentenceId}
+          onFavorite={onFavorite}
+          userId={userId}
+        />
+        <CommentButton
+          disabled={disabled}
+          showComment={showComment}
+          commentCount={commentCount!}
+          onShowComment={handleShowComment}
+        />
+        <AccessTypeButtonWithDropDown accessType={accessType} />
+        <OptionButtonWithDropDown />
+      </nav>
       {showComment && !isMyPage && (
         <Suspense fallback={<Spinner size={40} />}>
           <Comments sentenceId={sentenceId} me={me} />

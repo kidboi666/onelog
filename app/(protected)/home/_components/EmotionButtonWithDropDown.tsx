@@ -40,7 +40,7 @@ export default function EmotionButtonWithDropDown({ emotionLevel }: Props) {
         targetRef={buttonRef}
         size="none"
         onClick={onClick}
-        className="gap-px bg-white p-2 shadow-sm dark:bg-var-darkgray"
+        className="group gap-px bg-white p-2 shadow-sm dark:bg-var-darkgray"
       >
         {emotionLevel && <EmotionGauge emotionLevel={emotionLevel} />}
       </DropDown.Trigger>

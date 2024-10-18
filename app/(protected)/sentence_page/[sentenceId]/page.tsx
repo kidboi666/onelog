@@ -1,6 +1,6 @@
 'use client'
 
-import { MouseEvent } from 'react'
+import { MouseEvent, Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
@@ -15,12 +15,22 @@ import Line from '@/components/shared/Line'
 import { EditorContent } from '@tiptap/react'
 import Tag from '@/components/shared/Tag'
 import { List } from '@/components/shared/List'
+import EmotionGauge from '../../home/_components/EmotionGauge'
+import FavoriteButton from '../../home/_components/FavoriteButton'
+import CommentButton from '../../home/_components/CommentButton'
+import AccessTypeButtonWithDropDown from '../../home/_components/AccessTypeButtonWithDropDown'
+import OptionButtonWithDropDown from '../../home/_components/OptionButtonWithDropDown'
+import Comments from '../../home/_components/Comments'
+import Spinner from '@/components/shared/Spinner'
+import Button from '@/components/shared/Button'
+import Link from 'next/link'
 
 interface Props {
   params: { sentenceId: string }
 }
 
 export default function SentencePage({ params }: Props) {
+  const [showComment, setShowComment] = useState(true)
   const router = useRouter()
   const sentenceId = params.sentenceId
   const { data: sentence } = useSuspenseQuery(
@@ -33,8 +43,6 @@ export default function SentencePage({ params }: Props) {
   const { editor } = useBlockEditor({ content: sentence?.content })
   const { mutate: favoriteSentence } = useFavoriteSentence()
 
-  if (!editor) return null
-
   const handleFavoriteSentence = (
     e: MouseEvent,
     { sentenceId }: { sentenceId: number },
@@ -43,20 +51,35 @@ export default function SentencePage({ params }: Props) {
     favoriteSentence({ userId: me.id || '', sentenceId })
   }
 
-  const handleAvatarClick = () => {
-    router.push(`/${sentence?.user_id}`)
+  if (!editor) {
+    return null
   }
 
   return (
     <>
-      <div className="flex flex-col gap-4 rounded-md bg-white p-4 dark:bg-var-darkgray">
+      <div className="flex flex-col gap-8 rounded-md bg-white p-4 dark:bg-var-darkgray">
         <div className="flex items-center gap-4">
-          <Avatar src={sentence?.user_info.avatar_url} size="md" ring="xs" />
+          <Avatar
+            src={sentence?.user_info.avatar_url}
+            size="sm"
+            ring="xs"
+            onClick={() => router.push(`/profile/${sentence?.user_id}`)}
+          />
           <div className="flex flex-col self-end">
             <Title type="sub" size="sm">
               {sentence?.user_info.user_name}
+              <Text type="caption" size="sm" as="span">
+                {' '}
+                {/* {sentence.user_info.about_me} */}
+              </Text>
             </Title>
-            <Text type="caption">{sentence?.user_info.email}</Text>
+            <Text type="caption">{sentence.user_info.email}</Text>
+          </div>
+          <div className="flex h-full flex-1 items-end justify-end p-2">
+            <EmotionGauge
+              emotionLevel={sentence?.emotion_level}
+              className="h-full"
+            />
           </div>
         </div>
         <Line />
@@ -65,9 +88,57 @@ export default function SentencePage({ params }: Props) {
             {sentence?.tags?.map((tag, index) => <Tag key={index} tag={tag} />)}
           </List>
         )}
-        <div>
-          <EditorContent editor={editor} />
-        </div>
+        <EditorContent editor={editor} />
+        <Link
+          href={`/profile/${sentence?.user_id}`}
+          className="flex flex-col gap-2"
+        >
+          <Title type="sub" size="xs">
+            글쓴이 소개
+          </Title>
+          <div className="flex w-full gap-2 rounded-md bg-var-lightgray p-4 transition hover:shadow-xl dark:bg-var-dark">
+            <Avatar src={sentence.user_info.avatar_url} size="md" />
+            <div className="flex w-full flex-col gap-1">
+              <Title>{sentence.user_info.user_name}</Title>
+              <Text type="caption">{sentence.user_info.email}</Text>
+              <Text>{sentence.user_info.about_me}</Text>
+            </div>
+            <div className="flex flex-col justify-center gap-2">
+              <Button
+                size="sm"
+                onClick={(e) => e.stopPropagation()}
+                className="w-full self-end"
+              >
+                팔로우 하기
+              </Button>
+              <Button variant="secondary" size="sm" className="w-full self-end">
+                메세지 보내기
+              </Button>
+            </div>
+          </div>
+        </Link>
+        <Line />
+        <nav className="flex items-center justify-between">
+          <FavoriteButton
+            favoritedUserId={sentence?.favorited_user_id}
+            favoritedCount={sentence?.favorite}
+            sentenceId={sentence.id}
+            onFavorite={handleFavoriteSentence}
+            userId={me.id}
+          />
+          <CommentButton
+            showComment={showComment}
+            onShowComment={() => setShowComment((prev) => !prev)}
+            commentCount={sentence.comment}
+          />
+          <AccessTypeButtonWithDropDown accessType={sentence?.access_type} />
+          <OptionButtonWithDropDown />
+        </nav>
+        {showComment && (
+          <Suspense fallback={<Spinner size={40} />}>
+            <Comments sentenceId={sentence.id} me={me} />
+          </Suspense>
+        )}
       </div>
     </>
   )

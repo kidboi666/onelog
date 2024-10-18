@@ -6,5 +6,8 @@ export interface IFavoriteWord {
 }
 
 export interface ISentenceWithUserInfo extends Tables<'sentence'> {
-  user_info: Pick<Tables<'user_info'>, 'user_name' | 'email' | 'avatar_url'>
+  user_info: Pick<
+    Tables<'user_info'>,
+    'user_name' | 'email' | 'avatar_url' | 'about_me'
+  >
 }

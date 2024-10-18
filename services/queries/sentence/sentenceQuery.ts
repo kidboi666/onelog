@@ -52,7 +52,7 @@ export const sentenceQuery = {
     }),
 
   getSentence: (supabase: SupabaseClient, sentenceId: string) =>
-    queryOptions<ISentenceWithUserInfo | null>({
+    queryOptions<ISentenceWithUserInfo>({
       queryKey: ['sentence', sentenceId],
       queryFn: async () => {
         const { data, error } = await supabase
@@ -63,7 +63,8 @@ export const sentenceQuery = {
             user_info(
               email,
               user_name,
-              avatar_url
+              avatar_url,
+              about_me
             )
             `,
           )
