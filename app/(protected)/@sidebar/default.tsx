@@ -10,10 +10,10 @@ import {
   BOTTOM_NAVIGATE_MENUS,
   TOP_NAVIGATE_MENUS,
 } from './_constants/Navigate'
-import AuthButton from './_components/AuthButton'
 import OpenButton from './_components/OpenButton'
 import { usePathname } from 'next/navigation'
 import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
+import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown'
 
 export default function Sidebar() {
   const [isOpen, setOpen] = useState(false)
@@ -72,9 +72,8 @@ export default function Sidebar() {
           />
         ))}
         <ThemeToggleButton isOpen={isOpen} />
-
         <Line className="mb-2" />
-        <AuthButton
+        <AuthButtonWithDropDown
           isOpen={isOpen}
           pathname={pathname.split('/')[1]}
           userId={pathname.split('/')[2]}

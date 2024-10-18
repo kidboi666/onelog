@@ -2,6 +2,7 @@ import { forwardRef, PropsWithChildren, RefObject } from 'react'
 import Button, { ButtonProps } from './Button'
 import cn from '@/lib/cn'
 import Link from 'next/link'
+import Text, { TextProps } from './Text'
 
 interface DropDownRootProps {
   className?: string
@@ -43,8 +44,8 @@ const DropDownTrigger = ({
 }
 
 interface DropDownContentProps {
-  onTransitionEnd: () => void
-  initStatus: string
+  onTransitionEnd?: () => void
+  initStatus?: string
   onClick?: (params: any) => void
   className?: string
   position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
@@ -79,7 +80,7 @@ const DropDownContent = forwardRef<
         data-status={initStatus}
         onClick={onClick}
         className={cn(
-          'absolute z-40 hidden rounded-md bg-white p-2 shadow-md ring-1 ring-zinc-200 transition data-[status=closed]:scale-90 data-[status=closed]:opacity-0 dark:bg-var-dark dark:ring-zinc-700',
+          'absolute z-40 hidden rounded-md bg-white p-2 shadow-lg ring-1 ring-zinc-200 transition data-[status=closed]:scale-95 data-[status=closed]:opacity-0 dark:bg-var-darkgray dark:ring-zinc-700',
           DROPDOWN_POSITION[position],
           className,
         )}
@@ -116,6 +117,7 @@ const DropDownButton = ({
 interface DropDownLinkButtonProps extends ButtonProps {
   href: string
   className?: string
+  innerClassName?: string
 }
 
 const DropDownLinkButton = ({
@@ -124,14 +126,30 @@ const DropDownLinkButton = ({
   size = 'sm',
   onClick,
   children,
+  className,
+  innerClassName,
 }: PropsWithChildren<DropDownLinkButtonProps>) => {
   return (
-    <Link href={href}>
-      <Button variant={variant} size={size} onClick={onClick}>
+    <Link href={href} className={className}>
+      <Button
+        variant={variant}
+        size={size}
+        onClick={onClick}
+        className={innerClassName}
+      >
         {children}
       </Button>
     </Link>
   )
+}
+
+interface DropDownTextProps extends TextProps {}
+
+const DropDownText = ({
+  children,
+  ...props
+}: PropsWithChildren<DropDownTextProps>) => {
+  return <Text {...props}>{children}</Text>
 }
 
 export const DropDown = {
@@ -140,4 +158,5 @@ export const DropDown = {
   Content: DropDownContent,
   Button: DropDownButton,
   LinkButton: DropDownLinkButton,
+  Text: DropDownText,
 }

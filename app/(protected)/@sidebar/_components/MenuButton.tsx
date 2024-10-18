@@ -5,6 +5,7 @@ import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
 import LinkButton from '@/components/shared/LinkButton'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
+import BookMark from './BookMark'
 
 interface Props {
   isOpen: boolean
@@ -23,21 +24,9 @@ export default function MenuButton({
   path,
   className,
 }: Props) {
-  const { open, close, ref, onTransitionEnd } =
-    useDataDrivenAnimation<HTMLDivElement>()
-  if (isSelected) {
-    open()
-  } else {
-    close()
-  }
   return (
     <List.Row className={cn('relative', className)}>
-      <div
-        ref={ref}
-        data-status="closed"
-        onTransitionEnd={onTransitionEnd}
-        className="absolute -left-2 top-1/2 h-full w-1 -translate-y-1/2 rounded-r-md bg-var-gray transition duration-500 data-[status=closed]:scale-0"
-      />
+      <BookMark isSelected={isSelected} />
       <LinkButton
         href={path}
         variant="icon"
@@ -49,16 +38,13 @@ export default function MenuButton({
         <Icon view="0 -960 960 960" size={16} className="flex flex-shrink-0">
           {icon}
         </Icon>
-        <div
-          className={cn(
-            'origin-left transition',
-            isOpen ? '' : 'scale-x-0 opacity-0',
-          )}
-        >
-          <Text type="caption" size="sm">
-            {name}
-          </Text>
-        </div>
+        {isOpen && (
+          <div className="animate-fade-in">
+            <Text type="caption" size="sm">
+              {name}
+            </Text>
+          </div>
+        )}
       </LinkButton>
     </List.Row>
   )

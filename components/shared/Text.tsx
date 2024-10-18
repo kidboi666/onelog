@@ -2,7 +2,7 @@ import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
 import { ElementType, PropsWithChildren } from 'react'
 
-interface Props {
+export interface TextProps {
   as?: ElementType
   className?: string
   type?: 'body' | 'caption' | 'error' | 'none'
@@ -32,7 +32,7 @@ export default function Text({
   className,
   type = 'body',
   size = 'md',
-}: PropsWithChildren<Props>) {
+}: PropsWithChildren<TextProps>) {
   return (
     <Component className={cn(TEXT_VARIANTS({ type, size }), className)}>
       {children}

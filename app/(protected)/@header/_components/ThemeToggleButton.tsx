@@ -54,31 +54,31 @@ export default function ThemeToggleButton({ isOpen }: Props) {
               </Icon>
             </div>
           </div>
-          <Text
-            type="caption"
-            size="sm"
-            className={cn(
-              'hidden origin-left transition sm:block',
-              isOpen ? '' : 'scale-x-0 opacity-0',
-            )}
-          >
-            다크 모드
-          </Text>
-        </div>
-        <div
-          className={cn(
-            'flex h-full w-[30px] origin-left items-center rounded-full transition',
-            theme === 'dark' ? 'bg-green-500' : 'bg-zinc-400',
-            isOpen ? '' : 'scale-x-0 opacity-0',
+          {isOpen && (
+            <Text
+              type="caption"
+              size="sm"
+              className="animate-fade-in transition sm:block"
+            >
+              다크 모드
+            </Text>
           )}
-        >
+        </div>
+        {isOpen && (
           <div
             className={cn(
-              'size-[15px] rounded-full bg-zinc-200 transition',
-              theme === 'dark' ? 'translate-x-[14px]' : '',
+              'flex h-full w-[30px] origin-left animate-fade-in items-center rounded-full transition',
+              theme === 'dark' ? 'bg-green-500' : 'bg-zinc-400',
             )}
-          />
-        </div>
+          >
+            <div
+              className={cn(
+                'size-[15px] rounded-full bg-zinc-200 transition',
+                theme === 'dark' ? 'translate-x-[14px]' : '',
+              )}
+            />
+          </div>
+        )}
       </Button>
     </List.Row>
   )
