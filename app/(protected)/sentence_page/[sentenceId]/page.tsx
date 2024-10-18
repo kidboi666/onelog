@@ -57,7 +57,7 @@ export default function SentencePage({ params }: Props) {
 
   return (
     <>
-      <div className="flex flex-col gap-8 rounded-md bg-white p-4 dark:bg-var-darkgray">
+      <div className="flex flex-col gap-4 rounded-md bg-white p-4 dark:bg-var-darkgray">
         <div className="flex items-center gap-4">
           <Avatar
             src={sentence?.user_info.avatar_url}
@@ -68,10 +68,6 @@ export default function SentencePage({ params }: Props) {
           <div className="flex flex-col self-end">
             <Title type="sub" size="sm">
               {sentence?.user_info.user_name}
-              <Text type="caption" size="sm" as="span">
-                {' '}
-                {/* {sentence.user_info.about_me} */}
-              </Text>
             </Title>
             <Text type="caption">{sentence.user_info.email}</Text>
           </div>
@@ -91,19 +87,18 @@ export default function SentencePage({ params }: Props) {
         <EditorContent editor={editor} />
         <Link
           href={`/profile/${sentence?.user_id}`}
-          className="flex flex-col gap-2"
+          className="mt-8 flex flex-col gap-2"
         >
-          <Title type="sub" size="xs">
-            글쓴이 소개
-          </Title>
-          <div className="flex w-full gap-2 rounded-md bg-var-lightgray p-4 transition hover:shadow-xl dark:bg-var-dark">
-            <Avatar src={sentence.user_info.avatar_url} size="md" />
-            <div className="flex w-full flex-col gap-1">
-              <Title>{sentence.user_info.user_name}</Title>
-              <Text type="caption">{sentence.user_info.email}</Text>
-              <Text>{sentence.user_info.about_me}</Text>
+          <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition hover:shadow-xl sm:flex-row dark:bg-var-dark">
+            <div className="flex flex-1 gap-2">
+              <Avatar src={sentence.user_info.avatar_url} size="md" />
+              <div className="flex w-full flex-col gap-1">
+                <Title size="sm">{sentence.user_info.user_name}</Title>
+                <Text type="caption">{sentence.user_info.email}</Text>
+                <Text>{sentence.user_info.about_me}</Text>
+              </div>
             </div>
-            <div className="flex flex-col justify-center gap-2">
+            <div className="flex justify-center gap-2 sm:flex-col">
               <Button
                 size="sm"
                 onClick={(e) => e.stopPropagation()}

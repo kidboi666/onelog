@@ -52,7 +52,7 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
   }
 
   return (
-    <List.Row className="flex w-full gap-2">
+    <List.Row className="mb-4 flex w-full gap-2">
       <div className="h-fit">
         <Button variant="none" onClick={handleAvatarClick} className="p-0">
           <Avatar src={comment?.avatar_url} size="sm" shadow="sm" />
@@ -71,8 +71,6 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
               {comment.email}
             </Text>
             <Text type="caption" size="sm">
-              {formatDateToYMD(comment.created_at)}
-              {' ・ '}
               {formatDateToHM(comment.created_at)}
             </Text>
           </div>
@@ -80,7 +78,7 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
         <div className="w-fit rounded-md bg-var-lightgray p-2 dark:bg-var-dark">
           <Text>{comment.content}</Text>
         </div>
-        <div className="flex flex-1">
+        <div className="flex gap-1">
           <FavoriteButton
             sentenceId={sentenceId}
             commentId={comment.id}
