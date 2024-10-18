@@ -62,7 +62,7 @@ export default function SentencePage({ params }: Props) {
         <Line />
         {sentence?.tags && sentence.tags.length >= 1 && (
           <List className="flex flex-wrap gap-2">
-            {sentence?.tags?.map((tag) => <Tag tag={tag} />)}
+            {sentence?.tags?.map((tag, index) => <Tag key={index} tag={tag} />)}
           </List>
         )}
         <div>
