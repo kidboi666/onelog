@@ -64,7 +64,7 @@ export default function SentenceCard({
   }
 
   const handleSentenceItemClick = () => {
-    router.push(`/sentence_page/${sentenceId}`, { scroll: false })
+    router.push(`/sentence_page/${sentenceId}`)
   }
 
   return (

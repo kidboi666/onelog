@@ -42,7 +42,7 @@ export default function CommentInput({ sentenceId, commentId }: Props) {
   }
 
   return (
-    <form onSubmit={handlePostComment} className="mb-8 flex w-full gap-4">
+    <form onSubmit={handlePostComment} className="mb-2 flex w-full gap-4">
       <Avatar src={me?.avatar_url} size="sm" shadow="sm" />
       <Input
         value={content}
@@ -55,7 +55,8 @@ export default function CommentInput({ sentenceId, commentId }: Props) {
         type="submit"
         disabled={!content}
         isLoading={isPostPending}
-        className="h-full self-end text-nowrap"
+        size="sm"
+        className="h-full self-end"
       >
         댓글달기
       </Button>

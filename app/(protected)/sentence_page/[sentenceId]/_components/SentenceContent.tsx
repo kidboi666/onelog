@@ -58,7 +58,7 @@ export default function SentenceContent({
           {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
         </List>
       )}
-      <EditorContent editor={editor} className="line-clamp-6 max-h-64" />
+      <EditorContent editor={editor} />
       {isMyPage ? null : (
         <nav className="flex items-center justify-between">
           <FavoriteButton

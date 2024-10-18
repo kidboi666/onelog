@@ -1,9 +1,10 @@
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import cn from '@/lib/cn'
+import { MouseEvent } from 'react'
 
 interface Props {
-  onShowComment: () => void
+  onShowComment: (e: MouseEvent) => void
   commentCount?: number
   showComment?: boolean
   disabled?: boolean
