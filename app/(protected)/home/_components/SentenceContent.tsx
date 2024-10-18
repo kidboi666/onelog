@@ -44,7 +44,7 @@ export default function SentenceContent({
 }: Props) {
   const [showComment, setShowComment] = useState(false)
 
-  const handleShowComment = (e: MouseEvent) => {
+  const handleShowComment = () => {
     setShowComment((prev) => !prev)
   }
 
