@@ -66,7 +66,7 @@ export default function SentencePage({ params }: Props) {
     favoriteSentence({ userId: me.id || '', sentenceId })
   }
 
-  const handleFollow = (e: MouseEvent) => {
+  const handleFollow = () => {
     startTransitionFollowing(() =>
       isFollowing
         ? unFollow({

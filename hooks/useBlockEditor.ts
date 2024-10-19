@@ -1,11 +1,9 @@
 'use client'
 
 import CharacterCount from '@tiptap/extension-character-count'
-// import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Placeholder from '@tiptap/extension-placeholder'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { all, createLowlight } from 'lowlight'
 import { Dispatch, SetStateAction } from 'react'
 import { Markdown } from 'tiptap-markdown'
 
@@ -24,8 +22,6 @@ export default function useBlockEditor({
   limit,
   placeholder,
 }: Props) {
-  // const lowlight = createLowlight(all)
-
   const editor = useEditor({
     immediatelyRender: false,
     autofocus: editable ? true : false,
@@ -33,9 +29,6 @@ export default function useBlockEditor({
     content,
     extensions: [
       StarterKit,
-      // CodeBlockLowlight.configure({
-      //   lowlight,
-      // }),
       Placeholder.configure({
         placeholder,
         showOnlyCurrent: false,
