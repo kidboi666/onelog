@@ -18,7 +18,6 @@
     "@tiptap/extension-character-count": "^2.8.0",
     "@tiptap/extension-code-block-lowlight": "^2.8.0",
     "@tiptap/extension-color": "^2.6.6",
-    "@tiptap/extension-highlight": "^2.8.0",
     "@tiptap/extension-link": "^2.6.6",
     "@tiptap/extension-placeholder": "^2.8.0",
     "@tiptap/extension-text-style": "^2.6.6",
