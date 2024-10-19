@@ -9,7 +9,7 @@
 
   pre {
     font-family: 'JetBrainsMono', monospace;
-    @apply my-2 rounded-md bg-neutral-700 p-4 text-white caret-white ring-4 ring-zinc-400 dark:bg-var-dark dark:ring-zinc-600;
+    @apply my-2 rounded-md border-4 border-zinc-400 bg-neutral-700 p-4 text-white caret-white shadow-md dark:border-zinc-600 dark:bg-var-dark;
 
     *::selection {
       @apply bg-white/20;

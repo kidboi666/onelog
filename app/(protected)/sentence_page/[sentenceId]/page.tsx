@@ -122,7 +122,7 @@ export default function SentencePage({ params }: Props) {
         )}
         <EditorContent editor={editor} />
         <div className="mt-8 flex flex-col gap-2">
-          <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition hover:shadow-xl sm:flex-row dark:bg-var-dark">
+          <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark">
             <Link
               href={`/profile/${sentence?.user_id}`}
               className="flex flex-1 gap-2"

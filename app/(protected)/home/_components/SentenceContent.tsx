@@ -1,10 +1,9 @@
 import { List } from '@/components/shared/List'
 import Tag from '@/components/shared/Tag'
 import { Editor, EditorContent } from '@tiptap/react'
-import { MouseEvent, Suspense, useState } from 'react'
+import { MouseEvent, Suspense, useEffect, useRef, useState } from 'react'
 import Spinner from '@/components/shared/Spinner'
 import { Tables } from '@/types/supabase'
-import { usePathname } from 'next/navigation'
 import FavoriteButton from './FavoriteButton'
 import AccessTypeButtonWithDropDown from './AccessTypeButtonWithDropDown'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
@@ -43,14 +42,24 @@ export default function SentenceContent({
   accessType,
 }: Props) {
   const [showComment, setShowComment] = useState(false)
+  const [showGradient, setShowGradient] = useState(false)
+  const contentRef = useRef<HTMLDivElement>(null)
 
   const handleShowComment = () => {
     setShowComment((prev) => !prev)
   }
 
+  useEffect(() => {
+    if (contentRef.current) {
+      const contentHeight = contentRef.current.scrollHeight
+      const maxHeight = 256
+      setShowGradient(contentHeight > maxHeight)
+    }
+  }, [editor])
+
   return (
     <div
-      className="flex size-full w-full cursor-pointer flex-col gap-4 overflow-y-auto rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:shadow-lg dark:bg-var-darkgray"
+      className="flex size-full w-full cursor-pointer flex-col gap-4 rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:shadow-lg dark:bg-var-darkgray"
       onClick={onClick}
     >
       {tags?.length! > 0 && (
@@ -58,7 +67,16 @@ export default function SentenceContent({
           {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
         </List>
       )}
-      <EditorContent editor={editor} className="line-clamp-6 max-h-64" />
+      <div className="relative max-h-64 overflow-hidden">
+        <EditorContent
+          innerRef={contentRef}
+          editor={editor}
+          className="line-clamp-6"
+        />
+        {showGradient && (
+          <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-var-darkgray" />
+        )}
+      </div>
       <nav className="flex items-center justify-between">
         <FavoriteButton
           favoritedUserId={favoritedUserId}
