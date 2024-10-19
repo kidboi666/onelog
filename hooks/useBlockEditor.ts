@@ -32,7 +32,9 @@ export default function useBlockEditor({
     editable: editable ? true : false,
     content,
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        codeBlock: false,
+      }),
       Placeholder.configure({
         placeholder,
         showOnlyCurrent: false,
