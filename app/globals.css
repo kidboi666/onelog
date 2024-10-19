@@ -24,13 +24,9 @@
     @apply scale-95 opacity-0;
   }
 }
-.tiptap-bubble {
-  position: absolute;
-  bottom: 40;
-}
 
-@import '@/styles/typography.css';
-@import '@/styles/font.css';
 @import '@/styles/code.css';
-@import '@/styles/block.css';
+@import '@/styles/font.css';
 @import '@/styles/lists.css';
+@import '@/styles/typography.css';
+@import '@/styles/block.css';

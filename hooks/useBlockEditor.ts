@@ -43,7 +43,7 @@ export default function useBlockEditor({
     },
     editorProps: {
       attributes: {
-        class: `${editable ? 'min-h-40' : ''} w-full prose sm:prose-base lg:prose-lg xl:prose-2xl outline-none`,
+        class: `${editable ? 'min-h-40' : ''} w-full outline-none`,
       },
     },
   })
