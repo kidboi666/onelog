@@ -27,6 +27,9 @@ export default function useFollow() {
       queryClient.invalidateQueries({
         queryKey: ['follower', variables.followed_user_id],
       })
+      queryClient.invalidateQueries({
+        queryKey: ['follower', variables.follower_user_id],
+      })
     },
   })
 }

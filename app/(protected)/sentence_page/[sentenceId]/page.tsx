@@ -1,18 +1,21 @@
 'use client'
 
+import Link from 'next/link'
 import { MouseEvent, Suspense, useState } from 'react'
+import { EditorContent } from '@tiptap/react'
+import { useRouter } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
+
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
 import useBlockEditor from '@/hooks/useBlockEditor'
-import { useRouter } from 'next/navigation'
+
 import Avatar from '@/components/shared/Avatar'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import Line from '@/components/shared/Line'
-import { EditorContent } from '@tiptap/react'
 import Tag from '@/components/shared/Tag'
 import { List } from '@/components/shared/List'
 import EmotionGauge from '../../home/_components/EmotionGauge'
@@ -23,7 +26,10 @@ import OptionButtonWithDropDown from '../../home/_components/OptionButtonWithDro
 import Comments from '../../home/_components/Comments'
 import Spinner from '@/components/shared/Spinner'
 import Button from '@/components/shared/Button'
-import Link from 'next/link'
+import useFollow from '@/services/mutates/follow/useFollow'
+import useUnFollow from '@/services/mutates/follow/useUnFollow'
+import { followQuery } from '@/services/queries/follow/followQuery'
+import LinkButton from '@/components/shared/LinkButton'
 
 interface Props {
   params: { sentenceId: string }
@@ -40,6 +46,14 @@ export default function SentencePage({ params }: Props) {
   const { data: me } = useSuspenseQuery(
     meQuery.getUserInfo(supabase, data!.userId),
   )
+  const { data: followers } = useSuspenseQuery(
+    followQuery.getFollowers(supabase, sentence?.user_id),
+  )
+  const isFollowing = followers?.find(
+    (user) => user.follower_user_id === me?.id,
+  )
+  const { mutate: follow } = useFollow()
+  const { mutate: unFollow } = useUnFollow()
   const { editor } = useBlockEditor({ content: sentence?.content })
   const { mutate: favoriteSentence } = useFavoriteSentence()
 
@@ -49,6 +63,16 @@ export default function SentencePage({ params }: Props) {
   ) => {
     e.stopPropagation()
     favoriteSentence({ userId: me.id || '', sentenceId })
+  }
+
+  const handleFollow = (e: MouseEvent) => {
+    e.stopPropagation()
+    isFollowing
+      ? unFollow({
+          followed_user_id: me.id,
+          follower_user_id: sentence.user_id,
+        })
+      : follow({ followed_user_id: me.id, follower_user_id: sentence.user_id })
   }
 
   if (!editor) {
@@ -99,16 +123,42 @@ export default function SentencePage({ params }: Props) {
               </div>
             </div>
             <div className="flex justify-center gap-2 sm:flex-col">
-              <Button
-                size="sm"
-                onClick={(e) => e.stopPropagation()}
-                className="w-full self-end"
-              >
-                팔로우 하기
-              </Button>
-              <Button variant="secondary" size="sm" className="w-full self-end">
-                메세지 보내기
-              </Button>
+              {me.id === sentence.user_id ? (
+                <>
+                  <LinkButton
+                    href="/post/sentence"
+                    size="sm"
+                    className="w-full self-end"
+                  >
+                    글 쓰기
+                  </LinkButton>
+                  <LinkButton
+                    href="/edit_profile"
+                    variant="secondary"
+                    size="sm"
+                    className="w-full self-end"
+                  >
+                    프로필 수정
+                  </LinkButton>
+                </>
+              ) : (
+                <>
+                  <Button
+                    size="sm"
+                    onClick={handleFollow}
+                    className="w-full self-end"
+                  >
+                    {isFollowing ? '팔로우 취소' : '팔로우 하기'}
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="w-full self-end"
+                  >
+                    메세지 보내기
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </Link>

@@ -1,19 +1,19 @@
+import { useRouter } from 'next/navigation'
 import { MouseEvent, Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import useFavoriteComment from '@/services/mutates/comment/useFavoriteComment'
 import { commentQuery } from '@/services/queries/comment/commentQuery'
 import { Tables } from '@/types/supabase'
-import { formatDateToHM, formatDateToYMD } from '@/utils/formatDate'
+import { formatDateToHM } from '@/utils/formatDate'
 import Avatar from '@/components/shared/Avatar'
 import Text from '@/components/shared/Text'
 import { List } from '@/components/shared/List'
 import Spinner from '@/components/shared/Spinner'
+import Button from '@/components/shared/Button'
 import CommentInputButton from './CommentInputButton'
 import CommentButton from './CommentButton'
 import CommentInput from './CommentInput'
-import { useRouter } from 'next/navigation'
-import Button from '@/components/shared/Button'
 import FavoriteButton from './FavoriteButton'
 
 interface Props {
@@ -48,7 +48,7 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
   }
 
   const handleAvatarClick = () => {
-    router.replace(`/${comment?.user_id}`)
+    router.replace(`/profile/${comment?.user_id}`)
   }
 
   return (
@@ -75,26 +75,28 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
             </Text>
           </div>
         </div>
-        <div className="w-fit rounded-md bg-var-lightgray p-2 dark:bg-var-dark">
-          <Text>{comment.content}</Text>
-        </div>
-        <div className="flex gap-1">
-          <FavoriteButton
-            sentenceId={sentenceId}
-            commentId={comment.id}
-            favoritedCount={comment.favorite!}
-            favoritedUserId={comment.favorited_user_id!}
-            onFavorite={handleFavoriteComment}
-            userId={me?.id!}
-          />
-          {commentToComments.length >= 1 && (
-            <CommentButton
-              showComment={showComment}
-              onShowComment={handleShowComment}
-              commentCount={comment.comment ?? 0}
+        <div>
+          <div className="w-fit rounded-md bg-var-lightgray p-2 dark:bg-var-dark">
+            <Text>{comment.content}</Text>
+          </div>
+          <div className="flex gap-1">
+            <FavoriteButton
+              sentenceId={sentenceId}
+              commentId={comment.id}
+              favoritedCount={comment.favorite!}
+              favoritedUserId={comment.favorited_user_id!}
+              onFavorite={handleFavoriteComment}
+              userId={me?.id!}
             />
-          )}
-          <CommentInputButton onShowCommentInput={handleShowCommentInput} />
+            {commentToComments.length >= 1 && (
+              <CommentButton
+                showComment={showComment}
+                onShowComment={handleShowComment}
+                commentCount={comment.comment ?? 0}
+              />
+            )}
+            <CommentInputButton onShowCommentInput={handleShowCommentInput} />
+          </div>
         </div>
         {showCommentInput && (
           <CommentInput sentenceId={sentenceId} commentId={comment.id} />
