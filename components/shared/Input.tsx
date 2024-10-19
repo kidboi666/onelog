@@ -18,7 +18,7 @@ const INPUT_VARIANTS = cva('min-w-4 outline-none', {
       primary:
         'rounded-md bg-white shadow-sm ring-zinc-200 transition focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-zinc-600',
       secondary:
-        'border-var-zinc border-b bg-transparent transition ease-in-out dark:bg-transparent dark:text-white dark:ring-zinc-600',
+        'border-b border-zinc-300 bg-transparent text-zinc-600 transition ease-in-out dark:border-zinc-600 dark:bg-transparent dark:text-zinc-200 dark:ring-zinc-600 dark:placeholder:text-zinc-600',
       auth: 'rounded-md bg-zinc-200 transition dark:bg-white/15 dark:text-white',
       none: '',
     },

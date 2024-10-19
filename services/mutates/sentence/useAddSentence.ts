@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 
 interface IAddSentence {
   user_id: string
+  title?: string
   content: string
   emotion_level: string
   tags: string[]
@@ -27,3 +28,16 @@ export default function useAddSentence() {
     },
   })
 }
+
+// function useUpdateSentence() {
+//   const queryClient = getQueryClient()
+
+//   return useMutation({
+//     mutationFn: async (params) => {
+//       return supabase
+//         .from('sentence')
+//         .update({ ...params })
+//         .select()
+//     },
+//   })
+// }

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { MouseEvent, Suspense, useState } from 'react'
+import { MouseEvent, Suspense, useState, useTransition } from 'react'
 import { EditorContent } from '@tiptap/react'
 import { useRouter } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -56,6 +56,7 @@ export default function SentencePage({ params }: Props) {
   const { mutate: unFollow } = useUnFollow()
   const { editor } = useBlockEditor({ content: sentence?.content })
   const { mutate: favoriteSentence } = useFavoriteSentence()
+  const [isLoadingFollowing, startTransitionFollowing] = useTransition()
 
   const handleFavoriteSentence = (
     e: MouseEvent,
@@ -66,16 +67,24 @@ export default function SentencePage({ params }: Props) {
   }
 
   const handleFollow = (e: MouseEvent) => {
-    e.stopPropagation()
-    isFollowing
-      ? unFollow({
-          followed_user_id: me.id,
-          follower_user_id: sentence.user_id,
-        })
-      : follow({ followed_user_id: me.id, follower_user_id: sentence.user_id })
+    startTransitionFollowing(() =>
+      isFollowing
+        ? unFollow({
+            followed_user_id: sentence.user_id,
+            follower_user_id: me.id,
+          })
+        : follow({
+            followed_user_id: sentence.user_id,
+            follower_user_id: me.id,
+          }),
+    )
   }
 
   if (!editor) {
+    return null
+  }
+
+  if (!sentence) {
     return null
   }
 
@@ -93,7 +102,7 @@ export default function SentencePage({ params }: Props) {
             <Title type="sub" size="sm">
               {sentence?.user_info.user_name}
             </Title>
-            <Text type="caption">{sentence.user_info.email}</Text>
+            <Text type="caption">{sentence?.user_info.email}</Text>
           </div>
           <div className="flex h-full flex-1 items-end justify-end p-2">
             <EmotionGauge
@@ -103,27 +112,33 @@ export default function SentencePage({ params }: Props) {
           </div>
         </div>
         <Line />
+        <div>
+          <Title size="lg">{sentence.title}</Title>
+        </div>
         {sentence?.tags && sentence.tags.length >= 1 && (
           <List className="flex flex-wrap gap-2">
             {sentence?.tags?.map((tag, index) => <Tag key={index} tag={tag} />)}
           </List>
         )}
         <EditorContent editor={editor} />
-        <Link
-          href={`/profile/${sentence?.user_id}`}
-          className="mt-8 flex flex-col gap-2"
-        >
+        <div className="mt-8 flex flex-col gap-2">
           <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition hover:shadow-xl sm:flex-row dark:bg-var-dark">
-            <div className="flex flex-1 gap-2">
-              <Avatar src={sentence.user_info.avatar_url} size="md" />
+            <Link
+              href={`/profile/${sentence?.user_id}`}
+              className="flex flex-1 gap-2"
+            >
+              <Avatar src={sentence?.user_info.avatar_url} size="md" />
               <div className="flex w-full flex-col gap-1">
-                <Title size="sm">{sentence.user_info.user_name}</Title>
-                <Text type="caption">{sentence.user_info.email}</Text>
-                <Text>{sentence.user_info.about_me}</Text>
+                <Title size="sm">{sentence?.user_info.user_name}</Title>
+                <Text type="caption">{sentence?.user_info.email}</Text>
+                <Text>{sentence?.user_info.about_me}</Text>
               </div>
-            </div>
-            <div className="flex justify-center gap-2 sm:flex-col">
-              {me.id === sentence.user_id ? (
+            </Link>
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="flex justify-center gap-2 sm:flex-col"
+            >
+              {me?.id === sentence?.user_id ? (
                 <>
                   <LinkButton
                     href="/post/sentence"
@@ -145,6 +160,7 @@ export default function SentencePage({ params }: Props) {
                 <>
                   <Button
                     size="sm"
+                    isLoading={isLoadingFollowing}
                     onClick={handleFollow}
                     className="w-full self-end"
                   >
@@ -161,7 +177,7 @@ export default function SentencePage({ params }: Props) {
               )}
             </div>
           </div>
-        </Link>
+        </div>
         <Line />
         <nav className="flex items-center justify-between">
           <FavoriteButton

@@ -18,6 +18,7 @@ import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import Input from '@/components/shared/Input'
 
 export default function PostContainer() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -30,6 +31,7 @@ export default function PostContainer() {
     editable: true,
     placeholder: '오늘 당신의 생각과 감정을 기록하세요.',
   })
+  const [title, onChangeTitle, setTitle] = useInput('')
   const [tags, setTags] = useState<string[]>([])
   const { mutate: addSentence, isPending } = useAddSentence()
   const router = useRouter()
@@ -67,6 +69,7 @@ export default function PostContainer() {
         emotion_level: selectedEmotion,
         user_id: me!.userId,
         tags,
+        title,
         access_type: accessType,
       },
       {
@@ -82,6 +85,16 @@ export default function PostContainer() {
 
   return (
     <form onSubmit={handleSubmitSentence} className="flex h-full flex-col">
+      <div>
+        <Input
+          value={title}
+          onChange={onChangeTitle}
+          variant="secondary"
+          dimension="none"
+          className="mb-10 w-full py-2 text-3xl"
+          placeholder="제목은 생략할 수 있습니다."
+        />
+      </div>
       <div className="flex max-h-full cursor-text flex-col overflow-y-auto">
         {editor && (
           <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>

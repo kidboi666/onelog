@@ -17,11 +17,11 @@
 
 .ProseMirror {
   p {
-    @apply my-1 text-sm leading-relaxed text-zinc-600 first:mt-0 last:mb-0 dark:text-zinc-200;
+    @apply my-4 text-sm leading-relaxed text-zinc-600 first:mt-0 last:mb-0 dark:text-zinc-200;
   }
 
   & > p {
-    @apply my-1 first:mt-0 last:mb-0;
+    @apply my-4 first:mt-0 last:mb-0;
   }
 
   h1 {

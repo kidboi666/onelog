@@ -147,6 +147,7 @@ export type Database = {
           favorited_user_id: string[] | null
           id: number
           tags: string[] | null
+          title: string | null
           user_id: string
         }
         Insert: {
@@ -159,6 +160,7 @@ export type Database = {
           favorited_user_id?: string[] | null
           id?: number
           tags?: string[] | null
+          title?: string | null
           user_id: string
         }
         Update: {
@@ -171,11 +173,47 @@ export type Database = {
           favorited_user_id?: string[] | null
           id?: number
           tags?: string[] | null
+          title?: string | null
           user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "sentence_user_id_fkey1"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sentence_folder: {
+        Row: {
+          color: string | null
+          created_at: string
+          id: number
+          index: number | null
+          name: string | null
+          user_id: string | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          id?: number
+          index?: number | null
+          name?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          id?: number
+          index?: number | null
+          name?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sentence_folder_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user_info"
@@ -225,13 +263,6 @@ export type Database = {
             referencedRelation: "todo_folder"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "todo_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
         ]
       }
       todo_folder: {
@@ -259,15 +290,7 @@ export type Database = {
           name?: string
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "todo_folder_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       user_info: {
         Row: {
@@ -303,15 +326,7 @@ export type Database = {
           id?: string
           user_name?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "user_info_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       user_words: {
         Row: {
@@ -332,15 +347,7 @@ export type Database = {
           user_id?: string
           words?: Json[] | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "user_words_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       word_dictionary: {
         Row: {
@@ -486,4 +493,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
