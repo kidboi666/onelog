@@ -87,6 +87,7 @@ export default function SentenceCard({
       <SentenceContent
         tags={tags}
         editor={editor}
+        sentenceTitle={sentence?.title}
         accessType={sentence?.access_type}
         favoritedCount={sentence?.favorite || 0}
         favoritedUserId={sentence?.favorited_user_id || []}

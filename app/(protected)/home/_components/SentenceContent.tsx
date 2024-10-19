@@ -9,6 +9,7 @@ import AccessTypeButtonWithDropDown from './AccessTypeButtonWithDropDown'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
 import CommentButton from './CommentButton'
 import Comments from './Comments'
+import Title from '@/components/shared/Title'
 
 interface Props {
   tags?: string[]
@@ -17,6 +18,7 @@ interface Props {
   favoritedCount?: number
   commentCount?: number
   sentenceId: number
+  sentenceTitle?: string | null
   isMyPage?: boolean
   onFavorite: (e: MouseEvent, { sentenceId }: { sentenceId: number }) => void
   onClick?: () => void
@@ -29,6 +31,7 @@ interface Props {
 export default function SentenceContent({
   tags,
   editor,
+  sentenceTitle,
   favoritedUserId,
   favoritedCount,
   commentCount,
@@ -68,6 +71,7 @@ export default function SentenceContent({
         </List>
       )}
       <div className="relative max-h-64 overflow-hidden">
+        {sentenceTitle && <Title className="mb-8">{sentenceTitle}</Title>}
         <EditorContent
           innerRef={contentRef}
           editor={editor}
