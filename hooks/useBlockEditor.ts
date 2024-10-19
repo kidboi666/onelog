@@ -18,8 +18,6 @@ interface Props {
   placeholder?: string
 }
 
-const lowlight = createLowlight(all)
-
 export default function useBlockEditor({
   content,
   setContent,
@@ -27,6 +25,8 @@ export default function useBlockEditor({
   limit,
   placeholder,
 }: Props) {
+  const lowlight = createLowlight(all)
+
   const editor = useEditor({
     immediatelyRender: false,
     autofocus: editable ? true : false,
