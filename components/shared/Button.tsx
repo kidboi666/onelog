@@ -4,7 +4,7 @@ import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
 import { ComponentProps, forwardRef, PropsWithRef } from 'react'
 import Spinner from './Spinner'
-import { useTheme } from '@/store/useTheme'
+import { colorTheme, useTheme } from '@/store/useTheme'
 import { formatButtonColor } from '@/utils/formatColor'
 
 export interface ButtonProps extends ComponentProps<'button'> {
@@ -74,7 +74,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         onClick={onClick}
         type={type}
         className={cn(
-          color && formatButtonColor(color, variant),
+          variant === 'primary' ? colorTheme({ color }) : '',
           BUTTON_VARIANTS(
             isLoading || disabled
               ? { disabled: variant, size }

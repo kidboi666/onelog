@@ -1,7 +1,7 @@
 'use client'
 
 import { useSentence } from '@/store/useSentence'
-import { useTheme } from '@/store/useTheme'
+import { colorTheme, useTheme } from '@/store/useTheme'
 import { IBlockInfo } from '@/types/garden'
 import { useRef } from 'react'
 import cn from '@/lib/cn'
@@ -74,7 +74,7 @@ export default function Block({
         <div
           className={cn(
             'size-full text-center text-[7px] opacity-0 hover:opacity-55',
-            formatBlockColor(color),
+            colorTheme({ color }),
             length && `${colorizeOpacity(length, [1, 2, 3])}`,
             average && `${colorizeOpacity(average, [25, 50, 75])}`,
           )}
