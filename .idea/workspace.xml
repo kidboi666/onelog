@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="964f878d-eec9-4efe-a437-3a29adf4c9d4" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceOwnerInfoDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/feature/sentence/sentence/SentenceOwnerInfoDropDown.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +43,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-WS-242.20224.426" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23339.15" />
       </set>
     </attachedChunks>
   </component>
@@ -61,10 +59,23 @@
       <workItem from="1727615637173" duration="740000" />
       <workItem from="1728189569113" duration="41000" />
       <workItem from="1728286828985" duration="39000" />
+      <workItem from="1729497716272" duration="551000" />
+      <workItem from="1729499402143" duration="220000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

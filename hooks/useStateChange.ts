@@ -7,14 +7,15 @@ export default function useDataDrivenAnimation<T extends HTMLElement>(
   const ref = useRef<T>(null)
 
   const open = async () => {
+    await wait(0)
     if (ref.current) {
       ref.current.classList.remove(initClass)
-      await wait(10)
       ref.current.setAttribute('data-status', 'opened')
     }
   }
 
-  const close = () => {
+  const close = async () => {
+    await wait(0)
     if (ref.current) {
       ref.current.setAttribute('data-status', 'closed')
     }

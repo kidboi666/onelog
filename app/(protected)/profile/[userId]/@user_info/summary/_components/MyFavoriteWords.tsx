@@ -25,9 +25,13 @@ export default function MyFavoriteWords() {
       <Title>가장 많이 사용하는</Title>
       {shouldRenderWords?.length! >= 1 ? (
         <List className="flex flex-wrap gap-2">
-          {shouldRenderWords?.map((word) => (
-            <FavoriteWordTag key={word.word} word={word} />
-          ))}
+          {shouldRenderWords?.map((word, index) => {
+            if (index >= 20) {
+              return null
+            } else {
+              return <FavoriteWordTag key={word.word} word={word} />
+            }
+          })}
         </List>
       ) : (
         <Empty>아직 자주 사용하는 단어가 없습니다.</Empty>
