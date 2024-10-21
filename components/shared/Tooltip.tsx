@@ -1,7 +1,8 @@
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
-import { useTheme } from '@/store/useTheme'
+import { colorTheme, useTheme } from '@/store/useTheme'
+import { useEffect } from 'react'
 
 interface Props {
   text: string
@@ -41,18 +42,6 @@ const toolTipArrow = cva('absolute size-2 rotate-45', {
   },
 })
 
-const colorTheme = cva('', {
-  variants: {
-    color: {
-      green: 'bg-var-green',
-      black: 'bg-var-black',
-      yellow: 'bg-var-yellow',
-      blue: 'bg-var-blue',
-      orange: 'bg-var-orange',
-    },
-  },
-})
-
 export default function ToolTip({
   text,
   position = 'bottom',
@@ -63,11 +52,11 @@ export default function ToolTip({
   const { ref, open, close, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const { color } = useTheme()
-  if (isHover) {
-    open()
-  } else {
-    close()
-  }
+
+  useEffect(() => {
+    isHover ? open() : close()
+  }, [isHover])
+
   return (
     <div
       ref={ref}

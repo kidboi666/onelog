@@ -8,19 +8,19 @@ import { RefObject } from 'react'
 
 interface Props {
   word: IFavoriteWord
+  trigger: boolean
   onTransitionEnd: () => void
   targetRef: RefObject<HTMLDivElement>
-  isHover: boolean
 }
 
 export default function TagInfo({
   word,
   onTransitionEnd,
+  trigger,
   targetRef,
-  isHover,
 }: Props) {
   const { data, isFetching } = useQuery(
-    sentenceQuery.getUsedWords(supabase, word.word, isHover),
+    sentenceQuery.getUsedWords(supabase, word.word, trigger),
   )
 
   return (

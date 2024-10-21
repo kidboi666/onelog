@@ -1,4 +1,5 @@
 import { TColor, TTheme } from '@/types/theme'
+import { cva } from 'class-variance-authority'
 import { create } from 'zustand'
 
 interface ThemeState {
@@ -7,6 +8,18 @@ interface ThemeState {
   setColor: (color: TColor) => void
   setTheme: (theme: TTheme) => void
 }
+
+export const colorTheme = cva('', {
+  variants: {
+    color: {
+      green: 'bg-var-green',
+      black: 'bg-var-black',
+      yellow: 'bg-var-yellow',
+      blue: 'bg-var-blue',
+      orange: 'bg-var-orange',
+    },
+  },
+})
 
 export const useTheme = create<ThemeState>((set) => ({
   color: 'black',
