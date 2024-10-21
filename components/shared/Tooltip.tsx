@@ -1,25 +1,90 @@
 import cn from '@/lib/cn'
-import Text from './Text'
+import { cva } from 'class-variance-authority'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
+import { useTheme } from '@/store/useTheme'
 
 interface Props {
   text: string
   position?: 'top' | 'bottom' | 'left' | 'right'
+  size?: 'sm' | 'md' | 'lg'
+  isHover?: boolean
+  className?: string
 }
 
-export default function ToolTip({ text, position = 'bottom' }: Props) {
+const toolTipBox = cva(
+  'absolute hidden transition duration-300 data-[status=closed]:-translate-x-1 data-[status=closed]:opacity-0',
+  {
+    variants: {
+      position: {
+        top: '-top-full',
+        bottom: '-bottom-full',
+        left: '-left-full',
+        right: '-right-[calc(100%*2+4px)] top-1/2 -translate-y-1/2',
+      },
+      size: {
+        sm: 'w-20',
+        md: 'w-40',
+        lg: 'w-60',
+      },
+    },
+  },
+)
+
+const toolTipArrow = cva('absolute size-2 rotate-45', {
+  variants: {
+    position: {
+      bottom: '-top-1 left-1/2 -translate-x-1/2',
+      top: '-bottom-1 left-1/2 -translate-x-1/2',
+      right: '-left-1 top-1/2 -translate-y-1/2',
+      left: '-right-1 top-1/2 -translate-y-1/2',
+    },
+  },
+})
+
+const colorTheme = cva('', {
+  variants: {
+    color: {
+      green: 'bg-var-green',
+      black: 'bg-var-black',
+      yellow: 'bg-var-yellow',
+      blue: 'bg-var-blue',
+      orange: 'bg-var-orange',
+    },
+  },
+})
+
+export default function ToolTip({
+  text,
+  position = 'bottom',
+  size = 'sm',
+  isHover,
+  className,
+}: Props) {
+  const { ref, open, close, onTransitionEnd } =
+    useDataDrivenAnimation<HTMLDivElement>()
+  const { color } = useTheme()
+  if (isHover) {
+    open()
+  } else {
+    close()
+  }
   return (
-    <div className="fixed left-4 top-4 z-[9999]">
-      <div className="relative size-fit rounded-md bg-black px-2 py-2 shadow-md">
+    <div
+      ref={ref}
+      data-status="closed"
+      onTransitionEnd={onTransitionEnd}
+      className={cn(toolTipBox({ position, size }), className)}
+    >
+      <div
+        className={cn(
+          'relative flex size-fit items-center justify-center rounded-md px-2 py-2 shadow-md',
+          colorTheme({ color }),
+        )}
+      >
         <div
-          className={cn(
-            'absolute size-2 rotate-45 bg-black',
-            position === 'top' ? '-top-1 left-1/2 -translate-x-1/2' : '',
-            position === 'bottom' ? '-bottom-1 left-1/2 -translate-x-1/2' : '',
-            position === 'left' ? '-left-1 top-1/2 -translate-y-1/2' : '',
-            position === 'right' ? '-right-1 top-1/2 -translate-y-1/2' : '',
-          )}
+          className={cn(toolTipArrow({ position }), colorTheme({ color }))}
         />
-        <Text>{text}</Text>
+        <span className="text-xs text-white">{text}</span>
       </div>
     </div>
   )

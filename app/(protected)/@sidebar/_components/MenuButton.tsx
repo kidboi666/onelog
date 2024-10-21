@@ -4,7 +4,6 @@ import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
 import LinkButton from '@/components/shared/LinkButton'
-import useDataDrivenAnimation from '@/hooks/useStateChange'
 import BookMark from './BookMark'
 
 interface Props {
