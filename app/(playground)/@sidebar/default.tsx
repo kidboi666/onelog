@@ -76,7 +76,7 @@ export default function Sidebar() {
       <Line />
       <List className="flex h-full w-full flex-col gap-2">
         {TOP_NAVIGATE_MENUS.map((menu) => (
-          <div key={menu.id} className="relative">
+          <List.Row key={menu.id} className="relative">
             <MenuButton
               isSelected={pathname === menu.path}
               isOpen={isOpen}
@@ -86,12 +86,12 @@ export default function Sidebar() {
               path={menu.path}
             />
             <ToolTip position="right" isHover={isHover} text={menu.toolTip} />
-          </div>
+          </List.Row>
         ))}
       </List>
       <List className="flex flex-col gap-2">
         {BOTTOM_NAVIGATE_MENUS.map((menu) => (
-          <div key={menu.id} className="relative">
+          <List.Row key={menu.id} className="relative">
             <MenuButton
               isSelected={pathname === menu.path}
               isOpen={isOpen}
@@ -101,7 +101,7 @@ export default function Sidebar() {
               path={menu.path}
             />
             <ToolTip position="right" isHover={isHover} text={menu.toolTip} />
-          </div>
+          </List.Row>
         ))}
         <div className="relative">
           <ThemeToggleButton isOpen={isOpen} />

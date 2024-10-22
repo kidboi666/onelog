@@ -34,9 +34,9 @@ export default function AuthButtonWithDropDown({
         targetRef={buttonRef}
         variant="none"
         onClick={onClick}
-        className="justify-start gap-4 px-1 py-1"
+        className="gap-4 px-1 py-1"
       >
-        <Avatar src={me?.avatar_url} size="xs" ring="xs" shadow="sm" />
+        <Avatar src={me?.avatar_url} size="sm" ring="xs" shadow="sm" />
         {isOpen && (
           <Text
             size="sm"

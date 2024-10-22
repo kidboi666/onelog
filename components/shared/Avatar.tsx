@@ -5,7 +5,7 @@ import profileImage from '@/public/profile.svg'
 
 interface Props {
   src?: string | null
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'xs' | 'sm' | 'md' | 'base' | 'lg' | 'xl'
   ring?: 'none' | 'xs' | 'sm' | 'md' | 'lg'
   shadow?: 'none' | 'sm' | 'md' | 'lg'
   hoverEffect?: 'none' | 'ring'
@@ -13,34 +13,38 @@ interface Props {
   onClick?: () => void
 }
 
-const avatarVariants = cva('', {
-  variants: {
-    size: {
-      xs: 'size-8',
-      sm: 'size-10',
-      md: 'size-20',
-      lg: 'size-40',
-      xl: 'size-52',
-    },
-    ring: {
-      none: '',
-      xs: 'border border-zinc-200 ring-1 ring-zinc-400',
-      sm: 'border-2 border-zinc-200 ring-1 ring-zinc-400',
-      md: 'border-4 border-zinc-200 ring-1 ring-zinc-400',
-      lg: 'border-8 border-zinc-200 ring-1 ring-zinc-400',
-    },
-    shadow: {
-      none: '',
-      sm: 'shadow-sm',
-      md: 'shadow-md',
-      lg: 'shadow-lg',
-    },
-    hoverEffect: {
-      none: '',
-      ring: 'ring-zinc-400 transition duration-300 ease-in-out hover:ring-4 group-hover:ring-4',
+const avatarVariants = cva(
+  'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 dark:bg-var-darkgray',
+  {
+    variants: {
+      size: {
+        xs: 'size-8',
+        sm: 'size-9',
+        base: 'size-12',
+        md: 'size-20',
+        lg: 'size-40',
+        xl: 'size-52',
+      },
+      ring: {
+        none: '',
+        xs: 'border border-zinc-200 ring-1 ring-zinc-400',
+        sm: 'border-2 border-zinc-200 ring-1 ring-zinc-400',
+        md: 'border-4 border-zinc-200 ring-1 ring-zinc-400',
+        lg: 'border-8 border-zinc-200 ring-1 ring-zinc-400',
+      },
+      shadow: {
+        none: '',
+        sm: 'shadow-sm',
+        md: 'shadow-md',
+        lg: 'shadow-lg',
+      },
+      hoverEffect: {
+        none: '',
+        ring: 'ring-zinc-400 transition duration-300 ease-in-out hover:ring-4 group-hover:ring-4',
+      },
     },
   },
-})
+)
 
 export default function Avatar({
   src,
@@ -56,7 +60,6 @@ export default function Avatar({
       onClick={onClick}
       className={cn(
         avatarVariants({ size, ring, shadow, hoverEffect }),
-        'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 dark:bg-var-darkgray',
         className,
       )}
     >

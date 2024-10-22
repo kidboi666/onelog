@@ -1,7 +1,6 @@
 import { ReactNode, useTransition } from 'react'
 import cn from '@/lib/cn'
 import Icon from '@/components/shared/Icon'
-import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
 import BookMark from './BookMark'
 import Button from '@/components/shared/Button'
@@ -36,7 +35,7 @@ export default function MenuButton({
   }
 
   return (
-    <List.Row className={cn('relative flex justify-center', className)}>
+    <div className={cn('relative flex justify-center', className)}>
       <BookMark isSelected={isSelected} />
       <Button
         variant="icon"
@@ -59,6 +58,6 @@ export default function MenuButton({
           </div>
         )}
       </Button>
-    </List.Row>
+    </div>
   )
 }
