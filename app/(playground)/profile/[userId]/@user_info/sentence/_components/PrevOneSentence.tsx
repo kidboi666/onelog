@@ -7,7 +7,7 @@ import Title from '@/components/shared/Title'
 import { List } from '@/components/shared/List'
 import Empty from '@/components/shared/Empty'
 import { formatDateToMDY } from '@/utils/formatDate'
-import SentenceCard from '@/app/(protected)/home/_components/SentenceCard'
+import SentenceCard from '@/app/(playground)/home/_components/SentenceCard'
 
 export default function PrevOneSentence() {
   const pathname = usePathname()

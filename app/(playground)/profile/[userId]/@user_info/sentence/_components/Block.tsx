@@ -8,7 +8,7 @@ import cn from '@/lib/cn'
 import { colorizeOpacity, formatBlockColor } from '@/utils/formatColor'
 import Button from '@/components/shared/Button'
 import Text from '@/components/shared/Text'
-import { WEEKDAY } from '@/app/(protected)/post/sentence/_constants'
+import { WEEKDAY } from '@/app/(playground)/post/sentence/_constants'
 
 interface BlockProps {
   empty?: boolean
