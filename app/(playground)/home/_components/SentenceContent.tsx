@@ -1,14 +1,12 @@
 import { List } from '@/components/shared/List'
 import Tag from '@/components/shared/Tag'
 import { Editor, EditorContent } from '@tiptap/react'
-import { MouseEvent, Suspense, useEffect, useRef, useState } from 'react'
-import Spinner from '@/components/shared/Spinner'
+import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Tables } from '@/types/supabase'
 import FavoriteButton from './FavoriteButton'
 import AccessTypeButtonWithDropDown from './AccessTypeButtonWithDropDown'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
 import CommentButton from './CommentButton'
-import Comments from './Comments'
 import Title from '@/components/shared/Title'
 
 interface Props {
@@ -36,7 +34,6 @@ export default function SentenceContent({
   favoritedCount,
   commentCount,
   sentenceId,
-  isMyPage,
   onFavorite,
   onClick,
   disabled = false,
@@ -98,11 +95,6 @@ export default function SentenceContent({
         <AccessTypeButtonWithDropDown accessType={accessType} />
         <OptionButtonWithDropDown />
       </nav>
-      {showComment && !isMyPage && (
-        <Suspense fallback={<Spinner size={40} />}>
-          <Comments sentenceId={sentenceId} me={me} />
-        </Suspense>
-      )}
     </div>
   )
 }

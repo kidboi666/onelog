@@ -1,17 +1,12 @@
 import { DropDown } from '@/components/shared/DropDown'
 import Icon from '@/components/shared/Icon'
 
-interface Props {
-  closeSidebar: () => void
-}
-
-export default function GuestContent({ closeSidebar }: Props) {
+export default function GuestContent() {
   return (
     <>
       <DropDown.LinkButton
         href="/signup"
         variant="list"
-        onClick={closeSidebar}
         innerClassName="w-full flex gap-2 px-1"
       >
         <Icon view="0 -960 960 960" size={18}>
@@ -22,7 +17,6 @@ export default function GuestContent({ closeSidebar }: Props) {
       <DropDown.LinkButton
         href="/signin"
         variant="list"
-        onClick={closeSidebar}
         innerClassName="w-full flex gap-2 px-1"
       >
         <Icon view="0 -960 960 960" size={18}>

@@ -1,18 +1,23 @@
-import { forwardRef, PropsWithChildren, RefObject } from 'react'
+import { ComponentProps, forwardRef, PropsWithChildren, RefObject } from 'react'
 import Button, { ButtonProps } from './Button'
 import cn from '@/lib/cn'
 import Link from 'next/link'
 import Text, { TextProps } from './Text'
 
-interface DropDownRootProps {
+interface DropDownRootProps extends ComponentProps<'div'> {
   className?: string
 }
 
 const DropDownRoot = ({
   children,
   className,
+  ...props
 }: PropsWithChildren<DropDownRootProps>) => {
-  return <div className={cn('relative', className)}>{children}</div>
+  return (
+    <div className={cn('relative', className)} {...props}>
+      {children}
+    </div>
+  )
 }
 
 interface DropDownTriggerProps extends ButtonProps {

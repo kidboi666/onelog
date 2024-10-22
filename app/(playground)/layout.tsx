@@ -14,7 +14,7 @@ export default function Layout({
     <>
       {header}
       <div className="hidden sm:block">{sidebar}</div>
-      <div className="sm:ml-[74px]">{children}</div>
+      <div className="sm:ml-[80px]">{children}</div>
     </>
   )
 }

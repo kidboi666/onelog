@@ -82,6 +82,10 @@ export default function SentencePage({ params }: Props) {
       : router.push('/auth_guard', { scroll: false })
   }
 
+  const handleCommentGuard = () => {
+    me ? null : router.push('/auth_guard')
+  }
+
   if (!editor) {
     return null
   }
@@ -92,7 +96,7 @@ export default function SentencePage({ params }: Props) {
 
   return (
     <>
-      <div className="flex flex-col gap-4 rounded-md bg-white p-4 dark:bg-var-darkgray">
+      <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-md dark:bg-var-darkgray">
         <div className="flex items-center gap-4">
           <Avatar
             src={sentence?.user_info.avatar_url}
@@ -197,12 +201,17 @@ export default function SentencePage({ params }: Props) {
           <AccessTypeButtonWithDropDown accessType={sentence?.access_type} />
           <OptionButtonWithDropDown />
         </nav>
-        {showComment && (
+      </div>
+      {showComment && (
+        <div
+          onClick={handleCommentGuard}
+          className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-md dark:bg-var-darkgray"
+        >
           <Suspense fallback={<Spinner size={40} />}>
             <Comments sentenceId={sentence.id} me={me} />
           </Suspense>
-        )}
-      </div>
+        </div>
+      )}
     </>
   )
 }

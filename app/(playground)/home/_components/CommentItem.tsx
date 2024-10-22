@@ -19,7 +19,7 @@ import FavoriteButton from './FavoriteButton'
 interface Props {
   comment: Tables<'comment'>
   sentenceId: number
-  me: Tables<'user_info'>
+  me: Tables<'user_info'> | null
 }
 
 export default function CommentItem({ comment, sentenceId, me }: Props) {
@@ -99,7 +99,11 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
           </div>
         </div>
         {showCommentInput && (
-          <CommentInput sentenceId={sentenceId} commentId={comment.id} />
+          <CommentInput
+            sentenceId={sentenceId}
+            commentId={comment.id}
+            me={me}
+          />
         )}
         {showComment &&
           commentToComments.length >= 1 &&

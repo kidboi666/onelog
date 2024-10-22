@@ -10,7 +10,7 @@ export default function AuthGuardModal() {
   const router = useRouter()
 
   const handleSignPagePush = () => {
-    router.push('/signin')
+    router.replace('/signin')
   }
 
   const handleEnterPush = (e: KeyboardEvent) => {

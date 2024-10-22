@@ -4,6 +4,8 @@ import { MouseEvent } from 'react'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import { DropDown } from '@/components/shared/DropDown'
 import Text from '@/components/shared/Text'
+import ToolTip from '@/components/shared/Tooltip'
+import useToggle from '@/hooks/useToggle'
 
 interface Props {
   accessType?: string | null
@@ -13,6 +15,7 @@ export default function AccessTypeButtonWithDropDown({ accessType }: Props) {
   const { close, ref, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
+  const { isOpen: isHover, open: hover, close: leave } = useToggle()
 
   const handleButtonClick = (e: MouseEvent) => {
     e.stopPropagation()
@@ -20,7 +23,7 @@ export default function AccessTypeButtonWithDropDown({ accessType }: Props) {
   }
 
   return (
-    <DropDown.Root>
+    <DropDown.Root onMouseEnter={hover} onMouseLeave={leave}>
       <DropDown.Trigger
         targetRef={buttonRef}
         size="icon"
@@ -42,9 +45,10 @@ export default function AccessTypeButtonWithDropDown({ accessType }: Props) {
         onTransitionEnd={onTransitionEnd}
       >
         <Text size="sm" className="text-nowrap">
-          게시 여부 : {accessType === 'public' ? '공개' : '비공개'}
+          {accessType === 'public' ? '공개' : '비공개'}
         </Text>
       </DropDown.Content>
+      <ToolTip position="bottom" isHover={isHover} text="게시 여부" />
     </DropDown.Root>
   )
 }

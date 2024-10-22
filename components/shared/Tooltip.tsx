@@ -13,14 +13,15 @@ interface Props {
 }
 
 const toolTipBox = cva(
-  'absolute hidden transition duration-300 data-[status=closed]:-translate-x-1 data-[status=closed]:opacity-0',
+  'absolute hidden transition duration-300 data-[status=closed]:opacity-0',
   {
     variants: {
       position: {
         top: '-top-full',
-        bottom: '-bottom-full',
+        bottom: '-bottom-full left-2 data-[status=closed]:-translate-y-1',
         left: '-left-full',
-        right: '-right-[calc(100%*2+4px)] top-1/2 -translate-y-1/2',
+        right:
+          '-right-[calc(100%*2+4px)] top-1/2 -translate-y-1/2 data-[status=closed]:-translate-x-1',
       },
       size: {
         sm: 'w-20',
@@ -34,9 +35,9 @@ const toolTipBox = cva(
 const toolTipArrow = cva('absolute size-2 rotate-45', {
   variants: {
     position: {
-      bottom: '-top-1 left-1/2 -translate-x-1/2',
+      bottom: '-top-1 left-2',
       top: '-bottom-1 left-1/2 -translate-x-1/2',
-      right: '-left-1 top-1/2 -translate-y-1/2',
+      right: '-left-1 top-2',
       left: '-right-1 top-1/2 -translate-y-1/2',
     },
   },
@@ -58,23 +59,25 @@ export default function ToolTip({
   }, [isHover])
 
   return (
-    <div
-      ref={ref}
-      data-status="closed"
-      onTransitionEnd={onTransitionEnd}
-      className={cn(toolTipBox({ position, size }), className)}
-    >
+    <>
       <div
-        className={cn(
-          'relative flex size-fit items-center justify-center rounded-md px-2 py-2 shadow-md',
-          colorTheme({ color }),
-        )}
+        ref={ref}
+        data-status="closed"
+        onTransitionEnd={onTransitionEnd}
+        className={cn(toolTipBox({ position, size }), className)}
       >
         <div
-          className={cn(toolTipArrow({ position }), colorTheme({ color }))}
-        />
-        <span className="text-xs text-white">{text}</span>
+          className={cn(
+            'relative flex size-fit items-center justify-center rounded-md px-2 py-2 shadow-lg dark:shadow-zinc-800',
+            colorTheme({ color }),
+          )}
+        >
+          <div
+            className={cn(toolTipArrow({ position }), colorTheme({ color }))}
+          />
+          <span className="text-xs font-semibold text-white">{text}</span>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

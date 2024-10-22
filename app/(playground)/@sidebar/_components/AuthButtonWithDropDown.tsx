@@ -1,27 +1,25 @@
 import Avatar from '@/components/shared/Avatar'
 import { DropDown } from '@/components/shared/DropDown'
-import Text from '@/components/shared/Text'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
 import { IUserSession } from '@/services/queries/auth/meQuery'
 import BookMark from './BookMark'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import LoggedInContent from './LoggedInContent'
 import GuestContent from './GuestContent'
+import Text from '@/components/shared/Text'
 
 interface Props {
-  isOpen: boolean
   pathname: string
   userId: string
+  viewText?: boolean
   me: IUserSession | null
-  closeSidebar: () => void
 }
 
 export default function AuthButtonWithDropDown({
-  isOpen,
   pathname,
   userId,
+  viewText,
   me,
-  closeSidebar,
 }: Props) {
   const { ref, close, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
@@ -36,16 +34,13 @@ export default function AuthButtonWithDropDown({
         onClick={onClick}
         className="gap-4 px-1 py-1"
       >
-        <Avatar src={me?.avatar_url} size="sm" ring="xs" shadow="sm" />
-        {isOpen && (
-          <Text
-            size="sm"
-            type="caption"
-            className="animate-fade-in group-hover:text-zinc-500 dark:group-hover:text-zinc-400"
-          >
-            {me ? me.email : 'Guest'}
-          </Text>
-        )}
+        <Avatar
+          src={me?.avatar_url}
+          ring="xs"
+          shadow="sm"
+          className="size-10"
+        />
+        <Text type="caption">{viewText && me?.email}</Text>
       </DropDown.Trigger>
       <DropDown.Content
         ref={ref}
@@ -53,11 +48,7 @@ export default function AuthButtonWithDropDown({
         onTransitionEnd={onTransitionEnd}
         position="topRight"
       >
-        {me ? (
-          <LoggedInContent me={me} closeSidebar={closeSidebar} />
-        ) : (
-          <GuestContent closeSidebar={closeSidebar} />
-        )}
+        {me ? <LoggedInContent me={me} /> : <GuestContent />}
       </DropDown.Content>
     </DropDown.Root>
   )

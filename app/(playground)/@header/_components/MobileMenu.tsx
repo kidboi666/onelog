@@ -54,10 +54,9 @@ export default function MobileMenu({
           <List className="flex flex-1 flex-col gap-2">
             {TOP_NAVIGATE_MENUS.map((menu) => (
               <MenuButton
+                viewText
                 key={menu.id}
-                close={close}
                 isSelected={pathname === menu.path}
-                isOpen
                 icon={menu.icon}
                 name={menu.name}
                 path={menu.path}
@@ -67,10 +66,9 @@ export default function MobileMenu({
           <List className="flex flex-col gap-2">
             {BOTTOM_NAVIGATE_MENUS.map((menu) => (
               <MenuButton
+                viewText
                 key={menu.id}
-                close={close}
                 isSelected={pathname === menu.path}
-                isOpen
                 icon={menu.icon}
                 name={menu.name}
                 path={menu.path}
@@ -80,9 +78,8 @@ export default function MobileMenu({
           <Line className="my-2" />
           {me ? (
             <AuthButtonWithDropDown
+              viewText
               me={me}
-              isOpen
-              closeSidebar={close}
               pathname={pathname.split('/')[1]}
               userId={pathname.split('/')[2]}
             />
@@ -91,9 +88,7 @@ export default function MobileMenu({
               {AUTH_NAVIGATE_MENUS.map((menu) => (
                 <MenuButton
                   key={menu.id}
-                  close={close}
                   isSelected={pathname === menu.path}
-                  isOpen
                   icon={menu.icon}
                   name={menu.name}
                   path={menu.path}

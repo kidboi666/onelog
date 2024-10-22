@@ -6,10 +6,9 @@ import { IUserSession } from '@/services/queries/auth/meQuery'
 
 interface Props {
   me: IUserSession
-  closeSidebar: () => void
 }
 
-export default function LoggedInContent({ me, closeSidebar }: Props) {
+export default function LoggedInContent({ me }: Props) {
   const { mutate: signOut } = useSignOut()
 
   return (
@@ -24,7 +23,6 @@ export default function LoggedInContent({ me, closeSidebar }: Props) {
       <DropDown.LinkButton
         href={`/edit_profile`}
         variant="list"
-        onClick={closeSidebar}
         innerClassName="w-full flex gap-2 px-1"
       >
         <Icon view="0 -960 960 960" size={18}>
@@ -35,7 +33,6 @@ export default function LoggedInContent({ me, closeSidebar }: Props) {
       <DropDown.LinkButton
         href={`/profile/${me.userId}`}
         variant="list"
-        onClick={closeSidebar}
         innerClassName="w-full flex gap-2 px-1"
       >
         <Icon view="0 -960 960 960" size={18}>

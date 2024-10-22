@@ -1,36 +1,33 @@
 import { ReactNode, useTransition } from 'react'
 import cn from '@/lib/cn'
 import Icon from '@/components/shared/Icon'
-import Text from '@/components/shared/Text'
 import BookMark from './BookMark'
 import Button from '@/components/shared/Button'
 import { useRouter } from 'next/navigation'
 import Spinner from '@/components/shared/Spinner'
+import Text from '@/components/shared/Text'
 
 interface Props {
-  isOpen: boolean
   isSelected: boolean
   icon: ReactNode
   name: string
   path: string
+  viewText?: boolean
   className?: string
-  close: () => void
 }
 
 export default function MenuButton({
-  isOpen,
   isSelected,
   icon,
+  viewText,
   name,
   path,
   className,
-  close,
 }: Props) {
   const router = useRouter()
   const [isLoading, startTransition] = useTransition()
 
   const handleButtonClick = () => {
-    close()
     router.push(path)
   }
 
@@ -41,22 +38,21 @@ export default function MenuButton({
         variant="icon"
         onClick={() => startTransition(() => handleButtonClick())}
         className={cn(
-          'relative w-full justify-start gap-4',
-          isSelected ? 'text-zinc-500 dark:text-zinc-300' : '',
+          'relative size-full justify-start gap-4',
+          isSelected &&
+            'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-300',
         )}
       >
         {isLoading ? (
-          <Spinner size={20} />
+          <div>
+            <Spinner size={24} />
+          </div>
         ) : (
-          <Icon view="0 -960 960 960" size={20} className="flex flex-shrink-0">
+          <Icon view="0 -960 960 960" size={24} className="flex flex-shrink-0">
             {icon}
           </Icon>
         )}
-        {isOpen && (
-          <div className="animate-fade-in">
-            <Text type="caption">{name}</Text>
-          </div>
-        )}
+        {viewText && <Text type={isSelected ? 'body' : 'caption'}>{name}</Text>}
       </Button>
     </div>
   )
