@@ -1,6 +1,5 @@
 import { DropDown } from '@/components/shared/DropDown'
 import Icon from '@/components/shared/Icon'
-import Line from '@/components/shared/Line'
 
 interface Props {
   closeSidebar: () => void
@@ -9,10 +8,6 @@ interface Props {
 export default function GuestContent({ closeSidebar }: Props) {
   return (
     <>
-      <div className="px-1">
-        <DropDown.Text>로그인하고 함께하세요</DropDown.Text>
-      </div>
-      <Line className="mb-2 mt-4" />
       <DropDown.LinkButton
         href="/signup"
         variant="list"

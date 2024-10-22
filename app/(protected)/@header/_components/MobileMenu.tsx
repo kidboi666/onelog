@@ -5,6 +5,7 @@ import Line from '@/components/shared/Line'
 import { List } from '@/components/shared/List'
 import { usePathname } from 'next/navigation'
 import {
+  AUTH_NAVIGATE_MENUS,
   BOTTOM_NAVIGATE_MENUS,
   TOP_NAVIGATE_MENUS,
 } from '../../@sidebar/_constants/Navigate'
@@ -12,6 +13,9 @@ import MenuButton from '../../@sidebar/_components/MenuButton'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import AuthButtonWithDropDown from '../../@sidebar/_components/AuthButtonWithDropDown'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { supabase } from '@/lib/supabase/client'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>
@@ -25,6 +29,7 @@ export default function MobileMenu({
   onTransitionEnd,
 }: Props) {
   const pathname = usePathname()
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
 
   return (
     <>
@@ -73,12 +78,29 @@ export default function MobileMenu({
             ))}
           </List>
           <Line className="my-2" />
-          <AuthButtonWithDropDown
-            isOpen
-            closeSidebar={close}
-            pathname={pathname.split('/')[1]}
-            userId={pathname.split('/')[2]}
-          />
+          {me ? (
+            <AuthButtonWithDropDown
+              me={me}
+              isOpen
+              closeSidebar={close}
+              pathname={pathname.split('/')[1]}
+              userId={pathname.split('/')[2]}
+            />
+          ) : (
+            <List>
+              {AUTH_NAVIGATE_MENUS.map((menu) => (
+                <MenuButton
+                  key={menu.id}
+                  close={close}
+                  isSelected={pathname === menu.path}
+                  isOpen
+                  icon={menu.icon}
+                  name={menu.name}
+                  path={menu.path}
+                />
+              ))}
+            </List>
+          )}
         </div>
       </div>
     </>

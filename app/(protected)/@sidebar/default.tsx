@@ -15,8 +15,12 @@ import { usePathname } from 'next/navigation'
 import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
 import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown'
 import ToolTip from '@/components/shared/Tooltip'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { supabase } from '@/lib/supabase/client'
 
 export default function Sidebar() {
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [isOpen, setOpen] = useState(false)
   const { ref, close, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>('w-14')
@@ -104,12 +108,20 @@ export default function Sidebar() {
           <ToolTip position="right" isHover={isHover} text="테마 버튼" />
         </div>
         <Line className="mb-2" />
-        <AuthButtonWithDropDown
-          isOpen={isOpen}
-          closeSidebar={handlePanelClose}
-          pathname={pathname.split('/')[1]}
-          userId={pathname.split('/')[2]}
-        />
+        <div className="relative">
+          <AuthButtonWithDropDown
+            isOpen={isOpen}
+            me={me}
+            closeSidebar={handlePanelClose}
+            pathname={pathname.split('/')[1]}
+            userId={pathname.split('/')[2]}
+          />
+          <ToolTip
+            position="right"
+            isHover={isHover}
+            text={me ? me.email : '게스트'}
+          />
+        </div>
       </List>
     </div>
   )

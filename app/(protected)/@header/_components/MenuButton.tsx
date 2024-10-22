@@ -7,7 +7,7 @@ import MobileMenu from './MobileMenu'
 import useOutsideClick from '@/hooks/useOutsideClick'
 
 export default function MenuButton() {
-  const { close, onClick, open, ref, onTransitionEnd } =
+  const { close, onClick, ref, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLDivElement>(close)
 

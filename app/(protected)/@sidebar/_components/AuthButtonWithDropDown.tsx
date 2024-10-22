@@ -2,9 +2,7 @@ import Avatar from '@/components/shared/Avatar'
 import { DropDown } from '@/components/shared/DropDown'
 import Text from '@/components/shared/Text'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
-import { supabase } from '@/lib/supabase/client'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { IUserSession } from '@/services/queries/auth/meQuery'
 import BookMark from './BookMark'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import LoggedInContent from './LoggedInContent'
@@ -14,6 +12,7 @@ interface Props {
   isOpen: boolean
   pathname: string
   userId: string
+  me: IUserSession | null
   closeSidebar: () => void
 }
 
@@ -21,9 +20,9 @@ export default function AuthButtonWithDropDown({
   isOpen,
   pathname,
   userId,
+  me,
   closeSidebar,
 }: Props) {
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { ref, close, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
@@ -44,7 +43,7 @@ export default function AuthButtonWithDropDown({
             type="caption"
             className="animate-fade-in group-hover:text-zinc-500 dark:group-hover:text-zinc-400"
           >
-            {me?.email}
+            {me ? me.email : 'Guest'}
           </Text>
         )}
       </DropDown.Trigger>
