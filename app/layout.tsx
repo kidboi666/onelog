@@ -10,8 +10,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  auth_modal,
 }: Readonly<{
   children: React.ReactNode
+  auth_modal: React.ReactNode
 }>) {
   return (
     <html lang="ko">
@@ -20,6 +22,7 @@ export default function RootLayout({
           <ReactQueryProvider>
             {children}
             <div id="portal" />
+            {auth_modal}
           </ReactQueryProvider>
         </body>
       </ThemeProvider>

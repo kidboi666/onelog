@@ -1,6 +1,7 @@
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import cn from '@/lib/cn'
+import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 
 interface Props {
@@ -23,14 +24,23 @@ export default function FavoriteButton({
   onFavorite,
   userId,
 }: Props) {
+  const router = useRouter()
+
+  const handleFavorite = (e: MouseEvent) => {
+    userId
+      ? onFavorite(e, { commentId, sentenceId })
+      : router.push('/auth_guard', { scroll: false })
+  }
   return (
     <Button
       variant="icon"
       size="icon"
-      onClick={(e) => onFavorite(e, { commentId, sentenceId })}
+      onClick={handleFavorite}
       className={cn(
         'flex gap-2 border-none text-xs font-light hover:text-red-500 dark:hover:text-red-500',
-        favoritedUserId?.includes(userId) && 'text-red-500 dark:text-red-500',
+        userId &&
+          favoritedUserId?.includes(userId) &&
+          'text-red-500 dark:text-red-500',
       )}
     >
       <Icon size={16} view={150}>

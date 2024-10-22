@@ -14,10 +14,11 @@ import Tag from './Tag'
 
 interface Props {
   tags: string[]
+  disabled?: boolean
   setTags: Dispatch<SetStateAction<string[]>>
 }
 
-export const TagsInput = ({ tags, setTags }: Props) => {
+export const TagsInput = ({ tags, setTags, disabled }: Props) => {
   const [text, onChangeText, setText] = useInput('')
   const [error, setError] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -78,6 +79,7 @@ export const TagsInput = ({ tags, setTags }: Props) => {
         <input
           name="tags"
           ref={inputRef}
+          disabled={disabled}
           placeholder="태그를 추가하세요. 입력후 Enter. 삭제는 BackSpace"
           value={text}
           onChange={onChangeText}

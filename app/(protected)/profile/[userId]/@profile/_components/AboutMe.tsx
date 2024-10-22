@@ -48,9 +48,14 @@ export default function AboutMe({ userId }: Props) {
   const [isLoadingWrite, startTransitionWrite] = useTransition()
 
   const handleFollowButtonClick = () => {
-    isFollowing
-      ? unfollowUser({ followed_user_id: userId, follower_user_id: me!.userId })
-      : followUser({ followed_user_id: userId, follower_user_id: me!.userId })
+    me
+      ? isFollowing
+        ? unfollowUser({
+            followed_user_id: userId,
+            follower_user_id: me!.userId,
+          })
+        : followUser({ followed_user_id: userId, follower_user_id: me!.userId })
+      : router.push('/auth_guard')
   }
 
   const handleSendMessageButtonClick = () => {

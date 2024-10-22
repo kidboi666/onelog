@@ -12,7 +12,7 @@ import Button from '@/components/shared/Button'
 import Text from '@/components/shared/Text'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useInput } from '@/hooks/useInput'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 import { meQuery } from '@/services/queries/auth/meQuery'
@@ -21,6 +21,7 @@ import { useRouter } from 'next/navigation'
 import Input from '@/components/shared/Input'
 
 export default function PostContainer() {
+  const router = useRouter()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [content, _, setContent] = useInput<string>('')
   const [selectedEmotion, setSelectedEmotion] = useState('')
@@ -34,7 +35,6 @@ export default function PostContainer() {
   const [title, onChangeTitle] = useInput('')
   const [tags, setTags] = useState<string[]>([])
   const { mutate: addSentence, isPending } = useAddSentence()
-  const router = useRouter()
   const { close, onClick, onTransitionEnd, ref } =
     useDataDrivenAnimation<HTMLDivElement>()
   const accessTypeRef = useOutsideClick<HTMLButtonElement>(close)
@@ -46,8 +46,6 @@ export default function PostContainer() {
   } = useDataDrivenAnimation<HTMLDivElement>()
   const emotionButtonRef = useOutsideClick<HTMLButtonElement>(emotionClose)
 
-  if (!editor) return null
-
   const handleChangeEmotion = (emotion: string) => {
     setSelectedEmotion(emotion)
   }
@@ -57,7 +55,9 @@ export default function PostContainer() {
   }
 
   const handleInputFocus = () => {
-    editor.commands.focus('end')
+    if (editor) {
+      editor.commands.focus('end')
+    }
   }
 
   const handleSubmitSentence = (e: FormEvent) => {
@@ -82,13 +82,23 @@ export default function PostContainer() {
       },
     )
   }
+  const handleAuthGuard = () => {
+    me ? null : router.push('/auth_guard')
+  }
+
+  if (!editor) return null
 
   return (
-    <form onSubmit={handleSubmitSentence} className="flex h-full flex-col">
+    <form
+      onSubmit={handleSubmitSentence}
+      onClick={handleAuthGuard}
+      className="flex h-full flex-col"
+    >
       <div>
         <Input
           value={title}
           onChange={onChangeTitle}
+          disabled={me === null}
           variant="secondary"
           dimension="none"
           className="mb-10 w-full py-2 text-3xl"
@@ -101,11 +111,11 @@ export default function PostContainer() {
             <BubbleMenuBar editor={editor} />
           </BubbleMenu>
         )}
-        <EditorContent editor={editor} />
+        <EditorContent editor={editor} disabled={me === null} />
         <div onClick={handleInputFocus} className="h-20 max-h-full w-full" />
       </div>
       <div className="flex flex-col">
-        <TagsInput tags={tags} setTags={setTags} />
+        <TagsInput tags={tags} setTags={setTags} disabled={me === null} />
         <div className="flex justify-between">
           <div className="flex items-center gap-4">
             <DropDown.Root>

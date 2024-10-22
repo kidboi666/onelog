@@ -41,7 +41,7 @@ export default function AccessTypeButtonWithDropDown({ accessType }: Props) {
         position="topLeft"
         onTransitionEnd={onTransitionEnd}
       >
-        <Text size="sm">
+        <Text size="sm" className="text-nowrap">
           게시 여부 : {accessType === 'public' ? '공개' : '비공개'}
         </Text>
       </DropDown.Content>

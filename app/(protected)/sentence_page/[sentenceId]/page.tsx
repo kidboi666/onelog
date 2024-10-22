@@ -67,17 +67,19 @@ export default function SentencePage({ params }: Props) {
   }
 
   const handleFollow = () => {
-    startTransitionFollowing(() =>
-      isFollowing
-        ? unFollow({
-            followed_user_id: sentence.user_id,
-            follower_user_id: me.id,
-          })
-        : follow({
-            followed_user_id: sentence.user_id,
-            follower_user_id: me.id,
-          }),
-    )
+    me
+      ? startTransitionFollowing(() =>
+          isFollowing
+            ? unFollow({
+                followed_user_id: sentence.user_id,
+                follower_user_id: me.id,
+              })
+            : follow({
+                followed_user_id: sentence.user_id,
+                follower_user_id: me.id,
+              }),
+        )
+      : router.push('/auth_guard', { scroll: false })
   }
 
   if (!editor) {

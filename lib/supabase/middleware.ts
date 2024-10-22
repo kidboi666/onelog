@@ -38,10 +38,6 @@ export async function updateSession(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (!user && PROTECTED_ROUTES.includes(req.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL('/signin', req.url))
-  }
-
   if (user && AUTH_RESTRICTED_ROUTES.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/home', req.url))
   }

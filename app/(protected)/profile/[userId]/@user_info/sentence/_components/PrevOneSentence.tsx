@@ -31,7 +31,6 @@ export default function PrevOneSentence() {
               key={item.id}
               sentenceSummary={item}
               userId={userId}
-              isMyPage
             />
           ))}
         </List>

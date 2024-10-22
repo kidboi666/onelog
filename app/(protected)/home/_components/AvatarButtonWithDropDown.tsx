@@ -7,6 +7,10 @@ import { DropDown } from '@/components/shared/DropDown'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import Avatar from '@/components/shared/Avatar'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { meQuery } from '@/services/queries/auth/meQuery'
+import { supabase } from '@/lib/supabase/client'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   avatarUrl: string | null
@@ -29,17 +33,21 @@ export default function AvatarButtonWithDropDown({
   meId,
   userName,
 }: Props) {
+  const router = useRouter()
   const { close, ref, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { mutate: follow } = useFollow()
   const { mutate: unfollow } = useUnFollow()
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
 
   const handleFollowButtonClick = () => {
-    isFollowing
-      ? unfollow({ followed_user_id: userId, follower_user_id: meId })
-      : follow({ followed_user_id: userId, follower_user_id: meId })
+    me
+      ? isFollowing
+        ? unfollow({ followed_user_id: userId, follower_user_id: meId })
+        : follow({ followed_user_id: userId, follower_user_id: meId })
+      : router.push('/auth_guard')
   }
   return (
     <DropDown.Root>
