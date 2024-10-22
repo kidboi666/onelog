@@ -14,8 +14,6 @@ export default function useSignUp() {
         options: {
           data: {
             user_name: authData.userName,
-            avatar_url: '',
-            about_me: '',
           },
         },
       })

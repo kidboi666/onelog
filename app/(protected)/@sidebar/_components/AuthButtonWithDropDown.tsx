@@ -37,14 +37,14 @@ export default function AuthButtonWithDropDown({
         onClick={onClick}
         className="justify-start gap-4 px-1 py-1"
       >
-        <Avatar src={me!.avatar_url} size="xs" ring="xs" shadow="sm" />
+        <Avatar src={me?.avatar_url} size="xs" ring="xs" shadow="sm" />
         {isOpen && (
           <Text
             size="sm"
             type="caption"
             className="animate-fade-in group-hover:text-zinc-500 dark:group-hover:text-zinc-400"
           >
-            {me!.email}
+            {me?.email}
           </Text>
         )}
       </DropDown.Trigger>
