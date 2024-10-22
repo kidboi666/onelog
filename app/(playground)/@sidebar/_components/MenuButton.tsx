@@ -3,7 +3,6 @@ import cn from '@/lib/cn'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Text from '@/components/shared/Text'
-import LinkButton from '@/components/shared/LinkButton'
 import BookMark from './BookMark'
 import Button from '@/components/shared/Button'
 import { useRouter } from 'next/navigation'
@@ -37,28 +36,26 @@ export default function MenuButton({
   }
 
   return (
-    <List.Row className={cn('relative', className)}>
+    <List.Row className={cn('relative flex justify-center', className)}>
       <BookMark isSelected={isSelected} />
       <Button
         variant="icon"
         onClick={() => startTransition(() => handleButtonClick())}
         className={cn(
-          'relative justify-start gap-4',
+          'relative w-full justify-start gap-4',
           isSelected ? 'text-zinc-500 dark:text-zinc-300' : '',
         )}
       >
         {isLoading ? (
-          <Spinner size={16} />
+          <Spinner size={20} />
         ) : (
-          <Icon view="0 -960 960 960" size={16} className="flex flex-shrink-0">
+          <Icon view="0 -960 960 960" size={20} className="flex flex-shrink-0">
             {icon}
           </Icon>
         )}
         {isOpen && (
           <div className="animate-fade-in">
-            <Text type="caption" size="sm">
-              {name}
-            </Text>
+            <Text type="caption">{name}</Text>
           </div>
         )}
       </Button>

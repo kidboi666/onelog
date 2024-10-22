@@ -13,7 +13,7 @@ export default function Layout({
   return (
     <>
       {header}
-      <div className="invisible sm:visible">{sidebar}</div>
+      <div className="hidden sm:block">{sidebar}</div>
       <div className="sm:ml-[74px]">{children}</div>
     </>
   )
