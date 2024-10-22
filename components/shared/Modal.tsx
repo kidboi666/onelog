@@ -55,7 +55,7 @@ export default function Modal({
   }, [])
 
   return (
-    <Portal>
+    <>
       <div
         ref={outsideRef}
         onMouseDown={handleMouseDown}
@@ -76,6 +76,6 @@ export default function Modal({
       >
         {children}
       </div>
-    </Portal>
+    </>
   )
 }

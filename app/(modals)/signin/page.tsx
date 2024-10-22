@@ -63,6 +63,7 @@ export default function SignInModal() {
   const handleSubmitOAuthSignIn = () => {
     signInOAuth()
   }
+
   return (
     <Modal>
       <form

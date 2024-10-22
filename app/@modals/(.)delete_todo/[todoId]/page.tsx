@@ -1,4 +1,4 @@
-import DeleteTodoModal from '@/app/(protected)/(modals)/delete_todo/[todoId]/page'
+import DeleteTodoModal from '@/app/(modals)/delete_todo/[todoId]/page'
 
 interface Props {
   params: { todoId: string }

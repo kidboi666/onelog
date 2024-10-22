@@ -1,4 +1,4 @@
-import SignInModal from '@/app/(auth_modal)/signin/page'
+import SignInModal from '@/app/(modals)/signin/page'
 
 export default function Page() {
   return <SignInModal />
