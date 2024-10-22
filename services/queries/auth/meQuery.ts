@@ -30,7 +30,7 @@ export const meQuery = {
         } as IUserSession
       },
     }),
-  getUserInfo: (supabase: SupabaseClient, userId: string) =>
+  getUserInfo: (supabase: SupabaseClient, userId?: string) =>
     queryOptions<Tables<'user_info'>>({
       queryKey: ['me', 'info'],
       queryFn: async () => {

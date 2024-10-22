@@ -12,7 +12,7 @@ interface Props {
     e: MouseEvent,
     { commentId, sentenceId }: { commentId?: number; sentenceId: number },
   ) => void
-  userId: string
+  userId: string | null
 }
 
 export default function FavoriteButton({

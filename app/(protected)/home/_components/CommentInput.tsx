@@ -17,7 +17,7 @@ export default function CommentInput({ sentenceId, commentId }: Props) {
   const [content, onChangeContent, setContent] = useInput('')
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data!.userId),
+    meQuery.getUserInfo(supabase, data?.userId),
   )
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
 

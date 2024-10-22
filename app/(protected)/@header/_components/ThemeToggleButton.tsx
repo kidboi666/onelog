@@ -58,7 +58,7 @@ export default function ThemeToggleButton({ isOpen }: Props) {
             <Text
               type="caption"
               size="sm"
-              className="animate-fade-in transition sm:block"
+              className="hidden animate-fade-in transition sm:block"
             >
               다크 모드
             </Text>

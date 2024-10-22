@@ -31,7 +31,7 @@ export default function PostContainer() {
     editable: true,
     placeholder: '오늘 당신의 생각과 감정을 기록하세요.',
   })
-  const [title, onChangeTitle, setTitle] = useInput('')
+  const [title, onChangeTitle] = useInput('')
   const [tags, setTags] = useState<string[]>([])
   const { mutate: addSentence, isPending } = useAddSentence()
   const router = useRouter()

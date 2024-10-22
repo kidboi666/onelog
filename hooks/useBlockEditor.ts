@@ -2,6 +2,7 @@
 
 import CharacterCount from '@tiptap/extension-character-count'
 import CodeBlock from '@tiptap/extension-code-block'
+import Image from '@tiptap/extension-image'
 import Placeholder from '@tiptap/extension-placeholder'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -37,6 +38,10 @@ export default function useBlockEditor({
         showOnlyCurrent: false,
       }),
       Markdown,
+      Image.configure({
+        allowBase64: true,
+        inline: true,
+      }),
       CodeBlock,
       CharacterCount.configure({
         limit,

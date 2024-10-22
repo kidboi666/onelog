@@ -13,6 +13,7 @@ interface Props {
   name: string
   path: string
   className?: string
+  close: () => void
 }
 
 export default function MenuButton({
@@ -22,6 +23,7 @@ export default function MenuButton({
   name,
   path,
   className,
+  close,
 }: Props) {
   return (
     <List.Row className={cn('relative', className)}>
@@ -29,6 +31,7 @@ export default function MenuButton({
       <LinkButton
         href={path}
         variant="icon"
+        onClick={close}
         innerClassName={cn(
           'justify-start gap-4 relative',
           isSelected ? 'text-zinc-500 dark:text-zinc-300' : '',

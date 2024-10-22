@@ -38,7 +38,7 @@ export default function AboutMe({ userId }: Props) {
   )
   const isFollowing = isMyProfilePage
     ? null
-    : followers?.find((user) => user.follower_user_id === me!.userId)
+    : followers?.find((user) => user.follower_user_id === me?.userId)
   // const { data: followerList } = useSuspenseQuery(
   //   followQuery.getMyFollowers(supabase, userId),
   // )

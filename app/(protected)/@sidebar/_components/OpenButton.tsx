@@ -1,5 +1,6 @@
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
+import { RefObject } from 'react'
 
 interface Props {
   isOpen: boolean

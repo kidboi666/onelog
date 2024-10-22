@@ -18,7 +18,7 @@ export default function SentenceContainer() {
         <SentenceCard
           key={sentence.id}
           sentence={sentence}
-          userId={me!.userId}
+          userId={me !== null ? me.userId : null}
         />
       ))}
     </div>

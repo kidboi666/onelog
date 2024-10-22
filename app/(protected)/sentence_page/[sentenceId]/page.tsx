@@ -44,7 +44,7 @@ export default function SentencePage({ params }: Props) {
   )
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data!.userId),
+    meQuery.getUserInfo(supabase, data?.userId),
   )
   const { data: followers } = useSuspenseQuery(
     followQuery.getFollowers(supabase, sentence?.user_id),
@@ -185,7 +185,7 @@ export default function SentencePage({ params }: Props) {
             favoritedCount={sentence?.favorite}
             sentenceId={sentence.id}
             onFavorite={handleFavoriteSentence}
-            userId={me.id}
+            userId={me?.id}
           />
           <CommentButton
             showComment={showComment}

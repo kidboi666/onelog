@@ -8,6 +8,7 @@ import SentenceContainer from './_container/SentenceContainer'
 export default function HomePage() {
   const supabase = createServerClient()
   const queryClient = getQueryClient()
+
   queryClient.prefetchQuery(sentenceQuery.getAllSentence(supabase))
 
   return (

@@ -24,7 +24,7 @@ interface Props {
   onClick?: () => void
   disabled?: boolean
   me: Tables<'user_info'>
-  userId: string
+  userId: string | null
   accessType?: string | null
 }
 

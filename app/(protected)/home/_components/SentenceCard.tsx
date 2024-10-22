@@ -17,8 +17,7 @@ import SentenceContent from './SentenceContent'
 interface Props {
   sentence?: ISentenceWithUserInfo
   sentenceSummary?: ISentenceState
-  userId: string
-  isMyPage?: boolean
+  userId: string | null
   className?: string
   disabled?: boolean
 }
@@ -26,7 +25,6 @@ interface Props {
 export default function SentenceCard({
   sentence,
   userId,
-  isMyPage,
   sentenceSummary,
   className,
   disabled,
@@ -97,7 +95,6 @@ export default function SentenceCard({
         onClick={handleSentenceItemClick}
         userId={userId}
         me={me}
-        isMyPage={isMyPage}
         disabled={disabled}
       />
     </div>

@@ -15,11 +15,13 @@ import { usePathname } from 'next/navigation'
 import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
 import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown'
 import ToolTip from '@/components/shared/Tooltip'
+import useOutsideClick from '@/hooks/useOutsideClick'
 
 export default function Sidebar() {
   const [isOpen, setOpen] = useState(false)
   const { ref, close, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>('w-14')
+  const buttonRef = useOutsideClick(close)
   const [isHover, setHover] = useState(false)
   const pathname = usePathname()
 
@@ -76,6 +78,7 @@ export default function Sidebar() {
             <MenuButton
               isSelected={pathname === menu.path}
               isOpen={isOpen}
+              close={handlePanelClose}
               icon={menu.icon}
               name={menu.name}
               path={menu.path}
@@ -90,6 +93,7 @@ export default function Sidebar() {
             <MenuButton
               isSelected={pathname === menu.path}
               isOpen={isOpen}
+              close={handlePanelClose}
               icon={menu.icon}
               name={menu.name}
               path={menu.path}
@@ -104,6 +108,7 @@ export default function Sidebar() {
         <Line className="mb-2" />
         <AuthButtonWithDropDown
           isOpen={isOpen}
+          closeSidebar={handlePanelClose}
           pathname={pathname.split('/')[1]}
           userId={pathname.split('/')[2]}
         />
