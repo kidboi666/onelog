@@ -10,9 +10,10 @@ import { List } from '@/components/shared/List'
 
 interface Props {
   isOpen?: boolean
+  viewToggle?: boolean
 }
 
-export default function ThemeToggleButton({ isOpen }: Props) {
+export default function ThemeToggleButton({ isOpen, viewToggle }: Props) {
   const { theme, setTheme } = useTheme()
 
   const changeDocumentClass = (theme: TTheme) => {
@@ -34,6 +35,7 @@ export default function ThemeToggleButton({ isOpen }: Props) {
     <List.Row className="relative flex gap-2">
       <Button
         variant="icon"
+        size={viewToggle ? 'icon' : 'md'}
         onClick={handleThemeChange}
         className="flex w-full items-center justify-between gap-2"
       >
