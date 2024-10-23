@@ -14,7 +14,6 @@ interface Props {
   viewText?: boolean
   me: IUserSession | null
   closeMenu?: () => void
-  closeToolTip: () => void
 }
 
 export default function AuthButtonWithDropDown({

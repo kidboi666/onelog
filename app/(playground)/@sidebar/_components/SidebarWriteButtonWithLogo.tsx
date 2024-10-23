@@ -1,5 +1,4 @@
 import Icon from '@/components/shared/Icon'
-import LinkButton from '@/components/shared/LinkButton'
 import BookMark from './BookMark'
 import SelectedMenuBackground from './SelectedMenuBackground'
 import Button from '@/components/shared/Button'

@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import cn from '@/lib/cn'
+import { useState } from 'react'
 import Line from '@/components/shared/Line'
 import { List } from '@/components/shared/List'
 import MenuButton from './_components/MenuButton'
@@ -98,7 +97,6 @@ export default function Sidebar() {
             me={me}
             pathname={pathname.split('/')[1]}
             userId={pathname.split('/')[2]}
-            closeToolTip={handleToolTipClose}
           />
           <ToolTip
             position="right"
