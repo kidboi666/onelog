@@ -1,6 +1,8 @@
+import ToolTip from '@/components/shared/Tooltip'
 import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import EmotionButtonWithDropDown from './EmotionButtonWithDropDown'
 import NameSection from './NameSection'
+import useToggle from '@/hooks/useToggle'
 
 interface Props {
   avatarUrl: string | null
@@ -31,6 +33,8 @@ export default function SentenceHeader({
   isMe,
   isFollowing,
 }: Props) {
+  const { isOpen: isHover, open: hover, close: leave } = useToggle()
+
   return (
     <div className="flex w-full items-end gap-2">
       <AvatarButtonWithDropDown
@@ -44,7 +48,10 @@ export default function SentenceHeader({
         userName={userName}
       />
       <NameSection userName={userName} email={email} />
-      <EmotionButtonWithDropDown emotionLevel={emotionLevel} />
+      <div onMouseEnter={hover} onMouseLeave={leave} className="relative">
+        <EmotionButtonWithDropDown emotionLevel={emotionLevel} />
+        <ToolTip isHover={isHover} position="bottomRight" text="감정 농도" />
+      </div>
     </div>
   )
 }

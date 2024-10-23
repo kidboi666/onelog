@@ -45,7 +45,6 @@ export default function SentenceCard({
   const isFollowing = followers?.find(
     (user) => user.follower_user_id === userId,
   )
-
   const { editor } = useBlockEditor({
     content,
   })

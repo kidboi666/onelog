@@ -55,7 +55,12 @@ export default function Sidebar() {
               name={menu.name}
               path={menu.path}
             />
-            <ToolTip position="right" isHover={isHover} text={menu.toolTip} />
+            <ToolTip
+              position="right"
+              size="sm"
+              isHover={isHover}
+              text={menu.toolTip}
+            />
           </List.Row>
         ))}
       </List>
@@ -68,12 +73,22 @@ export default function Sidebar() {
               name={menu.name}
               path={menu.path}
             />
-            <ToolTip position="right" isHover={isHover} text={menu.toolTip} />
+            <ToolTip
+              position="right"
+              size="sm"
+              isHover={isHover}
+              text={menu.toolTip}
+            />
           </List.Row>
         ))}
         <div className="relative">
           <ThemeToggleButton />
-          <ToolTip position="right" isHover={isHover} text="테마 버튼" />
+          <ToolTip
+            position="right"
+            size="sm"
+            isHover={isHover}
+            text="테마 버튼"
+          />
         </div>
         <Line className="mb-2" />
         <div className="relative">
@@ -84,6 +99,7 @@ export default function Sidebar() {
           />
           <ToolTip
             position="right"
+            size="sm"
             isHover={isHover}
             text={me ? me.email : '게스트'}
           />

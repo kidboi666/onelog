@@ -9,9 +9,13 @@ import useToggle from '@/hooks/useToggle'
 
 interface Props {
   accessType?: string | null
+  viewToolTip?: boolean
 }
 
-export default function AccessTypeButtonWithDropDown({ accessType }: Props) {
+export default function AccessTypeButtonWithDropDown({
+  accessType,
+  viewToolTip,
+}: Props) {
   const { close, ref, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
@@ -48,7 +52,7 @@ export default function AccessTypeButtonWithDropDown({ accessType }: Props) {
           {accessType === 'public' ? '공개' : '비공개'}
         </Text>
       </DropDown.Content>
-      <ToolTip position="bottom" isHover={isHover} text="게시 여부" />
+      {viewToolTip && <ToolTip isHover={isHover} text="게시 여부" />}
     </DropDown.Root>
   )
 }

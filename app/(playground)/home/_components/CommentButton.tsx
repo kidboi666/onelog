@@ -9,6 +9,7 @@ interface Props {
   commentCount?: number | null
   showComment?: boolean
   disabled?: boolean
+  viewToolTip?: boolean
 }
 
 export default function CommentButton({
@@ -16,6 +17,7 @@ export default function CommentButton({
   commentCount,
   showComment,
   disabled,
+  viewToolTip,
 }: Props) {
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
 
@@ -40,7 +42,7 @@ export default function CommentButton({
         </Icon>
         {commentCount ?? 0}
       </Button>
-      <ToolTip position="bottom" isHover={isHover} text="댓글" />
+      {viewToolTip && <ToolTip isHover={isHover} text="댓글" />}
     </div>
   )
 }

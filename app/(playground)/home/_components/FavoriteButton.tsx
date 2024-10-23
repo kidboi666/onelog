@@ -16,6 +16,7 @@ interface Props {
     { commentId, sentenceId }: { commentId?: number; sentenceId: number },
   ) => void
   userId: string | null
+  viewToolTip?: boolean
 }
 
 export default function FavoriteButton({
@@ -25,6 +26,7 @@ export default function FavoriteButton({
   favoritedUserId,
   onFavorite,
   userId,
+  viewToolTip,
 }: Props) {
   const router = useRouter()
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
@@ -59,7 +61,7 @@ export default function FavoriteButton({
         </Icon>
         {favoritedCount ?? 0}
       </Button>
-      <ToolTip position="bottom" isHover={isHover} text="좋아요" />
+      {viewToolTip && <ToolTip isHover={isHover} text="좋아요" />}
     </div>
   )
 }

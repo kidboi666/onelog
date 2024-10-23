@@ -6,8 +6,8 @@ import { useEffect } from 'react'
 
 interface Props {
   text: string
-  position?: 'top' | 'bottom' | 'left' | 'right'
-  size?: 'sm' | 'md' | 'lg'
+  position?: 'top' | 'bottomLeft' | 'bottomRight' | 'left' | 'right'
+  size?: 'sm' | 'md' | 'lg' | 'none'
   isHover?: boolean
   className?: string
 }
@@ -18,7 +18,10 @@ const toolTipBox = cva(
     variants: {
       position: {
         top: '-top-full',
-        bottom: '-bottom-full left-2 data-[status=closed]:-translate-y-1',
+        bottomLeft:
+          '-bottom-[calc(100%--4px)] left-2 data-[status=closed]:-translate-y-1',
+        bottomRight:
+          '-bottom-[calc(100%--4px)] right-2 data-[status=closed]:-translate-y-1',
         left: '-left-full',
         right:
           '-right-[calc(100%*2+4px)] top-1/2 -translate-y-1/2 data-[status=closed]:-translate-x-1',
@@ -27,6 +30,7 @@ const toolTipBox = cva(
         sm: 'w-20',
         md: 'w-40',
         lg: 'w-60',
+        none: '',
       },
     },
   },
@@ -35,7 +39,8 @@ const toolTipBox = cva(
 const toolTipArrow = cva('absolute size-2 rotate-45', {
   variants: {
     position: {
-      bottom: '-top-1 left-2',
+      bottomLeft: '-top-1 left-2',
+      bottomRight: '-top-1 right-2',
       top: '-bottom-1 left-1/2 -translate-x-1/2',
       right: '-left-1 top-2',
       left: '-right-1 top-1/2 -translate-y-1/2',
@@ -45,8 +50,8 @@ const toolTipArrow = cva('absolute size-2 rotate-45', {
 
 export default function ToolTip({
   text,
-  position = 'bottom',
-  size = 'sm',
+  position = 'bottomLeft',
+  size = 'none',
   isHover,
   className,
 }: Props) {
@@ -75,7 +80,9 @@ export default function ToolTip({
           <div
             className={cn(toolTipArrow({ position }), colorTheme({ color }))}
           />
-          <span className="text-xs font-semibold text-white">{text}</span>
+          <span className="text-nowrap text-xs font-semibold text-white">
+            {text}
+          </span>
         </div>
       </div>
     </>

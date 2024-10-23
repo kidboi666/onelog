@@ -47,7 +47,7 @@ export default function EmotionButtonWithDropDown({ emotionLevel }: Props) {
       <DropDown.Content
         ref={ref}
         initStatus="closed"
-        position="bottomLeft"
+        position="topLeft"
         onTransitionEnd={onTransitionEnd}
         className="p-2"
       >

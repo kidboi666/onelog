@@ -85,14 +85,16 @@ export default function SentenceContent({
           sentenceId={sentenceId}
           onFavorite={onFavorite}
           userId={userId}
+          viewToolTip
         />
         <CommentButton
           disabled={disabled}
           showComment={showComment}
           commentCount={commentCount!}
           onShowComment={handleShowComment}
+          viewToolTip
         />
-        <AccessTypeButtonWithDropDown accessType={accessType} />
+        <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
         <OptionButtonWithDropDown />
       </nav>
     </div>
