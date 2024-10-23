@@ -75,7 +75,6 @@ const config: Config = {
           from: { opacity: '0', transform: 'translateY(4px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
-
         'slide-down': {
           from: { opacity: '0', transform: 'translateY(-10%)' },
           to: { opacity: '1', transform: 'translateY(0)' },

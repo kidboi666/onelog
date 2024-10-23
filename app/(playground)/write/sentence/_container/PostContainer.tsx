@@ -101,8 +101,8 @@ export default function PostContainer() {
         disabled={me === null}
         variant="secondary"
         dimension="none"
-        className="h-[46px] w-full text-center text-5xl"
-        placeholder="제목."
+        className="h-[46px] w-full overflow-x-auto text-3xl"
+        placeholder="제목을 입력해 주세요."
       />
       <Line className="my-4" />
       <div className="flex max-h-full cursor-text flex-col overflow-y-auto">

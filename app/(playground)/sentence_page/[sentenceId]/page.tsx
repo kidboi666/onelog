@@ -147,7 +147,7 @@ export default function SentencePage({ params }: Props) {
               {me?.id === sentence?.user_id ? (
                 <>
                   <LinkButton
-                    href="/post/sentence"
+                    href="/write/sentence"
                     size="sm"
                     className="w-full self-end"
                   >

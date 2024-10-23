@@ -15,7 +15,7 @@ export default function PostSentenceContainer() {
   const { color } = useTheme()
 
   const handleSentenceClick = () => {
-    router.push('/post/sentence')
+    router.push('/write/sentence')
   }
 
   return (

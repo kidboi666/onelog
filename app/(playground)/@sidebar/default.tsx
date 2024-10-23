@@ -31,10 +31,6 @@ export default function Sidebar() {
     setHover(false)
   }
 
-  useEffect(() => {
-    setHover(false)
-  }, [])
-
   return (
     <div
       onMouseEnter={handleToolTipOpen}

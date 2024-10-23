@@ -19,7 +19,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
         <div className="relative flex">
           <div
             className={cn(
-              'pointer-events-none absolute h-full w-[calc(50%)] rounded-md bg-zinc-400/20 transition duration-300 ease-out dark:bg-zinc-600/40',
+              'pointer-events-none absolute h-full w-[calc(50%)] rounded-md bg-zinc-400/10 transition duration-300 ease-out dark:bg-zinc-700/40',
               segment === 'sentence' ? 'translate-x-full' : '',
             )}
           />
@@ -27,7 +27,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
             href={`/profile/${userId}/summary`}
             variant="list"
             size="sm"
-            innerClassName={cn('justify-center')}
+            innerClassName="justify-center"
           >
             요약
           </LinkButton>
@@ -35,7 +35,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
             href={`/profile/${userId}/sentence`}
             variant="list"
             size="sm"
-            innerClassName={cn('justify-center')}
+            innerClassName="justify-center"
           >
             한줄 한 눈에 보기
           </LinkButton>
