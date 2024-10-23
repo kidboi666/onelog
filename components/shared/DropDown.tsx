@@ -6,15 +6,17 @@ import Text, { TextProps } from './Text'
 
 interface DropDownRootProps extends ComponentProps<'div'> {
   className?: string
+  targetRef?: RefObject<HTMLDivElement>
 }
 
 const DropDownRoot = ({
   children,
   className,
+  targetRef,
   ...props
 }: PropsWithChildren<DropDownRootProps>) => {
   return (
-    <div className={cn('relative', className)} {...props}>
+    <div ref={targetRef} className={cn('relative', className)} {...props}>
       {children}
     </div>
   )

@@ -12,24 +12,27 @@ interface Props extends ComponentProps<'input'> {
   dataStatus?: string
 }
 
-const INPUT_VARIANTS = cva('min-w-4 outline-none', {
-  variants: {
-    variant: {
-      primary:
-        'rounded-md bg-white shadow-sm ring-zinc-200 transition focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-zinc-600',
-      secondary:
-        'bg-transparent text-zinc-600 transition ease-in-out dark:border-zinc-600 dark:bg-transparent dark:text-zinc-200 dark:ring-zinc-600 dark:placeholder:text-zinc-600',
-      auth: 'rounded-md bg-zinc-200 transition dark:bg-white/15 dark:text-white',
-      none: '',
-    },
-    dimension: {
-      sm: 'p-2 text-sm',
-      md: 'p-4 text-sm',
-      lg: 'p-4 text-base',
-      none: '',
+const INPUT_VARIANTS = cva(
+  'min-w-4 outline-none placeholder:text-zinc-300/75 dark:placeholder:text-zinc-700/75',
+  {
+    variants: {
+      variant: {
+        primary:
+          'rounded-md bg-white shadow-sm ring-zinc-200 transition focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-zinc-600',
+        secondary:
+          'bg-transparent text-zinc-600 dark:border-zinc-600 dark:bg-transparent dark:text-zinc-200 dark:ring-zinc-600',
+        auth: 'rounded-md bg-zinc-200 transition dark:bg-white/15 dark:text-white',
+        none: '',
+      },
+      dimension: {
+        sm: 'p-2 text-sm',
+        md: 'p-4 text-sm',
+        lg: 'p-4 text-base',
+        none: '',
+      },
     },
   },
-})
+)
 
 const Input = forwardRef<HTMLInputElement, PropsWithRef<Props>>(
   (

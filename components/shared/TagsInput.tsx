@@ -11,6 +11,7 @@ import Text from './Text'
 import { useInput } from '@/hooks/useInput'
 import cn from '@/lib/cn'
 import Tag from './Tag'
+import Input from './Input'
 
 interface Props {
   tags: string[]
@@ -76,15 +77,17 @@ export const TagsInput = ({ tags, setTags, disabled }: Props) => {
             {tags?.map((tag, idx) => <Tag key={idx} tag={tag} index={idx} />)}
           </List>
         )}
-        <input
+        <Input
           name="tags"
+          variant="secondary"
+          dimension="none"
           ref={inputRef}
           disabled={disabled}
           placeholder="태그를 추가하세요. 입력후 Enter. 삭제는 BackSpace"
           value={text}
           onChange={onChangeText}
           onKeyDown={handleKeyDown}
-          className="w-72 bg-transparent text-zinc-600 outline-none transition placeholder:text-zinc-400 dark:text-zinc-200 dark:placeholder:text-zinc-600"
+          className="w-72"
         />
       </div>
       {error && (

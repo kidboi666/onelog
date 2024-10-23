@@ -1,5 +1,5 @@
 .tiptap p.is-editor-empty:first-child::before {
-  @apply text-zinc-400;
+  @apply text-zinc-300/75;
   content: attr(data-placeholder);
   float: left;
   height: 0;
@@ -12,7 +12,7 @@
 
 /* Dark mode */
 .dark .tiptap p.is-editor-empty:first-child::before {
-  @apply text-zinc-600; /* 다크 모드에서 사용할 색상 */
+  @apply text-zinc-700/75; /* 다크 모드에서 사용할 색상 */
 }
 
 .ProseMirror {
