@@ -7,24 +7,26 @@ export default function useDataDrivenAnimation<T extends HTMLElement>(
   const ref = useRef<T>(null)
 
   const open = async () => {
-    if (ref.current) {
-      ref.current.classList.remove(initClass)
+    const element = ref.current
+    if (element) {
+      element.classList.remove(initClass)
       await wait(10)
-      ref.current.setAttribute('data-status', 'opened')
+      element.setAttribute('data-status', 'opened')
     }
   }
 
   const close = async () => {
-    if (ref.current) {
-      ref.current.setAttribute('data-status', 'closed')
-    }
+    await wait(10)
+    ref.current?.setAttribute('data-status', 'closed')
   }
 
   const handleTransitionEnd = () => {
-    if (ref?.current?.getAttribute('data-status') === 'closed') {
-      if (!ref?.current?.classList.contains('hidden')) {
-        ref.current.classList.add(initClass)
-      }
+    const element = ref.current
+    if (
+      element?.getAttribute('data-status') === 'closed' &&
+      !element.classList.contains(initClass)
+    ) {
+      element.classList.add(initClass)
     }
   }
 
@@ -33,9 +35,7 @@ export default function useDataDrivenAnimation<T extends HTMLElement>(
 
     if (isOpen === 'opened') {
       close()
-    }
-
-    if (isOpen === 'closed') {
+    } else if (isOpen === 'closed') {
       open()
     }
   }

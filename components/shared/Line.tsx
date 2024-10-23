@@ -6,6 +6,6 @@ interface Props {
 
 export default function Line({ className }: Props) {
   return (
-    <hr className={cn('border-zinc-200 dark:border-zinc-600', className)} />
+    <hr className={cn('border-zinc-200 dark:border-zinc-700', className)} />
   )
 }

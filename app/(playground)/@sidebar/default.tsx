@@ -36,9 +36,7 @@ export default function Sidebar() {
       onMouseEnter={handleToolTipOpen}
       onMouseLeave={handleToolTipClose}
       data-status="closed"
-      className={cn(
-        'fixed top-0 z-40 m-4 flex h-[calc(100dvh-32px)] w-[64px] flex-shrink-0 flex-col gap-2 rounded-lg bg-white p-2 shadow-md transition-all duration-300 ease-in-out dark:bg-var-darkgray',
-      )}
+      className="fixed top-0 z-40 m-4 flex h-[calc(100dvh-32px)] w-[64px] flex-shrink-0 flex-col gap-2 rounded-lg bg-white p-2 shadow-md transition-all duration-300 ease-in-out dark:bg-var-darkgray"
     >
       <div className="relative">
         <SidebarWriteButtonWithLogo

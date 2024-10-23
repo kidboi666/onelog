@@ -55,7 +55,12 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
     <List.Row className="mb-4 flex w-full gap-2">
       <div className="h-fit">
         <Button variant="none" onClick={handleAvatarClick} className="p-0">
-          <Avatar src={comment?.avatar_url} size="sm" shadow="sm" />
+          <Avatar
+            src={comment?.avatar_url}
+            size="sm"
+            hoverEffect="none"
+            shadow="sm"
+          />
         </Button>
       </div>
       <div className="flex flex-1 flex-col gap-2">

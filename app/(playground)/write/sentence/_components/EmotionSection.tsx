@@ -29,7 +29,7 @@ export default function EmotionSection({
     <div
       onMouseEnter={open}
       onMouseLeave={close}
-      className="relative flex size-full items-center"
+      className="relative flex size-full items-center justify-start"
     >
       <DropDown.Root className="flex place-items-center gap-2">
         <DropDown.Trigger
@@ -52,8 +52,8 @@ export default function EmotionSection({
           onChangeEmotion={onChangeEmotion}
         />
         {selectedEmotion && (
-          <Text type="caption" size="xs">
-            선택된 감정 상태 :
+          <Text type="caption" size="xs" className="text-nowrap">
+            감정 상태 :
             {(selectedEmotion === '0%' && '매우나쁨') ||
               (selectedEmotion === '25%' && '나쁨') ||
               (selectedEmotion === '50%' && '보통') ||
