@@ -72,9 +72,10 @@ const config: Config = {
       },
       keyframes: {
         'fade-in': {
-          from: { opacity: '0' },
-          to: { opacity: '1' },
+          from: { opacity: '0', transform: 'translateY(4px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
         },
+
         'slide-down': {
           from: { opacity: '0', transform: 'translateY(-10%)' },
           to: { opacity: '1', transform: 'translateY(0)' },
@@ -103,7 +104,7 @@ const config: Config = {
         },
       },
       animation: {
-        'fade-in': 'fade-in 0.3s linear',
+        'fade-in': 'fade-in 0.3s ease-in-out',
         'slide-down': 'slide-down 0.3s ease-in-out',
         click: 'click 0.1s ease-in-out forwards',
         'cta-fadein-out': 'cta-fadein-out 3s ease-in-out infinite',

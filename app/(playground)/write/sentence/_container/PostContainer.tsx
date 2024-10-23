@@ -19,6 +19,7 @@ import { meQuery } from '@/services/queries/auth/meQuery'
 import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Input from '@/components/shared/Input'
+import Line from '@/components/shared/Line'
 
 export default function PostContainer() {
   const router = useRouter()
@@ -94,17 +95,16 @@ export default function PostContainer() {
       onClick={handleAuthGuard}
       className="flex h-full flex-col"
     >
-      <div>
-        <Input
-          value={title}
-          onChange={onChangeTitle}
-          disabled={me === null}
-          variant="secondary"
-          dimension="none"
-          className="mb-10 w-full py-2 text-3xl"
-          placeholder="제목은 생략할 수 있습니다."
-        />
-      </div>
+      <Input
+        value={title}
+        onChange={onChangeTitle}
+        disabled={me === null}
+        variant="secondary"
+        dimension="none"
+        className="h-[46px] w-full text-center text-5xl"
+        placeholder="제목."
+      />
+      <Line className="my-4" />
       <div className="flex max-h-full cursor-text flex-col overflow-y-auto">
         {editor && (
           <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
