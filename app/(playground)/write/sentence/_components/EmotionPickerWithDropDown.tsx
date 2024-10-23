@@ -2,11 +2,11 @@
 
 import cn from '@/lib/cn'
 import { List } from '@/components/shared/List'
-import { EMOTION_STATUS } from '@/app/(playground)/post/sentence/_constants'
 import { RefObject } from 'react'
 import { useTheme } from '@/store/useTheme'
 import Icon from '@/components/shared/Icon'
 import { DropDown } from '@/components/shared/DropDown'
+import { EMOTION_STATUS } from '../_constants'
 
 interface Props {
   selectedEmotion: string
