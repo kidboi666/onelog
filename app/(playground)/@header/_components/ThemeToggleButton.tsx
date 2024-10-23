@@ -57,13 +57,13 @@ export default function ThemeToggleButton({ isOpen }: Props) {
         {isOpen && (
           <div
             className={cn(
-              'flex h-full w-[40px] origin-left animate-fade-in items-center rounded-full transition',
+              'flex h-full w-[44px] origin-left animate-fade-in items-center rounded-full transition',
               theme === 'dark' ? 'bg-green-500' : 'bg-zinc-400',
             )}
           >
             <div
               className={cn(
-                'size-[18px] rounded-full bg-zinc-200 transition',
+                'size-[22px] rounded-full bg-zinc-200 transition',
                 theme === 'dark' ? 'translate-x-[21px]' : 'translate-x-px',
               )}
             />

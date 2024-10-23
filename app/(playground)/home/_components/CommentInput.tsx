@@ -17,9 +17,15 @@ export default function CommentInput({ sentenceId, commentId, me }: Props) {
   const router = useRouter()
   const [content, onChangeContent, setContent] = useInput('')
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
+
   const handleRouterGuard = () => {
-    router.push('/auth_guard')
+    if (me) {
+      return null
+    } else {
+      router.push('/auth_guard')
+    }
   }
+
   const handlePostComment = (e: FormEvent) => {
     e.preventDefault()
     if (me) {

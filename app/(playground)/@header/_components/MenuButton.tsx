@@ -15,11 +15,11 @@ export default function MenuButton() {
     <div ref={buttonRef}>
       <Button
         variant="icon"
+        size="icon"
         onClick={onClick}
-        size="md"
         className="flex sm:hidden"
       >
-        <Icon view="0 -960 960 960" size={18}>
+        <Icon view="0 -960 960 960" size={24}>
           <path d="M120-240v-80h240v80H120Zm0-200v-80h480v80H120Zm0-200v-80h720v80H120Z" />
         </Icon>
       </Button>
