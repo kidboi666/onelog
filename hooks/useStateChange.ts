@@ -14,15 +14,18 @@ export default function useDataDrivenAnimation<T extends HTMLElement>(
     }
   }
 
-  const close = () => {
+  const close = async () => {
     if (ref.current) {
+      await wait(10)
       ref.current.setAttribute('data-status', 'closed')
     }
   }
 
   const handleTransitionEnd = () => {
     if (ref?.current?.getAttribute('data-status') === 'closed') {
-      ref.current.classList.add(initClass)
+      if (!ref?.current?.classList.contains('hidden')) {
+        ref.current.classList.add(initClass)
+      }
     }
   }
 

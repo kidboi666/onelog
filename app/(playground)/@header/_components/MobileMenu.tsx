@@ -16,8 +16,8 @@ import AuthButtonWithDropDown from '../../@sidebar/_components/AuthButtonWithDro
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { supabase } from '@/lib/supabase/client'
-import SidebarLogo from '../../@sidebar/_components/SidebarLogo'
 import Text from '@/components/shared/Text'
+import MobileWriteButtonWithLogo from './MobileWriteButtonWithLogo'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>
@@ -53,12 +53,17 @@ export default function MobileMenu({
             </Icon>
           </Button>
           <Line className="my-2" />
+          <MobileWriteButtonWithLogo
+            closeMenu={close}
+            isSelected={pathname === '/write/sentence'}
+          />
           <List className="flex flex-1 flex-col gap-2">
             {TOP_NAVIGATE_MENUS.map((menu) => (
               <List.Row key={menu.id}>
                 <MenuButton
                   viewText
                   isSelected={pathname === menu.path}
+                  close={close}
                   icon={menu.icon}
                   name={menu.name}
                   path={menu.path}
@@ -75,6 +80,7 @@ export default function MobileMenu({
                   isSelected={pathname === menu.path}
                   icon={menu.icon}
                   name={menu.name}
+                  close={close}
                   path={menu.path}
                 />
               </List.Row>
@@ -85,6 +91,7 @@ export default function MobileMenu({
             <AuthButtonWithDropDown
               viewText
               me={me}
+              closeMenu={close}
               pathname={pathname.split('/')[1]}
               userId={pathname.split('/')[2]}
             />
@@ -98,14 +105,14 @@ export default function MobileMenu({
                     isSelected={pathname === menu.path}
                     icon={menu.icon}
                     name={menu.name}
+                    close={close}
                     path={menu.path}
                   />
                 </List.Row>
               ))}
             </List>
           )}
-          <div className="mt-4 flex flex-col items-center gap-4">
-            <SidebarLogo />
+          <div className="my-4 flex flex-col items-center gap-4">
             <Text type="caption" size="sm">
               © 2024 One-Sentence. All rights reserved.
             </Text>

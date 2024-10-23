@@ -13,6 +13,7 @@ interface Props {
   userId: string
   viewText?: boolean
   me: IUserSession | null
+  closeMenu?: () => void
 }
 
 export default function AuthButtonWithDropDown({
@@ -20,6 +21,7 @@ export default function AuthButtonWithDropDown({
   userId,
   viewText,
   me,
+  closeMenu,
 }: Props) {
   const { ref, close, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
@@ -48,7 +50,11 @@ export default function AuthButtonWithDropDown({
         onTransitionEnd={onTransitionEnd}
         position="topRight"
       >
-        {me ? <LoggedInContent me={me} /> : <GuestContent />}
+        {me ? (
+          <LoggedInContent me={me} closeMenu={closeMenu} />
+        ) : (
+          <GuestContent closeMenu={closeMenu} />
+        )}
       </DropDown.Content>
     </DropDown.Root>
   )

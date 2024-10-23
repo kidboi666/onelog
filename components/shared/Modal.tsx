@@ -4,7 +4,6 @@ import useDataDrivenAnimation from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect, useRef } from 'react'
-import Portal from './Portal'
 
 interface Props extends ComponentProps<'div'> {
   className?: string

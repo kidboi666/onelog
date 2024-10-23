@@ -16,7 +16,7 @@ import ToolTip from '@/components/shared/Tooltip'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { supabase } from '@/lib/supabase/client'
-import SidebarLogo from './_components/SidebarLogo'
+import SidebarWriteButtonWithLogo from './_components/SidebarWriteButtonWithLogo'
 
 export default function Sidebar() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -45,9 +45,12 @@ export default function Sidebar() {
       )}
     >
       <div className="relative">
-        <SidebarLogo isSelected={pathname === '/write/sentence'} />
+        <SidebarWriteButtonWithLogo
+          isSelected={pathname === '/write/sentence'}
+        />
         <ToolTip position="right" size="sm" isHover={isHover} text="글쓰기" />
       </div>
+      <Line />
       <List className="flex h-full w-full flex-col gap-2">
         {TOP_NAVIGATE_MENUS.map((menu) => (
           <List.Row key={menu.id} className="relative">

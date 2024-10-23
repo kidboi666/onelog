@@ -1,17 +1,20 @@
 import { ReactNode, useTransition } from 'react'
 import cn from '@/lib/cn'
+import { useRouter } from 'next/navigation'
 import Icon from '@/components/shared/Icon'
 import BookMark from './BookMark'
 import Button from '@/components/shared/Button'
-import { useRouter } from 'next/navigation'
 import Spinner from '@/components/shared/Spinner'
 import Text from '@/components/shared/Text'
+import SelectedMenuBackground from './SelectedMenuBackground'
+import { wait } from '@/utils/wait'
 
 interface Props {
   isSelected: boolean
   icon: ReactNode
   name: string
   path: string
+  close?: () => void
   viewText?: boolean
   className?: string
 }
@@ -21,14 +24,17 @@ export default function MenuButton({
   icon,
   viewText,
   name,
+  close,
   path,
   className,
 }: Props) {
   const router = useRouter()
   const [isLoading, startTransition] = useTransition()
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     router.push(path)
+    await wait(100)
+    close && close()
   }
 
   return (
@@ -37,12 +43,9 @@ export default function MenuButton({
       <Button
         variant="icon"
         onClick={() => startTransition(() => handleButtonClick())}
-        className={cn(
-          'relative size-full justify-start gap-4',
-          isSelected &&
-            'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-300',
-        )}
+        className="relative size-full justify-start gap-4"
       >
+        <SelectedMenuBackground isSelected={isSelected} />
         {isLoading ? (
           <div>
             <Spinner size={24} />

@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { useMutation } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 export default function useSignOut() {
   const queryClient = getQueryClient()
@@ -13,6 +13,7 @@ export default function useSignOut() {
       queryClient.removeQueries()
       alert('로그아웃 하였습니다.')
       router.refresh()
+      redirect('/home')
     },
   })
 }
