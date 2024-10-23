@@ -17,6 +17,7 @@ interface Props {
   close?: () => void
   viewText?: boolean
   className?: string
+  closeToolTip: () => void
 }
 
 export default function MenuButton({
@@ -27,6 +28,7 @@ export default function MenuButton({
   close,
   path,
   className,
+  closeToolTip,
 }: Props) {
   const router = useRouter()
   const [isLoading, startTransition] = useTransition()
@@ -34,6 +36,7 @@ export default function MenuButton({
   const handleButtonClick = async () => {
     router.push(path)
     await wait(100)
+    closeToolTip()
     close && close()
   }
 

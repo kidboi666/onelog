@@ -40,6 +40,7 @@ export default function Sidebar() {
     >
       <div className="relative">
         <SidebarWriteButtonWithLogo
+          closeToolTip={handleToolTipClose}
           isSelected={pathname === '/write/sentence'}
         />
         <ToolTip position="right" size="sm" isHover={isHover} text="글쓰기" />
@@ -53,6 +54,7 @@ export default function Sidebar() {
               icon={menu.icon}
               name={menu.name}
               path={menu.path}
+              closeToolTip={handleToolTipClose}
             />
             <ToolTip
               position="right"
@@ -71,6 +73,7 @@ export default function Sidebar() {
               icon={menu.icon}
               name={menu.name}
               path={menu.path}
+              closeToolTip={handleToolTipClose}
             />
             <ToolTip
               position="right"
@@ -95,6 +98,7 @@ export default function Sidebar() {
             me={me}
             pathname={pathname.split('/')[1]}
             userId={pathname.split('/')[2]}
+            closeToolTip={handleToolTipClose}
           />
           <ToolTip
             position="right"

@@ -8,7 +8,10 @@ import Icon from './Icon'
 
 interface Props extends ButtonProps {}
 
-export default function BackButton({ className }: PropsWithChildren<Props>) {
+export default function BackButton({
+  className,
+  children,
+}: PropsWithChildren<Props>) {
   const router = useRouter()
   const handleButtonClick = () => {
     router.back()
@@ -20,9 +23,13 @@ export default function BackButton({ className }: PropsWithChildren<Props>) {
       onClick={handleButtonClick}
       className={cn('p-1', className)}
     >
-      <Icon view="0 -960 960 960" size={14}>
-        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-      </Icon>
+      {children ? (
+        children
+      ) : (
+        <Icon view="0 -960 960 960" size={14}>
+          <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+        </Icon>
+      )}
     </Button>
   )
 }
