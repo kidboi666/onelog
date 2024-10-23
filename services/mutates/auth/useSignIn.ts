@@ -23,6 +23,7 @@ export default function useSignIn() {
     },
     onSuccess: () => {
       router.back()
+      window.location.href = '/home'
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['me', 'session'] })
