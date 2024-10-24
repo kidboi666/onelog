@@ -5,7 +5,7 @@ import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
 import cn from '@/lib/cn'
-import { useTheme } from '@/store/useTheme'
+import { colorTheme, useTheme } from '@/store/useTheme'
 import { TColor } from '@/types/theme'
 
 const colors: TColor[] = ['black', 'green', 'yellow', 'blue', 'orange']
@@ -48,12 +48,8 @@ function ColorBlock({ color, onClick, selectedColor }: ColorBlockProps) {
       variant="secondary"
       onClick={() => onClick(color)}
       className={cn(
+        colorTheme({ color }),
         'size-14 rounded-full border text-white ring-0 dark:border-gray-500',
-        color === 'yellow' && 'bg-var-yellow',
-        color === 'orange' && 'bg-var-orange',
-        color === 'black' && 'bg-var-black',
-        color === 'blue' && 'bg-var-blue',
-        color === 'green' && 'bg-var-green',
       )}
     >
       {selectedColor === color && (

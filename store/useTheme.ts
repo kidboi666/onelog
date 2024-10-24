@@ -12,11 +12,11 @@ interface ThemeState {
 export const colorTheme = cva('', {
   variants: {
     color: {
-      green: 'bg-var-green',
+      green: 'bg-var-green dark:bg-var-green',
       black: 'bg-var-black text-white dark:bg-white dark:text-var-dark',
-      yellow: 'bg-var-yellow',
-      blue: 'bg-var-blue',
-      orange: 'bg-var-orange',
+      yellow: 'bg-var-yellow dark:bg-var-yellow',
+      blue: 'bg-var-blue dark:bg-var-blue',
+      orange: 'bg-var-orange dark:bg-var-orange',
     },
   },
 })
