@@ -1,23 +1,19 @@
 import Text from '@/components/shared/Text'
 import Block from './Block'
 
-interface Props {
-  orderBy: string
-}
-
-export default function ColorInfoDisplay({ orderBy }: Props) {
+export default function ColorInfoDisplay() {
   return (
     <div className="flex items-center gap-2 self-end">
       <Text type="caption" size="sm" className="leading-none">
-        {orderBy === 'emotion' ? 'Bad' : 'Less'}
+        아주나쁨
       </Text>
-      <Block disabled />
-      <Block disabled length={1} />
-      <Block disabled length={2} />
-      <Block disabled length={3} />
-      <Block disabled length={4} />
+      <Block disabled average={20} />
+      <Block disabled average={40} />
+      <Block disabled average={60} />
+      <Block disabled average={80} />
+      <Block disabled average={100} />
       <Text type="caption" size="sm">
-        {orderBy === 'emotion' ? 'Good' : 'More'}
+        좋음
       </Text>
     </div>
   )

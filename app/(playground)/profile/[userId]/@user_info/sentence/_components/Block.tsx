@@ -14,7 +14,6 @@ import { Json } from '@/types/supabase'
 interface BlockProps {
   empty?: boolean
   className?: string
-  length?: number
   average?: number
   summary?: Json[] | null
   blockInfo?: IBlockInfo
@@ -23,7 +22,6 @@ interface BlockProps {
 
 export default function Block({
   className,
-  length,
   empty,
   average,
   summary,
@@ -42,6 +40,11 @@ export default function Block({
     const targetDate = blockInfo.weekDay
     const calculateMargin = 16 * (targetDate + 1) + 2
     return calculateMargin
+  }
+
+  const handleBlockClick = () => {
+    infoRef.current?.setAttribute('data-status', 'closed')
+    setSentences(summary as never as ISentenceState[])
   }
 
   return (
@@ -66,7 +69,7 @@ export default function Block({
           infoRef.current?.setAttribute('data-status', 'closed')
         }
         disabled={disabled}
-        onClick={() => setSentences(summary as never as ISentenceState[])}
+        onClick={handleBlockClick}
         className={cn(
           'size-3 select-none overflow-hidden rounded-[4px] border border-zinc-300 shadow-sm dark:border-zinc-700 dark:shadow-zinc-800',
           className,
@@ -76,8 +79,7 @@ export default function Block({
           className={cn(
             'size-full text-center text-[7px] opacity-0 hover:opacity-55',
             colorTheme({ color }),
-            length && `${colorizeOpacity(length, [1, 2, 3])}`,
-            average && `${colorizeOpacity(average, [25, 50, 75])}`,
+            average && `${colorizeOpacity(average)}`,
           )}
         />
       </Button>
