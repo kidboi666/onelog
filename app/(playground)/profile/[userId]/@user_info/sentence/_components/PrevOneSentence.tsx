@@ -23,6 +23,7 @@ export default function PrevOneSentence() {
       sentenceList?.[0].created_at || null,
     ),
   )
+  console.log(sentenceList)
 
   useEffect(() => {
     setSentences(null)

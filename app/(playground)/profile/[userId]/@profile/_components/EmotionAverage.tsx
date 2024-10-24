@@ -19,7 +19,7 @@ export default function EmotionAverage({ userId }: Props) {
       size="xs"
       className={cn(
         colorTheme({ color }),
-        'absolute -right-3 top-0 rounded-lg px-1.5 py-1 shadow-md',
+        'absolute -right-3 top-0 rounded-lg px-1.5 py-1 text-white shadow-md',
       )}
     >
       {myAverageEmotion}%

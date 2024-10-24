@@ -13,7 +13,6 @@ import { usePathname } from 'next/navigation'
 import Block from './Block'
 import GardenBlockSection from './GardenBlockSection'
 import ColorInfoDisplay from './ColorInfoDisplay'
-import { ISentenceState } from '@/store/useSentence'
 import YearSection from './YearSection'
 import { meQuery } from '@/services/queries/auth/meQuery'
 
@@ -103,13 +102,15 @@ export default function Garden() {
     getDaysInYear(currentYear),
     garden,
   )
-  const yearList = useMemo(() => {
-    let result = []
-    for (let i = currentYear; i >= signedYear; i--) {
-      result.push(i)
-    }
-    return result
-  }, [signedYear])
+  const signUpDate = me.created_at
+  const yearList = useMemo(
+    () =>
+      Array.from(
+        { length: currentYear - signedYear + 1 },
+        (_, index) => currentYear - index,
+      ),
+    [signedYear, currentYear],
+  )
 
   const handleSelect = (year: number) => {
     setSelectedYear(year)
