@@ -18,6 +18,9 @@ import Title from '@/components/shared/Title'
 import useFollow from '@/services/mutates/follow/useFollow'
 import useUnFollow from '@/services/mutates/follow/useUnFollow'
 import Container from '@/components/shared/Container'
+import { emotionQuery } from '@/services/queries/emotion/emotionQuery'
+import { colorTheme, useTheme } from '@/store/useTheme'
+import cn from '@/lib/cn'
 
 interface Props {
   userId: string
@@ -25,6 +28,7 @@ interface Props {
 
 export default function AboutMe({ userId }: Props) {
   const router = useRouter()
+  const { color } = useTheme()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),
@@ -39,9 +43,9 @@ export default function AboutMe({ userId }: Props) {
   const isFollowing = isMyProfilePage
     ? null
     : followers?.find((user) => user.follower_user_id === me?.userId)
-  // const { data: followerList } = useSuspenseQuery(
-  //   followQuery.getMyFollowers(supabase, userId),
-  // )
+  const { data: myAverageEmotion } = useSuspenseQuery(
+    emotionQuery.getEmotionAverage(supabase, userId),
+  )
   const { mutate: followUser } = useFollow()
   const { mutate: unfollowUser } = useUnFollow()
   const [isLoadingProfile, startTransitionProfile] = useTransition()
@@ -67,7 +71,18 @@ export default function AboutMe({ userId }: Props) {
       isBackground
       className="items-center justify-center gap-4 p-8 max-lg:py-4"
     >
-      <Avatar src={user?.avatar_url} size="md" ring="xs" shadow="sm" />
+      <div className="relative">
+        <Avatar src={user?.avatar_url} size="md" ring="xs" shadow="sm" />
+        <Text
+          size="xs"
+          className={cn(
+            colorTheme({ color }),
+            'absolute -right-2 top-0 rounded-lg p-1 text-white shadow-md dark:text-white',
+          )}
+        >
+          {myAverageEmotion}%
+        </Text>
+      </div>
       <div className="flex w-full flex-col items-center gap-4">
         <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-end">
           <Title>{user?.user_name}</Title>
