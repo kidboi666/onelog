@@ -24,7 +24,7 @@ export default function YearSection({
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   return (
-    <DropDown.Root>
+    <DropDown.Root className="self-end">
       <DropDown.Trigger
         onClick={onClickButton}
         variant="secondary"
@@ -41,6 +41,7 @@ export default function YearSection({
         position="bottomLeft"
         onTransitionEnd={onTransitionEnd}
         initStatus="closed"
+        className="p-0"
       >
         {yearList.map((year) => (
           <Button
