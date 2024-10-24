@@ -10,6 +10,7 @@ import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { getSignUpDays } from '@/utils/formatDate'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
+import { emotionQuery } from '@/services/queries/emotion/emotionQuery'
 
 export default function AuthHistory() {
   const pathname = usePathname()
@@ -20,6 +21,9 @@ export default function AuthHistory() {
   )
   const { data: sentenceLength } = useSuspenseQuery(
     sentenceQuery.getAllMySentenceCount(supabase, userId),
+  )
+  const { data: myAverageEmotion } = useSuspenseQuery(
+    emotionQuery.getEmotionAverage(supabase, userId),
   )
 
   const formatColor = (color: TColor) => {
@@ -60,6 +64,13 @@ export default function AuthHistory() {
         <Title size="bigger" type="sub" className={formatColor(color)}>
           {sentenceLength}
           <Text as="span">개</Text>
+        </Title>
+      </div>
+      <div className="flex flex-col gap-2">
+        <Text type="caption">평균 감정 농도</Text>
+        <Title size="bigger" type="sub" className={formatColor(color)}>
+          {myAverageEmotion}
+          <Text as="span">%</Text>
         </Title>
       </div>
     </div>
