@@ -37,7 +37,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
             size="sm"
             innerClassName="justify-center"
           >
-            한줄 한 눈에 보기
+            감정 한 눈에 보기
           </LinkButton>
         </div>
       </div>

@@ -23,7 +23,7 @@ export default function AuthCtaSection() {
       <div className="flex w-96 flex-col gap-12 p-4">
         <div className="flex flex-col gap-4">
           <Title>지금 가입하세요.</Title>
-          <Title>당신의 글쓰기 루틴을 만드세요.</Title>
+          <Title>오늘 당신의 감정을 기록하세요.</Title>
         </div>
         <div className="flex flex-col gap-4">
           <LinkButton href="/home">구경하러 가기</LinkButton>

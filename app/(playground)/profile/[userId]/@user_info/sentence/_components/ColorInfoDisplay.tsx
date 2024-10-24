@@ -13,7 +13,7 @@ export default function ColorInfoDisplay() {
       <Block disabled average={80} />
       <Block disabled average={100} />
       <Text type="caption" size="sm">
-        좋음
+        아주좋음
       </Text>
     </div>
   )
