@@ -14,6 +14,7 @@ import Block from './Block'
 import SortOptionMenu from './SortOptionMenu'
 import GardenBlockSection from './GardenBlockSection'
 import ColorInfoDisplay from './ColorInfoDisplay'
+import { ISentenceState } from '@/store/useSentence'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 작성 갯수 기준 색칠)

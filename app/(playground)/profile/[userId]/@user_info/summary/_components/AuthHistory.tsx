@@ -18,8 +18,8 @@ export default function AuthHistory() {
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),
   )
-  const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getAllMySentence(supabase, userId),
+  const { data: sentenceLength } = useSuspenseQuery(
+    sentenceQuery.getAllMySentenceCount(supabase, userId),
   )
 
   const formatColor = (color: TColor) => {
@@ -58,7 +58,7 @@ export default function AuthHistory() {
       <div className="flex flex-col gap-2">
         <Text type="caption">기록</Text>
         <Title size="bigger" type="sub" className={formatColor(color)}>
-          {sentence?.length}
+          {sentenceLength}
           <Text as="span">개</Text>
         </Title>
       </div>

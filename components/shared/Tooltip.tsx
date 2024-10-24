@@ -73,14 +73,19 @@ export default function ToolTip({
       >
         <div
           className={cn(
-            'relative flex size-fit items-center justify-center rounded-md px-2 py-2 shadow-lg dark:shadow-zinc-800',
+            'relative flex size-fit items-center justify-center rounded-md px-2 py-2 opacity-85 shadow-lg dark:shadow-zinc-800',
             colorTheme({ color }),
           )}
         >
           <div
             className={cn(toolTipArrow({ position }), colorTheme({ color }))}
           />
-          <span className="text-nowrap text-xs font-semibold text-white">
+          <span
+            className={cn(
+              colorTheme({ color }),
+              'text-nowrap text-xs font-semibold text-white',
+            )}
+          >
             {text}
           </span>
         </div>

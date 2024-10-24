@@ -1,21 +1,22 @@
 'use client'
 
-import { useSentence } from '@/store/useSentence'
+import { ISentenceState, useSentence } from '@/store/useSentence'
 import { colorTheme, useTheme } from '@/store/useTheme'
 import { IBlockInfo } from '@/types/garden'
 import { useRef } from 'react'
 import cn from '@/lib/cn'
-import { colorizeOpacity, formatBlockColor } from '@/utils/formatColor'
+import { colorizeOpacity } from '@/utils/formatColor'
 import Button from '@/components/shared/Button'
 import Text from '@/components/shared/Text'
 import { WEEKDAY } from '@/app/(playground)/write/sentence/_constants'
+import { Json } from '@/types/supabase'
 
 interface BlockProps {
   empty?: boolean
   className?: string
   length?: number
   average?: number
-  summary?: any
+  summary?: Json[] | null
   blockInfo?: IBlockInfo
   disabled?: boolean
 }
@@ -65,7 +66,7 @@ export default function Block({
           infoRef.current?.setAttribute('data-status', 'closed')
         }
         disabled={disabled}
-        onClick={() => setSentences(summary)}
+        onClick={() => setSentences(summary as never as ISentenceState[])}
         className={cn(
           'size-3 select-none overflow-hidden rounded-[4px] border border-zinc-300 shadow-sm dark:border-zinc-700 dark:shadow-zinc-800',
           className,

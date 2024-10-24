@@ -13,7 +13,7 @@ export const colorTheme = cva('', {
   variants: {
     color: {
       green: 'bg-var-green',
-      black: 'bg-var-black',
+      black: 'bg-var-black text-white dark:bg-white dark:text-var-dark',
       yellow: 'bg-var-yellow',
       blue: 'bg-var-blue',
       orange: 'bg-var-orange',

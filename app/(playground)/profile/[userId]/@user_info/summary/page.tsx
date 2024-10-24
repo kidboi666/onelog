@@ -16,7 +16,9 @@ export default function UserInfoSummary({ params }: Props) {
   const userId = params.userId
 
   queryClient.prefetchQuery(meQuery.getUserInfo(supabase, userId))
-  queryClient.prefetchQuery(sentenceQuery.getAllMySentence(supabase, userId))
+  queryClient.prefetchQuery(
+    sentenceQuery.getAllMySentenceCount(supabase, userId),
+  )
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

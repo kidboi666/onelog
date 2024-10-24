@@ -8,7 +8,7 @@ export const sentenceQuery = {
     queryOptions<ISentenceWithUserInfo[] | null>({
       queryKey: ['all_sentence'],
       queryFn: async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('sentence')
           .select(
             `
@@ -27,26 +27,36 @@ export const sentenceQuery = {
       },
     }),
 
-  getAllMySentence: (supabase: SupabaseClient, userId: string) =>
+  getMySentenceThatDay: (
+    supabase: SupabaseClient,
+    userId: string,
+    date: string | null,
+  ) =>
     queryOptions<ISentenceWithUserInfo[] | null>({
-      queryKey: ['sentence', userId],
+      queryKey: ['sentence', date],
       queryFn: async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('sentence')
-          .select(
-            `
-            *,  
-            user_info(
-              email,
-              user_name,
-              avatar_url
-            )
-            `,
-          )
+          .select(`*, user_info(email,user_name,avatar_url)`)
           .eq('user_id', userId)
+          .eq('created_at', date)
           .order('created_at', { ascending: false })
 
         return data
+      },
+      enabled: !!date,
+    }),
+
+  getAllMySentenceCount: (supabase: SupabaseClient, userId: string) =>
+    queryOptions({
+      queryKey: ['sentence_count'],
+      queryFn: async () => {
+        const { count } = await supabase
+          .from('sentence')
+          .select('*', { count: 'exact', head: true })
+          .eq('user_id', userId)
+
+        return count
       },
       enabled: !!userId,
     }),
@@ -55,7 +65,7 @@ export const sentenceQuery = {
     queryOptions<ISentenceWithUserInfo>({
       queryKey: ['sentence', sentenceId],
       queryFn: async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('sentence')
           .select(
             `
@@ -79,7 +89,7 @@ export const sentenceQuery = {
     queryOptions({
       queryKey: ['favorite_sentences', userId],
       queryFn: async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('user_info')
           .select('favorite_sentence_id')
           .eq('id', userId)
@@ -93,7 +103,7 @@ export const sentenceQuery = {
     queryOptions<Tables<'user_words'>>({
       queryKey: ['favorite_words', userId],
       queryFn: async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('user_words')
           .select()
           .eq('user_id', userId)
@@ -107,7 +117,7 @@ export const sentenceQuery = {
     queryOptions<Tables<'word_dictionary'>>({
       queryKey: ['words', word],
       queryFn: async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('word_dictionary')
           .select()
           .eq('word', word)

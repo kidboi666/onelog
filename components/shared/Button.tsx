@@ -14,24 +14,23 @@ export interface ButtonProps extends ComponentProps<'button'> {
 }
 
 const BUTTON_VARIANTS = cva(
-  'flex items-center justify-center text-nowrap font-semibold transition active:scale-90',
+  'flex items-center justify-center text-nowrap font-semibold text-white transition active:scale-95',
   {
     variants: {
       active: {
-        primary: 'rounded-md text-white hover:opacity-65 active:animate-click',
+        primary: 'rounded-md hover:opacity-65',
         secondary:
-          'rounded-md text-var-black ring-1 ring-zinc-400 hover:opacity-65 active:animate-click dark:text-zinc-200 dark:ring-zinc-500',
-        teritory:
-          'underline hover:opacity-65 active:animate-click dark:text-zinc-200',
+          'rounded-md text-var-black ring-1 ring-zinc-400 hover:opacity-65 dark:text-zinc-200 dark:ring-zinc-500',
+        teritory: 'underline hover:opacity-65 dark:text-zinc-200',
         list: 'justify-start rounded-md font-normal text-zinc-600 hover:bg-var-lightgray dark:text-zinc-300 dark:hover:bg-var-dark dark:hover:text-zinc-200',
         none: '',
         icon: 'rounded-md text-zinc-400 transition hover:bg-var-lightgray dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
       },
       disabled: {
         primary:
-          'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
+          'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 active:scale-100 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
         secondary:
-          'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
+          'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 active:scale-100 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
         teritory: '',
         list: '',
         icon: 'rounded-md text-zinc-300 transition dark:text-zinc-600',

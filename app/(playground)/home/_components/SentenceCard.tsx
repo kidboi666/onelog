@@ -50,8 +50,6 @@ export default function SentenceCard({
   })
   const { mutate: favoriteSentence } = useFavoriteSentence()
 
-  if (!editor) return null
-
   const handleFavoriteSentence = (
     e: MouseEvent,
     { sentenceId }: { sentenceId: number },
@@ -63,6 +61,8 @@ export default function SentenceCard({
   const handleSentenceItemClick = () => {
     router.push(`/sentence_page/${sentenceId}`)
   }
+
+  if (!editor) return null
 
   return (
     <div className={cn('flex flex-col gap-4', className)}>
