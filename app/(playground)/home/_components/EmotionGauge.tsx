@@ -6,28 +6,32 @@ interface Props {
   emotionLevel?: string
   className?: string
   size?: number
+  onClick?: (emotion: string) => void
 }
 
-export default function EmotionGauge({ emotionLevel, className }: Props) {
+export default function EmotionGauge({
+  emotionLevel,
+  className,
+  onClick,
+}: Props) {
   const { color } = useTheme()
 
   let emotionBlock = [0, 0, 0, 0, 0]
-  const [emotion] = emotionLevel?.split('%') || []
 
-  switch (emotion) {
-    case '0':
+  switch (emotionLevel) {
+    case '0%':
       emotionBlock = [1, 0, 0, 0, 0]
       break
-    case '25':
+    case '25%':
       emotionBlock = [1, 1, 0, 0, 0]
       break
-    case '50':
+    case '50%':
       emotionBlock = [1, 1, 1, 0, 0]
       break
-    case '75':
+    case '75%':
       emotionBlock = [1, 1, 1, 1, 0]
       break
-    case '100':
+    case '100%':
       emotionBlock = [1, 1, 1, 1, 1]
       break
     default:
@@ -36,11 +40,12 @@ export default function EmotionGauge({ emotionLevel, className }: Props) {
 
   return (
     emotionLevel && (
-      <div className={cn('flex items-end gap-1', className)}>
+      <div className={cn('flex items-end gap-px', className)}>
         {emotionBlock!.map((shouldRender, index) => (
           <EmotionBlock
             key={index}
             index={index}
+            onClick={onClick}
             shouldRender={shouldRender}
             color={color}
           />
@@ -54,11 +59,37 @@ interface EmotionBlockProps {
   shouldRender: number
   color: TColor
   index: number
+  onClick?: (emotion: string) => void
 }
 
-function EmotionBlock({ shouldRender, color, index }: EmotionBlockProps) {
+function EmotionBlock({
+  shouldRender,
+  color,
+  index,
+  onClick,
+}: EmotionBlockProps) {
+  let currentEmotion: string
   let blockOpacity: string
   let sizeString: string
+  switch (index) {
+    case 0:
+      currentEmotion = '0%'
+      break
+    case 1:
+      currentEmotion = '25%'
+      break
+    case 2:
+      currentEmotion = '50%'
+      break
+    case 3:
+      currentEmotion = '75%'
+      break
+    case 4:
+      currentEmotion = '100%'
+      break
+    default:
+      break
+  }
   switch (index) {
     case 0:
       blockOpacity = `opacity-20`
@@ -66,10 +97,12 @@ function EmotionBlock({ shouldRender, color, index }: EmotionBlockProps) {
     case 1:
       blockOpacity = `opacity-40`
       sizeString = shouldRender ? 'h-[12px]' : ''
+      currentEmotion = '25%'
       break
     case 2:
       blockOpacity = 'opacity-60'
       sizeString = shouldRender ? 'h-[16px]' : ''
+      currentEmotion = '50%'
       break
     case 3:
       blockOpacity = 'opacity-80'
@@ -78,14 +111,16 @@ function EmotionBlock({ shouldRender, color, index }: EmotionBlockProps) {
     case 4:
       blockOpacity = 'opacity-100'
       sizeString = shouldRender ? 'h-[24px]' : ''
+      currentEmotion = '100%'
       break
     default:
       break
   }
   return (
     <div
+      onClick={() => onClick && onClick(currentEmotion)}
       className={cn(
-        'size-2 overflow-hidden rounded-full bg-zinc-300/35 shadow-sm transition-all dark:bg-zinc-300/15',
+        'size-2 cursor-pointer overflow-hidden rounded-full bg-zinc-300/35 shadow-sm transition-all dark:bg-zinc-300/15',
         sizeString!,
       )}
     >
@@ -104,6 +139,7 @@ function EmotionBlock({ shouldRender, color, index }: EmotionBlockProps) {
           shouldRender && color === 'green' && 'bg-var-green dark:bg-var-green',
         )}
       />
+      <div className="h-1 w-1 bg-red-200" />
     </div>
   )
 }

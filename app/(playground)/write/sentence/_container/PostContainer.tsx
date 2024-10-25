@@ -16,12 +16,16 @@ import Input from '@/components/shared/Input'
 import Line from '@/components/shared/Line'
 import EmotionSection from '../_components/EmotionSection'
 import PublishSection from '../_components/PublishSection'
+import Avatar from '@/components/shared/Avatar'
+import Text from '@/components/shared/Text'
+import Title from '@/components/shared/Title'
+import EmotionGauge from '@/app/(playground)/home/_components/EmotionGauge'
 
 export default function PostContainer() {
   const router = useRouter()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [content, _, setContent] = useInput<string>('')
-  const [selectedEmotion, setSelectedEmotion] = useState('')
+  const [selectedEmotion, setSelectedEmotion] = useState('0')
   const [accessType, setAccessType] = useState<'public' | 'private'>('public')
   const { editor } = useBlockEditor({
     setContent,
@@ -79,19 +83,33 @@ export default function PostContainer() {
     <form
       onSubmit={handleSubmitSentence}
       onClick={handleAuthGuard}
-      className="flex h-full flex-col"
+      className="flex h-fit flex-col rounded-md bg-white p-4 shadow-md dark:bg-var-darkgray"
     >
+      <div className="flex items-center gap-4">
+        <Avatar src={me?.avatar_url} size="sm" ring="xs" />
+        <div className="flex w-full flex-col self-end">
+          <Title type="sub" size="sm">
+            {me?.user_name}
+          </Title>
+          <Text type="caption">{me?.email}</Text>
+        </div>
+        <EmotionGauge
+          emotionLevel={selectedEmotion}
+          onClick={handleChangeEmotion}
+          className="self-end"
+        />
+      </div>
+      <Line className="my-4" />
       <Input
         value={title}
         onChange={onChangeTitle}
         disabled={me === null}
         variant="secondary"
         dimension="none"
-        className="h-[46px] w-full overflow-x-auto text-3xl"
+        className="my-4 w-full overflow-x-auto text-3xl"
         placeholder="제목을 입력해 주세요."
       />
-      <Line className="my-4" />
-      <div className="flex max-h-full cursor-text flex-col overflow-y-auto">
+      <div className="flex max-h-full cursor-text flex-col">
         {editor && (
           <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
             <BubbleMenuBar editor={editor} />
