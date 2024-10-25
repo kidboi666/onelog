@@ -23,7 +23,8 @@ export default function useSignUp() {
       return data
     },
     onSuccess: () => {
-      router.replace('/home')
+      router.back()
+      window.location.href = '/home'
     },
   })
 }

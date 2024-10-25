@@ -12,14 +12,14 @@ export const emotionQuery = {
           .eq('user_id', userId)
         let result
 
-        if (data) {
+        if (data && data?.length !== 0) {
           const splitArray = data.map((item) =>
             Number(item.emotion_level.split('%')[0]),
           )
-          const sum = splitArray.reduce((prev, curr) => prev + curr)
+          const sum = splitArray.reduce((prev, curr) => prev + curr, 0)
           result = Math.floor(sum / splitArray.length + 1)
         } else {
-          result = '???'
+          result = 0
         }
 
         return result
