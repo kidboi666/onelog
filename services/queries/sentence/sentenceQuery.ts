@@ -37,7 +37,16 @@ export const sentenceQuery = {
       queryFn: async () => {
         const { data } = await supabase
           .from('sentence')
-          .select(`*, user_info(email,user_name,avatar_url)`)
+          .select(
+            `
+            *, 
+            user_info(
+            email,
+            user_name,
+            avatar_url
+            )
+            `,
+          )
           .eq('user_id', userId)
           .eq('created_at', date)
           .order('created_at', { ascending: false })
