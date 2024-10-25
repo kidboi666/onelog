@@ -30,30 +30,32 @@ export const sentenceQuery = {
   getMySentenceThatDay: (
     supabase: SupabaseClient,
     userId: string,
-    date: string | null,
+    startOfDay: string | null,
+    endOfDay: string | null,
   ) =>
     queryOptions<ISentenceWithUserInfo[] | null>({
-      queryKey: ['sentence', date],
+      queryKey: ['sentence', startOfDay, endOfDay],
       queryFn: async () => {
         const { data } = await supabase
           .from('sentence')
           .select(
             `
-            *, 
+            *,  
             user_info(
-            email,
-            user_name,
-            avatar_url
+              email,
+              user_name,
+              avatar_url
             )
             `,
           )
+          .gte('created_at', startOfDay)
+          .lte('created_at', endOfDay)
           .eq('user_id', userId)
-          .eq('created_at', date)
           .order('created_at', { ascending: false })
 
         return data
       },
-      enabled: !!date,
+      enabled: !!startOfDay && !!endOfDay,
     }),
 
   getAllMySentenceCount: (supabase: SupabaseClient, userId: string) =>

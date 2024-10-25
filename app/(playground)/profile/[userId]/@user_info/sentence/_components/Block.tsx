@@ -1,6 +1,5 @@
 'use client'
 
-import { ISentenceState, useSentence } from '@/store/useSentence'
 import { colorTheme, useTheme } from '@/store/useTheme'
 import { IBlockInfo } from '@/types/garden'
 import { useRef } from 'react'
@@ -9,13 +8,13 @@ import { colorizeOpacity } from '@/utils/formatColor'
 import Button from '@/components/shared/Button'
 import Text from '@/components/shared/Text'
 import { WEEKDAY } from '@/app/(playground)/write/sentence/_constants'
-import { Json } from '@/types/supabase'
+import { useRouter } from 'next/navigation'
 
 interface BlockProps {
   empty?: boolean
   className?: string
   average?: number
-  summary?: Json[] | null
+  summary?: any
   blockInfo?: IBlockInfo
   disabled?: boolean
 }
@@ -28,8 +27,8 @@ export default function Block({
   blockInfo,
   disabled,
 }: BlockProps) {
+  const router = useRouter()
   const infoRef = useRef<HTMLDivElement>(null)
-  const { setSentences } = useSentence()
   const { color } = useTheme()
 
   if (empty) {
@@ -44,7 +43,12 @@ export default function Block({
 
   const handleBlockClick = () => {
     infoRef.current?.setAttribute('data-status', 'closed')
-    setSentences(summary as never as ISentenceState[])
+    const createdAt = summary?.[0]?.created_at
+    const year = new Date(createdAt).getFullYear()
+    const month = new Date(createdAt).getMonth()
+    const date = new Date(createdAt).getDate()
+
+    router.push(`?year=${year}&month=${month}&date=${date}`)
   }
 
   return (
