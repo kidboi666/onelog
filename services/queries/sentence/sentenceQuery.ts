@@ -1,13 +1,13 @@
-import { queryOptions } from '@tanstack/react-query'
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { ISentenceWithUserInfo } from '@/types/sentence'
 import { Tables } from '@/types/supabase'
 
 export const sentenceQuery = {
-  getAllSentence: (supabase: SupabaseClient) =>
-    queryOptions<ISentenceWithUserInfo[] | null>({
+  getAllSentence: (supabase: SupabaseClient, limit: number) =>
+    infiniteQueryOptions<ISentenceWithUserInfo[] | null>({
       queryKey: ['all_sentence'],
-      queryFn: async () => {
+      queryFn: async ({ pageParam = 0 }) => {
         const { data } = await supabase
           .from('sentence')
           .select(
@@ -22,8 +22,14 @@ export const sentenceQuery = {
           )
           .eq('access_type', 'public')
           .order('created_at', { ascending: false })
+          .range(pageParam, pageParam + limit - 1)
 
         return data
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length < limit) return undefined // 마지막 페이지에 도달하면 undefined 반환
+        return allPages.length * limit // 다음 페이지의 offset 반환
       },
     }),
 
