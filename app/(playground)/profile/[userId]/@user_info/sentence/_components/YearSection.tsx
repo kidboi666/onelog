@@ -49,8 +49,14 @@ export default function YearSection({
             onClick={() => onSelect(year)}
             variant="list"
             size="sm"
+            className="gap-2"
           >
             {year}
+            {selectedYear === year && (
+              <Icon view="0 -960 960 960" size={16}>
+                <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+              </Icon>
+            )}
           </Button>
         ))}
       </DropDown.Content>

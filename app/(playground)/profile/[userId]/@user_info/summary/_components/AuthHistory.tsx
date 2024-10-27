@@ -61,7 +61,7 @@ export default function AuthHistory() {
       </div>
       <div className="flex flex-col gap-2">
         <Text type="caption">기록</Text>
-        <Title size="bigger" type="sub" className={formatColor(color)}>
+        <Title size="bigger" type="sub">
           {sentenceLength}
           <Text as="span">개</Text>
         </Title>

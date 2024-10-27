@@ -17,9 +17,13 @@ export default function PrevOneSentence() {
   const year = Number(searchParams.get('year'))
   const month = Number(searchParams.get('month'))
   const date = Number(searchParams.get('date'))
-  const startOfDay = new Date(year, month, date, 0, 0, 0).toISOString()
-  const endOfDay = new Date(year, month, date, 23, 59, 59).toISOString()
-  const { data: sentences, isLoading } = useSuspenseQuery(
+  let startOfDay = null
+  let endOfDay = null
+  if (year && month && date) {
+    startOfDay = new Date(year, month, date, 0, 0, 0).toISOString() || null
+    endOfDay = new Date(year, month, date, 23, 59, 59).toISOString() || null
+  }
+  const { data: sentences } = useSuspenseQuery(
     sentenceQuery.getMySentenceThatDay(supabase, userId, startOfDay, endOfDay),
   )
 
