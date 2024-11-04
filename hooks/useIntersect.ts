@@ -41,7 +41,7 @@ const useIntersect: TIntersect = (opt, once = false) => {
 
     // eslint-disable-next-line consistent-return
     return () => observer.disconnect()
-  }, [target, handleIntersect, opt])
+  }, [handleIntersect, opt])
 
   return [target, isIntersecting]
 }
