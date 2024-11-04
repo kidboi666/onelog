@@ -16,7 +16,7 @@ export default function SettingsPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <YStack gap={12}>
+      <YStack gap={12} className="animate-fade-in">
         <PasswordResetForm />
         <ColorPicker />
         <DarkModeSwitch />

@@ -11,7 +11,7 @@ export default function SentencePage({ params }: Props) {
   const sentenceId = parseInt(params.sentenceId)
 
   return (
-    <YStack gap={8}>
+    <YStack gap={8} className="animate-fade-in">
       <SentenceContainer sentenceId={sentenceId} />
     </YStack>
   )

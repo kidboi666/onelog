@@ -12,7 +12,7 @@ export default function PostSentencePage() {
   queryClient.prefetchQuery(meQuery.getUserSession(supabase))
 
   return (
-    <YStack gap={4}>
+    <YStack gap={4} className="animate-fade-in">
       <DateLabelContainer />
       <PostContainer />
     </YStack>

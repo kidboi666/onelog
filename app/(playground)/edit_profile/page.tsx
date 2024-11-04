@@ -14,6 +14,7 @@ import UserNameSection from './_components/UserNameSection'
 import ProfileImageSection from './_components/ProfileImageSection'
 import Button from '@/components/shared/Button'
 import AboutMeSection from './_components/AboutMeSection'
+import { YStack } from '@/components/shared/Stack'
 
 export default function EditProfilePage() {
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -87,34 +88,33 @@ export default function EditProfilePage() {
   }, [me?.avatar_url, me?.user_name, me?.about_me])
 
   return (
-    <form
-      onSubmit={handleProfileUpdate}
-      className="flex w-full animate-fade-in flex-col justify-center gap-12 md:max-w-[768px]"
-    >
-      <ProfileImageSection
-        email={me?.email}
-        onChange={handleChangeImage}
-        imagePreview={avatarUrl}
-      />
-      <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
-      <AboutMeSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
-      <Button
-        type="submit"
-        isLoading={
-          isPendingImageUpload ||
-          isPendingUpdateUserInfo ||
-          isSuccessUpdateUserInfo
-        }
-        disabled={
-          (userName === me?.user_name &&
-            aboutMe === me?.about_me &&
-            avatarUrl === me?.avatar_url) ||
-          userName?.length! > 10 ||
-          aboutMe?.length! > 150
-        }
-      >
-        수정하기
-      </Button>
+    <form onSubmit={handleProfileUpdate} className="animate-fade-in">
+      <YStack gap={12}>
+        <ProfileImageSection
+          email={me?.email}
+          onChange={handleChangeImage}
+          imagePreview={avatarUrl}
+        />
+        <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
+        <AboutMeSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
+        <Button
+          type="submit"
+          isLoading={
+            isPendingImageUpload ||
+            isPendingUpdateUserInfo ||
+            isSuccessUpdateUserInfo
+          }
+          disabled={
+            (userName === me?.user_name &&
+              aboutMe === me?.about_me &&
+              avatarUrl === me?.avatar_url) ||
+            userName?.length! > 10 ||
+            aboutMe?.length! > 150
+          }
+        >
+          수정하기
+        </Button>
+      </YStack>
     </form>
   )
 }

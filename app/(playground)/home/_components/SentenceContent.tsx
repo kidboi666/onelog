@@ -7,6 +7,8 @@ import AccessTypeButtonWithDropDown from './AccessTypeButtonWithDropDown'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
 import CommentButton from './CommentButton'
 import Title from '@/components/shared/Title'
+import { XStack, YStack } from '@/components/shared/Stack'
+import { Container } from '@/components/shared/Container'
 
 interface Props {
   tags?: string[]
@@ -55,44 +57,46 @@ export default function SentenceContent({
   }, [editor])
 
   return (
-    <div
-      className="flex size-full w-full cursor-pointer flex-col gap-4 rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:shadow-lg dark:bg-var-darkgray"
+    <Container
       onClick={onClick}
+      className="size-full w-full cursor-pointer rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:shadow-lg dark:bg-var-darkgray"
     >
-      {tags?.length! > 0 && (
-        <List className="flex flex-wrap gap-2">
-          {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
-        </List>
-      )}
-      <div className="relative max-h-64 overflow-hidden">
-        {sentenceTitle && <Title className="mb-8">{sentenceTitle}</Title>}
-        <EditorContent
-          innerRef={contentRef}
-          editor={editor}
-          className="line-clamp-6"
-        />
-        {showGradient && (
-          <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-var-darkgray" />
+      <YStack gap={4}>
+        {tags?.length! > 0 && (
+          <List className="flex flex-wrap gap-2">
+            {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
+          </List>
         )}
-      </div>
-      <nav className="flex items-center justify-between">
-        <FavoriteButton
-          favoritedUserId={favoritedUserId}
-          favoritedCount={favoritedCount}
-          onFavorite={onFavorite}
-          meId={meId}
-          viewToolTip
-        />
-        <CommentButton
-          disabled={disabled}
-          showComment={showComment}
-          commentCount={commentCount!}
-          onShowComment={handleShowComment}
-          viewToolTip
-        />
-        <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
-        <OptionButtonWithDropDown />
-      </nav>
-    </div>
+        <div className="relative max-h-64 overflow-hidden">
+          {sentenceTitle && <Title className="mb-8">{sentenceTitle}</Title>}
+          <EditorContent
+            innerRef={contentRef}
+            editor={editor}
+            className="line-clamp-6"
+          />
+          {showGradient && (
+            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-var-darkgray" />
+          )}
+        </div>
+        <nav className="flex items-center justify-between">
+          <FavoriteButton
+            favoritedUserId={favoritedUserId}
+            favoritedCount={favoritedCount}
+            onFavorite={onFavorite}
+            meId={meId}
+            viewToolTip
+          />
+          <CommentButton
+            disabled={disabled}
+            showComment={showComment}
+            commentCount={commentCount!}
+            onShowComment={handleShowComment}
+            viewToolTip
+          />
+          <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
+          <OptionButtonWithDropDown />
+        </nav>
+      </YStack>
+    </Container>
   )
 }

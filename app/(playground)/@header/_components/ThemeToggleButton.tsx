@@ -6,7 +6,7 @@ import { useTheme } from '@/store/useTheme'
 import { TTheme } from '@/types/theme'
 import Icon from '@/components/shared/Icon'
 import cn from '@/lib/cn'
-import { List } from '@/components/shared/List'
+import { XStack, ZStack } from '@/components/shared/Stack'
 
 interface Props {
   isOpen?: boolean
@@ -32,14 +32,14 @@ export default function ThemeToggleButton({ isOpen, viewToggle }: Props) {
   }
 
   return (
-    <List.Row className="relative flex gap-2">
+    <ZStack>
       <Button
         variant="icon"
         size={viewToggle ? 'icon' : 'md'}
         onClick={handleThemeChange}
         className="flex w-full items-center justify-between gap-2"
       >
-        <div className="flex gap-4">
+        <XStack gap={4}>
           <div className="size-[24px] gap-2 overflow-hidden">
             <div
               className={cn(
@@ -55,11 +55,11 @@ export default function ThemeToggleButton({ isOpen, viewToggle }: Props) {
               </Icon>
             </div>
           </div>
-        </div>
+        </XStack>
         {isOpen && (
-          <div
+          <XStack
             className={cn(
-              'flex h-full w-[44px] origin-left animate-fade-in items-center rounded-full transition',
+              'h-full w-[44px] origin-left animate-fade-in items-center rounded-full transition',
               theme === 'dark' ? 'bg-green-500' : 'bg-zinc-400',
             )}
           >
@@ -69,9 +69,9 @@ export default function ThemeToggleButton({ isOpen, viewToggle }: Props) {
                 theme === 'dark' ? 'translate-x-[21px]' : 'translate-x-px',
               )}
             />
-          </div>
+          </XStack>
         )}
       </Button>
-    </List.Row>
+    </ZStack>
   )
 }

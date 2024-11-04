@@ -5,6 +5,7 @@ import Text from '@/components/shared/Text'
 import { useRouter } from 'next/navigation'
 import { wait } from '@/utils/wait'
 import Button from '@/components/shared/Button'
+import { ZStack } from '@/components/shared/Stack'
 
 interface Props {
   isSelected?: boolean
@@ -24,7 +25,7 @@ export default function MobileWriteButtonWithLogo({
   }
 
   return (
-    <div className="relative">
+    <ZStack>
       <BookMark isSelected={isSelected} />
       <Button
         variant="icon"
@@ -39,6 +40,6 @@ export default function MobileWriteButtonWithLogo({
         </Icon>
         <Text type={isSelected ? 'body' : 'caption'}>글쓰기</Text>
       </Button>
-    </div>
+    </ZStack>
   )
 }

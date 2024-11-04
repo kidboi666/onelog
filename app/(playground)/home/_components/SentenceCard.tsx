@@ -2,7 +2,6 @@ import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
-import cn from '@/lib/cn'
 
 import { ISentenceState } from '@/store/useSentence'
 import useBlockEditor from '@/hooks/useBlockEditor'
@@ -57,7 +56,7 @@ export default function SentenceCard({
   if (!editor) return null
 
   return (
-    <YStack className={cn(className)}>
+    <YStack>
       {sentence ? (
         <SentenceHeader
           userId={sentence.user_id}

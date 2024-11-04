@@ -29,14 +29,19 @@ export default function PostSentenceContainer() {
           shadow="sm"
           className="max-sm:hidden"
         />
-        <XStack
+        <Container
           className={cn(
-            'w-full min-w-0 items-center rounded-md bg-white p-2 text-sm dark:bg-var-darkgray',
-            ringTheme({ color, width: 4 }),
+            'w-full min-w-0 animate-cta-fadein-out items-center rounded-md bg-white p-2 text-sm dark:bg-var-darkgray',
+            ringTheme({ color }),
           )}
         >
+          {/**
+           * TODO 스타일 적용 문제 @kidboi666
+           * ringTheme를 사용한 스타일링이 간헐적으로 적용되는 문제 발생
+           * tailwind.config 에 있는 animate 와 충돌이 있는듯 보임
+           */}
           <Text type="caption">오늘 당신의 생각을 한 줄로 기록하세요.</Text>
-        </XStack>
+        </Container>
       </XStack>
     </Container>
   )

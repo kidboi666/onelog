@@ -14,7 +14,7 @@ export default function HomePage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <YStack gap={8}>
+      <YStack gap={8} className="animate-fade-in">
         <PostSentenceContainer />
         <SentenceContainer />
       </YStack>

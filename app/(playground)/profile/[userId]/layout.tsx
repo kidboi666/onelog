@@ -11,7 +11,7 @@ export default async function UserLayout({
   user_info,
 }: PropsWithChildren<Props>) {
   return (
-    <YStack gap={8}>
+    <YStack gap={8} className="animate-fade-in">
       {profile}
       {user_info}
     </YStack>
