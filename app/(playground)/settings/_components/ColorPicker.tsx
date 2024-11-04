@@ -3,6 +3,7 @@
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
+import { YStack } from '@/components/shared/Stack'
 import Title from '@/components/shared/Title'
 import cn from '@/lib/cn'
 import { colorTheme, useTheme } from '@/store/useTheme'
@@ -19,7 +20,7 @@ export default function ColorPicker() {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <YStack>
       <Title>색상 설정</Title>
       <List className="flex gap-4 overflow-y-auto">
         {colors.map((color) => (
@@ -32,7 +33,7 @@ export default function ColorPicker() {
           </List.Row>
         ))}
       </List>
-    </div>
+    </YStack>
   )
 }
 

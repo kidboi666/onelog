@@ -1,4 +1,4 @@
-import ResetPasswordConfirmModal from '../../(modals)/confirm/page'
+import ResetPasswordConfirmModal from '@/app/(modals)/confirm/page'
 
 export default function Page() {
   return <ResetPasswordConfirmModal />

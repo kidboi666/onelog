@@ -1,6 +1,7 @@
 'use client'
 
 import LinkButton from '@/components/shared/LinkButton'
+import { XStack, YStack } from '@/components/shared/Stack'
 import Title from '@/components/shared/Title'
 import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
@@ -19,20 +20,20 @@ export default function AuthCtaSection() {
   }, [me])
 
   return (
-    <div className="flex w-full justify-center">
-      <div className="flex w-96 flex-col gap-12 p-4">
-        <div className="flex flex-col gap-4">
+    <XStack className="w-full justify-center">
+      <YStack gap={12} className="w-96 p-4">
+        <YStack gap={4}>
           <Title>지금 가입하세요.</Title>
           <Title>오늘 당신의 감정을 기록하세요.</Title>
-        </div>
-        <div className="flex flex-col gap-4">
+        </YStack>
+        <YStack gap={4}>
           <LinkButton href="/home">구경하러 가기</LinkButton>
           <Title size="sm">함께하세요.</Title>
           <LinkButton href="/signup" variant="secondary">
             가입하러 가기
           </LinkButton>
-        </div>
-      </div>
-    </div>
+        </YStack>
+      </YStack>
+    </XStack>
   )
 }

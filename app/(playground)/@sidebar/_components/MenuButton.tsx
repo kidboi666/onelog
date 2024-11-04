@@ -8,6 +8,7 @@ import Spinner from '@/components/shared/Spinner'
 import Text from '@/components/shared/Text'
 import SelectedMenuBackground from './SelectedMenuBackground'
 import { wait } from '@/utils/wait'
+import { ZStack } from '@/components/shared/Stack'
 
 interface Props {
   isSelected: boolean
@@ -41,7 +42,7 @@ export default function MenuButton({
   }
 
   return (
-    <div className={cn('relative flex justify-center', className)}>
+    <ZStack className={cn('justify-center', className)}>
       <BookMark isSelected={isSelected} />
       <Button
         variant="icon"
@@ -60,6 +61,6 @@ export default function MenuButton({
         )}
         {viewText && <Text type={isSelected ? 'body' : 'caption'}>{name}</Text>}
       </Button>
-    </div>
+    </ZStack>
   )
 }

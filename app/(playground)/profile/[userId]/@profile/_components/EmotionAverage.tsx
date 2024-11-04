@@ -1,3 +1,4 @@
+import { Container } from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 import cn from '@/lib/cn'
 import { supabase } from '@/lib/supabase/client'
@@ -15,18 +16,17 @@ export default function EmotionAverage({ userId }: Props) {
     emotionQuery.getEmotionAverage(supabase, userId),
   )
   return (
-    <div className="absolute -right-3 top-0">
+    <Container className="absolute -right-3 top-0">
       <Text
         size="xs"
         className={cn(
           'animate-cta-fadein-out rounded-lg px-1.5 py-1 font-semibold text-white',
           colorTheme({ color }),
-          ringTheme.width[4],
-          ringTheme.color[color],
+          ringTheme({ color, width: 4 }),
         )}
       >
         {myAverageEmotion}%
       </Text>
-    </div>
+    </Container>
   )
 }

@@ -5,8 +5,9 @@ import { PropsWithChildren } from 'react'
 import { createPortal } from 'react-dom'
 
 export default function Portal({ children }: PropsWithChildren) {
-  const element = !isServer && document.getElementById('portal')
-  if (!element) return null
+  if (isServer) return null
 
-  return createPortal(children, element)
+  const element = document.getElementById('portal')
+
+  return element ? createPortal(children, element) : null
 }

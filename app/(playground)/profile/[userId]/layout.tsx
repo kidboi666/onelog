@@ -1,3 +1,4 @@
+import { YStack } from '@/components/shared/Stack'
 import { PropsWithChildren, ReactNode } from 'react'
 
 interface Props {
@@ -10,9 +11,9 @@ export default async function UserLayout({
   user_info,
 }: PropsWithChildren<Props>) {
   return (
-    <div className="my-4 flex animate-fade-in flex-col items-center gap-8">
+    <YStack gap={8}>
       {profile}
       {user_info}
-    </div>
+    </YStack>
   )
 }

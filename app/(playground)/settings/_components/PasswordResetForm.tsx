@@ -1,6 +1,7 @@
 'use client'
 
 import Button from '@/components/shared/Button'
+import { YStack } from '@/components/shared/Stack'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { supabase } from '@/lib/supabase/client'
@@ -17,7 +18,7 @@ export default function PasswordResetForm() {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <YStack>
       {me ? (
         <>
           <Title>비밀번호 변경</Title>
@@ -39,6 +40,6 @@ export default function PasswordResetForm() {
           </Button>
         </>
       )}
-    </div>
+    </YStack>
   )
 }

@@ -25,7 +25,7 @@ const INPUT_VARIANTS = cva(
         none: '',
       },
       dimension: {
-        sm: 'p-2 text-sm',
+        sm: 'px-2 py-3 text-sm',
         md: 'p-4 text-sm',
         lg: 'p-4 text-base',
         none: '',

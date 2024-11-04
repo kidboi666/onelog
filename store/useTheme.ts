@@ -21,21 +21,23 @@ export const colorTheme = cva('', {
   },
 })
 
-export const ringTheme = {
-  width: {
-    1: 'ring-1',
-    2: 'ring-2',
-    4: 'ring-4',
-    8: 'ring-8',
+export const ringTheme = cva('', {
+  variants: {
+    width: {
+      1: 'ring-1',
+      2: 'ring-2',
+      4: 'ring-4',
+      8: 'ring-8',
+    },
+    color: {
+      blue: 'ring-var-blue/65',
+      orange: 'ring-var-orange/65',
+      yellow: 'ring-var-yellow/65',
+      green: 'ring-var-green/65',
+      black: 'ring-var-black/65',
+    },
   },
-  color: {
-    blue: 'ring-var-blue/65',
-    orange: 'ring-var-orange/65',
-    yellow: 'ring-var-yellow/65',
-    green: 'ring-var-green/65',
-    black: 'ring-var-black/65',
-  },
-}
+})
 
 export const useTheme = create<ThemeState>((set) => ({
   color: 'black',

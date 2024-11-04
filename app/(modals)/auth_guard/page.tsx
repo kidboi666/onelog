@@ -5,19 +5,24 @@ import { useRouter } from 'next/navigation'
 import Title from '@/components/shared/Title'
 import Button from '@/components/shared/Button'
 import Modal from '@/components/shared/Modal'
+import { XStack } from '@/components/shared/Stack'
 
 export default function AuthGuardModal() {
   const router = useRouter()
 
-  const handleSignPagePush = () => {
+  const pushSignIn = () => {
     router.replace('/signin')
   }
 
   const handleEnterPush = (e: KeyboardEvent) => {
     const ReactEvent = e as never as React.KeyboardEvent
     if (ReactEvent?.key === 'Enter') {
-      handleSignPagePush()
+      pushSignIn()
     }
+  }
+
+  const pushBack = () => {
+    router.back()
   }
 
   useEffect(() => {
@@ -31,18 +36,14 @@ export default function AuthGuardModal() {
   return (
     <Modal>
       <Title>로그인이 필요합니다.</Title>
-      <div className="flex w-full gap-2">
-        <Button onClick={handleSignPagePush} className="w-full">
+      <XStack className="w-full">
+        <Button onClick={pushSignIn} className="w-full">
           로그인 하러가기
         </Button>
-        <Button
-          variant="secondary"
-          onClick={() => router.back()}
-          className="w-full"
-        >
+        <Button variant="secondary" onClick={pushBack} className="w-full">
           취소
         </Button>
-      </div>
+      </XStack>
     </Modal>
   )
 }

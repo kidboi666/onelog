@@ -1,4 +1,5 @@
 import Input from '@/components/shared/Input'
+import { YStack } from '@/components/shared/Stack'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { ComponentProps } from 'react'
@@ -17,18 +18,18 @@ export default function AuthForm({
   error,
 }: Props) {
   return (
-    <div className="flex flex-col gap-2">
+    <YStack className="w-full">
       <Title as="h2" type="sub" size="xs">
         {name}
       </Title>
-      <label htmlFor={type} className="relative flex w-full flex-col">
+      <label htmlFor={type} className="relative">
         <Input
           variant="primary"
           placeholder={placeholder}
           type={type}
           register={register}
           error={error}
-          className="mt-2"
+          className="mt-2 w-full"
         />
       </label>
       {error?.message && (
@@ -36,6 +37,6 @@ export default function AuthForm({
           {error.message}
         </Text>
       )}
-    </div>
+    </YStack>
   )
 }

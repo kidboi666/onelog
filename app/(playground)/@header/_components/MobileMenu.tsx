@@ -18,17 +18,20 @@ import { meQuery } from '@/services/queries/auth/meQuery'
 import { supabase } from '@/lib/supabase/client'
 import Text from '@/components/shared/Text'
 import MobileWriteButtonWithLogo from './MobileWriteButtonWithLogo'
+import { YStack } from '@/components/shared/Stack'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>
   close: () => void
   onTransitionEnd: () => void
+  isOpen: boolean
 }
 
 export default function MobileMenu({
   targetRef,
   close,
   onTransitionEnd,
+  isOpen,
 }: Props) {
   const pathname = usePathname()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -39,9 +42,9 @@ export default function MobileMenu({
         ref={targetRef}
         onTransitionEnd={onTransitionEnd}
         data-status="closed"
-        className="fixed -left-2 -top-2 z-50 hidden h-dvh w-3/4 origin-left gap-2 rounded-r-lg bg-white p-2 shadow-md transition duration-300 ease-in-out data-[status=closed]:-translate-x-full dark:bg-var-darkgray"
+        className="fixed left-0 top-0 z-50 h-dvh w-3/4 origin-left gap-2 rounded-r-lg bg-white p-2 shadow-md transition duration-300 ease-in-out data-[status=closed]:-translate-x-full dark:bg-var-darkgray"
       >
-        <div className="flex h-full flex-col">
+        <YStack className="h-full">
           <Button
             variant="icon"
             onClick={close}
@@ -112,13 +115,19 @@ export default function MobileMenu({
               ))}
             </List>
           )}
-          <div className="my-4 flex flex-col items-center gap-4">
+          <YStack gap={4} className="my-4 items-center">
             <Text type="caption" size="sm">
               © 2024 One-Sentence. All rights reserved.
             </Text>
-          </div>
-        </div>
+          </YStack>
+        </YStack>
       </div>
+      {isOpen && (
+        <div
+          className="fixed bottom-0 left-0 top-0 z-20 h-dvh w-full"
+          onClick={close}
+        />
+      )}
     </>
   )
 }

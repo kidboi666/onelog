@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Line from '@/components/shared/Line'
-import { List } from '@/components/shared/List'
 import MenuButton from './_components/MenuButton'
 import {
   BOTTOM_NAVIGATE_MENUS,
@@ -16,6 +15,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { supabase } from '@/lib/supabase/client'
 import SidebarWriteButtonWithLogo from './_components/SidebarWriteButtonWithLogo'
+import { Container } from '@/components/shared/Container'
+import { YStack, ZStack } from '@/components/shared/Stack'
 
 export default function Sidebar() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -31,81 +32,84 @@ export default function Sidebar() {
   }
 
   return (
-    <div
+    <Container
       onMouseEnter={handleToolTipOpen}
       onMouseLeave={handleToolTipClose}
       data-status="closed"
-      className="fixed top-[calc(50%-80px)] z-40 m-4 flex h-fit w-[64px] flex-shrink-0 -translate-y-1/2 flex-col gap-2 rounded-lg bg-white p-2 shadow-md transition-all duration-300 ease-in-out dark:bg-var-darkgray"
+      className="fixed top-[calc(50%-80px)] z-40 m-4 hidden h-fit w-[64px] flex-shrink-0 -translate-y-1/2 rounded-lg bg-white p-2 shadow-md transition-all duration-300 ease-in-out sm:block dark:bg-var-darkgray"
     >
-      <div className="relative">
-        <SidebarWriteButtonWithLogo
-          closeToolTip={handleToolTipClose}
-          isSelected={pathname === '/write/sentence'}
-        />
-        <ToolTip position="right" size="sm" isHover={isHover} text="글쓰기" />
-      </div>
-      <Line />
-      <List className="flex h-full w-full flex-col gap-2">
-        {TOP_NAVIGATE_MENUS.map((menu) => (
-          <List.Row key={menu.id} className="relative">
-            <MenuButton
-              isSelected={pathname === menu.path}
-              icon={menu.icon}
-              name={menu.name}
-              path={menu.path}
-              closeToolTip={handleToolTipClose}
-            />
-            <ToolTip
-              position="right"
-              size="sm"
-              isHover={isHover}
-              text={menu.toolTip}
-            />
-          </List.Row>
-        ))}
-      </List>
-      <List className="flex flex-col gap-2">
-        {BOTTOM_NAVIGATE_MENUS.map((menu) => (
-          <List.Row key={menu.id} className="relative">
-            <MenuButton
-              isSelected={pathname === menu.path}
-              icon={menu.icon}
-              name={menu.name}
-              path={menu.path}
-              closeToolTip={handleToolTipClose}
-            />
-            <ToolTip
-              position="right"
-              size="sm"
-              isHover={isHover}
-              text={menu.toolTip}
-            />
-          </List.Row>
-        ))}
-        <div className="relative">
-          <ThemeToggleButton />
-          <ToolTip
-            position="right"
-            size="sm"
-            isHover={isHover}
-            text="테마 버튼"
-          />
-        </div>
-        <Line className="mb-2" />
-        <div className="relative">
-          <AuthButtonWithDropDown
+      <YStack as="nav">
+        <ZStack>
+          <SidebarWriteButtonWithLogo
             me={me}
-            pathname={pathname.split('/')[1]}
-            userId={pathname.split('/')[2]}
+            closeToolTip={handleToolTipClose}
+            isSelected={pathname === '/write/sentence'}
           />
-          <ToolTip
-            position="right"
-            size="sm"
-            isHover={isHover}
-            text={me ? me.email : '게스트'}
-          />
-        </div>
-      </List>
-    </div>
+          <ToolTip position="right" size="sm" isHover={isHover} text="글쓰기" />
+        </ZStack>
+        <Line />
+        <YStack className="size-full">
+          {TOP_NAVIGATE_MENUS.map((menu) => (
+            <ZStack key={menu.id}>
+              <MenuButton
+                isSelected={pathname === menu.path}
+                icon={menu.icon}
+                name={menu.name}
+                path={menu.path}
+                closeToolTip={handleToolTipClose}
+              />
+              <ToolTip
+                position="right"
+                size="sm"
+                isHover={isHover}
+                text={menu.toolTip}
+              />
+            </ZStack>
+          ))}
+        </YStack>
+        <YStack>
+          {BOTTOM_NAVIGATE_MENUS.map((menu) => (
+            <ZStack key={menu.id}>
+              <MenuButton
+                isSelected={pathname === menu.path}
+                icon={menu.icon}
+                name={menu.name}
+                path={menu.path}
+                closeToolTip={handleToolTipClose}
+              />
+              <ToolTip
+                position="right"
+                size="sm"
+                isHover={isHover}
+                text={menu.toolTip}
+              />
+            </ZStack>
+          ))}
+          <ZStack>
+            <ThemeToggleButton />
+            <ToolTip
+              position="right"
+              size="sm"
+              isHover={isHover}
+              text="테마 버튼"
+            />
+          </ZStack>
+          <Line className="mb-2" />
+          <ZStack>
+            <AuthButtonWithDropDown
+              me={me}
+              pathname={pathname.split('/')[1]}
+              userId={pathname.split('/')[2]}
+            />
+            <ToolTip
+              position="right"
+              size="sm"
+              isHover={isHover}
+              text={me ? me.email : '게스트'}
+            />
+          </ZStack>
+        </YStack>
+      </YStack>
+    </Container>
   )
 }

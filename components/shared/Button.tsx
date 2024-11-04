@@ -52,10 +52,10 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
     {
       children,
       className,
-      isLoading,
+      isLoading = false,
       onClick,
       dataStatus,
-      disabled,
+      disabled = false,
       type = 'button',
       size = 'md',
       variant = 'primary',
@@ -64,6 +64,17 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
     ref,
   ) => {
     const { color } = useTheme()
+
+    const buttonClasses = cn(
+      variant === 'primary' ? colorTheme({ color }) : '',
+      BUTTON_VARIANTS(
+        isLoading || disabled
+          ? { disabled: variant, size }
+          : { active: variant, size },
+      ),
+      className,
+    )
+
     return (
       <button
         ref={ref}
@@ -71,15 +82,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         data-status={dataStatus}
         onClick={onClick}
         type={type}
-        className={cn(
-          variant === 'primary' ? colorTheme({ color }) : '',
-          BUTTON_VARIANTS(
-            isLoading || disabled
-              ? { disabled: variant, size }
-              : { active: variant, size },
-          ),
-          className,
-        )}
+        className={buttonClasses}
         {...props}
       >
         {children}
@@ -92,5 +95,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
     )
   },
 )
+
+Button.displayName = 'Button'
 
 export default Button

@@ -62,7 +62,7 @@ export default function Avatar({
       onClick={onClick}
       className={cn(
         avatarVariants({ size, ring, shadow, hoverEffect }),
-        ringTheme.color[color],
+        ringTheme({ color }),
         className,
       )}
     >

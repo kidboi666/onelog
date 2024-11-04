@@ -4,6 +4,8 @@ import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import ThemeToggleButton from './_components/ThemeToggleButton'
 import MenuButton from './_components/MenuButton'
+import { Container } from '@/components/shared/Container'
+import { XStack } from '@/components/shared/Stack'
 
 export default function Default() {
   const supabase = createServerClient()
@@ -13,12 +15,14 @@ export default function Default() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <header className="sticky top-0 z-40 px-2 py-2 sm:hidden sm:px-4">
-        <div className="flex h-12 w-full items-center justify-between rounded-md bg-white/60 p-2 shadow-lg backdrop-blur-xl sm:p-4 lg:px-12 dark:bg-var-darkgray/60">
-          <MenuButton />
-          <ThemeToggleButton isOpen viewToggle />
-        </div>
-      </header>
+      <Container as="header" className="sticky top-0 z-50 sm:hidden">
+        <Container className="w-full rounded-md bg-white/60 p-2 shadow-lg backdrop-blur-xl sm:p-4 lg:px-12 dark:bg-var-darkgray/60">
+          <XStack className="h-full items-center justify-between">
+            <MenuButton />
+            <ThemeToggleButton isOpen viewToggle />
+          </XStack>
+        </Container>
+      </Container>
     </HydrationBoundary>
   )
 }

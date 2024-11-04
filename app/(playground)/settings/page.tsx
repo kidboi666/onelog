@@ -6,8 +6,7 @@ import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { createServerClient } from '@/lib/supabase/server'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
-import { Suspense } from 'react'
-import Spinner from '@/components/shared/Spinner'
+import { YStack } from '@/components/shared/Stack'
 
 export default function SettingsPage() {
   const queryClient = getQueryClient()
@@ -17,12 +16,12 @@ export default function SettingsPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Suspense fallback={<Spinner size={60} />}>
+      <YStack gap={24}>
         <PasswordResetForm />
-      </Suspense>
-      <ColorPicker />
-      <DarkModeSwitch />
-      <LogoutButton />
+        <ColorPicker />
+        <DarkModeSwitch />
+        <LogoutButton />
+      </YStack>
     </HydrationBoundary>
   )
 }

@@ -13,10 +13,7 @@ import useDeleteAvatarImage from '@/services/mutates/auth/useDeleteAvatarImage'
 import UserNameSection from './_components/UserNameSection'
 import ProfileImageSection from './_components/ProfileImageSection'
 import Button from '@/components/shared/Button'
-import Title from '@/components/shared/Title'
-import Text from '@/components/shared/Text'
-import TextArea from '@/components/shared/TextArea'
-import cn from '@/lib/cn'
+import AboutMeSection from './_components/AboutMeSection'
 
 export default function EditProfilePage() {
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -94,32 +91,13 @@ export default function EditProfilePage() {
       onSubmit={handleProfileUpdate}
       className="flex w-full animate-fade-in flex-col justify-center gap-12 md:max-w-[768px]"
     >
-      <div className="flex w-full justify-between max-sm:flex-col max-sm:gap-12 sm:items-end">
-        <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
-        <ProfileImageSection
-          onChange={handleChangeImage}
-          imagePreview={avatarUrl}
-        />
-      </div>
-      <div className="flex w-full flex-col gap-8">
-        <Title>소개글</Title>
-        <div className="flex flex-col gap-2">
-          <TextArea
-            value={aboutMe ?? ''}
-            onChange={onChangeAboutMe}
-            className="p-2"
-          />
-          <div className="self-end">
-            {aboutMe && (
-              <Text
-                size="sm"
-                className={cn(aboutMe?.length > 150 && 'text-red-600')}
-              >{`${aboutMe?.length} / 150`}</Text>
-            )}
-          </div>
-        </div>
-      </div>
-      <Title>도전 배지</Title>
+      <ProfileImageSection
+        email={me?.email}
+        onChange={handleChangeImage}
+        imagePreview={avatarUrl}
+      />
+      <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
+      <AboutMeSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
       <Button
         type="submit"
         isLoading={

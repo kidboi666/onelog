@@ -1,25 +1,21 @@
-import cn from '@/lib/cn'
-import { PropsWithChildren } from 'react'
+import { ComponentProps, PropsWithChildren } from 'react'
 
-interface Props {
-  isBackground?: boolean
+interface ContainerProps extends ComponentProps<'div'> {
   className?: string
+  as?: 'div' | 'nav' | 'header' | 'main' | 'footer' | 'article' | 'section'
 }
 
-export default function Container({
+export const Container = ({
   children,
-  isBackground,
   className,
-}: PropsWithChildren<Props>) {
+  as: Component = 'div',
+  ...props
+}: PropsWithChildren<ContainerProps>) => {
   return (
-    <div
-      className={cn(
-        'flex w-full flex-col gap-12 rounded-md max-lg:px-4 lg:w-[768px]',
-        isBackground ? 'bg-white shadow-md dark:bg-var-darkgray' : '',
-        className,
-      )}
-    >
+    <Component className={className} {...props}>
       {children}
-    </div>
+    </Component>
   )
 }
+
+Container.displayName = 'Container'

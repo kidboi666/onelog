@@ -11,6 +11,7 @@ import SentenceCard from '../_components/SentenceCard'
 import useIntersect from '@/hooks/useIntersect'
 import { useEffect } from 'react'
 import Spinner from '@/components/shared/Spinner'
+import { YStack } from '@/components/shared/Stack'
 
 export default function SentenceContainer() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -27,7 +28,7 @@ export default function SentenceContainer() {
   }, [inView, hasNextPage, fetchNextPage])
 
   return (
-    <div className="flex flex-col gap-8">
+    <YStack gap={8}>
       {sentences?.map((sentence) => (
         <SentenceCard
           key={sentence.id}
@@ -37,6 +38,6 @@ export default function SentenceContainer() {
       ))}
       <div ref={target} />
       {isFetchingNextPage && <Spinner size={60} />}
-    </div>
+    </YStack>
   )
 }

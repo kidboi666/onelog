@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 
-type TChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+export type TChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 
 export function useInput<T extends string | number | null>(
   initValue: T,

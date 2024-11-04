@@ -4,6 +4,7 @@ import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import PostSentenceContainer from './_container/PostSentenceContainer'
 import SentenceContainer from './_container/SentenceContainer'
 import { meQuery } from '@/services/queries/auth/meQuery'
+import { YStack } from '@/components/shared/Stack'
 
 export default function HomePage() {
   const supabase = createServerClient()
@@ -13,8 +14,10 @@ export default function HomePage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PostSentenceContainer />
-      <SentenceContainer />
+      <YStack gap={8}>
+        <PostSentenceContainer />
+        <SentenceContainer />
+      </YStack>
     </HydrationBoundary>
   )
 }

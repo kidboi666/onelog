@@ -5,7 +5,6 @@ import { userQuery } from '@/services/queries/auth/userQuery'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { followQuery } from '@/services/queries/follow/followQuery'
-import Container from '@/components/shared/Container'
 
 interface Props {
   params: { userId: string }
@@ -23,9 +22,7 @@ export default function Profile({ params }: Props) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Container>
-        <AboutMe userId={userId} />
-      </Container>
+      <AboutMe userId={userId} />
     </HydrationBoundary>
   )
 }

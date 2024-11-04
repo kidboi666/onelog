@@ -1,6 +1,7 @@
 'use client'
 
 import Button from '@/components/shared/Button'
+import { YStack } from '@/components/shared/Stack'
 import Title from '@/components/shared/Title'
 import { supabase } from '@/lib/supabase/client'
 import useSignOut from '@/services/mutates/auth/useSignOut'
@@ -16,7 +17,7 @@ export default function LogoutButton() {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <YStack>
       <Title>로그아웃</Title>
       <Button
         size="sm"
@@ -26,6 +27,6 @@ export default function LogoutButton() {
       >
         로그아웃 하기
       </Button>
-    </div>
+    </YStack>
   )
 }
