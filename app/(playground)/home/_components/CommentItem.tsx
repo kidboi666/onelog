@@ -15,16 +15,17 @@ import CommentInputButton from './CommentInputButton'
 import CommentButton from './CommentButton'
 import CommentInput from './CommentInput'
 import FavoriteButton from './FavoriteButton'
+import { IUserSession } from '@/services/queries/auth/meQuery'
 
 interface Props {
   comment: Tables<'comment'>
   sentenceId: number
-  me: Tables<'user_info'> | null
+  me: IUserSession | null
 }
 
 export default function CommentItem({ comment, sentenceId, me }: Props) {
   const router = useRouter()
-  const [showComment, setShowComment] = useState(false)
+  const [showComment, setShowComment] = useState(true)
   const [showCommentInput, setShowCommentInput] = useState(false)
   const { data: commentToComments } = useSuspenseQuery(
     commentQuery.getCommentToComment(supabase, sentenceId, comment?.id),
@@ -39,12 +40,15 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
     setShowCommentInput((prev) => !prev)
   }
 
-  const handleFavoriteComment = (
-    e: MouseEvent,
-    { commentId, sentenceId }: { commentId?: number; sentenceId: number },
-  ) => {
+  const handleFavoriteComment = (e: MouseEvent) => {
     e.stopPropagation()
-    favoriteComment({ commentId: commentId!, userId: me?.id!, sentenceId })
+    me
+      ? favoriteComment({
+          commentId: comment.id,
+          userId: me?.userId,
+          sentenceId,
+        })
+      : router.push('/auth_guard')
   }
 
   const handleAvatarClick = () => {
@@ -86,12 +90,10 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
           </div>
           <div className="flex gap-1">
             <FavoriteButton
-              sentenceId={sentenceId}
-              commentId={comment.id}
               favoritedCount={comment.favorite!}
               favoritedUserId={comment.favorited_user_id!}
               onFavorite={handleFavoriteComment}
-              userId={me?.id!}
+              meId={me?.userId!}
             />
             {commentToComments.length >= 1 && (
               <CommentButton

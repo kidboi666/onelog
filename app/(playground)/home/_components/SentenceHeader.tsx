@@ -11,7 +11,7 @@ interface Props {
   emotionLevel: string
   createdAt: string
   userId: string
-  meId: string
+  meId: string | null
   followers: any
   followings: any
   isMe: boolean

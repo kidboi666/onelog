@@ -12,6 +12,7 @@ export const commentQuery = {
           .select()
           .eq('sentence_id', sentenceId)
           .is('comment_id', null)
+          .order('created_at', { ascending: true })
 
         if (error) {
           throw error

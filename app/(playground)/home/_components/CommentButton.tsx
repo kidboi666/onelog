@@ -5,17 +5,17 @@ import useToggle from '@/hooks/useToggle'
 import cn from '@/lib/cn'
 
 interface Props {
-  onShowComment: () => void
   commentCount?: number | null
-  showComment?: boolean
+  showComment: boolean
+  onShowComment: () => void
   disabled?: boolean
   viewToolTip?: boolean
 }
 
 export default function CommentButton({
+  showComment,
   onShowComment,
   commentCount,
-  showComment,
   disabled,
   viewToolTip,
 }: Props) {
@@ -30,7 +30,7 @@ export default function CommentButton({
         onClick={onShowComment}
         className={cn(
           'flex gap-2 border-none text-xs font-light transition hover:text-blue-400 dark:hover:text-blue-400',
-          showComment ? 'text-blue-400 dark:text-blue-400' : '',
+          showComment && 'text-blue-400 dark:text-blue-400',
         )}
       >
         <Icon size={16} view={150}>

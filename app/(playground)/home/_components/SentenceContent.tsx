@@ -2,7 +2,6 @@ import { List } from '@/components/shared/List'
 import Tag from '@/components/shared/Tag'
 import { Editor, EditorContent } from '@tiptap/react'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
-import { Tables } from '@/types/supabase'
 import FavoriteButton from './FavoriteButton'
 import AccessTypeButtonWithDropDown from './AccessTypeButtonWithDropDown'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
@@ -18,11 +17,10 @@ interface Props {
   sentenceId: number
   sentenceTitle?: string | null
   isMyPage?: boolean
-  onFavorite: (e: MouseEvent, { sentenceId }: { sentenceId: number }) => void
+  onFavorite: (e: MouseEvent) => void
   onClick?: () => void
   disabled?: boolean
-  me: Tables<'user_info'>
-  userId: string | null
+  meId: string | null
   accessType?: string | null
 }
 
@@ -37,8 +35,7 @@ export default function SentenceContent({
   onFavorite,
   onClick,
   disabled = false,
-  me,
-  userId,
+  meId,
   accessType,
 }: Props) {
   const [showComment, setShowComment] = useState(false)
@@ -82,9 +79,8 @@ export default function SentenceContent({
         <FavoriteButton
           favoritedUserId={favoritedUserId}
           favoritedCount={favoritedCount}
-          sentenceId={sentenceId}
           onFavorite={onFavorite}
-          userId={userId}
+          meId={meId}
           viewToolTip
         />
         <CommentButton

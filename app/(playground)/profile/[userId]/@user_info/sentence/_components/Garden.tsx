@@ -94,7 +94,7 @@ export default function Garden() {
     gardenQuery.getGarden(supabase, userId),
   )
   const currentYear = new Date().getFullYear()
-  const signedYear = new Date(me.created_at).getFullYear()
+  const signedYear = new Date(me?.created_at).getFullYear()
   const [selectedYear, setSelectedYear] = useState(currentYear)
   const firstDayIndex = getFirstDayInYear(currentYear)
   const shouldRenderElement = getRenderedBlockFromEmotionLevel(
@@ -102,7 +102,6 @@ export default function Garden() {
     getDaysInYear(currentYear),
     garden,
   )
-  const signUpDate = me.created_at
   const yearList = useMemo(
     () =>
       Array.from(

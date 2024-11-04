@@ -3,14 +3,14 @@ import Button from '@/components/shared/Button'
 import Input from '@/components/shared/Input'
 import { useInput } from '@/hooks/useInput'
 import { usePostComment } from '@/services/mutates/comment/usePostComment'
-import { Tables } from '@/types/supabase'
+import { IUserSession } from '@/services/queries/auth/meQuery'
 import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
 
 interface Props {
   sentenceId: number
   commentId?: number
-  me: Tables<'user_info'> | null
+  me: IUserSession | null
 }
 
 export default function CommentInput({ sentenceId, commentId, me }: Props) {
@@ -33,7 +33,7 @@ export default function CommentInput({ sentenceId, commentId, me }: Props) {
         {
           email: me.email!,
           userName: me.user_name || '',
-          userId: me.id,
+          userId: me.userId,
           content,
           sentenceId: sentenceId,
           avatarUrl: me.avatar_url || null,

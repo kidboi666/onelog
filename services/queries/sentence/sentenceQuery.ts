@@ -78,7 +78,7 @@ export const sentenceQuery = {
       enabled: !!userId,
     }),
 
-  getSentence: (supabase: SupabaseClient, sentenceId: string) =>
+  getSentence: (supabase: SupabaseClient, sentenceId: number) =>
     queryOptions<ISentenceWithUserInfo>({
       queryKey: ['sentence', sentenceId],
       queryFn: async () => {

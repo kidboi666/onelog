@@ -16,7 +16,7 @@ export default function SettingsPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <YStack gap={24}>
+      <YStack gap={12}>
         <PasswordResetForm />
         <ColorPicker />
         <DarkModeSwitch />

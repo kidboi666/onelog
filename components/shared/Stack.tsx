@@ -1,22 +1,7 @@
 import cn from '@/lib/cn'
 import { ComponentProps, PropsWithChildren } from 'react'
 
-type GapSizes =
-  | 'px'
-  | 1
-  | 2
-  | 3
-  | 4
-  | 6
-  | 8
-  | 10
-  | 12
-  | 14
-  | 16
-  | 18
-  | 20
-  | 22
-  | 24
+type GapSizes = 'px' | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12
 
 interface StackProps extends ComponentProps<'div'> {
   className?: string
@@ -32,11 +17,12 @@ const Stack = ({
   as: Component = 'div',
   direction = 'row',
 }: PropsWithChildren<StackProps>) => {
+  const gapSizes = `gap-${gap}`
   return (
     <Component
       className={cn(
         direction === 'col' ? 'flex flex-col' : 'flex',
-        `gap-${gap}`,
+        gapSizes,
         className,
       )}
     >

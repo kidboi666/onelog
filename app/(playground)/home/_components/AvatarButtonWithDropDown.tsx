@@ -19,7 +19,7 @@ interface Props {
   followers: any
   followings: any
   userId: string
-  meId: string
+  meId: string | null
   userName: string | null
 }
 
@@ -45,8 +45,8 @@ export default function AvatarButtonWithDropDown({
   const handleFollowButtonClick = () => {
     me
       ? isFollowing
-        ? unfollow({ followed_user_id: userId, follower_user_id: meId })
-        : follow({ followed_user_id: userId, follower_user_id: meId })
+        ? unfollow({ followed_user_id: userId, follower_user_id: meId! })
+        : follow({ followed_user_id: userId, follower_user_id: meId! })
       : router.push('/auth_guard')
   }
   return (

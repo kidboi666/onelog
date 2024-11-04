@@ -3,39 +3,25 @@ import Icon from '@/components/shared/Icon'
 import ToolTip from '@/components/shared/Tooltip'
 import useToggle from '@/hooks/useToggle'
 import cn from '@/lib/cn'
-import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 
 interface Props {
-  sentenceId: number
-  commentId?: number
   favoritedCount?: number | null
   favoritedUserId?: string[] | null
-  onFavorite: (
-    e: MouseEvent,
-    { commentId, sentenceId }: { commentId?: number; sentenceId: number },
-  ) => void
-  userId: string | null
+  onFavorite: (e: MouseEvent) => void
+  meId?: string
   viewToolTip?: boolean
 }
 
 export default function FavoriteButton({
-  sentenceId,
-  commentId,
   favoritedCount,
   favoritedUserId,
   onFavorite,
-  userId,
+  meId,
   viewToolTip,
 }: Props) {
-  const router = useRouter()
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
 
-  const handleFavorite = (e: MouseEvent) => {
-    userId
-      ? onFavorite(e, { commentId, sentenceId })
-      : router.push('/auth_guard', { scroll: false })
-  }
   return (
     <div
       onMouseEnter={hover}
@@ -45,11 +31,11 @@ export default function FavoriteButton({
       <Button
         variant="icon"
         size="icon"
-        onClick={handleFavorite}
+        onClick={onFavorite}
         className={cn(
           'flex gap-2 border-none text-xs font-light hover:text-red-500 dark:hover:text-red-500',
-          userId &&
-            favoritedUserId?.includes(userId) &&
+          meId &&
+            favoritedUserId?.includes(meId) &&
             'text-red-500 dark:text-red-500',
         )}
       >

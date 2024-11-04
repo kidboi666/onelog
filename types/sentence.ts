@@ -11,3 +11,8 @@ export interface ISentenceWithUserInfo extends Tables<'sentence'> {
     'user_name' | 'email' | 'avatar_url' | 'about_me'
   >
 }
+
+export interface ISentenceInfiniteQuery {
+  pages: Tables<'sentence'>[]
+  pageParams: number
+}

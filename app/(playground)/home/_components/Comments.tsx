@@ -5,13 +5,13 @@ import { commentQuery } from '@/services/queries/comment/commentQuery'
 import { supabase } from '@/lib/supabase/client'
 import { Suspense } from 'react'
 import Spinner from '@/components/shared/Spinner'
-import { Tables } from '@/types/supabase'
 import { List } from '@/components/shared/List'
 import Empty from '@/components/shared/Empty'
+import { IUserSession } from '@/services/queries/auth/meQuery'
 
 interface Props {
   sentenceId: number
-  me: Tables<'user_info'> | null
+  me: IUserSession | null
 }
 
 export default function Comments({ sentenceId, me }: Props) {

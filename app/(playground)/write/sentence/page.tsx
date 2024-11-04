@@ -1,8 +1,8 @@
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import PostContainer from './_container/PostContainer'
+import PostContainer from './_containers/PostContainer'
 import { createServerClient } from '@/lib/supabase/server'
 import { meQuery } from '@/services/queries/auth/meQuery'
-import DateLabelContainer from './_container/DateLabelContainer'
+import DateLabelContainer from './_containers/DateLabelContainer'
 import { YStack } from '@/components/shared/Stack'
 
 export default function PostSentencePage() {
