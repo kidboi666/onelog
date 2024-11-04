@@ -9,7 +9,7 @@ interface Props {
   favoritedCount?: number | null
   favoritedUserId?: string[] | null
   onFavorite: (e: MouseEvent) => void
-  meId?: string
+  meId?: string | null
   viewToolTip?: boolean
 }
 

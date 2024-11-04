@@ -12,7 +12,7 @@ import { supabase } from '@/lib/supabase/client'
 
 export default function PrevOneSentence() {
   const pathname = usePathname()
-  const [_, __, userId] = pathname.split('/')
+  const [_, __, meId] = pathname.split('/')
   const searchParams = useSearchParams()
   const year = Number(searchParams.get('year'))
   const month = Number(searchParams.get('month'))
@@ -24,7 +24,7 @@ export default function PrevOneSentence() {
     endOfDay = new Date(year, month, date, 23, 59, 59).toISOString() || null
   }
   const { data: sentences } = useSuspenseQuery(
-    sentenceQuery.getMySentenceThatDay(supabase, userId, startOfDay, endOfDay),
+    sentenceQuery.getMySentenceThatDay(supabase, meId, startOfDay, endOfDay),
   )
 
   return (
@@ -36,11 +36,7 @@ export default function PrevOneSentence() {
             {formatDateToMDY(sentences[0]?.created_at)}
           </Title>
           {sentences?.map((sentence) => (
-            <SentenceCard
-              key={sentence.id}
-              sentence={sentence}
-              userId={userId}
-            />
+            <SentenceCard key={sentence.id} sentence={sentence} meId={meId} />
           ))}
         </List>
       ) : (

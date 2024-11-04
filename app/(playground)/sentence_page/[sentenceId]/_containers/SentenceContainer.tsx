@@ -208,7 +208,9 @@ export default function SentenceContainer({ sentenceId }: Props) {
             <Comments sentenceId={sentence.id} me={me} />
           </Suspense>
         </div>
-        // TODO 대댓글 기능에 대댓글 갯수 제한 필요 @kidboi666
+        /**
+         * TODO #1 무한 대댓글이 가능함 @kidboi666
+         */
       )}
     </YStack>
   )
