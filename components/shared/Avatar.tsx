@@ -2,7 +2,7 @@ import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
 import Image from 'next/image'
 import profileImage from '@/public/profile.svg'
-import { ringTheme, useTheme } from '@/store/useTheme'
+import { useTheme } from '@/store/useTheme'
 
 interface Props {
   src?: string | null
@@ -49,8 +49,12 @@ export default function Avatar({
       onClick={onClick}
       className={cn(
         avatarVariants({ size, shadow }),
-        ringTheme({ color }),
         ring && 'border border-zinc-400 dark:border-zinc-200',
+        color === 'blue' && 'ring-var-blue/65',
+        color === 'orange' && 'ring-var-orange/65',
+        color === 'yellow' && 'ring-var-yellow/65',
+        color === 'green' && 'ring-var-green/65',
+        color === 'black' && 'ring-var-black/65',
         className,
       )}
     >
