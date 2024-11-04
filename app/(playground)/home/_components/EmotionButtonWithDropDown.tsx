@@ -3,9 +3,10 @@ import useDataDrivenAnimation from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import EmotionGauge from './EmotionGauge'
 import Text from '@/components/shared/Text'
+import { TEmotion } from '../../write/sentence/_containers/PostContainer'
 
 interface Props {
-  emotionLevel: string
+  emotionLevel: TEmotion | null
 }
 
 export default function EmotionButtonWithDropDown({ emotionLevel }: Props) {

@@ -7,7 +7,7 @@ interface Props {
   emotionLevel: TEmotion | null
   className?: string
   size?: number
-  onClick: (emotion: TEmotion | null) => void
+  onClick?: (emotion: TEmotion | null) => void
 }
 
 export default function EmotionGauge({

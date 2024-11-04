@@ -5,12 +5,13 @@ import NameSection from './NameSection'
 import useToggle from '@/hooks/useToggle'
 import { XStack, ZStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
+import { TEmotion } from '../../write/sentence/_containers/PostContainer'
 
 interface Props {
   avatarUrl: string | null
   userName: string | null
   email: string | null
-  emotionLevel: string
+  emotionLevel: TEmotion
   createdAt: string
   userId: string
   meId: string | null

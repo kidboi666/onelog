@@ -32,6 +32,7 @@ import CommentButton from '@/app/(playground)/home/_components/CommentButton'
 import AccessTypeButtonWithDropDown from '@/app/(playground)/home/_components/AccessTypeButtonWithDropDown'
 import OptionButtonWithDropDown from '@/app/(playground)/home/_components/OptionButtonWithDropDown'
 import Comments from '@/app/(playground)/home/_components/Comments'
+import { TEmotion } from '@/app/(playground)/write/sentence/_containers/PostContainer'
 
 interface Props {
   sentenceId: number
@@ -112,7 +113,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
           </div>
           <div className="flex h-full flex-1 items-end justify-end p-2">
             <EmotionGauge
-              emotionLevel={sentence?.emotion_level}
+              emotionLevel={sentence?.emotion_level as TEmotion}
               className="h-full"
             />
           </div>

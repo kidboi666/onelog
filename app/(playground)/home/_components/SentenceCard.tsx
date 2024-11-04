@@ -12,6 +12,7 @@ import { ISentenceWithUserInfo } from '@/types/sentence'
 import SentenceHeader from './SentenceHeader'
 import SentenceContent from './SentenceContent'
 import { YStack } from '@/components/shared/Stack'
+import { TEmotion } from '../../write/sentence/_containers/PostContainer'
 
 interface Props {
   sentence?: ISentenceWithUserInfo
@@ -68,7 +69,7 @@ export default function SentenceCard({
           email={sentence.user_info.email}
           avatarUrl={sentence.user_info.avatar_url}
           userName={sentence.user_info.user_name}
-          emotionLevel={sentence.emotion_level}
+          emotionLevel={sentence.emotion_level as TEmotion}
           createdAt={sentence.created_at}
         />
       ) : null}
