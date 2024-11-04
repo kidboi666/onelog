@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <ThemeProvider>
-        <body className="hidden bg-var-lightgray dark:bg-var-dark">
+        <body className="hidden bg-var-lightgray transition dark:bg-var-dark">
           <ReactQueryProvider>
             {children}
             <div id="portal" />

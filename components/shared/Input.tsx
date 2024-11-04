@@ -13,15 +13,15 @@ interface Props extends ComponentProps<'input'> {
 }
 
 const INPUT_VARIANTS = cva(
-  'min-w-4 outline-none placeholder:text-zinc-300/75 dark:placeholder:text-zinc-700/75',
+  'min-w-4 outline-none transition placeholder:text-zinc-300/75 dark:placeholder:text-zinc-700/75',
   {
     variants: {
       variant: {
         primary:
-          'rounded-md bg-white shadow-sm ring-zinc-200 transition focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-zinc-600',
+          'rounded-md bg-white shadow-sm ring-zinc-200 focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-zinc-600',
         secondary:
           'bg-transparent text-zinc-600 dark:border-zinc-600 dark:bg-transparent dark:text-zinc-200 dark:ring-zinc-600',
-        auth: 'rounded-md bg-zinc-200 transition dark:bg-white/15 dark:text-white',
+        auth: 'rounded-md bg-zinc-200 dark:bg-white/15 dark:text-white',
         none: '',
       },
       dimension: {
