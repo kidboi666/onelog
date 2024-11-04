@@ -1,5 +1,6 @@
 import { DropDown } from '@/components/shared/DropDown'
 import Icon from '@/components/shared/Icon'
+import Text from '@/components/shared/Text'
 import ToolTip from '@/components/shared/Tooltip'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
@@ -24,7 +25,7 @@ export default function PublishSection({
     <DropDown.Root
       onMouseEnter={hover}
       onMouseLeave={leave}
-      className="flex size-full items-center"
+      className="flex size-full items-center gap-2"
     >
       <DropDown.Trigger targetRef={accessTypeRef} size="none" onClick={onClick}>
         <Icon view="0 -960 960 960" size={20}>
@@ -56,6 +57,9 @@ export default function PublishSection({
           비공개
         </DropDown.Button>
       </DropDown.Content>
+      <Text type="caption" size="xs" className="text-nowrap">
+        {accessType === 'private' ? '비공개' : '공개'}
+      </Text>
       <ToolTip
         isHover={isHover}
         position="bottomLeft"

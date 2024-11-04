@@ -6,7 +6,7 @@ import { TagsInput } from '@/components/shared/TagsInput'
 import Button from '@/components/shared/Button'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useInput } from '@/hooks/useInput'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 import { meQuery } from '@/services/queries/auth/meQuery'
@@ -20,13 +20,19 @@ import Avatar from '@/components/shared/Avatar'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import EmotionGauge from '@/app/(playground)/home/_components/EmotionGauge'
+import PostTypeSection from '../_components/PostTypeSection'
+
+export type TAccess = 'public' | 'private'
+export type TPost = 'journal' | 'article'
+export type TEmotion = '0%' | '25%' | '50%' | '75%' | '100%'
 
 export default function PostContainer() {
   const router = useRouter()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [content, _, setContent] = useInput<string>('')
-  const [selectedEmotion, setSelectedEmotion] = useState('0')
-  const [accessType, setAccessType] = useState<'public' | 'private'>('public')
+  const [selectedEmotion, setSelectedEmotion] = useState<TEmotion | null>('50%')
+  const [accessType, setAccessType] = useState<TAccess>('public')
+  const [postType, setPostType] = useState<TPost>('journal')
   const { editor } = useBlockEditor({
     setContent,
     content,
@@ -37,13 +43,10 @@ export default function PostContainer() {
   const [tags, setTags] = useState<string[]>([])
   const { mutate: addSentence, isPending } = useAddSentence()
 
-  const handleChangeEmotion = (emotion: string) => {
+  const handleChangeEmotion = (emotion: TEmotion | null) =>
     setSelectedEmotion(emotion)
-  }
-
-  const handleChangeAccessType = (order: 'private' | 'public') => {
-    setAccessType(order)
-  }
+  const handleChangeAccessType = (order: TAccess) => setAccessType(order)
+  const handleChangePostType = (order: TPost) => setPostType(order)
 
   const handleInputFocus = () => {
     if (editor) {
@@ -66,13 +69,19 @@ export default function PostContainer() {
       {
         onSuccess: () => {
           setContent('')
-          setSelectedEmotion('')
+          setSelectedEmotion(null)
           router.push('/success')
           router.back()
         },
       },
     )
   }
+
+  useEffect(() => {
+    postType === 'article'
+      ? handleChangeEmotion(null)
+      : handleChangeEmotion('50%')
+  }, [postType])
 
   if (!editor) return null
 
@@ -121,6 +130,10 @@ export default function PostContainer() {
             <PublishSection
               accessType={accessType}
               onChangeAccessType={handleChangeAccessType}
+            />
+            <PostTypeSection
+              postType={postType}
+              onChangePostType={handleChangePostType}
             />
             <EmotionSection
               selectedEmotion={selectedEmotion}

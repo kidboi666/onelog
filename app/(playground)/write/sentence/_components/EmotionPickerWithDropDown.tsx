@@ -7,11 +7,12 @@ import { useTheme } from '@/store/useTheme'
 import Icon from '@/components/shared/Icon'
 import { DropDown } from '@/components/shared/DropDown'
 import { EMOTION_STATUS } from '../_constants'
+import { TEmotion } from '../_containers/PostContainer'
 
 interface Props {
-  selectedEmotion: string
+  selectedEmotion: TEmotion | null
   targetRef: RefObject<HTMLDivElement>
-  onChangeEmotion: (emotion: string) => void
+  onChangeEmotion: (emotion: TEmotion | null) => void
   onTransitionEnd: () => void
 }
 
@@ -44,8 +45,8 @@ export default function EmotionPickerWithDropDown({
 
 interface EmotionBlockProps {
   emotion: (typeof EMOTION_STATUS)[number]
-  onChangeEmotion: (emotion: string) => void
-  selectedEmotion?: string
+  onChangeEmotion: (emotion: TEmotion) => void
+  selectedEmotion: TEmotion | null
   index: number
 }
 

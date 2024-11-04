@@ -6,10 +6,11 @@ import useDataDrivenAnimation from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import Icon from '@/components/shared/Icon'
 import ToolTip from '@/components/shared/Tooltip'
+import { TEmotion } from '../_containers/PostContainer'
 
 interface Props {
-  onChangeEmotion: (emotion: string) => void
-  selectedEmotion: string
+  onChangeEmotion: (emotion: TEmotion | null) => void
+  selectedEmotion: TEmotion | null
 }
 
 export default function EmotionSection({
@@ -24,6 +25,8 @@ export default function EmotionSection({
   } = useDataDrivenAnimation<HTMLDivElement>()
   const emotionButtonRef = useOutsideClick<HTMLButtonElement>(emotionClose)
   const { isOpen: isHover, open, close } = useToggle()
+
+  if (!selectedEmotion) return null
 
   return (
     <div
@@ -53,7 +56,6 @@ export default function EmotionSection({
         />
         {selectedEmotion && (
           <Text type="caption" size="xs" className="text-nowrap">
-            감정 상태 :
             {(selectedEmotion === '0%' && '매우나쁨') ||
               (selectedEmotion === '25%' && '나쁨') ||
               (selectedEmotion === '50%' && '보통') ||

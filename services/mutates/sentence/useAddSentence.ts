@@ -6,7 +6,7 @@ interface IAddSentence {
   user_id: string
   title?: string
   content: string
-  emotion_level: string
+  emotion_level: string | null
   tags: string[]
   access_type: 'private' | 'public'
 }

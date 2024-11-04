@@ -1,12 +1,13 @@
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
 import { TColor } from '@/types/theme'
+import { TEmotion } from '../../write/sentence/_containers/PostContainer'
 
 interface Props {
-  emotionLevel?: string
+  emotionLevel: TEmotion | null
   className?: string
   size?: number
-  onClick?: (emotion: string) => void
+  onClick: (emotion: TEmotion | null) => void
 }
 
 export default function EmotionGauge({
@@ -59,7 +60,7 @@ interface EmotionBlockProps {
   shouldRender: number
   color: TColor
   index: number
-  onClick?: (emotion: string) => void
+  onClick?: (emotion: TEmotion | null) => void
 }
 
 function EmotionBlock({
@@ -68,7 +69,7 @@ function EmotionBlock({
   index,
   onClick,
 }: EmotionBlockProps) {
-  let currentEmotion: string
+  let currentEmotion: TEmotion
   let blockOpacity: string
   let sizeString: string
   switch (index) {
@@ -118,7 +119,7 @@ function EmotionBlock({
   }
   return (
     <div
-      onClick={() => onClick && onClick(currentEmotion)}
+      onClick={() => onClick!(currentEmotion)}
       className={cn(
         'size-2 cursor-pointer overflow-hidden rounded-full bg-zinc-300/35 shadow-sm transition-all dark:bg-zinc-300/15',
         sizeString!,
