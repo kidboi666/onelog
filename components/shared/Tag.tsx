@@ -1,7 +1,8 @@
 import { cva } from 'class-variance-authority'
 import Button from './Button'
-import { List } from './List'
 import cn from '@/lib/cn'
+import { XStack } from './Stack'
+import Icon from './Icon'
 
 interface Props {
   border?: 'border' | 'none'
@@ -35,14 +36,22 @@ export default function Tag({
   onDelete,
 }: Props) {
   return (
-    <List.Row>
+    <XStack>
       <Button
         variant="secondary"
-        onClick={() => (onDelete ? onDelete(index!) : null)}
-        className={cn(TAG_VARIANTS({ border, background }))}
+        onClick={() => onDelete && onDelete(index!)}
+        className={cn(
+          TAG_VARIANTS({ border, background }),
+          index && index >= 10 && 'ring-1 ring-red-600 dark:ring-red-600',
+        )}
       >
-        {tag}
+        #{tag}{' '}
+        {onDelete && (
+          <Icon view="0 -960 960 960" size={12}>
+            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </Icon>
+        )}
       </Button>
-    </List.Row>
+    </XStack>
   )
 }

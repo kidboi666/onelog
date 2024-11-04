@@ -73,16 +73,12 @@ export default function PostContainer() {
       },
     )
   }
-  const handleAuthGuard = () => {
-    me ? null : router.push('/auth_guard')
-  }
 
   if (!editor) return null
 
   return (
     <form
       onSubmit={handleSubmitSentence}
-      onClick={handleAuthGuard}
       className="flex h-fit flex-col rounded-md bg-white p-4 shadow-md dark:bg-var-darkgray"
     >
       <div className="flex items-center gap-4">
@@ -135,7 +131,8 @@ export default function PostContainer() {
             isLoading={isPending}
             disabled={
               editor.storage.characterCount.characters() === 0 ||
-              !selectedEmotion
+              !selectedEmotion ||
+              tags.length > 10
             }
             type="submit"
             size="sm"

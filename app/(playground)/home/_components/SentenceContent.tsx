@@ -63,9 +63,9 @@ export default function SentenceContent({
     >
       <YStack gap={4}>
         {tags?.length! > 0 && (
-          <List className="flex flex-wrap gap-2">
+          <XStack className="flex-wrap">
             {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
-          </List>
+          </XStack>
         )}
         <div className="relative max-h-64 overflow-hidden">
           {sentenceTitle && <Title className="mb-8">{sentenceTitle}</Title>}

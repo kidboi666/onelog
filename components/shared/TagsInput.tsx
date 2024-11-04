@@ -6,12 +6,12 @@ import {
   useRef,
   useState,
 } from 'react'
-import { List } from './List'
 import Text from './Text'
 import { useInput } from '@/hooks/useInput'
 import cn from '@/lib/cn'
 import Tag from './Tag'
 import Input from './Input'
+import { XStack } from './Stack'
 
 interface Props {
   tags: string[]
@@ -25,7 +25,7 @@ export const TagsInput = ({ tags, setTags, disabled }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleDelete = (idx: number) => {
-    const filterTag = tags?.filter((tag) => tag !== tags[idx])
+    const filterTag = tags?.filter((_, index) => index !== idx)
     if (filterTag) {
       setTags(filterTag)
     }
@@ -50,7 +50,6 @@ export const TagsInput = ({ tags, setTags, disabled }: Props) => {
       }
     }
     if (tags.length >= 10 && e.key !== 'Backspace') {
-      setText('')
       setError('태그는 10개 까지만 등록 가능합니다.')
     } else {
       setError('')
@@ -73,9 +72,11 @@ export const TagsInput = ({ tags, setTags, disabled }: Props) => {
         )}
       >
         {tags.length !== 0 && (
-          <List className="flex flex-wrap gap-2">
-            {tags?.map((tag, idx) => <Tag key={idx} tag={tag} index={idx} />)}
-          </List>
+          <XStack className="flex-wrap">
+            {tags?.map((tag, idx) => (
+              <Tag key={idx} tag={tag} index={idx} onDelete={handleDelete} />
+            ))}
+          </XStack>
         )}
         <Input
           name="tags"
