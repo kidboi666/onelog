@@ -17,17 +17,17 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
 
   return (
     <>
-      <Container className="rounded-md bg-white p-1 shadow-md max-lg:px-1 dark:bg-var-darkgray">
+      <Container>
         <ZStack gap={0}>
           <div
             className={cn(
-              'pointer-events-none absolute h-full w-[calc(50%)] rounded-md bg-zinc-400/10 transition duration-300 ease-out dark:bg-zinc-700/40',
+              'pointer-events-none absolute -z-10 h-full w-[calc(50%)] rounded-md bg-white shadow-md transition duration-300 ease-out dark:bg-var-darkgray',
               segment === 'sentence' ? 'translate-x-full' : '',
             )}
           />
           <LinkButton
             href={`/profile/${userId}/summary`}
-            variant="list"
+            variant="teritory"
             size="sm"
             innerClassName="justify-center"
           >
@@ -35,7 +35,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
           </LinkButton>
           <LinkButton
             href={`/profile/${userId}/sentence`}
-            variant="list"
+            variant="teritory"
             size="sm"
             innerClassName="justify-center"
           >

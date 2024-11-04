@@ -21,7 +21,7 @@ const BUTTON_VARIANTS = cva(
         primary: 'rounded-md hover:opacity-65',
         secondary:
           'rounded-md bg-white text-var-black ring-1 ring-zinc-400 hover:opacity-65 dark:bg-var-darkgray dark:text-zinc-200 dark:ring-zinc-500',
-        teritory: 'text-zinc-800 underline hover:opacity-65 dark:text-zinc-200',
+        teritory: 'text-zinc-500 hover:opacity-65 dark:text-zinc-200',
         list: 'justify-start rounded-md font-normal text-zinc-600 hover:bg-var-lightgray dark:text-zinc-300 dark:hover:bg-var-dark dark:hover:text-zinc-200',
         none: '',
         icon: 'rounded-md text-zinc-400 transition hover:bg-var-lightgray dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',

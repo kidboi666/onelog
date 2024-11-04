@@ -45,7 +45,7 @@ export default function AuthHistory() {
   }
 
   return (
-    <XStack gap={8}>
+    <XStack className="sm:gap-8">
       <HistoryBlock
         title="시작한지"
         content={getSignUpDays(user?.created_at)}
