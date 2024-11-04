@@ -6,7 +6,7 @@ export interface TextProps {
   as?: ElementType
   className?: string
   type?: 'body' | 'caption' | 'error' | 'none'
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'bigger'
 }
 
 const TEXT_VARIANTS = cva('transition', {
@@ -22,6 +22,7 @@ const TEXT_VARIANTS = cva('transition', {
       sm: 'text-xs',
       md: 'text-sm',
       lg: 'text-base',
+      bigger: 'text-4xl font-medium md:text-6xl',
     },
   },
 })

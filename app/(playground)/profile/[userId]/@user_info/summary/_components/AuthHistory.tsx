@@ -11,6 +11,7 @@ import { getSignUpDays } from '@/utils/formatDate'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { emotionQuery } from '@/services/queries/emotion/emotionQuery'
+import HistoryBlock from './HistoryBlock'
 
 export default function AuthHistory() {
   const pathname = usePathname()
@@ -46,33 +47,18 @@ export default function AuthHistory() {
 
   return (
     <div className="flex gap-8">
-      <div className="flex flex-col gap-2">
-        <Text type="caption">시작한지</Text>
-        <Title size="bigger" type="sub">
-          {getSignUpDays(user?.created_at) === '오늘' ? (
-            getSignUpDays(user?.created_at)
-          ) : (
-            <>
-              {getSignUpDays(user?.created_at)}
-              <Text as="span">일 째</Text>
-            </>
-          )}
-        </Title>
-      </div>
-      <div className="flex flex-col gap-2">
-        <Text type="caption">기록</Text>
-        <Title size="bigger" type="sub">
-          {sentenceLength}
-          <Text as="span">개</Text>
-        </Title>
-      </div>
-      <div className="flex flex-col gap-2">
-        <Text type="caption">평균 감정 농도</Text>
-        <Title size="bigger" type="sub" className={formatColor(color)}>
-          {myAverageEmotion}
-          <Text as="span">%</Text>
-        </Title>
-      </div>
+      <HistoryBlock
+        title="시작한지"
+        content={getSignUpDays(user?.created_at)}
+        unit="일 째"
+      />
+      <HistoryBlock title="기록" content={sentenceLength} unit="개" />
+      <HistoryBlock
+        title="평균 감정 농도"
+        content={myAverageEmotion}
+        className={formatColor(color)}
+        unit="%"
+      />
     </div>
   )
 }

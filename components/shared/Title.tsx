@@ -5,7 +5,7 @@ import { ElementType, PropsWithChildren } from 'react'
 interface Props {
   as?: ElementType
   className?: string
-  type?: 'title' | 'sub' | 'customColor'
+  type?: 'title' | 'sub' | 'customColor' | 'caption'
   size?: 'sm' | 'md' | 'lg' | 'bigger' | 'xs'
 }
 
@@ -14,10 +14,11 @@ const TITLE_VARIANTS = cva('', {
     type: {
       title: 'font-semibold text-zinc-600 dark:text-zinc-200',
       sub: 'font-medium text-zinc-600 dark:text-zinc-200',
+      caption: 'text-zinc-400 dark:text-zinc-500',
       customColor: 'font-semibold',
     },
     size: {
-      xs: 'text-base',
+      xs: 'text-sm',
       sm: 'text-lg',
       md: 'text-2xl',
       lg: 'text-4xl',
