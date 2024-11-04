@@ -1,7 +1,7 @@
 import cn from '@/lib/cn'
 import { ComponentProps, PropsWithChildren } from 'react'
 
-type GapSizes = 'px' | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12
+type GapSizes = 'px' | 0 | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12
 
 interface StackProps extends ComponentProps<'div'> {
   className?: string

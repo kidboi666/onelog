@@ -18,7 +18,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
   return (
     <>
       <Container className="rounded-md bg-white p-1 shadow-md max-lg:px-1 dark:bg-var-darkgray">
-        <ZStack>
+        <ZStack gap={0}>
           <div
             className={cn(
               'pointer-events-none absolute h-full w-[calc(50%)] rounded-md bg-zinc-400/10 transition duration-300 ease-out dark:bg-zinc-700/40',

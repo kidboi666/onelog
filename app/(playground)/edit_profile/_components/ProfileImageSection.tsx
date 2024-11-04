@@ -25,7 +25,7 @@ export default function ProfileImageSection({
         onClick={() => handlePreviewClick()}
         className="relative flex cursor-pointer flex-col items-center max-sm:-order-1"
       >
-        <Avatar src={imagePreview} size="xl" ring="md" shadow="sm" />
+        <Avatar src={imagePreview} size="xl" ring shadow="sm" />
         <input
           ref={inputRef}
           type="file"

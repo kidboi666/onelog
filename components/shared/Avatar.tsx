@@ -7,15 +7,14 @@ import { ringTheme, useTheme } from '@/store/useTheme'
 interface Props {
   src?: string | null
   size?: 'xs' | 'sm' | 'md' | 'base' | 'lg' | 'xl'
-  ring?: 'none' | 'xs' | 'sm' | 'md' | 'lg'
   shadow?: 'none' | 'sm' | 'md' | 'lg'
-  hoverEffect?: 'none' | 'ring'
+  ring?: boolean
   className?: string
   onClick?: () => void
 }
 
 const avatarVariants = cva(
-  'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 dark:bg-var-darkgray',
+  'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 transition duration-300 ease-in-out hover:ring-4 group-hover:ring-4 dark:bg-var-darkgray',
   {
     variants: {
       size: {
@@ -26,22 +25,11 @@ const avatarVariants = cva(
         lg: 'size-40',
         xl: 'size-52',
       },
-      ring: {
-        none: '',
-        xs: 'border border-zinc-200',
-        sm: 'border-2 border-zinc-200',
-        md: 'border-4 border-zinc-200',
-        lg: 'border-8 border-zinc-200',
-      },
       shadow: {
         none: '',
         sm: 'shadow-sm',
         md: 'shadow-md',
         lg: 'shadow-lg',
-      },
-      hoverEffect: {
-        none: '',
-        ring: 'transition duration-300 ease-in-out hover:ring-4 group-hover:ring-4',
       },
     },
   },
@@ -50,9 +38,8 @@ const avatarVariants = cva(
 export default function Avatar({
   src,
   size = 'md',
-  ring = 'none',
+  ring = false,
   shadow = 'none',
-  hoverEffect = 'ring',
   onClick,
   className,
 }: Props) {
@@ -61,8 +48,9 @@ export default function Avatar({
     <div
       onClick={onClick}
       className={cn(
-        avatarVariants({ size, ring, shadow, hoverEffect }),
+        avatarVariants({ size, shadow }),
         ringTheme({ color }),
+        ring && 'border border-zinc-400 dark:border-zinc-200',
         className,
       )}
     >

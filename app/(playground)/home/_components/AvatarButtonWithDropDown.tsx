@@ -67,7 +67,7 @@ export default function AvatarButtonWithDropDown({
       >
         <div className="flex flex-col gap-4 p-4">
           <div className="flex flex-col items-center gap-2">
-            <Avatar src={avatarUrl} size="sm" hoverEffect="none" />
+            <Avatar src={avatarUrl} size="sm" />
             <Title type="sub" size="sm">
               {userName}
             </Title>

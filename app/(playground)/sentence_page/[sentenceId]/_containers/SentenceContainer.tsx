@@ -101,7 +101,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
           <Avatar
             src={sentence?.user_info.avatar_url}
             size="sm"
-            ring="xs"
+            ring
             onClick={() => router.push(`/profile/${sentence?.user_id}`)}
           />
           <div className="flex flex-col self-end">

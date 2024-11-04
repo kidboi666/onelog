@@ -36,12 +36,7 @@ export default function AuthButtonWithDropDown({
         onClick={onClick}
         className="gap-4 px-1 py-1"
       >
-        <Avatar
-          src={me?.avatar_url}
-          ring="xs"
-          shadow="sm"
-          className="size-10"
-        />
+        <Avatar src={me?.avatar_url} ring shadow="sm" className="size-10" />
         <Text type="caption">{viewText && me?.email}</Text>
       </DropDown.Trigger>
       <DropDown.Content

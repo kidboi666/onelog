@@ -1,3 +1,5 @@
+'use client'
+
 import { TColor, TTheme } from '@/types/theme'
 import { cva } from 'class-variance-authority'
 import { create } from 'zustand'
@@ -42,6 +44,6 @@ export const ringTheme = cva('', {
 export const useTheme = create<ThemeState>((set) => ({
   color: 'black',
   theme: 'light',
-  setColor: (color: TColor) => set({ color }),
-  setTheme: (theme: TTheme) => set({ theme }),
+  setColor: (color: TColor) => set((state) => ({ ...state, color })),
+  setTheme: (theme: TTheme) => set((state) => ({ ...state, theme })),
 }))

@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import Avatar from '@/components/shared/Avatar'
 import Text from '@/components/shared/Text'
-import { colorTheme, ringTheme, useTheme } from '@/store/useTheme'
+import { ringTheme, useTheme } from '@/store/useTheme'
 import cn from '@/lib/cn'
 import { XStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
@@ -31,9 +31,8 @@ export default function PostSentenceContainer() {
         />
         <XStack
           className={cn(
-            colorTheme({ color }),
-            'w-full min-w-0 animate-cta-fadein-out items-center rounded-md bg-white p-2 text-sm dark:bg-var-darkgray',
-            ringTheme({ color }),
+            'w-full min-w-0 items-center rounded-md bg-white p-2 text-sm dark:bg-var-darkgray',
+            ringTheme({ color, width: 4 }),
           )}
         >
           <Text type="caption">오늘 당신의 생각을 한 줄로 기록하세요.</Text>

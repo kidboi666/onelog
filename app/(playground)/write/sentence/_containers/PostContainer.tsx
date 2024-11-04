@@ -86,7 +86,7 @@ export default function PostContainer() {
       className="flex h-fit flex-col rounded-md bg-white p-4 shadow-md dark:bg-var-darkgray"
     >
       <div className="flex items-center gap-4">
-        <Avatar src={me?.avatar_url} size="sm" ring="xs" />
+        <Avatar src={me?.avatar_url} size="sm" ring />
         <div className="flex w-full flex-col self-end">
           <Title type="sub" size="sm">
             {me?.user_name}

@@ -15,7 +15,7 @@ export default function Layout({
     <>
       {header}
       {sidebar}
-      <Container className="my-8 flex flex-1 justify-center max-lg:px-4 sm:ml-[80px]">
+      <Container className="my-8 flex flex-1 justify-center px-2 sm:ml-[80px] sm:px-4">
         <Container className="w-full lg:w-[768px]">{children}</Container>
       </Container>
     </>
