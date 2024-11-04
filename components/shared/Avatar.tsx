@@ -2,6 +2,7 @@ import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
 import Image from 'next/image'
 import profileImage from '@/public/profile.svg'
+import { ringTheme, useTheme } from '@/store/useTheme'
 
 interface Props {
   src?: string | null
@@ -27,10 +28,10 @@ const avatarVariants = cva(
       },
       ring: {
         none: '',
-        xs: 'border border-zinc-200 ring-1 ring-zinc-400',
-        sm: 'border-2 border-zinc-200 ring-1 ring-zinc-400',
-        md: 'border-4 border-zinc-200 ring-1 ring-zinc-400',
-        lg: 'border-8 border-zinc-200 ring-1 ring-zinc-400',
+        xs: 'border border-zinc-200',
+        sm: 'border-2 border-zinc-200',
+        md: 'border-4 border-zinc-200',
+        lg: 'border-8 border-zinc-200',
       },
       shadow: {
         none: '',
@@ -40,7 +41,7 @@ const avatarVariants = cva(
       },
       hoverEffect: {
         none: '',
-        ring: 'ring-zinc-400 transition duration-300 ease-in-out hover:ring-4 group-hover:ring-4',
+        ring: 'transition duration-300 ease-in-out hover:ring-4 group-hover:ring-4',
       },
     },
   },
@@ -55,11 +56,13 @@ export default function Avatar({
   onClick,
   className,
 }: Props) {
+  const { color } = useTheme()
   return (
     <div
       onClick={onClick}
       className={cn(
         avatarVariants({ size, ring, shadow, hoverEffect }),
+        ringTheme.color[color],
         className,
       )}
     >
