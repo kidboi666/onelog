@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Button from '@/components/shared/Button'
 import Modal from '@/components/shared/Modal'
 import Title from '@/components/shared/Title'
@@ -14,8 +14,6 @@ interface Props {
 
 export default function DeleteSentenceModal({ params }: Props) {
   const router = useRouter()
-  // const pathname = useSearchParams()
-  // const sentenceId = pathname.get('sentence_id')
   const { mutate: deleteSentence } = useDeleteSentence()
   const [isLoading, startTransition] = useTransition()
 
@@ -28,14 +26,17 @@ export default function DeleteSentenceModal({ params }: Props) {
       <Title>정말 게시물을 삭제하시겠습니까?</Title>
       <XStack>
         <Button
-          onClick={() => startTransition(() => handleSentenceDelete())}
-          isLoading={isLoading}
           variant="secondary"
+          disabled={isLoading}
+          onClick={() => router.back()}
+        >
+          취소하기
+        </Button>
+        <Button
+          onClick={() => startTransition(() => handleSentenceDelete())}
+          isLoading
         >
           삭제하기
-        </Button>
-        <Button disabled={isLoading} onClick={() => router.back()}>
-          취소하기
         </Button>
       </XStack>
     </Modal>

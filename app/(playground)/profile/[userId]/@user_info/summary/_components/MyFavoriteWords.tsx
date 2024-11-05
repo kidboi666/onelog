@@ -34,7 +34,9 @@ export default function MyFavoriteWords() {
           })}
         </List>
       ) : (
-        <Empty>아직 자주 사용하는 단어가 없습니다.</Empty>
+        <Empty>
+          <Empty.Text>아직 자주 사용하는 단어가 없습니다.</Empty.Text>
+        </Empty>
       )}
     </>
   )

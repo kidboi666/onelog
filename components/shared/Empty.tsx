@@ -1,15 +1,12 @@
 import { PropsWithChildren } from 'react'
-import Text from './Text'
 import cn from '@/lib/cn'
+import Text from './Text'
 
 interface Props {
   className?: string
 }
 
-export default function Empty({
-  children,
-  className,
-}: PropsWithChildren<Props>) {
+const Empty = ({ children, className }: PropsWithChildren<Props>) => {
   return (
     <div
       className={cn(
@@ -22,6 +19,10 @@ export default function Empty({
   )
 }
 
-Empty.Text = ({ children }: PropsWithChildren) => (
-  <Text type="caption">{children}</Text>
-)
+const EmptyText = ({ children }: PropsWithChildren) => {
+  return <Text type="caption">{children}</Text>
+}
+
+Empty.Text = EmptyText
+
+export default Empty
