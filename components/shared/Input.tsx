@@ -8,7 +8,7 @@ interface Props extends ComponentProps<'input'> {
   variant?: 'primary' | 'secondary' | 'auth' | 'none'
   register?: UseFormRegisterReturn
   error?: FieldError
-  dimension?: 'sm' | 'md' | 'lg' | 'none'
+  dimension?: 'xs' | 'sm' | 'md' | 'lg' | 'none'
   dataStatus?: string
 }
 
@@ -25,6 +25,7 @@ const INPUT_VARIANTS = cva(
         none: '',
       },
       dimension: {
+        xs: 'p-2 text-sm',
         sm: 'px-2 py-3 text-sm',
         md: 'p-4 text-sm',
         lg: 'p-4 text-base',
