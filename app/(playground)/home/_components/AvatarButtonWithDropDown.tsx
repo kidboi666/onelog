@@ -11,6 +11,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { XStack, YStack } from '@/components/shared/Stack'
 
 interface Props {
   avatarUrl: string | null
@@ -65,15 +66,15 @@ export default function AvatarButtonWithDropDown({
         position="bottomRight"
         onTransitionEnd={onTransitionEnd}
       >
-        <div className="flex flex-col gap-4 p-4">
-          <div className="flex flex-col items-center gap-2">
+        <YStack gap={4} className="p-4">
+          <YStack gap={4} className="items-center">
             <Avatar src={avatarUrl} size="sm" />
             <Title type="sub" size="sm">
               {userName}
             </Title>
-          </div>
-          <div className="flex flex-col items-center gap-4">
-            <div className="flex gap-4">
+          </YStack>
+          <YStack gap={4} className="items-center">
+            <XStack gap={4}>
               <Text type="caption" size="sm">
                 팔로우{' '}
                 {followers && followers.length >= 1 ? followers.length : 0}명
@@ -82,8 +83,8 @@ export default function AvatarButtonWithDropDown({
                 팔로잉{' '}
                 {followings && followings.length >= 1 ? followings.length : 0}명
               </Text>
-            </div>
-            <div className="flex gap-4">
+            </XStack>
+            <XStack gap={4}>
               {isMe ? (
                 <>
                   <DropDown.LinkButton href="/edit_profile" variant="secondary">
@@ -109,9 +110,9 @@ export default function AvatarButtonWithDropDown({
                   </DropDown.LinkButton>
                 </>
               )}
-            </div>
-          </div>
-        </div>
+            </XStack>
+          </YStack>
+        </YStack>
       </DropDown.Content>
     </DropDown.Root>
   )

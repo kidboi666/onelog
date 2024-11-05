@@ -1,15 +1,15 @@
 'use client'
 
-import { PropsWithChildren } from 'react'
+import { Fragment, PropsWithChildren } from 'react'
 import { useSelectedLayoutSegment } from 'next/navigation'
+import { useSuspenseQueries } from '@tanstack/react-query'
+import { supabase } from '@/lib/supabase/client'
 import cn from '@/lib/cn'
+import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import { PROFILE_NAVIGATE_MENUS } from '../_constants/Navigate'
 import LinkButton from '@/components/shared/LinkButton'
 import { Container } from '@/components/shared/Container'
 import { ZStack } from '@/components/shared/Stack'
-import { PROFILE_NAVIGATE_MENUS } from '../_constants/Navigate'
-import { useSuspenseQueries } from '@tanstack/react-query'
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import { supabase } from '@/lib/supabase/client'
 import Text from '@/components/shared/Text'
 
 interface Props {
@@ -33,7 +33,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
 
   return (
     <>
-      <Container className="rounded-md bg-white p-1 shadow-md dark:bg-var-darkgray">
+      <Container className="overflow-x-auto rounded-md bg-white p-1 shadow-md dark:bg-var-darkgray">
         <ZStack gap={0}>
           {PROFILE_NAVIGATE_MENUS.map((menu) => (
             <LinkButton
@@ -50,9 +50,11 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
               {counts.map(
                 (data) =>
                   data.postType === menu.path && (
-                    <Text type="caption" size="xs" className="ml-1">
-                      {data.count}
-                    </Text>
+                    <Fragment key={data.postType}>
+                      <Text type="caption" size="xs" className="ml-1">
+                        {data.count}
+                      </Text>
+                    </Fragment>
                   ),
               )}
             </LinkButton>

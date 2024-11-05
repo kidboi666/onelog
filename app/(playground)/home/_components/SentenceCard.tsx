@@ -66,6 +66,7 @@ export default function SentenceCard({
           isFollowing={!!isFollowing}
           followers={followers}
           followings={followings}
+          postType={sentence.post_type}
           email={sentenceUserInfo.email}
           avatarUrl={sentenceUserInfo.avatar_url}
           userName={sentenceUserInfo.user_name}

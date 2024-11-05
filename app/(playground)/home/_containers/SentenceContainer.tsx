@@ -14,7 +14,7 @@ import Spinner from '@/components/shared/Spinner'
 import { YStack } from '@/components/shared/Stack'
 
 export default function SentenceContainer() {
-  const limit = 10
+  const limit = 4
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSuspenseInfiniteQuery(sentenceQuery.getAllSentence(supabase, limit))

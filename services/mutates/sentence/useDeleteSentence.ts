@@ -4,13 +4,11 @@ import { useMutation } from '@tanstack/react-query'
 
 export default function useDeleteSentence() {
   const queryClient = getQueryClient()
+
   return useMutation({
     mutationFn: async (id: number) => {
       return supabase.from('sentence').delete().eq('id', id)
     },
-    onSuccess(data, variables, context) {
-      queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
-      queryClient.removeQueries({ queryKey: ['sentence'] })
-    },
+    onSettled: () => {},
   })
 }

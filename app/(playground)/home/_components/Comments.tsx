@@ -22,7 +22,9 @@ export default function Comments({ sentenceId, me }: Props) {
     <>
       <CommentInput sentenceId={sentenceId} me={me} />
       {comments.length === 0 ? (
-        <Empty>아직 달린 댓글이 없습니다.</Empty>
+        <Empty>
+          <Empty.Text>아직 달린 댓글이 없습니다.</Empty.Text>
+        </Empty>
       ) : (
         <List className="w-full overflow-y-auto">
           {comments.map((comment) => (

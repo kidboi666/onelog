@@ -9,6 +9,7 @@ import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { userQuery } from '@/services/queries/auth/userQuery'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import { ISentenceWithUserInfo } from '@/types/sentence'
 import {
   useSuspenseInfiniteQuery,
   useSuspenseQuery,
@@ -30,9 +31,9 @@ export default function Journals() {
   const journals = data.pages.flatMap((journal) => journal || [])
   const [ref, inView] = useIntersect<HTMLDivElement>()
   const sentenceUserInfo = {
-    email: user.email,
-    user_name: user.user_name,
-    avatar_url: user.avatar_url,
+    email: user?.email,
+    user_name: user?.user_name,
+    avatar_url: user?.avatar_url,
   }
 
   useEffect(() => {
@@ -44,8 +45,9 @@ export default function Journals() {
   return (
     <Container>
       <YStack gap={8}>
-        {journals?.map((journal) => (
+        {journals?.map((journal: ISentenceWithUserInfo) => (
           <SentenceCard
+            key={journal.id}
             meId={me?.userId}
             sentence={journal}
             sentenceUserInfo={sentenceUserInfo}

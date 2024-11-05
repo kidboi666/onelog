@@ -28,12 +28,12 @@ export default function Articles() {
     useSuspenseInfiniteQuery(
       sentenceQuery.getAllMySentence(supabase, userId, 'article', limit),
     )
-  const journals = data.pages.flatMap((journal) => journal || [])
+  const articles = data.pages.flatMap((article) => article || [])
   const [ref, inView] = useIntersect<HTMLDivElement>()
   const sentenceUserInfo = {
-    email: user.email,
-    user_name: user.user_name,
-    avatar_url: user.avatar_url,
+    email: user?.email,
+    user_name: user?.user_name,
+    avatar_url: user?.avatar_url,
   }
 
   useEffect(() => {
@@ -46,10 +46,11 @@ export default function Articles() {
     <Container>
       <YStack gap={8}>
         <Title></Title>
-        {journals?.map((journal) => (
+        {articles?.map((article) => (
           <SentenceCard
+            key={article.id}
             meId={me?.userId}
-            sentence={journal}
+            sentence={article}
             sentenceUserInfo={sentenceUserInfo}
           />
         ))}

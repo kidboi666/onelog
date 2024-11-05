@@ -23,10 +23,11 @@ export default function useUpdateSentence() {
         .update({ ...params })
         .eq('id', params.id)
     },
-    onSuccess() {
+    onSuccess(data, variables) {
+      queryClient.invalidateQueries({
+        queryKey: ['sentence', variables.post_type],
+      })
       queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
-      queryClient.invalidateQueries({ queryKey: ['sentence'] })
-      queryClient.invalidateQueries({ queryKey: ['garden'] })
     },
   })
 }

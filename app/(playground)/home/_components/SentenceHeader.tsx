@@ -1,7 +1,7 @@
 import ToolTip from '@/components/shared/Tooltip'
 import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import EmotionButtonWithDropDown from './EmotionButtonWithDropDown'
-import NameSection from './NameSection'
+import NameWithDateSection from './NameWithDateSection'
 import useToggle from '@/hooks/useToggle'
 import { XStack, ZStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
@@ -15,6 +15,7 @@ interface Props {
   createdAt: string
   userId: string
   meId?: string | null
+  postType: 'journal' | 'article'
   followers: any
   followings: any
   isMe: boolean
@@ -32,6 +33,7 @@ export default function SentenceHeader({
   createdAt,
   meId,
   followers,
+  postType,
   followings,
   isMe,
   isFollowing,
@@ -50,7 +52,14 @@ export default function SentenceHeader({
         userId={userId}
         userName={userName}
       />
-      <NameSection userName={userName} email={email} />
+      <XStack className="flex-1 items-end">
+        <NameWithDateSection
+          userName={userName}
+          email={email}
+          createdAt={createdAt}
+          postType={postType}
+        />
+      </XStack>
       {emotionLevel && (
         <ZStack>
           <Container onMouseEnter={hover} onMouseLeave={leave}>
