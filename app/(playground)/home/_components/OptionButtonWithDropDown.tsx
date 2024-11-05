@@ -29,7 +29,7 @@ export default function OptionButtonWithDropDown({
 
   const pushDeleteModal = (e: MouseEvent) => {
     e.stopPropagation()
-    router.push(`/confirm/delete_sentence?sentence_id=${sentenceId}`)
+    router.push(`/delete_sentence?sentence_id=${sentenceId}`)
   }
 
   const pushWritePage = (e: MouseEvent) => {
