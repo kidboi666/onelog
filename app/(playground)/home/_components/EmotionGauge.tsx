@@ -119,7 +119,7 @@ function EmotionBlock({
   }
   return (
     <div
-      onClick={() => onClick!(currentEmotion)}
+      onClick={() => onClick && onClick(currentEmotion)}
       className={cn(
         'size-2 cursor-pointer overflow-hidden rounded-full bg-zinc-300/35 shadow-sm transition-all dark:bg-zinc-300/15',
         sizeString!,

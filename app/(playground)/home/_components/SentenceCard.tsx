@@ -79,6 +79,8 @@ export default function SentenceCard({
         favoritedCount={sentence?.favorite || 0}
         favoritedUserId={sentence?.favorited_user_id || []}
         commentCount={sentence?.comment || 0}
+        sentenceUserId={sentence?.user_id}
+        sentenceId={sentenceId}
         onFavorite={handleFavoriteSentence}
         onClick={handleSentenceItemClick}
         meId={meId}

@@ -14,7 +14,7 @@ export default function PasswordResetForm() {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
 
   const handlePasswordReset = () => {
-    router.push('/settings/confirm')
+    router.push('/settings/confirm/update_password')
   }
 
   return (

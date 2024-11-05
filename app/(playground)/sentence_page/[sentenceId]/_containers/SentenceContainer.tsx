@@ -199,7 +199,11 @@ export default function SentenceContainer({ sentenceId }: Props) {
             commentCount={sentence.comment}
           />
           <AccessTypeButtonWithDropDown accessType={sentence?.access_type} />
-          <OptionButtonWithDropDown />
+          <OptionButtonWithDropDown
+            meId={me?.userId!}
+            sentenceId={sentence.id}
+            sentenceUserId={sentence.user_id}
+          />
         </nav>
       </div>
 

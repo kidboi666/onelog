@@ -22,6 +22,8 @@ interface Props {
   disabled?: boolean
   meId: string | null
   accessType?: string | null
+  sentenceId?: number
+  sentenceUserId?: string
 }
 
 export default function SentenceContent({
@@ -36,6 +38,8 @@ export default function SentenceContent({
   disabled = false,
   meId,
   accessType,
+  sentenceId,
+  sentenceUserId,
 }: Props) {
   const [showComment, setShowComment] = useState(false)
   const [showGradient, setShowGradient] = useState(false)
@@ -91,7 +95,11 @@ export default function SentenceContent({
             viewToolTip
           />
           <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
-          <OptionButtonWithDropDown />
+          <OptionButtonWithDropDown
+            sentenceUserId={sentenceUserId}
+            sentenceId={sentenceId}
+            meId={meId}
+          />
         </XStack>
       </YStack>
     </Container>
