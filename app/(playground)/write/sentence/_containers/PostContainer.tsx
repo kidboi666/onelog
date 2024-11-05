@@ -25,6 +25,7 @@ import EmotionSection from '../_components/EmotionSection'
 import PublishSection from '../_components/PublishSection'
 import BubbleMenuBar from '../_components/BubbleMenuBar'
 import PostTypeSection from '../_components/PostTypeSection'
+import { XStack, YStack } from '@/components/shared/Stack'
 
 export type TAccess = 'public' | 'private'
 export type TPost = 'journal' | 'article'
@@ -114,72 +115,74 @@ export default function PostContainer() {
   return (
     <form
       onSubmit={handleSubmitSentence}
-      className="flex h-fit flex-col rounded-md bg-white p-4 shadow-md dark:bg-var-darkgray"
+      className="h-fit rounded-md bg-white p-4 shadow-md dark:bg-var-darkgray"
     >
-      <div className="flex items-center gap-4">
-        <Avatar src={me?.avatar_url} size="sm" ring />
-        <div className="flex w-full flex-col self-end">
-          <Title type="sub" size="sm">
-            {me?.user_name}
-          </Title>
-          <Text type="caption">{me?.email}</Text>
-        </div>
-        <EmotionGauge
-          emotionLevel={selectedEmotion}
-          onClick={handleChangeEmotion}
-          className="self-end"
+      <YStack gap={0}>
+        <XStack gap={4} className="items-center">
+          <Avatar src={me?.avatar_url} size="sm" ring />
+          <YStack gap={0} className="w-full self-end">
+            <Title type="sub" size="sm">
+              {me?.user_name}
+            </Title>
+            <Text type="caption">{me?.email}</Text>
+          </YStack>
+          <EmotionGauge
+            emotionLevel={selectedEmotion}
+            onClick={handleChangeEmotion}
+            className="self-end"
+          />
+        </XStack>
+        <Line className="my-4" />
+        <Input
+          value={title || ''}
+          onChange={onChangeTitle}
+          disabled={me === null}
+          variant="secondary"
+          dimension="none"
+          className="my-4 w-full overflow-x-auto text-3xl"
+          placeholder="제목을 입력해 주세요."
         />
-      </div>
-      <Line className="my-4" />
-      <Input
-        value={title || ''}
-        onChange={onChangeTitle}
-        disabled={me === null}
-        variant="secondary"
-        dimension="none"
-        className="my-4 w-full overflow-x-auto text-3xl"
-        placeholder="제목을 입력해 주세요."
-      />
-      <div className="flex max-h-full cursor-text flex-col">
-        {editor && (
-          <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-            <BubbleMenuBar editor={editor} />
-          </BubbleMenu>
-        )}
-        <EditorContent editor={editor} disabled={me === null} />
-        <div onClick={handleInputFocus} className="h-20 max-h-full w-full" />
-      </div>
-      <div className="flex flex-col">
-        <TagsInput tags={tags} setTags={setTags} disabled={me === null} />
-        <div className="flex justify-between">
-          <div className="flex items-center gap-4">
-            <PublishSection
-              accessType={accessType}
-              onChangeAccessType={handleChangeAccessType}
-            />
-            <PostTypeSection
-              postType={postType}
-              onChangePostType={handleChangePostType}
-            />
-            <EmotionSection
-              selectedEmotion={selectedEmotion}
-              onChangeEmotion={handleChangeEmotion}
-            />
-          </div>
-          <Button
-            isLoading={isPending}
-            disabled={
-              editor?.storage.characterCount.characters() === 0 ||
-              tags.length > 10
-            }
-            type="submit"
-            size="sm"
-            className="self-end text-nowrap"
-          >
-            등록하기
-          </Button>
-        </div>
-      </div>
+        <YStack gap={0} className="max-h-full cursor-text">
+          {editor && (
+            <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+              <BubbleMenuBar editor={editor} />
+            </BubbleMenu>
+          )}
+          <EditorContent editor={editor} disabled={me === null} />
+          <div onClick={handleInputFocus} className="h-20 max-h-full w-full" />
+        </YStack>
+        <YStack>
+          <TagsInput tags={tags} setTags={setTags} disabled={me === null} />
+          <XStack className="justify-between">
+            <XStack gap={4} className="items-center">
+              <PublishSection
+                accessType={accessType}
+                onChangeAccessType={handleChangeAccessType}
+              />
+              <PostTypeSection
+                postType={postType}
+                onChangePostType={handleChangePostType}
+              />
+              <EmotionSection
+                selectedEmotion={selectedEmotion}
+                onChangeEmotion={handleChangeEmotion}
+              />
+            </XStack>
+            <Button
+              isLoading={isPending}
+              disabled={
+                editor?.storage.characterCount.characters() === 0 ||
+                tags.length > 10
+              }
+              type="submit"
+              size="sm"
+              className="self-end text-nowrap"
+            >
+              등록하기
+            </Button>
+          </XStack>
+        </YStack>
+      </YStack>
     </form>
   )
 }

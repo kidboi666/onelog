@@ -1,6 +1,7 @@
 import Avatar from '@/components/shared/Avatar'
 import Button from '@/components/shared/Button'
 import Input from '@/components/shared/Input'
+import { XStack } from '@/components/shared/Stack'
 import { useInput } from '@/hooks/useInput'
 import { usePostComment } from '@/services/mutates/comment/usePostComment'
 import { IUserSession } from '@/services/queries/auth/meQuery'
@@ -54,25 +55,26 @@ export default function CommentInput({ sentenceId, commentId, me }: Props) {
     <form
       onClick={handleRouterGuard}
       onSubmit={handlePostComment}
-      className="mb-2 flex w-full gap-4"
+      className="mb-2 w-full"
     >
-      <Avatar src={me?.avatar_url} size="sm" shadow="sm" />
-      <Input
-        value={content}
-        onChange={onChangeContent}
-        dimension="sm"
-        placeholder={me ? '댓글을 달아주세요.' : '로그인을 해주세요'}
-        className="w-full bg-var-lightgray dark:bg-var-dark"
-      />
-      <Button
-        type="submit"
-        disabled={!content || !me}
-        isLoading={isPostPending}
-        size="sm"
-        className="h-full self-end"
-      >
-        댓글달기
-      </Button>
+      <XStack gap={4}>
+        <Avatar src={me?.avatar_url} size="sm" shadow="sm" />
+        <Input
+          value={content}
+          onChange={onChangeContent}
+          dimension="xs"
+          placeholder={me ? '댓글을 달아주세요.' : '로그인을 해주세요'}
+          className="w-full bg-var-lightgray dark:bg-var-dark"
+        />
+        <Button
+          type="submit"
+          disabled={!content || !me}
+          isLoading={isPostPending}
+          size="sm"
+        >
+          댓글달기
+        </Button>
+      </XStack>
     </form>
   )
 }
