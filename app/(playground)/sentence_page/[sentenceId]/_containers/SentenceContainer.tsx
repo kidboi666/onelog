@@ -97,7 +97,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
 
   return (
     <YStack gap={8}>
-      <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-md dark:bg-var-darkgray">
+      <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray">
         <div className="flex items-center gap-4">
           <Avatar
             src={sentence?.user_info.avatar_url}
@@ -132,7 +132,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
           <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark">
             <Link
               href={`/profile/${sentence?.user_id}`}
-              className="flex flex-1 gap-2"
+              className="flex flex-1 gap-4"
             >
               <Avatar src={sentence?.user_info.avatar_url} size="md" />
               <div className="flex w-full flex-col gap-1">
@@ -208,7 +208,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
       </div>
 
       {showComment && (
-        <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-md dark:bg-var-darkgray">
+        <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray">
           <Suspense fallback={<Spinner size={40} />}>
             <Comments sentenceId={sentence.id} me={me} />
           </Suspense>

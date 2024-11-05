@@ -115,7 +115,7 @@ export default function PostContainer() {
   return (
     <form
       onSubmit={handleSubmitSentence}
-      className="h-fit rounded-md bg-white p-4 shadow-md dark:bg-var-darkgray"
+      className="h-fit rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray"
     >
       <YStack gap={0}>
         <XStack gap={4} className="items-center">

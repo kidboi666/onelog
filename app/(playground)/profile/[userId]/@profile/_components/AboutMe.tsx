@@ -63,7 +63,7 @@ export default function AboutMe({ userId }: Props) {
   }
 
   return (
-    <Container className="rounded-md bg-white p-8 shadow-md transition max-lg:py-4 dark:bg-var-darkgray">
+    <Container className="rounded-md bg-white p-8 shadow-sm transition max-lg:py-4 dark:bg-var-darkgray">
       <YStack gap={4} className="items-center justify-center">
         <ZStack className="relative">
           <Avatar src={user?.avatar_url} size="md" ring shadow="sm" />

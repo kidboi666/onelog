@@ -33,7 +33,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
 
   return (
     <>
-      <Container className="overflow-x-auto rounded-md bg-white p-1 shadow-md dark:bg-var-darkgray">
+      <Container className="overflow-x-auto rounded-md bg-white p-1 shadow-sm dark:bg-var-darkgray">
         <ZStack gap={0}>
           {PROFILE_NAVIGATE_MENUS.map((menu) => (
             <LinkButton
