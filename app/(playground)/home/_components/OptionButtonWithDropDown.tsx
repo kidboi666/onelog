@@ -6,7 +6,7 @@ import { DropDown } from '@/components/shared/DropDown'
 import { useRouter } from 'next/navigation'
 
 interface Props {
-  meId: string | null
+  meId?: string | null
   sentenceUserId?: string
   sentenceId?: number
 }

@@ -14,7 +14,7 @@ interface Props {
   emotionLevel: TEmotion
   createdAt: string
   userId: string
-  meId: string | null
+  meId?: string | null
   followers: any
   followings: any
   isMe: boolean
@@ -51,12 +51,18 @@ export default function SentenceHeader({
         userName={userName}
       />
       <NameSection userName={userName} email={email} />
-      <ZStack>
-        <Container onMouseEnter={hover} onMouseLeave={leave}>
-          <EmotionButtonWithDropDown emotionLevel={emotionLevel} />
-          <ToolTip isHover={isHover} position="bottomRight" text="감정 농도" />
-        </Container>
-      </ZStack>
+      {emotionLevel && (
+        <ZStack>
+          <Container onMouseEnter={hover} onMouseLeave={leave}>
+            <EmotionButtonWithDropDown emotionLevel={emotionLevel} />
+            <ToolTip
+              isHover={isHover}
+              position="bottomRight"
+              text="감정 농도"
+            />
+          </Container>
+        </ZStack>
+      )}
     </XStack>
   )
 }

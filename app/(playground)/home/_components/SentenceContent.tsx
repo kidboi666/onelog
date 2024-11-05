@@ -20,7 +20,7 @@ interface Props {
   onFavorite: (e: MouseEvent) => void
   onClick?: () => void
   disabled?: boolean
-  meId: string | null
+  meId?: string | null
   accessType?: string | null
   sentenceId?: number
   sentenceUserId?: string

@@ -64,6 +64,32 @@ export const sentenceQuery = {
       enabled: !!startOfDay && !!endOfDay,
     }),
 
+  getAllMySentence: (
+    supabase: SupabaseClient,
+    userId: string,
+    postType: 'journal' | 'article',
+    limit: number = 10,
+  ) =>
+    infiniteQueryOptions({
+      queryKey: ['my_sentences', postType],
+      queryFn: async ({ pageParam = 0 }) => {
+        const { data } = await supabase
+          .from('sentence')
+          .select()
+          .eq('user_id', userId)
+          .eq('post_type', postType)
+          .order('created_at', { ascending: false })
+          .range(pageParam, pageParam + limit - 1)
+
+        return data
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage && lastPage.length < limit) return undefined
+        return allPages.length * limit
+      },
+    }),
+
   getAllMySentenceCount: (supabase: SupabaseClient, userId: string) =>
     queryOptions({
       queryKey: ['sentence_count'],
@@ -74,6 +100,25 @@ export const sentenceQuery = {
           .eq('user_id', userId)
 
         return count
+      },
+      enabled: !!userId,
+    }),
+
+  getAllSentenceCount: (
+    supabase: SupabaseClient,
+    userId: string,
+    postType: 'journal' | 'article',
+  ) =>
+    queryOptions({
+      queryKey: ['sentence_count', postType],
+      queryFn: async () => {
+        const { count } = await supabase
+          .from('sentence')
+          .select('*', { count: 'exact', head: true })
+          .eq('user_id', userId)
+          .eq('post_type', postType)
+
+        return { count, postType }
       },
       enabled: !!userId,
     }),

@@ -9,7 +9,7 @@ interface Props {
   params: { userId: string }
 }
 
-export default function SentenceSummary({ params }: Props) {
+export default function JournalGarden({ params }: Props) {
   const queryClient = getQueryClient()
   const supabase = createServerClient()
   const userId = params.userId

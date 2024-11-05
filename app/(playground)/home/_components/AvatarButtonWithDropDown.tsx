@@ -19,7 +19,7 @@ interface Props {
   followers: any
   followings: any
   userId: string
-  meId: string | null
+  meId?: string | null
   userName: string | null
 }
 

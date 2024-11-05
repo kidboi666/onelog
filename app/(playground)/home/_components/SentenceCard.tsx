@@ -16,13 +16,15 @@ import { TEmotion } from '../../write/sentence/_containers/PostContainer'
 
 interface Props {
   sentence?: ISentenceWithUserInfo
+  sentenceUserInfo?: any
   sentenceSummary?: ISentenceState
-  meId: string | null
+  meId?: string | null
   disabled?: boolean
 }
 
 export default function SentenceCard({
   sentence,
+  sentenceUserInfo,
   meId,
   sentenceSummary,
   disabled,
@@ -64,9 +66,9 @@ export default function SentenceCard({
           isFollowing={!!isFollowing}
           followers={followers}
           followings={followings}
-          email={sentence.user_info.email}
-          avatarUrl={sentence.user_info.avatar_url}
-          userName={sentence.user_info.user_name}
+          email={sentenceUserInfo.email}
+          avatarUrl={sentenceUserInfo.avatar_url}
+          userName={sentenceUserInfo.user_name}
           emotionLevel={sentence.emotion_level as TEmotion}
           createdAt={sentence.created_at}
         />

@@ -14,8 +14,8 @@ import Spinner from '@/components/shared/Spinner'
 import { YStack } from '@/components/shared/Stack'
 
 export default function SentenceContainer() {
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const limit = 10
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSuspenseInfiniteQuery(sentenceQuery.getAllSentence(supabase, limit))
   const sentences = data.pages.flatMap((page) => page || [])
@@ -33,6 +33,7 @@ export default function SentenceContainer() {
         <SentenceCard
           key={sentence.id}
           sentence={sentence}
+          sentenceUserInfo={sentence.user_info}
           meId={me !== null ? me.userId : null}
         />
       ))}
