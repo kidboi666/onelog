@@ -2,8 +2,9 @@ import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { useMutation } from '@tanstack/react-query'
 
-interface IAddSentence {
+interface IUpdateSentence {
   user_id: string
+  id: number
   title?: string
   content: string
   emotion_level: string | null
@@ -12,17 +13,17 @@ interface IAddSentence {
   post_type: 'article' | 'journal'
 }
 
-export default function useAddSentence() {
+export default function useUpdateSentence() {
   const queryClient = getQueryClient()
 
   return useMutation({
-    mutationFn: async (params: IAddSentence) => {
+    mutationFn: async (params: IUpdateSentence) => {
       return supabase
         .from('sentence')
-        .insert({ ...params })
-        .select()
+        .update({ ...params })
+        .eq('id', params.id)
     },
-    onSuccess: () => {
+    onSuccess(data, variables, context) {
       queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
       queryClient.invalidateQueries({ queryKey: ['sentence'] })
       queryClient.invalidateQueries({ queryKey: ['garden'] })

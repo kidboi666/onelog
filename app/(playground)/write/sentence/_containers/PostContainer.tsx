@@ -65,6 +65,7 @@ export default function PostContainer() {
         tags,
         title,
         access_type: accessType,
+        post_type: postType,
       },
       {
         onSuccess: () => {
@@ -144,7 +145,6 @@ export default function PostContainer() {
             isLoading={isPending}
             disabled={
               editor.storage.characterCount.characters() === 0 ||
-              !selectedEmotion ||
               tags.length > 10
             }
             type="submit"

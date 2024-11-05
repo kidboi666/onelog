@@ -18,7 +18,6 @@ interface Props {
   sentence?: ISentenceWithUserInfo
   sentenceSummary?: ISentenceState
   meId: string | null
-  className?: string
   disabled?: boolean
 }
 
@@ -26,7 +25,6 @@ export default function SentenceCard({
   sentence,
   meId,
   sentenceSummary,
-  className,
   disabled,
 }: Props) {
   const sentenceId = sentence?.id || sentenceSummary?.id
@@ -81,7 +79,6 @@ export default function SentenceCard({
         favoritedCount={sentence?.favorite || 0}
         favoritedUserId={sentence?.favorited_user_id || []}
         commentCount={sentence?.comment || 0}
-        sentenceId={sentenceId!}
         onFavorite={handleFavoriteSentence}
         onClick={handleSentenceItemClick}
         meId={meId}

@@ -1,4 +1,3 @@
-import { List } from '@/components/shared/List'
 import Tag from '@/components/shared/Tag'
 import { Editor, EditorContent } from '@tiptap/react'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
@@ -7,7 +6,7 @@ import AccessTypeButtonWithDropDown from './AccessTypeButtonWithDropDown'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
 import CommentButton from './CommentButton'
 import Title from '@/components/shared/Title'
-import { XStack, YStack } from '@/components/shared/Stack'
+import { XStack, YStack, ZStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
 
 interface Props {
@@ -16,7 +15,6 @@ interface Props {
   favoritedUserId?: string[]
   favoritedCount?: number
   commentCount?: number
-  sentenceId: number
   sentenceTitle?: string | null
   isMyPage?: boolean
   onFavorite: (e: MouseEvent) => void
@@ -33,7 +31,6 @@ export default function SentenceContent({
   favoritedUserId,
   favoritedCount,
   commentCount,
-  sentenceId,
   onFavorite,
   onClick,
   disabled = false,
@@ -67,7 +64,7 @@ export default function SentenceContent({
             {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
           </XStack>
         )}
-        <div className="relative max-h-64 overflow-hidden">
+        <ZStack direction="col" className="max-h-64 overflow-hidden">
           {sentenceTitle && <Title className="mb-8">{sentenceTitle}</Title>}
           <EditorContent
             innerRef={contentRef}
@@ -77,8 +74,8 @@ export default function SentenceContent({
           {showGradient && (
             <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-var-darkgray" />
           )}
-        </div>
-        <nav className="flex items-center justify-between">
+        </ZStack>
+        <XStack as="nav" className="items-center justify-between">
           <FavoriteButton
             favoritedUserId={favoritedUserId}
             favoritedCount={favoritedCount}
@@ -95,7 +92,7 @@ export default function SentenceContent({
           />
           <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
           <OptionButtonWithDropDown />
-        </nav>
+        </XStack>
       </YStack>
     </Container>
   )
