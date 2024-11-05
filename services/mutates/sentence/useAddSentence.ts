@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 
 interface IAddSentence {
   user_id: string
-  title?: string
+  title: string | null
   content: string
   emotion_level: string | null
   tags: string[]

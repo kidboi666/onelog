@@ -38,7 +38,7 @@ const getRenderedBlockFromEmotionLevel = (
           (v: any) => new Date(v.created_at).getDate() === day,
         )
         const levels = targetDays.map((v: any) =>
-          Number(v.emotion_level.replace('%', '')),
+          Number(v.emotion_level?.replace('%', '')),
         )
         const sum = levels.reduce((total, num) => total + num, 0)
         targetDaysForEmotionLevel = sum / levels.length

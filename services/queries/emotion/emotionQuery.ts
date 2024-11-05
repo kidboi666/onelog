@@ -9,12 +9,13 @@ export const emotionQuery = {
         const { data } = await supabase
           .from('sentence')
           .select('emotion_level')
+          .neq('emotion_level', null)
           .eq('user_id', userId)
         let result
 
-        if (data && data?.length !== 0) {
+        if (data && data?.length > 0) {
           const splitArray = data.map((item) =>
-            Number(item.emotion_level.split('%')[0]),
+            Number(item.emotion_level?.split('%')[0]),
           )
           const sum = splitArray.reduce((prev, curr) => prev + curr, 0)
           result = Math.floor(sum / splitArray.length + 1)

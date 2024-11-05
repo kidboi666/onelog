@@ -142,10 +142,11 @@ export type Database = {
           comment: number | null
           content: string
           created_at: string
-          emotion_level: string
+          emotion_level: string | null
           favorite: number | null
           favorited_user_id: string[] | null
           id: number
+          post_type: string
           tags: string[] | null
           title: string | null
           user_id: string
@@ -155,10 +156,11 @@ export type Database = {
           comment?: number | null
           content: string
           created_at?: string
-          emotion_level: string
+          emotion_level?: string | null
           favorite?: number | null
           favorited_user_id?: string[] | null
           id?: number
+          post_type?: string
           tags?: string[] | null
           title?: string | null
           user_id: string
@@ -168,10 +170,11 @@ export type Database = {
           comment?: number | null
           content?: string
           created_at?: string
-          emotion_level?: string
+          emotion_level?: string | null
           favorite?: number | null
           favorited_user_id?: string[] | null
           id?: number
+          post_type?: string
           tags?: string[] | null
           title?: string | null
           user_id?: string
@@ -220,77 +223,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      todo: {
-        Row: {
-          created_at: string
-          folder_id: number
-          id: number
-          index: number
-          is_complete: boolean | null
-          memo: string | null
-          name: string
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          folder_id: number
-          id?: number
-          index: number
-          is_complete?: boolean | null
-          memo?: string | null
-          name: string
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          folder_id?: number
-          id?: number
-          index?: number
-          is_complete?: boolean | null
-          memo?: string | null
-          name?: string
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "todo_folder_id_fkey"
-            columns: ["folder_id"]
-            isOneToOne: false
-            referencedRelation: "todo_folder"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      todo_folder: {
-        Row: {
-          color: string
-          created_at: string
-          id: number
-          index: number
-          name: string
-          user_id: string
-        }
-        Insert: {
-          color: string
-          created_at?: string
-          id?: number
-          index: number
-          name: string
-          user_id: string
-        }
-        Update: {
-          color?: string
-          created_at?: string
-          id?: number
-          index?: number
-          name?: string
-          user_id?: string
-        }
-        Relationships: []
       }
       user_info: {
         Row: {

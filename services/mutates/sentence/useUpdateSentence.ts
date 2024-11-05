@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 interface IUpdateSentence {
   user_id: string
   id: number
-  title?: string
+  title: string | null
   content: string
   emotion_level: string | null
   tags: string[]
@@ -23,7 +23,7 @@ export default function useUpdateSentence() {
         .update({ ...params })
         .eq('id', params.id)
     },
-    onSuccess(data, variables, context) {
+    onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
       queryClient.invalidateQueries({ queryKey: ['sentence'] })
       queryClient.invalidateQueries({ queryKey: ['garden'] })

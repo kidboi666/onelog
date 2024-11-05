@@ -11,7 +11,7 @@ import useBlockEditor from '@/hooks/useBlockEditor'
 import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { supabase } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Input from '@/components/shared/Input'
 import Line from '@/components/shared/Line'
 import EmotionSection from '../_components/EmotionSection'
@@ -21,6 +21,8 @@ import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import EmotionGauge from '@/app/(playground)/home/_components/EmotionGauge'
 import PostTypeSection from '../_components/PostTypeSection'
+import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import useUpdateSentence from '@/services/mutates/sentence/useUpdateSentence'
 
 export type TAccess = 'public' | 'private'
 export type TPost = 'journal' | 'article'
@@ -28,8 +30,13 @@ export type TEmotion = '0%' | '25%' | '50%' | '75%' | '100%'
 
 export default function PostContainer() {
   const router = useRouter()
+  const sentenceId = useSearchParams().get('sentence_id')
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const [content, _, setContent] = useInput<string>('')
+  const { data: sentence } = useSuspenseQuery(
+    sentenceQuery.getSentence(supabase, parseInt(sentenceId || '')),
+  )
+  const [content, setContent] = useState(sentence?.content ?? '')
+  const [title, onChangeTitle, setTitle] = useInput<string | null>(null)
   const [selectedEmotion, setSelectedEmotion] = useState<TEmotion | null>('50%')
   const [accessType, setAccessType] = useState<TAccess>('public')
   const [postType, setPostType] = useState<TPost>('journal')
@@ -39,43 +46,55 @@ export default function PostContainer() {
     editable: true,
     placeholder: '오늘 당신의 생각과 감정을 기록하세요.',
   })
-  const [title, onChangeTitle] = useInput('')
   const [tags, setTags] = useState<string[]>([])
   const { mutate: addSentence, isPending } = useAddSentence()
+  const { mutate: updateSentence } = useUpdateSentence()
 
   const handleChangeEmotion = (emotion: TEmotion | null) =>
     setSelectedEmotion(emotion)
   const handleChangeAccessType = (order: TAccess) => setAccessType(order)
   const handleChangePostType = (order: TPost) => setPostType(order)
-
-  const handleInputFocus = () => {
-    if (editor) {
-      editor.commands.focus('end')
-    }
+  const handleInputFocus = () => editor?.commands.focus('end')
+  const handleInitPostData = () => {
+    setTitle(sentence.title)
+    editor?.commands.setContent(content)
+    setPostType(sentence.post_type)
+    setAccessType(sentence.access_type)
+    setSelectedEmotion(sentence.emotion_level ? sentence.emotion_level : null)
   }
 
   const handleSubmitSentence = (e: FormEvent) => {
     e.preventDefault()
 
-    addSentence(
-      {
-        content,
-        emotion_level: selectedEmotion,
-        user_id: me!.userId,
-        tags,
-        title,
-        access_type: accessType,
-        post_type: postType,
-      },
-      {
-        onSuccess: () => {
-          setContent('')
-          setSelectedEmotion(null)
-          router.push('/success')
-          router.back()
-        },
-      },
-    )
+    const newSentence = {
+      content,
+      emotion_level: postType === 'journal' ? selectedEmotion : null,
+      user_id: me!.userId,
+      tags,
+      title,
+      access_type: accessType,
+      post_type: postType,
+    }
+
+    sentence
+      ? updateSentence(
+          {
+            ...newSentence,
+            id: sentence.id,
+          },
+          {
+            onSuccess: () => {
+              router.push('/success')
+              router.back()
+            },
+          },
+        )
+      : addSentence(newSentence, {
+          onSuccess: () => {
+            router.push('/success')
+            router.back()
+          },
+        })
   }
 
   useEffect(() => {
@@ -84,7 +103,11 @@ export default function PostContainer() {
       : handleChangeEmotion('50%')
   }, [postType])
 
-  if (!editor) return null
+  useEffect(() => {
+    if (sentence && editor) {
+      handleInitPostData()
+    }
+  }, [sentence, editor])
 
   return (
     <form
@@ -107,7 +130,7 @@ export default function PostContainer() {
       </div>
       <Line className="my-4" />
       <Input
-        value={title}
+        value={title || ''}
         onChange={onChangeTitle}
         disabled={me === null}
         variant="secondary"
@@ -144,7 +167,7 @@ export default function PostContainer() {
           <Button
             isLoading={isPending}
             disabled={
-              editor.storage.characterCount.characters() === 0 ||
+              editor?.storage.characterCount.characters() === 0 ||
               tags.length > 10
             }
             type="submit"

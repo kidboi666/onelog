@@ -32,6 +32,11 @@ export default function OptionButtonWithDropDown({
     router.push(`/confirm/delete_sentence?sentence_id=${sentenceId}`)
   }
 
+  const pushWritePage = (e: MouseEvent) => {
+    e.stopPropagation()
+    router.push(`/write/sentence/?sentence_id=${sentenceId}`)
+  }
+
   return (
     <DropDown.Root>
       <DropDown.Trigger
@@ -66,7 +71,7 @@ export default function OptionButtonWithDropDown({
             <DropDown.Button
               variant="list"
               size="sm"
-              onClick={() => null}
+              onClick={pushWritePage}
               className="w-full gap-2"
             >
               <Icon view="0 -960 960 960" size={18}>
