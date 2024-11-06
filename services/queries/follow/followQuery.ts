@@ -10,12 +10,8 @@ export const followQuery = {
         const { data, error } = await supabase
           .from('follow')
           .select(
-            `*, 
-            user_info:user_info!follow_follower_user_id_fkey(
-              email
-              user_name,
-              avatar_url,
-            )
+            `*,
+            user_info!follow_followed_user_id_fkey(*)
             `,
           )
           .eq('followed_user_id', userId)
@@ -36,13 +32,8 @@ export const followQuery = {
         const { data, error } = await supabase
           .from('follow')
           .select(
-            `
-            *,
-            user_info:user_info!follow_followed_user_id_fkey(
-              email
-              user_name,
-              avatar_url,
-            )
+            `*,
+            user_info!follow_follower_user_id_fkey(*)
             `,
           )
           .eq('follower_user_id', userId)
@@ -52,26 +43,6 @@ export const followQuery = {
         }
 
         return data
-      },
-    }),
-
-  /** 유저를 팔로우하는 사람들 정보 */
-  getMyFollowers: (supabase: SupabaseClient, userId?: string) =>
-    queryOptions({
-      queryKey: ['follower', userId],
-      queryFn: async () => {
-        const { data, error } = await supabase
-          .from('follow')
-          .select(
-            `*, 
-            user_info:user_info!follow_follower_user_id_fkey(
-              user_name,
-              avatar_url,
-              email
-            )
-            `,
-          )
-          .eq('follower_user_id', userId)
       },
     }),
 }
