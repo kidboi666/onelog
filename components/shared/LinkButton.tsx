@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Button, { ButtonProps } from './Button'
-import { PropsWithChildren } from 'react'
 import cn from '@/lib/cn'
 
 interface Props extends ButtonProps {
@@ -13,18 +12,11 @@ export default function LinkButton({
   className,
   innerClassName,
   href,
-  size,
-  variant,
   ...props
-}: PropsWithChildren<Props>) {
+}: Props) {
   return (
     <Link href={href} className={cn('h-full w-full', className)}>
-      <Button
-        variant={variant}
-        size={size}
-        {...props}
-        className={cn('h-full w-full', innerClassName)}
-      >
+      <Button className={cn('h-full w-full', innerClassName)} {...props}>
         {children}
       </Button>
     </Link>

@@ -1,43 +1,64 @@
 'use client'
 
-import Avatar from '@/components/shared/Avatar'
-import Button from '@/components/shared/Button'
 import Modal from '@/components/shared/Modal'
-import { XStack, YStack } from '@/components/shared/Stack'
-import Text from '@/components/shared/Text'
-import Title from '@/components/shared/Title'
+import { YStack } from '@/components/shared/Stack'
 import { supabase } from '@/lib/supabase/client'
+import useFollow from '@/services/mutates/follow/useFollow'
+import useUnFollow from '@/services/mutates/follow/useUnFollow'
+import { meQuery } from '@/services/queries/auth/meQuery'
 import { followQuery } from '@/services/queries/follow/followQuery'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import FollowUserCard from '../../_components/FollowUserCard'
 
 interface Props {
   params: { userId: string }
 }
 
 export default function FollowingListModal({ params }: Props) {
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: followings } = useSuspenseQuery(
     followQuery.getFollowing(supabase, params.userId),
   )
-  const isFollowing = null
+  const { data: myFollows } = useSuspenseQuery(
+    followQuery.getFollowing(supabase, me?.userId),
+  )
+  const { mutate: followUser } = useFollow()
+  const { mutate: unfollowUser } = useUnFollow()
+  const handleFollowUser = (userId: string) =>
+    followUser({
+      followed_user_id: userId,
+      follower_user_id: me!.userId,
+    })
+  const handleUnfollowUser = (userId: string) =>
+    unfollowUser({
+      followed_user_id: userId,
+      follower_user_id: me!.userId,
+    })
 
   return (
     <Modal className="sm:max-w-[600px]">
       <YStack gap={8} className="w-full">
-        {followings?.map((follower) => (
-          <>
-            <XStack gap={4} key={follower.id} className="h-20 items-center">
-              <Avatar size="base" src={follower.user_info.avatar_url} />
-              <YStack gap={0} className="flex-1 justify-center">
-                <Title size="sm">{follower.user_info.user_name}</Title>
-                <Text type="caption">{follower.user_info.email}</Text>
-              </YStack>
-              <Button size="sm" className="h-fit">
-                팔로우 하기
-              </Button>
-            </XStack>
-          </>
-        ))}
+        {followings?.map((user) => {
+          const isFollowing = myFollows?.find(
+            (user: any) => user.followed_user_id === user.user_info.id,
+          ) // 내가 팔로우중인 사람들 중, 해당 유저 아이디가 있으면 팔로우 취소 버튼을
+          const isMe = me?.userId === user.followed_user_id
+          // 유저의 아이디가 내 아이디라면 팔로우 버튼 삭제
+
+          return (
+            <FollowUserCard
+              key={user.id}
+              isFollowing={isFollowing}
+              isMe={isMe}
+              follower={user}
+              follow={handleFollowUser}
+              unfollow={handleUnfollowUser}
+            />
+          )
+        })}
       </YStack>
     </Modal>
   )
 }
+
+// 거씨발 팔로우 기능이 이렇게 복잡한거라니 개자식들 누가 누구를 팔로우를씨팔
