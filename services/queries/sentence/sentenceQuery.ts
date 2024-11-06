@@ -40,7 +40,7 @@ export const sentenceQuery = {
     endOfDay: string | null,
   ) =>
     queryOptions<ISentenceWithUserInfo[] | null>({
-      queryKey: ['sentence', `${startOfDay}${endOfDay}`],
+      queryKey: ['sentence', `${startOfDay}${endOfDay}`, userId],
       queryFn: async () => {
         const { data } = await supabase
           .from('sentence')
@@ -71,7 +71,7 @@ export const sentenceQuery = {
     limit: number = 10,
   ) =>
     infiniteQueryOptions({
-      queryKey: ['sentence', postType],
+      queryKey: ['sentence', postType, userId],
       queryFn: async ({ pageParam = 0 }) => {
         const { data } = await supabase
           .from('sentence')
@@ -92,7 +92,7 @@ export const sentenceQuery = {
 
   getAllMySentenceCount: (supabase: SupabaseClient, userId: string) =>
     queryOptions({
-      queryKey: ['sentence_count'],
+      queryKey: ['sentence_count', userId],
       queryFn: async () => {
         const { count } = await supabase
           .from('sentence')
@@ -110,7 +110,7 @@ export const sentenceQuery = {
     postType: 'journal' | 'article',
   ) =>
     queryOptions({
-      queryKey: ['sentence_count', postType],
+      queryKey: ['sentence_count', postType, userId],
       queryFn: async () => {
         const { count } = await supabase
           .from('sentence')

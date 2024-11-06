@@ -4,7 +4,7 @@ import { queryOptions } from '@tanstack/react-query'
 export const emotionQuery = {
   getEmotionAverage: (supabase: SupabaseClient, userId: string) =>
     queryOptions({
-      queryKey: ['user_emotion_average'],
+      queryKey: ['user_emotion_average', userId],
       queryFn: async () => {
         const { data } = await supabase
           .from('sentence')
@@ -33,7 +33,7 @@ export const emotionQuery = {
     date: string,
   ) =>
     queryOptions({
-      queryKey: ['user_emotion', date],
+      queryKey: ['user_emotion', date, userId],
       queryFn: async () => {
         const { data } = await supabase
           .from('sentence')

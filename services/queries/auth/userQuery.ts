@@ -5,7 +5,7 @@ import { queryOptions } from '@tanstack/react-query'
 export const userQuery = {
   getUserInfo: (supabase: SupabaseClient, userId: string) =>
     queryOptions<Tables<'user_info'>>({
-      queryKey: ['user', userId],
+      queryKey: ['user', 'info', userId],
       queryFn: async () => {
         const { data } = await supabase
           .from('user_info')
