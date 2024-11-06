@@ -2,7 +2,7 @@
 
 import cn from '@/lib/cn'
 import { cva } from 'class-variance-authority'
-import { ComponentProps, forwardRef, PropsWithRef } from 'react'
+import { ComponentProps, forwardRef, memo, PropsWithRef } from 'react'
 import Spinner from './Spinner'
 import { colorTheme, useTheme } from '@/store/useTheme'
 
@@ -47,49 +47,50 @@ const BUTTON_VARIANTS = cva(
   },
 )
 
-const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
-  (
-    {
-      children,
-      className,
-      isLoading = false,
-      onClick,
-      dataStatus,
-      disabled = false,
-      type = 'button',
-      size = 'md',
-      variant = 'primary',
-      ...props
+const Button = memo(
+  forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
+    (
+      {
+        children,
+        className,
+        isLoading = false,
+        onClick,
+        dataStatus,
+        disabled = false,
+        type = 'button',
+        size = 'md',
+        variant = 'primary',
+        ...props
+      },
+      ref,
+    ) => {
+      const { color } = useTheme()
+
+      const buttonClasses = cn(
+        variant === 'primary' && colorTheme({ color }),
+        BUTTON_VARIANTS({
+          [isLoading || disabled ? 'disabled' : 'active']: variant,
+          size,
+        }),
+        className,
+      )
+
+      return (
+        <button
+          ref={ref}
+          disabled={disabled}
+          data-status={dataStatus}
+          onClick={onClick}
+          type={type}
+          className={buttonClasses}
+          {...props}
+        >
+          {children}
+          {isLoading && <Spinner size={size === 'sm' ? 16 : 20} />}
+        </button>
+      )
     },
-    ref,
-  ) => {
-    const { color } = useTheme()
-
-    const buttonClasses = cn(
-      variant === 'primary' ? colorTheme({ color }) : '',
-      BUTTON_VARIANTS(
-        isLoading || disabled
-          ? { disabled: variant, size }
-          : { active: variant, size },
-      ),
-      className,
-    )
-
-    return (
-      <button
-        ref={ref}
-        disabled={disabled}
-        data-status={dataStatus}
-        onClick={onClick}
-        type={type}
-        className={buttonClasses}
-        {...props}
-      >
-        {children}
-        {isLoading && <Spinner size={size === 'sm' ? 16 : 20} />}
-      </button>
-    )
-  },
+  ),
 )
 
 Button.displayName = 'Button'

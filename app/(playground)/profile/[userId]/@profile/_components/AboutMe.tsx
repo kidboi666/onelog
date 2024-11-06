@@ -21,6 +21,7 @@ import EmotionAverage from './EmotionAverage'
 import { XStack, YStack, ZStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
+import Follow from '@/components/shared/Follow'
 
 interface Props {
   userId: string
@@ -49,6 +50,9 @@ export default function AboutMe({ userId }: Props) {
   const isFollowing =
     !isMyProfilePage &&
     followers?.find((user) => user.follower_user_id === me?.userId)
+
+  const pushFollowerList = () => router.push(`/follower/${userId}`)
+  const pushFollowingList = () => router.push(`/following/${userId}`)
 
   const handleFollowButtonClick = () => {
     me
@@ -85,14 +89,16 @@ export default function AboutMe({ userId }: Props) {
               {user?.about_me ? user.about_me : '자기 소개를 작성해주세요.'}
             </Text>
           </ZStack>
-          <XStack>
-            <Text type="caption" size="sm">
-              팔로우 {followerCount}명
-            </Text>
-            <Text type="caption" size="sm">
-              팔로잉 {followingCount}명
-            </Text>
-          </XStack>
+          <Follow>
+            <Follow.Follower
+              followerCount={followerCount}
+              onClick={pushFollowerList}
+            />
+            <Follow.Following
+              followingCount={followingCount}
+              onClick={pushFollowingList}
+            />
+          </Follow>
           <XStack gap={4}>
             {isMyProfilePage ? (
               <>

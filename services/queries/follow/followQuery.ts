@@ -11,7 +11,7 @@ export const followQuery = {
           .from('follow')
           .select(
             `*,
-            user_info!follow_followed_user_id_fkey(*)
+            user_info!follow_follower_user_id_fkey(*)
             `,
           )
           .eq('followed_user_id', userId)
@@ -33,7 +33,7 @@ export const followQuery = {
           .from('follow')
           .select(
             `*,
-            user_info!follow_follower_user_id_fkey(*)
+            user_info!follow_followed_user_id_fkey(*)
             `,
           )
           .eq('follower_user_id', userId)
