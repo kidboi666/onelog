@@ -9,7 +9,7 @@ import useDeleteSentence from '@/services/mutates/sentence/useDeleteSentence'
 import { XStack } from '@/components/shared/Stack'
 
 interface Props {
-  params: { sentence_id: string }
+  params: { sentenceId: string }
 }
 
 export default function DeleteSentenceModal({ params }: Props) {
@@ -18,7 +18,9 @@ export default function DeleteSentenceModal({ params }: Props) {
   const [isLoading, startTransition] = useTransition()
 
   const handleSentenceDelete = () => {
-    deleteSentence(parseInt(params.sentence_id || ''))
+    deleteSentence(Number(params.sentenceId), {
+      onSettled: () => router.back(),
+    })
   }
 
   return (
@@ -34,7 +36,7 @@ export default function DeleteSentenceModal({ params }: Props) {
         </Button>
         <Button
           onClick={() => startTransition(() => handleSentenceDelete())}
-          isLoading
+          isLoading={isLoading}
         >
           삭제하기
         </Button>

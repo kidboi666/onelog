@@ -7,8 +7,12 @@ export default function useDeleteSentence() {
 
   return useMutation({
     mutationFn: async (id: number) => {
-      return supabase.from('sentence').delete().eq('id', id)
+      return supabase.from('sentence').delete().eq('id', id).select()
     },
-    onSettled: () => {},
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
+      queryClient.invalidateQueries({ queryKey: ['garden'] })
+      queryClient.invalidateQueries({ queryKey: ['sentence_count'] })
+    },
   })
 }

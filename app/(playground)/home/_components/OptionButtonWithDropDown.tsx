@@ -6,21 +6,18 @@ import { DropDown } from '@/components/shared/DropDown'
 import { useRouter } from 'next/navigation'
 
 interface Props {
-  meId?: string | null
-  sentenceUserId?: string
   sentenceId?: number
+  isOwner: boolean
 }
 
 export default function OptionButtonWithDropDown({
-  meId,
-  sentenceUserId,
   sentenceId,
+  isOwner,
 }: Props) {
   const router = useRouter()
   const { close, ref, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const optionButtonRef = useOutsideClick<HTMLButtonElement>(close)
-  const isOwner = meId === sentenceUserId
 
   const handleButtonClick = (e: MouseEvent) => {
     e.stopPropagation()
@@ -29,7 +26,7 @@ export default function OptionButtonWithDropDown({
 
   const pushDeleteModal = (e: MouseEvent) => {
     e.stopPropagation()
-    router.push(`/delete_sentence?sentence_id=${sentenceId}`)
+    router.push(`/delete_sentence/${sentenceId}`)
   }
 
   const pushWritePage = (e: MouseEvent) => {
@@ -55,17 +52,6 @@ export default function OptionButtonWithDropDown({
         onTransitionEnd={onTransitionEnd}
         className="p-0"
       >
-        <DropDown.Button
-          variant="list"
-          size="sm"
-          onClick={() => null}
-          className="w-full gap-2"
-        >
-          <Icon view="0 -960 960 960" size={18}>
-            <path d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240ZM330-120 120-330v-300l210-210h300l210 210v300L630-120H330Zm34-80h232l164-164v-232L596-760H364L200-596v232l164 164Zm116-280Z" />
-          </Icon>
-          신고하기
-        </DropDown.Button>
         {isOwner && (
           <>
             <DropDown.Button

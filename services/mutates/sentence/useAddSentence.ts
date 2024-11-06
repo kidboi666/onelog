@@ -26,6 +26,7 @@ export default function useAddSentence() {
       queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
       queryClient.invalidateQueries({ queryKey: ['sentence'] })
       queryClient.invalidateQueries({ queryKey: ['garden'] })
+      queryClient.invalidateQueries({ queryKey: ['sentence_count'] })
     },
   })
 }

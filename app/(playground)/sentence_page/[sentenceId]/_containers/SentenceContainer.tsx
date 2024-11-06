@@ -33,6 +33,7 @@ import AccessTypeButtonWithDropDown from '@/app/(playground)/home/_components/Ac
 import OptionButtonWithDropDown from '@/app/(playground)/home/_components/OptionButtonWithDropDown'
 import Comments from '@/app/(playground)/home/_components/Comments'
 import { TEmotion } from '@/app/(playground)/write/sentence/_containers/PostContainer'
+import ReportButton from '@/app/(playground)/home/_components/ReportButton'
 
 interface Props {
   sentenceId: number
@@ -56,7 +57,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
   const { editor } = useBlockEditor({ content: sentence?.content })
   const { mutate: favoriteSentence } = useFavoriteSentence()
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
-
+  const isOwner = me?.userId === sentence?.user_id
   const handleShowComment = () => {
     setShowComment((prev) => !prev)
   }
@@ -192,18 +193,25 @@ export default function SentenceContainer({ sentenceId }: Props) {
             favoritedCount={sentence?.favorite}
             onFavorite={handleFavoriteSentence}
             meId={me?.userId}
+            viewToolTip
           />
           <CommentButton
+            viewToolTip
             showComment={showComment}
             onShowComment={handleShowComment}
             commentCount={sentence.comment}
           />
-          <AccessTypeButtonWithDropDown accessType={sentence?.access_type} />
-          <OptionButtonWithDropDown
-            meId={me?.userId!}
-            sentenceId={sentence.id}
-            sentenceUserId={sentence.user_id}
+          <AccessTypeButtonWithDropDown
+            accessType={sentence?.access_type}
+            viewToolTip
           />
+          <ReportButton viewToolTip />
+          {isOwner && (
+            <OptionButtonWithDropDown
+              isOwner={isOwner}
+              sentenceId={sentence.id}
+            />
+          )}
         </nav>
       </div>
 

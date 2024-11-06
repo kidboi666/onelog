@@ -55,14 +55,18 @@ export default function Journals() {
               sentenceUserInfo={sentenceUserInfo}
             />
           ))}
-          <div ref={ref} />
-          {isFetchingNextPage && <Spinner size={60} />}
+          {isFetchingNextPage && (
+            <Spinner.Container>
+              <Spinner size={60} />
+            </Spinner.Container>
+          )}
         </YStack>
       ) : (
         <Empty>
           <Empty.Text>아직 작성한 일기가 없습니다.</Empty.Text>
         </Empty>
       )}
+      <div ref={ref} />
     </Container>
   )
 }

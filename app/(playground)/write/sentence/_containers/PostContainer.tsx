@@ -176,7 +176,6 @@ export default function PostContainer() {
               }
               type="submit"
               size="sm"
-              className="self-end text-nowrap"
             >
               등록하기
             </Button>

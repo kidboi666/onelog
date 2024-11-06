@@ -3,11 +3,11 @@ import { Editor, EditorContent } from '@tiptap/react'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import FavoriteButton from './FavoriteButton'
 import AccessTypeButtonWithDropDown from './AccessTypeButtonWithDropDown'
-import OptionButtonWithDropDown from './OptionButtonWithDropDown'
 import CommentButton from './CommentButton'
 import Title from '@/components/shared/Title'
 import { XStack, YStack, ZStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
+import ReportButton from './ReportButton'
 
 interface Props {
   tags?: string[]
@@ -95,11 +95,7 @@ export default function SentenceContent({
             viewToolTip
           />
           <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
-          <OptionButtonWithDropDown
-            sentenceUserId={sentenceUserId}
-            sentenceId={sentenceId}
-            meId={meId}
-          />
+          <ReportButton sentenceId={sentenceId} meId={meId} viewToolTip />
         </XStack>
       </YStack>
     </Container>

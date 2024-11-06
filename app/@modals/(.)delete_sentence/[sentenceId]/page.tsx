@@ -1,7 +1,7 @@
-import DeleteSentenceModal from '@/app/(modals)/delete_sentence/page'
+import DeleteSentenceModal from '@/app/(modals)/delete_sentence/[sentenceId]/page'
 
 interface Props {
-  params: { sentence_id: string }
+  params: { sentenceId: string }
 }
 
 export default function Page({ params }: Props) {

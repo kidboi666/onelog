@@ -38,7 +38,11 @@ export default function SentenceContainer() {
         />
       ))}
       <div ref={target} />
-      {isFetchingNextPage && <Spinner size={60} />}
+      {isFetchingNextPage && (
+        <Spinner.Container>
+          <Spinner size={60} />
+        </Spinner.Container>
+      )}
     </YStack>
   )
 }
