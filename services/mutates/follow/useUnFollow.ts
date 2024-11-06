@@ -26,6 +26,15 @@ export default function useUnFollow() {
       queryClient.invalidateQueries({
         queryKey: ['follower', variables.followed_user_id],
       })
+      queryClient.invalidateQueries({
+        queryKey: ['follower', 'count', variables.followed_user_id],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['following', variables.follower_user_id],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['following', 'count', variables.follower_user_id],
+      })
     },
   })
 }
