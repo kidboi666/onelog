@@ -3,7 +3,7 @@ import { queryOptions } from '@tanstack/react-query'
 
 export const followQuery = {
   /** 유저를 팔로우하는 유저의 Id들 */
-  getFollowers: (supabase: SupabaseClient, userId?: string) =>
+  getFollower: (supabase: SupabaseClient, userId?: string) =>
     queryOptions({
       queryKey: ['follower', userId],
       queryFn: async () => {
@@ -25,7 +25,7 @@ export const followQuery = {
     }),
 
   /** 유저가 팔로우하는 유저의 Id들 */
-  getFollwing: (supabase: SupabaseClient, userId?: string) =>
+  getFollowing: (supabase: SupabaseClient, userId?: string) =>
     queryOptions({
       queryKey: ['following', userId],
       queryFn: async () => {

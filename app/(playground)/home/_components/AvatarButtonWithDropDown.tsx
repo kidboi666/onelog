@@ -17,8 +17,8 @@ interface Props {
   avatarUrl: string | null
   isMe: boolean
   isFollowing: boolean
-  followers: any
-  followings: any
+  followerCount: number
+  followingCount: number
   userId: string
   meId?: string | null
   userName: string | null
@@ -28,8 +28,8 @@ export default function AvatarButtonWithDropDown({
   avatarUrl,
   isMe,
   isFollowing,
-  followers,
-  followings,
+  followerCount,
+  followingCount,
   userId,
   meId,
   userName,
@@ -76,12 +76,10 @@ export default function AvatarButtonWithDropDown({
           <YStack gap={4} className="items-center">
             <XStack gap={4}>
               <Text type="caption" size="sm">
-                팔로우{' '}
-                {followers && followers.length >= 1 ? followers.length : 0}명
+                팔로우 {followerCount}명
               </Text>
               <Text type="caption" size="sm">
-                팔로잉{' '}
-                {followings && followings.length >= 1 ? followings.length : 0}명
+                팔로잉 {followingCount}명
               </Text>
             </XStack>
             <XStack gap={4}>

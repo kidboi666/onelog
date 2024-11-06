@@ -16,8 +16,8 @@ interface Props {
   userId: string
   meId?: string | null
   postType: 'journal' | 'article'
-  followers: any
-  followings: any
+  followerCount: any
+  followingCount: any
   isMe: boolean
   isFollowing: boolean
   isModal?: boolean
@@ -32,9 +32,9 @@ export default function SentenceHeader({
   userId,
   createdAt,
   meId,
-  followers,
+  followerCount,
   postType,
-  followings,
+  followingCount,
   isMe,
   isFollowing,
 }: Props) {
@@ -44,8 +44,8 @@ export default function SentenceHeader({
     <XStack className="w-full items-end">
       <AvatarButtonWithDropDown
         avatarUrl={avatarUrl}
-        followers={followers}
-        followings={followings}
+        followerCount={followerCount}
+        followingCount={followingCount}
         isMe={isMe}
         isFollowing={isFollowing}
         meId={meId}

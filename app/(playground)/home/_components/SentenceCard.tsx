@@ -13,6 +13,7 @@ import SentenceHeader from './SentenceHeader'
 import SentenceContent from './SentenceContent'
 import { YStack } from '@/components/shared/Stack'
 import { TEmotion } from '../../write/sentence/_containers/PostContainer'
+import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 
 interface Props {
   sentence?: ISentenceWithUserInfo
@@ -29,21 +30,24 @@ export default function SentenceCard({
   sentenceSummary,
   disabled,
 }: Props) {
+  const router = useRouter()
   const sentenceId = sentence?.id || sentenceSummary?.id
   const content = sentence?.content || sentenceSummary?.content
   const tags = sentence?.tags || sentenceSummary?.tags
-  const router = useRouter()
+  const { data: followingCount } = useSuspenseQuery(
+    countFollowQuery.countFollowing(supabase, sentence?.user_id),
+  )
+  const { data: followerCount } = useSuspenseQuery(
+    countFollowQuery.countFollower(supabase, sentence?.user_id),
+  )
   const { data: followers } = useSuspenseQuery(
-    followQuery.getFollowers(supabase, sentence?.user_id),
+    followQuery.getFollower(supabase, sentence?.user_id),
   )
-  const { data: followings } = useSuspenseQuery(
-    followQuery.getFollwing(supabase, sentence?.user_id),
-  )
-  const isFollowing = followers?.find((user) => user.follower_user_id === meId)
   const { editor } = useBlockEditor({
     content,
   })
   const { mutate: favoriteSentence } = useFavoriteSentence()
+  const isFollowing = followers?.find((user) => user.follower_user_id === meId)
 
   const handleFavoriteSentence = (e: MouseEvent) => {
     e.stopPropagation()
@@ -64,8 +68,8 @@ export default function SentenceCard({
           meId={meId}
           isMe={meId === sentence.user_id}
           isFollowing={!!isFollowing}
-          followers={followers}
-          followings={followings}
+          followerCount={followerCount}
+          followingCount={followingCount}
           postType={sentence.post_type}
           email={sentenceUserInfo.email}
           avatarUrl={sentenceUserInfo.avatar_url}

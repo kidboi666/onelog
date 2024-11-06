@@ -20,6 +20,7 @@ import useUnFollow from '@/services/mutates/follow/useUnFollow'
 import EmotionAverage from './EmotionAverage'
 import { XStack, YStack, ZStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
+import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 
 interface Props {
   userId: string
@@ -31,21 +32,23 @@ export default function AboutMe({ userId }: Props) {
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),
   )
-  const isMyProfilePage = me?.userId === user?.id
+  const { data: followingCount } = useSuspenseQuery(
+    countFollowQuery.countFollowing(supabase, userId),
+  )
+  const { data: followerCount } = useSuspenseQuery(
+    countFollowQuery.countFollower(supabase, userId),
+  )
   const { data: followers } = useSuspenseQuery(
-    followQuery.getFollowers(supabase, userId),
+    followQuery.getFollower(supabase, userId),
   )
-  const { data: following } = useSuspenseQuery(
-    followQuery.getFollwing(supabase, userId),
-  )
-  const isFollowing = isMyProfilePage
-    ? null
-    : followers?.find((user) => user.follower_user_id === me?.userId)
-
   const { mutate: followUser } = useFollow()
   const { mutate: unfollowUser } = useUnFollow()
   const [isLoadingProfile, startTransitionProfile] = useTransition()
   const [isLoadingWrite, startTransitionWrite] = useTransition()
+  const isMyProfilePage = me?.userId === user?.id
+  const isFollowing =
+    !isMyProfilePage &&
+    followers?.find((user) => user.follower_user_id === me?.userId)
 
   const handleFollowButtonClick = () => {
     me
@@ -84,12 +87,10 @@ export default function AboutMe({ userId }: Props) {
           </ZStack>
           <XStack>
             <Text type="caption" size="sm">
-              팔로우 {followers && followers.length >= 1 ? followers.length : 0}
-              명
+              팔로우 {followerCount}명
             </Text>
             <Text type="caption" size="sm">
-              팔로잉 {following && following.length >= 1 ? following.length : 0}
-              명
+              팔로잉 {followingCount}명
             </Text>
           </XStack>
           <XStack gap={4}>

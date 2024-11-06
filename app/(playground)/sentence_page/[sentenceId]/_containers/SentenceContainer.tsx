@@ -47,7 +47,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
   )
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: followers } = useSuspenseQuery(
-    followQuery.getFollowers(supabase, sentence?.user_id),
+    followQuery.getFollower(supabase, sentence?.user_id),
   )
   const isFollowing = followers?.find(
     (user) => user.follower_user_id === me?.userId,
