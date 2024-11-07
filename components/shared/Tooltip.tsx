@@ -13,7 +13,7 @@ interface Props {
 }
 
 const toolTipBox = cva(
-  'absolute hidden transition duration-300 data-[status=closed]:opacity-0',
+  'pointer-events-none absolute z-20 hidden transition duration-300 data-[status=closed]:opacity-0',
   {
     variants: {
       position: {

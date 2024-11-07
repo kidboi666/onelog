@@ -186,33 +186,35 @@ export default function SentenceContainer({ sentenceId }: Props) {
             </div>
           </div>
         </div>
-        <Line />
-        <nav className="flex items-center justify-between">
-          <FavoriteButton
-            favoritedUserId={sentence?.favorited_user_id}
-            favoritedCount={sentence?.favorite}
-            onFavorite={handleFavoriteSentence}
-            meId={me?.userId}
-            viewToolTip
-          />
-          <CommentButton
-            viewToolTip
-            showComment={showComment}
-            onShowComment={handleShowComment}
-            commentCount={sentence.comment}
-          />
-          <AccessTypeButtonWithDropDown
-            accessType={sentence?.access_type}
-            viewToolTip
-          />
-          <ReportButton viewToolTip />
-          {isOwner && (
-            <OptionButtonWithDropDown
-              isOwner={isOwner}
-              sentenceId={sentence.id}
+        <YStack className="sm:hidden">
+          <Line />
+          <nav className="flex items-center justify-between">
+            <FavoriteButton
+              favoritedUserId={sentence?.favorited_user_id}
+              favoritedCount={sentence?.favorite}
+              onFavorite={handleFavoriteSentence}
+              meId={me?.userId}
+              viewToolTip
             />
-          )}
-        </nav>
+            <CommentButton
+              viewToolTip
+              showComment={showComment}
+              onShowComment={handleShowComment}
+              commentCount={sentence.comment}
+            />
+            <AccessTypeButtonWithDropDown
+              accessType={sentence?.access_type}
+              viewToolTip
+            />
+            <ReportButton viewToolTip />
+            {isOwner && (
+              <OptionButtonWithDropDown
+                isOwner={isOwner}
+                sentenceId={sentence.id}
+              />
+            )}
+          </nav>
+        </YStack>
       </div>
 
       {showComment && (
