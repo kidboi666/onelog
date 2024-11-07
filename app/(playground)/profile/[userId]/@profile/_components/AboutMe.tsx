@@ -115,7 +115,7 @@ export default function AboutMe({ userId }: Props) {
                 <Button
                   size="sm"
                   onClick={() =>
-                    startTransitionWrite(() => router.push('/write/sentence'))
+                    startTransitionWrite(() => router.push('/write'))
                   }
                 >
                   {isLoadingWrite ? <Spinner size={16} /> : '글쓰기'}

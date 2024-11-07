@@ -26,7 +26,7 @@ export default function EmotionAverage({ userId }: Props) {
           color === 'orange' && 'ring-var-orange/65',
           color === 'yellow' && 'ring-var-yellow/65',
           color === 'green' && 'ring-var-green/65',
-          color === 'black' && 'ring-var-black/65',
+          color === 'black' && 'ring-var-black/65 dark:ring-white/65',
         )}
       >
         {myAverageEmotion}%

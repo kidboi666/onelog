@@ -14,6 +14,7 @@ interface Props {
   targetRef: RefObject<HTMLDivElement>
   onChangeEmotion: (emotion: TEmotion | null) => void
   onTransitionEnd: () => void
+  isSide?: boolean
 }
 
 export default function EmotionPickerWithDropDown({
@@ -21,11 +22,12 @@ export default function EmotionPickerWithDropDown({
   onChangeEmotion,
   targetRef,
   onTransitionEnd,
+  isSide,
 }: Props) {
   return (
     <DropDown.Content
       ref={targetRef}
-      position="bottomRight"
+      position={isSide ? 'bottomRight' : 'topRight'}
       initStatus="closed"
       onTransitionEnd={onTransitionEnd}
     >

@@ -68,6 +68,7 @@ export default function EmotionSection({
           onTransitionEnd={emotionTransitionEnd}
           selectedEmotion={selectedEmotion}
           onChangeEmotion={onChangeEmotion}
+          isSide={isSide}
         />
         <ToolTip
           position="bottomLeft"

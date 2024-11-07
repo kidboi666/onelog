@@ -181,7 +181,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
               {me?.userId === sentence?.user_id ? (
                 <>
                   <LinkButton
-                    href="/write/sentence"
+                    href="/write"
                     size="sm"
                     className="w-full self-end"
                   >

@@ -47,7 +47,7 @@ export default function PostTypeSection({
         ref={ref}
         onTransitionEnd={onTransitionEnd}
         className="p-1"
-        position="bottomRight"
+        position={isSide ? 'bottomRight' : 'topRight'}
       >
         <DropDown.Button
           variant="list"
@@ -64,11 +64,7 @@ export default function PostTypeSection({
           아티클
         </DropDown.Button>
       </DropDown.Content>
-      {!isSide && (
-        <Text type="caption" size="xs" className="text-nowrap">
-          {postType === 'journal' ? '감정 일기' : '아티클'}
-        </Text>
-      )}
+
       <ToolTip
         isHover={isHover}
         position="bottomLeft"

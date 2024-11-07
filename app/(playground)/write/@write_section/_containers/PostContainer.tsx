@@ -168,17 +168,19 @@ export default function PostContainer() {
                 onChangeEmotion={handleChangeEmotion}
               />
             </XStack>
-            <Button
-              isLoading={isPending}
-              disabled={
-                editor?.storage.characterCount.characters() === 0 ||
-                tags.length > 10
-              }
-              type="submit"
-              size="sm"
-            >
-              등록하기
-            </Button>
+            <XStack className="flex-1 justify-end">
+              <Button
+                isLoading={isPending}
+                disabled={
+                  editor?.storage.characterCount.characters() === 0 ||
+                  tags.length > 10
+                }
+                type="submit"
+                size="sm"
+              >
+                등록하기
+              </Button>
+            </XStack>
           </XStack>
         </YStack>
       </YStack>

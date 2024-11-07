@@ -47,7 +47,7 @@ export default function PublishSection({
         ref={ref}
         onTransitionEnd={onTransitionEnd}
         className="p-1"
-        position="bottomRight"
+        position={isSide ? 'bottomRight' : 'topRight'}
       >
         <DropDown.Button
           variant="list"
@@ -64,11 +64,7 @@ export default function PublishSection({
           비공개
         </DropDown.Button>
       </DropDown.Content>
-      {!isSide && (
-        <Text type="caption" size="xs" className="text-nowrap">
-          {accessType === 'private' ? '비공개' : '공개'}
-        </Text>
-      )}
+
       <ToolTip
         isHover={isHover}
         position="bottomLeft"

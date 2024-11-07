@@ -3,7 +3,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import { supabase } from '@/lib/supabase/client'
-import { useTheme } from '@/store/useTheme'
+import { colorTheme, useTheme } from '@/store/useTheme'
 import { userQuery } from '@/services/queries/auth/userQuery'
 import { TColor } from '@/types/theme'
 import { getSignUpDays } from '@/utils/formatDate'
@@ -55,7 +55,7 @@ export default function AuthHistory() {
       <HistoryBlock
         title="평균 감정 농도"
         content={myAverageEmotion}
-        className={formatColor(color)}
+        className={colorTheme({ color })}
         unit="%"
       />
     </XStack>
