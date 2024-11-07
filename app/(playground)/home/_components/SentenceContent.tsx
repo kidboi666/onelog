@@ -12,7 +12,7 @@ import ReportButton from './ReportButton'
 interface Props {
   tags?: string[]
   editor: Editor
-  favoritedUserId?: string[]
+  isLiked: boolean | null
   favoritedCount?: number
   commentCount?: number
   sentenceTitle?: string | null
@@ -30,7 +30,7 @@ export default function SentenceContent({
   tags,
   editor,
   sentenceTitle,
-  favoritedUserId,
+  isLiked,
   favoritedCount,
   commentCount,
   onFavorite,
@@ -39,7 +39,6 @@ export default function SentenceContent({
   meId,
   accessType,
   sentenceId,
-  sentenceUserId,
 }: Props) {
   const [showComment, setShowComment] = useState(false)
   const [showGradient, setShowGradient] = useState(false)
@@ -81,7 +80,7 @@ export default function SentenceContent({
         </ZStack>
         <XStack as="nav" className="items-center justify-between">
           <FavoriteButton
-            favoritedUserId={favoritedUserId}
+            isLiked={isLiked}
             favoritedCount={favoritedCount}
             onFavorite={onFavorite}
             meId={meId}

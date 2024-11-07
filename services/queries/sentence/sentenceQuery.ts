@@ -12,7 +12,8 @@ export const sentenceQuery = {
           .from('sentence')
           .select(
             `
-            *,  
+            *,
+            like(count),
             user_info(
               email,
               user_name,
@@ -131,7 +132,8 @@ export const sentenceQuery = {
           .from('sentence')
           .select(
             `
-            *,  
+            *,
+            like(count),
             user_info(
               email,
               user_name,
@@ -146,6 +148,21 @@ export const sentenceQuery = {
         return data
       },
       enabled: !!sentenceId,
+    }),
+
+  checkLiked: (supabase: SupabaseClient, sentenceId?: number, meId?: string) =>
+    queryOptions({
+      queryKey: ['sentence', 'isLiked', sentenceId],
+      queryFn: async () => {
+        const { data } = await supabase
+          .from('like')
+          .select('*')
+          .eq('post_id', sentenceId)
+          .eq('user_id', meId)
+
+        return data && data?.length >= 1
+      },
+      enabled: !!meId,
     }),
 
   getMyFavoriteSentence: (supabase: SupabaseClient, userId: string) =>

@@ -52,7 +52,7 @@ export default function OptionButtonWithDropDown({
       <DropDown.Content
         ref={ref}
         initStatus="closed"
-        position="bottomRight"
+        position={isSide ? 'topRight' : 'topLeft'}
         onTransitionEnd={onTransitionEnd}
         className="p-0"
       >

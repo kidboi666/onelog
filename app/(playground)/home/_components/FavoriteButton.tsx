@@ -7,7 +7,7 @@ import { MouseEvent } from 'react'
 
 interface Props {
   favoritedCount?: number | null
-  favoritedUserId?: string[] | null
+  isLiked: boolean | null
   onFavorite: (e: MouseEvent) => void
   meId?: string | null
   viewToolTip?: boolean
@@ -16,7 +16,7 @@ interface Props {
 
 export default function FavoriteButton({
   favoritedCount,
-  favoritedUserId,
+  isLiked,
   onFavorite,
   meId,
   viewToolTip,
@@ -34,10 +34,9 @@ export default function FavoriteButton({
         variant="icon"
         onClick={onFavorite}
         className={cn(
-          'flex border-none text-xs font-light hover:text-red-500 max-lg:flex-col dark:hover:text-red-500',
-          meId &&
-            favoritedUserId?.includes(meId) &&
-            'text-red-500 dark:text-red-500',
+          'flex border-none text-xs font-light hover:text-red-500 dark:hover:text-red-500',
+          isSide ? 'max-lg:flex-col' : 'gap-1',
+          meId && isLiked && 'text-red-500 dark:text-red-500',
         )}
       >
         <Icon size={isSide ? 24 : 18} view={150}>

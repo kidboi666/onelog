@@ -30,7 +30,8 @@ export default function CommentButton({
         disabled={disabled}
         onClick={onShowComment}
         className={cn(
-          'flex border-none text-xs font-light transition hover:text-blue-400 max-lg:flex-col dark:hover:text-blue-400',
+          'flex border-none text-xs font-light transition hover:text-blue-400 dark:hover:text-blue-400',
+          isSide ? 'max-lg:flex-col' : 'gap-1',
           showComment && 'text-blue-400 dark:text-blue-400',
         )}
       >

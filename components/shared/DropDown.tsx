@@ -87,7 +87,7 @@ const DropDownContent = forwardRef<
         data-status={initStatus}
         onClick={onClick}
         className={cn(
-          'absolute z-40 hidden rounded-md bg-white p-2 shadow-lg ring-1 ring-zinc-200 transition data-[status=closed]:scale-95 data-[status=closed]:opacity-0 dark:bg-var-darkgray dark:ring-zinc-700',
+          'absolute z-50 hidden rounded-md bg-white p-2 shadow-lg ring-1 ring-zinc-200 transition data-[status=closed]:scale-95 data-[status=closed]:opacity-0 dark:bg-var-darkgray dark:ring-zinc-700',
           DROPDOWN_POSITION[position],
           className,
         )}

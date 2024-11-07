@@ -17,6 +17,7 @@ export interface ISentenceWithUserInfo
   post_type: 'article' | 'journal'
   access_type: 'public' | 'private'
   emotion_level: '0%' | '25%' | '50%' | '75%' | '100%' | null
+  like: { count: number }[]
 }
 
 export interface ISentenceInfiniteQuery {

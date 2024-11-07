@@ -136,7 +136,43 @@ export type Database = {
         }
         Relationships: []
       }
-      reports: {
+      like: {
+        Row: {
+          created_at: string
+          id: number
+          post_id: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          post_id?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          post_id?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "like_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "sentence"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "like_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      report: {
         Row: {
           created_at: string
           id: number

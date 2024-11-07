@@ -9,8 +9,8 @@ interface Props {
 export default function Layout({ post, side_menu }: Props) {
   return (
     <ZStack gap={8}>
-      {side_menu}
       {post}
+      {side_menu}
     </ZStack>
   )
 }

@@ -34,6 +34,8 @@ import OptionButtonWithDropDown from '@/app/(playground)/home/_components/Option
 import Comments from '@/app/(playground)/home/_components/Comments'
 import { TEmotion } from '@/app/(playground)/write/sentence/_containers/PostContainer'
 import ReportButton from '@/app/(playground)/home/_components/ReportButton'
+import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
+import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
 
 interface Props {
   sentenceId: number
@@ -46,6 +48,9 @@ export default function SentenceContainer({ sentenceId }: Props) {
     sentenceQuery.getSentence(supabase, sentenceId),
   )
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: isLiked } = useSuspenseQuery(
+    sentenceQuery.checkLiked(supabase, sentenceId, me?.userId),
+  )
   const { data: followers } = useSuspenseQuery(
     followQuery.getFollower(supabase, sentence?.user_id),
   )
@@ -55,21 +60,26 @@ export default function SentenceContainer({ sentenceId }: Props) {
   const { mutate: follow } = useFollow()
   const { mutate: unFollow } = useUnFollow()
   const { editor } = useBlockEditor({ content: sentence?.content })
-  const { mutate: favoriteSentence } = useFavoriteSentence()
+  const { mutate: like } = useLikeSentence()
+  const { mutate: unlike } = useUnlikeSentence()
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
   const isOwner = me?.userId === sentence?.user_id
   const handleShowComment = () => {
     setShowComment((prev) => !prev)
   }
 
+  const handleFavorite = () => {
+    isLiked
+      ? like({
+          meId: me?.userId,
+          sentenceId: sentenceId,
+        })
+      : unlike({ meId: me?.userId, sentenceId })
+  }
+
   const handleFavoriteSentence = (e: MouseEvent) => {
     e.stopPropagation()
-    me
-      ? favoriteSentence({
-          meId: me.userId,
-          sentenceId: Number(sentenceId),
-        })
-      : router.push('/auth_guard')
+    me ? handleFavorite() : router.push('/auth_guard')
   }
 
   const handleFollow = () => {
@@ -190,8 +200,8 @@ export default function SentenceContainer({ sentenceId }: Props) {
           <Line />
           <nav className="flex items-center justify-between">
             <FavoriteButton
-              favoritedUserId={sentence?.favorited_user_id}
-              favoritedCount={sentence?.favorite}
+              isLiked={isLiked}
+              favoritedCount={sentence?.like[0].count}
               onFavorite={handleFavoriteSentence}
               meId={me?.userId}
               viewToolTip

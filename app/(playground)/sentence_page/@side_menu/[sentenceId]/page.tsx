@@ -17,36 +17,47 @@ import OptionButtonWithDropDown from '@/app/(playground)/home/_components/Option
 import { Container } from '@/components/shared/Container'
 import { YStack } from '@/components/shared/Stack'
 import Line from '@/components/shared/Line'
+import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
+import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
 
 interface Props {
   params: { sentenceId: string }
 }
 
-export default function Default({ params }: Props) {
+export default function SideMenuPage({ params }: Props) {
+  const sentenceId = Number(params.sentenceId)
   const router = useRouter()
   const { data: sentence } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, Number(params.sentenceId)),
   )
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { mutate: favoriteSentence } = useFavoriteSentence()
+  const { data: isLiked } = useSuspenseQuery(
+    sentenceQuery.checkLiked(supabase, sentenceId, me?.userId),
+  )
+  const { mutate: like } = useLikeSentence()
+  const { mutate: unlike } = useUnlikeSentence()
   const isOwner = me?.userId === sentence?.user_id
+
+  const handleFavorite = () => {
+    isLiked
+      ? unlike({ meId: me?.userId, sentenceId })
+      : like({
+          meId: me?.userId,
+          sentenceId: sentenceId,
+        })
+  }
 
   const handleFavoriteSentence = (e: MouseEvent) => {
     e.stopPropagation()
-    me
-      ? favoriteSentence({
-          meId: me.userId,
-          sentenceId: Number(params.sentenceId),
-        })
-      : router.push('/auth_guard')
+    me ? handleFavorite() : router.push('/auth_guard')
   }
 
   return (
     <Container className="sticky left-4 top-8 hidden h-fit rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
       <YStack as="nav" className="items-center">
         <FavoriteButton
-          favoritedUserId={sentence?.favorited_user_id}
-          favoritedCount={sentence?.favorite}
+          favoritedCount={sentence?.like[0].count}
+          isLiked={isLiked}
           onFavorite={handleFavoriteSentence}
           meId={me?.userId}
           viewToolTip
