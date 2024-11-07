@@ -23,14 +23,15 @@ export default function useUnFollow() {
       }
     },
     onSettled: (_, __, variables) => {
+      // queryClient.setQueryData(['follower',variables.followed_user_id], (oldData) => oldData ? oldData.filter((follow) => ))
       queryClient.invalidateQueries({
         queryKey: ['follower', variables.followed_user_id],
       })
       queryClient.invalidateQueries({
-        queryKey: ['follower', 'count', variables.followed_user_id],
+        queryKey: ['following', variables.follower_user_id],
       })
       queryClient.invalidateQueries({
-        queryKey: ['following', variables.follower_user_id],
+        queryKey: ['follower', 'count', variables.followed_user_id],
       })
       queryClient.invalidateQueries({
         queryKey: ['following', 'count', variables.follower_user_id],

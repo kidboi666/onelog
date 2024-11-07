@@ -32,7 +32,7 @@ const Stack = ({
 }
 
 export const XStack = (props: PropsWithChildren<StackProps>) => (
-  <Stack {...props} />
+  <Stack {...props} direction="row" />
 )
 export const YStack = (props: PropsWithChildren<StackProps>) => (
   <Stack {...props} direction="col" />

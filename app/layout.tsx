@@ -5,8 +5,11 @@ import ThemeProvider from '@/store/context/theme-provider'
 import Portal from '@/components/shared/Portal'
 
 export const metadata: Metadata = {
-  title: 'One Sentence',
-  description: '하루 한 문장씩 - 홍보 문구 - ',
+  title: {
+    template: '%s | OneSentence',
+    default: 'OneSentence',
+  },
+  description: '하루 한 문장씩 - 당신의 감정을 기록하세요.',
 }
 
 export default function RootLayout({
