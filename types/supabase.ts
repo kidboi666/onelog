@@ -136,6 +136,44 @@ export type Database = {
         }
         Relationships: []
       }
+      reports: {
+        Row: {
+          created_at: string
+          id: number
+          reason: string | null
+          reporter_id: string | null
+          status: string | null
+          target_id: number | null
+          target_type: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          reason?: string | null
+          reporter_id?: string | null
+          status?: string | null
+          target_id?: number | null
+          target_type?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          reason?: string | null
+          reporter_id?: string | null
+          status?: string | null
+          target_id?: number | null
+          target_type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reports_target_id_fkey"
+            columns: ["target_id"]
+            isOneToOne: false
+            referencedRelation: "sentence"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       sentence: {
         Row: {
           access_type: string | null
@@ -182,41 +220,6 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "sentence_user_id_fkey1"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "user_info"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      sentence_folder: {
-        Row: {
-          color: string | null
-          created_at: string
-          id: number
-          index: number | null
-          name: string | null
-          user_id: string | null
-        }
-        Insert: {
-          color?: string | null
-          created_at?: string
-          id?: number
-          index?: number | null
-          name?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          color?: string | null
-          created_at?: string
-          id?: number
-          index?: number | null
-          name?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "sentence_folder_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user_info"

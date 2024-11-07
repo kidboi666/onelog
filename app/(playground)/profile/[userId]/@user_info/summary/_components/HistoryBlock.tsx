@@ -18,12 +18,14 @@ export default function HistoryBlock({
   className,
 }: Props) {
   return (
-    <Container className="flex-1 rounded-lg bg-white p-4 shadow-md dark:bg-var-darkgray">
+    <Container className="flex-1 rounded-lg bg-white p-2 shadow-sm sm:p-4 dark:bg-var-darkgray">
       <YStack gap={4} className="items-center">
-        <Title type="caption" size="xs">
-          {title}
-        </Title>
-        <Line className="w-full" />
+        <YStack gap={0}>
+          <Title type="caption" size="xs">
+            {title}
+          </Title>
+          <Line className="w-full" />
+        </YStack>
         <Text size="bigger" className={className}>
           {content}
           <Text as="span">{unit}</Text>

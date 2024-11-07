@@ -67,6 +67,12 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
 
     const buttonClasses = cn(
       variant === 'primary' && colorTheme({ color }),
+      variant === 'primary' && 'ring-1',
+      color === 'blue' && 'ring-var-blue',
+      color === 'orange' && 'ring-var-orange',
+      color === 'yellow' && 'ring-var-yellow',
+      color === 'green' && 'ring-var-green',
+      color === 'black' && 'ring-var-black',
       BUTTON_VARIANTS({
         [isLoading || disabled ? 'disabled' : 'active']: variant,
         size,

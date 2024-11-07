@@ -16,7 +16,7 @@ interface Props {
   params: { sentenceId: string }
 }
 
-export default function ReportSentence({ params }: Props) {
+export default function ReportSentenceModal({ params }: Props) {
   const router = useRouter()
   const [isLoading, startTransition] = useTransition()
   const { data: sentence } = useSuspenseQuery(

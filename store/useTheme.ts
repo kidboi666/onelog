@@ -32,11 +32,11 @@ export const ringTheme = cva('', {
       8: 'ring-8',
     },
     color: {
-      blue: 'ring-var-blue/65',
-      orange: 'ring-var-orange/65',
-      yellow: 'ring-var-yellow/65',
-      green: 'ring-var-green/65',
-      black: 'ring-var-black/65',
+      blue: 'ring-var-bold_blue dark:ring-var-bold_blue',
+      orange: 'ring-var-bold_orange dark:ring-var-bold_orange',
+      yellow: 'ring-var-bold_yellow dark:ring-var-bold_yellow',
+      green: 'ring-var-bold_green dark:ring-var-bold_green',
+      black: 'ring-var-bold_black dark:ring-var-bold_black',
     },
   },
 })

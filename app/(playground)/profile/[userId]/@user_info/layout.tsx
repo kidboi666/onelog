@@ -34,30 +34,39 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
   return (
     <>
       <Container className="overflow-x-auto rounded-md bg-white p-1 shadow-sm dark:bg-var-darkgray">
-        <ZStack gap={0}>
-          {PROFILE_NAVIGATE_MENUS.map((menu) => (
-            <LinkButton
-              key={menu.id}
-              href={`/profile/${userId}/${menu.path}`}
-              variant="teritory"
-              size="sm"
-              innerClassName={cn(
-                'justify-center rounded-md text-zinc-500 font-medium',
-                segment === menu.path ? 'bg-zinc-200 dark:bg-var-dark' : '',
+        <ZStack gap={2}>
+          {PROFILE_NAVIGATE_MENUS.map((menu, idx) => (
+            <>
+              <LinkButton
+                key={menu.id}
+                href={`/profile/${userId}/${menu.path}`}
+                variant="teritory"
+                size="sm"
+                innerClassName={cn(
+                  'justify-center rounded-md text-zinc-500 font-medium ',
+                  segment === menu.path && 'bg-zinc-100 dark:bg-var-dark',
+                )}
+              >
+                {menu.name}
+                {counts.map(
+                  (data) =>
+                    data.postType === menu.path && (
+                      <Fragment key={data.postType}>
+                        <Text type="caption" size="xs" className="ml-1">
+                          {data.count}
+                        </Text>
+                      </Fragment>
+                    ),
+                )}
+              </LinkButton>
+              {PROFILE_NAVIGATE_MENUS.length === idx + 1 ? null : (
+                <div
+                  className={cn(
+                    'my-auto h-3 border-r border-zinc-200 dark:border-zinc-600',
+                  )}
+                />
               )}
-            >
-              {menu.name}
-              {counts.map(
-                (data) =>
-                  data.postType === menu.path && (
-                    <Fragment key={data.postType}>
-                      <Text type="caption" size="xs" className="ml-1">
-                        {data.count}
-                      </Text>
-                    </Fragment>
-                  ),
-              )}
-            </LinkButton>
+            </>
           ))}
         </ZStack>
       </Container>

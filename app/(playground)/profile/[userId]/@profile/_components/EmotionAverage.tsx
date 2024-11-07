@@ -22,7 +22,11 @@ export default function EmotionAverage({ userId }: Props) {
         className={cn(
           'animate-cta-fadein-out rounded-lg px-1.5 py-1 font-semibold text-white',
           colorTheme({ color }),
-          ringTheme({ color, width: 4 }),
+          color === 'blue' && 'ring-var-blue/65',
+          color === 'orange' && 'ring-var-orange/65',
+          color === 'yellow' && 'ring-var-yellow/65',
+          color === 'green' && 'ring-var-green/65',
+          color === 'black' && 'ring-var-black/65',
         )}
       >
         {myAverageEmotion}%
