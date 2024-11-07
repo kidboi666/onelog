@@ -1,7 +1,7 @@
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
 import { TColor } from '@/types/theme'
-import { TEmotion } from '../../write/sentence/_containers/PostContainer'
+import { TEmotion } from '../../write/@write_section/_containers/PostContainer'
 
 interface Props {
   emotionLevel: TEmotion | null

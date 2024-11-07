@@ -36,7 +36,7 @@ export default function Sidebar() {
       onMouseEnter={handleToolTipOpen}
       onMouseLeave={handleToolTipClose}
       data-status="closed"
-      className="fixed top-[calc(50%-80px)] z-40 m-4 hidden h-fit w-[64px] flex-shrink-0 -translate-y-1/2 rounded-lg bg-white p-2 shadow-md transition-all duration-300 ease-in-out sm:block dark:bg-var-darkgray"
+      className="fixed bottom-4 z-40 m-4 hidden h-fit w-[64px] flex-shrink-0 rounded-lg bg-white p-2 shadow-md transition-all duration-300 ease-in-out sm:block lg:top-[calc(50%-80px)] lg:-translate-y-1/2 dark:bg-var-darkgray"
     >
       <YStack as="nav">
         <ZStack>

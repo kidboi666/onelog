@@ -20,8 +20,8 @@ const TEXTAREA_VARIANTS = cva('w-full outline-none transition', {
       none: '',
     },
     dimension: {
-      sm: 'text-xs',
-      md: 'text-sm',
+      sm: 'p-1 text-xs',
+      md: 'p-1 text-sm',
       lg: 'text-base',
       none: '',
     },

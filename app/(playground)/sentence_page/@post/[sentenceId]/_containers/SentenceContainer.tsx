@@ -9,7 +9,6 @@ import { supabase } from '@/lib/supabase/client'
 
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
-import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
 import useFollow from '@/services/mutates/follow/useFollow'
 import useUnFollow from '@/services/mutates/follow/useUnFollow'
 import { followQuery } from '@/services/queries/follow/followQuery'
@@ -25,17 +24,20 @@ import { List } from '@/components/shared/List'
 import Spinner from '@/components/shared/Spinner'
 import Button from '@/components/shared/Button'
 
-import { YStack } from '@/components/shared/Stack'
+import { XStack, YStack } from '@/components/shared/Stack'
 import EmotionGauge from '@/app/(playground)/home/_components/EmotionGauge'
 import FavoriteButton from '@/app/(playground)/home/_components/FavoriteButton'
 import CommentButton from '@/app/(playground)/home/_components/CommentButton'
 import AccessTypeButtonWithDropDown from '@/app/(playground)/home/_components/AccessTypeButtonWithDropDown'
 import OptionButtonWithDropDown from '@/app/(playground)/home/_components/OptionButtonWithDropDown'
 import Comments from '@/app/(playground)/home/_components/Comments'
-import { TEmotion } from '@/app/(playground)/write/sentence/_containers/PostContainer'
+import { TEmotion } from '@/app/(playground)/write/@write_section/_containers/PostContainer'
 import ReportButton from '@/app/(playground)/home/_components/ReportButton'
 import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
 import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
+import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
+import AvatarButtonWithDropDown from '@/app/(playground)/home/_components/AvatarButtonWithDropDown'
+import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 
 interface Props {
   sentenceId: number
@@ -51,12 +53,19 @@ export default function SentenceContainer({ sentenceId }: Props) {
   const { data: isLiked } = useSuspenseQuery(
     sentenceQuery.checkLiked(supabase, sentenceId, me?.userId),
   )
+  const { data: followerCount } = useSuspenseQuery(
+    countFollowQuery.countFollower(supabase, sentence.user_id),
+  )
+  const { data: followingCount } = useSuspenseQuery(
+    countFollowQuery.countFollowing(supabase, sentence.user_id),
+  )
   const { data: followers } = useSuspenseQuery(
     followQuery.getFollower(supabase, sentence?.user_id),
   )
   const isFollowing = followers?.find(
     (user) => user.follower_user_id === me?.userId,
   )
+  const isMe = me?.userId === sentence.user_id
   const { mutate: follow } = useFollow()
   const { mutate: unFollow } = useUnFollow()
   const { editor } = useBlockEditor({ content: sentence?.content })
@@ -108,37 +117,50 @@ export default function SentenceContainer({ sentenceId }: Props) {
 
   return (
     <YStack gap={8}>
-      <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray">
-        <div className="flex items-center gap-4">
-          <Avatar
-            src={sentence?.user_info.avatar_url}
-            size="sm"
-            ring
-            onClick={() => router.push(`/profile/${sentence?.user_id}`)}
+      <YStack className="rounded-md bg-white p-2 shadow-sm sm:gap-4 sm:p-4 dark:bg-var-darkgray">
+        <XStack gap={4} className="items-center">
+          <AvatarButtonWithDropDown
+            isMe={isMe}
+            userId={sentence?.user_id}
+            userName={sentence?.user_info.user_name}
+            avatarUrl={sentence?.user_info.avatar_url}
+            followerCount={followerCount}
+            followingCount={followingCount}
+            isFollowing={isFollowing}
           />
-          <div className="flex flex-col self-end">
-            <Title type="sub" size="sm">
-              {sentence?.user_info.user_name}
-            </Title>
-            <Text type="caption">{sentence?.user_info.email}</Text>
-          </div>
-          <div className="flex h-full flex-1 items-end justify-end p-2">
+          <YStack gap={0} className="self-end">
+            <XStack gap={1} className="items-end">
+              <Title size="xs" type="sub">
+                {sentence?.user_info.user_name}
+              </Title>
+              <Text as="span" type="caption" size="sm">
+                · @{sentence?.user_info.email?.split('@')[0]}
+              </Text>
+            </XStack>
+            <Text type="caption" size="sm">
+              {formatDateToMDY(sentence.created_at)} ·{' '}
+              {formatDateToHM(sentence.created_at)}
+            </Text>
+          </YStack>
+          <XStack className="h-full flex-1 items-end justify-end p-2">
             <EmotionGauge
               emotionLevel={sentence?.emotion_level as TEmotion}
               className="h-full"
             />
-          </div>
-        </div>
+          </XStack>
+        </XStack>
         <Line />
-        <div>
+        <YStack className="mt-4">
           <Title size="lg">{sentence.title}</Title>
-        </div>
-        {sentence?.tags && sentence.tags.length >= 1 && (
-          <List className="flex flex-wrap gap-2">
-            {sentence?.tags?.map((tag, index) => <Tag key={index} tag={tag} />)}
-          </List>
-        )}
-        <EditorContent editor={editor} />
+          {sentence?.tags && sentence.tags.length >= 1 && (
+            <List className="flex flex-wrap gap-2">
+              {sentence?.tags?.map((tag, index) => (
+                <Tag key={index} tag={tag} />
+              ))}
+            </List>
+          )}
+          <EditorContent editor={editor} />
+        </YStack>
         <div className="mt-8 flex flex-col gap-2">
           <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark">
             <Link
@@ -225,7 +247,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
             )}
           </nav>
         </YStack>
-      </div>
+      </YStack>
 
       {showComment && (
         <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray">

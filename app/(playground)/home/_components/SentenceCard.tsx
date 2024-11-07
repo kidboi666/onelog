@@ -10,7 +10,7 @@ import { ISentenceWithUserInfo } from '@/types/sentence'
 import SentenceHeader from './SentenceHeader'
 import SentenceContent from './SentenceContent'
 import { YStack } from '@/components/shared/Stack'
-import { TEmotion } from '../../write/sentence/_containers/PostContainer'
+import { TEmotion } from '../../write/@write_section/_containers/PostContainer'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
 import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
@@ -76,7 +76,6 @@ export default function SentenceCard({
       {sentence ? (
         <SentenceHeader
           userId={sentence.user_id}
-          meId={meId}
           isMe={meId === sentence.user_id}
           isFollowing={!!isFollowing}
           followerCount={followerCount}

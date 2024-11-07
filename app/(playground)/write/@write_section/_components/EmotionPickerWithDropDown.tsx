@@ -25,6 +25,7 @@ export default function EmotionPickerWithDropDown({
   return (
     <DropDown.Content
       ref={targetRef}
+      position="bottomRight"
       initStatus="closed"
       onTransitionEnd={onTransitionEnd}
     >

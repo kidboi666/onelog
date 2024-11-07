@@ -7,7 +7,6 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
-import useFavoriteSentence from '@/services/mutates/sentence/useFavoriteSentence'
 
 import FavoriteButton from '@/app/(playground)/home/_components/FavoriteButton'
 import CommentButton from '@/app/(playground)/home/_components/CommentButton'
@@ -53,7 +52,7 @@ export default function SideMenuPage({ params }: Props) {
   }
 
   return (
-    <Container className="sticky left-4 top-8 hidden h-fit rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
+    <Container className="animate-fade-in-reverse sticky left-4 top-8 hidden h-fit rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
       <YStack as="nav" className="items-center">
         <FavoriteButton
           favoritedCount={sentence?.like[0].count}

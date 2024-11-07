@@ -1,10 +1,9 @@
 'use client'
 
 import Button from '@/components/shared/Button'
-import Input from '@/components/shared/Input'
 import Modal from '@/components/shared/Modal'
 import { XStack, YStack } from '@/components/shared/Stack'
-import Text from '@/components/shared/Text'
+import TextArea from '@/components/shared/TextArea'
 import Title from '@/components/shared/Title'
 import { useInput } from '@/hooks/useInput'
 import { supabase } from '@/lib/supabase/client'
@@ -45,10 +44,10 @@ export default function ReportSentenceModal({ params }: Props) {
     <Modal>
       <Title>게시물 신고</Title>
       <YStack className="w-full">
-        <Text>신고 사유</Text>
-        <Input value={reason} onChange={onChangeReasonValue} />
+        <Title size="xs">신고 사유</Title>
+        <TextArea value={reason} onChange={onChangeReasonValue} />
       </YStack>
-      <XStack>
+      <XStack gap={4}>
         <Button variant="secondary" onClick={() => router.back()}>
           취소하기
         </Button>

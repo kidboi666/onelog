@@ -5,7 +5,7 @@ import NameWithDateSection from './NameWithDateSection'
 import useToggle from '@/hooks/useToggle'
 import { XStack, ZStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
-import { TEmotion } from '../../write/sentence/_containers/PostContainer'
+import { TEmotion } from '../../write/@write_section/_containers/PostContainer'
 
 interface Props {
   avatarUrl: string | null
@@ -14,11 +14,10 @@ interface Props {
   emotionLevel: TEmotion
   createdAt: string
   userId: string
-  meId?: string | null
   createdAtLiked?: string
   postType: 'journal' | 'article'
-  followerCount: any
-  followingCount: any
+  followerCount: number | null
+  followingCount: number | null
   isMe: boolean
   isFollowing: boolean
   isModal?: boolean
@@ -33,7 +32,6 @@ export default function SentenceHeader({
   emotionLevel,
   userId,
   createdAt,
-  meId,
   followerCount,
   postType,
   followingCount,
@@ -50,7 +48,6 @@ export default function SentenceHeader({
         followingCount={followingCount}
         isMe={isMe}
         isFollowing={isFollowing}
-        meId={meId}
         userId={userId}
         userName={userName}
       />
