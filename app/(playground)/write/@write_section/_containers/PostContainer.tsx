@@ -153,8 +153,8 @@ export default function PostContainer() {
         </YStack>
         <YStack>
           <TagsInput tags={tags} setTags={setTags} disabled={me === null} />
-          <XStack className="justify-between sm:hidden">
-            <XStack gap={4} className="items-center">
+          <XStack className="justify-between">
+            <XStack gap={4} className="items-center sm:hidden">
               <PublishSection
                 accessType={accessType}
                 onChangeAccessType={handleChangeAccessType}
