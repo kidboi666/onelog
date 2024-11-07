@@ -84,12 +84,6 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
             <Text>{comment.content}</Text>
           </div>
           <div className="flex gap-1">
-            <FavoriteButton
-              favoritedCount={comment.favorite!}
-              favoritedUserId={comment.favorited_user_id!}
-              onFavorite={handleFavoriteComment}
-              meId={me?.userId!}
-            />
             {commentToComments.length >= 1 && (
               <CommentButton
                 showComment={showComment}

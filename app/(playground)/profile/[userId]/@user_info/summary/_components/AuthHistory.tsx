@@ -6,11 +6,11 @@ import { supabase } from '@/lib/supabase/client'
 import { useTheme } from '@/store/useTheme'
 import { userQuery } from '@/services/queries/auth/userQuery'
 import { TColor } from '@/types/theme'
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { getSignUpDays } from '@/utils/formatDate'
 import { emotionQuery } from '@/services/queries/emotion/emotionQuery'
 import HistoryBlock from './HistoryBlock'
 import { XStack } from '@/components/shared/Stack'
+import { countSentenceQuery } from '@/services/queries/sentence/countSentenceQuery'
 
 export default function AuthHistory() {
   const pathname = usePathname()
@@ -20,7 +20,7 @@ export default function AuthHistory() {
     userQuery.getUserInfo(supabase, userId),
   )
   const { data: sentenceLength } = useSuspenseQuery(
-    sentenceQuery.getAllMySentenceCount(supabase, userId),
+    countSentenceQuery.countAllMySentence(supabase, userId),
   )
   const { data: myAverageEmotion } = useSuspenseQuery(
     emotionQuery.getEmotionAverage(supabase, userId),

@@ -20,6 +20,7 @@ interface Props {
   sentence?: ISentenceWithUserInfo
   sentenceUserInfo?: any
   sentenceSummary?: ISentenceState
+  createdAtLiked?: string
   meId?: string | null
   disabled?: boolean
 }
@@ -27,6 +28,7 @@ interface Props {
 export default function SentenceCard({
   sentence,
   sentenceUserInfo,
+  createdAtLiked,
   meId,
   disabled,
 }: Props) {
@@ -79,6 +81,7 @@ export default function SentenceCard({
           isFollowing={!!isFollowing}
           followerCount={followerCount}
           followingCount={followingCount}
+          createdAtLiked={createdAtLiked}
           postType={sentence.post_type}
           email={sentenceUserInfo.email}
           avatarUrl={sentenceUserInfo.avatar_url}

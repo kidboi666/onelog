@@ -20,6 +20,11 @@ export interface ISentenceWithUserInfo
   like: { count: number }[]
 }
 
+export interface ILikedSentenceWithUserInfo {
+  id: number
+  sentence: ISentenceWithUserInfo[]
+}
+
 export interface ISentenceInfiniteQuery {
   pages: Tables<'sentence'>[]
   pageParams: number

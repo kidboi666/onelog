@@ -75,7 +75,7 @@ export default function SideMenuPage({ params }: Props) {
           viewToolTip
           isSide
         />
-        <ReportButton viewToolTip isSide />
+        <ReportButton sentenceId={sentence.id} viewToolTip isSide />
         {isOwner && (
           <OptionButtonWithDropDown
             isOwner={isOwner}

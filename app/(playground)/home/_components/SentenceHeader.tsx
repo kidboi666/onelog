@@ -15,6 +15,7 @@ interface Props {
   createdAt: string
   userId: string
   meId?: string | null
+  createdAtLiked?: string
   postType: 'journal' | 'article'
   followerCount: any
   followingCount: any
@@ -28,6 +29,7 @@ export default function SentenceHeader({
   avatarUrl,
   userName,
   email,
+  createdAtLiked,
   emotionLevel,
   userId,
   createdAt,
@@ -57,6 +59,7 @@ export default function SentenceHeader({
           userName={userName}
           email={email}
           createdAt={createdAt}
+          createdAtLiked={createdAtLiked}
           postType={postType}
         />
       </XStack>

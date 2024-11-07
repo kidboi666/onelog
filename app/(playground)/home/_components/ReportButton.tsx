@@ -8,14 +8,12 @@ import useToggle from '@/hooks/useToggle'
 import cn from '@/lib/cn'
 
 interface Props {
-  meId?: string | null
   sentenceId?: number
   viewToolTip?: boolean
   isSide?: boolean
 }
 
 export default function ReportButton({
-  meId,
   viewToolTip,
   sentenceId,
   isSide,
@@ -25,7 +23,7 @@ export default function ReportButton({
 
   const pushReportModal = (e: MouseEvent) => {
     e.stopPropagation()
-    router.push(`/report_sentence/${sentenceId}?reporter_id=${meId}`)
+    router.push(`/report_sentence/${sentenceId}`)
   }
 
   return (

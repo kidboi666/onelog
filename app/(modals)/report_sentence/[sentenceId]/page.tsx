@@ -6,8 +6,10 @@ import Modal from '@/components/shared/Modal'
 import { XStack, YStack } from '@/components/shared/Stack'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
+import { useInput } from '@/hooks/useInput'
 import { supabase } from '@/lib/supabase/client'
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import useReport from '@/services/mutates/report/useReport'
+import { meQuery } from '@/services/queries/auth/meQuery'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
@@ -18,13 +20,25 @@ interface Props {
 
 export default function ReportSentenceModal({ params }: Props) {
   const router = useRouter()
+  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const [reason, onChangeReasonValue] = useInput('')
+  const { mutate: report } = useReport()
   const [isLoading, startTransition] = useTransition()
-  const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getSentence(supabase, Number(params.sentenceId)),
-  )
 
   const handleSentenceReport = () => {
-    null
+    report(
+      {
+        reason,
+        reporterId: me?.userId,
+        targetId: Number(params.sentenceId),
+      },
+      {
+        onSuccess: () => {
+          router.push('/success')
+          router.back()
+        },
+      },
+    )
   }
 
   return (
@@ -32,7 +46,7 @@ export default function ReportSentenceModal({ params }: Props) {
       <Title>게시물 신고</Title>
       <YStack className="w-full">
         <Text>신고 사유</Text>
-        <Input />
+        <Input value={reason} onChange={onChangeReasonValue} />
       </YStack>
       <XStack>
         <Button variant="secondary" onClick={() => router.back()}>

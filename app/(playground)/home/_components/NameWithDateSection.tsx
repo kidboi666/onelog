@@ -7,6 +7,7 @@ interface Props {
   userName: string | null
   email: string | null
   createdAt: string
+  createdAtLiked?: string
   postType: 'journal' | 'article'
 }
 
@@ -14,6 +15,7 @@ export default function NameWithDateSection({
   userName,
   email,
   createdAt,
+  createdAtLiked,
   postType,
 }: Props) {
   return (
@@ -24,6 +26,8 @@ export default function NameWithDateSection({
       <Text type="caption" size="sm">
         @{email?.split('@')[0]} · {formatDateElapsed(createdAt)} ·{' '}
         {postType === 'journal' ? '감정 일기' : '아티클'}
+        {createdAtLiked && ' ·  업데이트 '}
+        {createdAtLiked && formatDateElapsed(createdAtLiked)}
       </Text>
     </YStack>
   )

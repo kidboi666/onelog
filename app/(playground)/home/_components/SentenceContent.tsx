@@ -94,7 +94,7 @@ export default function SentenceContent({
             viewToolTip
           />
           <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
-          <ReportButton sentenceId={sentenceId} meId={meId} viewToolTip />
+          <ReportButton sentenceId={sentenceId} viewToolTip />
         </XStack>
       </YStack>
     </Container>
