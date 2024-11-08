@@ -31,13 +31,13 @@ import CommentButton from '@/app/(playground)/home/_components/CommentButton'
 import AccessTypeButtonWithDropDown from '@/app/(playground)/home/_components/AccessTypeButtonWithDropDown'
 import OptionButtonWithDropDown from '@/app/(playground)/home/_components/OptionButtonWithDropDown'
 import Comments from '@/app/(playground)/home/_components/Comments'
-import { TEmotion } from '@/app/(playground)/write/_containers/PostContainer'
 import ReportButton from '@/app/(playground)/home/_components/ReportButton'
 import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
 import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
 import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import AvatarButtonWithDropDown from '@/app/(playground)/home/_components/AvatarButtonWithDropDown'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
+import { TEmotion } from '@/app/(playground)/write/page'
 
 interface Props {
   sentenceId: number

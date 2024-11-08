@@ -10,11 +10,11 @@ import { ISentenceWithUserInfo } from '@/types/sentence'
 import SentenceHeader from './SentenceHeader'
 import SentenceContent from './SentenceContent'
 import { YStack } from '@/components/shared/Stack'
-import { TEmotion } from '../../write/_containers/PostContainer'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
 import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import { TEmotion } from '../../write/page'
 
 interface Props {
   sentence?: ISentenceWithUserInfo

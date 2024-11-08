@@ -7,6 +7,8 @@ import { PropsWithChildren, ReactNode } from 'react'
 
 interface MetadataProps {
   params: { userId: string }
+  profile: ReactNode
+  user_info: ReactNode
 }
 
 export async function generateMetadata({ params }: MetadataProps) {
