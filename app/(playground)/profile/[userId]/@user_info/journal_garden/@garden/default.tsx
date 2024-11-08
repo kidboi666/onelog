@@ -14,6 +14,8 @@ import Block from '../_components/Block'
 import YearSection from '../_components/YearSection'
 import ColorInfoDisplay from '../_components/ColorInfoDisplay'
 import GardenBlockSection from '../_components/GardenBlockSection'
+import { Container } from '@/components/shared/Container'
+import { YStack } from '@/components/shared/Stack'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 이모션 레벨 기준 색칠)
@@ -120,20 +122,22 @@ export default function Garden({ params }: Props) {
   }
 
   return (
-    <>
-      <div className="flex flex-col justify-between sm:flex-row">
-        <Title>감정 한 눈에 보기</Title>
-        <YearSection
-          yearList={yearList}
-          selectedYear={selectedYear}
-          onSelect={handleSelect}
+    <Container className="animate-fade-in">
+      <YStack gap={8}>
+        <div className="flex flex-col justify-between sm:flex-row">
+          <Title>감정 한 눈에 보기</Title>
+          <YearSection
+            yearList={yearList}
+            selectedYear={selectedYear}
+            onSelect={handleSelect}
+          />
+        </div>
+        <GardenBlockSection
+          shouldRenderElement={shouldRenderElement}
+          firstDayIndex={firstDayIndex}
         />
-      </div>
-      <GardenBlockSection
-        shouldRenderElement={shouldRenderElement}
-        firstDayIndex={firstDayIndex}
-      />
-      <ColorInfoDisplay />
-    </>
+        <ColorInfoDisplay />
+      </YStack>
+    </Container>
   )
 }

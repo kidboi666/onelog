@@ -37,7 +37,7 @@ export default function LikedPage({ params }: Props) {
   }, [inView, hasNextPage, fetchNextPage])
 
   return (
-    <Container>
+    <Container className="animate-fade-in">
       {likedSentences.length > 0 ? (
         <YStack gap={8}>
           <Title></Title>

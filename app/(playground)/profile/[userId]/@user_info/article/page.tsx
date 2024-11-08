@@ -43,7 +43,7 @@ export default function Articles() {
   }, [inView, hasNextPage, fetchNextPage])
 
   return (
-    <Container>
+    <Container className="animate-fade-in">
       {articles.length > 0 ? (
         <YStack gap={8}>
           {articles?.map((article) => (

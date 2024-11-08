@@ -28,9 +28,9 @@ export default function FollowUserCard({
     return (
       <Container
         onClick={pushUserPage}
-        className="w-full rounded-md p-2 transition hover:bg-zinc-200"
+        className="w-full cursor-pointer rounded-md p-2 transition hover:bg-zinc-200 dark:hover:bg-zinc-700"
       >
-        <XStack gap={4} key={follower.id} className="h-10 items-center">
+        <XStack gap={4} key={follower.id} className="items-center">
           <Avatar size="base" src={follower.user_info.avatar_url} />
           <YStack gap={0} className="flex-1 justify-center">
             <Text>{follower.user_info.user_name}</Text>
@@ -43,7 +43,7 @@ export default function FollowUserCard({
   return (
     <Container
       onClick={pushUserPage}
-      className="w-full rounded-md p-2 transition hover:bg-zinc-200"
+      className="w-full cursor-pointer rounded-md p-2 transition hover:bg-zinc-200 dark:hover:bg-zinc-700"
     >
       <XStack gap={4} key={follower.id} className="items-center">
         <Avatar size="base" src={follower.user_info.avatar_url} />

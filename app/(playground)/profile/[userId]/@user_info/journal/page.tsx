@@ -40,7 +40,7 @@ export default function Journals() {
   }, [inView, hasNextPage, fetchNextPage])
 
   return (
-    <Container>
+    <Container className="animate-fade-in">
       {journals?.length! > 0 ? (
         <YStack gap={8}>
           {journals?.map((journal: ISentenceWithUserInfo) => (

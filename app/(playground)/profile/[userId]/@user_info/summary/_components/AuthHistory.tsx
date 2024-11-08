@@ -10,6 +10,7 @@ import { emotionQuery } from '@/services/queries/emotion/emotionQuery'
 import HistoryBlock from './HistoryBlock'
 import { XStack } from '@/components/shared/Stack'
 import { countSentenceQuery } from '@/services/queries/sentence/countSentenceQuery'
+import { Container } from '@/components/shared/Container'
 
 export default function AuthHistory() {
   const pathname = usePathname()
@@ -26,19 +27,21 @@ export default function AuthHistory() {
   )
 
   return (
-    <XStack className="sm:gap-8">
-      <HistoryBlock
-        title="시작한지"
-        content={getSignUpDays(user?.created_at)}
-        unit="일 째"
-      />
-      <HistoryBlock title="기록" content={sentenceLength} unit="개" />
-      <HistoryBlock
-        title="평균 감정 농도"
-        content={myAverageEmotion}
-        className={colorTheme({ color })}
-        unit="%"
-      />
-    </XStack>
+    <Container className="animate-fade-in">
+      <XStack className="sm:gap-8">
+        <HistoryBlock
+          title="시작한지"
+          content={getSignUpDays(user?.created_at)}
+          unit="일 째"
+        />
+        <HistoryBlock title="기록" content={sentenceLength} unit="개" />
+        <HistoryBlock
+          title="평균 감정 농도"
+          content={myAverageEmotion}
+          className={colorTheme({ color })}
+          unit="%"
+        />
+      </XStack>
+    </Container>
   )
 }
