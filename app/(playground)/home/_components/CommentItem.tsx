@@ -1,4 +1,3 @@
-import { useRouter } from 'next/navigation'
 import { Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
@@ -16,6 +15,9 @@ import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import { followQuery } from '@/services/queries/follow/followQuery'
 import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
+import { YStack } from '@/components/shared/Stack'
+import ReportButton from './ReportButton'
+import OptionButtonWithDropDown from './OptionButtonWithDropDown'
 
 interface Props {
   comment: ICommentWithUserInfo
@@ -50,6 +52,7 @@ export default function CommentItem({
   const isFollowing = followers?.find(
     (user) => user.follower_user_id === me?.userId,
   )
+  const isOwner = comment.user_id === me?.userId
 
   const handleShowComment = () => {
     setShowComment((prev) => !prev)
@@ -60,7 +63,7 @@ export default function CommentItem({
   }
 
   return (
-    <List.Row className="mb-4 flex w-full gap-2">
+    <List.Row className="flex w-full gap-2">
       <div className="h-fit">
         <AvatarButtonWithDropDown
           avatarUrl={comment.user_info.avatar_url}
@@ -74,7 +77,7 @@ export default function CommentItem({
         />
       </div>
       <div className="flex flex-1 flex-col gap-2">
-        <div>
+        <YStack gap={1}>
           <div className="flex items-end gap-2">
             <Text>{comment.user_info.user_name}</Text>
             <Text as="span" type="caption" size="sm">
@@ -86,8 +89,6 @@ export default function CommentItem({
               {formatDateElapsed(comment.created_at)}
             </Text>
           </div>
-        </div>
-        <div>
           <div className="w-fit rounded-md bg-var-lightgray p-2 dark:bg-var-dark">
             <Text>{comment.content}</Text>
           </div>
@@ -100,8 +101,16 @@ export default function CommentItem({
               />
             )}
             <CommentInputButton onShowCommentInput={handleShowCommentInput} />
+            <ReportButton commentId={comment.id} />
+            {isOwner && (
+              <OptionButtonWithDropDown
+                isOwner
+                commentId={comment.id}
+                sentenceId={sentenceId}
+              />
+            )}
           </div>
-        </div>
+        </YStack>
         {showCommentInput && (
           <CommentInput
             sentenceId={sentenceId}

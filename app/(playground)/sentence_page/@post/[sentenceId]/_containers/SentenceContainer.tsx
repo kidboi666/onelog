@@ -241,7 +241,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
               accessType={sentence?.access_type}
               viewToolTip
             />
-            <ReportButton viewToolTip />
+            <ReportButton viewToolTip sentenceId={sentenceId} />
             {isOwner && (
               <OptionButtonWithDropDown
                 isOwner={isOwner}

@@ -3,7 +3,8 @@ import { useMutation } from '@tanstack/react-query'
 
 interface IReport {
   reporterId?: string
-  targetId: string | number
+  targetSentenceId?: number
+  targetCommentId?: number
   reason: string
 }
 
@@ -14,7 +15,8 @@ export default function useReport() {
         .from('report')
         .insert({
           reporter_id: params.reporterId,
-          target_id: params.targetId,
+          target_sentence_id: params.targetSentenceId || null,
+          target_comment_id: params.targetCommentId || null,
           reason: params.reason,
         })
         .select()

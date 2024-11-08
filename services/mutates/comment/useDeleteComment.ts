@@ -2,30 +2,25 @@ import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { useMutation } from '@tanstack/react-query'
 
-interface IComment {
-  userId: string
-  content: string
+interface IDeleteComment {
   sentenceId: number
-  commentId: number | null
+  commentId: number
 }
 
-export default function usePostComment() {
+export default function useDeleteComment() {
   const queryClient = getQueryClient()
 
   return useMutation({
-    mutationFn: async (params: IComment) => {
+    mutationFn: async ({ sentenceId, commentId }: IDeleteComment) => {
       return supabase
         .from('comment')
-        .insert({
-          user_id: params.userId,
-          content: params.content,
-          sentence_id: params.sentenceId,
-          comment_id: params.commentId || null,
-        })
+        .delete()
+        .eq('sentence_id', sentenceId)
+        .eq('id', commentId)
         .select()
-        .single()
     },
     onSettled: (_, __, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
       queryClient.invalidateQueries({
         queryKey: ['all_sentence'],
       })

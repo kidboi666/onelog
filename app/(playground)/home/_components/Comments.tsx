@@ -26,7 +26,7 @@ export default function Comments({ sentenceId, me }: Props) {
           <Empty.Text>아직 달린 댓글이 없습니다.</Empty.Text>
         </Empty>
       ) : (
-        <List className="w-full">
+        <List className="flex w-full flex-col gap-4">
           {comments.map((comment, idx) => (
             <Suspense key={comment.id} fallback={<Spinner size={40} />}>
               <CommentItem

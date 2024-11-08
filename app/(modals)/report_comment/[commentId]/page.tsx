@@ -14,22 +14,22 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 
 interface Props {
-  params: { sentenceId: string }
+  params: { commentId: string }
 }
 
-export default function ReportSentenceModal({ params }: Props) {
+export default function ReportCommentModal({ params }: Props) {
   const router = useRouter()
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const [reason, onChangeReasonValue] = useInput('')
   const { mutate: report } = useReport()
   const [isLoading, startTransition] = useTransition()
 
-  const handleSentenceReport = () => {
+  const handleCommentReport = () => {
     report(
       {
         reason,
         reporterId: me?.userId,
-        targetSentenceId: Number(params.sentenceId),
+        targetCommentId: Number(params.commentId),
       },
       {
         onSuccess: () => {
@@ -42,7 +42,7 @@ export default function ReportSentenceModal({ params }: Props) {
 
   return (
     <Modal>
-      <Title>게시물 신고</Title>
+      <Title>댓글 신고</Title>
       <YStack className="w-full">
         <Title size="xs">신고 사유</Title>
         <TextArea value={reason} onChange={onChangeReasonValue} />
@@ -52,7 +52,7 @@ export default function ReportSentenceModal({ params }: Props) {
           취소하기
         </Button>
         <Button
-          onClick={() => startTransition(() => handleSentenceReport())}
+          onClick={() => startTransition(() => handleCommentReport())}
           isLoading={isLoading}
         >
           신고하기

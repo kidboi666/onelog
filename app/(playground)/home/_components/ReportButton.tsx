@@ -9,6 +9,7 @@ import cn from '@/lib/cn'
 
 interface Props {
   sentenceId?: number
+  commentId?: number
   viewToolTip?: boolean
   isSide?: boolean
 }
@@ -16,6 +17,7 @@ interface Props {
 export default function ReportButton({
   viewToolTip,
   sentenceId,
+  commentId,
   isSide,
 }: Props) {
   const router = useRouter()
@@ -23,13 +25,18 @@ export default function ReportButton({
 
   const pushReportModal = (e: MouseEvent) => {
     e.stopPropagation()
-    router.push(`/report_sentence/${sentenceId}`)
+    if (commentId) {
+      router.push(`/report_comment/${commentId}`)
+    } else {
+      router.push(`/report_sentence/${sentenceId}`)
+    }
   }
 
   return (
     <Container onMouseEnter={hover} onMouseLeave={leave} className="relative">
       <Button
         variant="icon"
+        size={isSide ? 'md' : 'icon'}
         onClick={pushReportModal}
         className={cn(
           'flex gap-2 border-none text-xs font-light transition hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-900/25 dark:hover:text-red-600',
