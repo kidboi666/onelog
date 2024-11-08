@@ -1,5 +1,4 @@
 import { ICommentWithUserInfo } from '@/types/comment'
-import { Tables } from '@/types/supabase'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
@@ -52,6 +51,7 @@ export const commentQuery = {
             )
             `,
           )
+          .eq('sentence_id', sentenceId)
           .eq('comment_id', commentId)
           .order('created_at', { ascending: false })
 

@@ -16,6 +16,7 @@ import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { TEmotion } from '../../write/page'
 import { MouseEvent } from 'react'
+import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
 
 interface Props {
   sentence?: ISentenceWithUserInfo
@@ -34,7 +35,7 @@ export default function SentenceCard({
   disabled,
 }: Props) {
   const router = useRouter()
-  const sentenceId = sentence?.id
+  const sentenceId = Number(sentence?.id)
   const content = sentence?.content
   const tags = sentence?.tags || []
   const { data: followingCount } = useSuspenseQuery(
@@ -42,6 +43,9 @@ export default function SentenceCard({
   )
   const { data: followerCount } = useSuspenseQuery(
     countFollowQuery.countFollower(supabase, sentence?.user_id),
+  )
+  const { data: commentCount } = useSuspenseQuery(
+    countCommentQuery.countCommentFromSentence(supabase, sentence?.id),
   )
   const { data: followers } = useSuspenseQuery(
     followQuery.getFollower(supabase, sentence?.user_id),
@@ -98,7 +102,7 @@ export default function SentenceCard({
         accessType={sentence?.access_type}
         favoritedCount={sentence?.like?.[0].count}
         isLiked={isLiked}
-        commentCount={sentence?.comment || 0}
+        commentCount={commentCount || 0}
         sentenceUserId={sentence?.user_id}
         sentenceId={sentenceId}
         onFavorite={handleFavorite}

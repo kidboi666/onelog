@@ -11,46 +11,31 @@ export type Database = {
     Tables: {
       comment: {
         Row: {
-          avatar_url: string | null
           comment: number | null
           comment_id: number | null
           content: string
           created_at: string
-          email: string
-          favorite: number | null
-          favorited_user_id: string[] | null
           id: number
           sentence_id: number | null
           user_id: string
-          user_name: string
         }
         Insert: {
-          avatar_url?: string | null
           comment?: number | null
           comment_id?: number | null
           content: string
           created_at?: string
-          email: string
-          favorite?: number | null
-          favorited_user_id?: string[] | null
           id?: number
           sentence_id?: number | null
           user_id: string
-          user_name: string
         }
         Update: {
-          avatar_url?: string | null
           comment?: number | null
           comment_id?: number | null
           content?: string
           created_at?: string
-          email?: string
-          favorite?: number | null
-          favorited_user_id?: string[] | null
           id?: number
           sentence_id?: number | null
           user_id?: string
-          user_name?: string
         }
         Relationships: [
           {

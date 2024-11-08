@@ -18,6 +18,7 @@ import { YStack } from '@/components/shared/Stack'
 import Line from '@/components/shared/Line'
 import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
 import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
+import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
 
 interface Props {
   params: { sentenceId: string }
@@ -28,6 +29,9 @@ export default function SideMenuPage({ params }: Props) {
   const router = useRouter()
   const { data: sentence } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, Number(params.sentenceId)),
+  )
+  const { data: commentCount } = useSuspenseQuery(
+    countCommentQuery.countCommentFromSentence(supabase, sentenceId),
   )
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: isLiked } = useSuspenseQuery(
@@ -52,7 +56,7 @@ export default function SideMenuPage({ params }: Props) {
   }
 
   return (
-    <Container className="animate-fade-in-reverse sticky left-4 top-8 hidden h-fit rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
+    <Container className="sticky left-4 top-8 hidden h-fit animate-fade-in-reverse rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
       <YStack as="nav" className="items-center">
         <FavoriteButton
           favoritedCount={sentence?.like[0].count}
@@ -63,7 +67,7 @@ export default function SideMenuPage({ params }: Props) {
           isSide
         />
         <CommentButton
-          commentCount={sentence?.comment}
+          commentCount={commentCount}
           showComment={!!sentence?.comment}
           viewToolTip
           isSide

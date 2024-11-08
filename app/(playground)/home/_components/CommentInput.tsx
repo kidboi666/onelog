@@ -32,12 +32,9 @@ export default function CommentInput({ sentenceId, commentId, me }: Props) {
     if (me) {
       postComment(
         {
-          email: me.email!,
-          userName: me.user_name || '',
           userId: me.userId,
           content,
           sentenceId: sentenceId,
-          avatarUrl: me.avatar_url || null,
           commentId: commentId || null,
         },
         {

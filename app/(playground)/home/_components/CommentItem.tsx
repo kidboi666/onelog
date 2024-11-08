@@ -15,6 +15,7 @@ import { ICommentWithUserInfo } from '@/types/comment'
 import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import { followQuery } from '@/services/queries/follow/followQuery'
+import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
 
 interface Props {
   comment: ICommentWithUserInfo
@@ -29,11 +30,13 @@ export default function CommentItem({
   me,
   isLastComment,
 }: Props) {
-  const router = useRouter()
   const [showComment, setShowComment] = useState(true)
   const [showCommentInput, setShowCommentInput] = useState(false)
   const { data: commentToComments } = useSuspenseQuery(
     commentQuery.getCommentToComment(supabase, sentenceId, comment?.id),
+  )
+  const { data: commentToCommentsCount } = useSuspenseQuery(
+    countCommentQuery.countCommentFromComment(supabase, sentenceId, comment.id),
   )
   const { data: followerCount } = useSuspenseQuery(
     countFollowQuery.countFollower(supabase, comment.user_id),
@@ -54,10 +57,6 @@ export default function CommentItem({
 
   const handleShowCommentInput = () => {
     setShowCommentInput((prev) => !prev)
-  }
-
-  const handleAvatarClick = () => {
-    router.replace(`/profile/${comment?.user_id}`)
   }
 
   return (
@@ -97,7 +96,7 @@ export default function CommentItem({
               <CommentButton
                 showComment={showComment}
                 onShowComment={handleShowComment}
-                commentCount={comment.comment ?? 0}
+                commentCount={commentToCommentsCount ?? 0}
               />
             )}
             <CommentInputButton onShowCommentInput={handleShowCommentInput} />
