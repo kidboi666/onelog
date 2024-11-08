@@ -1,15 +1,12 @@
 import { useRouter } from 'next/navigation'
-import { MouseEvent, Suspense, useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
-import useFavoriteComment from '@/services/mutates/comment/useFavoriteComment'
 import { commentQuery } from '@/services/queries/comment/commentQuery'
-import { formatDateToHM } from '@/utils/formatDate'
-import Avatar from '@/components/shared/Avatar'
+import { formatDateElapsed } from '@/utils/formatDate'
 import Text from '@/components/shared/Text'
 import { List } from '@/components/shared/List'
 import Spinner from '@/components/shared/Spinner'
-import Button from '@/components/shared/Button'
 import CommentInputButton from './CommentInputButton'
 import CommentButton from './CommentButton'
 import CommentInput from './CommentInput'
@@ -23,9 +20,15 @@ interface Props {
   comment: ICommentWithUserInfo
   sentenceId: number
   me: IUserSession | null
+  isLastComment?: boolean
 }
 
-export default function CommentItem({ comment, sentenceId, me }: Props) {
+export default function CommentItem({
+  comment,
+  sentenceId,
+  me,
+  isLastComment,
+}: Props) {
   const router = useRouter()
   const [showComment, setShowComment] = useState(true)
   const [showCommentInput, setShowCommentInput] = useState(false)
@@ -60,11 +63,9 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
   return (
     <List.Row className="mb-4 flex w-full gap-2">
       <div className="h-fit">
-        {/* <Button variant="none" onClick={handleAvatarClick} className="p-0">
-          <Avatar src={comment.user_info.avatar_url} size="sm" shadow="sm" />
-        </Button> */}
         <AvatarButtonWithDropDown
           avatarUrl={comment.user_info.avatar_url}
+          isLastComment={isLastComment}
           followerCount={followerCount}
           followingCount={followingCount}
           isFollowing={!!isFollowing}
@@ -78,15 +79,12 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
           <div className="flex items-end gap-2">
             <Text>{comment.user_info.user_name}</Text>
             <Text as="span" type="caption" size="sm">
-              님의 댓글
+              @{comment.user_info.email?.split('@')[0]}
             </Text>
           </div>
           <div className="flex gap-2">
             <Text type="caption" size="sm">
-              {comment.user_info.email}
-            </Text>
-            <Text type="caption" size="sm">
-              {formatDateToHM(comment.created_at)}
+              {formatDateElapsed(comment.created_at)}
             </Text>
           </div>
         </div>
@@ -116,7 +114,12 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
           commentToComments.length >= 1 &&
           commentToComments.map((comment) => (
             <Suspense key={comment.id} fallback={<Spinner size={40} />}>
-              <CommentItem sentenceId={sentenceId} comment={comment} me={me} />
+              <CommentItem
+                sentenceId={sentenceId}
+                comment={comment}
+                me={me}
+                isLastComment
+              />
             </Suspense>
           ))}
       </div>

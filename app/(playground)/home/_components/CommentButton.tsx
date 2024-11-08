@@ -27,6 +27,7 @@ export default function CommentButton({
     <div onMouseEnter={hover} onMouseLeave={leave} className="relative">
       <Button
         variant="icon"
+        size={isSide ? 'md' : 'icon'}
         disabled={disabled}
         onClick={onShowComment}
         className={cn(

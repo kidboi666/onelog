@@ -26,10 +26,15 @@ export default function Comments({ sentenceId, me }: Props) {
           <Empty.Text>아직 달린 댓글이 없습니다.</Empty.Text>
         </Empty>
       ) : (
-        <List className="w-full overflow-y-auto">
-          {comments.map((comment) => (
+        <List className="w-full">
+          {comments.map((comment, idx) => (
             <Suspense key={comment.id} fallback={<Spinner size={40} />}>
-              <CommentItem comment={comment} sentenceId={sentenceId} me={me} />
+              <CommentItem
+                comment={comment}
+                sentenceId={sentenceId}
+                me={me}
+                isLastComment={comments.length === idx + 1}
+              />
             </Suspense>
           ))}
         </List>
