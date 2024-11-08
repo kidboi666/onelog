@@ -68,7 +68,7 @@ export default function SentenceContent({
           </XStack>
         )}
         <ZStack direction="col" className="max-h-64 overflow-hidden">
-          {sentenceTitle && <Title className="mb-8">{sentenceTitle}</Title>}
+          {sentenceTitle && <Title>{sentenceTitle}</Title>}
           <EditorContent
             innerRef={contentRef}
             editor={editor}

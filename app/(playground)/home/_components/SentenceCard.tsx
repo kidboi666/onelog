@@ -15,6 +15,7 @@ import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
 import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { TEmotion } from '../../write/page'
+import { MouseEvent } from 'react'
 
 interface Props {
   sentence?: ISentenceWithUserInfo
@@ -56,7 +57,8 @@ export default function SentenceCard({
   const { mutate: like } = useLikeSentence()
   const { mutate: unlike } = useUnlikeSentence()
 
-  const handleFavorite = () => {
+  const handleFavorite = (e: MouseEvent) => {
+    e.stopPropagation()
     isLiked
       ? unlike({ meId, sentenceId })
       : like({

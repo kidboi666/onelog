@@ -150,16 +150,20 @@ export default function SentenceContainer({ sentenceId }: Props) {
           </XStack>
         </XStack>
         <Line />
-        <YStack className="mt-4">
-          <Title size="lg">{sentence.title}</Title>
+        <YStack>
+          {sentence.title && (
+            <Title size="lg" className="my-4">
+              {sentence.title}
+            </Title>
+          )}
+          <EditorContent editor={editor} />
           {sentence?.tags && sentence.tags.length >= 1 && (
-            <List className="flex flex-wrap gap-2">
+            <XStack className="flex-wrap">
               {sentence?.tags?.map((tag, index) => (
                 <Tag key={index} tag={tag} />
               ))}
-            </List>
+            </XStack>
           )}
-          <EditorContent editor={editor} />
         </YStack>
         <div className="mt-8 flex flex-col gap-2">
           <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark">
