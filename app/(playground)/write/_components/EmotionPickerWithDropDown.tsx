@@ -6,8 +6,9 @@ import { RefObject } from 'react'
 import { useTheme } from '@/store/useTheme'
 import Icon from '@/components/shared/Icon'
 import { DropDown } from '@/components/shared/DropDown'
+import { TEmotion } from '../page'
 import { EMOTION_STATUS } from '../_constants'
-import { TEmotion } from '../_containers/PostContainer'
+import { YStack } from '@/components/shared/Stack'
 
 interface Props {
   selectedEmotion: TEmotion | null
@@ -31,7 +32,7 @@ export default function EmotionPickerWithDropDown({
       initStatus="closed"
       onTransitionEnd={onTransitionEnd}
     >
-      <List className="flex items-start justify-between gap-2">
+      <YStack className="items-start justify-between gap-2">
         {EMOTION_STATUS.map((emotion, index) => (
           <EmotionBlock
             key={emotion.status}
@@ -41,7 +42,7 @@ export default function EmotionPickerWithDropDown({
             onChangeEmotion={onChangeEmotion}
           />
         ))}
-      </List>
+      </YStack>
     </DropDown.Content>
   )
 }

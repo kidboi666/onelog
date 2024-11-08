@@ -67,7 +67,7 @@ export default function PostTypeSection({
 
       <ToolTip
         isHover={isHover}
-        position="bottomLeft"
+        position={isSide ? 'topLeft' : 'bottomLeft'}
         text="게시물 종류"
         size="md"
         className="left-0"

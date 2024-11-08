@@ -19,7 +19,7 @@ export default function MobileWriteButtonWithLogo({
   const router = useRouter()
 
   const pushWritePage = async () => {
-    router.push('/write/sentence')
+    router.push('/write')
     await wait(100)
     closeMenu()
   }

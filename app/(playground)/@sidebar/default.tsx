@@ -43,7 +43,7 @@ export default function Sidebar() {
           <SidebarWriteButtonWithLogo
             me={me}
             closeToolTip={handleToolTipClose}
-            isSelected={pathname === '/write/sentence'}
+            isSelected={pathname === '/write'}
           />
           <ToolTip position="right" size="sm" isHover={isHover} text="글쓰기" />
         </ZStack>

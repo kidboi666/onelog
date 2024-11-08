@@ -1,16 +1,10 @@
-import { ZStack } from '@/components/shared/Stack'
-import { ReactNode } from 'react'
+import { Metadata } from 'next'
+import { PropsWithChildren } from 'react'
 
-interface Props {
-  side_options: ReactNode
-  write_section: ReactNode
+export const metadata: Metadata = {
+  title: 'Write',
 }
 
-export default function Layout({ side_options, write_section }: Props) {
-  return (
-    <ZStack gap={8}>
-      {side_options}
-      {write_section}
-    </ZStack>
-  )
+export default function Layout({ children }: PropsWithChildren) {
+  return <>{children}</>
 }

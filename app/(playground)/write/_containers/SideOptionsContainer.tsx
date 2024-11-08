@@ -1,6 +1,6 @@
 'use client'
 
-import { MouseEvent, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -8,35 +8,39 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
 
-import AccessTypeButtonWithDropDown from '@/app/(playground)/home/_components/AccessTypeButtonWithDropDown'
-import OptionButtonWithDropDown from '@/app/(playground)/home/_components/OptionButtonWithDropDown'
 import { Container } from '@/components/shared/Container'
 import { YStack } from '@/components/shared/Stack'
 import Line from '@/components/shared/Line'
-import PublishSection from '../@write_section/_components/PublishSection'
-import PostTypeSection from '../@write_section/_components/PostTypeSection'
-import EmotionSection from '../@write_section/_components/EmotionSection'
-import {
-  TAccess,
-  TEmotion,
-  TPost,
-} from '../@write_section/_containers/PostContainer'
+import PublishSection from '../_components/PublishSection'
+import PostTypeSection from '../_components/PostTypeSection'
+import EmotionSection from '../_components/EmotionSection'
+import { TAccess, TEmotion, TPost } from '../page'
 
 interface Props {
   params: { sentenceId: string }
+  selectedEmotion: TEmotion
+  setSelectedEmotion: (emotio: TEmotion) => void
+  accessType: TAccess
+  setAccessType: (accessType: TAccess) => void
+  postType: TPost
+  setPostType: (postType: TPost) => void
 }
 
-export default function Default({ params }: Props) {
+export default function SideOptionsContainer({
+  params,
+  selectedEmotion,
+  setSelectedEmotion,
+  accessType,
+  setAccessType,
+  postType,
+  setPostType,
+}: Props) {
   const sentenceId = Number(params.sentenceId)
   const router = useRouter()
   const { data: sentence } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, Number(params.sentenceId)),
   )
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-
-  const [selectedEmotion, setSelectedEmotion] = useState<TEmotion | null>('50%')
-  const [accessType, setAccessType] = useState<TAccess>('public')
-  const [postType, setPostType] = useState<TPost>('journal')
 
   const isOwner = me?.userId === sentence?.user_id
   const handleChangeEmotion = (emotion: TEmotion | null) =>

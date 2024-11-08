@@ -1,6 +1,5 @@
 import { DropDown } from '@/components/shared/DropDown'
 import Icon from '@/components/shared/Icon'
-import Text from '@/components/shared/Text'
 import ToolTip from '@/components/shared/Tooltip'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
@@ -67,7 +66,7 @@ export default function PublishSection({
 
       <ToolTip
         isHover={isHover}
-        position="bottomLeft"
+        position={isSide ? 'topLeft' : 'bottomLeft'}
         text="게시 여부"
         size="md"
       />

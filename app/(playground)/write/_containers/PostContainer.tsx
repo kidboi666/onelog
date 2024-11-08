@@ -12,6 +12,8 @@ import useAddSentence from '@/services/mutates/sentence/useAddSentence'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import { useInput } from '@/hooks/useInput'
+import { TAccess, TEmotion, TPost } from '../page'
+import { formatDateToMDY } from '@/utils/formatDate'
 
 import EmotionGauge from '@/app/(playground)/home/_components/EmotionGauge'
 import { TagsInput } from '@/components/shared/TagsInput'
@@ -27,22 +29,35 @@ import PublishSection from '../_components/PublishSection'
 import BubbleMenuBar from '../_components/BubbleMenuBar'
 import PostTypeSection from '../_components/PostTypeSection'
 
-export type TAccess = 'public' | 'private'
-export type TPost = 'journal' | 'article'
-export type TEmotion = '0%' | '25%' | '50%' | '75%' | '100%'
+interface Props {
+  params: { sentenceId: string }
+  selectedEmotion: TEmotion
+  setSelectedEmotion: (emotio: TEmotion) => void
+  accessType: TAccess
+  setAccessType: (accessType: TAccess) => void
+  postType: TPost
+  setPostType: (postType: TPost) => void
+}
 
-export default function PostContainer() {
+export default function PostContainer({
+  params,
+  selectedEmotion,
+  setSelectedEmotion,
+  accessType,
+  setAccessType,
+  postType,
+  setPostType,
+}: Props) {
   const router = useRouter()
-  const sentenceId = useSearchParams().get('sentence_id')
+  const searchParams = useSearchParams()
+  const sentenceId = searchParams.get('sentence_id')
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: sentence } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, parseInt(sentenceId || '')),
   )
   const [content, setContent] = useState(sentence?.content ?? '')
   const [title, onChangeTitle, setTitle] = useInput<string | null>(null)
-  const [selectedEmotion, setSelectedEmotion] = useState<TEmotion | null>('50%')
-  const [accessType, setAccessType] = useState<TAccess>('public')
-  const [postType, setPostType] = useState<TPost>('journal')
+
   const { editor } = useBlockEditor({
     setContent,
     content,
@@ -55,6 +70,7 @@ export default function PostContainer() {
 
   const handleChangeEmotion = (emotion: TEmotion | null) =>
     setSelectedEmotion(emotion)
+
   const handleChangeAccessType = (order: TAccess) => setAccessType(order)
   const handleChangePostType = (order: TPost) => setPostType(order)
   const handleInputFocus = () => editor?.commands.focus('end')
@@ -115,22 +131,30 @@ export default function PostContainer() {
   return (
     <form
       onSubmit={handleSubmitSentence}
-      className="h-fit rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray"
+      className="h-fit w-full rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray"
     >
       <YStack gap={0}>
-        <XStack gap={4} className="items-center">
+        <XStack gap={4}>
           <Avatar src={me?.avatar_url} size="sm" ring />
-          <YStack gap={0} className="w-full self-end">
-            <Title type="sub" size="sm">
-              {me?.user_name}
-            </Title>
-            <Text type="caption">{me?.email}</Text>
+          <YStack gap={0} className="self-end">
+            <XStack gap={1} className="items-end">
+              <Title size="xs" type="sub">
+                {me?.user_name}
+              </Title>
+              <Text as="span" type="caption" size="sm">
+                · @{me?.email?.split('@')[0]}
+              </Text>
+            </XStack>
+            <Text type="caption" size="sm">
+              {formatDateToMDY(new Date().getTime())}
+            </Text>
           </YStack>
-          <EmotionGauge
-            emotionLevel={selectedEmotion}
-            onClick={handleChangeEmotion}
-            className="self-end"
-          />
+          <XStack className="flex-1 justify-end">
+            <EmotionGauge
+              emotionLevel={selectedEmotion}
+              onClick={handleChangeEmotion}
+            />
+          </XStack>
         </XStack>
         <Line className="my-4" />
         <Input

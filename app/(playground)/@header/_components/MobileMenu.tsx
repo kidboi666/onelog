@@ -58,7 +58,7 @@ export default function MobileMenu({
           <Line className="my-2" />
           <MobileWriteButtonWithLogo
             closeMenu={close}
-            isSelected={pathname === '/write/sentence'}
+            isSelected={pathname === '/write'}
           />
           <List className="flex flex-1 flex-col gap-2">
             {TOP_NAVIGATE_MENUS.map((menu) => (

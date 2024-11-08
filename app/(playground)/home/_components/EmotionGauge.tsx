@@ -1,7 +1,7 @@
 import cn from '@/lib/cn'
 import { useTheme } from '@/store/useTheme'
 import { TColor } from '@/types/theme'
-import { TEmotion } from '../../write/@write_section/_containers/PostContainer'
+import { TEmotion } from '../../write/_containers/PostContainer'
 
 interface Props {
   emotionLevel: TEmotion | null
@@ -41,7 +41,7 @@ export default function EmotionGauge({
 
   return (
     emotionLevel && (
-      <div className={cn('flex items-end gap-px', className)}>
+      <div className={cn('flex items-end', className)}>
         {emotionBlock!.map((shouldRender, index) => (
           <EmotionBlock
             key={index}
@@ -120,14 +120,12 @@ function EmotionBlock({
   return (
     <div
       onClick={() => onClick && onClick(currentEmotion)}
-      className={cn(
-        'size-2 cursor-pointer overflow-hidden rounded-full bg-zinc-300/35 shadow-sm transition-all dark:bg-zinc-300/15',
-        sizeString!,
-      )}
+      className="flex h-full cursor-pointer items-end overflow-hidden"
     >
       <div
         className={cn(
-          'size-full',
+          'size-full h-2 rounded-full bg-zinc-300/35 p-1 shadow-sm transition-all dark:bg-zinc-300/15',
+          sizeString!,
           blockOpacity!,
           shouldRender &&
             color === 'yellow' &&
@@ -140,7 +138,7 @@ function EmotionBlock({
           shouldRender && color === 'green' && 'bg-var-green dark:bg-var-green',
         )}
       />
-      <div className="h-1 w-1 bg-red-200" />
+      <div className="w-px" />
     </div>
   )
 }

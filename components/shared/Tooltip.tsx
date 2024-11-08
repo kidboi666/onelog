@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 interface Props {
   text: string
-  position?: 'top' | 'bottomLeft' | 'bottomRight' | 'left' | 'right'
+  position?: 'top' | 'topLeft' | 'bottomLeft' | 'bottomRight' | 'left' | 'right'
   size?: 'sm' | 'md' | 'lg' | 'none'
   isHover?: boolean
   className?: string
@@ -18,13 +18,15 @@ const toolTipBox = cva(
     variants: {
       position: {
         top: '-top-full',
+        topLeft:
+          '-top-[calc(100%-8px)] left-2 data-[status=closed]:translate-y-1',
         bottomLeft:
-          '-bottom-[calc(100%--4px)] left-2 data-[status=closed]:-translate-y-1',
+          '-bottom-[calc(100%-4px)] left-2 data-[status=closed]:translate-y-1',
         bottomRight:
-          '-bottom-[calc(100%--4px)] right-2 data-[status=closed]:-translate-y-1',
+          '-bottom-[calc(100%-4px)] right-2 data-[status=closed]:translate-y-1',
         left: '-left-full',
         right:
-          '-right-[calc(100%*2+4px)] top-1/2 -translate-y-1/2 data-[status=closed]:-translate-x-1',
+          '-right-[calc(100%*2-4px)] top-1/2 -translate-y-1/2 data-[status=closed]:-translate-x-1',
       },
       size: {
         sm: 'w-20',
@@ -42,6 +44,7 @@ const toolTipArrow = cva('absolute size-2 rotate-45', {
       bottomLeft: '-top-1 left-2',
       bottomRight: '-top-1 right-2',
       top: '-bottom-1 left-1/2 -translate-x-1/2',
+      topLeft: '-bottom-1 left-2',
       right: '-left-1 top-2',
       left: '-right-1 top-1/2 -translate-y-1/2',
     },

@@ -6,8 +6,8 @@ import useDataDrivenAnimation from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import Icon from '@/components/shared/Icon'
 import ToolTip from '@/components/shared/Tooltip'
-import { TEmotion } from '../_containers/PostContainer'
-import { YStack, ZStack } from '@/components/shared/Stack'
+import { ZStack } from '@/components/shared/Stack'
+import { TEmotion } from '../page'
 
 interface Props {
   onChangeEmotion: (emotion: TEmotion | null) => void
@@ -71,7 +71,7 @@ export default function EmotionSection({
           isSide={isSide}
         />
         <ToolTip
-          position="bottomLeft"
+          position={isSide ? 'topLeft' : 'bottomLeft'}
           size="md"
           isHover={isHover}
           text="감정 농도 선택"
