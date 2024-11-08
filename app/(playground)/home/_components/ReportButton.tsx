@@ -26,9 +26,9 @@ export default function ReportButton({
   const pushReportModal = (e: MouseEvent) => {
     e.stopPropagation()
     if (commentId) {
-      router.push(`/report_comment/${commentId}`)
+      router.push(`/modal/report_comment/${commentId}`, { scroll: false })
     } else {
-      router.push(`/report_sentence/${sentenceId}`)
+      router.push(`/modal/report_sentence/${sentenceId}`, { scroll: false })
     }
   }
 

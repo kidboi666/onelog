@@ -51,8 +51,8 @@ export default function AboutMe({ userId }: Props) {
     !isMyProfilePage &&
     followers?.find((user) => user.follower_user_id === me?.userId)
 
-  const pushFollowerList = () => router.push(`/follower/${userId}`)
-  const pushFollowingList = () => router.push(`/following/${userId}`)
+  const pushFollowerList = () => router.push(`/modal/follower/${userId}`)
+  const pushFollowingList = () => router.push(`/modal/following/${userId}`)
 
   const handleFollowButtonClick = () => {
     me
@@ -62,7 +62,7 @@ export default function AboutMe({ userId }: Props) {
             follower_user_id: me!.userId,
           })
         : followUser({ followed_user_id: userId, follower_user_id: me!.userId })
-      : router.push('/auth_guard')
+      : router.push('/modal/auth_guard')
   }
 
   const handleSendMessageButtonClick = () => {

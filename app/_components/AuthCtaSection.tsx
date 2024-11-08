@@ -29,7 +29,7 @@ export default function AuthCtaSection() {
         <YStack gap={4}>
           <LinkButton href="/home">구경하러 가기</LinkButton>
           <Title size="sm">함께하세요.</Title>
-          <LinkButton href="/signup" variant="secondary">
+          <LinkButton href="/modal/signup" variant="secondary">
             가입하러 가기
           </LinkButton>
         </YStack>

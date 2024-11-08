@@ -17,7 +17,7 @@ export default function PostSentenceContainer() {
   const { color } = useTheme()
 
   const handleSentenceClick = () => {
-    me ? router.push('/write') : router.push('/auth_guard')
+    me ? router.push('/write') : router.push('/modal/auth_guard')
   }
 
   return (

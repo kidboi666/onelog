@@ -11,13 +11,13 @@ export default function GuestContent({ closeMenu }: Props) {
   const router = useRouter()
 
   const pushSignUpPage = async () => {
-    router.push('/signup')
+    router.push('/modal/signup')
     await wait(100)
     closeMenu && closeMenu()
   }
 
   const pushSignInPage = async () => {
-    router.push('/signin')
+    router.push('/modal/signin')
     await wait(100)
     closeMenu && closeMenu()
   }

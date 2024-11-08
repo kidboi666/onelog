@@ -103,14 +103,14 @@ export default function PostContainer({
           },
           {
             onSuccess: () => {
-              router.push('/success')
+              router.push('/modal/success')
               router.back()
             },
           },
         )
       : addSentence(newSentence, {
           onSuccess: () => {
-            router.push('/success')
+            router.push('/modal/success')
             router.back()
           },
         })

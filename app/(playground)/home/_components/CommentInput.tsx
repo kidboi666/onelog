@@ -23,7 +23,7 @@ export default function CommentInput({ sentenceId, commentId, me }: Props) {
     if (me) {
       return null
     } else {
-      router.push('/auth_guard')
+      router.push('/modal/auth_guard')
     }
   }
 

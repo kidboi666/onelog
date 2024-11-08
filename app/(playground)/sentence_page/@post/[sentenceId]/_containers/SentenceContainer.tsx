@@ -87,7 +87,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
 
   const handleFavoriteSentence = (e: MouseEvent) => {
     e.stopPropagation()
-    me ? handleFavorite() : router.push('/auth_guard')
+    me ? handleFavorite() : router.push('/modal/auth_guard')
   }
 
   const handleFollow = () => {
@@ -103,7 +103,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
                 follower_user_id: me.userId,
               }),
         )
-      : router.push('/auth_guard', { scroll: false })
+      : router.push('/modal/auth_guard', { scroll: false })
   }
 
   if (!editor) {

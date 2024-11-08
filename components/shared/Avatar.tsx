@@ -9,12 +9,13 @@ interface Props {
   size?: 'xs' | 'sm' | 'md' | 'base' | 'lg' | 'xl'
   shadow?: 'none' | 'sm' | 'md' | 'lg'
   ring?: boolean
+  hoverEffect?: boolean
   className?: string
   onClick?: () => void
 }
 
 const avatarVariants = cva(
-  'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 transition duration-300 ease-in-out hover:ring-4 group-hover:ring-4 dark:bg-var-darkgray',
+  'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 transition duration-300 ease-in-out dark:bg-var-darkgray',
   {
     variants: {
       size: {
@@ -40,6 +41,7 @@ export default function Avatar({
   size = 'md',
   ring = false,
   shadow = 'none',
+  hoverEffect = true,
   onClick,
   className,
 }: Props) {
@@ -49,6 +51,7 @@ export default function Avatar({
       onClick={onClick}
       className={cn(
         avatarVariants({ size, shadow }),
+        hoverEffect && 'hover:ring-4 group-hover:ring-4',
         ring && 'border border-zinc-400 dark:border-zinc-200',
         color === 'blue' && 'ring-var-blue/65',
         color === 'orange' && 'ring-var-orange/65',

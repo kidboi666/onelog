@@ -31,9 +31,11 @@ export default function OptionButtonWithDropDown({
   const pushDeleteModal = (e: MouseEvent) => {
     e.stopPropagation()
     if (commentId) {
-      router.push(`/delete_comment/${commentId}?sentence_id=${sentenceId}`)
+      router.push(
+        `/modal/delete_comment/${commentId}?sentence_id=${sentenceId}`,
+      )
     } else {
-      router.push(`/delete_sentence/${sentenceId}`)
+      router.push(`/modal/delete_sentence/${sentenceId}`)
     }
   }
 

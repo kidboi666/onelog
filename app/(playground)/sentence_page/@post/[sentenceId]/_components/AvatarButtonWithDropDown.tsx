@@ -41,14 +41,14 @@ export default function AvatarButtonWithDropDown({
   const { mutate: follow } = useFollow()
   const { mutate: unfollow } = useUnFollow()
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
-  const pushFollowerList = () => router.push(`/follower/${userId}`)
-  const pushFollowingList = () => router.push(`/following/${userId}`)
+  const pushFollowerList = () => router.push(`/modal/follower/${userId}`)
+  const pushFollowingList = () => router.push(`/modal/following/${userId}`)
   const handleFollowButtonClick = () => {
     me
       ? isFollowing
         ? unfollow({ followed_user_id: userId, follower_user_id: me.userId! })
         : follow({ followed_user_id: userId, follower_user_id: me.userId! })
-      : router.push('/auth_guard')
+      : router.push('/modal/auth_guard')
   }
   return (
     <DropDown.Root>

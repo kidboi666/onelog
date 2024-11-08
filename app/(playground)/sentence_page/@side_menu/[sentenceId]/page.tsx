@@ -52,7 +52,7 @@ export default function SideMenuPage({ params }: Props) {
 
   const handleFavoriteSentence = (e: MouseEvent) => {
     e.stopPropagation()
-    me ? handleFavorite() : router.push('/auth_guard')
+    me ? handleFavorite() : router.push('/modal/auth_guard', { scroll: false })
   }
 
   return (

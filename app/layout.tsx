@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import ReactQueryProvider from '@/store/context/query-client-provider'
 import ThemeProvider from '@/store/context/theme-provider'
-import Portal from '@/components/shared/Portal'
 
 export const metadata: Metadata = {
   title: {
@@ -14,10 +13,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  modals,
 }: Readonly<{
   children: React.ReactNode
-  modals: React.ReactNode
 }>) {
   return (
     <html lang="ko">
@@ -26,7 +23,6 @@ export default function RootLayout({
           <ReactQueryProvider>
             {children}
             <div id="portal" />
-            <Portal>{modals}</Portal>
           </ReactQueryProvider>
         </body>
       </ThemeProvider>
