@@ -49,6 +49,7 @@ export default function HistoryBlock({
             as="span"
             className={cn(
               title === '평균 감정 농도' && 'text-white dark:text-white',
+              className,
             )}
           >
             {unit}
