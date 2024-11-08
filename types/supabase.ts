@@ -177,28 +177,22 @@ export type Database = {
           created_at: string
           id: number
           reason: string | null
-          reporter_id: string | null
-          status: string | null
-          target_id: number | null
-          target_type: string | null
+          reporter_id: string
+          target_id: number
         }
         Insert: {
           created_at?: string
           id?: number
           reason?: string | null
-          reporter_id?: string | null
-          status?: string | null
-          target_id?: number | null
-          target_type?: string | null
+          reporter_id: string
+          target_id: number
         }
         Update: {
           created_at?: string
           id?: number
           reason?: string | null
-          reporter_id?: string | null
-          status?: string | null
-          target_id?: number | null
-          target_type?: string | null
+          reporter_id?: string
+          target_id?: number
         }
         Relationships: [
           {
@@ -217,8 +211,6 @@ export type Database = {
           content: string
           created_at: string
           emotion_level: string | null
-          favorite: number | null
-          favorited_user_id: string[] | null
           id: number
           post_type: string
           tags: string[] | null
@@ -231,8 +223,6 @@ export type Database = {
           content: string
           created_at?: string
           emotion_level?: string | null
-          favorite?: number | null
-          favorited_user_id?: string[] | null
           id?: number
           post_type?: string
           tags?: string[] | null
@@ -245,8 +235,6 @@ export type Database = {
           content?: string
           created_at?: string
           emotion_level?: string | null
-          favorite?: number | null
-          favorited_user_id?: string[] | null
           id?: number
           post_type?: string
           tags?: string[] | null

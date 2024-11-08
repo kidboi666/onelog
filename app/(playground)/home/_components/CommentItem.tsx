@@ -4,7 +4,6 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import useFavoriteComment from '@/services/mutates/comment/useFavoriteComment'
 import { commentQuery } from '@/services/queries/comment/commentQuery'
-import { Tables } from '@/types/supabase'
 import { formatDateToHM } from '@/utils/formatDate'
 import Avatar from '@/components/shared/Avatar'
 import Text from '@/components/shared/Text'
@@ -14,11 +13,14 @@ import Button from '@/components/shared/Button'
 import CommentInputButton from './CommentInputButton'
 import CommentButton from './CommentButton'
 import CommentInput from './CommentInput'
-import FavoriteButton from './FavoriteButton'
 import { IUserSession } from '@/services/queries/auth/meQuery'
+import { ICommentWithUserInfo } from '@/types/comment'
+import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
+import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
+import { followQuery } from '@/services/queries/follow/followQuery'
 
 interface Props {
-  comment: Tables<'comment'>
+  comment: ICommentWithUserInfo
   sentenceId: number
   me: IUserSession | null
 }
@@ -30,7 +32,18 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
   const { data: commentToComments } = useSuspenseQuery(
     commentQuery.getCommentToComment(supabase, sentenceId, comment?.id),
   )
-  const { mutate: favoriteComment } = useFavoriteComment()
+  const { data: followerCount } = useSuspenseQuery(
+    countFollowQuery.countFollower(supabase, comment.user_id),
+  )
+  const { data: followingCount } = useSuspenseQuery(
+    countFollowQuery.countFollowing(supabase, comment.user_id),
+  )
+  const { data: followers } = useSuspenseQuery(
+    followQuery.getFollower(supabase, comment?.user_id),
+  )
+  const isFollowing = followers?.find(
+    (user) => user.follower_user_id === me?.userId,
+  )
 
   const handleShowComment = () => {
     setShowComment((prev) => !prev)
@@ -40,17 +53,6 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
     setShowCommentInput((prev) => !prev)
   }
 
-  const handleFavoriteComment = (e: MouseEvent) => {
-    e.stopPropagation()
-    me
-      ? favoriteComment({
-          commentId: comment.id,
-          userId: me?.userId,
-          sentenceId,
-        })
-      : router.push('/auth_guard')
-  }
-
   const handleAvatarClick = () => {
     router.replace(`/profile/${comment?.user_id}`)
   }
@@ -58,21 +60,30 @@ export default function CommentItem({ comment, sentenceId, me }: Props) {
   return (
     <List.Row className="mb-4 flex w-full gap-2">
       <div className="h-fit">
-        <Button variant="none" onClick={handleAvatarClick} className="p-0">
-          <Avatar src={comment?.avatar_url} size="sm" shadow="sm" />
-        </Button>
+        {/* <Button variant="none" onClick={handleAvatarClick} className="p-0">
+          <Avatar src={comment.user_info.avatar_url} size="sm" shadow="sm" />
+        </Button> */}
+        <AvatarButtonWithDropDown
+          avatarUrl={comment.user_info.avatar_url}
+          followerCount={followerCount}
+          followingCount={followingCount}
+          isFollowing={!!isFollowing}
+          userId={comment.user_id}
+          isMe={me?.userId === comment.user_id}
+          userName={comment.user_info.user_name}
+        />
       </div>
       <div className="flex flex-1 flex-col gap-2">
         <div>
           <div className="flex items-end gap-2">
-            <Text>{comment.user_name}</Text>
+            <Text>{comment.user_info.user_name}</Text>
             <Text as="span" type="caption" size="sm">
               님의 댓글
             </Text>
           </div>
           <div className="flex gap-2">
             <Text type="caption" size="sm">
-              {comment.email}
+              {comment.user_info.email}
             </Text>
             <Text type="caption" size="sm">
               {formatDateToHM(comment.created_at)}

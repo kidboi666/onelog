@@ -62,8 +62,8 @@ export const sentenceQuery = {
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
-        if (lastPage && lastPage.length < limit) return undefined // 마지막 페이지에 도달하면 undefined 반환
-        return allPages.length * limit // 다음 페이지의 offset 반환
+        if (lastPage && lastPage.length < limit) return undefined
+        return allPages.length * limit
       },
     }),
 

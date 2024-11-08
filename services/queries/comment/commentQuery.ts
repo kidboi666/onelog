@@ -1,15 +1,24 @@
+import { ICommentWithUserInfo } from '@/types/comment'
 import { Tables } from '@/types/supabase'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
 export const commentQuery = {
   getComment: (supabase: SupabaseClient, sentenceId: number) =>
-    queryOptions<Tables<'comment'>[]>({
+    queryOptions<ICommentWithUserInfo[]>({
       queryKey: ['comment', sentenceId],
       queryFn: async () => {
         const { data, error } = await supabase
           .from('comment')
-          .select()
+          .select(
+            `
+            *,
+            user_info(
+              email,
+              user_name,
+              avatar_url
+            )`,
+          )
           .eq('sentence_id', sentenceId)
           .is('comment_id', null)
           .order('created_at', { ascending: true })
@@ -28,12 +37,21 @@ export const commentQuery = {
     sentenceId: number,
     commentId: number,
   ) =>
-    queryOptions<Tables<'comment'>[]>({
+    queryOptions<ICommentWithUserInfo[]>({
       queryKey: ['comment', sentenceId, commentId],
       queryFn: async () => {
         const { data, error } = await supabase
           .from('comment')
-          .select()
+          .select(
+            `
+            *,
+            user_info(
+              email,
+              user_name,
+              avatar_url
+            )
+            `,
+          )
           .eq('comment_id', commentId)
           .order('created_at', { ascending: false })
 

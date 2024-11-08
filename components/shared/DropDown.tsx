@@ -3,6 +3,7 @@ import Button, { ButtonProps } from './Button'
 import cn from '@/lib/cn'
 import Link from 'next/link'
 import Text, { TextProps } from './Text'
+import Portal from './Portal'
 
 interface DropDownRootProps extends ComponentProps<'div'> {
   className?: string
@@ -81,19 +82,21 @@ const DropDownContent = forwardRef<
     ref,
   ) => {
     return (
-      <nav
-        ref={ref}
-        onTransitionEnd={onTransitionEnd}
-        data-status={initStatus}
-        onClick={onClick}
-        className={cn(
-          'absolute z-50 hidden rounded-md bg-white p-2 shadow-lg ring-1 ring-zinc-200 transition data-[status=closed]:scale-95 data-[status=closed]:opacity-0 dark:bg-var-darkgray dark:ring-zinc-700',
-          DROPDOWN_POSITION[position],
-          className,
-        )}
-      >
-        {children}
-      </nav>
+      <Portal>
+        <nav
+          ref={ref}
+          onTransitionEnd={onTransitionEnd}
+          data-status={initStatus}
+          onClick={onClick}
+          className={cn(
+            'absolute z-50 hidden rounded-md bg-white p-2 shadow-lg ring-1 ring-zinc-200 transition data-[status=closed]:scale-95 data-[status=closed]:opacity-0 dark:bg-var-darkgray dark:ring-zinc-700',
+            DROPDOWN_POSITION[position],
+            className,
+          )}
+        >
+          {children}
+        </nav>
+      </Portal>
     )
   },
 )

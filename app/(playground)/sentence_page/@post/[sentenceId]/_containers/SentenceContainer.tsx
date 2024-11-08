@@ -20,7 +20,6 @@ import Title from '@/components/shared/Title'
 import Line from '@/components/shared/Line'
 import Tag from '@/components/shared/Tag'
 import LinkButton from '@/components/shared/LinkButton'
-import { List } from '@/components/shared/List'
 import Spinner from '@/components/shared/Spinner'
 import Button from '@/components/shared/Button'
 
