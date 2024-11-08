@@ -15,7 +15,7 @@ import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import { followQuery } from '@/services/queries/follow/followQuery'
 import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
-import { YStack } from '@/components/shared/Stack'
+import { XStack, YStack } from '@/components/shared/Stack'
 import ReportButton from './ReportButton'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
 
@@ -63,36 +63,34 @@ export default function CommentItem({
   }
 
   return (
-    <List.Row className="flex w-full gap-2">
-      <div className="h-fit">
-        <AvatarButtonWithDropDown
-          avatarUrl={comment.user_info.avatar_url}
-          isLastComment={isLastComment}
-          followerCount={followerCount}
-          followingCount={followingCount}
-          isFollowing={!!isFollowing}
-          userId={comment.user_id}
-          isMe={me?.userId === comment.user_id}
-          userName={comment.user_info.user_name}
-        />
-      </div>
-      <div className="flex flex-1 flex-col gap-2">
+    <XStack className="w-full">
+      <AvatarButtonWithDropDown
+        avatarUrl={comment.user_info.avatar_url}
+        isLastComment={isLastComment}
+        followerCount={followerCount}
+        followingCount={followingCount}
+        isFollowing={!!isFollowing}
+        userId={comment.user_id}
+        isMe={me?.userId === comment.user_id}
+        userName={comment.user_info.user_name}
+      />
+      <YStack className="flex-1">
         <YStack gap={1}>
-          <div className="flex items-end gap-2">
+          <XStack className="items-end">
             <Text>{comment.user_info.user_name}</Text>
             <Text as="span" type="caption" size="sm">
               @{comment.user_info.email?.split('@')[0]}
             </Text>
-          </div>
-          <div className="flex gap-2">
+          </XStack>
+          <XStack>
             <Text type="caption" size="sm">
               {formatDateElapsed(comment.created_at)}
             </Text>
-          </div>
+          </XStack>
           <div className="w-fit rounded-md bg-var-lightgray p-2 dark:bg-var-dark">
             <Text>{comment.content}</Text>
           </div>
-          <div className="flex gap-1">
+          <XStack gap={0}>
             {commentToComments.length >= 1 && (
               <CommentButton
                 showComment={showComment}
@@ -109,7 +107,7 @@ export default function CommentItem({
                 sentenceId={sentenceId}
               />
             )}
-          </div>
+          </XStack>
         </YStack>
         {showCommentInput && (
           <CommentInput
@@ -121,7 +119,14 @@ export default function CommentItem({
         {showComment &&
           commentToComments.length >= 1 &&
           commentToComments.map((comment) => (
-            <Suspense key={comment.id} fallback={<Spinner size={40} />}>
+            <Suspense
+              key={comment.id}
+              fallback={
+                <Spinner.Container>
+                  <Spinner size={40} />
+                </Spinner.Container>
+              }
+            >
               <CommentItem
                 sentenceId={sentenceId}
                 comment={comment}
@@ -130,7 +135,7 @@ export default function CommentItem({
               />
             </Suspense>
           ))}
-      </div>
-    </List.Row>
+      </YStack>
+    </XStack>
   )
 }

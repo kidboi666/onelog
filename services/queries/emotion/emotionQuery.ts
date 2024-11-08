@@ -18,7 +18,7 @@ export const emotionQuery = {
             Number(item.emotion_level?.split('%')[0]),
           )
           const sum = splitArray.reduce((prev, curr) => prev + curr, 0)
-          result = Math.floor(sum / splitArray.length + 1)
+          result = Math.floor(sum / splitArray.length)
         } else {
           result = 0
         }

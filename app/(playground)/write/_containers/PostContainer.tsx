@@ -30,7 +30,7 @@ import BubbleMenuBar from '../_components/BubbleMenuBar'
 import PostTypeSection from '../_components/PostTypeSection'
 
 interface Props {
-  params: { sentenceId: string }
+  searchParams: { sentence_id: string }
   selectedEmotion: TEmotion
   setSelectedEmotion: (emotio: TEmotion) => void
   accessType: TAccess
@@ -40,7 +40,7 @@ interface Props {
 }
 
 export default function PostContainer({
-  params,
+  searchParams,
   selectedEmotion,
   setSelectedEmotion,
   accessType,
@@ -49,11 +49,10 @@ export default function PostContainer({
   setPostType,
 }: Props) {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const sentenceId = searchParams.get('sentence_id')
+  const sentenceId = Number(searchParams?.sentence_id)
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getSentence(supabase, parseInt(sentenceId || '')),
+    sentenceQuery.getSentence(supabase, sentenceId),
   )
   const [content, setContent] = useState(sentence?.content ?? '')
   const [title, onChangeTitle, setTitle] = useInput<string | null>(null)

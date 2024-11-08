@@ -16,7 +16,7 @@ import { YStack } from '@/components/shared/Stack'
 export default function SentenceContainer() {
   const limit = 4
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetching } =
     useSuspenseInfiniteQuery(sentenceQuery.getAllSentence(supabase, limit))
   const sentences = data.pages.flatMap((page) => page || [])
   const [target, inView] = useIntersect<HTMLDivElement>()
@@ -38,7 +38,7 @@ export default function SentenceContainer() {
         />
       ))}
       <div ref={target} />
-      {isFetchingNextPage && (
+      {isFetching && (
         <Spinner.Container>
           <Spinner size={60} />
         </Spinner.Container>

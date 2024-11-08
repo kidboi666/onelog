@@ -16,7 +16,7 @@ export default function Default() {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Container as="header" className="sticky top-0 z-50 sm:hidden">
-        <div className="w-full rounded-md bg-white/60 p-2 shadow-lg backdrop-blur-xl sm:p-4 lg:px-12 dark:bg-var-darkgray/60">
+        <div className="w-full rounded-md bg-white/60 p-2 shadow-lg backdrop-blur-xl lg:px-12 dark:bg-var-darkgray/60">
           <XStack className="h-full items-center justify-between">
             <MenuButton />
             <ThemeToggleButton isOpen viewToggle />

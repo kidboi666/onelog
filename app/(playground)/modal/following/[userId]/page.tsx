@@ -49,7 +49,7 @@ export default function FollowingListModal({ params }: Props) {
           const isMe = me?.userId === user.followed_user_id
           // 유저의 아이디가 내 아이디라면 팔로우 버튼 삭제
           const pushUserPage = () => {
-            router.push(`/profile/${user.user_info.id}`)
+            router.push(`/profile/${user.user_info.id}`, { scroll: false })
           }
           return (
             <FollowUserCard

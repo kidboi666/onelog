@@ -254,7 +254,13 @@ export default function SentenceContainer({ sentenceId }: Props) {
 
       {showComment && (
         <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray">
-          <Suspense fallback={<Spinner size={40} />}>
+          <Suspense
+            fallback={
+              <Spinner.Container>
+                <Spinner size={40} />
+              </Spinner.Container>
+            }
+          >
             <Comments sentenceId={sentence.id} me={me} />
           </Suspense>
         </div>

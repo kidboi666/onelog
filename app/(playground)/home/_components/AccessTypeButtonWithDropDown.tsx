@@ -33,6 +33,7 @@ export default function AccessTypeButtonWithDropDown({
       <DropDown.Trigger
         targetRef={buttonRef}
         onClick={handleButtonClick}
+        size={isSide ? 'md' : 'icon'}
         className="hover:text-green-400 dark:hover:text-green-400"
       >
         <Icon view="0 -960 960 960" size={isSide ? 24 : 18}>

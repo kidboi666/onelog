@@ -60,7 +60,7 @@ export const getSignUpDays = (date: string) => {
   const result = Math.floor(diffTime / 86400000)
 
   if (result < 1) {
-    return '오늘'
+    return '1'
   }
 
   return result

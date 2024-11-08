@@ -33,8 +33,7 @@ export default function ReportCommentModal({ params }: Props) {
       },
       {
         onSuccess: () => {
-          router.push('/modal/success')
-          router.back()
+          router.push('/modal/success', { scroll: false })
         },
       },
     )

@@ -1,16 +1,14 @@
 'use client'
 
-import { Fragment, PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { useSuspenseQueries, useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
-import cn from '@/lib/cn'
+import { countSentenceQuery } from '@/services/queries/sentence/countSentenceQuery'
 import { PROFILE_NAVIGATE_MENUS } from '../_constants/Navigate'
-import LinkButton from '@/components/shared/LinkButton'
 import { Container } from '@/components/shared/Container'
 import { ZStack } from '@/components/shared/Stack'
-import Text from '@/components/shared/Text'
-import { countSentenceQuery } from '@/services/queries/sentence/countSentenceQuery'
+import MenuSection from './journal_garden/_components/MenuSection'
 
 interface Props {
   params: { userId: string }
@@ -39,41 +37,15 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
       <Container className="overflow-x-auto rounded-md bg-white p-1 shadow-sm dark:bg-var-darkgray">
         <ZStack gap={2}>
           {PROFILE_NAVIGATE_MENUS.map((menu, idx) => (
-            <Fragment key={menu.id}>
-              <LinkButton
-                href={`/profile/${userId}/${menu.path}`}
-                variant="teritory"
-                size="sm"
-                innerClassName={cn(
-                  'justify-center rounded-md text-zinc-500 font-medium ',
-                  segment === menu.path && 'bg-zinc-100 dark:bg-var-dark',
-                )}
-              >
-                {menu.name}
-                {counts.map(
-                  (data) =>
-                    data.postType === menu.path && (
-                      <Fragment key={data.postType}>
-                        <Text type="caption" size="xs" className="ml-1">
-                          {data.count}
-                        </Text>
-                      </Fragment>
-                    ),
-                )}
-                {menu.path === 'liked' && (
-                  <Text type="caption" size="xs" className="ml-1">
-                    {likedCount}
-                  </Text>
-                )}
-              </LinkButton>
-              {PROFILE_NAVIGATE_MENUS.length === idx + 1 ? null : (
-                <div
-                  className={cn(
-                    'my-auto h-3 border-r border-zinc-200 dark:border-zinc-600',
-                  )}
-                />
-              )}
-            </Fragment>
+            <MenuSection
+              key={menu.id}
+              menu={menu}
+              idx={idx}
+              segment={segment}
+              userId={userId}
+              counts={counts}
+              likedCount={likedCount}
+            />
           ))}
         </ZStack>
       </Container>

@@ -17,7 +17,7 @@ import EmotionSection from '../_components/EmotionSection'
 import { TAccess, TEmotion, TPost } from '../page'
 
 interface Props {
-  params: { sentenceId: string }
+  searchParams: { sentence_id: string }
   selectedEmotion: TEmotion
   setSelectedEmotion: (emotio: TEmotion) => void
   accessType: TAccess
@@ -27,7 +27,7 @@ interface Props {
 }
 
 export default function SideOptionsContainer({
-  params,
+  searchParams,
   selectedEmotion,
   setSelectedEmotion,
   accessType,
@@ -35,10 +35,10 @@ export default function SideOptionsContainer({
   postType,
   setPostType,
 }: Props) {
-  const sentenceId = Number(params.sentenceId)
+  const sentenceId = Number(searchParams.sentence_id)
   const router = useRouter()
   const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getSentence(supabase, Number(params.sentenceId)),
+    sentenceQuery.getSentence(supabase, sentenceId),
   )
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
 

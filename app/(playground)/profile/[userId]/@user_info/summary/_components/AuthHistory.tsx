@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation'
 import { supabase } from '@/lib/supabase/client'
 import { colorTheme, useTheme } from '@/store/useTheme'
 import { userQuery } from '@/services/queries/auth/userQuery'
-import { TColor } from '@/types/theme'
 import { getSignUpDays } from '@/utils/formatDate'
 import { emotionQuery } from '@/services/queries/emotion/emotionQuery'
 import HistoryBlock from './HistoryBlock'
@@ -25,24 +24,6 @@ export default function AuthHistory() {
   const { data: myAverageEmotion } = useSuspenseQuery(
     emotionQuery.getEmotionAverage(supabase, userId),
   )
-
-  const formatColor = (color: TColor) => {
-    switch (color) {
-      case 'green':
-        return 'text-var-green dark:text-var-green'
-      case 'blue':
-        return 'text-var-blue dark:text-var-blue'
-      case 'yellow':
-        return 'text-var-yellow dark:text-var-yellow'
-      case 'orange':
-        return 'text-var-orange dark:text-var-orange'
-      case 'black':
-        return 'text-var-black dark:text-white '
-      default:
-        'text-var-black dark:text-white'
-        break
-    }
-  }
 
   return (
     <XStack className="sm:gap-8">

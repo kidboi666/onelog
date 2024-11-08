@@ -47,8 +47,7 @@ export default function FollowerListModal({ params }: Props) {
           )
           const isMe = me?.userId === follower.user_info.id
           const pushUserPage = () => {
-            router.back()
-            router.push(`/profile/${follower.user_info.id}`)
+            router.push(`/profile/${follower.user_info.id}`, { scroll: false })
           }
 
           return (

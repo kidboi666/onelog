@@ -28,6 +28,7 @@
 
     &.layout-sidebar-right {
       grid-template-columns: 60fr 40fr;
+      /* color: #ffc918 */
     }
 
     &.layout-two-column {

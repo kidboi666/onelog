@@ -16,7 +16,6 @@ import { Container } from '@/components/shared/Container'
 import Empty from '@/components/shared/Empty'
 import Spinner from '@/components/shared/Spinner'
 import { YStack } from '@/components/shared/Stack'
-import Title from '@/components/shared/Title'
 
 export default function Articles() {
   const limit = 4
@@ -25,7 +24,7 @@ export default function Articles() {
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),
   )
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetching } =
     useSuspenseInfiniteQuery(
       sentenceQuery.getAllMySentence(supabase, userId, 'article', limit),
     )
@@ -47,7 +46,6 @@ export default function Articles() {
     <Container>
       {articles.length > 0 ? (
         <YStack gap={8}>
-          <Title></Title>
           {articles?.map((article) => (
             <SentenceCard
               key={article.id}
@@ -57,7 +55,11 @@ export default function Articles() {
             />
           ))}
           <div ref={ref} />
-          {isFetchingNextPage && <Spinner size={60} />}
+          {isFetching && (
+            <Spinner.Container>
+              <Spinner size={60} />
+            </Spinner.Container>
+          )}
         </YStack>
       ) : (
         <Empty>

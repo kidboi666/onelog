@@ -32,6 +32,7 @@ export default function FavoriteButton({
     >
       <Button
         variant="icon"
+        size={isSide ? 'md' : 'icon'}
         onClick={onFavorite}
         className={cn(
           'flex border-none text-xs font-light hover:text-red-500 dark:hover:text-red-500',

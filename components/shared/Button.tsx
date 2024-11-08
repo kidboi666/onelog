@@ -67,12 +67,6 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
 
     const buttonClasses = cn(
       variant === 'primary' && colorTheme({ color }),
-      variant === 'primary' && 'ring-1',
-      color === 'blue' && 'ring-var-blue',
-      color === 'orange' && 'ring-var-orange',
-      color === 'yellow' && 'ring-var-yellow',
-      color === 'green' && 'ring-var-green',
-      color === 'black' && 'ring-var-black',
       BUTTON_VARIANTS({
         [isLoading || disabled ? 'disabled' : 'active']: variant,
         size,
@@ -91,7 +85,9 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         {...props}
       >
         {children}
-        {isLoading && <Spinner size={size === 'sm' ? 16 : 20} />}
+        {isLoading && (
+          <Spinner size={size === 'sm' ? 16 : 20} variants="circle" />
+        )}
       </button>
     )
   },
