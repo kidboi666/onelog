@@ -9,4 +9,5 @@ export interface IBlockInfo {
   month: number
   date: number
   weekDay: number
+  year: number
 }

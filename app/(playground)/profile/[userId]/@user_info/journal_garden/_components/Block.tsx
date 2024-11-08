@@ -8,13 +8,12 @@ import { colorizeOpacity } from '@/utils/formatColor'
 import Button from '@/components/shared/Button'
 import Text from '@/components/shared/Text'
 import { WEEKDAY } from '@/app/(playground)/write/_constants'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface BlockProps {
   empty?: boolean
   className?: string
   average?: number
-  summary?: any
   blockInfo?: IBlockInfo
   disabled?: boolean
 }
@@ -23,13 +22,22 @@ export default function Block({
   className,
   empty,
   average,
-  summary,
   blockInfo,
   disabled,
 }: BlockProps) {
   const router = useRouter()
   const infoRef = useRef<HTMLDivElement>(null)
   const { color } = useTheme()
+  const searchParams = useSearchParams()
+  const selectedDate = {
+    year: Number(searchParams.get('year')),
+    month: Number(searchParams.get('month')),
+    date: Number(searchParams.get('date')),
+  }
+  const isSelected =
+    selectedDate.year === blockInfo?.year &&
+    selectedDate.month === blockInfo?.month &&
+    selectedDate.date === blockInfo?.date
 
   if (empty) {
     return <div className="size-2.5 select-none opacity-0" />
@@ -43,12 +51,10 @@ export default function Block({
 
   const handleBlockClick = () => {
     infoRef.current?.setAttribute('data-status', 'closed')
-    const createdAt = summary?.[0]?.created_at
-    const year = new Date(createdAt).getFullYear()
-    const month = new Date(createdAt).getMonth()
-    const date = new Date(createdAt).getDate()
 
-    router.push(`?year=${year}&month=${month}&date=${date}`)
+    router.push(
+      `?year=${blockInfo?.year}&month=${blockInfo?.month}&date=${blockInfo?.date}`,
+    )
   }
 
   return (
@@ -75,10 +81,16 @@ export default function Block({
         disabled={disabled}
         onClick={handleBlockClick}
         className={cn(
-          'size-3 select-none overflow-hidden rounded-[4px] border border-zinc-300 shadow-sm dark:border-zinc-700 dark:shadow-zinc-800',
+          'size-3 select-none overflow-hidden rounded-[4px] border border-zinc-300 shadow-sm active:scale-75 dark:border-zinc-700 dark:shadow-zinc-800',
           className,
         )}
       >
+        <div
+          className={cn(
+            'absolute size-full rounded-[4px]',
+            isSelected && 'animate-ping ring-2',
+          )}
+        />
         <div
           className={cn(
             'size-full text-center text-[7px] opacity-0 hover:opacity-55',

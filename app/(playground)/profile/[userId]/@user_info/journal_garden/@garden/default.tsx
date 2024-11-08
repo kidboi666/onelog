@@ -9,12 +9,11 @@ import { IDateBlock } from '@/types/garden'
 import { getDaysInYear, getFirstDayInYear } from '@/utils/formatDate'
 
 import Title from '@/components/shared/Title'
-import { usePathname } from 'next/navigation'
-import Block from './Block'
-import GardenBlockSection from './GardenBlockSection'
-import ColorInfoDisplay from './ColorInfoDisplay'
-import YearSection from './YearSection'
 import { meQuery } from '@/services/queries/auth/meQuery'
+import Block from '../_components/Block'
+import YearSection from '../_components/YearSection'
+import ColorInfoDisplay from '../_components/ColorInfoDisplay'
+import GardenBlockSection from '../_components/GardenBlockSection'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 이모션 레벨 기준 색칠)
@@ -46,8 +45,7 @@ const getRenderedBlockFromEmotionLevel = (
           blocks.push(
             <Block
               key={day}
-              summary={targetDays}
-              blockInfo={{ month: i + 1, date: day, weekDay }}
+              blockInfo={{ month: i + 1, date: day, weekDay, year }}
               average={targetDaysForEmotionLevel}
             />,
           )
@@ -55,7 +53,10 @@ const getRenderedBlockFromEmotionLevel = (
         }
       }
       blocks.push(
-        <Block key={day} blockInfo={{ month: i + 1, date: day, weekDay }} />,
+        <Block
+          key={day}
+          blockInfo={{ month: i + 1, date: day, weekDay, year }}
+        />,
       )
     }
     return { month: i + 1, days: [...blocks] }
@@ -86,9 +87,12 @@ export const createEmptySpaceByWeekday = (
   return [...trueResult]
 }
 
-export default function Garden() {
-  const pathname = usePathname()
-  const [_, __, userId] = pathname.split('/')
+interface Props {
+  params: { userId: string }
+}
+
+export default function Garden({ params }: Props) {
+  const userId = params.userId
   const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, userId))
   const { data: garden } = useSuspenseQuery(
     gardenQuery.getGarden(supabase, userId),

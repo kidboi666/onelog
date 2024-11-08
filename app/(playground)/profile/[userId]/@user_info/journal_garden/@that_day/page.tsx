@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import Title from '@/components/shared/Title'
 import Empty from '@/components/shared/Empty'
 import SentenceCard from '@/app/(playground)/home/_components/SentenceCard'
@@ -9,24 +9,30 @@ import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { supabase } from '@/lib/supabase/client'
 import { YStack } from '@/components/shared/Stack'
 import Spinner from '@/components/shared/Spinner'
+import { useEffect, useState } from 'react'
 
-export default function PrevOneSentence() {
+interface Props {
+  searchParams: { year: string; month: string; date: string }
+}
+
+export default function PrevOneSentence({ searchParams }: Props) {
   const pathname = usePathname()
   const [_, __, meId] = pathname.split('/')
-  const searchParams = useSearchParams()
-  const year = Number(searchParams.get('year'))
-  const month = Number(searchParams.get('month'))
-  const date = Number(searchParams.get('date'))
-  let startOfDay = null
-  let endOfDay = null
-  if (year && month && date) {
-    startOfDay = new Date(year, month, date, 0, 0, 0).toISOString() || null
-    endOfDay = new Date(year, month, date, 23, 59, 59).toISOString() || null
-  }
+  const year = parseInt(searchParams.year)
+  const month = parseInt(searchParams.month)
+  const date = parseInt(searchParams.date)
+  const [startOfDay, setStartOfDay] = useState('')
+  const [endOfDay, setEndOfDay] = useState('')
   const { data: sentences, isFetching } = useSuspenseQuery(
     sentenceQuery.getMySentenceThatDay(supabase, meId, startOfDay, endOfDay),
   )
 
+  useEffect(() => {
+    if (year && month && date) {
+      setStartOfDay(new Date(year, month - 1, date, 0, 0, 0).toISOString())
+      setEndOfDay(new Date(year, month - 1, date, 23, 59, 59).toISOString())
+    }
+  }, [year, month, date])
   return (
     <>
       <Title>그날의 기록</Title>

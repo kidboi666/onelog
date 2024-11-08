@@ -74,7 +74,7 @@ export const sentenceQuery = {
     endOfDay: string | null,
   ) =>
     queryOptions<ISentenceWithUserInfo[] | null>({
-      queryKey: ['sentence', `${startOfDay}${endOfDay}`, userId],
+      queryKey: ['sentence', `${startOfDay}`, `${endOfDay}`, userId],
       queryFn: async () => {
         const { data } = await supabase
           .from('sentence')
