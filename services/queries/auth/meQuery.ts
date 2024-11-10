@@ -1,4 +1,4 @@
-import { Tables } from '@/types/supabase'
+import { IUserInfoWithMBTI } from '@/types/auth'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
@@ -31,7 +31,7 @@ export const meQuery = {
       },
     }),
   getUserInfo: (supabase: SupabaseClient, userId?: string) =>
-    queryOptions<Tables<'user_info'>>({
+    queryOptions<IUserInfoWithMBTI>({
       queryKey: ['me', 'info'],
       queryFn: async () => {
         const { data } = await supabase

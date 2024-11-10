@@ -1,7 +1,7 @@
 import Input from '@/components/shared/Input'
+import { YStack } from '@/components/shared/Stack'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import useDataDrivenAnimation from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
 import { ComponentProps } from 'react'
 
@@ -10,16 +10,14 @@ interface Props extends ComponentProps<'input'> {
 }
 
 export default function UserNameSection({ value, onChange }: Props) {
-  const { ref, open, close } = useDataDrivenAnimation<HTMLInputElement>()
   return (
-    <div className="flex w-full max-w-52 flex-col gap-8">
+    <YStack gap={8} className="max-w-52">
       <Title>필명</Title>
-      <div className="flex w-full flex-col gap-2">
+      <YStack>
         <Input
-          onFocus={() => open()}
-          onBlur={() => close()}
           value={value}
           onChange={onChange}
+          className="bg-var-lightgray dark:bg-var-dark"
         />
         <div className="self-end">
           {value && (
@@ -29,7 +27,7 @@ export default function UserNameSection({ value, onChange }: Props) {
             >{`${value?.length} / 10`}</Text>
           )}
         </div>
-      </div>
-    </div>
+      </YStack>
+    </YStack>
   )
 }

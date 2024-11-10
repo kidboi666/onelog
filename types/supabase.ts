@@ -163,26 +163,36 @@ export type Database = {
           id: number
           reason: string | null
           reporter_id: string
-          target_id: number
+          target_comment_id: number | null
+          target_sentence_id: number | null
         }
         Insert: {
           created_at?: string
           id?: number
           reason?: string | null
           reporter_id: string
-          target_id: number
+          target_comment_id?: number | null
+          target_sentence_id?: number | null
         }
         Update: {
           created_at?: string
           id?: number
           reason?: string | null
           reporter_id?: string
-          target_id?: number
+          target_comment_id?: number | null
+          target_sentence_id?: number | null
         }
         Relationships: [
           {
+            foreignKeyName: "report_target_comment_id_fkey"
+            columns: ["target_comment_id"]
+            isOneToOne: false
+            referencedRelation: "comment"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "reports_target_id_fkey"
-            columns: ["target_id"]
+            columns: ["target_sentence_id"]
             isOneToOne: false
             referencedRelation: "sentence"
             referencedColumns: ["id"]
@@ -246,6 +256,7 @@ export type Database = {
           favorite_sentence_id: number[] | null
           favorite_words: string[] | null
           id: string
+          mbti: string | null
           user_name: string | null
         }
         Insert: {
@@ -257,6 +268,7 @@ export type Database = {
           favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
           id: string
+          mbti?: string | null
           user_name?: string | null
         }
         Update: {
@@ -268,6 +280,7 @@ export type Database = {
           favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
           id?: string
+          mbti?: string | null
           user_name?: string | null
         }
         Relationships: []
@@ -326,23 +339,9 @@ export type Database = {
         }
         Returns: undefined
       }
-      decrement_favorite_comment: {
-        Args: {
-          comment_intid: number
-          user_uuid: string
-        }
-        Returns: undefined
-      }
       increment_favorite: {
         Args: {
           sentence_id: number
-          user_uuid: string
-        }
-        Returns: undefined
-      }
-      increment_favorite_comment: {
-        Args: {
-          comment_intid: number
           user_uuid: string
         }
         Returns: undefined

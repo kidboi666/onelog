@@ -1,3 +1,4 @@
+import { YStack } from '@/components/shared/Stack'
 import Text from '@/components/shared/Text'
 import TextArea from '@/components/shared/TextArea'
 import Title from '@/components/shared/Title'
@@ -10,10 +11,14 @@ interface Props extends ComponentProps<'textarea'> {
 
 export default function AboutMeSection({ value, onChange }: Props) {
   return (
-    <div className="flex w-full flex-col gap-8">
+    <YStack gap={8}>
       <Title>소개글</Title>
-      <div className="flex flex-col gap-2">
-        <TextArea value={value ?? ''} onChange={onChange} className="p-2" />
+      <YStack>
+        <TextArea
+          value={value ?? ''}
+          onChange={onChange}
+          className="bg-var-lightgray p-2 dark:bg-var-dark"
+        />
         <div className="self-end">
           {value && (
             <Text
@@ -22,7 +27,7 @@ export default function AboutMeSection({ value, onChange }: Props) {
             >{`${value?.length} / 150`}</Text>
           )}
         </div>
-      </div>
-    </div>
+      </YStack>
+    </YStack>
   )
 }

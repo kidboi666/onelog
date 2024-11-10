@@ -10,13 +10,15 @@ export default function useUpdateUserInfo() {
 
   return useMutation({
     mutationFn: async (params: IUpdateUserInfo) => {
-      const { data, error } = await supabase.auth.updateUser({
-        data: {
+      const { data, error } = await supabase
+        .from('user_info')
+        .update({
           about_me: params.aboutMe,
           avatar_url: params.avatarUrl,
           user_name: params.userName,
-        },
-      })
+          mbti: params.mbti,
+        })
+        .eq('id', params.userId)
 
       if (error) {
         throw error
@@ -31,7 +33,7 @@ export default function useUpdateUserInfo() {
       queryClient.invalidateQueries({
         queryKey: ['user', variables.userId],
       })
-      router.replace('success')
+      router.replace('/modal/success')
     },
     onError: (error, variables, context) => {
       console.log('에러발생', error)
