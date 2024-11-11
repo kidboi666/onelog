@@ -15,7 +15,7 @@ const TEXTAREA_VARIANTS = cva('w-full outline-none transition', {
   variants: {
     variant: {
       primary:
-        'h-fit min-h-20 resize-none rounded-md shadow-sm ring-zinc-200 focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-white dark:focus:ring-zinc-600',
+        'h-fit min-h-20 resize-none rounded-md shadow-sm ring-zinc-200 focus:ring-2 dark:bg-var-darkgray dark:text-white dark:ring-white dark:focus:ring-zinc-600',
       secondary: 'border-b-1 border-zinc-400 focus:border-b-4',
       none: '',
     },

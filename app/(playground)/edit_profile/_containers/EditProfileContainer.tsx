@@ -17,6 +17,7 @@ import UserNameSection from '../_components/UserNameSection'
 import AboutMeSection from '../_components/AboutMeSection'
 import MBTISection from '../_components/MBTISection'
 import { TMBTI } from '../_constants/mbti'
+import EmailSection from '../_components/EmailSection'
 
 export default function EditProfileContainer() {
   const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
@@ -98,12 +99,12 @@ export default function EditProfileContainer() {
       onSubmit={handleProfileUpdate}
       className="animate-fade-in rounded-md bg-white p-8 shadow-sm dark:bg-var-darkgray"
     >
-      <YStack gap={12}>
+      <YStack gap={8}>
         <ProfileImageSection
-          email={me?.email}
           onChange={handleChangeImage}
           imagePreview={avatarUrl}
         />
+        <EmailSection email={me.email} provider={data?.provider} />
         <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
         <AboutMeSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
         <MBTISection mbti={mbti} setMbti={setMbti} />

@@ -11,6 +11,7 @@ export interface IUserSession {
   phone_verified: boolean
   sub: string
   userId: string
+  provider: string
 }
 
 export const meQuery = {
@@ -27,6 +28,7 @@ export const meQuery = {
         return {
           ...data.user?.user_metadata,
           userId: data.user?.id,
+          provider: data.user.app_metadata.provider,
         } as IUserSession
       },
     }),

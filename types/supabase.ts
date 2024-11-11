@@ -251,7 +251,7 @@ export type Database = {
           about_me: string | null
           avatar_url: string | null
           created_at: string
-          email: string | null
+          email: string
           favorite_comment_id: number[] | null
           favorite_sentence_id: number[] | null
           favorite_words: string[] | null
@@ -263,7 +263,7 @@ export type Database = {
           about_me?: string | null
           avatar_url?: string | null
           created_at?: string
-          email?: string | null
+          email: string
           favorite_comment_id?: number[] | null
           favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
@@ -275,7 +275,7 @@ export type Database = {
           about_me?: string | null
           avatar_url?: string | null
           created_at?: string
-          email?: string | null
+          email?: string
           favorite_comment_id?: number[] | null
           favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null

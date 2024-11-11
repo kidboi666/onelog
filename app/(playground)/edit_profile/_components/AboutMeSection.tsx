@@ -1,4 +1,4 @@
-import { YStack } from '@/components/shared/Stack'
+import { XStack, YStack } from '@/components/shared/Stack'
 import Text from '@/components/shared/Text'
 import TextArea from '@/components/shared/TextArea'
 import Title from '@/components/shared/Title'
@@ -11,23 +11,21 @@ interface Props extends ComponentProps<'textarea'> {
 
 export default function AboutMeSection({ value, onChange }: Props) {
   return (
-    <YStack gap={8}>
-      <Title>소개글</Title>
-      <YStack>
+    <YStack gap={4}>
+      <Title>한줄 소개</Title>
+      <XStack className="items-end">
         <TextArea
           value={value ?? ''}
           onChange={onChange}
           className="bg-var-lightgray p-2 dark:bg-var-dark"
         />
-        <div className="self-end">
-          {value && (
-            <Text
-              size="sm"
-              className={cn(value?.length > 150 && 'text-red-600')}
-            >{`${value?.length} / 150`}</Text>
-          )}
-        </div>
-      </YStack>
+        {value && (
+          <Text
+            size="sm"
+            className={cn('text-nowrap', value?.length > 150 && 'text-red-600')}
+          >{`${value?.length} / 150`}</Text>
+        )}
+      </XStack>
     </YStack>
   )
 }

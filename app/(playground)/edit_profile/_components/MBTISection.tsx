@@ -22,7 +22,7 @@ export default function MBTISection({ mbti, setMbti }: Props) {
   }
 
   return (
-    <YStack gap={8}>
+    <YStack gap={4}>
       <Title>MBTI</Title>
       <DropDown.Root>
         <DropDown.Trigger
@@ -41,13 +41,19 @@ export default function MBTISection({ mbti, setMbti }: Props) {
           onTransitionEnd={onTransitionEnd}
           ref={ref}
         >
-          {MBTI.map((mbti) => (
+          {MBTI.map((v) => (
             <DropDown.Button
-              onClick={() => handleListClick(mbti)}
-              key={mbti}
+              onClick={() => handleListClick(v)}
+              key={v}
               variant="list"
+              className="gap-2"
             >
-              {mbti}
+              {v}
+              {v === mbti && (
+                <Icon view="0 -960 960 960" size={14}>
+                  <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+                </Icon>
+              )}
             </DropDown.Button>
           ))}
         </DropDown.Content>

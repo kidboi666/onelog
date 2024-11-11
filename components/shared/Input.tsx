@@ -18,7 +18,7 @@ const INPUT_VARIANTS = cva(
     variants: {
       variant: {
         primary:
-          'rounded-md bg-white shadow-sm ring-zinc-200 focus:ring-4 dark:bg-var-darkgray dark:text-white dark:ring-zinc-600',
+          'rounded-md bg-white shadow-sm ring-zinc-200 focus:ring-2 dark:bg-var-darkgray dark:text-white dark:ring-zinc-600',
         secondary:
           'bg-transparent text-zinc-600 dark:border-zinc-600 dark:bg-transparent dark:text-zinc-200 dark:ring-zinc-600',
         auth: 'rounded-md bg-zinc-200 dark:bg-white/15 dark:text-white',
