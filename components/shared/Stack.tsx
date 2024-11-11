@@ -1,4 +1,5 @@
 import cn from '@/lib/cn'
+import { cva } from 'class-variance-authority'
 import { ComponentProps, PropsWithChildren } from 'react'
 
 type GapSizes = 'px' | 0 | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12
@@ -10,6 +11,27 @@ interface StackProps extends ComponentProps<'div'> {
   direction?: 'row' | 'col'
 }
 
+const stackClasses = cva('', {
+  variants: {
+    gap: {
+      0: 'gap-0',
+      px: 'gap-px',
+      1: 'gap-1',
+      2: 'gap-2',
+      3: 'gap-3',
+      4: 'gap-4',
+      6: 'gap-6',
+      8: 'gap-8',
+      10: 'gap-10',
+      12: 'gap-12',
+    },
+    direction: {
+      col: 'flex flex-col',
+      row: 'flex',
+    },
+  },
+})
+
 const Stack = ({
   children,
   gap = 2,
@@ -17,15 +39,8 @@ const Stack = ({
   as: Component = 'div',
   direction = 'row',
 }: PropsWithChildren<StackProps>) => {
-  const gapSizes = `gap-${gap}`
   return (
-    <Component
-      className={cn(
-        direction === 'col' ? 'flex flex-col' : 'flex',
-        gapSizes,
-        className,
-      )}
-    >
+    <Component className={cn(stackClasses({ gap, direction }), className)}>
       {children}
     </Component>
   )
