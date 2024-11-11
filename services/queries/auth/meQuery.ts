@@ -33,6 +33,7 @@ export const meQuery = {
       },
       staleTime: 300000,
     }),
+
   getUserInfo: (supabase: SupabaseClient, userId?: string) =>
     queryOptions<IUserInfoWithMBTI>({
       queryKey: ['me', 'info'],

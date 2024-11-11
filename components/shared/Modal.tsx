@@ -1,9 +1,9 @@
 'use client'
 
-import useDataDrivenAnimation from '@/hooks/useStateChange'
-import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect, useRef } from 'react'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
+import cn from '@/lib/cn'
 
 interface Props extends ComponentProps<'div'> {
   className?: string
@@ -68,7 +68,7 @@ export default function Modal({
         data-status="closed"
         onTransitionEnd={insideOnTransitionEnd}
         className={cn(
-          'fixed left-1/2 top-1/2 z-50 flex h-fit max-h-[calc(100%-200px)] w-full max-w-[calc(100%-20px)] origin-top -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-12 overflow-y-auto rounded-md bg-var-lightgray p-8 shadow-lg transition ease-in-out data-[status=closed]:scale-90 data-[status=closed]:opacity-0 sm:max-w-[425px] dark:bg-var-dark',
+          'fixed left-1/2 top-1/2 z-50 flex h-fit max-h-[calc(100%-200px)] w-full max-w-[calc(100%-20px)] origin-top -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-12 overflow-y-auto rounded-md bg-var-lightgray p-4 shadow-lg transition ease-in-out data-[status=closed]:scale-90 data-[status=closed]:opacity-0 sm:max-w-[425px] sm:p-8 dark:bg-var-dark',
           className,
         )}
         {...props}

@@ -12,7 +12,7 @@ import ReportButton from './ReportButton'
 interface Props {
   tags?: string[]
   editor: Editor
-  isLiked: boolean | null
+  isLiked?: boolean | null
   favoritedCount?: number
   commentCount?: number
   sentenceTitle?: string | null

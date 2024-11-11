@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 
 import { ISentenceState } from '@/store/useSentence'
@@ -24,7 +24,7 @@ interface Props {
   sentenceUserInfo?: any
   sentenceSummary?: ISentenceState
   createdAtLiked?: string
-  meId?: string | null
+  meId?: string
   session?: IUserSession | null
   disabled?: boolean
 }
@@ -53,8 +53,8 @@ export default function SentenceCard({
   const { data: followers } = useSuspenseQuery(
     followQuery.getFollower(supabase, sentence?.user_id),
   )
-  const { data: isLiked } = useSuspenseQuery(
-    sentenceQuery.checkLiked(supabase, sentenceId, meId || ''),
+  const { data: isLiked } = useQuery(
+    sentenceQuery.checkLiked(supabase, sentenceId, meId),
   )
   const { editor } = useBlockEditor({
     content,

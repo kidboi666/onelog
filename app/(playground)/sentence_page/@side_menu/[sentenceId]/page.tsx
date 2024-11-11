@@ -3,7 +3,7 @@
 import { MouseEvent } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
@@ -35,7 +35,7 @@ export default function SideMenuPage({ params }: Props) {
     countCommentQuery.countCommentFromSentence(supabase, sentenceId),
   )
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: isLiked } = useSuspenseQuery(
+  const { data: isLiked } = useQuery(
     sentenceQuery.checkLiked(supabase, sentenceId, me?.userId),
   )
   const { mutate: like } = useLikeSentence()

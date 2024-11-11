@@ -7,7 +7,7 @@ import { MouseEvent } from 'react'
 
 interface Props {
   favoritedCount?: number | null
-  isLiked: boolean | null
+  isLiked?: boolean | null
   onFavorite: (e: MouseEvent) => void
   meId?: string | null
   viewToolTip?: boolean

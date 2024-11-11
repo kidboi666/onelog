@@ -161,7 +161,9 @@ export const sentenceQuery = {
         isMe
           ? (publicData = data)
           : (publicData = data?.map((item) =>
-              item.access_type === 'public' ? item : null,
+              item.access_type === 'public'
+                ? item
+                : { ...item, content: null, title: null },
             ))
 
         return publicData
@@ -211,7 +213,7 @@ export const sentenceQuery = {
 
         return data && data?.length >= 1
       },
-      enabled: !!sentenceId && meId !== undefined,
+      enabled: !!meId,
     }),
 
   getMyUsedWords: (supabase: SupabaseClient, userId: string) =>

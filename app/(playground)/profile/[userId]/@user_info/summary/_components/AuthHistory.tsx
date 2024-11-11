@@ -1,7 +1,6 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { usePathname } from 'next/navigation'
 import { supabase } from '@/lib/supabase/client'
 import { colorTheme, useTheme } from '@/store/useTheme'
 import { userQuery } from '@/services/queries/auth/userQuery'
@@ -12,9 +11,11 @@ import { XStack } from '@/components/shared/Stack'
 import { countSentenceQuery } from '@/services/queries/sentence/countSentenceQuery'
 import { Container } from '@/components/shared/Container'
 
-export default function AuthHistory() {
-  const pathname = usePathname()
-  const [_, __, userId] = pathname.split('/')
+interface Props {
+  userId: string
+}
+
+export default function AuthHistory({ userId }: Props) {
   const { color } = useTheme()
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),

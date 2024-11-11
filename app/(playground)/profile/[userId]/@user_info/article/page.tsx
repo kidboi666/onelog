@@ -19,7 +19,7 @@ interface Props {
   params: { userId: string }
 }
 
-export default function Articles({ params }: Props) {
+export default function Article({ params }: Props) {
   const limit = 4
   const { me, session } = useMe()
   const { data: user } = useSuspenseQuery(
@@ -36,7 +36,7 @@ export default function Articles({ params }: Props) {
         isMe,
       ),
     )
-  const articles = data?.pages.flatMap((article) => article || [])
+  const articles = data?.pages.flatMap((article) => article) || []
   const [ref, inView] = useIntersect<HTMLDivElement>({}, !!isLoading)
   const sentenceUserInfo = {
     email: user?.email,
