@@ -24,9 +24,16 @@ export default function Articles() {
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),
   )
+  const isMe = me?.userId === user.id
   const { data, fetchNextPage, hasNextPage, isFetching } =
     useSuspenseInfiniteQuery(
-      sentenceQuery.getAllMySentence(supabase, userId, 'article', limit),
+      sentenceQuery.getAllUserSentence(
+        supabase,
+        userId,
+        'article',
+        limit,
+        isMe,
+      ),
     )
   const articles = data.pages.flatMap((article) => article || [])
   const [ref, inView] = useIntersect<HTMLDivElement>()

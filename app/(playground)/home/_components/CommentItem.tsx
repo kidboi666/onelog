@@ -1,28 +1,29 @@
 import { Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
+
 import { commentQuery } from '@/services/queries/comment/commentQuery'
-import { formatDateElapsed } from '@/utils/formatDate'
-import Text from '@/components/shared/Text'
-import { List } from '@/components/shared/List'
-import Spinner from '@/components/shared/Spinner'
-import CommentInputButton from './CommentInputButton'
-import CommentButton from './CommentButton'
-import CommentInput from './CommentInput'
-import { IUserSession } from '@/services/queries/auth/meQuery'
-import { ICommentWithUserInfo } from '@/types/comment'
-import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import { followQuery } from '@/services/queries/follow/followQuery'
 import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
+import { formatDateElapsed } from '@/utils/formatDate'
+import { ICommentWithUserInfo } from '@/types/comment'
+import { IUserInfoWithMBTI } from '@/types/auth'
+
+import Text from '@/components/shared/Text'
+import Spinner from '@/components/shared/Spinner'
 import { XStack, YStack } from '@/components/shared/Stack'
+import CommentInputButton from './CommentInputButton'
+import CommentButton from './CommentButton'
+import CommentInput from './CommentInput'
+import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import ReportButton from './ReportButton'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
 
 interface Props {
   comment: ICommentWithUserInfo
   sentenceId: number
-  me: IUserSession | null
+  me: IUserInfoWithMBTI
   isLastComment?: boolean
 }
 
@@ -50,9 +51,9 @@ export default function CommentItem({
     followQuery.getFollower(supabase, comment?.user_id),
   )
   const isFollowing = followers?.find(
-    (user) => user.follower_user_id === me?.userId,
+    (user) => user.follower_user_id === me?.id,
   )
-  const isOwner = comment.user_id === me?.userId
+  const isOwner = comment.user_id === me?.id
 
   const handleShowComment = () => {
     setShowComment((prev) => !prev)
@@ -71,7 +72,7 @@ export default function CommentItem({
         followingCount={followingCount}
         isFollowing={!!isFollowing}
         userId={comment.user_id}
-        isMe={me?.userId === comment.user_id}
+        isMe={me?.id === comment.user_id}
         userName={comment.user_info.user_name}
       />
       <YStack className="flex-1">

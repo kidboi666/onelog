@@ -22,8 +22,9 @@ export default function Journals() {
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),
   )
+  const isMe = me?.userId === user.id
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery(
-    sentenceQuery.getAllMySentence(supabase, userId, 'journal', limit),
+    sentenceQuery.getAllUserSentence(supabase, userId, 'journal', limit, isMe),
   )
   const journals = data?.pages.flatMap((journal) => journal || [])
   const [ref, inView] = useIntersect<HTMLDivElement>()

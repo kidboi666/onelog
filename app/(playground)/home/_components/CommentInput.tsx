@@ -6,6 +6,7 @@ import { useInput } from '@/hooks/useInput'
 import { supabase } from '@/lib/supabase/client'
 import usePostComment from '@/services/mutates/comment/usePostComment'
 import { IUserSession, meQuery } from '@/services/queries/auth/meQuery'
+import { IUserInfoWithMBTI } from '@/types/auth'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
@@ -13,13 +14,13 @@ import { FormEvent } from 'react'
 interface Props {
   sentenceId: number
   commentId?: number
-  me: IUserSession | null
+  me: IUserInfoWithMBTI
 }
 
 export default function CommentInput({ sentenceId, commentId, me }: Props) {
   const router = useRouter()
   const { data: meInfo } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, me?.userId),
+    meQuery.getUserInfo(supabase, me?.id),
   )
   const [content, onChangeContent, setContent] = useInput('')
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
@@ -37,7 +38,7 @@ export default function CommentInput({ sentenceId, commentId, me }: Props) {
     if (me) {
       postComment(
         {
-          userId: me.userId,
+          userId: me.id,
           content,
           sentenceId: sentenceId,
           commentId: commentId || null,

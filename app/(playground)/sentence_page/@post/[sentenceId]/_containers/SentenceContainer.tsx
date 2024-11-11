@@ -38,6 +38,7 @@ import AvatarButtonWithDropDown from '@/app/(playground)/home/_components/Avatar
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import { TEmotion } from '@/app/(playground)/write/page'
 import ShareButton from '@/app/(playground)/home/_components/ShareButton'
+import useMe from '@/hooks/useMe'
 
 interface Props {
   sentenceId: number
@@ -49,9 +50,9 @@ export default function SentenceContainer({ sentenceId }: Props) {
   const { data: sentence } = useSuspenseQuery(
     sentenceQuery.getSentence(supabase, sentenceId),
   )
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { me } = useMe()
   const { data: isLiked } = useSuspenseQuery(
-    sentenceQuery.checkLiked(supabase, sentenceId, me?.userId),
+    sentenceQuery.checkLiked(supabase, sentenceId, me?.id),
   )
   const { data: followerCount } = useSuspenseQuery(
     countFollowQuery.countFollower(supabase, sentence.user_id),
@@ -63,25 +64,25 @@ export default function SentenceContainer({ sentenceId }: Props) {
     followQuery.getFollower(supabase, sentence?.user_id),
   )
   const isFollowing = followers?.find(
-    (user) => user.follower_user_id === me?.userId,
+    (user) => user.follower_user_id === me?.id,
   )
-  const isMe = me?.userId === sentence.user_id
+  const isMe = me?.id === sentence.user_id
   const { mutate: follow } = useFollow()
   const { mutate: unFollow } = useUnFollow()
   const { editor } = useBlockEditor({ content: sentence?.content })
   const { mutate: like } = useLikeSentence()
   const { mutate: unlike } = useUnlikeSentence()
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
-  const isOwner = me?.userId === sentence?.user_id
+  const isOwner = me?.id === sentence?.user_id
   const handleShowComment = () => {
     setShowComment((prev) => !prev)
   }
 
   const handleFavorite = () => {
     isLiked
-      ? unlike({ meId: me?.userId, sentenceId })
+      ? unlike({ meId: me?.id, sentenceId })
       : like({
-          meId: me?.userId,
+          meId: me?.id,
           sentenceId: sentenceId,
         })
   }
@@ -97,11 +98,11 @@ export default function SentenceContainer({ sentenceId }: Props) {
           isFollowing
             ? unFollow({
                 followed_user_id: sentence.user_id,
-                follower_user_id: me.userId,
+                follower_user_id: me.id,
               })
             : follow({
                 followed_user_id: sentence.user_id,
-                follower_user_id: me.userId,
+                follower_user_id: me.id,
               }),
         )
       : router.push('/modal/auth_guard', { scroll: false })
@@ -182,7 +183,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
               onClick={(e) => e.stopPropagation()}
               className="flex justify-center gap-2 sm:flex-col"
             >
-              {me?.userId === sentence?.user_id ? (
+              {me?.id === sentence?.user_id ? (
                 <>
                   <LinkButton
                     href="/write"
@@ -229,7 +230,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
               isLiked={isLiked}
               favoritedCount={sentence?.like[0].count}
               onFavorite={handleFavoriteSentence}
-              meId={me?.userId}
+              meId={me?.id}
               viewToolTip
             />
             <CommentButton

@@ -1,23 +1,21 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/lib/supabase/client'
-import { meQuery } from '@/services/queries/auth/meQuery'
 import Avatar from '@/components/shared/Avatar'
 import Text from '@/components/shared/Text'
 import { useTheme } from '@/store/useTheme'
 import cn from '@/lib/cn'
 import { XStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
+import useMe from '@/hooks/useMe'
 
 export default function PostSentenceContainer() {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { me, session } = useMe()
   const { color } = useTheme()
 
   const handleSentenceClick = () => {
-    me ? router.push('/write') : router.push('/modal/auth_guard')
+    session ? router.push('/write') : router.push('/modal/auth_guard')
   }
 
   return (

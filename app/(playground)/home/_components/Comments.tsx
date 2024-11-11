@@ -5,11 +5,11 @@ import { commentQuery } from '@/services/queries/comment/commentQuery'
 import { supabase } from '@/lib/supabase/client'
 import { List } from '@/components/shared/List'
 import Empty from '@/components/shared/Empty'
-import { IUserSession } from '@/services/queries/auth/meQuery'
+import { IUserInfoWithMBTI } from '@/types/auth'
 
 interface Props {
   sentenceId: number
-  me: IUserSession | null
+  me: IUserInfoWithMBTI
 }
 
 export default function Comments({ sentenceId, me }: Props) {

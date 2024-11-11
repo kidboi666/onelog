@@ -4,22 +4,19 @@ import Button from '@/components/shared/Button'
 import { YStack } from '@/components/shared/Stack'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
-import { supabase } from '@/lib/supabase/client'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import useMe from '@/hooks/useMe'
 import { useRouter } from 'next/navigation'
 
 export default function PasswordResetForm() {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-
+  const { me, session } = useMe()
   const handlePasswordReset = () => {
     router.push('/settings/confirm/update_password')
   }
 
   return (
     <YStack>
-      {me ? (
+      {session ? (
         <>
           <Title>비밀번호 변경</Title>
           <Text>

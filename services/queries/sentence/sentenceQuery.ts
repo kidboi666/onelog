@@ -99,24 +99,35 @@ export const sentenceQuery = {
       enabled: !!startOfDay && !!endOfDay,
     }),
 
-  getAllMySentence: (
+  getAllUserSentence: (
     supabase: SupabaseClient,
     userId: string,
     postType: 'journal' | 'article',
     limit: number = 10,
+    isMe: boolean,
   ) =>
     infiniteQueryOptions({
       queryKey: ['sentence', postType, userId],
       queryFn: async ({ pageParam = 0 }) => {
-        const { data } = await supabase
-          .from('sentence')
-          .select()
-          .eq('user_id', userId)
-          .eq('post_type', postType)
-          .order('created_at', { ascending: false })
-          .range(pageParam, pageParam + limit - 1)
+        let data
+        isMe
+          ? (data = await supabase
+              .from('sentence')
+              .select()
+              .eq('user_id', userId)
+              .eq('post_type', postType)
+              .order('created_at', { ascending: false })
+              .range(pageParam, pageParam + limit - 1))
+          : (data = await supabase
+              .from('sentence')
+              .select()
+              .eq('user_id', userId)
+              .eq('post_type', postType)
+              .eq('access_type', 'public')
+              .order('created_at', { ascending: false })
+              .range(pageParam, pageParam + limit - 1))
 
-        return data
+        return data.data
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {

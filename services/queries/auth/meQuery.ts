@@ -31,6 +31,7 @@ export const meQuery = {
           provider: data.user.app_metadata.provider,
         } as IUserSession
       },
+      staleTime: 300000,
     }),
   getUserInfo: (supabase: SupabaseClient, userId?: string) =>
     queryOptions<IUserInfoWithMBTI>({

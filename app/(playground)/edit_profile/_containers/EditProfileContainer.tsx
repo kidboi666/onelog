@@ -1,29 +1,24 @@
 'use client'
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/lib/supabase/client'
 
-import { meQuery } from '@/services/queries/auth/meQuery'
 import useUploadAvatarImage from '@/services/mutates/auth/useUploadAvatarImage'
 import useUpdateUserInfo from '@/services/mutates/auth/useUpdateUserInfo'
-import { useInput } from '@/hooks/useInput'
-
 import useDeleteAvatarImage from '@/services/mutates/auth/useDeleteAvatarImage'
+import { useInput } from '@/hooks/useInput'
+import useMe from '@/hooks/useMe'
+import { TMBTI } from '../_constants/mbti'
+
 import Button from '@/components/shared/Button'
 import { YStack } from '@/components/shared/Stack'
 import ProfileImageSection from '../_components/ProfileImageSection'
 import UserNameSection from '../_components/UserNameSection'
 import AboutMeSection from '../_components/AboutMeSection'
 import MBTISection from '../_components/MBTISection'
-import { TMBTI } from '../_constants/mbti'
 import EmailSection from '../_components/EmailSection'
 
 export default function EditProfileContainer() {
-  const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data?.userId),
-  )
+  const { me, session } = useMe()
   const [userName, onChangeUserName, setUserName] = useInput<string | null>('')
   const [aboutMe, onChangeAboutMe, setAboutMe] = useInput<string | null>('')
   const [avatarUrl, , setAvatarUrl] = useInput<string | null>('')
@@ -104,7 +99,7 @@ export default function EditProfileContainer() {
           onChange={handleChangeImage}
           imagePreview={avatarUrl}
         />
-        <EmailSection email={me.email} provider={data?.provider} />
+        <EmailSection email={me.email} provider={session?.provider} />
         <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
         <AboutMeSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
         <MBTISection mbti={mbti} setMbti={setMbti} />

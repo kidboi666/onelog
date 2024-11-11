@@ -29,7 +29,6 @@ export default function useUpdateUserInfo() {
 
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['me', 'info'] })
-      queryClient.invalidateQueries({ queryKey: ['me', 'session'] })
       queryClient.invalidateQueries({
         queryKey: ['user', variables.userId],
       })

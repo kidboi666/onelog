@@ -40,6 +40,8 @@ export async function updateSession(req: NextRequest) {
 
   if (user && AUTH_RESTRICTED_ROUTES.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/home', req.url))
+  } else if (!user && PROTECTED_ROUTES.includes(req.nextUrl.pathname)) {
+    return NextResponse.redirect(new URL('/modal/auth_guard', req.url))
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
