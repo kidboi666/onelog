@@ -3,7 +3,7 @@ import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { useMutation } from '@tanstack/react-query'
 
 interface IComment {
-  userId: string
+  userId?: string
   content: string
   sentenceId: number
   commentId: number | null

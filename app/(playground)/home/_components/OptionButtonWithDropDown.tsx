@@ -4,6 +4,7 @@ import useOutsideClick from '@/hooks/useOutsideClick'
 import { MouseEvent } from 'react'
 import { DropDown } from '@/components/shared/DropDown'
 import { useRouter } from 'next/navigation'
+import { ROUTES } from '@/constants/routes'
 
 interface Props {
   sentenceId?: number
@@ -30,18 +31,16 @@ export default function OptionButtonWithDropDown({
 
   const pushDeleteModal = (e: MouseEvent) => {
     e.stopPropagation()
-    if (commentId) {
-      router.push(
-        `/modal/delete_comment/${commentId}?sentence_id=${sentenceId}`,
-      )
+    if (commentId && sentenceId) {
+      router.push(ROUTES.MODAL.DELETE_COMMENT(commentId, sentenceId))
     } else {
-      router.push(`/modal/delete_sentence/${sentenceId}`)
+      router.push(ROUTES.MODAL.DELETE_SENTENCE(sentenceId!))
     }
   }
 
   const pushWritePage = (e: MouseEvent) => {
     e.stopPropagation()
-    router.push(`/write/?sentence_id=${sentenceId}`)
+    router.push(ROUTES.EDIT_POST(sentenceId!))
   }
 
   return (

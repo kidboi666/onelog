@@ -38,6 +38,7 @@ import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import { TEmotion } from '@/app/(playground)/write/page'
 import ShareButton from '@/app/(playground)/home/_components/ShareButton'
 import useMe from '@/hooks/useMe'
+import { ROUTES } from '@/constants/routes'
 
 interface Props {
   sentenceId: number
@@ -73,6 +74,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
   const { mutate: unlike } = useUnlikeSentence()
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
   const isOwner = me?.id === sentence?.user_id
+
   const handleShowComment = () => {
     setShowComment((prev) => !prev)
   }
@@ -88,7 +90,9 @@ export default function SentenceContainer({ sentenceId }: Props) {
 
   const handleFavoriteSentence = (e: MouseEvent) => {
     e.stopPropagation()
-    me ? handleFavorite() : router.push('/modal/auth_guard', { scroll: false })
+    me
+      ? handleFavorite()
+      : router.push(ROUTES.MODAL.AUTH_GUARD, { scroll: false })
   }
 
   const handleFollow = () => {
@@ -104,7 +108,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
                 follower_user_id: me.id,
               }),
         )
-      : router.push('/modal/auth_guard', { scroll: false })
+      : router.push(ROUTES.MODAL.AUTH_GUARD, { scroll: false })
   }
 
   if (!editor) {
@@ -169,7 +173,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
         <div className="mt-8 flex flex-col gap-2">
           <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark">
             <Link
-              href={`/profile/${sentence?.user_id}`}
+              href={ROUTES.PROFILE(sentence?.user_id)}
               className="flex flex-1 gap-4"
             >
               <Avatar src={sentence?.user_info.avatar_url} size="md" />

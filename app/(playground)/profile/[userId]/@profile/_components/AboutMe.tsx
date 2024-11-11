@@ -22,6 +22,7 @@ import { Container } from '@/components/shared/Container'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import Follow from '@/components/shared/Follow'
 import useMe from '@/hooks/useMe'
+import { ROUTES } from '@/constants/routes'
 
 interface Props {
   userId: string
@@ -51,8 +52,8 @@ export default function AboutMe({ userId }: Props) {
     !isMyProfilePage &&
     followers?.find((user) => user.follower_user_id === me?.id)
 
-  const pushFollowerList = () => router.push(`/modal/follower/${userId}`)
-  const pushFollowingList = () => router.push(`/modal/following/${userId}`)
+  const pushFollowerList = () => router.push(ROUTES.MODAL.FOLLOWER(userId))
+  const pushFollowingList = () => router.push(ROUTES.MODAL.FOLLOWING(userId))
 
   const handleFollowButtonClick = () => {
     session
@@ -62,7 +63,7 @@ export default function AboutMe({ userId }: Props) {
             follower_user_id: me!.id,
           })
         : followUser({ followed_user_id: userId, follower_user_id: me!.id })
-      : router.push('/modal/auth_guard')
+      : router.push(ROUTES.MODAL.AUTH_GUARD)
   }
 
   const handleSendMessageButtonClick = () => {
@@ -106,7 +107,9 @@ export default function AboutMe({ userId }: Props) {
                   variant="secondary"
                   size="sm"
                   onClick={() =>
-                    startTransitionProfile(() => router.push('/edit_profile'))
+                    startTransitionProfile(() =>
+                      router.push(ROUTES.EDIT_PROFILE),
+                    )
                   }
                   className="text-nowrap"
                 >
@@ -115,7 +118,7 @@ export default function AboutMe({ userId }: Props) {
                 <Button
                   size="sm"
                   onClick={() =>
-                    startTransitionWrite(() => router.push('/write'))
+                    startTransitionWrite(() => router.push(ROUTES.WRITE))
                   }
                 >
                   {isLoadingWrite ? <Spinner size={16} /> : '글쓰기'}

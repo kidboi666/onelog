@@ -1,6 +1,7 @@
 import { DropDown } from '@/components/shared/DropDown'
 import Icon from '@/components/shared/Icon'
 import Line from '@/components/shared/Line'
+import { ROUTES } from '@/constants/routes'
 import useSignOut from '@/services/mutates/auth/useSignOut'
 import { IUserInfoWithMBTI } from '@/types/auth'
 import { wait } from '@/utils/wait'
@@ -16,13 +17,13 @@ export default function LoggedInContent({ me, closeMenu }: Props) {
   const { mutate: signOut } = useSignOut()
 
   const pushProfilePage = async () => {
-    router.push(`/profile/${me.id}`)
+    router.push(ROUTES.PROFILE(me.id))
     await wait(100)
     closeMenu && closeMenu()
   }
 
   const pushEditProfilePage = async () => {
-    router.push('/edit_profile')
+    router.push(ROUTES.EDIT_PROFILE)
     await wait(100)
     closeMenu && closeMenu()
   }

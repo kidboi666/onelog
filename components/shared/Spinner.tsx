@@ -49,9 +49,20 @@ const Spinner = ({ size = 40, variants = 'logo' }: Props) => {
   )
 }
 
-const Container = ({ children }: PropsWithChildren) => {
+interface ContainerProps {
+  className?: string
+}
+
+const Container = ({
+  children,
+  className,
+}: PropsWithChildren<ContainerProps>) => {
   return (
-    <div className="flex size-full items-center justify-center">{children}</div>
+    <div
+      className={cn('flex size-full items-center justify-center', className)}
+    >
+      {children}
+    </div>
   )
 }
 

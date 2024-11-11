@@ -2,12 +2,11 @@ import Avatar from '@/components/shared/Avatar'
 import Button from '@/components/shared/Button'
 import Input from '@/components/shared/Input'
 import { XStack } from '@/components/shared/Stack'
+import { ROUTES } from '@/constants/routes'
 import { useInput } from '@/hooks/useInput'
-import { supabase } from '@/lib/supabase/client'
+import useMe from '@/hooks/useMe'
 import usePostComment from '@/services/mutates/comment/usePostComment'
-import { IUserSession, meQuery } from '@/services/queries/auth/meQuery'
 import { IUserInfoWithMBTI } from '@/types/auth'
-import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
 
@@ -19,26 +18,24 @@ interface Props {
 
 export default function CommentInput({ sentenceId, commentId, me }: Props) {
   const router = useRouter()
-  const { data: meInfo } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, me?.id),
-  )
+  const { session } = useMe()
   const [content, onChangeContent, setContent] = useInput('')
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
 
   const handleRouterGuard = () => {
-    if (me) {
+    if (session) {
       return null
     } else {
-      router.push('/modal/auth_guard')
+      router.push(ROUTES.MODAL.AUTH_GUARD)
     }
   }
 
   const handlePostComment = (e: FormEvent) => {
     e.preventDefault()
-    if (me) {
+    if (session) {
       postComment(
         {
-          userId: me.id,
+          userId: me?.id,
           content,
           sentenceId: sentenceId,
           commentId: commentId || null,
@@ -61,7 +58,7 @@ export default function CommentInput({ sentenceId, commentId, me }: Props) {
       className="mb-2 w-full"
     >
       <XStack gap={4}>
-        <Avatar src={meInfo?.avatar_url} size="sm" shadow="sm" />
+        <Avatar src={me?.avatar_url} size="sm" shadow="sm" />
         <Input
           value={content}
           onChange={onChangeContent}

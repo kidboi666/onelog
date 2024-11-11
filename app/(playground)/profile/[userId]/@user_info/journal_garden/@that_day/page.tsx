@@ -3,7 +3,7 @@
 import Title from '@/components/shared/Title'
 import Empty from '@/components/shared/Empty'
 import SentenceCard from '@/app/(playground)/home/_components/SentenceCard'
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { supabase } from '@/lib/supabase/client'
 import { YStack } from '@/components/shared/Stack'
@@ -45,9 +45,17 @@ export default function PrevOneSentence({ params, searchParams }: Props) {
 
   if (isFetching) {
     return (
-      <Spinner.Container>
-        <Spinner size={60} />
-      </Spinner.Container>
+      <Container>
+        <YStack gap={8}>
+          <Title>그날의 기록</Title>
+          <Title type="sub" size="sm" className="mb-4">
+            {`${month}월 ${date}일, ${year}`}
+          </Title>
+          <Spinner.Container>
+            <Spinner size={60} />
+          </Spinner.Container>
+        </YStack>
+      </Container>
     )
   }
 

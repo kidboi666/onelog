@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useState } from 'react'
 import { BubbleMenu, EditorContent } from '@tiptap/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 
@@ -28,6 +28,7 @@ import EmotionSection from '../_components/EmotionSection'
 import PublishSection from '../_components/PublishSection'
 import BubbleMenuBar from '../_components/BubbleMenuBar'
 import PostTypeSection from '../_components/PostTypeSection'
+import { ROUTES } from '@/constants/routes'
 
 interface Props {
   searchParams: { sentence_id: string }
@@ -64,7 +65,7 @@ export default function PostContainer({
     placeholder: '오늘 당신의 생각과 감정을 기록하세요.',
   })
   const [tags, setTags] = useState<string[]>([])
-  const { mutate: addSentence, isPending } = useAddSentence()
+  const { mutate: addSentence, isPending, isSuccess } = useAddSentence()
   const { mutate: updateSentence } = useUpdateSentence()
 
   const handleChangeEmotion = (emotion: TEmotion | null) =>
@@ -102,15 +103,13 @@ export default function PostContainer({
           },
           {
             onSuccess: () => {
-              router.push('/modal/success')
-              router.back()
+              router.replace(ROUTES.MODAL.SUCCESS)
             },
           },
         )
       : addSentence(newSentence, {
           onSuccess: () => {
-            router.push('/modal/success')
-            router.back()
+            router.replace(ROUTES.MODAL.SUCCESS)
           },
         })
   }
@@ -196,7 +195,8 @@ export default function PostContainer({
                 isLoading={isPending}
                 disabled={
                   editor?.storage.characterCount.characters() === 0 ||
-                  tags.length > 10
+                  tags.length > 10 ||
+                  isSuccess
                 }
                 type="submit"
                 size="sm"

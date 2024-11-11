@@ -1,4 +1,4 @@
-import { AUTH_RESTRICTED_ROUTES, PROTECTED_ROUTES } from '@/middleware'
+import { AUTH_RESTRICTED_ROUTES, PROTECTED_ROUTES } from '@/constants/routes'
 import { createServerClient } from '@supabase/ssr'
 import { User } from '@supabase/supabase-js'
 import { NextResponse, type NextRequest } from 'next/server'

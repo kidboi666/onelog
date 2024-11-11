@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { ZStack } from '@/components/shared/Stack'
 import { useTransition } from 'react'
 import Spinner from '@/components/shared/Spinner'
+import { ROUTES } from '@/constants/routes'
 
 interface Props {
   isSelected?: boolean
@@ -20,7 +21,7 @@ export default function SidebarWriteButtonWithLogo({
   const [isLoading, startTransition] = useTransition()
 
   const pushWritePage = () => {
-    router.push('/write')
+    router.push(ROUTES.WRITE)
     closeToolTip()
   }
 

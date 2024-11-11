@@ -1,5 +1,6 @@
 import { DropDown } from '@/components/shared/DropDown'
 import Icon from '@/components/shared/Icon'
+import { ROUTES } from '@/constants/routes'
 import { wait } from '@/utils/wait'
 import { useRouter } from 'next/navigation'
 
@@ -11,13 +12,13 @@ export default function GuestContent({ closeMenu }: Props) {
   const router = useRouter()
 
   const pushSignUpPage = async () => {
-    router.push('/modal/signup')
+    router.push(ROUTES.MODAL.AUTH.SIGNUP)
     await wait(100)
     closeMenu && closeMenu()
   }
 
   const pushSignInPage = async () => {
-    router.push('/modal/signin')
+    router.push(ROUTES.MODAL.AUTH.SIGNIN)
     await wait(100)
     closeMenu && closeMenu()
   }

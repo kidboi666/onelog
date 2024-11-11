@@ -6,6 +6,7 @@ import { Container } from '@/components/shared/Container'
 import ToolTip from '@/components/shared/Tooltip'
 import useToggle from '@/hooks/useToggle'
 import cn from '@/lib/cn'
+import { ROUTES } from '@/constants/routes'
 
 interface Props {
   sentenceId?: number
@@ -26,9 +27,9 @@ export default function ReportButton({
   const pushReportModal = (e: MouseEvent) => {
     e.stopPropagation()
     if (commentId) {
-      router.push(`/modal/report_comment/${commentId}`, { scroll: false })
+      router.push(ROUTES.MODAL.REPORT_COMMENT(commentId), { scroll: false })
     } else {
-      router.push(`/modal/report_sentence/${sentenceId}`, { scroll: false })
+      router.push(ROUTES.MODAL.REPORT_SENTENCE(sentenceId!), { scroll: false })
     }
   }
 
