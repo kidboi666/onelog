@@ -28,7 +28,7 @@ const BUTTON_VARIANTS = cva(
       },
       disabled: {
         primary:
-          'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 active:scale-100 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
+          'gap-2 rounded-md bg-zinc-300 text-zinc-200 active:scale-100 dark:bg-zinc-500 dark:text-zinc-400',
         secondary:
           'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 active:scale-100 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
         teritory: '',

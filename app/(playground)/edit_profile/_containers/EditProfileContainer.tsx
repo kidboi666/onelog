@@ -92,7 +92,7 @@ export default function EditProfileContainer() {
   return (
     <form
       onSubmit={handleProfileUpdate}
-      className="animate-fade-in rounded-md bg-white p-8 shadow-sm dark:bg-var-darkgray"
+      className="animate-fade-in rounded-md bg-white p-2 shadow-sm sm:p-8 dark:bg-var-darkgray"
     >
       <YStack gap={8}>
         <ProfileImageSection

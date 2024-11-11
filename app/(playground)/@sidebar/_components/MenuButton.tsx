@@ -51,9 +51,7 @@ export default function MenuButton({
       >
         <SelectedMenuBackground isSelected={isSelected} />
         {isLoading ? (
-          <Spinner.Container>
-            <Spinner size={24} />
-          </Spinner.Container>
+          <Spinner size={24} />
         ) : (
           <Icon view="0 -960 960 960" size={24} className="flex flex-shrink-0">
             {icon}
