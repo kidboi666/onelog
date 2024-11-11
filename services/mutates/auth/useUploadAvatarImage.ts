@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabase/client'
 import { useMutation } from '@tanstack/react-query'
 
 interface IFile {
-  email: string | null
+  email?: string | null
   image: File | null
 }
 

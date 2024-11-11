@@ -24,7 +24,7 @@ interface Props {
   sentenceUserInfo?: any
   sentenceSummary?: ISentenceState
   createdAtLiked?: string
-  meId?: string
+  meId?: string | null
   session?: IUserSession | null
   disabled?: boolean
 }

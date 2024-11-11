@@ -14,7 +14,7 @@ import { FormEvent } from 'react'
 interface Props {
   sentenceId: number
   commentId?: number
-  me: IUserInfoWithMBTI
+  me?: IUserInfoWithMBTI
 }
 
 export default function CommentInput({ sentenceId, commentId, me }: Props) {

@@ -47,11 +47,11 @@ export default function EditProfileContainer() {
       deletePrevImage(prevAvatarUrl)
     }
     uploadImage(
-      { email: me.email, image },
+      { email: me?.email, image },
       {
         onSuccess: (data) => {
           updateProfile({
-            userId: me.id,
+            userId: me?.id,
             aboutMe,
             avatarUrl: data,
             userName,
@@ -64,7 +64,7 @@ export default function EditProfileContainer() {
 
   const handleProfileUpdateWithoutImage = () => {
     updateProfile({
-      userId: me.id,
+      userId: me?.id,
       aboutMe,
       userName,
       mbti,
@@ -81,11 +81,11 @@ export default function EditProfileContainer() {
   }
 
   useEffect(() => {
-    setUserName(me?.user_name)
-    setAboutMe(me?.about_me)
-    setAvatarUrl(me?.avatar_url)
-    setPrevAvatarUrl(me?.avatar_url)
-    setMbti(me.mbti)
+    setUserName(me ? me.user_name : null)
+    setAboutMe(me ? me.about_me : null)
+    setAvatarUrl(me ? me.avatar_url : null)
+    setPrevAvatarUrl(me ? me.avatar_url : null)
+    setMbti(me ? me.mbti : null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me?.avatar_url, me?.user_name, me?.about_me])
 
@@ -99,7 +99,7 @@ export default function EditProfileContainer() {
           onChange={handleChangeImage}
           imagePreview={avatarUrl}
         />
-        <EmailSection email={me.email} provider={session?.provider} />
+        <EmailSection email={me?.email} provider={session?.provider} />
         <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
         <AboutMeSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
         <MBTISection mbti={mbti} setMbti={setMbti} />

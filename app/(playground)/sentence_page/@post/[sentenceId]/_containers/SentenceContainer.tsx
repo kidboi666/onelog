@@ -8,7 +8,6 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import { meQuery } from '@/services/queries/auth/meQuery'
 import useFollow from '@/services/mutates/follow/useFollow'
 import useUnFollow from '@/services/mutates/follow/useUnFollow'
 import { followQuery } from '@/services/queries/follow/followQuery'

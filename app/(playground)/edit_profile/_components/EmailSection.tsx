@@ -4,7 +4,7 @@ import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 
 interface Props {
-  email: string
+  email?: string
   provider?: string
 }
 

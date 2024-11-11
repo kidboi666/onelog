@@ -9,7 +9,7 @@ import { IUserInfoWithMBTI } from '@/types/auth'
 
 interface Props {
   sentenceId: number
-  me: IUserInfoWithMBTI
+  me?: IUserInfoWithMBTI
 }
 
 export default function Comments({ sentenceId, me }: Props) {

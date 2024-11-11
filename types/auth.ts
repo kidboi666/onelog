@@ -13,9 +13,9 @@ export interface ISignUp {
 }
 
 export interface IUpdateUserInfo {
-  userId: string
-  aboutMe: string | null
-  userName: string | null
+  userId?: string | null
+  aboutMe?: string | null
+  userName?: string | null
   avatarUrl?: string | null
   mbti: TMBTI
 }

@@ -201,7 +201,11 @@ export const sentenceQuery = {
       enabled: !!sentenceId,
     }),
 
-  checkLiked: (supabase: SupabaseClient, sentenceId?: number, meId?: string) =>
+  checkLiked: (
+    supabase: SupabaseClient,
+    sentenceId?: number,
+    meId?: string | null,
+  ) =>
     queryOptions({
       queryKey: ['sentence', 'isLiked', sentenceId],
       queryFn: async () => {

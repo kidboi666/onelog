@@ -23,7 +23,7 @@ import OptionButtonWithDropDown from './OptionButtonWithDropDown'
 interface Props {
   comment: ICommentWithUserInfo
   sentenceId: number
-  me: IUserInfoWithMBTI
+  me?: IUserInfoWithMBTI
   isLastComment?: boolean
 }
 
