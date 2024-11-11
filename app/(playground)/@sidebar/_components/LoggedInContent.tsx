@@ -2,12 +2,12 @@ import { DropDown } from '@/components/shared/DropDown'
 import Icon from '@/components/shared/Icon'
 import Line from '@/components/shared/Line'
 import useSignOut from '@/services/mutates/auth/useSignOut'
-import { IUserSession } from '@/services/queries/auth/meQuery'
+import { IUserInfoWithMBTI } from '@/types/auth'
 import { wait } from '@/utils/wait'
 import { useRouter } from 'next/navigation'
 
 interface Props {
-  me: IUserSession
+  me: IUserInfoWithMBTI
   closeMenu?: () => void
 }
 
@@ -16,7 +16,7 @@ export default function LoggedInContent({ me, closeMenu }: Props) {
   const { mutate: signOut } = useSignOut()
 
   const pushProfilePage = async () => {
-    router.push(`/profile/${me.userId}`)
+    router.push(`/profile/${me.id}`)
     await wait(100)
     closeMenu && closeMenu()
   }

@@ -34,7 +34,10 @@ export default function MobileMenu({
   isOpen,
 }: Props) {
   const pathname = usePathname()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, data?.userId),
+  )
 
   return (
     <>

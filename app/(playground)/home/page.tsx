@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <YStack gap={8} className="animate-fade-in">
+    <YStack gap={12} className="animate-fade-in">
       <PostSentenceContainer />
       <SentenceContainer />
     </YStack>

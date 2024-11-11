@@ -15,7 +15,7 @@ interface Props {
 }
 
 const avatarVariants = cva(
-  'relative flex-shrink-0 overflow-hidden rounded-full bg-zinc-400 transition duration-300 ease-in-out dark:bg-var-darkgray',
+  'relative flex-shrink-0 overflow-hidden rounded-full transition duration-300 ease-in-out',
   {
     variants: {
       size: {
@@ -68,7 +68,7 @@ export default function Avatar({
           src={profileImage}
           fill
           alt="프로필 이미지 없음"
-          className="object-cover"
+          className="bg-zinc-400 object-cover dark:bg-var-darkgray"
         />
       )}
     </div>

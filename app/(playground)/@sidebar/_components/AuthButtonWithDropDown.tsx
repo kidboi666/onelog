@@ -1,18 +1,18 @@
 import Avatar from '@/components/shared/Avatar'
 import { DropDown } from '@/components/shared/DropDown'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
-import { IUserSession } from '@/services/queries/auth/meQuery'
 import BookMark from './BookMark'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import LoggedInContent from './LoggedInContent'
 import GuestContent from './GuestContent'
 import Text from '@/components/shared/Text'
+import { IUserInfoWithMBTI } from '@/types/auth'
 
 interface Props {
   pathname: string
   userId: string
   viewText?: boolean
-  me: IUserSession | null
+  me: IUserInfoWithMBTI
   closeMenu?: () => void
 }
 

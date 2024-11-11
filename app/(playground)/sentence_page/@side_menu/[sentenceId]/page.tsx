@@ -19,6 +19,7 @@ import Line from '@/components/shared/Line'
 import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
 import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
 import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
+import ShareButton from '@/app/(playground)/home/_components/ShareButton'
 
 interface Props {
   params: { sentenceId: string }
@@ -78,6 +79,7 @@ export default function SideMenuPage({ params }: Props) {
           viewToolTip
           isSide
         />
+        <ShareButton isSide viewToolTip />
         <ReportButton sentenceId={sentence.id} viewToolTip isSide />
         {isOwner && (
           <OptionButtonWithDropDown

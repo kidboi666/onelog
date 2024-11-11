@@ -28,7 +28,7 @@ export default function SentenceContainer() {
   }, [inView, hasNextPage, fetchNextPage])
 
   return (
-    <YStack gap={8}>
+    <YStack gap={12}>
       {sentences?.map((sentence) => (
         <SentenceCard
           key={sentence.id}

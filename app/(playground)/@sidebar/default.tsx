@@ -19,7 +19,10 @@ import { Container } from '@/components/shared/Container'
 import { YStack, ZStack } from '@/components/shared/Stack'
 
 export default function Sidebar() {
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, data?.userId),
+  )
   const [isHover, setHover] = useState(false)
   const pathname = usePathname()
 

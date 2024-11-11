@@ -1,12 +1,12 @@
 import useDataDrivenAnimation from '@/hooks/useStateChange'
 import cn from '@/lib/cn'
-import { IUserSession } from '@/services/queries/auth/meQuery'
 import { colorTheme, useTheme } from '@/store/useTheme'
+import { IUserInfoWithMBTI } from '@/types/auth'
 
 interface Props {
   pathname?: string
   userId?: string
-  me?: IUserSession | null
+  me?: IUserInfoWithMBTI | null
   isSelected?: boolean
 }
 
@@ -14,7 +14,7 @@ export default function BookMark({ pathname, userId, me, isSelected }: Props) {
   const { color } = useTheme()
   const { open, close, ref, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
-  if ((pathname === 'profile' && userId === me?.userId) || isSelected) {
+  if ((pathname === 'profile' && userId === me?.id) || isSelected) {
     open()
   } else {
     close()

@@ -3,11 +3,13 @@ import BookMark from './BookMark'
 import SelectedMenuBackground from './SelectedMenuBackground'
 import Button from '@/components/shared/Button'
 import { useRouter } from 'next/navigation'
-import { IUserSession } from '@/services/queries/auth/meQuery'
 import { ZStack } from '@/components/shared/Stack'
+import { IUserInfoWithMBTI } from '@/types/auth'
+import { useTransition } from 'react'
+import Spinner from '@/components/shared/Spinner'
 
 interface Props {
-  me: IUserSession | null
+  me: IUserInfoWithMBTI | null
   isSelected?: boolean
   closeToolTip: () => void
 }
@@ -18,6 +20,7 @@ export default function SidebarWriteButtonWithLogo({
   closeToolTip,
 }: Props) {
   const router = useRouter()
+  const [isLoading, startTransition] = useTransition()
 
   const pushWritePage = () => {
     me
@@ -30,12 +33,30 @@ export default function SidebarWriteButtonWithLogo({
   return (
     <ZStack>
       <BookMark isSelected={isSelected} />
-      <Button variant="icon" size="icon" onClick={pushWritePage}>
+      <Button
+        variant="icon"
+        size="icon"
+        onClick={() => startTransition(() => pushWritePage())}
+      >
         <SelectedMenuBackground isSelected={isSelected} />
-        <Icon view="0 0 336 336" size={30}>
-          <ellipse cx="83" cy="323" rx="83" ry="21" fill="#D9D9D9" />
-          <path d="M83 322.994L197.5 77C226 12 301 9.99998 335.5 20.9999C309.9 26.4867 244.333 159.307 221.432 221.111C206.547 227.452 175.468 234.026 161.789 236.52C180.627 236.946 204.296 234.084 213.776 232.599C215.388 235.864 211.839 245.619 184.749 258.515C143.16 261.651 113.159 289.745 103.5 302.866C103.5 302.866 112.5 303 118 304C123.5 305 97.0341 316.047 97.0341 316.047L165.5 322.994L83 322.994Z" />
-        </Icon>
+        {isLoading ? (
+          <Spinner.Container>
+            <Spinner size={34} />
+          </Spinner.Container>
+        ) : (
+          <Icon
+            size={34}
+            view="0 0 386 386"
+            className="relative text-zinc-300 dark:text-zinc-600"
+          >
+            <circle cx="185" cy="185" r="185" fill="currentColor" />
+            <ellipse cx="100" cy="336" rx="83" ry="21" fill="#B9B9B9" />
+            <path
+              d="M100 335.994L214.5 90C243 25 318 23 352.5 33.9999C326.9 39.4867 261.333 172.307 238.432 234.111C223.547 240.452 192.468 247.026 178.789 249.52C197.627 249.946 221.296 247.084 230.776 245.599C232.388 248.864 228.839 258.619 201.749 271.515C160.16 274.651 130.159 302.745 120.5 315.866C120.5 315.866 129.5 316 135 317C140.5 318 114.034 329.047 114.034 329.047L182.5 335.994L100 335.994Z"
+              fill="white"
+            />
+          </Icon>
+        )}
       </Button>
     </ZStack>
   )
