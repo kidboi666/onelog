@@ -11,5 +11,19 @@ export const config = {
   ],
 }
 
-export const AUTH_RESTRICTED_ROUTES = ['/signup', '/signin']
-export const PROTECTED_ROUTES = ['/edit_profile']
+export const AUTH_RESTRICTED_ROUTES = [
+  '/signup',
+  '/signin',
+  '/modal/auth_guard',
+]
+
+export const PROTECTED_ROUTES = [
+  '/write',
+  '/edit_profile',
+  '/modal/send_message',
+  '/modal/report_sentence',
+  '/modal/report_comment',
+  '/modal/update_password',
+  '/modal/delete_comment',
+  '/modal/delete_sentence',
+]

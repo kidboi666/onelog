@@ -1,6 +1,8 @@
 import { PropsWithChildren } from 'react'
 import cn from '@/lib/cn'
 import Text from './Text'
+import Icon, { IconProps } from './Icon'
+import Button from './Button'
 
 interface Props {
   className?: string
@@ -23,6 +25,17 @@ const EmptyText = ({ children }: PropsWithChildren) => {
   return <Text type="caption">{children}</Text>
 }
 
+interface Icon extends IconProps {}
+
+const EmptyIcon = ({ children, ...props }: PropsWithChildren<IconProps>) => {
+  return (
+    <Button disabled variant="icon">
+      <Icon {...props}>{children}</Icon>
+    </Button>
+  )
+}
+
 Empty.Text = EmptyText
+Empty.Icon = EmptyIcon
 
 export default Empty

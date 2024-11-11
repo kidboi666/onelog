@@ -33,7 +33,7 @@ const BUTTON_VARIANTS = cva(
           'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 active:scale-100 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
         teritory: '',
         list: '',
-        icon: 'rounded-md text-zinc-300 transition dark:text-zinc-600',
+        icon: 'rounded-md text-zinc-400 transition dark:text-zinc-400',
         none: '',
       },
       size: {

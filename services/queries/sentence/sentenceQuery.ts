@@ -67,13 +67,14 @@ export const sentenceQuery = {
       },
     }),
 
-  getMySentenceThatDay: (
+  getUserSentenceThatDay: (
     supabase: SupabaseClient,
     userId: string,
     startOfDay: string | null,
     endOfDay: string | null,
+    isMe: boolean,
   ) =>
-    queryOptions<ISentenceWithUserInfo[] | null>({
+    queryOptions({
       queryKey: ['sentence', `${startOfDay}`, `${endOfDay}`, userId],
       queryFn: async () => {
         const { data } = await supabase
@@ -94,7 +95,17 @@ export const sentenceQuery = {
           .eq('user_id', userId)
           .order('created_at', { ascending: false })
 
-        return data
+        let publicData
+
+        isMe
+          ? (publicData = data)
+          : (publicData = data?.map((item) =>
+              item.access_type === 'public'
+                ? item
+                : { ...item, title: null, content: null },
+            ))
+
+        return publicData
       },
       enabled: !!startOfDay && !!endOfDay,
     }),
@@ -109,25 +120,33 @@ export const sentenceQuery = {
     infiniteQueryOptions({
       queryKey: ['sentence', postType, userId],
       queryFn: async ({ pageParam = 0 }) => {
-        let data
-        isMe
-          ? (data = await supabase
-              .from('sentence')
-              .select()
-              .eq('user_id', userId)
-              .eq('post_type', postType)
-              .order('created_at', { ascending: false })
-              .range(pageParam, pageParam + limit - 1))
-          : (data = await supabase
-              .from('sentence')
-              .select()
-              .eq('user_id', userId)
-              .eq('post_type', postType)
-              .eq('access_type', 'public')
-              .order('created_at', { ascending: false })
-              .range(pageParam, pageParam + limit - 1))
+        const { data } = await supabase
+          .from('sentence')
+          .select(
+            `
+            *,
+            like(count),
+            user_info(
+              email,
+              user_name,
+              avatar_url
+            )
+            `,
+          )
+          .eq('user_id', userId)
+          .eq('post_type', postType)
+          .order('created_at', { ascending: false })
+          .range(pageParam, pageParam + limit - 1)
 
-        return data.data
+        let publicData
+
+        isMe
+          ? (publicData = data)
+          : (publicData = data?.map((item) =>
+              item.access_type === 'public' ? item : null,
+            ))
+
+        return publicData
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
@@ -174,7 +193,7 @@ export const sentenceQuery = {
 
         return data && data?.length >= 1
       },
-      enabled: !!meId,
+      enabled: !!sentenceId && meId !== undefined,
     }),
 
   getMyUsedWords: (supabase: SupabaseClient, userId: string) =>

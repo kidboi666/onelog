@@ -52,19 +52,11 @@ export default function FollowUserCard({
           <Text type="caption">{follower.user_info.email}</Text>
         </YStack>
         {isFollowing ? (
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => unfollow(follower.user_info.id)}
-          >
+          <Button variant="secondary" size="sm" onClick={unfollow}>
             팔로우 취소
           </Button>
         ) : (
-          <Button
-            size="sm"
-            className="h-fit"
-            onClick={() => follow(follower.user_info.id)}
-          >
+          <Button size="sm" className="h-fit" onClick={follow}>
             팔로우 하기
           </Button>
         )}

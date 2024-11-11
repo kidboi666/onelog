@@ -17,6 +17,7 @@ import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { TEmotion } from '../../write/page'
 import { MouseEvent } from 'react'
 import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
+import { IUserSession } from '@/services/queries/auth/meQuery'
 
 interface Props {
   sentence?: ISentenceWithUserInfo
@@ -24,6 +25,7 @@ interface Props {
   sentenceSummary?: ISentenceState
   createdAtLiked?: string
   meId?: string | null
+  session: IUserSession | null
   disabled?: boolean
 }
 
@@ -32,6 +34,7 @@ export default function SentenceCard({
   sentenceUserInfo,
   createdAtLiked,
   meId,
+  session,
   disabled,
 }: Props) {
   const router = useRouter()
@@ -63,6 +66,7 @@ export default function SentenceCard({
 
   const handleFavorite = (e: MouseEvent) => {
     e.stopPropagation()
+    if (!session) return router.push('/modal/auth_guard', { scroll: false })
     isLiked
       ? unlike({ meId, sentenceId })
       : like({

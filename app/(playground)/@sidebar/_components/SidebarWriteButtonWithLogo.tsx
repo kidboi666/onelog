@@ -4,29 +4,23 @@ import SelectedMenuBackground from './SelectedMenuBackground'
 import Button from '@/components/shared/Button'
 import { useRouter } from 'next/navigation'
 import { ZStack } from '@/components/shared/Stack'
-import { IUserInfoWithMBTI } from '@/types/auth'
 import { useTransition } from 'react'
 import Spinner from '@/components/shared/Spinner'
 
 interface Props {
-  me: IUserInfoWithMBTI | null
   isSelected?: boolean
   closeToolTip: () => void
 }
 
 export default function SidebarWriteButtonWithLogo({
   isSelected,
-  me,
   closeToolTip,
 }: Props) {
   const router = useRouter()
   const [isLoading, startTransition] = useTransition()
 
   const pushWritePage = () => {
-    me
-      ? router.push('/write')
-      : router.push('/modal/auth_guard', { scroll: false })
-
+    router.push('/write')
     closeToolTip()
   }
 

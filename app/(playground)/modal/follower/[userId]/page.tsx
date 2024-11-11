@@ -5,11 +5,12 @@ import { YStack } from '@/components/shared/Stack'
 import { supabase } from '@/lib/supabase/client'
 import useFollow from '@/services/mutates/follow/useFollow'
 import useUnFollow from '@/services/mutates/follow/useUnFollow'
-import { meQuery } from '@/services/queries/auth/meQuery'
 import { followQuery } from '@/services/queries/follow/followQuery'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import FollowUserCard from '../../_components/FollowUserCard'
 import { useRouter } from 'next/navigation'
+import useMe from '@/hooks/useMe'
+import { MouseEvent, useCallback } from 'react'
 
 interface Props {
   params: { userId: string }
@@ -17,38 +18,55 @@ interface Props {
 
 export default function FollowerListModal({ params }: Props) {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { me, session } = useMe()
   const { data: followers } = useSuspenseQuery(
     followQuery.getFollower(supabase, params.userId),
   )
   const { data: myFollows } = useSuspenseQuery(
-    followQuery.getFollowing(supabase, me?.userId),
+    followQuery.getFollowing(supabase, me?.id),
   )
   const { mutate: followUser } = useFollow()
   const { mutate: unfollowUser } = useUnFollow()
-  const handleFollowUser = (userId: string) =>
-    followUser({
-      followed_user_id: userId,
-      follower_user_id: me!.userId,
-    })
 
-  const handleUnfollowUser = (userId: string) =>
-    unfollowUser({
-      followed_user_id: userId,
-      follower_user_id: me!.userId,
-    })
+  const handleFollowUser = useCallback(
+    (e: MouseEvent, userId: string) => {
+      e.stopPropagation()
+      if (!session) return router.push('/modal/auth_guard')
+      followUser({
+        followed_user_id: userId,
+        follower_user_id: me!.id,
+      })
+    },
+    [session, me, router, followUser],
+  )
+
+  const handleUnfollowUser = useCallback(
+    (e: MouseEvent, userId: string) => {
+      e.stopPropagation()
+      if (!session) return router.push('/modal/auth_guard')
+      unfollowUser({
+        followed_user_id: userId,
+        follower_user_id: me!.id,
+      })
+    },
+    [session, me, router, unfollowUser],
+  )
+
+  const handlePushUserPage = useCallback(
+    (userId: string) => {
+      router.push(`/profile/${userId}`, { scroll: false })
+    },
+    [router],
+  )
 
   return (
     <Modal className="sm:max-w-[600px]">
-      <YStack gap={8} className="w-full">
+      <YStack className="w-full">
         {followers?.map((follower) => {
           const isFollowing = myFollows?.find(
             (user: any) => user.followed_user_id === follower.user_info.id,
           )
-          const isMe = me?.userId === follower.user_info.id
-          const pushUserPage = () => {
-            router.push(`/profile/${follower.user_info.id}`, { scroll: false })
-          }
+          const isMe = me?.id === follower.user_info.id
 
           return (
             <FollowUserCard
@@ -56,9 +74,13 @@ export default function FollowerListModal({ params }: Props) {
               isFollowing={isFollowing}
               isMe={isMe}
               follower={follower}
-              follow={handleFollowUser}
-              unfollow={handleUnfollowUser}
-              pushUserPage={pushUserPage}
+              follow={(e: MouseEvent) =>
+                handleFollowUser(e, follower.user_info.id)
+              }
+              unfollow={(e: MouseEvent) =>
+                handleUnfollowUser(e, follower.user_info.id)
+              }
+              pushUserPage={() => handlePushUserPage(follower.user_info.id)}
             />
           )
         })}

@@ -1,7 +1,7 @@
 import cn from '@/lib/cn'
 import { PropsWithChildren } from 'react'
 
-interface Props {
+export interface IconProps {
   name?: string
   className?: string
   size?: number
@@ -22,7 +22,7 @@ export default function Icon({
   view = 24,
   viewX,
   viewY,
-}: PropsWithChildren<Props>) {
+}: PropsWithChildren<IconProps>) {
   let viewProp
   if (typeof view === 'string') {
     viewProp = view

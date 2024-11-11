@@ -44,7 +44,6 @@ export default function Sidebar() {
       <YStack as="nav">
         <ZStack>
           <SidebarWriteButtonWithLogo
-            me={me}
             closeToolTip={handleToolTipClose}
             isSelected={pathname === '/write'}
           />
