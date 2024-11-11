@@ -34,7 +34,12 @@ export const sentenceQuery = {
       },
     }),
 
-  getLikedSentence: (supabase: SupabaseClient, userId: string, limit: number) =>
+  getLikedSentence: (
+    supabase: SupabaseClient,
+    userId: string,
+    limit: number,
+    isMe: boolean,
+  ) =>
     infiniteQueryOptions({
       queryKey: ['sentence', 'liked', userId],
       queryFn: async ({ pageParam = 0 }) => {
@@ -58,7 +63,20 @@ export const sentenceQuery = {
           .order('created_at', { ascending: false })
           .range(pageParam, pageParam + limit - 1)
 
-        return data
+        let publicData
+
+        isMe
+          ? (publicData = data)
+          : (publicData = data?.map((item) =>
+              item.sentence.access_type === 'public'
+                ? item
+                : {
+                    ...item,
+                    sentence: { title: null, content: null },
+                  },
+            ))
+
+        return publicData
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {

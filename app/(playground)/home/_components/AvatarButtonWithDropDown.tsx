@@ -22,6 +22,7 @@ interface Props {
   userId: string
   userName: string | null
   isLastComment?: boolean
+  position?: 'bottomRight' | 'topRight' | 'topLeft' | 'bottomLeft'
 }
 
 export default function AvatarButtonWithDropDown({
@@ -32,7 +33,7 @@ export default function AvatarButtonWithDropDown({
   followingCount,
   userId,
   userName,
-  isLastComment,
+  position = 'topRight',
 }: Props) {
   const router = useRouter()
   const { close, ref, onClick, onTransitionEnd } =
@@ -66,7 +67,7 @@ export default function AvatarButtonWithDropDown({
       <DropDown.Content
         ref={ref}
         initStatus="closed"
-        position="topRight"
+        position={position}
         onTransitionEnd={onTransitionEnd}
       >
         <YStack gap={4} className="p-4">

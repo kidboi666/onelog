@@ -128,6 +128,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
             followerCount={followerCount}
             followingCount={followingCount}
             isFollowing={isFollowing}
+            position="bottomRight"
           />
           <YStack gap={0} className="self-end">
             <XStack gap={1} className="items-end">

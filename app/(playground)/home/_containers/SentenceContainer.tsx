@@ -31,7 +31,7 @@ export default function SentenceContainer() {
           key={sentence.id}
           sentence={sentence}
           sentenceUserInfo={sentence.user_info}
-          meId={session ? me.id : null}
+          meId={session ? me?.id : null}
         />
       ))}
       <div ref={target} />
