@@ -1,6 +1,5 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { IFavoriteWord } from '@/types/sentence'
@@ -12,9 +11,11 @@ import FavoriteWordTag from './FavoriteWordTag'
 import { Container } from '@/components/shared/Container'
 import { YStack } from '@/components/shared/Stack'
 
-export default function MyFavoriteWords() {
-  const pathname = usePathname()
-  const [_, __, userId] = pathname.split('/')
+interface Props {
+  userId: string
+}
+
+export default function MyFavoriteWords({ userId }: Props) {
   const { data: words } = useSuspenseQuery(
     sentenceQuery.getMyUsedWords(supabase, userId),
   )

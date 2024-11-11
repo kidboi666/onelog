@@ -6,7 +6,6 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 
 import { userQuery } from '@/services/queries/auth/userQuery'
-import { meQuery } from '@/services/queries/auth/meQuery'
 import { followQuery } from '@/services/queries/follow/followQuery'
 
 import Avatar from '@/components/shared/Avatar'
@@ -22,6 +21,7 @@ import { XStack, YStack, ZStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import Follow from '@/components/shared/Follow'
+import useMe from '@/hooks/useMe'
 
 interface Props {
   userId: string
@@ -29,7 +29,7 @@ interface Props {
 
 export default function AboutMe({ userId }: Props) {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { me, session } = useMe()
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),
   )
@@ -46,22 +46,22 @@ export default function AboutMe({ userId }: Props) {
   const { mutate: unfollowUser } = useUnFollow()
   const [isLoadingProfile, startTransitionProfile] = useTransition()
   const [isLoadingWrite, startTransitionWrite] = useTransition()
-  const isMyProfilePage = me?.userId === user?.id
+  const isMyProfilePage = me?.id === user?.id
   const isFollowing =
     !isMyProfilePage &&
-    followers?.find((user) => user.follower_user_id === me?.userId)
+    followers?.find((user) => user.follower_user_id === me?.id)
 
   const pushFollowerList = () => router.push(`/modal/follower/${userId}`)
   const pushFollowingList = () => router.push(`/modal/following/${userId}`)
 
   const handleFollowButtonClick = () => {
-    me
+    session
       ? isFollowing
         ? unfollowUser({
             followed_user_id: userId,
-            follower_user_id: me!.userId,
+            follower_user_id: me!.id,
           })
-        : followUser({ followed_user_id: userId, follower_user_id: me!.userId })
+        : followUser({ followed_user_id: userId, follower_user_id: me!.id })
       : router.push('/modal/auth_guard')
   }
 

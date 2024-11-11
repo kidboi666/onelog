@@ -21,7 +21,7 @@ export default function UserInfoSummary({ params }: Props) {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <AuthHistory userId={userId} />
-      <MyFavoriteWords />
+      <MyFavoriteWords userId={userId} />
     </HydrationBoundary>
   )
 }
