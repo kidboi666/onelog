@@ -3,8 +3,10 @@ import Button from '@/components/shared/Button'
 import Input from '@/components/shared/Input'
 import { XStack } from '@/components/shared/Stack'
 import { useInput } from '@/hooks/useInput'
+import { supabase } from '@/lib/supabase/client'
 import usePostComment from '@/services/mutates/comment/usePostComment'
-import { IUserSession } from '@/services/queries/auth/meQuery'
+import { IUserSession, meQuery } from '@/services/queries/auth/meQuery'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
 
@@ -16,6 +18,9 @@ interface Props {
 
 export default function CommentInput({ sentenceId, commentId, me }: Props) {
   const router = useRouter()
+  const { data: meInfo } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, me?.userId),
+  )
   const [content, onChangeContent, setContent] = useInput('')
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
 
@@ -55,7 +60,7 @@ export default function CommentInput({ sentenceId, commentId, me }: Props) {
       className="mb-2 w-full"
     >
       <XStack gap={4}>
-        <Avatar src={me?.avatar_url} size="sm" shadow="sm" />
+        <Avatar src={meInfo?.avatar_url} size="sm" shadow="sm" />
         <Input
           value={content}
           onChange={onChangeContent}

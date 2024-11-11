@@ -66,7 +66,7 @@ export default function AvatarButtonWithDropDown({
       <DropDown.Content
         ref={ref}
         initStatus="closed"
-        position={isLastComment ? 'topRight' : 'bottomRight'}
+        position="topRight"
         onTransitionEnd={onTransitionEnd}
       >
         <YStack gap={4} className="p-4">

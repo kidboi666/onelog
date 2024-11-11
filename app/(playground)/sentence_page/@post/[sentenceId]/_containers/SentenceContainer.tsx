@@ -37,6 +37,7 @@ import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import AvatarButtonWithDropDown from '@/app/(playground)/home/_components/AvatarButtonWithDropDown'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import { TEmotion } from '@/app/(playground)/write/page'
+import ShareButton from '@/app/(playground)/home/_components/ShareButton'
 
 interface Props {
   sentenceId: number
@@ -78,16 +79,16 @@ export default function SentenceContainer({ sentenceId }: Props) {
 
   const handleFavorite = () => {
     isLiked
-      ? like({
+      ? unlike({ meId: me?.userId, sentenceId })
+      : like({
           meId: me?.userId,
           sentenceId: sentenceId,
         })
-      : unlike({ meId: me?.userId, sentenceId })
   }
 
   const handleFavoriteSentence = (e: MouseEvent) => {
     e.stopPropagation()
-    me ? handleFavorite() : router.push('/modal/auth_guard')
+    me ? handleFavorite() : router.push('/modal/auth_guard', { scroll: false })
   }
 
   const handleFollow = () => {
@@ -241,6 +242,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
               accessType={sentence?.access_type}
               viewToolTip
             />
+            <ShareButton viewToolTip />
             <ReportButton viewToolTip sentenceId={sentenceId} />
             {isOwner && (
               <OptionButtonWithDropDown

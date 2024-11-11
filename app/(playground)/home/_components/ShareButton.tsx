@@ -5,7 +5,6 @@ import useOutsideClick from '@/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
 import useToggle from '@/hooks/useToggle'
 import { isServer } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 
 interface Props {
@@ -14,7 +13,6 @@ interface Props {
 }
 
 export default function ShareButton({ isSide, viewToolTip }: Props) {
-  const router = useRouter()
   const { close, ref, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
