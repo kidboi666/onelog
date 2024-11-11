@@ -19,6 +19,7 @@ export default function Layout({
 }: PropsWithChildren<Props>) {
   const pathname = usePathname()
   const isModalOpen = pathname.startsWith('/modal')
+
   return (
     <>
       {header}

@@ -50,6 +50,7 @@ export default function SentenceHeader({
         isFollowing={isFollowing}
         userId={userId}
         userName={userName}
+        position="bottomRight"
       />
       <XStack className="flex-1 items-end">
         <NameWithDateSection

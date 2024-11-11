@@ -11,18 +11,13 @@ import { usePathname } from 'next/navigation'
 import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
 import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown'
 import ToolTip from '@/components/shared/Tooltip'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { supabase } from '@/lib/supabase/client'
 import SidebarWriteButtonWithLogo from './_components/SidebarWriteButtonWithLogo'
 import { Container } from '@/components/shared/Container'
 import { YStack, ZStack } from '@/components/shared/Stack'
+import useMe from '@/hooks/useMe'
 
 export default function Sidebar() {
-  const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data?.userId),
-  )
+  const { me, session } = useMe()
   const [isHover, setHover] = useState(false)
   const pathname = usePathname()
 
@@ -101,7 +96,8 @@ export default function Sidebar() {
             <AuthButtonWithDropDown
               me={me}
               pathname={pathname.split('/')[1]}
-              userId={pathname.split('/')[2]}
+              userId={pathname.split('/')[2] || ''}
+              session={session}
             />
             <ToolTip
               position="right"

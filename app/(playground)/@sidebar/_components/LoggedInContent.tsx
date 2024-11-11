@@ -8,7 +8,7 @@ import { wait } from '@/utils/wait'
 import { useRouter } from 'next/navigation'
 
 interface Props {
-  me: IUserInfoWithMBTI
+  me?: IUserInfoWithMBTI
   closeMenu?: () => void
 }
 
@@ -17,7 +17,7 @@ export default function LoggedInContent({ me, closeMenu }: Props) {
   const { mutate: signOut } = useSignOut()
 
   const pushProfilePage = async () => {
-    router.push(ROUTES.PROFILE(me.id))
+    router.push(ROUTES.PROFILE(me?.id!))
     await wait(100)
     closeMenu && closeMenu()
   }
@@ -30,9 +30,9 @@ export default function LoggedInContent({ me, closeMenu }: Props) {
   return (
     <>
       <div className="px-1">
-        <DropDown.Text>{me.user_name}</DropDown.Text>
+        <DropDown.Text>{me?.user_name}</DropDown.Text>
         <DropDown.Text type="caption" size="sm">
-          {me.email}
+          {me?.email}
         </DropDown.Text>
       </div>
       <Line className="mb-2 mt-4" />

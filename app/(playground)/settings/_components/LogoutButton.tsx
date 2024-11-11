@@ -3,13 +3,11 @@
 import Button from '@/components/shared/Button'
 import { YStack } from '@/components/shared/Stack'
 import Title from '@/components/shared/Title'
-import { supabase } from '@/lib/supabase/client'
+import useMe from '@/hooks/useMe'
 import useSignOut from '@/services/mutates/auth/useSignOut'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { useSuspenseQuery } from '@tanstack/react-query'
 
 export default function LogoutButton() {
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { session } = useMe()
   const { mutate: signOut } = useSignOut()
 
   const handleSingOut = () => {
@@ -22,7 +20,7 @@ export default function LogoutButton() {
       <Button
         size="sm"
         onClick={handleSingOut}
-        disabled={!me}
+        disabled={!session}
         className="w-fit"
       >
         로그아웃 하기

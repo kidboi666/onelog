@@ -7,12 +7,14 @@ import LoggedInContent from './LoggedInContent'
 import GuestContent from './GuestContent'
 import Text from '@/components/shared/Text'
 import { IUserInfoWithMBTI } from '@/types/auth'
+import { IUserSession } from '@/services/queries/auth/meQuery'
 
 interface Props {
   pathname: string
   userId: string
   viewText?: boolean
-  me: IUserInfoWithMBTI
+  me?: IUserInfoWithMBTI
+  session?: IUserSession | null
   closeMenu?: () => void
 }
 
@@ -21,6 +23,7 @@ export default function AuthButtonWithDropDown({
   userId,
   viewText,
   me,
+  session,
   closeMenu,
 }: Props) {
   const { ref, close, onClick, onTransitionEnd } =
@@ -45,7 +48,7 @@ export default function AuthButtonWithDropDown({
         onTransitionEnd={onTransitionEnd}
         position="topRight"
       >
-        {me ? (
+        {session ? (
           <LoggedInContent me={me} closeMenu={closeMenu} />
         ) : (
           <GuestContent closeMenu={closeMenu} />

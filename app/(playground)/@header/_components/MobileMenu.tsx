@@ -13,12 +13,10 @@ import MenuButton from '../../@sidebar/_components/MenuButton'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import AuthButtonWithDropDown from '../../@sidebar/_components/AuthButtonWithDropDown'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { meQuery } from '@/services/queries/auth/meQuery'
-import { supabase } from '@/lib/supabase/client'
 import Text from '@/components/shared/Text'
 import MobileWriteButtonWithLogo from './MobileWriteButtonWithLogo'
 import { YStack } from '@/components/shared/Stack'
+import useMe from '@/hooks/useMe'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>
@@ -34,10 +32,7 @@ export default function MobileMenu({
   isOpen,
 }: Props) {
   const pathname = usePathname()
-  const { data } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, data?.userId),
-  )
+  const { me, session } = useMe()
 
   return (
     <>
@@ -93,10 +88,11 @@ export default function MobileMenu({
             ))}
           </List>
           <Line className="my-2" />
-          {me ? (
+          {session ? (
             <AuthButtonWithDropDown
               viewText
               me={me}
+              session={session}
               closeMenu={close}
               pathname={pathname.split('/')[1]}
               userId={pathname.split('/')[2]}

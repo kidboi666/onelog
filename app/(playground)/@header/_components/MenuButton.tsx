@@ -11,9 +11,8 @@ import useToggle from '@/hooks/useToggle'
 export default function MenuButton() {
   const { close, onClick, ref, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
-  const { isOpen, close: closeMenu, toggle } = useToggle()
-
   const buttonRef = useOutsideClick<HTMLDivElement>(close)
+  const { isOpen, close: closeMenu, toggle } = useToggle()
 
   const handleToggle = () => {
     onClick()
