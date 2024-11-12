@@ -5,15 +5,15 @@ import { useEffect } from 'react'
 import { supabase } from '@/lib/supabase/client'
 
 import { userQuery } from '@/services/queries/auth/userQuery'
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import { postQuery } from '@/services/queries/post/postQuery'
 import useMe from '@/hooks/useMe'
 import useIntersect from '@/hooks/useIntersect'
 
-import SentenceCard from '@/app/(playground)/home/_components/SentenceCard'
 import { Container } from '@/components/shared/Container'
 import Empty from '@/components/shared/Empty'
 import Spinner from '@/components/shared/Spinner'
 import { YStack } from '@/components/shared/Stack'
+import PostCard from '@/app/(playground)/home/_components/PostCard'
 
 interface Props {
   params: { userId: string }
@@ -25,20 +25,19 @@ export default function Article({ params }: Props) {
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, params.userId),
   )
-  const isMe = me?.id === user?.id
   const { data, fetchNextPage, hasNextPage, isFetching, isPending, isLoading } =
     useInfiniteQuery(
-      sentenceQuery.getAllUserSentence(
+      postQuery.getAllUserPost(
         supabase,
         params.userId,
         'article',
         limit,
-        isMe,
+        me.id,
       ),
     )
   const articles = data?.pages.flatMap((article) => article) || []
   const [ref, inView] = useIntersect<HTMLDivElement>({}, !!isLoading)
-  const sentenceUserInfo = {
+  const postUserInfo = {
     email: user?.email,
     user_name: user?.user_name,
     avatar_url: user?.avatar_url,
@@ -64,12 +63,12 @@ export default function Article({ params }: Props) {
         <YStack gap={8}>
           {articles?.map((article) =>
             article?.content ? (
-              <SentenceCard
+              <PostCard
                 key={article?.id}
                 meId={me?.id}
                 session={session}
-                sentence={article}
-                sentenceUserInfo={sentenceUserInfo}
+                post={article}
+                postUserInfo={postUserInfo}
               />
             ) : (
               <Empty key={article?.id}>

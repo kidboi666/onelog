@@ -1,3 +1,4 @@
+import { queryKey } from '@/lib/tanstack/query-key'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
@@ -5,7 +6,7 @@ export const followQuery = {
   /** 유저를 팔로우하는 유저의 Id들 */
   getFollower: (supabase: SupabaseClient, userId?: string) =>
     queryOptions({
-      queryKey: ['follower', userId],
+      queryKey: queryKey.follow.follower(userId),
       queryFn: async () => {
         const { data, error } = await supabase
           .from('follow')
@@ -27,7 +28,7 @@ export const followQuery = {
   /** 유저가 팔로우하는 유저의 Id들 */
   getFollowing: (supabase: SupabaseClient, userId?: string) =>
     queryOptions({
-      queryKey: ['following', userId],
+      queryKey: queryKey.follow.following(userId),
       queryFn: async () => {
         const { data, error } = await supabase
           .from('follow')

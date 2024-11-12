@@ -11,12 +11,12 @@ import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
 
 interface Props {
-  sentenceId: number
+  postId: number
   commentId?: number
   me?: IUserInfoWithMBTI
 }
 
-export default function CommentInput({ sentenceId, commentId, me }: Props) {
+export default function CommentInput({ postId, commentId, me }: Props) {
   const router = useRouter()
   const { session } = useMe()
   const [content, onChangeContent, setContent] = useInput('')
@@ -37,7 +37,7 @@ export default function CommentInput({ sentenceId, commentId, me }: Props) {
         {
           userId: me?.id,
           content,
-          sentenceId: sentenceId,
+          postId: postId,
           commentId: commentId || null,
         },
         {

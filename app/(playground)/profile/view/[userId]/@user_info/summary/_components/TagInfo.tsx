@@ -1,8 +1,8 @@
 import Spinner from '@/components/shared/Spinner'
 import Text from '@/components/shared/Text'
 import { supabase } from '@/lib/supabase/client'
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import { IFavoriteWord } from '@/types/sentence'
+import { postQuery } from '@/services/queries/post/postQuery'
+import { IFavoriteWord } from '@/types/post'
 import { useQuery } from '@tanstack/react-query'
 import { RefObject } from 'react'
 
@@ -20,7 +20,7 @@ export default function TagInfo({
   targetRef,
 }: Props) {
   const { data, isFetching } = useQuery(
-    sentenceQuery.getUsedWords(supabase, word.word, trigger),
+    postQuery.getUsedWords(supabase, word.word, trigger),
   )
 
   return (

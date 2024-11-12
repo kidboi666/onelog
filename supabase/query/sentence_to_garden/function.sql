@@ -18,10 +18,10 @@ BEGIN
 
     IF EXISTS (SELECT 1 FROM garden WHERE year_month = v_year_month AND user_id = v_user_id) THEN
         UPDATE garden
-        SET sentences = sentences || v_json_obj
+        SET posts = posts || v_json_obj
         WHERE year_month = v_year_month AND user_id = v_user_id;
     ELSE
-        INSERT INTO garden (year_month, user_id, sentences)
+        INSERT INTO garden (year_month, user_id, posts)
         VALUES (v_year_month, v_user_id, ARRAY[v_json_obj]::jsonb[]);
     END IF;
     RETURN new;

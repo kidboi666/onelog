@@ -1,37 +1,44 @@
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import { queryKey } from '@/lib/tanstack/query-key'
+import { routes } from '@/routes'
 import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 
 interface IDeleteComment {
-  sentenceId: number
+  postId: number
   commentId: number
 }
 
 export default function useDeleteComment() {
   const queryClient = getQueryClient()
+  const router = useRouter()
 
   return useMutation({
-    mutationFn: async ({ sentenceId, commentId }: IDeleteComment) => {
+    mutationFn: async ({ postId, commentId }: IDeleteComment) => {
       return supabase
         .from('comment')
         .delete()
-        .eq('sentence_id', sentenceId)
+        .eq('post_id', postId)
         .eq('id', commentId)
         .select()
     },
+    onSuccess: () => {
+      router.replace(routes.modal.success)
+    },
     onSettled: (_, __, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
+      const { postId, commentId = null } = variables
       queryClient.invalidateQueries({
-        queryKey: ['all_sentence'],
+        queryKey: queryKey.comment.byPost(postId),
       })
       queryClient.invalidateQueries({
-        queryKey: ['sentence', variables.sentenceId],
+        queryKey: queryKey.comment.byComment(postId, commentId),
       })
       queryClient.invalidateQueries({
-        queryKey: ['comment', variables.sentenceId],
+        queryKey: queryKey.comment.count.byPost(postId),
       })
       queryClient.invalidateQueries({
-        queryKey: ['comment', variables.sentenceId, variables.commentId],
+        queryKey: queryKey.comment.count.byComment(postId, commentId),
       })
     },
   })

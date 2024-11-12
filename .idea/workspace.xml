@@ -17,17 +17,17 @@
       <change beforePath="$PROJECT_DIR$/app/(playground)/home/_components/CommentInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_components/CommentInput.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(playground)/home/_components/OptionButtonWithDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_components/OptionButtonWithDropDown.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(playground)/home/_components/ReportButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_components/ReportButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(playground)/home/_components/SentenceCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_components/SentenceCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(playground)/home/_containers/PostSentenceContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_containers/PostSentenceContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/home/_components/PostCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_components/PostCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/home/_containers/PostPostContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_containers/PostPostContainer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(playground)/modal/follower/[userId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/modal/follower/[userId]/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(playground)/modal/following/[userId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/modal/following/[userId]/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(playground)/modal/report_comment/[commentId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/modal/report_comment/[commentId]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(playground)/modal/report_sentence/[sentenceId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/modal/report_sentence/[sentenceId]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/modal/report_post/[postId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/modal/report_post/[postId]/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(playground)/profile/[userId]/@profile/_components/AboutMe.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/profile/[userId]/@profile/_components/AboutMe.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(playground)/profile/[userId]/@user_info/journal_garden/_components/MenuSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/profile/[userId]/@user_info/journal_garden/_components/MenuSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(playground)/sentence_page/@post/[sentenceId]/_components/AvatarButtonWithDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/sentence_page/@post/[sentenceId]/_components/AvatarButtonWithDropDown.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(playground)/sentence_page/@post/[sentenceId]/_containers/SentenceContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/sentence_page/@post/[sentenceId]/_containers/SentenceContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(playground)/sentence_page/@side_menu/[sentenceId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/sentence_page/@side_menu/[sentenceId]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/post_page/@post/[postId]/_components/AvatarButtonWithDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/post_page/@post/[postId]/_components/AvatarButtonWithDropDown.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/post_page/@post/[postId]/_containers/PostContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/post_page/@post/[postId]/_containers/PostContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/post_page/@side_menu/[postId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/post_page/@side_menu/[postId]/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(playground)/write/_containers/PostContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/write/_containers/PostContainer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants/routes.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/supabase/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/supabase/middleware.ts" afterDir="false" />
@@ -62,7 +62,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/jin-wook/Desktop/web/one_sentence/node_modules/typescript/lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/jin-wook/Desktop/web/one_post/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>

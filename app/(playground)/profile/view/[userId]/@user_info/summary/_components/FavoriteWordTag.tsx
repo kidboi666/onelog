@@ -1,10 +1,10 @@
 import Button from '@/components/shared/Button'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
-import { IFavoriteWord } from '@/types/sentence'
 import TagInfo from './TagInfo'
 import { useState } from 'react'
 import { List } from '@/components/shared/List'
 import useOutsideClick from '@/hooks/useOutsideClick'
+import { IFavoriteWord } from '@/types/post'
 
 interface Props {
   word: IFavoriteWord

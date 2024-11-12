@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { useSuspenseQueries, useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
-import { countSentenceQuery } from '@/services/queries/sentence/countSentenceQuery'
+import { countPostQuery } from '@/services/queries/post/countPostQuery'
 import { PROFILE_NAVIGATE_MENUS } from '../_constants/Navigate'
 import { Container } from '@/components/shared/Container'
 import { ZStack } from '@/components/shared/Stack'
@@ -19,7 +19,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
   const segment = useSelectedLayoutSegment()
   const { data: counts } = useSuspenseQueries({
     queries: ['journal', 'article'].map((type: any) =>
-      countSentenceQuery.countAllSentence(supabase, userId, type),
+      countPostQuery.countAllPost(supabase, userId, type),
     ),
     combine: (results) => {
       return {
@@ -29,7 +29,7 @@ export default function Layout({ params, children }: PropsWithChildren<Props>) {
     },
   })
   const { data: likedCount } = useSuspenseQuery(
-    countSentenceQuery.countLikedSentence(supabase, userId),
+    countPostQuery.countLikedPost(supabase, userId),
   )
 
   return (

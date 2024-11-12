@@ -9,7 +9,7 @@ import cn from '@/lib/cn'
 import { routes } from '@/routes'
 
 interface Props {
-  sentenceId?: number
+  postId?: number
   commentId?: number
   viewToolTip?: boolean
   isSide?: boolean
@@ -17,7 +17,7 @@ interface Props {
 
 export default function ReportButton({
   viewToolTip,
-  sentenceId,
+  postId,
   commentId,
   isSide,
 }: Props) {
@@ -29,7 +29,7 @@ export default function ReportButton({
     if (commentId) {
       router.push(routes.modal.report.comment(commentId), { scroll: false })
     } else {
-      router.push(routes.modal.report.sentence(sentenceId!), { scroll: false })
+      router.push(routes.modal.report.post(postId!), { scroll: false })
     }
   }
 

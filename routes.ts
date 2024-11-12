@@ -1,14 +1,18 @@
-export const authRestrictedRoutes = ['/signup', '/signin', '/modal/auth_guard']
+export const authRestrictedRoutes = [
+  '/modal/signup',
+  '/modal/signin',
+  '/modal/auth_guard',
+]
 
 export const protectedRoutes = [
-  '/write',
-  '/edit_profile',
+  '/post/edit',
+  '/profile/edit',
   '/modal/send_message',
-  '/modal/report_sentence',
+  '/modal/report_post',
   '/modal/report_comment',
   '/modal/update_password',
   '/modal/delete_comment',
-  '/modal/delete_sentence',
+  '/modal/delete_post',
 ]
 
 export const routes = {
@@ -21,8 +25,8 @@ export const routes = {
   },
   post: {
     new: '/post/edit',
-    view: (sentenceId: number) => `/post/view/${sentenceId}`,
-    edit: (sentenceId: number) => `/post/edit?sentence_id=${sentenceId}`,
+    view: (postId: number) => `/post/view/${postId}`,
+    edit: (postId: number) => `/post/edit?post_id=${postId}`,
   },
   modal: {
     auth: {
@@ -31,9 +35,9 @@ export const routes = {
       guard: '/modal/auth_guard',
     },
     delete: {
-      comment: (commentId: number, sentenceId: number) =>
-        `/modal/delete_comment/${commentId}?sentence_id=${sentenceId}`,
-      sentence: (sentenceId: number) => `/modal/delete_sentence/${sentenceId}`,
+      comment: (commentId: number, postId: number) =>
+        `/modal/delete_comment/${commentId}?post_id=${postId}`,
+      post: (postId: number) => `/modal/delete_post/${postId}`,
     },
     follow: {
       follower: (userId: string) => `/modal/follower/${userId}`,
@@ -41,7 +45,7 @@ export const routes = {
     },
     report: {
       comment: (commentId: number) => `/modal/report_comment/${commentId}`,
-      sentence: (sentenceId: number) => `/modal/report_sentence/${sentenceId}`,
+      post: (postId: number) => `/modal/report_post/${postId}`,
     },
     updatePassword: '/modal/update_password',
     success: '/modal/success',

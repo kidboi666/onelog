@@ -3,6 +3,8 @@ import { IUpdateUserInfo } from '@/types/auth'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { routes } from '@/routes'
+import { queryKey } from '@/lib/tanstack/query-key'
 
 export default function useUpdateUserInfo() {
   const queryClient = getQueryClient()
@@ -27,14 +29,12 @@ export default function useUpdateUserInfo() {
       return data
     },
 
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['me', 'info'] })
-      queryClient.invalidateQueries({
-        queryKey: ['user', variables.userId],
-      })
-      router.replace('/modal/success')
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKey.auth.info })
+      queryClient.invalidateQueries({ queryKey: queryKey.auth.session })
+      router.replace(routes.modal.success)
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       console.log('에러발생', error)
     },
   })

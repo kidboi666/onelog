@@ -1,3 +1,4 @@
+import { queryKey } from '@/lib/tanstack/query-key'
 import { IUserInfoWithMBTI } from '@/types/auth'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
@@ -17,7 +18,7 @@ export interface IUserSession {
 export const meQuery = {
   getUserSession: (supabase: SupabaseClient) =>
     queryOptions<IUserSession | null>({
-      queryKey: ['me', 'session'],
+      queryKey: queryKey.auth.session,
       queryFn: async () => {
         const { data, error } = await supabase.auth.getUser()
 
@@ -36,7 +37,7 @@ export const meQuery = {
 
   getUserInfo: (supabase: SupabaseClient, userId?: string) =>
     queryOptions<IUserInfoWithMBTI>({
-      queryKey: ['me', 'info'],
+      queryKey: queryKey.auth.info,
       queryFn: async () => {
         const { data } = await supabase
           .from('user_info')

@@ -22,24 +22,24 @@ import OptionButtonWithDropDown from './OptionButtonWithDropDown'
 
 interface Props {
   comment: ICommentWithUserInfo
-  sentenceId: number
+  postId: number
   me?: IUserInfoWithMBTI
   isLastComment?: boolean
 }
 
 export default function CommentItem({
   comment,
-  sentenceId,
+  postId,
   me,
   isLastComment,
 }: Props) {
   const [showComment, setShowComment] = useState(true)
   const [showCommentInput, setShowCommentInput] = useState(false)
   const { data: commentToComments } = useSuspenseQuery(
-    commentQuery.getCommentToComment(supabase, sentenceId, comment?.id),
+    commentQuery.getCommentToComment(supabase, postId, comment?.id),
   )
   const { data: commentToCommentsCount } = useSuspenseQuery(
-    countCommentQuery.countCommentFromComment(supabase, sentenceId, comment.id),
+    countCommentQuery.countCommentFromComment(supabase, postId, comment.id),
   )
   const { data: followerCount } = useSuspenseQuery(
     countFollowQuery.countFollower(supabase, comment.user_id),
@@ -105,17 +105,13 @@ export default function CommentItem({
               <OptionButtonWithDropDown
                 isOwner
                 commentId={comment.id}
-                sentenceId={sentenceId}
+                postId={postId}
               />
             )}
           </XStack>
         </YStack>
         {showCommentInput && (
-          <CommentInput
-            sentenceId={sentenceId}
-            commentId={comment.id}
-            me={me}
-          />
+          <CommentInput postId={postId} commentId={comment.id} me={me} />
         )}
         {showComment &&
           commentToComments.length >= 1 &&
@@ -129,7 +125,7 @@ export default function CommentItem({
               }
             >
               <CommentItem
-                sentenceId={sentenceId}
+                postId={postId}
                 comment={comment}
                 me={me}
                 isLastComment

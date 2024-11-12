@@ -34,8 +34,8 @@ const getRenderedBlockFromEmotionLevel = (
     for (let day = 1; day <= days; day++) {
       const weekDay = new Date(year, i, day).getDay()
       let targetDaysForEmotionLevel
-      if (foundTargetMonth?.sentences) {
-        const targetDays = foundTargetMonth.sentences.filter(
+      if (foundTargetMonth?.posts) {
+        const targetDays = foundTargetMonth.posts.filter(
           (v: any) => new Date(v.created_at).getDate() === day,
         )
         const levels = targetDays.map((v: any) =>

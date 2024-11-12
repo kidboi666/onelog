@@ -7,7 +7,7 @@ export const emotionQuery = {
       queryKey: ['user_emotion_average', userId],
       queryFn: async () => {
         const { data } = await supabase
-          .from('sentence')
+          .from('post')
           .select('emotion_level')
           .neq('emotion_level', null)
           .eq('user_id', userId)
@@ -36,7 +36,7 @@ export const emotionQuery = {
       queryKey: ['user_emotion', date, userId],
       queryFn: async () => {
         const { data } = await supabase
-          .from('sentence')
+          .from('post')
           .select('emotion_level')
           .rangeGt('created_at', date)
           .eq('user_id', userId)

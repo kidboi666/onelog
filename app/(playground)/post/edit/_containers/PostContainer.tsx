@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
-import useUpdateSentence from '@/services/mutates/sentence/useUpdateSentence'
-import useAddSentence from '@/services/mutates/sentence/useAddSentence'
+import { postQuery } from '@/services/queries/post/postQuery'
+import useUpdatePost from '@/services/mutates/post/useUpdatePost'
+import useAddPost from '@/services/mutates/post/useAddPost'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import { useInput } from '@/hooks/useInput'
@@ -31,7 +31,7 @@ import PostTypeSection from '../_components/PostTypeSection'
 import { routes } from '@/routes'
 
 interface Props {
-  searchParams: { sentence_id: string }
+  searchParams: { post_id: string }
   selectedEmotion: TEmotion
   setSelectedEmotion: (emotio: TEmotion) => void
   accessType: TAccess
@@ -50,12 +50,10 @@ export default function PostContainer({
   setPostType,
 }: Props) {
   const router = useRouter()
-  const sentenceId = Number(searchParams?.sentence_id)
+  const postId = Number(searchParams?.post_id)
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getSentence(supabase, sentenceId),
-  )
-  const [content, setContent] = useState(sentence?.content ?? '')
+  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
+  const [content, setContent] = useState(post?.content ?? '')
   const [title, onChangeTitle, setTitle] = useInput<string | null>(null)
 
   const { editor } = useBlockEditor({
@@ -65,8 +63,8 @@ export default function PostContainer({
     placeholder: '오늘 당신의 생각과 감정을 기록하세요.',
   })
   const [tags, setTags] = useState<string[]>([])
-  const { mutate: addSentence, isPending, isSuccess } = useAddSentence()
-  const { mutate: updateSentence } = useUpdateSentence()
+  const { mutate: addPost, isPending, isSuccess } = useAddPost()
+  const { mutate: updatePost } = useUpdatePost()
 
   const handleChangeEmotion = (emotion: TEmotion | null) =>
     setSelectedEmotion(emotion)
@@ -75,17 +73,17 @@ export default function PostContainer({
   const handleChangePostType = (order: TPost) => setPostType(order)
   const handleInputFocus = () => editor?.commands.focus('end')
   const handleInitPostData = () => {
-    setTitle(sentence.title)
+    setTitle(post.title)
     editor?.commands.setContent(content)
-    setPostType(sentence.post_type)
-    setAccessType(sentence.access_type)
-    setSelectedEmotion(sentence.emotion_level ? sentence.emotion_level : null)
+    setPostType(post.post_type)
+    setAccessType(post.access_type)
+    setSelectedEmotion(post.emotion_level ? post.emotion_level : null)
   }
 
-  const handleSubmitSentence = (e: FormEvent) => {
+  const handleSubmitPost = (e: FormEvent) => {
     e.preventDefault()
 
-    const newSentence = {
+    const newPost = {
       content,
       emotion_level: postType === 'journal' ? selectedEmotion : null,
       user_id: me!.userId,
@@ -95,11 +93,11 @@ export default function PostContainer({
       post_type: postType,
     }
 
-    sentence
-      ? updateSentence(
+    post
+      ? updatePost(
           {
-            ...newSentence,
-            id: sentence.id,
+            ...newPost,
+            id: post.id,
           },
           {
             onSuccess: () => {
@@ -107,7 +105,7 @@ export default function PostContainer({
             },
           },
         )
-      : addSentence(newSentence, {
+      : addPost(newPost, {
           onSuccess: () => {
             router.replace(routes.modal.success)
           },
@@ -121,14 +119,14 @@ export default function PostContainer({
   }, [postType])
 
   useEffect(() => {
-    if (sentence && editor) {
+    if (post && editor) {
       handleInitPostData()
     }
-  }, [sentence, editor])
+  }, [post, editor])
 
   return (
     <form
-      onSubmit={handleSubmitSentence}
+      onSubmit={handleSubmitPost}
       className="h-fit w-full rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray"
     >
       <YStack gap={0}>

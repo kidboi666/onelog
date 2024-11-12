@@ -7,14 +7,14 @@ import { useRouter } from 'next/navigation'
 import { routes } from '@/routes'
 
 interface Props {
-  sentenceId?: number
+  postId?: number
   commentId?: number
   isOwner: boolean
   isSide?: boolean
 }
 
 export default function OptionButtonWithDropDown({
-  sentenceId,
+  postId,
   commentId,
   isOwner,
   isSide,
@@ -31,16 +31,16 @@ export default function OptionButtonWithDropDown({
 
   const pushDeleteModal = (e: MouseEvent) => {
     e.stopPropagation()
-    if (commentId && sentenceId) {
-      router.push(routes.modal.delete.comment(commentId, sentenceId))
+    if (commentId && postId) {
+      router.push(routes.modal.delete.comment(commentId, postId))
     } else {
-      router.push(routes.modal.delete.sentence(sentenceId!))
+      router.push(routes.modal.delete.post(postId!))
     }
   }
 
   const pushWritePage = (e: MouseEvent) => {
     e.stopPropagation()
-    router.push(routes.post.edit(sentenceId!))
+    router.push(routes.post.edit(postId!))
   }
 
   return (

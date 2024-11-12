@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
-import PostSentenceContainer from './_containers/PostSentenceContainer'
-import SentenceContainer from './_containers/SentenceContainer'
 import { YStack } from '@/components/shared/Stack'
+import FakeFormContainer from './_containers/FakeFormContainer'
+import PostContainer from './_containers/PostContainer'
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <YStack gap={12} className="animate-fade-in">
-      <PostSentenceContainer />
-      <SentenceContainer />
+      <FakeFormContainer />
+      <PostContainer />
     </YStack>
   )
 }

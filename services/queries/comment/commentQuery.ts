@@ -1,11 +1,12 @@
+import { queryKey } from '@/lib/tanstack/query-key'
 import { ICommentWithUserInfo } from '@/types/comment'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 
 export const commentQuery = {
-  getComment: (supabase: SupabaseClient, sentenceId: number) =>
+  getComment: (supabase: SupabaseClient, postId: number) =>
     queryOptions<ICommentWithUserInfo[]>({
-      queryKey: ['comment', sentenceId],
+      queryKey: queryKey.comment.byPost(postId),
       queryFn: async () => {
         const { data, error } = await supabase
           .from('comment')
@@ -18,7 +19,7 @@ export const commentQuery = {
               avatar_url
             )`,
           )
-          .eq('sentence_id', sentenceId)
+          .eq('post_id', postId)
           .is('comment_id', null)
           .order('created_at', { ascending: true })
 
@@ -28,16 +29,16 @@ export const commentQuery = {
 
         return data
       },
-      enabled: !!sentenceId,
+      enabled: !!postId,
     }),
 
   getCommentToComment: (
     supabase: SupabaseClient,
-    sentenceId: number,
+    postId: number,
     commentId: number,
   ) =>
     queryOptions<ICommentWithUserInfo[]>({
-      queryKey: ['comment', sentenceId, commentId],
+      queryKey: queryKey.comment.byComment(postId, commentId),
       queryFn: async () => {
         const { data, error } = await supabase
           .from('comment')
@@ -51,7 +52,7 @@ export const commentQuery = {
             )
             `,
           )
-          .eq('sentence_id', sentenceId)
+          .eq('post_id', postId)
           .eq('comment_id', commentId)
           .order('created_at', { ascending: false })
 

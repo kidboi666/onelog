@@ -16,7 +16,7 @@ export type Database = {
           content: string
           created_at: string
           id: number
-          sentence_id: number | null
+          post_id: number | null
           user_id: string
         }
         Insert: {
@@ -25,7 +25,7 @@ export type Database = {
           content: string
           created_at?: string
           id?: number
-          sentence_id?: number | null
+          post_id?: number | null
           user_id: string
         }
         Update: {
@@ -34,7 +34,7 @@ export type Database = {
           content?: string
           created_at?: string
           id?: number
-          sentence_id?: number | null
+          post_id?: number | null
           user_id?: string
         }
         Relationships: [
@@ -47,9 +47,9 @@ export type Database = {
           },
           {
             foreignKeyName: "comment_sentence_id_fkey"
-            columns: ["sentence_id"]
+            columns: ["post_id"]
             isOneToOne: false
-            referencedRelation: "sentence"
+            referencedRelation: "post"
             referencedColumns: ["id"]
           },
           {
@@ -101,21 +101,21 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          sentences: Json[] | null
+          posts: Json[] | null
           user_id: string
           year_month: string
         }
         Insert: {
           created_at?: string
           id?: number
-          sentences?: Json[] | null
+          posts?: Json[] | null
           user_id: string
           year_month: string
         }
         Update: {
           created_at?: string
           id?: number
-          sentences?: Json[] | null
+          posts?: Json[] | null
           user_id?: string
           year_month?: string
         }
@@ -145,7 +145,7 @@ export type Database = {
             foreignKeyName: "like_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
-            referencedRelation: "sentence"
+            referencedRelation: "post"
             referencedColumns: ["id"]
           },
           {
@@ -157,49 +157,7 @@ export type Database = {
           },
         ]
       }
-      report: {
-        Row: {
-          created_at: string
-          id: number
-          reason: string | null
-          reporter_id: string
-          target_comment_id: number | null
-          target_sentence_id: number | null
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          reason?: string | null
-          reporter_id: string
-          target_comment_id?: number | null
-          target_sentence_id?: number | null
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          reason?: string | null
-          reporter_id?: string
-          target_comment_id?: number | null
-          target_sentence_id?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "report_target_comment_id_fkey"
-            columns: ["target_comment_id"]
-            isOneToOne: false
-            referencedRelation: "comment"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "reports_target_id_fkey"
-            columns: ["target_sentence_id"]
-            isOneToOne: false
-            referencedRelation: "sentence"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      sentence: {
+      post: {
         Row: {
           access_type: string | null
           comment: number | null
@@ -246,14 +204,54 @@ export type Database = {
           },
         ]
       }
+      report: {
+        Row: {
+          created_at: string
+          id: number
+          reason: string | null
+          reporter_id: string
+          target_comment_id: number | null
+          target_post_id: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          reason?: string | null
+          reporter_id: string
+          target_comment_id?: number | null
+          target_post_id?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          reason?: string | null
+          reporter_id?: string
+          target_comment_id?: number | null
+          target_post_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_target_comment_id_fkey"
+            columns: ["target_comment_id"]
+            isOneToOne: false
+            referencedRelation: "comment"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reports_target_id_fkey"
+            columns: ["target_post_id"]
+            isOneToOne: false
+            referencedRelation: "post"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_info: {
         Row: {
           about_me: string | null
           avatar_url: string | null
           created_at: string
           email: string
-          favorite_comment_id: number[] | null
-          favorite_sentence_id: number[] | null
           favorite_words: string[] | null
           id: string
           mbti: string | null
@@ -264,8 +262,6 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           email: string
-          favorite_comment_id?: number[] | null
-          favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
           id: string
           mbti?: string | null
@@ -276,8 +272,6 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           email?: string
-          favorite_comment_id?: number[] | null
-          favorite_sentence_id?: number[] | null
           favorite_words?: string[] | null
           id?: string
           mbti?: string | null

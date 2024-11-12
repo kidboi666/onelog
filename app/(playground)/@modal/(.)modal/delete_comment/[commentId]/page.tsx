@@ -2,7 +2,7 @@ import DeleteCommentModal from '@/app/(playground)/modal/delete_comment/[comment
 
 interface Props {
   params: { commentId: string }
-  searchParams: { sentence_id: string }
+  searchParams: { post_id: string }
 }
 
 export default function Page({ params, searchParams }: Props) {

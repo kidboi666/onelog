@@ -4,15 +4,15 @@ import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { userQuery } from '@/services/queries/auth/userQuery'
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import { postQuery } from '@/services/queries/post/postQuery'
 import useIntersect from '@/hooks/useIntersect'
-import { ISentenceWithUserInfo } from '@/types/sentence'
-import SentenceCard from '@/app/(playground)/home/_components/SentenceCard'
 import { Container } from '@/components/shared/Container'
 import Spinner from '@/components/shared/Spinner'
 import { YStack } from '@/components/shared/Stack'
 import Empty from '@/components/shared/Empty'
 import useMe from '@/hooks/useMe'
+import { IPostWithUserInfo } from '@/types/post'
+import PostCard from '@/app/(playground)/home/_components/PostCard'
 
 interface Props {
   params: { userId: string }
@@ -24,20 +24,19 @@ export default function Journals({ params }: Props) {
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, params.userId),
   )
-  const isMe = me?.id === user?.id
   const { data, fetchNextPage, hasNextPage, isFetching, isPending, isLoading } =
     useInfiniteQuery(
-      sentenceQuery.getAllUserSentence(
+      postQuery.getAllUserPost(
         supabase,
         params.userId,
         'journal',
         limit,
-        isMe,
+        me.id,
       ),
     )
   const journals = data?.pages.flatMap((journal) => journal || [])
   const [ref, inView] = useIntersect<HTMLDivElement>({}, !!isLoading)
-  const sentenceUserInfo = {
+  const postUserInfo = {
     email: user?.email,
     user_name: user?.user_name,
     avatar_url: user?.avatar_url,
@@ -61,14 +60,14 @@ export default function Journals({ params }: Props) {
     <Container className="animate-fade-in">
       {journals?.length! > 0 ? (
         <YStack gap={8}>
-          {journals?.map((journal: ISentenceWithUserInfo) =>
+          {journals?.map((journal: IPostWithUserInfo) =>
             journal?.content ? (
-              <SentenceCard
+              <PostCard
                 key={journal?.id}
                 meId={session ? me?.id : null}
-                sentence={journal}
+                post={journal}
                 session={session}
-                sentenceUserInfo={sentenceUserInfo}
+                postUserInfo={postUserInfo}
               />
             ) : (
               <Empty key={journal?.id}>

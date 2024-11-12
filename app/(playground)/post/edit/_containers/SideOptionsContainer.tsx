@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import { postQuery } from '@/services/queries/post/postQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
 
 import { Container } from '@/components/shared/Container'
@@ -17,7 +17,7 @@ import EmotionSection from '../_components/EmotionSection'
 import { TAccess, TEmotion, TPost } from '../page'
 
 interface Props {
-  searchParams: { sentence_id: string }
+  searchParams: { post_id: string }
   selectedEmotion: TEmotion
   setSelectedEmotion: (emotio: TEmotion) => void
   accessType: TAccess
@@ -35,14 +35,12 @@ export default function SideOptionsContainer({
   postType,
   setPostType,
 }: Props) {
-  const sentenceId = Number(searchParams.sentence_id)
+  const postId = Number(searchParams.post_id)
   const router = useRouter()
-  const { data: sentence } = useSuspenseQuery(
-    sentenceQuery.getSentence(supabase, sentenceId),
-  )
+  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
 
-  const isOwner = me?.userId === sentence?.user_id
+  const isOwner = me?.userId === post?.user_id
   const handleChangeEmotion = (emotion: TEmotion | null) =>
     setSelectedEmotion(emotion)
   const handleChangeAccessType = (order: TAccess) => setAccessType(order)

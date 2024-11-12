@@ -8,17 +8,17 @@ import Empty from '@/components/shared/Empty'
 import { IUserInfoWithMBTI } from '@/types/auth'
 
 interface Props {
-  sentenceId: number
+  postId: number
   me?: IUserInfoWithMBTI
 }
 
-export default function Comments({ sentenceId, me }: Props) {
+export default function Comments({ postId, me }: Props) {
   const { data: comments } = useSuspenseQuery(
-    commentQuery.getComment(supabase, sentenceId),
+    commentQuery.getComment(supabase, postId),
   )
   return (
     <>
-      <CommentInput sentenceId={sentenceId} me={me} />
+      <CommentInput postId={postId} me={me} />
       {comments.length === 0 ? (
         <Empty>
           <Empty.Text>아직 달린 댓글이 없습니다.</Empty.Text>
@@ -29,7 +29,7 @@ export default function Comments({ sentenceId, me }: Props) {
             <CommentItem
               key={idx}
               comment={comment}
-              sentenceId={sentenceId}
+              postId={postId}
               me={me}
               isLastComment={comments.length === idx + 1}
             />

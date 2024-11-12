@@ -10,7 +10,7 @@ import useDeleteComment from '@/services/mutates/comment/useDeleteComment'
 
 interface Props {
   params: { commentId: string }
-  searchParams: { sentence_id: string }
+  searchParams: { post_id: string }
 }
 
 export default function DeleteCommentModal({ params, searchParams }: Props) {
@@ -22,7 +22,7 @@ export default function DeleteCommentModal({ params, searchParams }: Props) {
     deleteComment(
       {
         commentId: Number(params.commentId),
-        sentenceId: Number(searchParams.sentence_id),
+        postId: Number(searchParams.post_id),
       },
       {
         onSettled: () => router.back(),

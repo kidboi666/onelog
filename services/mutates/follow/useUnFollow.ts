@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import { queryKey } from '@/lib/tanstack/query-key'
 import { useMutation } from '@tanstack/react-query'
 
 interface Params {
@@ -23,18 +24,17 @@ export default function useUnFollow() {
       }
     },
     onSettled: (_, __, variables) => {
-      // queryClient.setQueryData(['follower',variables.followed_user_id], (oldData) => oldData ? oldData.filter((follow) => ))
       queryClient.invalidateQueries({
-        queryKey: ['follower', variables.followed_user_id],
+        queryKey: queryKey.follow.follower(variables.followed_user_id),
       })
       queryClient.invalidateQueries({
-        queryKey: ['following', variables.follower_user_id],
+        queryKey: queryKey.follow.count.follower(variables.followed_user_id),
       })
       queryClient.invalidateQueries({
-        queryKey: ['follower', 'count', variables.followed_user_id],
+        queryKey: queryKey.follow.following(variables.follower_user_id),
       })
       queryClient.invalidateQueries({
-        queryKey: ['following', 'count', variables.follower_user_id],
+        queryKey: queryKey.follow.count.following(variables.follower_user_id),
       })
     },
   })

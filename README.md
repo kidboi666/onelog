@@ -1,4 +1,4 @@
-## sentence가 가지고 있어야할 정보
+## post가 가지고 있어야할 정보
 
 id,
 content : 내용
@@ -16,7 +16,7 @@ id,
 created_at : 생성 시간
 updated_at : 수정 시간
 year_month : 해당 년도와 월 (예: '2024.04')
-sentences[] : 해당 월에 작성된 문장의 정보 (예: { sentence_id, created_at, content, emotion_level })
+posts[] : 해당 월에 작성된 문장의 정보 (예: { post_id, created_at, content, emotion_level })
 
 ---
 
@@ -35,7 +35,7 @@ sentences[] : 해당 월에 작성된 문장의 정보 (예: { sentence_id, crea
 
 ## db에서 처리하는 방식
 
-1. sentence 테이블에 데이터가 추가되면 트리거 함수를 실행시킨다.
+1. post 테이블에 데이터가 추가되면 트리거 함수를 실행시킨다.
 2. content의 내용을 공백 기준으로 분리하여 word_dictionary 테이블에 전부 넣는다.
 3. word_dictionary에 중복되는 값이 있다면 해당 값의 count값을 1 올린다.
 4. user_words에도 user_id를 기준으로 하는 데이터의 words 값에 전부 넣는다.
@@ -54,6 +54,6 @@ email text
 user_name text
 avatar_url text
 content text
-sentence_id int4
+post_id int4
 comment_id int4
 user_id uuid

@@ -4,15 +4,15 @@ import { useEffect } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 
-import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
+import { postQuery } from '@/services/queries/post/postQuery'
 import useIntersect from '@/hooks/useIntersect'
 import useMe from '@/hooks/useMe'
 
-import SentenceCard from '@/app/(playground)/home/_components/SentenceCard'
 import { Container } from '@/components/shared/Container'
 import Empty from '@/components/shared/Empty'
 import Spinner from '@/components/shared/Spinner'
 import { YStack } from '@/components/shared/Stack'
+import PostCard from '@/app/(playground)/home/_components/PostCard'
 
 interface Props {
   params: { userId: string }
@@ -21,12 +21,11 @@ interface Props {
 export default function LikedPage({ params }: Props) {
   const limit = 4
   const { me, session } = useMe()
-  const isMe = params.userId === me?.id
   const { data, hasNextPage, fetchNextPage, isFetching, isLoading, isPending } =
     useInfiniteQuery(
-      sentenceQuery.getLikedSentence(supabase, params.userId, limit, isMe),
+      postQuery.getLikedPost(supabase, params.userId, limit, me.id),
     )
-  const likedSentences = data?.pages.flatMap((sentence) => sentence || [])
+  const likedPosts = data?.pages.flatMap((post) => post || [])
   const [ref, inView] = useIntersect<HTMLDivElement>({}, !!isLoading)
 
   useEffect(() => {
@@ -45,17 +44,17 @@ export default function LikedPage({ params }: Props) {
 
   return (
     <Container className="animate-fade-in">
-      {likedSentences && likedSentences?.length > 0 ? (
+      {likedPosts && likedPosts?.length > 0 ? (
         <YStack gap={8}>
-          {likedSentences?.map((item) =>
-            item?.sentence.content ? (
-              <SentenceCard
+          {likedPosts?.map((item) =>
+            item?.post.content ? (
+              <PostCard
                 key={item.id}
                 meId={me?.id}
                 session={session}
-                sentence={item.sentence}
+                post={item.post}
                 createdAtLiked={item.created_at}
-                sentenceUserInfo={item.sentence.user_info}
+                postUserInfo={item.post.user_info}
               />
             ) : (
               <Empty key={item?.id}>

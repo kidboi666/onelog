@@ -10,7 +10,7 @@ export type TPost = 'journal' | 'article'
 export type TEmotion = '0%' | '25%' | '50%' | '75%' | '100%' | null
 
 interface Props {
-  searchParams: { sentence_id: string }
+  searchParams: { post_id: string }
 }
 
 export default function Default({ searchParams }: Props) {
