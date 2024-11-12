@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { MouseEvent, Suspense, useState, useTransition } from 'react'
+import { MouseEvent, Suspense, useState } from 'react'
 import { EditorContent } from '@tiptap/react'
 import { useRouter } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -11,34 +11,35 @@ import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import useFollow from '@/services/mutates/follow/useFollow'
 import useUnFollow from '@/services/mutates/follow/useUnFollow'
 import { followQuery } from '@/services/queries/follow/followQuery'
+import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
+import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
+import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
 import useBlockEditor from '@/hooks/useBlockEditor'
+import useMe from '@/hooks/useMe'
+import useFetchWithDelay from '@/hooks/useFetchWithDelay'
+import useTransitionWithRoute from '@/hooks/useTransitionWithRoute'
+import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
+import { TEmotion } from '@/app/(playground)/write/page'
+import { routes } from '@/routes'
 
 import Avatar from '@/components/shared/Avatar'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import Line from '@/components/shared/Line'
 import Tag from '@/components/shared/Tag'
-import LinkButton from '@/components/shared/LinkButton'
 import Spinner from '@/components/shared/Spinner'
 import Button from '@/components/shared/Button'
-
 import { XStack, YStack } from '@/components/shared/Stack'
+
 import EmotionGauge from '@/app/(playground)/home/_components/EmotionGauge'
-import FavoriteButton from '@/app/(playground)/home/_components/FavoriteButton'
+import LikeButton from '@/app/(playground)/home/_components/LikeButton'
 import CommentButton from '@/app/(playground)/home/_components/CommentButton'
 import AccessTypeButtonWithDropDown from '@/app/(playground)/home/_components/AccessTypeButtonWithDropDown'
 import OptionButtonWithDropDown from '@/app/(playground)/home/_components/OptionButtonWithDropDown'
 import Comments from '@/app/(playground)/home/_components/Comments'
 import ReportButton from '@/app/(playground)/home/_components/ReportButton'
-import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
-import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
-import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import AvatarButtonWithDropDown from '@/app/(playground)/home/_components/AvatarButtonWithDropDown'
-import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
-import { TEmotion } from '@/app/(playground)/write/page'
 import ShareButton from '@/app/(playground)/home/_components/ShareButton'
-import useMe from '@/hooks/useMe'
-import { routes } from '@/routes'
 
 interface Props {
   sentenceId: number
@@ -67,19 +68,22 @@ export default function SentenceContainer({ sentenceId }: Props) {
     (user) => user.follower_user_id === me?.id,
   )
   const isMe = me?.id === sentence.user_id
-  const { mutate: follow } = useFollow()
-  const { mutate: unFollow } = useUnFollow()
+  const { mutate: follow, isPending: isPendingFollow } = useFollow()
+  const { mutate: unfollow, isPending: isPendingUnfollow } = useUnFollow()
   const { editor } = useBlockEditor({ content: sentence?.content })
   const { mutate: like } = useLikeSentence()
   const { mutate: unlike } = useUnlikeSentence()
-  const [isLoadingFollowing, startTransitionFollowing] = useTransition()
+  const isPending = useFetchWithDelay(isPendingFollow || isPendingUnfollow)
   const isOwner = me?.id === sentence?.user_id
+  const [isLoadingWrite, startTransitionWrite] = useTransitionWithRoute()
+  const [isLoadingEditProfile, startTransitionEditProfile] =
+    useTransitionWithRoute()
 
   const handleShowComment = () => {
     setShowComment((prev) => !prev)
   }
 
-  const handleFavorite = () => {
+  const handleLike = () => {
     isLiked
       ? unlike({ meId: me?.id, sentenceId })
       : like({
@@ -88,26 +92,22 @@ export default function SentenceContainer({ sentenceId }: Props) {
         })
   }
 
-  const handleFavoriteSentence = (e: MouseEvent) => {
+  const handleLikeSentence = (e: MouseEvent) => {
     e.stopPropagation()
-    me
-      ? handleFavorite()
-      : router.push(routes.modal.auth.guard, { scroll: false })
+    me ? handleLike() : router.push(routes.modal.auth.guard, { scroll: false })
   }
 
   const handleFollow = () => {
     me
-      ? startTransitionFollowing(() =>
-          isFollowing
-            ? unFollow({
-                followed_user_id: sentence.user_id,
-                follower_user_id: me.id,
-              })
-            : follow({
-                followed_user_id: sentence.user_id,
-                follower_user_id: me.id,
-              }),
-        )
+      ? isFollowing
+        ? unfollow({
+            followed_user_id: sentence.user_id,
+            follower_user_id: me.id,
+          })
+        : follow({
+            followed_user_id: sentence.user_id,
+            follower_user_id: me.id,
+          })
       : router.push(routes.modal.auth.guard, { scroll: false })
   }
 
@@ -170,46 +170,53 @@ export default function SentenceContainer({ sentenceId }: Props) {
             </XStack>
           )}
         </YStack>
-        <div className="mt-8 flex flex-col gap-2">
-          <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark">
+        <YStack className="mt-8">
+          <YStack
+            gap={4}
+            className="w-full rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark"
+          >
             <Link
               href={routes.profile.view(sentence?.user_id)}
               className="flex flex-1 gap-4"
             >
               <Avatar src={sentence?.user_info.avatar_url} size="md" />
-              <div className="flex w-full flex-col gap-1">
+              <YStack gap={1} className="w-full">
                 <Title size="sm">{sentence?.user_info.user_name}</Title>
                 <Text type="caption">{sentence?.user_info.email}</Text>
                 <Text>{sentence?.user_info.about_me}</Text>
-              </div>
+              </YStack>
             </Link>
-            <div
+            <XStack
               onClick={(e) => e.stopPropagation()}
-              className="flex justify-center gap-2 sm:flex-col"
+              className="justify-center sm:flex-col"
             >
               {me?.id === sentence?.user_id ? (
                 <>
-                  <LinkButton
-                    href="/write"
+                  <Button
                     size="sm"
+                    isLoading={isLoadingWrite}
+                    onClick={() => startTransitionWrite(routes.post.new)}
                     className="w-full self-end"
                   >
                     글 쓰기
-                  </LinkButton>
-                  <LinkButton
-                    href="/edit_profile"
+                  </Button>
+                  <Button
                     variant="secondary"
                     size="sm"
+                    onClick={() =>
+                      startTransitionEditProfile(routes.profile.edit)
+                    }
+                    isLoading={isLoadingEditProfile}
                     className="w-full self-end"
                   >
                     프로필 수정
-                  </LinkButton>
+                  </Button>
                 </>
               ) : (
                 <>
                   <Button
                     size="sm"
-                    isLoading={isLoadingFollowing}
+                    isLoading={isPending}
                     onClick={handleFollow}
                     className="w-full self-end"
                   >
@@ -224,16 +231,16 @@ export default function SentenceContainer({ sentenceId }: Props) {
                   </Button>
                 </>
               )}
-            </div>
-          </div>
-        </div>
+            </XStack>
+          </YStack>
+        </YStack>
         <YStack className="sm:hidden">
           <Line />
-          <nav className="flex items-center justify-between">
-            <FavoriteButton
+          <XStack gap={0} className="items-center justify-between">
+            <LikeButton
               isLiked={isLiked}
-              favoritedCount={sentence?.like[0].count}
-              onFavorite={handleFavoriteSentence}
+              likedCount={sentence?.like[0].count}
+              onLike={handleLikeSentence}
               meId={me?.id}
               viewToolTip
             />
@@ -255,12 +262,15 @@ export default function SentenceContainer({ sentenceId }: Props) {
                 sentenceId={sentence.id}
               />
             )}
-          </nav>
+          </XStack>
         </YStack>
       </YStack>
 
       {showComment && (
-        <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray">
+        <YStack
+          gap={4}
+          className="rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray"
+        >
           <Suspense
             fallback={
               <Spinner.Container>
@@ -270,7 +280,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
           >
             <Comments sentenceId={sentence.id} me={me} />
           </Suspense>
-        </div>
+        </YStack>
         /**
          * TODO #1 무한 대댓글이 가능함 @kidboi666
          */

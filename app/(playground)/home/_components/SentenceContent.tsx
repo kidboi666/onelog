@@ -1,7 +1,7 @@
 import Tag from '@/components/shared/Tag'
 import { Editor, EditorContent } from '@tiptap/react'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
-import FavoriteButton from './FavoriteButton'
+import LikeButton from './LikeButton'
 import AccessTypeButtonWithDropDown from './AccessTypeButtonWithDropDown'
 import CommentButton from './CommentButton'
 import Title from '@/components/shared/Title'
@@ -13,11 +13,11 @@ interface Props {
   tags?: string[]
   editor: Editor
   isLiked?: boolean | null
-  favoritedCount?: number
+  likedCount?: number
   commentCount?: number
   sentenceTitle?: string | null
   isMyPage?: boolean
-  onFavorite: (e: MouseEvent) => void
+  onLike: (e: MouseEvent) => void
   onClick?: () => void
   disabled?: boolean
   meId?: string | null
@@ -31,9 +31,9 @@ export default function SentenceContent({
   editor,
   sentenceTitle,
   isLiked,
-  favoritedCount,
+  likedCount,
   commentCount,
-  onFavorite,
+  onLike,
   onClick,
   disabled = false,
   meId,
@@ -79,10 +79,10 @@ export default function SentenceContent({
           )}
         </ZStack>
         <XStack as="nav" className="items-center justify-between">
-          <FavoriteButton
+          <LikeButton
             isLiked={isLiked}
-            favoritedCount={favoritedCount}
-            onFavorite={onFavorite}
+            likedCount={likedCount}
+            onLike={onLike}
             meId={meId}
             viewToolTip
           />

@@ -31,6 +31,7 @@ export default function SentenceContainer() {
           key={sentence.id}
           sentence={sentence}
           sentenceUserInfo={sentence.user_info}
+          session={session}
           meId={session ? me?.id : null}
         />
       ))}

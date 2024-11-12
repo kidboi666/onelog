@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 interface IFavorite {
   sentenceId?: number
   meId?: string | null
+  postType?: 'journal' | 'article'
 }
 
 export default function useUnlikeSentence() {
@@ -28,6 +29,9 @@ export default function useUnlikeSentence() {
       queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
       queryClient.invalidateQueries({
         queryKey: ['sentence', variables.sentenceId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['sentence', variables.postType, variables.meId],
       })
       queryClient.invalidateQueries({
         queryKey: ['sentence', 'isLiked', variables.sentenceId],

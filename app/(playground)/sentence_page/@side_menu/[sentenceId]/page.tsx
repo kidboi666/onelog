@@ -8,7 +8,7 @@ import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { sentenceQuery } from '@/services/queries/sentence/sentenceQuery'
 import { meQuery } from '@/services/queries/auth/meQuery'
 
-import FavoriteButton from '@/app/(playground)/home/_components/FavoriteButton'
+import LikeButton from '@/app/(playground)/home/_components/LikeButton'
 import CommentButton from '@/app/(playground)/home/_components/CommentButton'
 import AccessTypeButtonWithDropDown from '@/app/(playground)/home/_components/AccessTypeButtonWithDropDown'
 import ReportButton from '@/app/(playground)/home/_components/ReportButton'
@@ -62,10 +62,10 @@ export default function SideMenuPage({ params }: Props) {
   return (
     <Container className="sticky left-4 top-8 hidden h-fit animate-fade-in-reverse rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
       <YStack as="nav" className="items-center">
-        <FavoriteButton
-          favoritedCount={sentence?.like[0].count}
+        <LikeButton
+          likedCount={sentence?.like[0].count}
           isLiked={isLiked}
-          onFavorite={handleFavoriteSentence}
+          onLike={handleFavoriteSentence}
           meId={me?.userId}
           viewToolTip
           isSide

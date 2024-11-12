@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 interface IFavorite {
   sentenceId?: number
   meId?: string | null
+  postType?: 'journal' | 'article'
 }
 
 export default function useLikeSentence() {
@@ -30,6 +31,9 @@ export default function useLikeSentence() {
       queryClient.invalidateQueries({ queryKey: ['all_sentence'] })
       queryClient.invalidateQueries({
         queryKey: ['sentence', variables.sentenceId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['sentence', variables.postType, variables.meId],
       })
       queryClient.invalidateQueries({
         queryKey: ['sentence', 'isLiked', variables.sentenceId],

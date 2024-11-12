@@ -65,15 +65,21 @@ export default function SentenceCard({
   const { mutate: like } = useLikeSentence()
   const { mutate: unlike } = useUnlikeSentence()
 
-  const handleFavorite = (e: MouseEvent) => {
-    e.stopPropagation()
-    if (!session) return router.push(routes.modal.auth.guard, { scroll: false })
+  const handleLike = () => {
     isLiked
-      ? unlike({ meId, sentenceId })
+      ? unlike({ meId, sentenceId, postType: sentence?.post_type })
       : like({
           meId,
-          sentenceId: sentenceId,
+          sentenceId,
+          postType: sentence?.post_type,
         })
+  }
+
+  const handleLikeSentence = (e: MouseEvent) => {
+    e.stopPropagation()
+    session
+      ? handleLike()
+      : router.push(routes.modal.auth.guard, { scroll: false })
   }
 
   const handleSentenceItemClick = () => {
@@ -105,12 +111,12 @@ export default function SentenceCard({
         editor={editor}
         sentenceTitle={sentence?.title}
         accessType={sentence?.access_type}
-        favoritedCount={sentence?.like?.[0].count}
+        likedCount={sentence?.like?.[0].count}
         isLiked={isLiked}
         commentCount={commentCount || 0}
         sentenceUserId={sentence?.user_id}
         sentenceId={sentenceId}
-        onFavorite={handleFavorite}
+        onLike={handleLikeSentence}
         onClick={handleSentenceItemClick}
         meId={meId}
         disabled={disabled}

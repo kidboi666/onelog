@@ -65,7 +65,7 @@ export default function Journals({ params }: Props) {
             journal?.content ? (
               <SentenceCard
                 key={journal?.id}
-                meId={me?.id}
+                meId={session ? me?.id : null}
                 sentence={journal}
                 session={session}
                 sentenceUserInfo={sentenceUserInfo}
