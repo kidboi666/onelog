@@ -10,8 +10,9 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import FollowUserCard from '../../_components/FollowUserCard'
 import { useRouter } from 'next/navigation'
 import useMe from '@/hooks/useMe'
-import { MouseEvent, useCallback } from 'react'
+import { MouseEvent } from 'react'
 import { routes } from '@/routes'
+import useFetchWithDelay from '@/hooks/useFetchWithDelay'
 
 interface Props {
   params: { userId: string }
@@ -26,42 +27,37 @@ export default function FollowerListModal({ params }: Props) {
   const { data: myFollows } = useSuspenseQuery(
     followQuery.getFollowing(supabase, me?.id),
   )
-  const { mutate: followUser } = useFollow()
-  const { mutate: unfollowUser } = useUnFollow()
-
-  const handleFollowUser = useCallback(
-    (e: MouseEvent, userId: string) => {
-      e.stopPropagation()
-      if (!session) return router.push(routes.modal.auth.guard)
-      followUser({
-        followed_user_id: userId,
-        follower_user_id: me!.id,
-      })
-    },
-    [session, me, router, followUser],
+  const { mutate: followUser, isPending: isPendingFollowUser } = useFollow()
+  const { mutate: unfollowUser, isPending: isPendingUnfollowUser } =
+    useUnFollow()
+  const isPending = useFetchWithDelay(
+    isPendingFollowUser || isPendingUnfollowUser,
   )
 
-  const handleUnfollowUser = useCallback(
-    (e: MouseEvent, userId: string) => {
-      e.stopPropagation()
-      if (!session) return router.push(routes.modal.auth.guard)
-      unfollowUser({
-        followed_user_id: userId,
-        follower_user_id: me!.id,
-      })
-    },
-    [session, me, router, unfollowUser],
-  )
+  const handleFollowUser = (e: MouseEvent, userId: string) => {
+    e.stopPropagation()
+    if (!session) return router.push(routes.modal.auth.guard)
+    followUser({
+      followed_user_id: userId,
+      follower_user_id: me!.id,
+    })
+  }
 
-  const handlePushUserPage = useCallback(
-    (userId: string) => {
-      router.push(routes.profile.view(userId), { scroll: false })
-    },
-    [router],
-  )
+  const handleUnfollowUser = (e: MouseEvent, userId: string) => {
+    e.stopPropagation()
+    if (!session) return router.push(routes.modal.auth.guard)
+    unfollowUser({
+      followed_user_id: userId,
+      follower_user_id: me!.id,
+    })
+  }
+
+  const handlePushUserPage = (userId: string) => {
+    router.push(routes.profile.view(userId), { scroll: false })
+  }
 
   return (
-    <Modal className="sm:max-w-[600px]">
+    <Modal>
       <YStack className="w-full">
         {followers?.map((follower) => {
           const isFollowing = myFollows?.find(
@@ -81,6 +77,7 @@ export default function FollowerListModal({ params }: Props) {
               unfollow={(e: MouseEvent) =>
                 handleUnfollowUser(e, follower.user_info.id)
               }
+              isPending={isPending}
               pushUserPage={() => handlePushUserPage(follower.user_info.id)}
             />
           )

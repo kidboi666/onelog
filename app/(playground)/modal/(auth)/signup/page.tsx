@@ -68,7 +68,7 @@ export default function SignUpModal() {
   }
 
   return (
-    <Modal>
+    <Modal className="w-[420px]">
       <form onSubmit={handleSubmit(handleSubmitSignUp)} className="w-full">
         <YStack gap={4}>
           <Title>회원가입</Title>

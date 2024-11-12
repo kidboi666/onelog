@@ -59,7 +59,7 @@ export default function SignInModal() {
   }
 
   return (
-    <Modal>
+    <Modal className="w-[420px]">
       <form onSubmit={handleSubmit(handleSubmitSignIn)} className="w-full">
         <YStack gap={4}>
           <Title>로그인</Title>

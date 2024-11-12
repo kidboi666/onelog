@@ -19,14 +19,14 @@ export default function Modal({
   const router = useRouter()
   const isMouseDown = useRef<boolean>(false)
   const {
-    close: insideClose,
-    open: insideOpen,
+    close: closeInside,
+    open: openInside,
     ref: insideRef,
     onTransitionEnd: insideOnTransitionEnd,
   } = useDataDrivenAnimation<HTMLDivElement>()
   const {
-    close: outsideClose,
-    open: outsideOpen,
+    close: closeOutside,
+    open: openOutside,
     ref: outsideRef,
     onTransitionEnd: outsideOnTransitionEnd,
   } = useDataDrivenAnimation<HTMLDivElement>()
@@ -37,20 +37,21 @@ export default function Modal({
 
   const handleMouseUp = () => {
     if (isMouseDown.current) {
-      insideClose()
-      outsideClose()
-      setTimeout(() => {
-        router.back()
-      }, 100)
+      closeInside()
+      closeOutside()
+      setTimeout(() => router.back(), 100)
     }
     isMouseDown.current = false
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      insideOpen()
-      outsideOpen()
-    }, 0)
+    document.body.classList.add('overflow-hidden')
+    openInside()
+    openOutside()
+
+    return () => {
+      document.body.classList.remove('overflow-hidden')
+    }
   }, [])
 
   return (
@@ -61,14 +62,14 @@ export default function Modal({
         onMouseUp={handleMouseUp}
         data-status="closed"
         onTransitionEnd={outsideOnTransitionEnd}
-        className="fixed inset-0 z-40 overflow-hidden bg-var-dark/25 backdrop-blur-sm transition ease-in-out data-[status=closed]:opacity-0 dark:bg-var-gray/25"
+        className="fixed inset-0 z-40 overflow-hidden bg-var-dark/25 backdrop-blur-sm transition-opacity ease-in-out data-[status=closed]:opacity-0 dark:bg-var-gray/25"
       />
       <div
         ref={insideRef}
         data-status="closed"
         onTransitionEnd={insideOnTransitionEnd}
         className={cn(
-          'fixed left-1/2 top-1/2 z-50 flex h-fit max-h-[calc(100%-200px)] w-full max-w-[calc(100%-20px)] origin-top -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-12 overflow-y-auto rounded-md bg-var-lightgray p-4 shadow-lg transition ease-in-out data-[status=closed]:scale-90 data-[status=closed]:opacity-0 sm:max-w-[425px] sm:p-8 dark:bg-var-dark',
+          'fixed left-1/2 top-1/2 z-50 flex max-h-[calc(100%-200px)] w-full max-w-[calc(100%-20px)] -translate-x-1/2 -translate-y-1/2 transform flex-col items-center gap-12 overflow-y-auto rounded-md bg-var-lightgray p-4 shadow-lg transition-transform data-[status=closed]:scale-90 data-[status=closed]:opacity-0 sm:max-w-[600px] sm:p-8 dark:bg-var-dark',
           className,
         )}
         {...props}
