@@ -16,13 +16,13 @@ export const routes = {
   settings: '/settings',
   profile: {
     view: (userId: string, path?: string) =>
-      `/profile/${userId}${path ? `/${path}` : ''}`,
-    edit: '/edit_profile',
+      `/profile/view/${userId}${path ? `/${path}` : ''}`,
+    edit: '/profile/edit',
   },
   post: {
-    new: '/write',
-    view: (sentenceId: number) => `/sentence_page/${sentenceId}`,
-    edit: (sentenceId: number) => `/write?sentence_id=${sentenceId}`,
+    new: '/post/edit',
+    view: (sentenceId: number) => `/post/view/${sentenceId}`,
+    edit: (sentenceId: number) => `/post/edit?sentence_id=${sentenceId}`,
   },
   modal: {
     auth: {

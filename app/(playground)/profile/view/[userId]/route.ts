@@ -6,5 +6,5 @@ interface Params {
 
 export async function GET(_: Request, context: { params: Params }) {
   const userId = context.params.userId
-  redirect(`/profile/${userId}/summary`)
+  redirect(`/profile/view/${userId}/summary`)
 }

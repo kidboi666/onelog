@@ -1,11 +1,10 @@
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import { routes } from '@/routes'
 import { ISignIn } from '@/types/auth'
 import { useMutation } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
 
 export default function useSignIn() {
-  const router = useRouter()
   const queryClient = getQueryClient()
 
   return useMutation({
@@ -22,8 +21,7 @@ export default function useSignIn() {
       return data
     },
     onSuccess: () => {
-      router.back()
-      window.location.href = '/home'
+      window.location.href = routes.home
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['me', 'session'] })

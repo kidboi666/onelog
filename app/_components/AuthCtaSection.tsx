@@ -4,6 +4,7 @@ import LinkButton from '@/components/shared/LinkButton'
 import { XStack, YStack } from '@/components/shared/Stack'
 import Title from '@/components/shared/Title'
 import { supabase } from '@/lib/supabase/client'
+import { routes } from '@/routes'
 import { meQuery } from '@/services/queries/auth/meQuery'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -27,9 +28,9 @@ export default function AuthCtaSection() {
           <Title>오늘 당신의 감정을 기록하세요.</Title>
         </YStack>
         <YStack gap={4}>
-          <LinkButton href="/home">구경하러 가기</LinkButton>
+          <LinkButton href={routes.home}>구경하러 가기</LinkButton>
           <Title size="sm">함께하세요.</Title>
-          <LinkButton href="/modal/signup" variant="secondary">
+          <LinkButton href={routes.modal.auth.signup} variant="secondary">
             가입하러 가기
           </LinkButton>
         </YStack>

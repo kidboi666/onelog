@@ -19,7 +19,7 @@ import useMe from '@/hooks/useMe'
 import useFetchWithDelay from '@/hooks/useFetchWithDelay'
 import useTransitionWithRoute from '@/hooks/useTransitionWithRoute'
 import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
-import { TEmotion } from '@/app/(playground)/write/page'
+import { TEmotion } from '@/app/(playground)/post/edit/page'
 import { routes } from '@/routes'
 
 import Avatar from '@/components/shared/Avatar'

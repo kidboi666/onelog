@@ -93,10 +93,13 @@ export default function AvatarButtonWithDropDown({
             <XStack gap={4}>
               {isMe ? (
                 <>
-                  <DropDown.LinkButton href="/edit_profile" variant="secondary">
+                  <DropDown.LinkButton
+                    href={routes.profile.edit}
+                    variant="secondary"
+                  >
                     프로필 수정
                   </DropDown.LinkButton>
-                  <DropDown.LinkButton href={`/profile/${userId}`}>
+                  <DropDown.LinkButton href={routes.profile.view(userId)}>
                     마이 페이지
                   </DropDown.LinkButton>
                 </>
@@ -111,7 +114,7 @@ export default function AvatarButtonWithDropDown({
                   >
                     {isFollowing ? '팔로우 취소' : '팔로우 하기'}
                   </DropDown.Button>
-                  <DropDown.LinkButton href={`/profile/${userId}`}>
+                  <DropDown.LinkButton href={routes.profile.view(userId)}>
                     프로필 페이지
                   </DropDown.LinkButton>
                 </>

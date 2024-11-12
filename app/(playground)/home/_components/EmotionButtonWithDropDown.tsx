@@ -3,7 +3,7 @@ import useDataDrivenAnimation from '@/hooks/useStateChange'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import EmotionGauge from './EmotionGauge'
 import Text from '@/components/shared/Text'
-import { TEmotion } from '../../write/page'
+import { TEmotion } from '../../post/edit/page'
 
 interface Props {
   emotionLevel: TEmotion | null

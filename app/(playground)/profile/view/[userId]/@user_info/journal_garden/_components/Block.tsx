@@ -7,7 +7,7 @@ import cn from '@/lib/cn'
 import { colorizeOpacity } from '@/utils/formatColor'
 import Button from '@/components/shared/Button'
 import Text from '@/components/shared/Text'
-import { WEEKDAY } from '@/app/(playground)/write/_constants'
+import { WEEKDAY } from '@/app/(playground)/post/edit/_constants'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 interface BlockProps {

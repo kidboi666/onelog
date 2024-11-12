@@ -1,11 +1,9 @@
 import { supabase } from '@/lib/supabase/client'
+import { routes } from '@/routes'
 import { ISignUp } from '@/types/auth'
 import { useMutation } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
 
 export default function useSignUp() {
-  const router = useRouter()
-
   return useMutation({
     mutationFn: async (authData: ISignUp) => {
       const { data, error } = await supabase.auth.signUp({
@@ -23,8 +21,7 @@ export default function useSignUp() {
       return data
     },
     onSuccess: () => {
-      router.back()
-      window.location.href = '/home'
+      window.location.href = routes.home
     },
   })
 }

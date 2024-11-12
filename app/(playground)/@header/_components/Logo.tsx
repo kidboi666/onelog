@@ -3,13 +3,14 @@
 import Icon from '@/components/shared/Icon'
 import LinkButton from '@/components/shared/LinkButton'
 import cn from '@/lib/cn'
+import { routes } from '@/routes'
 import { useTheme } from '@/store/useTheme'
 
 export default function Logo() {
   const { theme } = useTheme()
   return (
     <LinkButton
-      href="/home"
+      href={routes.home}
       variant="none"
       className={cn('w-fit', theme === 'dark' ? 'text-white' : 'text-black')}
       innerClassName="py-0"
