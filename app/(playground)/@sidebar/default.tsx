@@ -15,7 +15,7 @@ import SidebarWriteButtonWithLogo from './_components/SidebarWriteButtonWithLogo
 import { Container } from '@/components/shared/Container'
 import { YStack, ZStack } from '@/components/shared/Stack'
 import useMe from '@/hooks/useMe'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 
 export default function Sidebar() {
   const { me, session } = useMe()
@@ -41,7 +41,7 @@ export default function Sidebar() {
         <ZStack>
           <SidebarWriteButtonWithLogo
             closeToolTip={handleToolTipClose}
-            isSelected={pathname === ROUTES.WRITE}
+            isSelected={pathname === routes.post.new}
           />
           <ToolTip position="right" size="sm" isHover={isHover} text="글쓰기" />
         </ZStack>

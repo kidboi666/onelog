@@ -12,7 +12,7 @@ import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { XStack, YStack } from '@/components/shared/Stack'
 import Follow from '@/components/shared/Follow'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 
 interface Props {
   avatarUrl: string | null
@@ -45,15 +45,15 @@ export default function AvatarButtonWithDropDown({
   const { mutate: unfollow } = useUnFollow()
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
   const pushFollowerList = () =>
-    router.push(ROUTES.MODAL.FOLLOWER(userId), { scroll: false })
+    router.push(routes.modal.follow.follower(userId), { scroll: false })
   const pushFollowingList = () =>
-    router.push(ROUTES.MODAL.FOLLOWING(userId), { scroll: false })
+    router.push(routes.modal.follow.following(userId), { scroll: false })
   const handleFollowButtonClick = () => {
     me
       ? isFollowing
         ? unfollow({ followed_user_id: userId, follower_user_id: me.userId! })
         : follow({ followed_user_id: userId, follower_user_id: me.userId! })
-      : router.push(ROUTES.MODAL.AUTH_GUARD, { scroll: false })
+      : router.push(routes.modal.auth.guard, { scroll: false })
   }
   return (
     <DropDown.Root>

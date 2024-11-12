@@ -4,7 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="964f878d-eec9-4efe-a437-3a29adf4c9d4" name="변경" comment="" />
+    <list default="true" id="964f878d-eec9-4efe-a437-3a29adf4c9d4" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/@header/_components/MobileWriteButtonWithLogo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/@header/_components/MobileWriteButtonWithLogo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/@sidebar/_components/GuestContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/@sidebar/_components/GuestContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/@sidebar/_components/LoggedInContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/@sidebar/_components/LoggedInContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/@sidebar/_components/SidebarWriteButtonWithLogo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/@sidebar/_components/SidebarWriteButtonWithLogo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/@sidebar/default.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/@sidebar/default.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/edit_profile/_components/PasswordResetForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/edit_profile/_components/PasswordResetForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/home/_components/AvatarButtonWithDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_components/AvatarButtonWithDropDown.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/home/_components/CommentInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_components/CommentInput.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/home/_components/OptionButtonWithDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_components/OptionButtonWithDropDown.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/home/_components/ReportButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_components/ReportButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/home/_components/SentenceCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_components/SentenceCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/home/_containers/PostSentenceContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/home/_containers/PostSentenceContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/modal/follower/[userId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/modal/follower/[userId]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/modal/following/[userId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/modal/following/[userId]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/modal/report_comment/[commentId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/modal/report_comment/[commentId]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/modal/report_sentence/[sentenceId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/modal/report_sentence/[sentenceId]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/profile/[userId]/@profile/_components/AboutMe.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/profile/[userId]/@profile/_components/AboutMe.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/profile/[userId]/@user_info/journal_garden/_components/MenuSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/profile/[userId]/@user_info/journal_garden/_components/MenuSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/sentence_page/@post/[sentenceId]/_components/AvatarButtonWithDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/sentence_page/@post/[sentenceId]/_components/AvatarButtonWithDropDown.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/sentence_page/@post/[sentenceId]/_containers/SentenceContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/sentence_page/@post/[sentenceId]/_containers/SentenceContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/sentence_page/@side_menu/[sentenceId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/sentence_page/@side_menu/[sentenceId]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(playground)/write/_containers/PostContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/write/_containers/PostContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants/routes.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/supabase/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/supabase/middleware.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,10 +61,16 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Users/jin-wook/Desktop/web/one_sentence/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -60,6 +93,8 @@
       <workItem from="1729497716272" duration="551000" />
       <workItem from="1729499402143" duration="220000" />
       <workItem from="1730210476719" duration="10000" />
+      <workItem from="1731372387768" duration="471000" />
+      <workItem from="1731373070032" duration="48000" />
     </task>
     <servers />
   </component>

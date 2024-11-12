@@ -1,4 +1,4 @@
-import { AUTH_RESTRICTED_ROUTES, PROTECTED_ROUTES } from '@/constants/routes'
+import { authRestrictedRoutes, protectedRoutes, routes } from '@/routes'
 import { createServerClient } from '@supabase/ssr'
 import { User } from '@supabase/supabase-js'
 import { NextResponse, type NextRequest } from 'next/server'
@@ -40,11 +40,11 @@ export async function updateSession(req: NextRequest) {
   } = await supabase.auth.getUser()
 
   if (shouldRedirectToHome(user, req)) {
-    return NextResponse.redirect(new URL('/home', req.url))
+    return NextResponse.redirect(new URL(routes.home, req.url))
   }
 
   if (shouldRedirectToAuthGuard(user, req)) {
-    return NextResponse.redirect(new URL('/modal/auth_guard', req.url))
+    return NextResponse.redirect(new URL(routes.modal.auth.guard, req.url))
   }
 
   return supabaseResponse
@@ -53,15 +53,13 @@ export async function updateSession(req: NextRequest) {
 function shouldRedirectToHome(user: User | null, req: NextRequest) {
   return (
     user &&
-    AUTH_RESTRICTED_ROUTES.some((route) =>
-      req.nextUrl.pathname.startsWith(route),
-    )
+    authRestrictedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))
   )
 }
 
 function shouldRedirectToAuthGuard(user: User | null, req: NextRequest) {
   return (
     !user &&
-    PROTECTED_ROUTES.some((route) => req.nextUrl.pathname.startsWith(route))
+    protectedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))
   )
 }

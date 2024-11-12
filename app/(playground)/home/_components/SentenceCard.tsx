@@ -18,7 +18,7 @@ import { TEmotion } from '../../write/page'
 import { MouseEvent } from 'react'
 import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
 import { IUserSession } from '@/services/queries/auth/meQuery'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 
 interface Props {
   sentence?: ISentenceWithUserInfo
@@ -67,7 +67,7 @@ export default function SentenceCard({
 
   const handleFavorite = (e: MouseEvent) => {
     e.stopPropagation()
-    if (!session) return router.push(ROUTES.MODAL.AUTH_GUARD, { scroll: false })
+    if (!session) return router.push(routes.modal.auth.guard, { scroll: false })
     isLiked
       ? unlike({ meId, sentenceId })
       : like({
@@ -77,7 +77,7 @@ export default function SentenceCard({
   }
 
   const handleSentenceItemClick = () => {
-    router.push(ROUTES.POST(sentenceId))
+    router.push(routes.post.view(sentenceId))
   }
 
   if (!editor) return null

@@ -4,7 +4,7 @@ import cn from '@/lib/cn'
 import { useRouter } from 'next/navigation'
 import { Fragment, useTransition } from 'react'
 import { PROFILE_NAVIGATE_MENUS } from '../../../_constants/Navigate'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 
 interface Props {
   menu: any
@@ -32,7 +32,9 @@ export default function MenuSection({
         variant="teritory"
         size="sm"
         onClick={() =>
-          startTransition(() => router.push(ROUTES.PROFILE(userId, menu.path)))
+          startTransition(() =>
+            router.push(routes.profile.view(userId, menu.path)),
+          )
         }
         isLoading={isLoading}
         className={cn(

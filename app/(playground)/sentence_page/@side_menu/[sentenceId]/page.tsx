@@ -20,7 +20,7 @@ import useLikeSentence from '@/services/mutates/sentence/useLikeSentence'
 import useUnlikeSentence from '@/services/mutates/sentence/useUnlikeSentence'
 import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
 import ShareButton from '@/app/(playground)/home/_components/ShareButton'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 
 interface Props {
   params: { sentenceId: string }
@@ -56,7 +56,7 @@ export default function SideMenuPage({ params }: Props) {
     e.stopPropagation()
     me
       ? handleFavorite()
-      : router.push(ROUTES.MODAL.AUTH_GUARD, { scroll: false })
+      : router.push(routes.modal.auth.guard, { scroll: false })
   }
 
   return (

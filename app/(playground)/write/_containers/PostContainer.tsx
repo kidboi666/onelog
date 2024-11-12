@@ -28,7 +28,7 @@ import EmotionSection from '../_components/EmotionSection'
 import PublishSection from '../_components/PublishSection'
 import BubbleMenuBar from '../_components/BubbleMenuBar'
 import PostTypeSection from '../_components/PostTypeSection'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 
 interface Props {
   searchParams: { sentence_id: string }
@@ -103,13 +103,13 @@ export default function PostContainer({
           },
           {
             onSuccess: () => {
-              router.replace(ROUTES.MODAL.SUCCESS)
+              router.replace(routes.modal.success)
             },
           },
         )
       : addSentence(newSentence, {
           onSuccess: () => {
-            router.replace(ROUTES.MODAL.SUCCESS)
+            router.replace(routes.modal.success)
           },
         })
   }

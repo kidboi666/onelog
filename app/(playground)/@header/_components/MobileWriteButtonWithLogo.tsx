@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { wait } from '@/utils/wait'
 import Button from '@/components/shared/Button'
 import { ZStack } from '@/components/shared/Stack'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 
 interface Props {
   isSelected?: boolean
@@ -20,7 +20,7 @@ export default function MobileWriteButtonWithLogo({
   const router = useRouter()
 
   const pushWritePage = async () => {
-    router.push(ROUTES.WRITE)
+    router.push(routes.post.new)
     await wait(100)
     closeMenu()
   }

@@ -11,7 +11,6 @@ import { followQuery } from '@/services/queries/follow/followQuery'
 import Avatar from '@/components/shared/Avatar'
 import Button from '@/components/shared/Button'
 import Line from '@/components/shared/Line'
-import Spinner from '@/components/shared/Spinner'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import useFollow from '@/services/mutates/follow/useFollow'
@@ -22,7 +21,8 @@ import { Container } from '@/components/shared/Container'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import Follow from '@/components/shared/Follow'
 import useMe from '@/hooks/useMe'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
+import useFetchWithDelay from '@/hooks/useFetchWithDelay'
 
 interface Props {
   userId: string
@@ -43,17 +43,29 @@ export default function AboutMe({ userId }: Props) {
   const { data: followers } = useSuspenseQuery(
     followQuery.getFollower(supabase, userId),
   )
-  const { mutate: followUser } = useFollow()
-  const { mutate: unfollowUser } = useUnFollow()
-  const [isLoadingProfile, startTransitionProfile] = useTransition()
-  const [isLoadingWrite, startTransitionWrite] = useTransition()
+  const { mutate: followUser, isPending: isPendingFollow } = useFollow()
+  const { mutate: unfollowUser, isPending: isPendingUnfollow } = useUnFollow()
+
   const isMyProfilePage = me?.id === user?.id
   const isFollowing =
     !isMyProfilePage &&
     followers?.find((user) => user.follower_user_id === me?.id)
+  const isPending = useFetchWithDelay(isPendingFollow || isPendingUnfollow)
 
-  const pushFollowerList = () => router.push(ROUTES.MODAL.FOLLOWER(userId))
-  const pushFollowingList = () => router.push(ROUTES.MODAL.FOLLOWING(userId))
+  const [isLoadingProfile, startTransitionProfile] = useTransition()
+  const [isLoadingWrite, startTransitionWrite] = useTransition()
+
+  const pushFollowerList = () =>
+    router.push(routes.modal.follow.follower(userId))
+
+  const pushFollowingList = () =>
+    router.push(routes.modal.follow.following(userId))
+
+  const handlePushEditProfilePage = () =>
+    startTransitionProfile(() => router.push(routes.profile.edit))
+
+  const handlePushNewPostPage = () =>
+    startTransitionWrite(() => router.push(routes.post.new))
 
   const handleFollowButtonClick = () => {
     session
@@ -63,7 +75,7 @@ export default function AboutMe({ userId }: Props) {
             follower_user_id: me!.id,
           })
         : followUser({ followed_user_id: userId, follower_user_id: me!.id })
-      : router.push(ROUTES.MODAL.AUTH_GUARD)
+      : router.push(routes.modal.auth.guard)
   }
 
   const handleSendMessageButtonClick = () => {
@@ -106,27 +118,27 @@ export default function AboutMe({ userId }: Props) {
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() =>
-                    startTransitionProfile(() =>
-                      router.push(ROUTES.EDIT_PROFILE),
-                    )
-                  }
+                  isLoading={isLoadingProfile}
+                  onClick={handlePushEditProfilePage}
                   className="text-nowrap"
                 >
-                  {isLoadingProfile ? <Spinner size={16} /> : '프로필 수정'}
+                  프로필 수정
                 </Button>
                 <Button
                   size="sm"
-                  onClick={() =>
-                    startTransitionWrite(() => router.push(ROUTES.WRITE))
-                  }
+                  isLoading={isLoadingWrite}
+                  onClick={handlePushNewPostPage}
                 >
-                  {isLoadingWrite ? <Spinner size={16} /> : '글쓰기'}
+                  글쓰기
                 </Button>
               </>
             ) : (
               <>
-                <Button size="sm" onClick={handleFollowButtonClick}>
+                <Button
+                  size="sm"
+                  isLoading={isPending}
+                  onClick={handleFollowButtonClick}
+                >
                   {isFollowing ? '팔로우 취소' : '팔로우 하기'}
                 </Button>
                 <Button

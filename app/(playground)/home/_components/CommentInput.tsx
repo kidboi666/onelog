@@ -2,7 +2,7 @@ import Avatar from '@/components/shared/Avatar'
 import Button from '@/components/shared/Button'
 import Input from '@/components/shared/Input'
 import { XStack } from '@/components/shared/Stack'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 import { useInput } from '@/hooks/useInput'
 import useMe from '@/hooks/useMe'
 import usePostComment from '@/services/mutates/comment/usePostComment'
@@ -26,7 +26,7 @@ export default function CommentInput({ sentenceId, commentId, me }: Props) {
     if (session) {
       return null
     } else {
-      router.push(ROUTES.MODAL.AUTH_GUARD)
+      router.push(routes.modal.auth.guard)
     }
   }
 

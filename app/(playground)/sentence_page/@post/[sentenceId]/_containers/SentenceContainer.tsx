@@ -38,7 +38,7 @@ import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import { TEmotion } from '@/app/(playground)/write/page'
 import ShareButton from '@/app/(playground)/home/_components/ShareButton'
 import useMe from '@/hooks/useMe'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 
 interface Props {
   sentenceId: number
@@ -92,7 +92,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
     e.stopPropagation()
     me
       ? handleFavorite()
-      : router.push(ROUTES.MODAL.AUTH_GUARD, { scroll: false })
+      : router.push(routes.modal.auth.guard, { scroll: false })
   }
 
   const handleFollow = () => {
@@ -108,7 +108,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
                 follower_user_id: me.id,
               }),
         )
-      : router.push(ROUTES.MODAL.AUTH_GUARD, { scroll: false })
+      : router.push(routes.modal.auth.guard, { scroll: false })
   }
 
   if (!editor) {
@@ -173,7 +173,7 @@ export default function SentenceContainer({ sentenceId }: Props) {
         <div className="mt-8 flex flex-col gap-2">
           <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark">
             <Link
-              href={ROUTES.PROFILE(sentence?.user_id)}
+              href={routes.profile.view(sentence?.user_id)}
               className="flex flex-1 gap-4"
             >
               <Avatar src={sentence?.user_info.avatar_url} size="md" />

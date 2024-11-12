@@ -5,7 +5,7 @@ import Modal from '@/components/shared/Modal'
 import { XStack, YStack } from '@/components/shared/Stack'
 import TextArea from '@/components/shared/TextArea'
 import Title from '@/components/shared/Title'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 import { useInput } from '@/hooks/useInput'
 import { supabase } from '@/lib/supabase/client'
 import useReport from '@/services/mutates/report/useReport'
@@ -34,7 +34,7 @@ export default function ReportCommentModal({ params }: Props) {
       },
       {
         onSuccess: () => {
-          router.push(ROUTES.MODAL.SUCCESS, { scroll: false })
+          router.push(routes.modal.success, { scroll: false })
         },
       },
     )

@@ -11,7 +11,7 @@ import FollowUserCard from '../../_components/FollowUserCard'
 import { useRouter } from 'next/navigation'
 import useMe from '@/hooks/useMe'
 import { useCallback } from 'react'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 
 interface Props {
   params: { userId: string }
@@ -32,7 +32,7 @@ export default function FollowingListModal({ params }: Props) {
   const handleFollowUser = useCallback(
     (e: MouseEvent, userId: string) => {
       e.stopPropagation()
-      if (!session) return router.push(ROUTES.MODAL.AUTH_GUARD)
+      if (!session) return router.push(routes.modal.auth.guard)
       followUser({
         followed_user_id: userId,
         follower_user_id: me!.id,
@@ -44,7 +44,7 @@ export default function FollowingListModal({ params }: Props) {
   const handleUnfollowUser = useCallback(
     (e: MouseEvent, userId: string) => {
       e.stopPropagation()
-      if (!session) return router.push(ROUTES.MODAL.AUTH_GUARD)
+      if (!session) return router.push(routes.modal.auth.guard)
       unfollowUser({
         followed_user_id: userId,
         follower_user_id: me!.id,
@@ -55,7 +55,7 @@ export default function FollowingListModal({ params }: Props) {
 
   const handlePushUserPage = useCallback(
     (userId: string) => {
-      router.push(ROUTES.PROFILE(userId), { scroll: false })
+      router.push(routes.profile.view(userId), { scroll: false })
     },
     [router],
   )

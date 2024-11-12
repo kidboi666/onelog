@@ -31,10 +31,16 @@ export default function FollowUserCard({
         className="w-full cursor-pointer rounded-md p-2 transition hover:bg-zinc-200 dark:hover:bg-zinc-700"
       >
         <XStack gap={4} key={follower.id} className="items-center">
-          <Avatar size="base" src={follower.user_info.avatar_url} />
+          <Avatar
+            size="base"
+            src={follower.user_info.avatar_url}
+            className="size-8"
+          />
           <YStack gap={0} className="flex-1 justify-center">
             <Text>{follower.user_info.user_name}</Text>
-            <Text type="caption">{follower.user_info.email}</Text>
+            <Text type="caption">
+              @{follower.user_info.email.split('@')[0]}
+            </Text>
           </YStack>
         </XStack>
       </Container>
@@ -46,10 +52,14 @@ export default function FollowUserCard({
       className="w-full cursor-pointer rounded-md p-2 transition hover:bg-zinc-200 dark:hover:bg-zinc-700"
     >
       <XStack gap={4} key={follower.id} className="items-center">
-        <Avatar size="base" src={follower.user_info.avatar_url} />
+        <Avatar
+          size="base"
+          src={follower.user_info.avatar_url}
+          className="size-8"
+        />
         <YStack gap={0} className="flex-1 justify-center">
           <Text>{follower.user_info.user_name}</Text>
-          <Text type="caption">{follower.user_info.email}</Text>
+          <Text type="caption">@{follower.user_info.email.split('@')[0]}</Text>
         </YStack>
         {isFollowing ? (
           <Button variant="secondary" size="sm" onClick={unfollow}>

@@ -8,7 +8,7 @@ import cn from '@/lib/cn'
 import { XStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
 import useMe from '@/hooks/useMe'
-import { ROUTES } from '@/constants/routes'
+import { routes } from '@/routes'
 
 export default function PostSentenceContainer() {
   const router = useRouter()
@@ -16,7 +16,9 @@ export default function PostSentenceContainer() {
   const { color } = useTheme()
 
   const handleSentenceClick = () => {
-    session ? router.push(ROUTES.WRITE) : router.push(ROUTES.MODAL.AUTH_GUARD)
+    session
+      ? router.push(routes.post.new)
+      : router.push(routes.modal.auth.guard)
   }
 
   return (
