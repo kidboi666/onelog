@@ -84,7 +84,7 @@ export default function FollowerListModal({ params }: Props) {
           return (
             <FollowUserCard
               key={follower.id}
-              isFollowing={isFollowing}
+              isFollowing={!!isFollowing}
               isMe={isMe}
               follower={follower}
               follow={(e: MouseEvent) =>
