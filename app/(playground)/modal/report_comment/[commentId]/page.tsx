@@ -47,13 +47,18 @@ export default function ReportCommentModal({ params }: Props) {
         <Title size="xs">신고 사유</Title>
         <TextArea value={reason} onChange={onChangeReasonValue} />
       </YStack>
-      <XStack gap={4}>
-        <Button variant="secondary" onClick={() => router.back()}>
+      <XStack gap={4} className="w-full">
+        <Button
+          variant="secondary"
+          onClick={() => router.back()}
+          className="flex-1"
+        >
           취소하기
         </Button>
         <Button
           onClick={() => startTransition(() => handleCommentReport())}
           isLoading={isLoading}
+          className="flex-1"
         >
           신고하기
         </Button>

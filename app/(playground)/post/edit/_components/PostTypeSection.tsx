@@ -1,11 +1,9 @@
 import { DropDown } from '@/components/shared/DropDown'
 import Icon from '@/components/shared/Icon'
-import Text from '@/components/shared/Text'
 import ToolTip from '@/components/shared/Tooltip'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
 import useToggle from '@/hooks/useToggle'
-import cn from '@/lib/cn'
 
 interface Props {
   onChangePostType: (postType: 'article' | 'journal') => void
@@ -52,16 +50,26 @@ export default function PostTypeSection({
         <DropDown.Button
           variant="list"
           onClick={() => onChangePostType('journal')}
-          className={cn(postType === 'journal' && 'font-semibold')}
+          className="flex gap-2"
         >
           감정 일기
+          {postType === 'journal' && (
+            <Icon view="0 -960 960 960" size={16}>
+              <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+            </Icon>
+          )}
         </DropDown.Button>
         <DropDown.Button
           variant="list"
           onClick={() => onChangePostType('article')}
-          className={cn(postType === 'article' && 'font-semibold')}
+          className="flex gap-2"
         >
           아티클
+          {postType === 'article' && (
+            <Icon view="0 -960 960 960" size={16}>
+              <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+            </Icon>
+          )}
         </DropDown.Button>
       </DropDown.Content>
 

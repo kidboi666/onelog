@@ -51,16 +51,26 @@ export default function PublishSection({
         <DropDown.Button
           variant="list"
           onClick={() => onChangeAccessType('public')}
-          className={cn(accessType === 'public' && 'font-semibold')}
+          className="gap-2"
         >
           공개
+          {accessType === 'public' && (
+            <Icon view="0 -960 960 960" size={16}>
+              <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+            </Icon>
+          )}
         </DropDown.Button>
         <DropDown.Button
           variant="list"
           onClick={() => onChangeAccessType('private')}
-          className={cn(accessType === 'private' && 'font-semibold')}
+          className="gap-2"
         >
           비공개
+          {accessType === 'private' && (
+            <Icon view="0 -960 960 960" size={16}>
+              <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+            </Icon>
+          )}
         </DropDown.Button>
       </DropDown.Content>
 
