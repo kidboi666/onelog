@@ -24,7 +24,7 @@ export default function useFollow() {
 
       return data
     },
-    onSuccess: (data, variables) => {
+    onSettled: (_, __, variables) => {
       queryClient.invalidateQueries({
         queryKey: queryKey.follow.follower(variables.followed_user_id),
       })

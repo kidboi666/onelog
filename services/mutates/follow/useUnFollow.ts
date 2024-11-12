@@ -4,8 +4,8 @@ import { queryKey } from '@/lib/tanstack/query-key'
 import { useMutation } from '@tanstack/react-query'
 
 interface Params {
-  follower_user_id: string
   followed_user_id: string
+  follower_user_id: string
 }
 
 export default function useUnFollow() {
@@ -23,6 +23,7 @@ export default function useUnFollow() {
         console.error('언팔로우 실패:', error)
       }
     },
+
     onSettled: (_, __, variables) => {
       queryClient.invalidateQueries({
         queryKey: queryKey.follow.follower(variables.followed_user_id),

@@ -3,6 +3,7 @@ import Button from '@/components/shared/Button'
 import { Container } from '@/components/shared/Container'
 import { XStack, YStack } from '@/components/shared/Stack'
 import Text from '@/components/shared/Text'
+import useFetchWithDelay from '@/hooks/useFetchWithDelay'
 
 interface Props {
   follower: any
@@ -26,6 +27,7 @@ export default function FollowUserCard({
   pushUserPage,
   isPending,
 }: Props) {
+  const isPendingFollow = useFetchWithDelay(isPending)
   if (isMe)
     return (
       <Container
@@ -69,7 +71,7 @@ export default function FollowUserCard({
           <Button
             variant="secondary"
             size="sm"
-            isLoading={isPending}
+            isLoading={isPendingFollow}
             onClick={unfollow}
           >
             팔로우 취소
@@ -77,7 +79,7 @@ export default function FollowUserCard({
         ) : (
           <Button
             size="sm"
-            isLoading={isPending}
+            isLoading={isPendingFollow}
             className="h-fit"
             onClick={follow}
           >

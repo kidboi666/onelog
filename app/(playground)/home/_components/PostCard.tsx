@@ -28,6 +28,8 @@ interface Props {
   meId?: string | null
   session?: IUserSession | null
   disabled?: boolean
+  startOfDay?: string
+  endOfDay?: string
 }
 
 export default function PostCard({
@@ -37,6 +39,8 @@ export default function PostCard({
   meId,
   session,
   disabled,
+  startOfDay,
+  endOfDay,
 }: Props) {
   const router = useRouter()
   const postId = Number(post?.id)
@@ -67,11 +71,21 @@ export default function PostCard({
 
   const handleLike = () => {
     isLiked
-      ? unlike({ meId, postId, postType: post?.post_type })
+      ? unlike({
+          meId,
+          postId,
+          postType: post?.post_type,
+          authorId: post?.user_id,
+          startOfDay,
+          endOfDay,
+        })
       : like({
           meId,
           postId,
           postType: post?.post_type,
+          authorId: post?.user_id,
+          startOfDay,
+          endOfDay,
         })
   }
 

@@ -10,9 +10,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import FollowUserCard from '../../_components/FollowUserCard'
 import { useRouter } from 'next/navigation'
 import useMe from '@/hooks/useMe'
-import { MouseEvent } from 'react'
+import { MouseEvent, useState } from 'react'
 import { routes } from '@/routes'
-import useFetchWithDelay from '@/hooks/useFetchWithDelay'
 
 interface Props {
   params: { userId: string }
@@ -27,29 +26,44 @@ export default function FollowerListModal({ params }: Props) {
   const { data: myFollows } = useSuspenseQuery(
     followQuery.getFollowing(supabase, me?.id),
   )
-  const { mutate: followUser, isPending: isPendingFollowUser } = useFollow()
-  const { mutate: unfollowUser, isPending: isPendingUnfollowUser } =
-    useUnFollow()
-  const isPending = useFetchWithDelay(
-    isPendingFollowUser || isPendingUnfollowUser,
-  )
+  const { mutate: followUser } = useFollow()
+  const { mutate: unfollowUser } = useUnFollow()
+  const [isPendingList, setPendingList] = useState<Record<string, boolean>>({})
 
   const handleFollowUser = (e: MouseEvent, userId: string) => {
     e.stopPropagation()
     if (!session) return router.push(routes.modal.auth.guard)
-    followUser({
-      followed_user_id: userId,
-      follower_user_id: me!.id,
-    })
+
+    setPendingList((prev) => ({ ...prev, [userId]: true }))
+    followUser(
+      {
+        followed_user_id: userId,
+        follower_user_id: me!.id,
+      },
+      {
+        onSettled: () => {
+          setPendingList((prev) => ({ ...prev, [userId]: false }))
+        },
+      },
+    )
   }
 
   const handleUnfollowUser = (e: MouseEvent, userId: string) => {
     e.stopPropagation()
     if (!session) return router.push(routes.modal.auth.guard)
-    unfollowUser({
-      followed_user_id: userId,
-      follower_user_id: me!.id,
-    })
+
+    setPendingList((prev) => ({ ...prev, [userId]: true }))
+    unfollowUser(
+      {
+        followed_user_id: userId,
+        follower_user_id: me!.id,
+      },
+      {
+        onSettled: () => {
+          setPendingList((prev) => ({ ...prev, [userId]: false }))
+        },
+      },
+    )
   }
 
   const handlePushUserPage = (userId: string) => {
@@ -61,9 +75,11 @@ export default function FollowerListModal({ params }: Props) {
       <YStack className="w-full">
         {followers?.map((follower) => {
           const isFollowing = myFollows?.find(
-            (user: any) => user.followed_user_id === follower.user_info.id,
+            (myFollower: any) =>
+              myFollower.followed_user_id === follower.user_info.id,
           )
           const isMe = me?.id === follower.user_info.id
+          const isPending = isPendingList[follower.user_info.id] || false
 
           return (
             <FollowUserCard

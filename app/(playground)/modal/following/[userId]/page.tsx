@@ -11,7 +11,7 @@ import FollowUserCard from '../../_components/FollowUserCard'
 import { useRouter } from 'next/navigation'
 import useMe from '@/hooks/useMe'
 import { routes } from '@/routes'
-import useFetchWithDelay from '@/hooks/useFetchWithDelay'
+import { useState } from 'react'
 
 interface Props {
   params: { userId: string }
@@ -26,29 +26,44 @@ export default function FollowingListModal({ params }: Props) {
   const { data: myFollows } = useSuspenseQuery(
     followQuery.getFollowing(supabase, me?.id),
   )
-  const { mutate: followUser, isPending: isPendingFollowUser } = useFollow()
-  const { mutate: unfollowUser, isPending: isPendingUnfollowUser } =
-    useUnFollow()
-  const isPending = useFetchWithDelay(
-    isPendingFollowUser || isPendingUnfollowUser,
-  )
+  const { mutate: followUser } = useFollow()
+  const { mutate: unfollowUser } = useUnFollow()
+  const [isPendingList, setPendingList] = useState<Record<string, boolean>>({})
 
   const handleFollowUser = (e: MouseEvent, userId: string) => {
     e.stopPropagation()
     if (!session) return router.push(routes.modal.auth.guard)
-    followUser({
-      followed_user_id: userId,
-      follower_user_id: me!.id,
-    })
+
+    setPendingList((prev) => ({ ...prev, [userId]: true }))
+    followUser(
+      {
+        followed_user_id: userId,
+        follower_user_id: me!.id,
+      },
+      {
+        onSettled: () => {
+          setPendingList((prev) => ({ ...prev, [userId]: false }))
+        },
+      },
+    )
   }
 
   const handleUnfollowUser = (e: MouseEvent, userId: string) => {
     e.stopPropagation()
     if (!session) return router.push(routes.modal.auth.guard)
-    unfollowUser({
-      followed_user_id: userId,
-      follower_user_id: me!.id,
-    })
+
+    setPendingList((prev) => ({ ...prev, [userId]: true }))
+    unfollowUser(
+      {
+        followed_user_id: userId,
+        follower_user_id: me!.id,
+      },
+      {
+        onSettled: () => {
+          setPendingList((prev) => ({ ...prev, [userId]: false }))
+        },
+      },
+    )
   }
 
   const handlePushUserPage = (userId: string) => {
@@ -60,15 +75,16 @@ export default function FollowingListModal({ params }: Props) {
       <YStack className="w-full">
         {followings?.map((user) => {
           const isFollowing = myFollows?.find(
-            (user: any) => user.followed_user_id === user.user_info.id,
-          ) // 내가 팔로우중인 사람들 중, 해당 유저 아이디가 있으면 팔로우 취소 버튼을
+            (myFollower: any) =>
+              myFollower.followed_user_id === user.user_info.id,
+          )
           const isMe = me?.id === user.followed_user_id
-          // 유저의 아이디가 내 아이디라면 팔로우 버튼 삭제
+          const isPending = isPendingList[user.user_info.id] || false
 
           return (
             <FollowUserCard
               key={user.id}
-              isFollowing={isFollowing}
+              isFollowing={!!isFollowing}
               isMe={isMe}
               follower={user}
               follow={(e: MouseEvent) => handleFollowUser(e, user.user_info.id)}
@@ -84,5 +100,3 @@ export default function FollowingListModal({ params }: Props) {
     </Modal>
   )
 }
-
-// 거씨발 팔로우 기능이 이렇게 복잡한거라니 개자식들 누가 누구를 팔로우를씨팔
