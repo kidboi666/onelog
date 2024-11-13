@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { FormEvent, useEffect, useRef, useState } from 'react'
+import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
@@ -43,7 +43,10 @@ export default function TodoFolderCard({
   const dragItem = useRef(null)
   const dragOverItem = useRef(null)
 
-  const handleUpdateButtonClick = (selectedTodo: Tables<'todo'>) => {
+  const handleUpdateButtonClick = (
+    e: MouseEvent,
+    selectedTodo: Tables<'todo'>,
+  ) => {
     updateTodo(
       { ...selectedTodo, is_complete: true },
       {
