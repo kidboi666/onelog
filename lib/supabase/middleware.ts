@@ -39,13 +39,13 @@ export async function updateSession(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // if (shouldRedirectToHome(user, req)) {
-  //   return NextResponse.redirect(new URL(routes.home, req.url))
-  // }
+  if (shouldRedirectToHome(user, req)) {
+    return NextResponse.redirect(new URL(routes.home, req.url))
+  }
 
-  // if (shouldRedirectToAuthGuard(user, req)) {
-  //   return NextResponse.redirect(new URL(routes.modal.auth.guard, req.url))
-  // }
+  if (shouldRedirectToAuthGuard(user, req)) {
+    return NextResponse.redirect(new URL(routes.modal.auth.guard, req.url))
+  }
 
   return supabaseResponse
 }
