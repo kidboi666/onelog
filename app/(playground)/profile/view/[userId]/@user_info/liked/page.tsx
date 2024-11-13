@@ -23,7 +23,7 @@ export default function LikedPage({ params }: Props) {
   const { me, session } = useMe()
   const { data, hasNextPage, fetchNextPage, isFetching, isLoading, isPending } =
     useInfiniteQuery(
-      postQuery.getLikedPost(supabase, params.userId, limit, me.id),
+      postQuery.getLikedPost(supabase, params.userId, limit, me?.id),
     )
   const likedPosts = data?.pages.flatMap((post) => post || [])
   const [ref, inView] = useIntersect<HTMLDivElement>({}, !!isLoading)

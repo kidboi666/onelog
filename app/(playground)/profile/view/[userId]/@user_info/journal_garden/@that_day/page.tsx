@@ -31,7 +31,7 @@ export default function PrevOnePost({ params, searchParams }: Props) {
       params.userId,
       startOfDay,
       endOfDay,
-      me.id,
+      me?.id,
     ),
   )
 

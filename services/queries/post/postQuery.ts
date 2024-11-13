@@ -39,7 +39,7 @@ export const postQuery = {
     supabase: SupabaseClient,
     userId: string,
     limit: number,
-    meId: string,
+    meId?: string,
   ) =>
     infiniteQueryOptions({
       queryKey: queryKey.post.liked(userId, meId),
@@ -91,7 +91,7 @@ export const postQuery = {
     authorId: string,
     startOfDay: string | null,
     endOfDay: string | null,
-    meId: string,
+    meId?: string,
   ) =>
     queryOptions({
       queryKey: queryKey.post.thatDay(startOfDay, endOfDay, authorId),
@@ -135,7 +135,7 @@ export const postQuery = {
     authorId: string,
     postType: 'journal' | 'article',
     limit: number = 10,
-    meId: string,
+    meId?: string,
   ) =>
     infiniteQueryOptions({
       queryKey: queryKey.post.byPostType(postType, authorId),

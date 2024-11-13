@@ -32,7 +32,7 @@ export default function Article({ params }: Props) {
         params.userId,
         'article',
         limit,
-        me.id,
+        me?.id,
       ),
     )
   const articles = data?.pages.flatMap((article) => article) || []

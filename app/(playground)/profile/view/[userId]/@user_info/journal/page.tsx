@@ -31,7 +31,7 @@ export default function Journals({ params }: Props) {
         params.userId,
         'journal',
         limit,
-        me.id,
+        me?.id,
       ),
     )
   const journals = data?.pages.flatMap((journal) => journal || [])
