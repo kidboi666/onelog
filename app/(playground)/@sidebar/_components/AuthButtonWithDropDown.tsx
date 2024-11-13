@@ -7,7 +7,7 @@ import LoggedInContent from './LoggedInContent'
 import GuestContent from './GuestContent'
 import Text from '@/components/shared/Text'
 import { IUserInfoWithMBTI } from '@/types/auth'
-import { IUserSession } from '@/services/queries/auth/meQuery'
+import { IUserSession } from '@/services/queries/auth/me-query'
 
 interface Props {
   pathname: string

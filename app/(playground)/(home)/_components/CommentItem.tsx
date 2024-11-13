@@ -2,10 +2,9 @@ import { Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 
-import { commentQuery } from '@/services/queries/comment/commentQuery'
-import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
-import { followQuery } from '@/services/queries/follow/followQuery'
-import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
+import { countFollowQuery } from '@/services/queries/follow/count-follow-query'
+import { followQuery } from '@/services/queries/follow/follow-query'
+import { countCommentQuery } from '@/services/queries/comment/count-comment-query'
 import { formatDateElapsed } from '@/utils/formatDate'
 import { ICommentWithUserInfo } from '@/types/comment'
 import { IUserInfoWithMBTI } from '@/types/auth'
@@ -19,6 +18,7 @@ import CommentInput from './CommentInput'
 import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import ReportButton from './ReportButton'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
+import { commentQuery } from '@/services/queries/comment/comment-query'
 
 interface Props {
   comment: ICommentWithUserInfo

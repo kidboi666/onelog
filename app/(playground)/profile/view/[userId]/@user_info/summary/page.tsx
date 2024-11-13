@@ -3,7 +3,7 @@ import AuthHistory from './_components/AuthHistory'
 import MyFavoriteWords from './_components/MyFavoriteWords'
 import { createServerClient } from '@/lib/supabase/server'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
-import { countPostQuery } from '@/services/queries/post/countPostQuery'
+import { countPostQuery } from '@/services/queries/post/count-post-query'
 
 interface Props {
   params: { userId: string }

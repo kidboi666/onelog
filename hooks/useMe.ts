@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase/client'
-import { meQuery } from '@/services/queries/auth/meQuery'
+import { meQuery } from '@/services/queries/auth/me-query'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 export default function useMe() {

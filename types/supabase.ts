@@ -157,6 +157,48 @@ export type Database = {
           },
         ]
       }
+      message: {
+        Row: {
+          content: string
+          created_at: string
+          from: string
+          id: number
+          title: string
+          to: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          from: string
+          id?: number
+          title: string
+          to: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          from?: string
+          id?: number
+          title?: string
+          to?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_from_user_id_fkey"
+            columns: ["from"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "message_to_user_id_fkey"
+            columns: ["to"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       post: {
         Row: {
           access_type: string | null
@@ -246,6 +288,85 @@ export type Database = {
           },
         ]
       }
+      todo: {
+        Row: {
+          created_at: string
+          folder_id: number
+          id: number
+          index: number
+          is_complete: boolean
+          memo: string | null
+          name: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          folder_id: number
+          id?: number
+          index: number
+          is_complete?: boolean
+          memo?: string | null
+          name: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          folder_id?: number
+          id?: number
+          index?: number
+          is_complete?: boolean
+          memo?: string | null
+          name?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "todo_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      todo_folder: {
+        Row: {
+          color: string
+          created_at: string
+          id: number
+          index: number
+          name: string
+          user_id: string
+        }
+        Insert: {
+          color: string
+          created_at?: string
+          id?: number
+          index: number
+          name: string
+          user_id: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          id?: number
+          index?: number
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "todo_folder_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_info: {
         Row: {
           about_me: string | null
@@ -326,20 +447,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      decrement_favorite: {
-        Args: {
-          sentence_id: number
-          user_uuid: string
-        }
-        Returns: undefined
-      }
-      increment_favorite: {
-        Args: {
-          sentence_id: number
-          user_uuid: string
-        }
-        Returns: undefined
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never

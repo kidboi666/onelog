@@ -3,12 +3,12 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 import { colorTheme, useTheme } from '@/store/useTheme'
-import { userQuery } from '@/services/queries/auth/userQuery'
+import { userQuery } from '@/services/queries/auth/user-query'
 import { getSignUpDays } from '@/utils/formatDate'
-import { emotionQuery } from '@/services/queries/emotion/emotionQuery'
+import { emotionQuery } from '@/services/queries/emotion/emotion-query'
 import HistoryBlock from './HistoryBlock'
 import { XStack } from '@/components/shared/Stack'
-import { countPostQuery } from '@/services/queries/post/countPostQuery'
+import { countPostQuery } from '@/services/queries/post/count-post-query'
 import { Container } from '@/components/shared/Container'
 
 interface Props {

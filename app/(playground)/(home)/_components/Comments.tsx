@@ -1,7 +1,7 @@
 import CommentItem from './CommentItem'
 import CommentInput from './CommentInput'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { commentQuery } from '@/services/queries/comment/commentQuery'
+import { commentQuery } from '@/services/queries/comment/comment-query'
 import { supabase } from '@/lib/supabase/client'
 import { List } from '@/components/shared/List'
 import Empty from '@/components/shared/Empty'

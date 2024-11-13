@@ -1,7 +1,7 @@
 import { YStack } from '@/components/shared/Stack'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { createServerClient } from '@/lib/supabase/server'
-import { postQuery } from '@/services/queries/post/postQuery'
+import { postQuery } from '@/services/queries/post/post-query'
 import { IPostWithUserInfo } from '@/types/post'
 import PostContainer from './_containers/PostContainer'
 

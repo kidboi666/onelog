@@ -28,5 +28,5 @@
     ".next/types/**/*.ts",
     "app/(playground)/profile/[userId]/@user_info/routetsx"
   ],
-  "exclude": ["node_modules", "app/(playground)/_todo(dev)"]
+  "exclude": ["node_modules"]
 }

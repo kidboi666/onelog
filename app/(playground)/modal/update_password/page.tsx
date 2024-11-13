@@ -6,7 +6,7 @@ import Button from '@/components/shared/Button'
 import Modal from '@/components/shared/Modal'
 import Title from '@/components/shared/Title'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { meQuery } from '@/services/queries/auth/meQuery'
+import { meQuery } from '@/services/queries/auth/me-query'
 import { supabase } from '@/lib/supabase/client'
 import { useTransition } from 'react'
 

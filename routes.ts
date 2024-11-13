@@ -28,6 +28,9 @@ export const routes = {
     view: (postId: number) => `/post/view/${postId}`,
     edit: (postId: number) => `/post/edit?post_id=${postId}`,
   },
+  todo: {
+    view: (menu: string = 'main') => `/todo/${menu}`,
+  },
   modal: {
     auth: {
       signin: '/modal/signin',
@@ -46,6 +49,11 @@ export const routes = {
     report: {
       comment: (commentId: number) => `/modal/report_comment/${commentId}`,
       post: (postId: number) => `/modal/report_post/${postId}`,
+    },
+    todo: {
+      add: '/modal/add_todo_folder',
+      deleteTodo: (todoId: string, folderId: string) =>
+        `/modal/delete_todo/${todoId}?folder_id=${folderId}`,
     },
     updatePassword: '/modal/update_password',
     success: '/modal/success',

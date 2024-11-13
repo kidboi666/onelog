@@ -5,8 +5,8 @@ import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { postQuery } from '@/services/queries/post/postQuery'
-import { meQuery } from '@/services/queries/auth/meQuery'
+import { postQuery } from '@/services/queries/post/post-query'
+import { meQuery } from '@/services/queries/auth/me-query'
 
 import { Container } from '@/components/shared/Container'
 import { YStack } from '@/components/shared/Stack'

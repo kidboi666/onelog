@@ -2,7 +2,7 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
-import { postQuery } from '@/services/queries/post/postQuery'
+import { postQuery } from '@/services/queries/post/post-query'
 import Empty from '@/components/shared/Empty'
 import Title from '@/components/shared/Title'
 import { List } from '@/components/shared/List'

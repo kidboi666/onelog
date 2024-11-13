@@ -2,8 +2,8 @@ import { Container } from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 import cn from '@/lib/cn'
 import { supabase } from '@/lib/supabase/client'
-import { emotionQuery } from '@/services/queries/emotion/emotionQuery'
-import { colorTheme, ringTheme, useTheme } from '@/store/useTheme'
+import { emotionQuery } from '@/services/queries/emotion/emotion-query'
+import { colorTheme, useTheme } from '@/store/useTheme'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 interface Props {

@@ -5,15 +5,14 @@ import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 
-import { postQuery } from '@/services/queries/post/postQuery'
-import { meQuery } from '@/services/queries/auth/meQuery'
+import { postQuery } from '@/services/queries/post/post-query'
+import { meQuery } from '@/services/queries/auth/me-query'
 
 import { Container } from '@/components/shared/Container'
 import { YStack } from '@/components/shared/Stack'
 import Line from '@/components/shared/Line'
 import useLikePost from '@/services/mutates/post/useLikePost'
 import useUnlikePost from '@/services/mutates/post/useUnlikePost'
-import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
 import { routes } from '@/routes'
 import LikeButton from '@/app/(playground)/(home)/_components/LikeButton'
 import CommentButton from '@/app/(playground)/(home)/_components/CommentButton'
@@ -21,6 +20,7 @@ import AccessTypeButtonWithDropDown from '@/app/(playground)/(home)/_components/
 import ShareButton from '@/app/(playground)/(home)/_components/ShareButton'
 import ReportButton from '@/app/(playground)/(home)/_components/ReportButton'
 import OptionButtonWithDropDown from '@/app/(playground)/(home)/_components/OptionButtonWithDropDown'
+import { countCommentQuery } from '@/services/queries/comment/count-comment-query'
 
 interface Props {
   params: { postId: string }

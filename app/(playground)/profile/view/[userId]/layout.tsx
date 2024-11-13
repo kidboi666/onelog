@@ -1,7 +1,7 @@
 import { YStack } from '@/components/shared/Stack'
 import { createServerClient } from '@/lib/supabase/server'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import { userQuery } from '@/services/queries/auth/userQuery'
+import { userQuery } from '@/services/queries/auth/user-query'
 import { Tables } from '@/types/supabase'
 import { PropsWithChildren, ReactNode } from 'react'
 

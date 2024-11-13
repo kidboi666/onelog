@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase/client'
 
-import { postQuery } from '@/services/queries/post/postQuery'
+import { postQuery } from '@/services/queries/post/post-query'
 import useIntersect from '@/hooks/useIntersect'
 import useMe from '@/hooks/useMe'
 

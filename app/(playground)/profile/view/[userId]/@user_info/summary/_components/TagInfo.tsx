@@ -1,7 +1,7 @@
 import Spinner from '@/components/shared/Spinner'
 import Text from '@/components/shared/Text'
 import { supabase } from '@/lib/supabase/client'
-import { postQuery } from '@/services/queries/post/postQuery'
+import { postQuery } from '@/services/queries/post/post-query'
 import { IFavoriteWord } from '@/types/post'
 import { useQuery } from '@tanstack/react-query'
 import { RefObject } from 'react'

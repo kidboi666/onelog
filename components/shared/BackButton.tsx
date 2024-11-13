@@ -11,6 +11,7 @@ interface Props extends ButtonProps {}
 export default function BackButton({
   className,
   children,
+  ...props
 }: PropsWithChildren<Props>) {
   const router = useRouter()
   const handleButtonClick = () => {
@@ -22,6 +23,7 @@ export default function BackButton({
       size="none"
       onClick={handleButtonClick}
       className={cn('p-1', className)}
+      {...props}
     >
       {children ? (
         children

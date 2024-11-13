@@ -1,7 +1,7 @@
 import { createServerClient } from '@/lib/supabase/server'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import { meQuery } from '@/services/queries/auth/meQuery'
+import { meQuery } from '@/services/queries/auth/me-query'
 import ThemeToggleButton from './_components/ThemeToggleButton'
 import MenuButton from './_components/MenuButton'
 import { Container } from '@/components/shared/Container'
