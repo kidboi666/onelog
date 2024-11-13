@@ -7,6 +7,7 @@ import Title from '@/components/shared/Title'
 import { useTransition } from 'react'
 import useDeletePost from '@/services/mutates/post/useDeletePost'
 import { XStack } from '@/components/shared/Stack'
+import { routes } from '@/routes'
 
 interface Props {
   params: { postId: string }
@@ -19,7 +20,7 @@ export default function DeletePostModal({ params }: Props) {
 
   const handlePostDelete = () => {
     deletePost(Number(params.postId), {
-      onSettled: () => router.back(),
+      onSettled: () => router.push(routes.home),
     })
   }
 
