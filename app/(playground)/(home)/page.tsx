@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Home',
 }
 
-export default function HomePage() {
+export default function Page() {
   return (
     <YStack gap={12} className="animate-fade-in">
       <FakeFormContainer />

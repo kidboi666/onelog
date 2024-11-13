@@ -5,7 +5,7 @@ import NameWithDateSection from './NameWithDateSection'
 import useToggle from '@/hooks/useToggle'
 import { XStack, ZStack } from '@/components/shared/Stack'
 import { Container } from '@/components/shared/Container'
-import { TEmotion } from '../../post/edit/page'
+import { TEmotion } from '@/app/(playground)/post/edit/page'
 
 interface Props {
   avatarUrl: string | null

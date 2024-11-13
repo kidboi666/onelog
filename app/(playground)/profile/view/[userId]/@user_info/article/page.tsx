@@ -13,7 +13,7 @@ import { Container } from '@/components/shared/Container'
 import Empty from '@/components/shared/Empty'
 import Spinner from '@/components/shared/Spinner'
 import { YStack } from '@/components/shared/Stack'
-import PostCard from '@/app/(playground)/home/_components/PostCard'
+import PostCard from '@/app/(playground)/(home)/_components/PostCard'
 
 interface Props {
   params: { userId: string }

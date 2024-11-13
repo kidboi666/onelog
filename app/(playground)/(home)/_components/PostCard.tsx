@@ -10,7 +10,6 @@ import { YStack } from '@/components/shared/Stack'
 import { countFollowQuery } from '@/services/queries/follow/countFollowQuery'
 import useUnlikePost from '@/services/mutates/post/useUnlikePost'
 import { postQuery } from '@/services/queries/post/postQuery'
-import { TEmotion } from '../../post/edit/page'
 import { MouseEvent } from 'react'
 import { countCommentQuery } from '@/services/queries/comment/countCommentQuery'
 import { IUserSession } from '@/services/queries/auth/meQuery'
@@ -19,6 +18,7 @@ import { IPostWithUserInfo } from '@/types/post'
 import { IPostState } from '@/store/usePost'
 import useLikepost from '@/services/mutates/post/useLikePost'
 import PostHeader from './PostHeader'
+import { TEmotion } from '@/app/(playground)/post/edit/page'
 
 interface Props {
   post?: IPostWithUserInfo

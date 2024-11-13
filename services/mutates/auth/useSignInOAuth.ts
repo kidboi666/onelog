@@ -6,8 +6,8 @@ import { useMutation } from '@tanstack/react-query'
 
 const getRedirectUri = () => {
   return isDevelop
-    ? 'http://localhost:3000/home'
-    : 'https://one-post-gray.vercel.app/home'
+    ? 'http://localhost:3000'
+    : 'https://one-post-gray.vercel.app'
 }
 
 export const useSignInOAuth = () => {

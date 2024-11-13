@@ -15,7 +15,6 @@ import { useInput } from '@/hooks/useInput'
 import { TAccess, TEmotion, TPost } from '../page'
 import { formatDateToMDY } from '@/utils/formatDate'
 
-import EmotionGauge from '@/app/(playground)/home/_components/EmotionGauge'
 import { TagsInput } from '@/components/shared/TagsInput'
 import Button from '@/components/shared/Button'
 import Input from '@/components/shared/Input'
@@ -29,6 +28,7 @@ import PublishSection from '../_components/PublishSection'
 import BubbleMenuBar from '../_components/BubbleMenuBar'
 import PostTypeSection from '../_components/PostTypeSection'
 import { routes } from '@/routes'
+import EmotionGauge from '@/app/(playground)/(home)/_components/EmotionGauge'
 
 interface Props {
   searchParams: { post_id: string }

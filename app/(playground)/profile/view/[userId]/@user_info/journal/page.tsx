@@ -12,7 +12,7 @@ import { YStack } from '@/components/shared/Stack'
 import Empty from '@/components/shared/Empty'
 import useMe from '@/hooks/useMe'
 import { IPostWithUserInfo } from '@/types/post'
-import PostCard from '@/app/(playground)/home/_components/PostCard'
+import PostCard from '@/app/(playground)/(home)/_components/PostCard'
 
 interface Props {
   params: { userId: string }

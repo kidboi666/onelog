@@ -10,7 +10,7 @@ import Spinner from '@/components/shared/Spinner'
 import { useEffect, useState } from 'react'
 import { Container } from '@/components/shared/Container'
 import useMe from '@/hooks/useMe'
-import PostCard from '@/app/(playground)/home/_components/PostCard'
+import PostCard from '@/app/(playground)/(home)/_components/PostCard'
 
 interface Props {
   params: { userId: string }

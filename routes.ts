@@ -16,7 +16,7 @@ export const protectedRoutes = [
 ]
 
 export const routes = {
-  home: '/home',
+  home: '/',
   settings: '/settings',
   profile: {
     view: (userId: string, path?: string) =>
