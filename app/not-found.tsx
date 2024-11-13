@@ -1,9 +1,12 @@
+import BackButton from '@/components/shared/BackButton'
+import Button from '@/components/shared/Button'
 import { Container } from '@/components/shared/Container'
 import LinkButton from '@/components/shared/LinkButton'
 import { XStack, YStack } from '@/components/shared/Stack'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { routes } from '@/routes'
+import { redirect } from 'next/navigation'
 
 export default function NotFound() {
   return (
@@ -17,7 +20,12 @@ export default function NotFound() {
           <Text>이 페이지는 존재하지 않습니다. </Text>
           <Text>처음으로 돌아가세요. </Text>
         </YStack>
-        <LinkButton href={routes.home}>메인 화면으로</LinkButton>
+        <XStack>
+          <BackButton variant="secondary" size="md" className="p-3">
+            뒤로가기
+          </BackButton>
+          <LinkButton href={routes.home}>메인 화면으로</LinkButton>
+        </XStack>
       </YStack>
     </Container>
   )
