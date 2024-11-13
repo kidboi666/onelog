@@ -8,6 +8,7 @@ import cn from '@/lib/cn'
 import { formatDateToHM, formatDateToMDY } from '@/utils/formatDate'
 import {
   DragEvent,
+  MouseEvent,
   MutableRefObject,
   useRef,
   useState,
@@ -21,12 +22,13 @@ import { supabase } from '@/lib/supabase/client'
 import { meQuery } from '@/services/queries/auth/me-query'
 import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
 import { todoQuery } from '@/services/queries/todo/todo-query'
+import { XStack, YStack } from '@/components/shared/Stack'
 
 interface TodoProps {
   todo: Tables<'todo'>
   isComplete: boolean | null
   folderColor?: string
-  onUpdate: (selectedTodo: Tables<'todo'>) => void
+  onUpdate: (e: MouseEvent, selectedTodo: Tables<'todo'>) => void
   isDraggable?: boolean
   dragItem: MutableRefObject<Tables<'todo'> | null>
   dragOverItem: MutableRefObject<Tables<'todo'> | null>
@@ -98,7 +100,7 @@ export default function Todo({
     }
 
     if (e.currentTarget.classList.contains('')) {
-      return onUpdate(dragItem.current!)
+      return onUpdate(e, dragItem.current!)
     }
 
     let targetItemList
@@ -166,7 +168,7 @@ export default function Todo({
       className="flex min-w-20 animate-fade-in cursor-pointer gap-2 border border-transparent transition"
     >
       <div className="flex w-full items-center justify-between rounded-md bg-white p-2 shadow-sm hover:opacity-85 dark:bg-var-darkgray">
-        <div className="flex items-center gap-2">
+        <XStack className="items-center">
           <Button
             size="none"
             variant="icon"
@@ -174,7 +176,7 @@ export default function Todo({
               'size-4 flex-shrink-0 rounded-full border border-zinc-400 text-white hover:text-zinc-400 dark:border-zinc-600 dark:text-white',
               isComplete ? 'bg-zinc-400 dark:bg-zinc-600' : '',
             )}
-            onClick={() => onUpdate(todo)}
+            onClick={(e) => onUpdate(e, todo)}
           >
             {isComplete && (
               <Icon size={12} view={20} className="animate-grow-up">
@@ -187,7 +189,7 @@ export default function Todo({
             )}
           </Button>
 
-          <div>
+          <YStack gap={0}>
             <Text
               className={cn(
                 'line-clamp-4 break-all text-xs',
@@ -201,9 +203,9 @@ export default function Todo({
                 ? `완료일 : ${formatDateToMDY(todo.updated_at ?? '')} ${formatDateToHM(todo.updated_at ?? '')}`
                 : `등록일 : ${formatDateToMDY(todo.created_at)} ${formatDateToHM(todo.created_at)}`}
             </Text>
-          </div>
-        </div>
-        <div className="flex gap-2">
+          </YStack>
+        </XStack>
+        <div className="flex justify-between gap-2">
           {todo?.memo?.length! >= 1 && (
             <Button disabled variant="icon" size="none">
               <Icon view="0 -960 960 960" size={18}>
@@ -211,27 +213,25 @@ export default function Todo({
               </Icon>
             </Button>
           )}
-          <div className="relative flex gap-2">
-            <Button
-              size="none"
-              variant="icon"
-              onClick={() => startTransition(() => handleTodoClick())}
-              className={cn(
-                'rounded-full',
-                showKebabButton ? 'opacity-100' : 'opacity-0',
-                isPending && 'opacity-0',
+          {showKebabButton && (
+            <div className="relative flex animate-grow-up gap-2">
+              <Button
+                size="none"
+                variant="icon"
+                onClick={() => startTransition(() => handleTodoClick())}
+                className={cn('rounded-full', isPending && 'opacity-0')}
+              >
+                <Icon view="0 -960 960 960" size={18}>
+                  <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
+                </Icon>
+              </Button>
+              {isPending && (
+                <div className="absolute left-0 top-0">
+                  <Spinner size={18} />
+                </div>
               )}
-            >
-              <Icon view="0 -960 960 960" size={18}>
-                <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
-              </Icon>
-            </Button>
-            {isPending && (
-              <div className="absolute left-0 top-0">
-                <Spinner size={18} />
-              </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </List.Row>
