@@ -79,4 +79,11 @@ export const queryKey = {
       following: (userId?: string) => ['count', 'following', userId],
     },
   },
+
+  todo: {
+    inProgress: ['todo', 'in_progress'],
+    completed: ['todo', 'completed'],
+    folder: (folderId: number) => ['todo', folderId],
+    index: (folderId: number) => ['todo', 'index', folderId],
+  },
 }

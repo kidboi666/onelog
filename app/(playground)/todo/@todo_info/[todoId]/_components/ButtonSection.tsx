@@ -4,6 +4,7 @@ import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import Spinner from '@/components/shared/Spinner'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import { queryKey } from '@/lib/tanstack/query-key'
 import { routes } from '@/routes'
 import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
 import { Tables } from '@/types/supabase'
@@ -55,7 +56,7 @@ export default function ButtonSection({ todoId, folderId, todo }: Props) {
           {
             onSuccess: () => {
               queryClient.invalidateQueries({
-                queryKey: ['todo', folderId],
+                queryKey: queryKey.todo.folder(Number(folderId)),
               })
               router.back()
             },

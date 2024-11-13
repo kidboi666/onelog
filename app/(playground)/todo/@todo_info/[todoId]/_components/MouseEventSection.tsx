@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation'
 import { PropsWithChildren, useEffect, useRef } from 'react'
 import BackButtonSection from './BackButtonSection'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { meQuery } from '@/services/queries/auth/me-query'
 import { supabase } from '@/lib/supabase/client'
 import { Tables } from '@/types/supabase'
 import { todoQuery } from '@/services/queries/todo/todo-query'
+import useMe from '@/hooks/useMe'
 
 interface Props {
   todoId: string
@@ -21,9 +21,9 @@ export default function MouseEventSection({
   folderId,
 }: PropsWithChildren<Props>) {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { me } = useMe()
   const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me!.userId, Number(folderId)),
+    todoQuery.getTodoFromFolder(supabase, me?.id, Number(folderId)),
   )
   const isMouseDown = useRef<boolean>(false)
   const {

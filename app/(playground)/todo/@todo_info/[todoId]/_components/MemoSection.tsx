@@ -5,6 +5,7 @@ import TextArea from '@/components/shared/TextArea'
 import Title from '@/components/shared/Title'
 import { useInput } from '@/hooks/useInput'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import { queryKey } from '@/lib/tanstack/query-key'
 import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
 import { Tables } from '@/types/supabase'
 import { FormEvent, useEffect } from 'react'
@@ -26,7 +27,7 @@ export default function MemoSection({ todo }: Props) {
       { ...todo!, memo, updated_at: new Date().toISOString() },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['todo', 'in_progress'] })
+          queryClient.invalidateQueries({ queryKey: queryKey.todo.inProgress })
         },
       },
     )
