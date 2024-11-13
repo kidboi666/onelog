@@ -26,7 +26,7 @@ export default function ButtonSection({ todoId, folderId, todo }: Props) {
 
   const handleDeleteButtonClick = () => {
     startTransitionDelete(() =>
-      router.push(routes.modal.todo.deleteTodo(todoId, folderId), {
+      router.push(routes.modal.delete.todo(todoId, folderId), {
         scroll: false,
       }),
     )

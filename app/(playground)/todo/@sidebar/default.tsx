@@ -59,8 +59,8 @@ export default function SideBarPage({ searchParams }: Props) {
         <TaskFolderSection todoFolders={todoFolders} />
         <MenuButton
           name="할일 폴더 추가"
-          path={routes.modal.todo.add}
-          isSelected={pathname === routes.modal.todo.add}
+          path={routes.modal.todo.post}
+          isSelected={pathname === routes.modal.todo.post}
           icon={
             <path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
           }

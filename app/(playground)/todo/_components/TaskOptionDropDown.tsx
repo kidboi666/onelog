@@ -1,6 +1,7 @@
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import Text from '@/components/shared/Text'
+import { routes } from '@/routes'
 import { useRouter } from 'next/navigation'
 import { RefObject } from 'react'
 
@@ -18,11 +19,11 @@ export default function TaskOptionDropDown({
   const router = useRouter()
 
   const handleFolderDelete = () => {
-    router.push(`/delete_todo_folder/${folderId}`)
+    router.push(routes.modal.todo.deleteFolder(folderId))
   }
 
   const handleFolderEdit = () => {
-    router.push(`/edit_todo_folder/${folderId}`)
+    router.push(routes.modal.todo.edit(folderId))
   }
 
   return (

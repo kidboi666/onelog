@@ -54,10 +54,10 @@ export default function PostContainer({ postId }: Props) {
     postQuery.checkLiked(supabase, postId, me?.id),
   )
   const { data: followerCount } = useSuspenseQuery(
-    countFollowQuery.countFollower(supabase, post.user_id),
+    countFollowQuery.countFollower(supabase, post?.user_id),
   )
   const { data: followingCount } = useSuspenseQuery(
-    countFollowQuery.countFollowing(supabase, post.user_id),
+    countFollowQuery.countFollowing(supabase, post?.user_id),
   )
   const { data: followers } = useSuspenseQuery(
     followQuery.getFollower(supabase, post?.user_id),
@@ -65,7 +65,7 @@ export default function PostContainer({ postId }: Props) {
   const isFollowing = followers?.find(
     (user) => user.follower_user_id === me?.id,
   )
-  const isMe = me?.id === post.user_id
+  const isMe = me?.id === post?.user_id
   const { mutate: follow, isPending: isPendingFollow } = useFollow()
   const { mutate: unfollow, isPending: isPendingUnfollow } = useUnFollow()
   const { editor } = useBlockEditor({ content: post?.content })

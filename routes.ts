@@ -51,9 +51,12 @@ export const routes = {
       post: (postId: number) => `/modal/report_post/${postId}`,
     },
     todo: {
-      add: '/modal/add_todo_folder',
-      deleteTodo: (todoId: string, folderId: string) =>
+      post: '/modal/add_todo_folder',
+      delete: (todoId: string, folderId: string) =>
         `/modal/delete_todo/${todoId}?folder_id=${folderId}`,
+      deleteFolder: (folderId?: number) =>
+        `/modal/delete_todo_folder/${folderId}`,
+      edit: (folderId?: number) => `/modal/edit_todo_folder/${folderId}`,
     },
     updatePassword: '/modal/update_password',
     success: '/modal/success',
