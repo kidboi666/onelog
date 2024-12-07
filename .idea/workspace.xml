@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="964f878d-eec9-4efe-a437-3a29adf4c9d4" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(playground)/(home)/_components/PostContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/(home)/_components/PostContent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(playground)/post/view/@post/[postId]/_containers/PostContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(playground)/post/view/@post/[postId]/_containers/PostContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/not-found.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/not-found.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="964f878d-eec9-4efe-a437-3a29adf4c9d4" name="변경" comment="💅design : 몇가지 스타일 수정" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -130,8 +122,17 @@
       <workItem from="1733564197129" duration="29000" />
       <workItem from="1733564306875" duration="108000" />
       <workItem from="1733564442870" duration="61000" />
-      <workItem from="1733564515461" duration="1598000" />
+      <workItem from="1733564515461" duration="1906000" />
     </task>
+    <task id="LOCAL-00001" summary="💅design : 몇가지 스타일 수정">
+      <option name="closed" value="true" />
+      <created>1733569859771</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1733569859771</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,6 +148,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="design : 몇가지 스타일 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="design : 몇가지 스타일 수정" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
