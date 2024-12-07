@@ -8,12 +8,12 @@ export interface IPostState {
   tags: string[]
 }
 
-interface PostState {
-  posts: IPostState[] | null
-  setPosts: (posts: IPostState[] | null) => void
+interface ToastState {
+  toast: boolean
+  openToast: (text: string) => void
 }
 
-export const usePost = create<PostState>((set) => ({
-  posts: null,
-  setPosts: (posts) => set({ posts }),
+export const useToast = create<ToastState>((set) => ({
+  toast: false,
+  openToast: (text) => set(text),
 }))

@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase/client'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import { queryKey } from '@/lib/tanstack/query-key'
+import { useToast } from '@/store/useToast'
 import { useMutation } from '@tanstack/react-query'
 
 interface IFavorite {
@@ -14,6 +15,7 @@ interface IFavorite {
 
 export default function useUnlikepost() {
   const queryClient = getQueryClient()
+  const { openToast } = useToast()
 
   return useMutation({
     mutationFn: async (params: IFavorite) => {
@@ -28,6 +30,9 @@ export default function useUnlikepost() {
       }
 
       return data
+    },
+    onSuccess: () => {
+      openToast({ text: '좋아하는 게시물에서 삭제하였습니다.', type: 'info' })
     },
     onSettled: (_, __, variables) => {
       const {

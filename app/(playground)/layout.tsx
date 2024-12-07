@@ -2,6 +2,7 @@
 
 import { Container } from '@/components/shared/Container'
 import Portal from '@/components/shared/Portal'
+import ToastContainer from '@/components/shared/ToastContainer'
 import { usePathname } from 'next/navigation'
 import { PropsWithChildren, ReactNode } from 'react'
 
@@ -25,6 +26,7 @@ export default function Layout({
       {header}
       {sidebar}
       {isModalOpen && <Portal>{modal}</Portal>}
+      <ToastContainer />
       <Container className="my-8 flex flex-1 justify-center px-2 sm:ml-[80px] sm:px-4">
         <Container className="w-full lg:w-[880px]">{children}</Container>
       </Container>

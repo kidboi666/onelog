@@ -3,7 +3,6 @@ import Button, { ButtonProps } from './Button'
 import cn from '@/lib/cn'
 import Link from 'next/link'
 import Text, { TextProps } from './Text'
-import Portal from './Portal'
 
 interface DropDownRootProps extends ComponentProps<'div'> {
   className?: string

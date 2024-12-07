@@ -15,7 +15,6 @@ import { countCommentQuery } from '@/services/queries/comment/count-comment-quer
 import { IUserSession } from '@/services/queries/auth/me-query'
 import { routes } from '@/routes'
 import { IPostWithUserInfo } from '@/types/post'
-import { IPostState } from '@/store/usePost'
 import useLikepost from '@/services/mutates/post/useLikePost'
 import PostHeader from './PostHeader'
 import { TEmotion } from '@/app/(playground)/post/edit/page'
@@ -23,7 +22,6 @@ import { TEmotion } from '@/app/(playground)/post/edit/page'
 interface Props {
   post?: IPostWithUserInfo
   postUserInfo?: any
-  postSummary?: IPostState
   createdAtLiked?: string
   meId?: string | null
   session?: IUserSession | null
