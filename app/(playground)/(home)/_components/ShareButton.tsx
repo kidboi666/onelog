@@ -4,6 +4,7 @@ import ToolTip from '@/components/shared/Tooltip'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/hooks/useStateChange'
 import useToggle from '@/hooks/useToggle'
+import { useToast } from '@/store/useToast'
 import { isServer } from '@tanstack/react-query'
 import { MouseEvent } from 'react'
 
@@ -17,6 +18,7 @@ export default function ShareButton({ isSide, viewToolTip }: Props) {
     useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
+  const { openToast } = useToast()
 
   const handleButtonClick = (e: MouseEvent) => {
     e.stopPropagation()
@@ -26,6 +28,7 @@ export default function ShareButton({ isSide, viewToolTip }: Props) {
   const copyURL = async () => {
     const fullURL = !isServer ? window.location.href : ''
     await navigator.clipboard.writeText(fullURL)
+    openToast({ text: '주소가 복사되었습니다.', type: 'info' })
   }
 
   return (

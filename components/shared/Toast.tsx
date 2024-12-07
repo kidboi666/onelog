@@ -33,7 +33,7 @@ export default function Toast({ content }: Props) {
     <div
       ref={toastRef}
       data-status="opened"
-      className="flex w-80 origin-right animate-fade-in items-center justify-between rounded-md bg-white/45 p-4 shadow-lg ring-1 ring-zinc-300 backdrop-blur-md transition duration-300 data-[status=closed]:translate-x-4 data-[status=closed]:opacity-0 dark:bg-var-gray/25"
+      className="flex w-80 origin-right animate-fade-in items-center justify-between rounded-md bg-white/45 p-4 shadow-lg ring-1 ring-zinc-300 backdrop-blur-md transition duration-300 data-[status=closed]:translate-x-4 data-[status=closed]:opacity-0 dark:bg-zinc-800/25 dark:ring-zinc-700"
     >
       <Text>{content.text}</Text>
       <Button
