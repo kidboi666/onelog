@@ -153,7 +153,7 @@ export default function PostContainer({ postId }: Props) {
           </XStack>
         </XStack>
         <Line />
-        <YStack>
+        <YStack gap={8} className='my-8'>
           {post.title && (
             <Title size="lg" className="my-4">
               {post.title}
@@ -166,7 +166,7 @@ export default function PostContainer({ postId }: Props) {
             </XStack>
           )}
         </YStack>
-        <YStack className="mt-8">
+        <YStack>
           <YStack
             gap={4}
             className="w-full rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark"

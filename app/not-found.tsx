@@ -1,12 +1,10 @@
 import BackButton from '@/components/shared/BackButton'
-import Button from '@/components/shared/Button'
 import { Container } from '@/components/shared/Container'
 import LinkButton from '@/components/shared/LinkButton'
 import { XStack, YStack } from '@/components/shared/Stack'
 import Text from '@/components/shared/Text'
 import Title from '@/components/shared/Title'
 import { routes } from '@/routes'
-import { redirect } from 'next/navigation'
 
 export default function NotFound() {
   return (

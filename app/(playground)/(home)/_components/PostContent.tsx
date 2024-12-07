@@ -62,11 +62,6 @@ export default function PostContent({
       className="size-full w-full cursor-pointer rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:shadow-lg dark:bg-var-darkgray"
     >
       <YStack gap={4}>
-        {tags?.length! > 0 && (
-          <XStack className="flex-wrap">
-            {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
-          </XStack>
-        )}
         <ZStack direction="col" className="max-h-64 overflow-hidden">
           {postTitle && <Title>{postTitle}</Title>}
           <EditorContent
@@ -78,6 +73,11 @@ export default function PostContent({
             <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-var-darkgray" />
           )}
         </ZStack>
+        {tags?.length! > 0 && (
+          <XStack className="flex-wrap">
+            {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
+          </XStack>
+        )}
         <XStack as="nav" className="items-center justify-between">
           <LikeButton
             isLiked={isLiked}
