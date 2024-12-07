@@ -1,22 +1,25 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { supabase } from '@/lib/supabase/client'
+import { getQueryClient } from '@/lib/tanstack/get-query-client'
+import cn from '@/lib/cn'
+
+import { todoQuery } from '@/services/queries/todo/todo-query'
+import useAddTodo from '@/services/mutates/todo/useAddTodo'
+import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
+import { Tables } from '@/types/supabase'
+import { useInput } from '@/hooks/useInput'
+import useOutsideClick from '@/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/hooks/useStateChange'
+
+import Input from '@/components/shared/Input'
 import Button from '@/components/shared/Button'
 import Icon from '@/components/shared/Icon'
 import { List } from '@/components/shared/List'
 import Title from '@/components/shared/Title'
-import { useInput } from '@/hooks/useInput'
-import useOutsideClick from '@/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/hooks/useStateChange'
-import cn from '@/lib/cn'
-import { supabase } from '@/lib/supabase/client'
-import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import useAddTodo from '@/services/mutates/todo/useAddTodo'
-import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
-import { Tables } from '@/types/supabase'
+import LinkButton from '@/components/shared/LinkButton'
 import TaskOptionDropDown from './TaskOptionDropDown'
-import Input from '@/components/shared/Input'
 import Todo from './Todo'
-import { todoQuery } from '@/services/queries/todo/todo-query'
 
 interface TodoFolderCardProps {
   folder: Tables<'todo_folder'>
@@ -102,9 +105,16 @@ export default function TodoFolderCard({
       )}
     >
       <div className="relative flex items-center justify-between gap-4">
-        <Title size="sm" className="line-clamp-1">
-          {folder?.name}
-        </Title>
+        <LinkButton
+          variant="teritory"
+          size="none"
+          href={`/todo/custom_task/${folder.id}?color=${folder.color}`}
+          innerClassName="justify-start"
+        >
+          <Title size="sm" className="line-clamp-1">
+            {folder?.name}
+          </Title>
+        </LinkButton>
         <div className="flex">
           <Button
             variant="icon"

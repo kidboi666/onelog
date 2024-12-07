@@ -1,9 +1,11 @@
-import Title from '@/components/shared/Title'
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+import { createServerClient } from '@/lib/supabase/server'
+import { getQueryClient } from '@/lib/tanstack/get-query-client'
+
 import { todoFolderQuery } from '@/services/queries/todo/todo-folder-query'
 import { IUserSession, meQuery } from '@/services/queries/auth/me-query'
-import { getQueryClient } from '@/lib/tanstack/get-query-client'
-import { createServerClient } from '@/lib/supabase/server'
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+
+import Title from '@/components/shared/Title'
 import TodoFoldersSection from '../_components/TodoFoldersSection'
 
 export default async function TodoDashBoard() {
