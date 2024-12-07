@@ -1,21 +1,23 @@
 'use client'
 
 import { useState } from 'react'
-import Line from '@/components/shared/Line'
-import MenuButton from './_components/MenuButton'
+import { usePathname } from 'next/navigation'
+
+import { routes } from '@/routes'
+import useMe from '@/hooks/useMe'
 import {
   BOTTOM_NAVIGATE_MENUS,
   TOP_NAVIGATE_MENUS,
 } from './_constants/Navigate'
-import { usePathname } from 'next/navigation'
-import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
-import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown'
+
 import ToolTip from '@/components/shared/Tooltip'
-import SidebarWriteButtonWithLogo from './_components/SidebarWriteButtonWithLogo'
 import { Container } from '@/components/shared/Container'
 import { YStack, ZStack } from '@/components/shared/Stack'
-import useMe from '@/hooks/useMe'
-import { routes } from '@/routes'
+import Line from '@/components/shared/Line'
+import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
+import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown'
+import SidebarWriteButtonWithLogo from './_components/SidebarWriteButtonWithLogo'
+import MenuButton from './_components/MenuButton'
 
 export default function Sidebar() {
   const { me, session } = useMe()
@@ -50,7 +52,10 @@ export default function Sidebar() {
           {TOP_NAVIGATE_MENUS.map((menu) => (
             <ZStack key={menu.id}>
               <MenuButton
-                isSelected={pathname === menu.path}
+                isSelected={
+                  pathname === menu.path ||
+                  pathname.split('/')[1] === menu.path.split('/')[1]
+                }
                 icon={menu.icon}
                 name={menu.name}
                 path={menu.path}

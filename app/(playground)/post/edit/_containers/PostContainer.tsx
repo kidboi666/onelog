@@ -9,10 +9,10 @@ import { supabase } from '@/lib/supabase/client'
 import { postQuery } from '@/services/queries/post/post-query'
 import useUpdatePost from '@/services/mutates/post/useUpdatePost'
 import useAddPost from '@/services/mutates/post/useAddPost'
-import { meQuery } from '@/services/queries/auth/me-query'
 import { TAccess, TEmotion, TPost } from '../page'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import { useInput } from '@/hooks/useInput'
+import useMe from '@/hooks/useMe'
 import { formatDateToMDY } from '@/utils/formatDate'
 import { routes } from '@/routes'
 
@@ -29,7 +29,6 @@ import EmotionSection from '../_components/EmotionSection'
 import PublishSection from '../_components/PublishSection'
 import BubbleMenuBar from '../_components/BubbleMenuBar'
 import PostTypeSection from '../_components/PostTypeSection'
-import useMe from '@/hooks/useMe'
 
 interface Props {
   searchParams: { post_id: string }

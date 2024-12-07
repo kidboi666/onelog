@@ -29,6 +29,7 @@ export const routes = {
     edit: (postId: number) => `/post/edit?post_id=${postId}`,
   },
   todo: {
+    todo: '/todo',
     view: (menu: string = 'main') => `/todo/${menu}`,
   },
   modal: {
