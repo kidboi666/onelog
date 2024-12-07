@@ -31,7 +31,6 @@ export default function PostPage({ params }: Props) {
   return (
     <YStack gap={8} className="flex-1 animate-fade-in">
       <PostContainer postId={postId} />
-      <Toast />
     </YStack>
   )
 }
