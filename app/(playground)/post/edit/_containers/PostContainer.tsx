@@ -10,11 +10,13 @@ import { postQuery } from '@/services/queries/post/post-query'
 import useUpdatePost from '@/services/mutates/post/useUpdatePost'
 import useAddPost from '@/services/mutates/post/useAddPost'
 import { meQuery } from '@/services/queries/auth/me-query'
+import { TAccess, TEmotion, TPost } from '../page'
 import useBlockEditor from '@/hooks/useBlockEditor'
 import { useInput } from '@/hooks/useInput'
-import { TAccess, TEmotion, TPost } from '../page'
 import { formatDateToMDY } from '@/utils/formatDate'
+import { routes } from '@/routes'
 
+import EmotionGauge from '@/app/(playground)/(home)/_components/EmotionGauge'
 import { TagsInput } from '@/components/shared/TagsInput'
 import Button from '@/components/shared/Button'
 import Input from '@/components/shared/Input'
@@ -27,8 +29,7 @@ import EmotionSection from '../_components/EmotionSection'
 import PublishSection from '../_components/PublishSection'
 import BubbleMenuBar from '../_components/BubbleMenuBar'
 import PostTypeSection from '../_components/PostTypeSection'
-import { routes } from '@/routes'
-import EmotionGauge from '@/app/(playground)/(home)/_components/EmotionGauge'
+import useMe from '@/hooks/useMe'
 
 interface Props {
   searchParams: { post_id: string }
@@ -51,7 +52,7 @@ export default function PostContainer({
 }: Props) {
   const router = useRouter()
   const postId = Number(searchParams?.post_id)
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { me } = useMe()
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
   const [content, setContent] = useState(post?.content ?? '')
   const [title, onChangeTitle, setTitle] = useInput<string | null>(null)
@@ -86,7 +87,7 @@ export default function PostContainer({
     const newPost = {
       content,
       emotion_level: postType === 'journal' ? selectedEmotion : null,
-      user_id: me!.userId,
+      user_id: me!.id,
       tags,
       title,
       access_type: accessType,

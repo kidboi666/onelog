@@ -4,6 +4,7 @@ import { createServerClient } from '@/lib/supabase/server'
 import { postQuery } from '@/services/queries/post/post-query'
 import { IPostWithUserInfo } from '@/types/post'
 import PostContainer from './_containers/PostContainer'
+import Toast from '@/components/shared/Toast'
 
 interface Props {
   params: { postId: string }
@@ -30,6 +31,7 @@ export default function PostPage({ params }: Props) {
   return (
     <YStack gap={8} className="flex-1 animate-fade-in">
       <PostContainer postId={postId} />
+      <Toast />
     </YStack>
   )
 }
