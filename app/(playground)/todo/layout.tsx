@@ -1,6 +1,9 @@
+'use client'
+
 import Portal from '@/components/shared/Portal'
 import { ZStack } from '@/components/shared/Stack'
 import { PropsWithChildren, ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
 
 interface Props {
   sidebar: ReactNode
@@ -13,11 +16,14 @@ export default function Layout({
   main,
   todo_info,
 }: PropsWithChildren<Props>) {
+  const pathname = usePathname()
+  const isDetailOpen = pathname.startsWith('/todo/detail')
+
   return (
     <ZStack gap={8}>
       {main}
       {sidebar}
-      <Portal>{todo_info}</Portal>
+      {isDetailOpen && <Portal>{todo_info}</Portal>}
     </ZStack>
   )
 }

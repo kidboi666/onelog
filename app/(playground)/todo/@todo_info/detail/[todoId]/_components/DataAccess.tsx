@@ -14,9 +14,16 @@ import { todoQuery } from '@/services/queries/todo/todo-query'
 interface Props {
   todoId: string
   folderId: string
+  orderFrom: 'main' | 'folder'
+  color: string
 }
 
-export default function DataAccess({ todoId, folderId }: Props) {
+export default function DataAccess({
+  todoId,
+  folderId,
+  orderFrom,
+  color,
+}: Props) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todos } = useSuspenseQuery(
     todoQuery.getTodoFromFolder(supabase, me!.userId, Number(folderId)),
@@ -36,7 +43,13 @@ export default function DataAccess({ todoId, folderId }: Props) {
         <Line />
         <IsCompleteSection todo={todo} />
       </div>
-      <ButtonSection todoId={todoId} folderId={folderId} todo={todo} />
+      <ButtonSection
+        todoId={todoId}
+        folderId={folderId}
+        todo={todo}
+        orderFrom={orderFrom}
+        color={color}
+      />
     </>
   )
 }

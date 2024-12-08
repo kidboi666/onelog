@@ -5,16 +5,25 @@ import Modal from '@/components/shared/Modal'
 import Title from '@/components/shared/Title'
 import { getQueryClient } from '@/lib/tanstack/get-query-client'
 import useDeleteTodo from '@/services/mutates/todo/useDeleteTodo'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { routes } from '@/routes'
+import { queryKey } from '@/lib/tanstack/query-key'
 
 interface Props {
   params: { todoId: string }
+  searchParams: {
+    folder_id: string
+    color: string
+    order_from: 'main' | 'folder'
+  }
 }
 
-export default function DeleteTodoModal({ params }: Props) {
+export default function DeleteTodoModal({ params, searchParams }: Props) {
   const todoId = params.todoId
+  const folderId = searchParams.folder_id
+  const orderFrom = searchParams.order_from
+  const color = searchParams.color
   const queryClient = getQueryClient()
-  const folderId = useSearchParams().get('folder_id')
   const router = useRouter()
   const { mutate: deleteTodo } = useDeleteTodo()
   const handleCancelButtonClick = () => {
@@ -25,8 +34,17 @@ export default function DeleteTodoModal({ params }: Props) {
       { todoId: Number(todoId!), folderId: Number(folderId!) },
       {
         onSettled: (data, error, variables, context) => {
-          queryClient.invalidateQueries({ queryKey: ['todo', 'in_progress'] })
-          router.back()
+          queryClient.invalidateQueries({
+            queryKey: queryKey.todo.folder(Number(folderId)),
+          })
+          queryClient.invalidateQueries({
+            queryKey: queryKey.todo.inProgress,
+          })
+          if (orderFrom === 'main') {
+            router.push(routes.todo.main)
+          } else {
+            router.push(routes.todo.view.folder(Number(folderId), color))
+          }
         },
       },
     )

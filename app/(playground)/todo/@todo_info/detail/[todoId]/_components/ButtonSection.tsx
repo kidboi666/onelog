@@ -15,9 +15,17 @@ interface Props {
   todoId: string
   folderId: string
   todo?: Tables<'todo'>
+  color: string
+  orderFrom: 'main' | 'folder'
 }
 
-export default function ButtonSection({ todoId, folderId, todo }: Props) {
+export default function ButtonSection({
+  todoId,
+  folderId,
+  todo,
+  color,
+  orderFrom,
+}: Props) {
   const router = useRouter()
   const queryClient = getQueryClient()
 
@@ -27,7 +35,7 @@ export default function ButtonSection({ todoId, folderId, todo }: Props) {
 
   const handleDeleteButtonClick = () => {
     startTransitionDelete(() =>
-      router.push(routes.modal.todo.delete(todoId, folderId), {
+      router.push(routes.modal.todo.delete(todoId, folderId, color, orderFrom), {
         scroll: false,
       }),
     )

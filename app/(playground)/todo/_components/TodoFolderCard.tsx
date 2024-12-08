@@ -20,6 +20,7 @@ import Title from '@/components/shared/Title'
 import LinkButton from '@/components/shared/LinkButton'
 import TaskOptionDropDown from './TaskOptionDropDown'
 import Todo from './Todo'
+import { routes } from '@/routes'
 
 interface TodoFolderCardProps {
   folder: Tables<'todo_folder'>
@@ -108,7 +109,7 @@ export default function TodoFolderCard({
         <LinkButton
           variant="teritory"
           size="none"
-          href={`/todo/custom_task/${folder.id}?color=${folder.color}`}
+          href={routes.todo.view.folder(folder.id,folder.color)}
           innerClassName="justify-start"
         >
           <Title size="sm" className="line-clamp-1">
@@ -180,6 +181,8 @@ export default function TodoFolderCard({
                 todo={todo}
                 isComplete={todo.is_complete}
                 onUpdate={handleUpdateButtonClick}
+                orderFrom='main'
+                folderColor={folder.color}
               />
             ))}
           </List>

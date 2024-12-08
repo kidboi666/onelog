@@ -215,10 +215,11 @@ export default function TaskForm({ params, searchParams }: Props) {
                         key={todo.id}
                         todo={todo}
                         isComplete={todo.is_complete}
-                        folderColor={currentFolder?.color}
+                        folderColor={currentFolder?.color || ''}
                         onUpdate={handleUpdateButtonClick}
                         dragItem={dragItem}
                         dragOverItem={dragOverItem}
+                        orderFrom='folder'
                       />
                     ))}
                   </List>
@@ -241,10 +242,11 @@ export default function TaskForm({ params, searchParams }: Props) {
                         key={todo.id}
                         todo={todo}
                         isComplete={todo.is_complete}
-                        folderColor={currentFolder?.color}
+                        folderColor={currentFolder?.color || ''}
                         onUpdate={handleUpdateButtonClick}
                         dragItem={dragItem}
                         dragOverItem={dragOverItem}
+                        orderFrom='folder'
                       />
                     ))}
                   </List>

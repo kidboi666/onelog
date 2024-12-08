@@ -23,15 +23,17 @@ import { meQuery } from '@/services/queries/auth/me-query'
 import useUpdateTodo from '@/services/mutates/todo/useUpdateTodo'
 import { todoQuery } from '@/services/queries/todo/todo-query'
 import { XStack, YStack } from '@/components/shared/Stack'
+import { routes } from '@/routes'
 
 interface TodoProps {
   todo: Tables<'todo'>
   isComplete: boolean | null
-  folderColor?: string
+  folderColor: string
   onUpdate: (e: MouseEvent, selectedTodo: Tables<'todo'>) => void
   isDraggable?: boolean
   dragItem: MutableRefObject<Tables<'todo'> | null>
   dragOverItem: MutableRefObject<Tables<'todo'> | null>
+  orderFrom: 'main' | 'folder'
 }
 
 export default function Todo({
@@ -42,6 +44,7 @@ export default function Todo({
   isDraggable = false,
   dragItem,
   dragOverItem,
+  orderFrom
 }: TodoProps) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todos } = useSuspenseQuery(
@@ -54,8 +57,7 @@ export default function Todo({
   const [isPending, startTransition] = useTransition()
 
   const handleTodoClick = () => {
-    const colorParams = folderColor ? `&color=${folderColor}` : ''
-    router.push(`/todo/${todo.id}?folder_id=${todo.folder_id}${colorParams}`, {
+    router.push(routes.todo.view.detail(todo.id, todo.folder_id, folderColor, orderFrom), {
       scroll: false,
     })
   }

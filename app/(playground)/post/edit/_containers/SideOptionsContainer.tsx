@@ -19,7 +19,7 @@ import { TAccess, TEmotion, TPost } from '../page'
 interface Props {
   searchParams: { post_id: string }
   selectedEmotion: TEmotion
-  setSelectedEmotion: (emotio: TEmotion) => void
+  setSelectedEmotion: (emotion: TEmotion) => void
   accessType: TAccess
   setAccessType: (accessType: TAccess) => void
   postType: TPost

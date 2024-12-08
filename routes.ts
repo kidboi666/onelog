@@ -30,7 +30,18 @@ export const routes = {
   },
   todo: {
     todo: '/todo',
-    view: (menu: string = 'main') => `/todo/${menu}`,
+    main: '/todo/main',
+    view: {
+      folder: (folderId: number, color: string) =>
+        `/todo/custom_task/${folderId}?color=${color}`,
+      detail: (
+        todoId: number,
+        folderId: number,
+        color: string,
+        orderFrom: 'main' | 'folder',
+      ) =>
+        `/todo/detail/${todoId}?folder_id=${folderId}&color=${color}&order_from=${orderFrom}`,
+    },
   },
   modal: {
     auth: {
@@ -53,8 +64,13 @@ export const routes = {
     },
     todo: {
       post: '/modal/add_todo_folder',
-      delete: (todoId: string, folderId: string) =>
-        `/modal/delete_todo/${todoId}?folder_id=${folderId}`,
+      delete: (
+        todoId: string,
+        folderId: string,
+        color: string,
+        orderFrom: 'main' | 'folder',
+      ) =>
+        `/modal/delete_todo/${todoId}?folder_id=${folderId}&color=${color}&order_from=${orderFrom}`,
       deleteFolder: (folderId?: number) =>
         `/modal/delete_todo_folder/${folderId}`,
       edit: (folderId?: number) => `/modal/edit_todo_folder/${folderId}`,
