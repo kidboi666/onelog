@@ -1,6 +1,14 @@
+@import '@/src/styles/code.css';
+@import '@/src/styles/font.css';
+@import '@/src/styles/lists.css';
+@import '@/src/styles/typography.css';
+@import '@/src/styles/block.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 * {
   box-sizing: border-box;
@@ -25,8 +33,3 @@
   }
 }
 
-@import '@/styles/code.css';
-@import '@/styles/font.css';
-@import '@/styles/lists.css';
-@import '@/styles/typography.css';
-@import '@/styles/block.css';
