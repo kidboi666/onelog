@@ -2,6 +2,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { Tables } from '@/src/types/supabase'
 import { useMutation } from '@tanstack/react-query'
+import { queryKey } from '@/src/lib/tanstack/query-key'
 
 export default function useUpdateTodo() {
   const queryClient = getQueryClient()
@@ -23,7 +24,10 @@ export default function useUpdateTodo() {
         .select()
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['todo', variables.folder_id] })
+      queryClient.invalidateQueries({
+        queryKey: queryKey.todo.folder(variables.folder_id),
+      })
+      queryClient.invalidateQueries({ queryKey: queryKey.todo.inProgress })
     },
   })
 }

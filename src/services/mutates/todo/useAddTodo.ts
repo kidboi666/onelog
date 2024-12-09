@@ -1,6 +1,8 @@
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { useMutation } from '@tanstack/react-query'
+import { queryKey } from '@/src/lib/tanstack/query-key'
+import { useToast } from '@/src/store/useToast'
 
 interface ITodo {
   name: string
@@ -11,6 +13,7 @@ interface ITodo {
 
 export default function useAddTodo() {
   const queryClient = getQueryClient()
+  const { openToast } = useToast()
   return useMutation({
     mutationFn: async (params: ITodo) => {
       return supabase
@@ -24,7 +27,13 @@ export default function useAddTodo() {
         .select()
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['todo', variables.folderId] })
+      queryClient.invalidateQueries({
+        queryKey: queryKey.todo.folder(variables.folderId),
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKey.todo.main,
+      })
+      openToast({ text: '할일이 추가되었습니다.', type: 'info' })
     },
   })
 }

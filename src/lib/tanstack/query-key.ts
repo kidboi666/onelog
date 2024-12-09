@@ -83,6 +83,7 @@ export const queryKey = {
   todo: {
     inProgress: ['todo', 'in_progress'],
     completed: ['todo', 'completed'],
+    main: ['todo_folder'],
     folder: (folderId: number) => ['todo', folderId],
     index: (folderId: number) => ['todo', 'index', folderId],
   },
