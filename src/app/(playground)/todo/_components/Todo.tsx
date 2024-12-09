@@ -1,11 +1,5 @@
 'use client'
 
-import Button from '@/src/components/shared/Button'
-import Icon from '@/src/components/shared/Icon'
-import { List } from '@/src/components/shared/List'
-import Text from '@/src/components/shared/Text'
-import cn from '@/src/lib/cn'
-import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
 import {
   DragEvent,
   MouseEvent,
@@ -15,15 +9,21 @@ import {
   useTransition,
 } from 'react'
 import { useRouter } from 'next/navigation'
-import Spinner from '@/src/components/shared/Spinner'
-import { Tables } from '@/src/types/supabase'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
+import cn from '@/src/lib/cn'
+import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
+import { Tables } from '@/src/types/supabase'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
-import { XStack, YStack } from '@/src/components/shared/Stack'
 import { routes } from '@/src/routes'
+import Spinner from '@/src/components/shared/Spinner'
+import { XStack, YStack } from '@/src/components/shared/Stack'
+import Button from '@/src/components/shared/Button'
+import Icon from '@/src/components/shared/Icon'
+import { List } from '@/src/components/shared/List'
+import Text from '@/src/components/shared/Text'
 
 interface TodoProps {
   todo: Tables<'todo'>
@@ -44,7 +44,7 @@ export default function Todo({
   isDraggable = false,
   dragItem,
   dragOverItem,
-  orderFrom
+  orderFrom,
 }: TodoProps) {
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: todos } = useSuspenseQuery(
@@ -57,9 +57,12 @@ export default function Todo({
   const [isPending, startTransition] = useTransition()
 
   const handleTodoClick = () => {
-    router.push(routes.todo.view.detail(todo.id, todo.folder_id, folderColor, orderFrom), {
-      scroll: false,
-    })
+    router.push(
+      routes.todo.view.detail(todo.id, todo.folder_id, folderColor, orderFrom),
+      {
+        scroll: false,
+      },
+    )
   }
 
   const dragStart = () => {

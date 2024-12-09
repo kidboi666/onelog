@@ -10,13 +10,23 @@ interface Props {
 }
 
 export default function DateSection({ todo }: Props) {
+  const createdAt = todo?.created_at
+  const updatedAt = todo?.updated_at || null
+
   return (
     <>
       <Title size="xs">등록일</Title>
-      <Text>
-        {formatDateToMDY(todo?.created_at!)}년{' '}
-        {formatDateToHM(todo?.created_at!)}
+      <Text type="caption">
+        {formatDateToMDY(createdAt!)}년 {formatDateToHM(createdAt!)}
       </Text>
+      {updatedAt && (
+        <>
+          <Title size="xs">최종 수정일</Title>
+          <Text type="caption">
+            {formatDateToMDY(updatedAt)}년 {formatDateToHM(updatedAt)}
+          </Text>
+        </>
+      )}
     </>
   )
 }

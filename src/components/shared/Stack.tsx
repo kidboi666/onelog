@@ -6,6 +6,7 @@ type GapSizes = 'px' | 0 | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12
 
 interface StackProps extends ComponentProps<'div'> {
   className?: string
+  dataStatus?: string
   gap?: GapSizes
   as?: 'div' | 'nav' | 'header' | 'main' | 'footer' | 'article' | 'section'
   direction?: 'row' | 'col'
@@ -36,11 +37,15 @@ const Stack = ({
   children,
   gap = 2,
   className,
+  dataStatus,
   as: Component = 'div',
   direction = 'row',
 }: PropsWithChildren<StackProps>) => {
   return (
-    <Component className={cn(stackClasses({ gap, direction }), className)}>
+    <Component
+      data-status={dataStatus}
+      className={cn(stackClasses({ gap, direction }), className)}
+    >
       {children}
     </Component>
   )

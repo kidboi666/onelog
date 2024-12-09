@@ -40,6 +40,7 @@ export default function TaskForm({ params, searchParams }: Props) {
     useDataDrivenAnimation<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+
   const { data: todoFolders } = useSuspenseQuery(
     todoFolderQuery.getTodoFolder(supabase, me!.userId),
   )
@@ -219,7 +220,7 @@ export default function TaskForm({ params, searchParams }: Props) {
                         onUpdate={handleUpdateButtonClick}
                         dragItem={dragItem}
                         dragOverItem={dragOverItem}
-                        orderFrom='folder'
+                        orderFrom="folder"
                       />
                     ))}
                   </List>
@@ -246,7 +247,7 @@ export default function TaskForm({ params, searchParams }: Props) {
                         onUpdate={handleUpdateButtonClick}
                         dragItem={dragItem}
                         dragOverItem={dragOverItem}
-                        orderFrom='folder'
+                        orderFrom="folder"
                       />
                     ))}
                   </List>
