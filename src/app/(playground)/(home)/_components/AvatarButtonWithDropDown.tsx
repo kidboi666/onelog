@@ -1,18 +1,15 @@
-import { useTransition } from 'react'
 import useFollow from '@/src/services/mutates/follow/useFollow'
 import useUnFollow from '@/src/services/mutates/follow/useUnFollow'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import { DropDown } from '@/src/components/shared/DropDown'
-import Title from '@/src/components/shared/Title'
 import Avatar from '@/src/components/shared/Avatar'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { useRouter } from 'next/navigation'
-import { XStack, YStack } from '@/src/components/shared/Stack'
-import Follow from '@/src/components/shared/Follow'
 import { routes } from '@/src/routes'
+import AvatarButtonWithDropDownContent from '@/src/app/(playground)/(home)/_components/AvatarButtonWithDropDownContent'
 
 interface Props {
   avatarUrl: string | null
@@ -43,7 +40,7 @@ export default function AvatarButtonWithDropDown({
   const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { mutate: follow } = useFollow()
   const { mutate: unfollow } = useUnFollow()
-  const [isLoadingFollowing, startTransitionFollowing] = useTransition()
+
   const pushFollowerList = () =>
     router.push(routes.modal.follow.follower(userId), { scroll: false })
   const pushFollowingList = () =>
@@ -71,56 +68,18 @@ export default function AvatarButtonWithDropDown({
         position={position}
         onTransitionEnd={onTransitionEnd}
       >
-        <YStack gap={4} className="p-4">
-          <YStack gap={4} className="items-center">
-            <Avatar src={avatarUrl} size="sm" />
-            <Title type="sub" size="sm">
-              {userName}
-            </Title>
-          </YStack>
-          <YStack gap={4} className="items-center">
-            <Follow>
-              <Follow.Follower
-                followerCount={followerCount}
-                onClick={pushFollowerList}
-              />
-              <Follow.Following
-                followingCount={followingCount}
-                onClick={pushFollowingList}
-              />
-            </Follow>
-            <XStack gap={4}>
-              {isMe ? (
-                <>
-                  <DropDown.LinkButton
-                    href={routes.profile.edit}
-                    variant="secondary"
-                  >
-                    프로필 수정
-                  </DropDown.LinkButton>
-                  <DropDown.LinkButton href={routes.profile.view(userId)}>
-                    마이 페이지
-                  </DropDown.LinkButton>
-                </>
-              ) : (
-                <>
-                  <DropDown.Button
-                    variant="secondary"
-                    isLoading={isLoadingFollowing}
-                    onClick={() =>
-                      startTransitionFollowing(() => handleFollowButtonClick())
-                    }
-                  >
-                    {isFollowing ? '팔로우 취소' : '팔로우 하기'}
-                  </DropDown.Button>
-                  <DropDown.LinkButton href={routes.profile.view(userId)}>
-                    프로필 페이지
-                  </DropDown.LinkButton>
-                </>
-              )}
-            </XStack>
-          </YStack>
-        </YStack>
+        <AvatarButtonWithDropDownContent
+          avatarUrl={avatarUrl}
+          userName={userName}
+          followerCount={followerCount}
+          pushFollowerList={pushFollowerList}
+          followingCount={followingCount}
+          pushFollowingList={pushFollowingList}
+          isMe={isMe}
+          onFollowButtonClick={handleFollowButtonClick}
+          userId={userId}
+          isFollowing={isFollowing}
+        />
       </DropDown.Content>
     </DropDown.Root>
   )
