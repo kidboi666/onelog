@@ -4,7 +4,6 @@ import ToolTip from '@/src/components/shared/Tooltip'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useToggle from '@/src/hooks/useToggle'
-import cn from '@/src/lib/cn'
 
 interface Props {
   accessType: 'public' | 'private'

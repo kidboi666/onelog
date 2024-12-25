@@ -26,8 +26,8 @@ export default function useBlockEditor({
 }: Props) {
   const editor = useEditor({
     immediatelyRender: false,
-    autofocus: editable ? true : false,
-    editable: editable ? true : false,
+    autofocus: !!editable,
+    editable: !!editable,
     content,
     extensions: [
       StarterKit.configure({

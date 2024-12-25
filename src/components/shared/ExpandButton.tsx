@@ -3,15 +3,12 @@
 import Button from './Button'
 import Icon from './Icon'
 import cn from '@/src/lib/cn'
-import { useRouter } from 'next/navigation'
 
 interface Props {
   className?: string
 }
 
 export default function ExpandButton({ className }: Props) {
-  const router = useRouter()
-
   const handleButtonClick = () => {
     window.location.reload()
   }

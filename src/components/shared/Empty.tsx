@@ -25,8 +25,6 @@ const EmptyText = ({ children }: PropsWithChildren) => {
   return <Text type="caption">{children}</Text>
 }
 
-interface Icon extends IconProps {}
-
 const EmptyIcon = ({ children, ...props }: PropsWithChildren<IconProps>) => {
   return (
     <Button disabled variant="icon" size="icon">

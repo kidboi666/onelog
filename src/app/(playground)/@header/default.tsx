@@ -11,7 +11,7 @@ export default function Default() {
   const supabase = createServerClient()
   const queryClient = getQueryClient()
 
-  queryClient.prefetchQuery(meQuery.getUserSession(supabase))
+  void queryClient.prefetchQuery(meQuery.getUserSession(supabase))
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

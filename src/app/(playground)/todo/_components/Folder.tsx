@@ -44,7 +44,6 @@ export default function Folder({
   const {
     ref: dropdownRef,
     close,
-    onClick,
     onTransitionEnd,
   } = useDataDrivenAnimation<HTMLDivElement>()
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(close)

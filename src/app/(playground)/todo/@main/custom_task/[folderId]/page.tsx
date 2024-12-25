@@ -25,6 +25,7 @@ import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
 import { XStack, YStack, ZStack } from '@/src/components/shared/Stack'
 import { Container } from '@/src/components/shared/Container'
+import { routes } from '@/src/routes'
 
 interface Props {
   params: { folderId: string }
@@ -135,7 +136,7 @@ export default function TaskForm({ params, searchParams }: Props) {
 
   useEffect(() => {
     if (!currentFolder) {
-      router.push('/todo/main')
+      router.push(routes.todo.main)
     }
   }, [currentFolder])
 

@@ -20,14 +20,14 @@ interface Props {
 }
 
 export default function AvatarButtonWithDropDownContent({
-  avatarUrl,
-  userName,
+  pushFollowingList,
   followerCount,
+  userId,
+  userName,
+  isMe,
+  avatarUrl,
   pushFollowerList,
   followingCount,
-  pushFollowingList,
-  isMe,
-  userId,
   onFollowButtonClick,
   isFollowing,
 }: Props) {
