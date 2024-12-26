@@ -8,11 +8,9 @@ import useIntersect from '@/src/hooks/useIntersect'
 import { useEffect } from 'react'
 import Spinner from '@/src/components/shared/Spinner'
 import { YStack } from '@/src/components/shared/Stack'
-import useMe from '@/src/hooks/useMe'
 
 export default function PostContainer() {
   const limit = 4
-  const { me, session } = useMe()
   const { data, fetchNextPage, hasNextPage, isFetching } =
     useSuspenseInfiniteQuery(postQuery.getAllPost(supabase, limit))
   const posts = data.pages.flatMap((page) => page || [])
@@ -20,20 +18,14 @@ export default function PostContainer() {
 
   useEffect(() => {
     if (inView && hasNextPage) {
-      fetchNextPage()
+      void fetchNextPage()
     }
   }, [inView, hasNextPage, fetchNextPage])
 
   return (
     <YStack gap={12}>
       {posts?.map((post) => (
-        <PostCard
-          key={post.id}
-          post={post}
-          postUserInfo={post.user_info}
-          session={session}
-          meId={session ? me?.id : null}
-        />
+        <PostCard key={post.id} post={post} postUserInfo={post.user_info} />
       ))}
       <div ref={target} />
       {isFetching && (

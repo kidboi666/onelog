@@ -9,7 +9,7 @@ import useMe from '@/src/hooks/useMe'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { userQuery } from '@/src/services/queries/auth/user-query'
 import { supabase } from '@/src/lib/supabase/client'
-import useFollowQuery from '@/src/hooks/query/useFollowQuery'
+import useFollowQueries from '@/src/hooks/query/useFollowQueries'
 
 interface Props {
   userId: string
@@ -20,8 +20,8 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),
   )
-  const { isFollowing } = useFollowQuery({ meId: me.id, userId })
-  const { onFollow, isPendingFollowActions } = useFollowActions({
+  const { isFollowing } = useFollowQueries({ meId: me.id, userId })
+  const { onFollow, isPending } = useFollowActions({
     isFollowing,
     me,
     userId,
@@ -68,7 +68,7 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
           <Button
             variant={isFollowing ? 'secondary' : 'primary'}
             size="sm"
-            isLoading={isPendingFollowActions}
+            isLoading={isPending}
             onClick={onFollow}
           >
             {isFollowing ? '팔로우 취소' : '팔로우 하기'}

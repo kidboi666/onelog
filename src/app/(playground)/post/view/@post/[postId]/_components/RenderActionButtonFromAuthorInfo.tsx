@@ -3,7 +3,6 @@
 import Button from '@/src/components/shared/Button'
 import { routes } from '@/src/routes'
 import { XStack } from '@/src/components/shared/Stack'
-import useFetchWithDelay from '@/src/hooks/useFetchWithDelay'
 import useFollowActions from '@/src/hooks/actions/useFollowActions'
 import { IUserInfoWithMBTI } from '@/src/types/auth'
 import useTransitionWithRoute from '@/src/hooks/useRouterPushWithTransition'
@@ -19,17 +18,17 @@ export default function RenderActionButtonFromAuthorInfo({
   isFollowing,
   userId,
 }: Props) {
-  const { onFollow, isPendingFollow, isPendingUnfollow } = useFollowActions({
+  const { onFollow, isPending } = useFollowActions({
     me,
     isFollowing,
     userId,
   })
 
-  const [isLoadingWrite, startTransitionWrite] = useTransitionWithRoute()
+  const [isLoadingWrite, startTransitionWrite] = useTransitionWithRoute(
+    routes.post.new,
+  )
   const [isLoadingEditProfile, startTransitionEditProfile] =
-    useTransitionWithRoute()
-
-  const isPending = useFetchWithDelay(isPendingFollow || isPendingUnfollow)
+    useTransitionWithRoute(routes.profile.edit)
 
   return (
     <XStack
@@ -41,7 +40,7 @@ export default function RenderActionButtonFromAuthorInfo({
           <Button
             size="sm"
             isLoading={isLoadingWrite}
-            onClick={() => startTransitionWrite(routes.post.new)}
+            onClick={startTransitionWrite}
             className="w-full self-end"
           >
             글 쓰기
@@ -49,7 +48,7 @@ export default function RenderActionButtonFromAuthorInfo({
           <Button
             variant="secondary"
             size="sm"
-            onClick={() => startTransitionEditProfile(routes.profile.edit)}
+            onClick={startTransitionEditProfile}
             isLoading={isLoadingEditProfile}
             className="w-full self-end"
           >

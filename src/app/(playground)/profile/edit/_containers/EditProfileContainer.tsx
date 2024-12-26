@@ -46,7 +46,7 @@ export default function EditProfileContainer() {
     if (prevAvatarUrl) {
       deletePrevImage(prevAvatarUrl)
     }
-    uploadImage(
+    void uploadImage(
       { email: me?.email, image },
       {
         onSuccess: (data) => {

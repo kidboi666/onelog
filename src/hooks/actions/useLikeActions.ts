@@ -20,13 +20,13 @@ export default function useLikeActions({ postId, me }: Props): {
 } {
   const router = useRouter()
   const { data: isLike } = useSuspenseQuery(
-    postQuery.checkLiked(supabase, postId, me.id),
+    postQuery.checkLiked(supabase, postId, me?.id),
   )
   const { mutate: likeOrUnlike } = useHandleLikePost(isLike)
 
   const handleLike = () => {
     likeOrUnlike({
-      meId: me.id,
+      meId: me?.id,
       postId,
     })
   }

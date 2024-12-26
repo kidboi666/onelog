@@ -45,7 +45,7 @@ export default function LikeButton({
         className={cn(
           'flex border-none text-xs font-light hover:text-red-500 dark:hover:text-red-500',
           isSide ? 'max-lg:flex-col' : 'gap-1',
-          me.id && isLike && 'text-red-500 dark:text-red-500',
+          me?.id && isLike && 'text-red-500 dark:text-red-500',
         )}
       >
         <Icon size={isSide ? 24 : 18} view={150}>

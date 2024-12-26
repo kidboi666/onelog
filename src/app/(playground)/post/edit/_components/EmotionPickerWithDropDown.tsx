@@ -1,5 +1,3 @@
-'use client'
-
 import cn from '@/src/lib/cn'
 import { List } from '@/src/components/shared/List'
 import { RefObject } from 'react'

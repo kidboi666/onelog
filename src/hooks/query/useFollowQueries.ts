@@ -10,7 +10,7 @@ interface Props {
   meId: string
 }
 
-export default function useFollowQuery({ userId, meId }: Props) {
+export default function useFollowQueries({ userId, meId }: Props) {
   const { data: followerCount } = useSuspenseQuery(
     countFollowQuery.countFollower(supabase, userId),
   )

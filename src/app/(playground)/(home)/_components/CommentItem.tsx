@@ -3,9 +3,6 @@
 import { Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
-
-import { countFollowQuery } from '@/src/services/queries/follow/count-follow-query'
-import { followQuery } from '@/src/services/queries/follow/follow-query'
 import { countCommentQuery } from '@/src/services/queries/comment/count-comment-query'
 import { formatDateElapsed } from '@/src/utils/formatDate'
 import { ICommentWithUserInfo } from '@/src/types/comment'
@@ -25,16 +22,10 @@ import { commentQuery } from '@/src/services/queries/comment/comment-query'
 interface Props {
   comment: ICommentWithUserInfo
   postId: number
-  me?: IUserInfoWithMBTI
-  isLastComment?: boolean
+  me: IUserInfoWithMBTI
 }
 
-export default function CommentItem({
-  comment,
-  postId,
-  me,
-  isLastComment,
-}: Props) {
+export default function CommentItem({ comment, postId, me }: Props) {
   const [showCommentInput, setShowCommentInput] = useState(false)
   const { data: commentToComments } = useSuspenseQuery(
     commentQuery.getCommentToComment(supabase, postId, comment?.id),
@@ -42,19 +33,6 @@ export default function CommentItem({
   const { data: commentToCommentsCount } = useSuspenseQuery(
     countCommentQuery.countCommentFromComment(supabase, postId, comment.id),
   )
-  const { data: followerCount } = useSuspenseQuery(
-    countFollowQuery.countFollower(supabase, comment.user_id),
-  )
-  const { data: followingCount } = useSuspenseQuery(
-    countFollowQuery.countFollowing(supabase, comment.user_id),
-  )
-  const { data: followers } = useSuspenseQuery(
-    followQuery.getFollower(supabase, comment?.user_id),
-  )
-  const isFollowing = followers?.find(
-    (user) => user.follower_user_id === me?.id,
-  )
-  const isOwner = comment.user_id === me?.id
 
   const handleShowCommentInput = () => {
     setShowCommentInput((prev) => !prev)
@@ -64,12 +42,7 @@ export default function CommentItem({
     <XStack className="w-full">
       <AvatarButtonWithDropDown
         avatarUrl={comment.user_info.avatar_url}
-        isLastComment={isLastComment}
-        followerCount={followerCount}
-        followingCount={followingCount}
-        isFollowing={!!isFollowing}
         userId={comment.user_id}
-        isMe={me?.id === comment.user_id}
         userName={comment.user_info.user_name}
       />
       <YStack className="flex-1">
@@ -94,13 +67,7 @@ export default function CommentItem({
             )}
             <CommentInputButton onShowCommentInput={handleShowCommentInput} />
             <ReportButton commentId={comment.id} />
-            {isOwner && (
-              <OptionButtonWithDropDown
-                isOwner
-                commentId={comment.id}
-                postId={postId}
-              />
-            )}
+            <OptionButtonWithDropDown commentId={comment.id} postId={postId} />
           </XStack>
         </YStack>
         {showCommentInput && (
@@ -116,12 +83,7 @@ export default function CommentItem({
                 </Spinner.Container>
               }
             >
-              <CommentItem
-                postId={postId}
-                comment={comment}
-                me={me}
-                isLastComment
-              />
+              <CommentItem postId={postId} comment={comment} me={me} />
             </Suspense>
           ))}
       </YStack>

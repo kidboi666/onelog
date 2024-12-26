@@ -26,7 +26,7 @@ export default function LikedPage({ params }: Props) {
       postQuery.getLikedPost(supabase, params.userId, limit, me?.id),
     )
   const likedPosts = data?.pages.flatMap((post) => post || [])
-  const [ref, inView] = useIntersect<HTMLDivElement>({}, !!isLoading)
+  const [ref, inView] = useIntersect<HTMLDivElement>({}, isLoading)
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -46,11 +46,10 @@ export default function LikedPage({ params }: Props) {
     <Container className="animate-fade-in">
       {likedPosts && likedPosts?.length > 0 ? (
         <YStack gap={8}>
-          {likedPosts?.map((item) =>
-            item?.post.content ? (
+          {likedPosts.map((item) =>
+            item.post.content ? (
               <PostCard
                 key={item.id}
-                meId={me?.id}
                 session={session}
                 post={item.post}
                 createdAtLiked={item.created_at}

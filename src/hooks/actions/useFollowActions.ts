@@ -13,8 +13,7 @@ interface Props {
 
 export default function useFollowActions({ me, isFollowing, userId }: Props) {
   const router = useRouter()
-  const { mutate: followOrUnfollow, isPending: isPendingFollowActions } =
-    useHandleFollow()
+  const { mutate: followOrUnfollow, isPending } = useHandleFollow()
 
   const handleFollow = (options?: any) => {
     me
@@ -39,6 +38,6 @@ export default function useFollowActions({ me, isFollowing, userId }: Props) {
     onFollow: handleFollow,
     pushFollowerList,
     pushFollowingList,
-    isPendingFollowActions,
+    isPending,
   }
 }

@@ -35,17 +35,12 @@ export default function AvatarButtonWithDropDown({
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
   const { me } = useMe()
 
-  const {
-    onFollow,
-    isPendingFollow,
-    isPendingUnfollow,
-    pushFollowerList,
-    pushFollowingList,
-  } = useFollowActions({
-    isFollowing,
-    me,
-    userId,
-  })
+  const { onFollow, isPending, pushFollowerList, pushFollowingList } =
+    useFollowActions({
+      isFollowing,
+      me,
+      userId,
+    })
 
   return (
     <DropDown.Root>
@@ -100,7 +95,7 @@ export default function AvatarButtonWithDropDown({
                 <>
                   <DropDown.Button
                     variant="secondary"
-                    isLoading={isPendingFollow || isPendingUnfollow}
+                    isLoading={isPending}
                     onClick={onFollow}
                   >
                     {isFollowing ? '팔로우 취소' : '팔로우 하기'}

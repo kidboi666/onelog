@@ -10,7 +10,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { supabase } from '@/src/lib/supabase/client'
 import useMe from '@/src/hooks/useMe'
-import useFollowQuery from '@/src/hooks/query/useFollowQuery'
+import useFollowQueries from '@/src/hooks/query/useFollowQueries'
 import useRouterPush from '@/src/hooks/useRouterPush'
 
 interface Props {
@@ -21,7 +21,7 @@ export default function PostAuthorInfo({ postId }: Props) {
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
   const { me } = useMe()
   const pushNewPostPage = useRouterPush(routes.profile.view(post?.user_id))
-  const { isFollowing } = useFollowQuery({
+  const { isFollowing } = useFollowQueries({
     userId: post?.user_id,
     meId: me?.id,
   })

@@ -2,7 +2,7 @@
 
 import Follow from '@/src/components/shared/Follow'
 import useMe from '@/src/hooks/useMe'
-import useFollowQuery from '@/src/hooks/query/useFollowQuery'
+import useFollowQueries from '@/src/hooks/query/useFollowQueries'
 import useFollowActions from '@/src/hooks/actions/useFollowActions'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 export default function RenderFollowButtonFromProfile({ userId }: Props) {
   const { me } = useMe()
-  const { followingCount, followerCount, isFollowing } = useFollowQuery({
+  const { followingCount, followerCount, isFollowing } = useFollowQueries({
     meId: me.id,
     userId,
   })

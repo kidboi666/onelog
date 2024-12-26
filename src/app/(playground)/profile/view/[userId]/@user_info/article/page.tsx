@@ -21,7 +21,7 @@ interface Props {
 
 export default function Article({ params }: Props) {
   const limit = 4
-  const { me, session } = useMe()
+  const { me } = useMe()
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, params.userId),
   )
@@ -65,8 +65,6 @@ export default function Article({ params }: Props) {
             article?.content ? (
               <PostCard
                 key={article?.id}
-                meId={me?.id}
-                session={session}
                 post={article}
                 postUserInfo={postUserInfo}
               />

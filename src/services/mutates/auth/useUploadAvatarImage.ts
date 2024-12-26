@@ -16,7 +16,7 @@ export default function useUploadAvatarImage() {
       if (error) {
         throw error
       }
-      // 미작동 로직,
+      
       return `${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_BASE_URL!}/${data?.fullPath}`
     },
   })

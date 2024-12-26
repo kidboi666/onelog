@@ -7,7 +7,7 @@ import Avatar from '@/src/components/shared/Avatar'
 import { routes } from '@/src/routes'
 import AvatarButtonWithDropDownContent from '@/src/app/(playground)/(home)/_components/AvatarButtonWithDropDownContent'
 import useMe from '@/src/hooks/useMe'
-import useFollowQuery from '@/src/hooks/query/useFollowQuery'
+import useFollowQueries from '@/src/hooks/query/useFollowQueries'
 import useFollowActions from '@/src/hooks/actions/useFollowActions'
 import useRouterPush from '@/src/hooks/useRouterPush'
 
@@ -15,7 +15,6 @@ interface Props {
   avatarUrl: string | null
   userId: string
   userName: string | null
-  isLastComment?: boolean
   position?: 'bottomRight' | 'topRight' | 'topLeft' | 'bottomLeft'
 }
 
@@ -30,10 +29,12 @@ export default function AvatarButtonWithDropDown({
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
   const { me } = useMe()
   const authGuard = useRouterPush(routes.modal.auth.guard, false)
-  const { followingCount, followerCount, isFollowing, isMe } = useFollowQuery({
-    userId,
-    meId: me?.id,
-  })
+  const { followingCount, followerCount, isFollowing, isMe } = useFollowQueries(
+    {
+      userId,
+      meId: me?.id,
+    },
+  )
   const { onFollow, pushFollowingList, pushFollowerList } = useFollowActions({
     isFollowing,
     me,

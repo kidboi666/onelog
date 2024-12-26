@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import useMe from '@/src/hooks/useMe'
 import { routes } from '@/src/routes'
 import { useState } from 'react'
-import useFollowQuery from '@/src/hooks/query/useFollowQuery'
+import useFollowQueries from '@/src/hooks/query/useFollowQueries'
 
 interface Props {
   params: { userId: string }
@@ -18,7 +18,7 @@ export default function FollowingListModal({ params }: Props) {
   const router = useRouter()
   const userId = params.userId
   const { me, session } = useMe()
-  const { followings, myFollows } = useFollowQuery({
+  const { followings, myFollows } = useFollowQueries({
     userId,
     meId: me.id,
   })

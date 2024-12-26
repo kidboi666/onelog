@@ -7,7 +7,7 @@ import { routes } from '@/src/routes'
 import Modal from '@/src/components/shared/Modal'
 import { YStack } from '@/src/components/shared/Stack'
 import FollowUserCard from '../../_components/FollowUserCard'
-import useFollowQuery from '@/src/hooks/query/useFollowQuery'
+import useFollowQueries from '@/src/hooks/query/useFollowQueries'
 import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 
 interface Props {
@@ -18,7 +18,7 @@ export default function FollowerListModal({ params }: Props) {
   const router = useRouter()
   const userId = params.userId
   const { me, session } = useMe()
-  const { followers, myFollows } = useFollowQuery({
+  const { followers, myFollows } = useFollowQueries({
     userId,
     meId: me.id,
   })

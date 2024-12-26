@@ -16,12 +16,6 @@ interface Props {
   userId: string
   createdAtLiked?: string
   postType: 'journal' | 'article'
-  followerCount: number | null
-  followingCount: number | null
-  isMe: boolean
-  isFollowing: boolean
-  isModal?: boolean
-  onClick?: () => void
 }
 
 export default function PostHeader({
@@ -32,11 +26,7 @@ export default function PostHeader({
   emotionLevel,
   userId,
   createdAt,
-  followerCount,
   postType,
-  followingCount,
-  isMe,
-  isFollowing,
 }: Props) {
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
 
@@ -44,10 +34,6 @@ export default function PostHeader({
     <XStack className="w-full items-end">
       <AvatarButtonWithDropDown
         avatarUrl={avatarUrl}
-        followerCount={followerCount}
-        followingCount={followingCount}
-        isMe={isMe}
-        isFollowing={isFollowing}
         userId={userId}
         userName={userName}
         position="bottomRight"

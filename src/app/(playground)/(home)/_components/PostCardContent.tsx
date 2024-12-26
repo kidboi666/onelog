@@ -1,37 +1,35 @@
 import Tag from '@/src/components/shared/Tag'
 import { Editor, EditorContent } from '@tiptap/react'
-import { MouseEvent, useEffect, useRef, useState } from 'react'
-import LikeButton from './LikeButton'
-import AccessTypeButtonWithDropDown from './AccessTypeButtonWithDropDown'
-import CommentButton from './CommentButton'
+import { useEffect, useRef, useState } from 'react'
 import Title from '@/src/components/shared/Title'
 import { XStack, YStack, ZStack } from '@/src/components/shared/Stack'
 import { Container } from '@/src/components/shared/Container'
-import ReportButton from './ReportButton'
+import LikeButton from '@/src/app/(playground)/(home)/_components/LikeButton'
+import CommentButton from '@/src/app/(playground)/(home)/_components/CommentButton'
+import AccessTypeButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown'
+import ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton'
 
 interface Props {
   tags?: string[]
   editor: Editor
-  isLike?: boolean | null
-  likedCount?: number
-  commentCount?: number
   postTitle?: string | null
-  isMyPage?: boolean
-  onLike: (e: MouseEvent) => void
   onClick?: () => void
   disabled?: boolean
-  meId?: string | null
-  accessType?: string | null
+  likeCount: number
+  commentCount: number
+  accessType: 'public' | 'private'
   postId: number
-  postUserId?: string
 }
 
-export default function PostContent({
+export default function PostCardContent({
   tags,
   editor,
   postTitle,
   onClick,
   disabled = false,
+  likeCount,
+  commentCount,
+  accessType,
   postId,
 }: Props) {
   const [showGradient, setShowGradient] = useState(false)
@@ -68,9 +66,13 @@ export default function PostContent({
           </XStack>
         )}
         <XStack as="nav" className="items-center justify-between">
-          <LikeButton postId={postId} viewToolTip />
-          <CommentButton postId={postId} disabled={disabled} viewToolTip />
-          <AccessTypeButtonWithDropDown postId={postId} viewToolTip />
+          <LikeButton likeCount={likeCount} postId={postId} viewToolTip />
+          <CommentButton
+            commentCount={commentCount}
+            disabled={disabled}
+            viewToolTip
+          />
+          <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
           <ReportButton postId={postId} viewToolTip />
         </XStack>
       </YStack>

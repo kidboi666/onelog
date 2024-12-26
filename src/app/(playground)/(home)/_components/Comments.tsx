@@ -28,13 +28,7 @@ export default function Comments({ postId }: Props) {
       ) : (
         <List className="flex w-full flex-col gap-4">
           {comments.map((comment, idx) => (
-            <CommentItem
-              key={idx}
-              comment={comment}
-              postId={postId}
-              me={me}
-              isLastComment={comments.length === idx + 1}
-            />
+            <CommentItem key={idx} comment={comment} postId={postId} me={me} />
           ))}
         </List>
       )}

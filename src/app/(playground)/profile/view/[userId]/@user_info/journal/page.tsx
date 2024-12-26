@@ -20,7 +20,7 @@ interface Props {
 
 export default function Journals({ params }: Props) {
   const limit = 4
-  const { me, session } = useMe()
+  const { me } = useMe()
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, params.userId),
   )
@@ -35,7 +35,7 @@ export default function Journals({ params }: Props) {
       ),
     )
   const journals = data?.pages.flatMap((journal) => journal || [])
-  const [ref, inView] = useIntersect<HTMLDivElement>({}, !!isLoading)
+  const [ref, inView] = useIntersect<HTMLDivElement>({}, isLoading)
   const postUserInfo = {
     email: user?.email,
     user_name: user?.user_name,
@@ -64,9 +64,7 @@ export default function Journals({ params }: Props) {
             journal?.content ? (
               <PostCard
                 key={journal?.id}
-                meId={session ? me?.id : null}
                 post={journal}
-                session={session}
                 postUserInfo={postUserInfo}
               />
             ) : (
