@@ -12,7 +12,7 @@ import ReportButton from './ReportButton'
 interface Props {
   tags?: string[]
   editor: Editor
-  isLiked?: boolean | null
+  isLike?: boolean | null
   likedCount?: number
   commentCount?: number
   postTitle?: string | null
@@ -30,7 +30,7 @@ export default function PostContent({
   tags,
   editor,
   postTitle,
-  isLiked,
+  isLike,
   likedCount,
   commentCount,
   onLike,
@@ -80,7 +80,7 @@ export default function PostContent({
         )}
         <XStack as="nav" className="items-center justify-between">
           <LikeButton
-            isLiked={isLiked}
+            isLike={isLike}
             likedCount={likedCount}
             onLike={onLike}
             meId={meId}

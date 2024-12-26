@@ -7,7 +7,7 @@ import { MouseEvent } from 'react'
 
 interface Props {
   likedCount?: number | null
-  isLiked?: boolean | null
+  isLike?: boolean | null
   onLike: (e: MouseEvent) => void
   meId?: string | null
   viewToolTip?: boolean
@@ -16,7 +16,7 @@ interface Props {
 
 export default function LikeButton({
   likedCount,
-  isLiked,
+  isLike,
   onLike,
   meId,
   viewToolTip,
@@ -37,7 +37,7 @@ export default function LikeButton({
         className={cn(
           'flex border-none text-xs font-light hover:text-red-500 dark:hover:text-red-500',
           isSide ? 'max-lg:flex-col' : 'gap-1',
-          meId && isLiked && 'text-red-500 dark:text-red-500',
+          meId && isLike && 'text-red-500 dark:text-red-500',
         )}
       >
         <Icon size={isSide ? 24 : 18} view={150}>

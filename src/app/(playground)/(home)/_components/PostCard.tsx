@@ -8,14 +8,13 @@ import { followQuery } from '@/src/services/queries/follow/follow-query'
 import PostContent from './PostContent'
 import { YStack } from '@/src/components/shared/Stack'
 import { countFollowQuery } from '@/src/services/queries/follow/count-follow-query'
-import useUnlikePost from '@/src/services/mutates/post/useUnlikePost'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { MouseEvent } from 'react'
 import { countCommentQuery } from '@/src/services/queries/comment/count-comment-query'
 import { IUserSession } from '@/src/services/queries/auth/me-query'
 import { routes } from '@/src/routes'
 import { IPostWithUserInfo } from '@/src/types/post'
-import useLikepost from '@/src/services/mutates/post/useLikePost'
+import useHandleLikePost from '@/src/services/mutates/post/useHandleLikePost'
 import PostHeader from './PostHeader'
 import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 
@@ -56,7 +55,7 @@ export default function PostCard({
   const { data: followers } = useSuspenseQuery(
     followQuery.getFollower(supabase, post?.user_id),
   )
-  const { data: isLiked } = useQuery(
+  const { data: isLike } = useQuery(
     postQuery.checkLiked(supabase, postId, meId),
   )
   const { editor } = useBlockEditor({
@@ -64,27 +63,17 @@ export default function PostCard({
   })
   const isFollowing = followers?.find((user) => user.follower_user_id === meId)
 
-  const { mutate: like } = useLikepost()
-  const { mutate: unlike } = useUnlikePost()
+  const { mutate: likeOrUnlike } = useHandleLikePost(isLike)
 
   const handleLike = () => {
-    isLiked
-      ? unlike({
-          meId,
-          postId,
-          postType: post?.post_type,
-          authorId: post?.user_id,
-          startOfDay,
-          endOfDay,
-        })
-      : like({
-          meId,
-          postId,
-          postType: post?.post_type,
-          authorId: post?.user_id,
-          startOfDay,
-          endOfDay,
-        })
+    likeOrUnlike({
+      meId,
+      postId,
+      postType: post?.post_type,
+      authorId: post?.user_id,
+      startOfDay,
+      endOfDay,
+    })
   }
 
   const handleLikePost = (e: MouseEvent) => {
@@ -124,7 +113,7 @@ export default function PostCard({
         postTitle={post?.title}
         accessType={post?.access_type}
         likedCount={post?.like?.[0].count}
-        isLiked={isLiked}
+        isLike={isLike}
         commentCount={commentCount || 0}
         postUserId={post?.user_id}
         postId={postId}

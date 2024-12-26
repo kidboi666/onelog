@@ -1,3 +1,5 @@
+'use client'
+
 import { Suspense, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
@@ -33,7 +35,6 @@ export default function CommentItem({
   me,
   isLastComment,
 }: Props) {
-  const [showComment, setShowComment] = useState(true)
   const [showCommentInput, setShowCommentInput] = useState(false)
   const { data: commentToComments } = useSuspenseQuery(
     commentQuery.getCommentToComment(supabase, postId, comment?.id),
@@ -54,10 +55,6 @@ export default function CommentItem({
     (user) => user.follower_user_id === me?.id,
   )
   const isOwner = comment.user_id === me?.id
-
-  const handleShowComment = () => {
-    setShowComment((prev) => !prev)
-  }
 
   const handleShowCommentInput = () => {
     setShowCommentInput((prev) => !prev)
@@ -93,11 +90,7 @@ export default function CommentItem({
           </div>
           <XStack gap={0}>
             {commentToComments.length >= 1 && (
-              <CommentButton
-                showComment={showComment}
-                onShowComment={handleShowComment}
-                commentCount={commentToCommentsCount ?? 0}
-              />
+              <CommentButton commentCount={commentToCommentsCount ?? 0} />
             )}
             <CommentInputButton onShowCommentInput={handleShowCommentInput} />
             <ReportButton commentId={comment.id} />
@@ -113,8 +106,7 @@ export default function CommentItem({
         {showCommentInput && (
           <CommentInput postId={postId} commentId={comment.id} me={me} />
         )}
-        {showComment &&
-          commentToComments.length >= 1 &&
+        {commentToComments.length >= 1 &&
           commentToComments.map((comment) => (
             <Suspense
               key={comment.id}

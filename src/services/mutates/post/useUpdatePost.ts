@@ -3,7 +3,7 @@ import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
 import { useMutation } from '@tanstack/react-query'
 
-interface IUpdatepost {
+interface IUpdatePost {
   user_id: string
   id: number
   title: string | null
@@ -14,11 +14,11 @@ interface IUpdatepost {
   post_type: 'article' | 'journal'
 }
 
-export default function useUpdatepost() {
+export default function useUpdatePost() {
   const queryClient = getQueryClient()
 
   return useMutation({
-    mutationFn: async (params: IUpdatepost) => {
+    mutationFn: async (params: IUpdatePost) => {
       return supabase
         .from('post')
         .update({ ...params })

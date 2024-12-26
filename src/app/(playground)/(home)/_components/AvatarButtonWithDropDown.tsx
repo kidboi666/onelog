@@ -1,3 +1,5 @@
+'use client'
+
 import useFollow from '@/src/services/mutates/follow/useFollow'
 import useUnFollow from '@/src/services/mutates/follow/useUnFollow'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'

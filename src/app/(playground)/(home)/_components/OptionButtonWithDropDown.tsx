@@ -1,3 +1,5 @@
+'use client'
+
 import Icon from '@/src/components/shared/Icon'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'

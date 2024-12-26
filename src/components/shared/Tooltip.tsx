@@ -1,3 +1,5 @@
+'use client'
+
 import cn from '@/src/lib/cn'
 import { cva } from 'class-variance-authority'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'

@@ -1,3 +1,5 @@
+'use client'
+
 import Avatar from '@/src/components/shared/Avatar'
 import Button from '@/src/components/shared/Button'
 import Input from '@/src/components/shared/Input'

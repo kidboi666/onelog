@@ -13,22 +13,33 @@ interface IFavorite {
   endOfDay?: string | null
 }
 
-export default function useLikepost() {
+export default function useHandleLikePost(isLike: boolean | null | undefined) {
   const queryClient = getQueryClient()
   const { openToast } = useToast()
 
   return useMutation({
     mutationFn: async (params: IFavorite) => {
-      const { data, error } = await supabase
-        .from('like')
-        .insert({
-          post_id: Number(params.postId),
-          user_id: params.meId,
-        })
-        .select()
+      let data
+      let error
+
+      if (isLike) {
+        ;({ data, error } = await supabase
+          .from('like')
+          .delete()
+          .eq('user_id', params.meId)
+          .eq('post_id', params.postId))
+      } else {
+        ;({ data, error } = await supabase
+          .from('like')
+          .insert({
+            post_id: Number(params.postId),
+            user_id: params.meId,
+          })
+          .select())
+      }
 
       if (error) {
-        console.error('좋아요 실패:', error)
+        console.error('좋아요/삭제 실패:', error)
       }
 
       return data

@@ -1,3 +1,5 @@
+'use client'
+
 import CommentItem from './CommentItem'
 import CommentInput from './CommentInput'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -5,14 +7,14 @@ import { commentQuery } from '@/src/services/queries/comment/comment-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { List } from '@/src/components/shared/List'
 import Empty from '@/src/components/shared/Empty'
-import { IUserInfoWithMBTI } from '@/src/types/auth'
+import useMe from '@/src/hooks/useMe'
 
 interface Props {
   postId: number
-  me?: IUserInfoWithMBTI
 }
 
-export default function Comments({ postId, me }: Props) {
+export default function Comments({ postId }: Props) {
+  const { me } = useMe()
   const { data: comments } = useSuspenseQuery(
     commentQuery.getComment(supabase, postId),
   )

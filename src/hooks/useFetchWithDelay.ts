@@ -1,3 +1,5 @@
+'use client'
+
 import { wait } from '@/src/utils/wait'
 import { useEffect, useState } from 'react'
 

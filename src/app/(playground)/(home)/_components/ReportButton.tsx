@@ -1,3 +1,5 @@
+'use client'
+
 import Icon from '@/src/components/shared/Icon'
 import { MouseEvent } from 'react'
 import { useRouter } from 'next/navigation'

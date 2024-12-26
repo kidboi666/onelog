@@ -1,18 +1,13 @@
-import { useTransition } from 'react'
-import useFollow from '@/src/services/mutates/follow/useFollow'
-import useUnFollow from '@/src/services/mutates/follow/useUnFollow'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import { DropDown } from '@/src/components/shared/DropDown'
 import Title from '@/src/components/shared/Title'
 import Avatar from '@/src/components/shared/Avatar'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { meQuery } from '@/src/services/queries/auth/me-query'
-import { supabase } from '@/src/lib/supabase/client'
-import { useRouter } from 'next/navigation'
 import { XStack, YStack } from '@/src/components/shared/Stack'
 import Follow from '@/src/components/shared/Follow'
 import { routes } from '@/src/routes'
+import useFollowActions from '@/src/hooks/actions/useFollowActions'
+import useMe from '@/src/hooks/useMe'
 
 interface Props {
   avatarUrl: string | null
@@ -33,27 +28,22 @@ export default function AvatarButtonWithDropDown({
   userId,
   userName,
 }: Props) {
-  const router = useRouter()
-  const { close, ref, onClick, onTransitionEnd } =
+  const { close, open, ref, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
-  const { mutate: follow } = useFollow()
-  const { mutate: unfollow } = useUnFollow()
-  const [isLoadingFollowing, startTransitionFollowing] = useTransition()
+  const { me } = useMe()
 
-  const pushFollowerList = () =>
-    router.push(routes.modal.follow.follower(userId))
-  const pushFollowingList = () =>
-    router.push(routes.modal.follow.following(userId))
-
-  const handleFollowButtonClick = () => {
-    me
-      ? isFollowing
-        ? unfollow({ followed_user_id: userId, follower_user_id: me.userId! })
-        : follow({ followed_user_id: userId, follower_user_id: me.userId! })
-      : router.push(routes.modal.auth.guard)
-  }
+  const {
+    onFollow,
+    isPendingFollow,
+    isPendingUnfollow,
+    pushFollowerList,
+    pushFollowingList,
+  } = useFollowActions({
+    isFollowing,
+    me,
+    userId,
+  })
 
   return (
     <DropDown.Root>
@@ -70,6 +60,7 @@ export default function AvatarButtonWithDropDown({
         initStatus="closed"
         position="bottomRight"
         onTransitionEnd={onTransitionEnd}
+        onClick={open}
         className="right-0 top-0"
       >
         <YStack gap={4} className="p-4">
@@ -107,10 +98,8 @@ export default function AvatarButtonWithDropDown({
                 <>
                   <DropDown.Button
                     variant="secondary"
-                    isLoading={isLoadingFollowing}
-                    onClick={() =>
-                      startTransitionFollowing(() => handleFollowButtonClick())
-                    }
+                    isLoading={isPendingFollow || isPendingUnfollow}
+                    onClick={onFollow}
                   >
                     {isFollowing ? '팔로우 취소' : '팔로우 하기'}
                   </DropDown.Button>

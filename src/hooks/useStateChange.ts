@@ -1,3 +1,5 @@
+'use client'
+
 import { wait } from '@/src/utils/wait'
 import { useRef } from 'react'
 
@@ -6,7 +8,7 @@ export default function useDataDrivenAnimation<T extends HTMLElement>(
 ) {
   const ref = useRef<T>(null)
 
-  const open = async () => {
+  const open = async (): Promise<void> => {
     const element = ref.current
     if (element) {
       element.classList.remove(initClass)
@@ -15,12 +17,12 @@ export default function useDataDrivenAnimation<T extends HTMLElement>(
     }
   }
 
-  const close = async () => {
+  const close = async (): Promise<void> => {
     await wait(10)
     ref.current?.setAttribute('data-status', 'closed')
   }
 
-  const handleTransitionEnd = () => {
+  const handleTransitionEnd = (): void => {
     const element = ref.current
     if (
       element?.getAttribute('data-status') === 'closed' &&
@@ -30,13 +32,13 @@ export default function useDataDrivenAnimation<T extends HTMLElement>(
     }
   }
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (): void => {
     const isOpen = ref.current?.getAttribute('data-status')
 
     if (isOpen === 'opened') {
-      close()
+      void close()
     } else if (isOpen === 'closed') {
-      open()
+      void open()
     }
   }
 

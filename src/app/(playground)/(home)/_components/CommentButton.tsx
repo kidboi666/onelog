@@ -6,16 +6,12 @@ import cn from '@/src/lib/cn'
 
 interface Props {
   commentCount?: number | null
-  showComment?: boolean
-  onShowComment?: () => void
   disabled?: boolean
   viewToolTip?: boolean
   isSide?: boolean
 }
 
 export default function CommentButton({
-  showComment,
-  onShowComment,
   commentCount,
   disabled,
   viewToolTip,
@@ -29,11 +25,10 @@ export default function CommentButton({
         variant="icon"
         size={isSide ? 'md' : 'icon'}
         disabled={disabled}
-        onClick={onShowComment}
         className={cn(
           'flex border-none text-xs font-light transition hover:text-blue-400 dark:hover:text-blue-400',
           isSide ? 'max-lg:flex-col' : 'gap-1',
-          showComment && 'text-blue-400 dark:text-blue-400',
+          commentCount && 'text-blue-400 dark:text-blue-400',
         )}
       >
         <Icon size={isSide ? 24 : 18} view={150}>
