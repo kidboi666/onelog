@@ -14,7 +14,9 @@ export default function UserInfoSummary({ params }: Props) {
   const supabase = createServerClient()
   const userId = params.userId
 
-  queryClient.prefetchQuery(countPostQuery.countAllMyPost(supabase, userId))
+  void queryClient.prefetchQuery(
+    countPostQuery.countAllMyPost(supabase, userId),
+  )
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

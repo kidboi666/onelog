@@ -85,11 +85,7 @@ export default function PrevOnePost({ params, searchParams }: Props) {
                 post.content ? (
                   <PostCard
                     key={post?.id}
-                    meId={session ? me?.id : null}
                     post={post}
-                    session={session}
-                    startOfDay={startOfDay}
-                    endOfDay={endOfDay}
                     postUserInfo={post?.user_info}
                   />
                 ) : (

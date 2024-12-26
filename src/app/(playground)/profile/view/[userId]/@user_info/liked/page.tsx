@@ -20,7 +20,7 @@ interface Props {
 
 export default function LikedPage({ params }: Props) {
   const limit = 4
-  const { me, session } = useMe()
+  const { me } = useMe()
   const { data, hasNextPage, fetchNextPage, isFetching, isLoading, isPending } =
     useInfiniteQuery(
       postQuery.getLikedPost(supabase, params.userId, limit, me?.id),
@@ -30,7 +30,7 @@ export default function LikedPage({ params }: Props) {
 
   useEffect(() => {
     if (inView && hasNextPage) {
-      fetchNextPage()
+      void fetchNextPage()
     }
   }, [inView, hasNextPage, fetchNextPage])
 
@@ -50,7 +50,6 @@ export default function LikedPage({ params }: Props) {
             item.post.content ? (
               <PostCard
                 key={item.id}
-                session={session}
                 post={item.post}
                 createdAtLiked={item.created_at}
                 postUserInfo={item.post.user_info}

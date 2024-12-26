@@ -18,7 +18,7 @@ export default function MBTISection({ mbti, setMbti }: Props) {
 
   const handleListClick = (mbti: (typeof MBTI)[number]) => {
     setMbti(mbti)
-    close()
+    void close()
   }
 
   return (
