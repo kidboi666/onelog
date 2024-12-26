@@ -1,32 +1,31 @@
 'use client'
 
-import useFollow from '@/src/services/mutates/follow/useFollow'
-import useUnFollow from '@/src/services/mutates/follow/useUnFollow'
+import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 import { routes } from '@/src/routes'
 import { useRouter } from 'next/navigation'
+import { IUserInfoWithMBTI } from '@/src/types/auth'
 
 interface Props {
-  me: any
+  me: IUserInfoWithMBTI
   isFollowing: boolean
   userId: string
 }
 
 export default function useFollowActions({ me, isFollowing, userId }: Props) {
   const router = useRouter()
-  const { mutate: follow, isPending: isPendingFollow } = useFollow()
-  const { mutate: unfollow, isPending: isPendingUnfollow } = useUnFollow()
+  const { mutate: followOrUnfollow, isPending: isPendingFollowActions } =
+    useHandleFollow()
 
-  const handleFollow = () => {
+  const handleFollow = (options?: any) => {
     me
-      ? isFollowing
-        ? unfollow({
+      ? followOrUnfollow(
+          {
             followed_user_id: userId,
             follower_user_id: me.id,
-          })
-        : follow({
-            followed_user_id: userId,
-            follower_user_id: me.id,
-          })
+            isFollowing,
+          },
+          { ...options },
+        )
       : router.push(routes.modal.auth.guard, { scroll: false })
   }
 
@@ -37,12 +36,9 @@ export default function useFollowActions({ me, isFollowing, userId }: Props) {
     router.push(routes.modal.follow.following(userId))
 
   return {
-    follow,
-    unfollow,
     onFollow: handleFollow,
     pushFollowerList,
     pushFollowingList,
-    isPendingFollow,
-    isPendingUnfollow,
+    isPendingFollowActions,
   }
 }

@@ -15,6 +15,7 @@ export interface IPostWithUserInfo
   access_type: 'public' | 'private'
   emotion_level: '0%' | '25%' | '50%' | '75%' | '100%' | null
   like: { count: number }[]
+  comment: { count: number }[]
 }
 
 export interface ILikedPostWithUserInfo {

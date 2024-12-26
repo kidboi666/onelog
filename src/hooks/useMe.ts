@@ -1,3 +1,5 @@
+'use client'
+
 import { supabase } from '@/src/lib/supabase/client'
 import { IUserSession, meQuery } from '@/src/services/queries/auth/me-query'
 import { useSuspenseQuery } from '@tanstack/react-query'

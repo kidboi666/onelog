@@ -1,7 +1,6 @@
 'use client'
 
-import { YStack } from '@/src/components/shared/Stack'
-import Link from 'next/link'
+import { XStack, YStack } from '@/src/components/shared/Stack'
 import { routes } from '@/src/routes'
 import Avatar from '@/src/components/shared/Avatar'
 import Title from '@/src/components/shared/Title'
@@ -12,6 +11,7 @@ import { postQuery } from '@/src/services/queries/post/post-query'
 import { supabase } from '@/src/lib/supabase/client'
 import useMe from '@/src/hooks/useMe'
 import useFollowQuery from '@/src/hooks/query/useFollowQuery'
+import useRouterPush from '@/src/hooks/useRouterPush'
 
 interface Props {
   postId: number
@@ -20,6 +20,7 @@ interface Props {
 export default function PostAuthorInfo({ postId }: Props) {
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
   const { me } = useMe()
+  const pushNewPostPage = useRouterPush(routes.profile.view(post?.user_id))
   const { isFollowing } = useFollowQuery({
     userId: post?.user_id,
     meId: me?.id,
@@ -31,10 +32,7 @@ export default function PostAuthorInfo({ postId }: Props) {
         gap={4}
         className="w-full rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark"
       >
-        <Link
-          href={routes.profile.view(post?.user_id)}
-          className="flex flex-1 gap-4"
-        >
+        <XStack onClick={pushNewPostPage} className="flex flex-1 gap-4">
           <Avatar src={post?.user_info.avatar_url} size="md" />
           <YStack gap={1} className="w-full">
             <Title size="sm">{post?.user_info.user_name}</Title>
@@ -46,7 +44,7 @@ export default function PostAuthorInfo({ postId }: Props) {
             isFollowing={isFollowing}
             userId={post?.user_id}
           />
-        </Link>
+        </XStack>
       </YStack>
     </YStack>
   )

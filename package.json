@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen-types": "npx src/supabase gen types typescript --project-id knbqtoddehiqtawhenwl --schema public > types/supabase.ts"
+    "gen-types": "npx src/supabase gen types typescript --project-id knbqtoddehiqtawhenwl --schema public > src/types/supabase.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

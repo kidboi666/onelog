@@ -1,8 +1,10 @@
+'use client'
+
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 
 export type TChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 
-export function useInput<T extends string | number | null>(
+export default function useInput<T extends string | number | null>(
   initValue: T,
 ): [T, (e: TChangeEvent) => void, Dispatch<SetStateAction<T>>] {
   const [value, setValue] = useState<T>(initValue)

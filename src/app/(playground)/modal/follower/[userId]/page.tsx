@@ -1,17 +1,14 @@
 'use client'
 
 import { MouseEvent, useState } from 'react'
-import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/src/lib/supabase/client'
-import useFollow from '@/src/services/mutates/follow/useFollow'
-import useUnFollow from '@/src/services/mutates/follow/useUnFollow'
-import { followQuery } from '@/src/services/queries/follow/follow-query'
 import useMe from '@/src/hooks/useMe'
 import { routes } from '@/src/routes'
 import Modal from '@/src/components/shared/Modal'
 import { YStack } from '@/src/components/shared/Stack'
 import FollowUserCard from '../../_components/FollowUserCard'
+import useFollowQuery from '@/src/hooks/query/useFollowQuery'
+import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 
 interface Props {
   params: { userId: string }
@@ -19,44 +16,29 @@ interface Props {
 
 export default function FollowerListModal({ params }: Props) {
   const router = useRouter()
+  const userId = params.userId
   const { me, session } = useMe()
-  const { data: followers } = useSuspenseQuery(
-    followQuery.getFollower(supabase, params.userId),
-  )
-  const { data: myFollows } = useSuspenseQuery(
-    followQuery.getFollowing(supabase, me?.id),
-  )
-  const { mutate: followUser } = useFollow()
-  const { mutate: unfollowUser } = useUnFollow()
-  const [isPendingList, setPendingList] = useState<Record<string, boolean>>({})
+  const { followers, myFollows } = useFollowQuery({
+    userId,
+    meId: me.id,
+  })
+  const { mutate: followOrUnfollow } = useHandleFollow()
+  const [pendingList, setPendingList] = useState<Record<string, boolean>>({})
 
-  const handleFollowUser = (e: MouseEvent, userId: string) => {
+  const handleFollow = (
+    e: MouseEvent,
+    userId: string,
+    isFollowing: boolean,
+  ) => {
     e.stopPropagation()
     if (!session) return router.push(routes.modal.auth.guard)
 
     setPendingList((prev) => ({ ...prev, [userId]: true }))
-    followUser(
+    followOrUnfollow(
       {
         followed_user_id: userId,
-        follower_user_id: me!.id,
-      },
-      {
-        onSettled: () => {
-          setPendingList((prev) => ({ ...prev, [userId]: false }))
-        },
-      },
-    )
-  }
-
-  const handleUnfollowUser = (e: MouseEvent, userId: string) => {
-    e.stopPropagation()
-    if (!session) return router.push(routes.modal.auth.guard)
-
-    setPendingList((prev) => ({ ...prev, [userId]: true }))
-    unfollowUser(
-      {
-        followed_user_id: userId,
-        follower_user_id: me!.id,
+        follower_user_id: me.id,
+        isFollowing,
       },
       {
         onSettled: () => {
@@ -79,7 +61,7 @@ export default function FollowerListModal({ params }: Props) {
               myFollower.followed_user_id === follower.user_info.id,
           )
           const isMe = me?.id === follower.user_info.id
-          const isPending = isPendingList[follower.user_info.id] || false
+          const isPending = pendingList[follower.user_info.id] || false
 
           return (
             <FollowUserCard
@@ -87,11 +69,8 @@ export default function FollowerListModal({ params }: Props) {
               isFollowing={!!isFollowing}
               isMe={isMe}
               follower={follower}
-              follow={(e: MouseEvent) =>
-                handleFollowUser(e, follower.user_info.id)
-              }
-              unfollow={(e: MouseEvent) =>
-                handleUnfollowUser(e, follower.user_info.id)
+              onFollow={(e: MouseEvent) =>
+                handleFollow(e, follower.user_info.id, !!isFollowing)
               }
               isPending={isPending}
               pushUserPage={() => handlePushUserPage(follower.user_info.id)}

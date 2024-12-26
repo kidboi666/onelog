@@ -8,7 +8,7 @@ import { todoQuery } from '@/src/services/queries/todo/todo-query'
 import useAddTodo from '@/src/services/mutates/todo/useAddTodo'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { Tables } from '@/src/types/supabase'
-import { useInput } from '@/src/hooks/useInput'
+import useInput from '@/src/hooks/useInput'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
@@ -109,7 +109,7 @@ export default function TodoFolderCard({
         <LinkButton
           variant="teritory"
           size="none"
-          href={routes.todo.view.folder(folder.id,folder.color)}
+          href={routes.todo.view.folder(folder.id, folder.color)}
           innerClassName="justify-start"
         >
           <Title size="sm" className="line-clamp-1">
@@ -181,7 +181,7 @@ export default function TodoFolderCard({
                 todo={todo}
                 isComplete={todo.is_complete}
                 onUpdate={handleUpdateButtonClick}
-                orderFrom='main'
+                orderFrom="main"
                 folderColor={folder.color}
               />
             ))}

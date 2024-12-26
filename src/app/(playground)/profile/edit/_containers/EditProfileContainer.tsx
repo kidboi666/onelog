@@ -5,7 +5,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import useUploadAvatarImage from '@/src/services/mutates/auth/useUploadAvatarImage'
 import useUpdateUserInfo from '@/src/services/mutates/auth/useUpdateUserInfo'
 import useDeleteAvatarImage from '@/src/services/mutates/auth/useDeleteAvatarImage'
-import { useInput } from '@/src/hooks/useInput'
+import useInput from '@/src/hooks/useInput'
 import useMe from '@/src/hooks/useMe'
 import { TMBTI } from '../_constants/mbti'
 

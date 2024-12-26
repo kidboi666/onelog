@@ -1,3 +1,5 @@
+'use client'
+
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import { DropDown } from '@/src/components/shared/DropDown'

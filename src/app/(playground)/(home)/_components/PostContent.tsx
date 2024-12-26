@@ -22,7 +22,7 @@ interface Props {
   disabled?: boolean
   meId?: string | null
   accessType?: string | null
-  postId?: number
+  postId: number
   postUserId?: string
 }
 
@@ -30,23 +30,12 @@ export default function PostContent({
   tags,
   editor,
   postTitle,
-  isLike,
-  likedCount,
-  commentCount,
-  onLike,
   onClick,
   disabled = false,
-  meId,
-  accessType,
   postId,
 }: Props) {
-  const [showComment, setShowComment] = useState(false)
   const [showGradient, setShowGradient] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
-
-  const handleShowComment = () => {
-    setShowComment((prev) => !prev)
-  }
 
   useEffect(() => {
     if (contentRef.current) {
@@ -79,21 +68,9 @@ export default function PostContent({
           </XStack>
         )}
         <XStack as="nav" className="items-center justify-between">
-          <LikeButton
-            isLike={isLike}
-            likedCount={likedCount}
-            onLike={onLike}
-            meId={meId}
-            viewToolTip
-          />
-          <CommentButton
-            disabled={disabled}
-            showComment={showComment}
-            commentCount={commentCount!}
-            onShowComment={handleShowComment}
-            viewToolTip
-          />
-          <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
+          <LikeButton postId={postId} viewToolTip />
+          <CommentButton postId={postId} disabled={disabled} viewToolTip />
+          <AccessTypeButtonWithDropDown postId={postId} viewToolTip />
           <ReportButton postId={postId} viewToolTip />
         </XStack>
       </YStack>

@@ -8,15 +8,15 @@ import ToolTip from '@/src/components/shared/Tooltip'
 import useToggle from '@/src/hooks/useToggle'
 
 interface Props {
-  accessType?: string | null
   viewToolTip?: boolean
   isSide?: boolean
+  accessType: 'public' | 'private'
 }
 
 export default function AccessTypeButtonWithDropDown({
-  accessType,
   viewToolTip,
   isSide,
+  accessType,
 }: Props) {
   const { close, ref, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()

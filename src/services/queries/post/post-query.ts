@@ -186,6 +186,7 @@ export const postQuery = {
           .select(
             `
             *,
+            comment(count),
             like(count),
             user_info(
               email,

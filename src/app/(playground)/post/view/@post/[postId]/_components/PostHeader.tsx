@@ -10,8 +10,6 @@ import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { supabase } from '@/src/lib/supabase/client'
-import useFollowQuery from '@/src/hooks/query/useFollowQuery'
-import useMe from '@/src/hooks/useMe'
 
 interface Props {
   postId: number
@@ -19,22 +17,13 @@ interface Props {
 
 export default function PostHeader({ postId }: Props) {
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
-  const { me } = useMe()
-  const { followingCount, followerCount, isFollowing, isMe } = useFollowQuery({
-    userId: post?.user_id,
-    meId: me?.id,
-  })
 
   return (
     <XStack gap={4} className="items-center">
       <AvatarButtonWithDropDown
-        isMe={isMe}
         userId={post?.user_id}
         userName={post?.user_info.user_name}
         avatarUrl={post?.user_info.avatar_url}
-        followerCount={followerCount}
-        followingCount={followingCount}
-        isFollowing={isFollowing}
         position="bottomRight"
       />
       <YStack gap={0} className="self-end">

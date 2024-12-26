@@ -3,7 +3,7 @@ import Text from '@/src/components/shared/Text'
 import cn from '@/src/lib/cn'
 import { useRouter } from 'next/navigation'
 import { Fragment, useTransition } from 'react'
-import { PROFILE_NAVIGATE_MENUS } from '../../../_constants/Navigate'
+import { PROFILE_NAVIGATE_MENUS } from '../../../_constants/navigate'
 import { routes } from '@/src/routes'
 
 interface Props {

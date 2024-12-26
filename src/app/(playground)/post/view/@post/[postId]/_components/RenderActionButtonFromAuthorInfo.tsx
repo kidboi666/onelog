@@ -1,10 +1,12 @@
+'use client'
+
 import Button from '@/src/components/shared/Button'
 import { routes } from '@/src/routes'
 import { XStack } from '@/src/components/shared/Stack'
-import useTransitionWithRoute from '@/src/hooks/useTransitionWithRoute'
 import useFetchWithDelay from '@/src/hooks/useFetchWithDelay'
 import useFollowActions from '@/src/hooks/actions/useFollowActions'
 import { IUserInfoWithMBTI } from '@/src/types/auth'
+import useTransitionWithRoute from '@/src/hooks/useRouterPushWithTransition'
 
 interface Props {
   me: IUserInfoWithMBTI

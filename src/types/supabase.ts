@@ -7,6 +7,31 @@ export type Json =
   | Json[]
 
 export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          operationName?: string
+          query?: string
+          variables?: Json
+          extensions?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       comment: {
@@ -109,7 +134,7 @@ export type Database = {
           created_at?: string
           id?: number
           posts?: Json[] | null
-          user_id: string
+          user_id?: string
           year_month: string
         }
         Update: {
@@ -119,7 +144,15 @@ export type Database = {
           user_id?: string
           year_month?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "garden_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_info"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       like: {
         Row: {
@@ -202,7 +235,6 @@ export type Database = {
       post: {
         Row: {
           access_type: string | null
-          comment: number | null
           content: string
           created_at: string
           emotion_level: string | null
@@ -214,7 +246,6 @@ export type Database = {
         }
         Insert: {
           access_type?: string | null
-          comment?: number | null
           content: string
           created_at?: string
           emotion_level?: string | null
@@ -226,7 +257,6 @@ export type Database = {
         }
         Update: {
           access_type?: string | null
-          comment?: number | null
           content?: string
           created_at?: string
           emotion_level?: string | null
@@ -280,7 +310,7 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "reports_target_id_fkey"
+            foreignKeyName: "report_target_post_id_fkey"
             columns: ["target_post_id"]
             isOneToOne: false
             referencedRelation: "post"
@@ -323,6 +353,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "todo_folder_id_fkey"
+            columns: ["folder_id"]
+            isOneToOne: false
+            referencedRelation: "todo_folder"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "todo_user_id_fkey"
             columns: ["user_id"]

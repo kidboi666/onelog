@@ -5,17 +5,17 @@ import useToggle from '@/src/hooks/useToggle'
 import cn from '@/src/lib/cn'
 
 interface Props {
-  commentCount?: number | null
   disabled?: boolean
+  commentCount: number | null
   viewToolTip?: boolean
   isSide?: boolean
 }
 
 export default function CommentButton({
-  commentCount,
   disabled,
   viewToolTip,
   isSide,
+  commentCount,
 }: Props) {
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
 

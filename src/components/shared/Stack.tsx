@@ -40,10 +40,12 @@ const Stack = ({
   dataStatus,
   as: Component = 'div',
   direction = 'row',
+  onClick,
 }: PropsWithChildren<StackProps>) => {
   return (
     <Component
       data-status={dataStatus}
+      onClick={onClick}
       className={cn(stackClasses({ gap, direction }), className)}
     >
       {children}

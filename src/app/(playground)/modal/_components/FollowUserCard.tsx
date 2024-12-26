@@ -3,31 +3,27 @@ import Button from '@/src/components/shared/Button'
 import { Container } from '@/src/components/shared/Container'
 import { XStack, YStack } from '@/src/components/shared/Stack'
 import Text from '@/src/components/shared/Text'
-import useFetchWithDelay from '@/src/hooks/useFetchWithDelay'
 
 interface Props {
   follower: any
-  follow: any
-  unfollow: any
+  onFollow: any
   isFollowing: boolean
   isMe: boolean
   pushUserPage: () => void
   isPending: boolean
 }
-/**
- * TODO #7 추후 타입핑 요망 @kidboi666
- */
 
+/**
+ * TODO 추후 타입핑 요망 @kidboi666
+ */
 export default function FollowUserCard({
   follower,
-  follow,
-  unfollow,
+  onFollow,
   isFollowing,
   isMe,
   pushUserPage,
   isPending,
 }: Props) {
-  const isPendingFollow = useFetchWithDelay(isPending)
   if (isMe)
     return (
       <Container
@@ -71,17 +67,17 @@ export default function FollowUserCard({
           <Button
             variant="secondary"
             size="sm"
-            isLoading={isPendingFollow}
-            onClick={unfollow}
+            isLoading={isPending}
+            onClick={onFollow}
           >
             팔로우 취소
           </Button>
         ) : (
           <Button
-            size="sm"
-            isLoading={isPendingFollow}
             className="h-fit"
-            onClick={follow}
+            size="sm"
+            isLoading={isPending}
+            onClick={onFollow}
           >
             팔로우 하기
           </Button>

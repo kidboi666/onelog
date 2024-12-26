@@ -1,13 +1,7 @@
 /* eslint-disable react/no-array-index-key */
-import {
-  Dispatch,
-  KeyboardEvent,
-  SetStateAction,
-  useRef,
-  useState,
-} from 'react'
+import { Dispatch, KeyboardEvent, SetStateAction, useRef, useState } from 'react'
 import Text from './Text'
-import { useInput } from '@/src/hooks/useInput'
+import useInput from '@/src/hooks/useInput'
 import cn from '@/src/lib/cn'
 import Tag from './Tag'
 import Input from './Input'
