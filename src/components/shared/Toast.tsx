@@ -5,7 +5,7 @@ import Button from './Button'
 import Icon from './Icon'
 import Text from './Text'
 import React, { useEffect, useRef } from 'react'
-import { XStack, YStack } from '@/src/components/shared/Stack'
+import { XStack } from '@/src/components/shared/Stack'
 
 interface Props {
   content: ToastContent
@@ -42,7 +42,7 @@ export default function Toast({ content }: Props) {
           size="none"
           className="rounded-full bg-green-400 text-white dark:bg-green-500 dark:text-white"
         >
-          <Icon view="0 -960 960 960">
+          <Icon view="0 -960 960 960" size={14}>
             <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
           </Icon>
         </Button>
