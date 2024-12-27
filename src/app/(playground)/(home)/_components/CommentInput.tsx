@@ -1,9 +1,9 @@
 'use client'
 
-import Avatar from '@/src/components/shared/Avatar'
-import Button from '@/src/components/shared/Button'
-import Input from '@/src/components/shared/Input'
-import { XStack } from '@/src/components/shared/Stack'
+import Avatar from '@/src/components/Avatar'
+import Button from '@/src/components/Button'
+import Input from '@/src/components/Input'
+import { XStack } from '@/src/components/Stack'
 import { routes } from '@/src/routes'
 import useInput from '@/src/hooks/useInput'
 import useMe from '@/src/hooks/useMe'

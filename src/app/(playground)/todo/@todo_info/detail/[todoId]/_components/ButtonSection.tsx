@@ -1,8 +1,8 @@
 'use client'
 
-import Button from '@/src/components/shared/Button'
-import Icon from '@/src/components/shared/Icon'
-import Spinner from '@/src/components/shared/Spinner'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
+import Spinner from '@/src/components/Spinner'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
 import { routes } from '@/src/routes'
@@ -35,9 +35,12 @@ export default function ButtonSection({
 
   const handleDeleteButtonClick = () => {
     startTransitionDelete(() =>
-      router.push(routes.modal.todo.delete(todoId, folderId, color, orderFrom), {
-        scroll: false,
-      }),
+      router.push(
+        routes.modal.todo.delete(todoId, folderId, color, orderFrom),
+        {
+          scroll: false,
+        },
+      ),
     )
   }
 

@@ -5,7 +5,7 @@ import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
 import { IUserSession, meQuery } from '@/src/services/queries/auth/me-query'
 
-import Title from '@/src/components/shared/Title'
+import Title from '@/src/components/Title'
 import TodoFoldersSection from '../_components/TodoFoldersSection'
 
 export default async function TodoDashBoard() {

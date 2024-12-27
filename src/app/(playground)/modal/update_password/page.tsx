@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation'
 import useResetPassword from '@/src/services/mutates/auth/useResetPassword'
-import Button from '@/src/components/shared/Button'
-import Modal from '@/src/components/shared/Modal'
-import Title from '@/src/components/shared/Title'
+import Button from '@/src/components/Button'
+import Modal from '@/src/components/Modal'
+import Title from '@/src/components/Title'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { supabase } from '@/src/lib/supabase/client'

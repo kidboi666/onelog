@@ -1,5 +1,5 @@
-import Button from '@/src/components/shared/Button'
-import Text from '@/src/components/shared/Text'
+import Button from '@/src/components/Button'
+import Text from '@/src/components/Text'
 import cn from '@/src/lib/cn'
 import { useRouter } from 'next/navigation'
 import { Fragment, useTransition } from 'react'

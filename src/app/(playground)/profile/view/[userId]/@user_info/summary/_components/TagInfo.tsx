@@ -1,5 +1,5 @@
-import Spinner from '@/src/components/shared/Spinner'
-import Text from '@/src/components/shared/Text'
+import Spinner from '@/src/components/Spinner'
+import Text from '@/src/components/Text'
 import { supabase } from '@/src/lib/supabase/client'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { IFavoriteWord } from '@/src/types/post'

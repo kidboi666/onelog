@@ -1,12 +1,12 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import Avatar from '@/src/components/shared/Avatar'
-import Text from '@/src/components/shared/Text'
+import Avatar from '@/src/components/Avatar'
+import Text from '@/src/components/Text'
 import { useTheme } from '@/src/store/useTheme'
 import cn from '@/src/lib/cn'
-import { XStack } from '@/src/components/shared/Stack'
-import { Container } from '@/src/components/shared/Container'
+import { XStack } from '@/src/components/Stack'
+import { Container } from '@/src/components/Container'
 import useMe from '@/src/hooks/useMe'
 import { routes } from '@/src/routes'
 

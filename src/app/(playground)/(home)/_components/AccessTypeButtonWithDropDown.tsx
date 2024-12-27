@@ -1,10 +1,10 @@
-import Icon from '@/src/components/shared/Icon'
+import Icon from '@/src/components/Icon'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import { MouseEvent } from 'react'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
-import { DropDown } from '@/src/components/shared/DropDown'
-import Text from '@/src/components/shared/Text'
-import ToolTip from '@/src/components/shared/Tooltip'
+import { DropDown } from '@/src/components/DropDown'
+import Text from '@/src/components/Text'
+import ToolTip from '@/src/components/Tooltip'
 import useToggle from '@/src/hooks/useToggle'
 
 interface Props {

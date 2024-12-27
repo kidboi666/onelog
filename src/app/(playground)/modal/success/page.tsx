@@ -2,9 +2,9 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Title from '@/src/components/shared/Title'
-import Button from '@/src/components/shared/Button'
-import Modal from '@/src/components/shared/Modal'
+import Title from '@/src/components/Title'
+import Button from '@/src/components/Button'
+import Modal from '@/src/components/Modal'
 
 export default function SuccessModal() {
   const router = useRouter()

@@ -1,7 +1,7 @@
-import { Container } from '@/src/components/shared/Container'
-import { YStack } from '@/src/components/shared/Stack'
-import Text from '@/src/components/shared/Text'
-import Title from '@/src/components/shared/Title'
+import { Container } from '@/src/components/Container'
+import { YStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+import Title from '@/src/components/Title'
 import cn from '@/src/lib/cn'
 
 interface Props {

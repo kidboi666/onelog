@@ -1,8 +1,8 @@
-import Avatar from '@/src/components/shared/Avatar'
-import Button from '@/src/components/shared/Button'
-import { Container } from '@/src/components/shared/Container'
-import { XStack, YStack } from '@/src/components/shared/Stack'
-import Text from '@/src/components/shared/Text'
+import Avatar from '@/src/components/Avatar'
+import Button from '@/src/components/Button'
+import { Container } from '@/src/components/Container'
+import { XStack, YStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
 
 interface Props {
   follower: any

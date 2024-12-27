@@ -6,8 +6,8 @@ import { useSuspenseQueries, useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { countPostQuery } from '@/src/services/queries/post/count-post-query'
 import { PROFILE_NAVIGATE_MENUS } from '../_constants/navigate'
-import { Container } from '@/src/components/shared/Container'
-import { ZStack } from '@/src/components/shared/Stack'
+import { Container } from '@/src/components/Container'
+import { ZStack } from '@/src/components/Stack'
 import MenuSection from './journal_garden/_components/MenuSection'
 
 interface Props {

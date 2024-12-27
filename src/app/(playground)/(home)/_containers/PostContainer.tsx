@@ -6,8 +6,8 @@ import { postQuery } from '@/src/services/queries/post/post-query'
 import PostCard from '../_components/PostCard'
 import useIntersect from '@/src/hooks/useIntersect'
 import { useEffect } from 'react'
-import Spinner from '@/src/components/shared/Spinner'
-import { YStack } from '@/src/components/shared/Stack'
+import Spinner from '@/src/components/Spinner'
+import { YStack } from '@/src/components/Stack'
 
 export default function PostContainer() {
   const limit = 4

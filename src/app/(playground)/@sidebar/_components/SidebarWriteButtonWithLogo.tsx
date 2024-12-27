@@ -1,11 +1,11 @@
-import Icon from '@/src/components/shared/Icon'
+import Icon from '@/src/components/Icon'
 import BookMark from './BookMark'
 import SelectedMenuBackground from './SelectedMenuBackground'
-import Button from '@/src/components/shared/Button'
+import Button from '@/src/components/Button'
 import { useRouter } from 'next/navigation'
-import { ZStack } from '@/src/components/shared/Stack'
+import { ZStack } from '@/src/components/Stack'
 import { useTransition } from 'react'
-import Spinner from '@/src/components/shared/Spinner'
+import Spinner from '@/src/components/Spinner'
 import { routes } from '@/src/routes'
 
 interface Props {

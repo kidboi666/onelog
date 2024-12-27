@@ -1,8 +1,8 @@
-import { DropDown } from '@/src/components/shared/DropDown'
+import { DropDown } from '@/src/components/DropDown'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import EmotionGauge from './EmotionGauge'
-import Text from '@/src/components/shared/Text'
+import Text from '@/src/components/Text'
 import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 
 interface Props {

@@ -7,11 +7,11 @@ import useAddTodoFolder from '@/src/services/mutates/todo/useAddTodoFolder'
 import { TTodoColor } from '@/src/types/todo'
 import useInput from '@/src/hooks/useInput'
 import useMe from '@/src/hooks/useMe'
-import Modal from '@/src/components/shared/Modal'
-import Text from '@/src/components/shared/Text'
-import Input from '@/src/components/shared/Input'
-import Button from '@/src/components/shared/Button'
-import Icon from '@/src/components/shared/Icon'
+import Modal from '@/src/components/Modal'
+import Text from '@/src/components/Text'
+import Input from '@/src/components/Input'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
 
 const colors: TTodoColor[] = [
   'black',

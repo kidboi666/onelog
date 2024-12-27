@@ -1,5 +1,5 @@
-import Button from '@/src/components/shared/Button'
-import Icon from '@/src/components/shared/Icon'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
 import cn from '@/src/lib/cn'
 import { ReactNode } from 'react'
 

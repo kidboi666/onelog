@@ -1,5 +1,5 @@
 import cn from '@/src/lib/cn'
-import Button, { ButtonProps } from '@/src/components/shared/Button'
+import Button, { ButtonProps } from '@/src/components/Button'
 import { useTheme } from '@/src/store/useTheme'
 
 interface Props extends ButtonProps {

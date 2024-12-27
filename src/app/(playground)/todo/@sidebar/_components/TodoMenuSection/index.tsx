@@ -1,10 +1,10 @@
-import Button from '@/src/components/shared/Button'
-import Icon from '@/src/components/shared/Icon'
-import { List } from '@/src/components/shared/List'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
+import { List } from '@/src/components/List'
 import cn from '@/src/lib/cn'
 import { TODO_MENU } from '../../../_constants'
 import { useTransition } from 'react'
-import Spinner from '@/src/components/shared/Spinner'
+import Spinner from '@/src/components/Spinner'
 import { usePathname } from 'next/navigation'
 
 interface Props {

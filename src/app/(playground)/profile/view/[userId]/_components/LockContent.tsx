@@ -1,5 +1,5 @@
-import { Container } from '@/src/components/shared/Container'
-import Text from '@/src/components/shared/Text'
+import { Container } from '@/src/components/Container'
+import Text from '@/src/components/Text'
 
 export default function LockContent() {
   return (

@@ -1,9 +1,9 @@
 'use client'
 
-import Title from '@/src/components/shared/Title'
+import Title from '@/src/components/Title'
 import { EditorContent } from '@tiptap/react'
-import { XStack, YStack } from '@/src/components/shared/Stack'
-import Tag from '@/src/components/shared/Tag'
+import { XStack, YStack } from '@/src/components/Stack'
+import Tag from '@/src/components/Tag'
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { postQuery } from '@/src/services/queries/post/post-query'

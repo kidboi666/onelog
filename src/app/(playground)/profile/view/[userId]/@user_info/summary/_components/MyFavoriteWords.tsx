@@ -3,12 +3,12 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { postQuery } from '@/src/services/queries/post/post-query'
-import Empty from '@/src/components/shared/Empty'
-import Title from '@/src/components/shared/Title'
-import { List } from '@/src/components/shared/List'
+import Empty from '@/src/components/Empty'
+import Title from '@/src/components/Title'
+import { List } from '@/src/components/List'
 import FavoriteWordTag from './FavoriteWordTag'
-import { Container } from '@/src/components/shared/Container'
-import { YStack } from '@/src/components/shared/Stack'
+import { Container } from '@/src/components/Container'
+import { YStack } from '@/src/components/Stack'
 import { IFavoriteWord } from '@/src/types/post'
 
 interface Props {

@@ -7,9 +7,9 @@ import { userQuery } from '@/src/services/queries/auth/user-query'
 import { getSignUpDays } from '@/src/utils/formatDate'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
 import HistoryBlock from './HistoryBlock'
-import { XStack } from '@/src/components/shared/Stack'
+import { XStack } from '@/src/components/Stack'
 import { countPostQuery } from '@/src/services/queries/post/count-post-query'
-import { Container } from '@/src/components/shared/Container'
+import { Container } from '@/src/components/Container'
 
 interface Props {
   userId: string

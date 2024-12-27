@@ -1,10 +1,10 @@
-import { DropDown } from '@/src/components/shared/DropDown'
-import { YStack } from '@/src/components/shared/Stack'
-import Title from '@/src/components/shared/Title'
+import { DropDown } from '@/src/components/DropDown'
+import { YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
 import { MBTI, TMBTI } from '../_constants/mbti'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
-import Icon from '@/src/components/shared/Icon'
+import Icon from '@/src/components/Icon'
 
 interface Props {
   mbti?: TMBTI

@@ -1,6 +1,6 @@
 'use client'
 
-import { XStack } from '@/src/components/shared/Stack'
+import { XStack } from '@/src/components/Stack'
 import SideOptionsContainer from './_containers/SideOptionsContainer'
 import { useState } from 'react'
 import PostContainer from './_containers/PostContainer'

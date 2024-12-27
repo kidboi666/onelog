@@ -1,11 +1,11 @@
 'use client'
 
-import Button from '@/src/components/shared/Button'
-import Icon from '@/src/components/shared/Icon'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import MobileMenu from './MobileMenu'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
-import { Container } from '@/src/components/shared/Container'
+import { Container } from '@/src/components/Container'
 import useToggle from '@/src/hooks/useToggle'
 
 export default function MenuButton() {

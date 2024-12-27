@@ -1,6 +1,6 @@
 'use client'
 
-import Follow from '@/src/components/shared/Follow'
+import Follow from '@/src/components/Follow'
 import useMe from '@/src/hooks/useMe'
 import useFollowQueries from '@/src/hooks/query/useFollowQueries'
 import useFollowActions from '@/src/hooks/actions/useFollowActions'

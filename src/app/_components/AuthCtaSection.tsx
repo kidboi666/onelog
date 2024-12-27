@@ -1,8 +1,8 @@
 'use client'
 
-import LinkButton from '@/src/components/shared/LinkButton'
-import { XStack, YStack } from '@/src/components/shared/Stack'
-import Title from '@/src/components/shared/Title'
+import LinkButton from '@/src/components/LinkButton'
+import { XStack, YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
 import { supabase } from '@/src/lib/supabase/client'
 import { routes } from '@/src/routes'
 import { meQuery } from '@/src/services/queries/auth/me-query'

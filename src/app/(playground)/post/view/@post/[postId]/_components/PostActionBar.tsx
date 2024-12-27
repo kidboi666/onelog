@@ -1,7 +1,7 @@
 'use client'
 
-import Line from '@/src/components/shared/Line'
-import { XStack, YStack } from '@/src/components/shared/Stack'
+import Line from '@/src/components/Line'
+import { XStack, YStack } from '@/src/components/Stack'
 import LikeButton from '@/src/app/(playground)/(home)/_components/LikeButton'
 import ShareButton from '@/src/app/(playground)/(home)/_components/ShareButton'
 import ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton'

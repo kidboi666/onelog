@@ -1,5 +1,5 @@
-import { Container } from '@/src/components/shared/Container'
-import Text from '@/src/components/shared/Text'
+import { Container } from '@/src/components/Container'
+import Text from '@/src/components/Text'
 import cn from '@/src/lib/cn'
 import { supabase } from '@/src/lib/supabase/client'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'

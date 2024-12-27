@@ -1,6 +1,6 @@
 'use client'
 
-import Line from '@/src/components/shared/Line'
+import Line from '@/src/components/Line'
 import TitleSection from './TitleSection'
 import DateSection from './DateSection'
 import MemoSection from './MemoSection'

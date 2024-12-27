@@ -1,8 +1,8 @@
-import Button from '@/src/components/shared/Button'
+import Button from '@/src/components/Button'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import TagInfo from './TagInfo'
 import { useState } from 'react'
-import { List } from '@/src/components/shared/List'
+import { List } from '@/src/components/List'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import { IFavoriteWord } from '@/src/types/post'
 

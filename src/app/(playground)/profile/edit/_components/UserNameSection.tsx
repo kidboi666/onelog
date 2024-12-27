@@ -1,7 +1,7 @@
-import Input from '@/src/components/shared/Input'
-import { XStack, YStack } from '@/src/components/shared/Stack'
-import Text from '@/src/components/shared/Text'
-import Title from '@/src/components/shared/Title'
+import Input from '@/src/components/Input'
+import { XStack, YStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+import Title from '@/src/components/Title'
 import cn from '@/src/lib/cn'
 import { ComponentProps } from 'react'
 

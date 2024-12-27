@@ -1,9 +1,9 @@
 'use client'
 
-import Button from '@/src/components/shared/Button'
-import Icon from '@/src/components/shared/Icon'
-import TextArea from '@/src/components/shared/TextArea'
-import Title from '@/src/components/shared/Title'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
+import TextArea from '@/src/components/TextArea'
+import Title from '@/src/components/Title'
 import useInput from '@/src/hooks/useInput'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { Tables } from '@/src/types/supabase'

@@ -1,4 +1,4 @@
-import { YStack } from '@/src/components/shared/Stack'
+import { YStack } from '@/src/components/Stack'
 import { createServerClient } from '@/src/lib/supabase/server'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { userQuery } from '@/src/services/queries/auth/user-query'

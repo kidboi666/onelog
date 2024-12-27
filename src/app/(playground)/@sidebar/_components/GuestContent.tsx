@@ -1,5 +1,5 @@
-import { DropDown } from '@/src/components/shared/DropDown'
-import Icon from '@/src/components/shared/Icon'
+import { DropDown } from '@/src/components/DropDown'
+import Icon from '@/src/components/Icon'
 import { routes } from '@/src/routes'
 import { wait } from '@/src/utils/wait'
 import { useRouter } from 'next/navigation'

@@ -1,4 +1,4 @@
-import { ButtonProps } from '@/src/components/shared/Button'
+import { ButtonProps } from '@/src/components/Button'
 import { TColor } from '@/src/types/theme'
 
 export const formatColor = (color: TColor) => {

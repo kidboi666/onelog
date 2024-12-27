@@ -1,8 +1,8 @@
 'use client'
 
-import Button from '@/src/components/shared/Button'
+import Button from '@/src/components/Button'
 import { routes } from '@/src/routes'
-import { XStack } from '@/src/components/shared/Stack'
+import { XStack } from '@/src/components/Stack'
 import useFollowActions from '@/src/hooks/actions/useFollowActions'
 import { IUserInfoWithMBTI } from '@/src/types/auth'
 import useTransitionWithRoute from '@/src/hooks/useRouterPushWithTransition'

@@ -1,7 +1,7 @@
 'use client'
 
-import Button from '@/src/components/shared/Button'
-import { XStack } from '@/src/components/shared/Stack'
+import Button from '@/src/components/Button'
+import { XStack } from '@/src/components/Stack'
 import useFollowActions from '@/src/hooks/actions/useFollowActions'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
 import { routes } from '@/src/routes'

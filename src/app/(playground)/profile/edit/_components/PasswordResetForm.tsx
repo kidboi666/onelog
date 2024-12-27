@@ -1,9 +1,9 @@
 'use client'
 
-import Button from '@/src/components/shared/Button'
-import { YStack } from '@/src/components/shared/Stack'
-import Text from '@/src/components/shared/Text'
-import Title from '@/src/components/shared/Title'
+import Button from '@/src/components/Button'
+import { YStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+import Title from '@/src/components/Title'
 import { routes } from '@/src/routes'
 import useMe from '@/src/hooks/useMe'
 import { useRouter } from 'next/navigation'

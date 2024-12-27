@@ -1,6 +1,6 @@
-import Button from '@/src/components/shared/Button'
-import Icon from '@/src/components/shared/Icon'
-import ToolTip from '@/src/components/shared/Tooltip'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
+import ToolTip from '@/src/components/Tooltip'
 import useToggle from '@/src/hooks/useToggle'
 import cn from '@/src/lib/cn'
 

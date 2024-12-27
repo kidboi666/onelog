@@ -1,14 +1,14 @@
 import { ReactNode, useTransition } from 'react'
 import cn from '@/src/lib/cn'
 import { useRouter } from 'next/navigation'
-import Icon from '@/src/components/shared/Icon'
+import Icon from '@/src/components/Icon'
 import BookMark from './BookMark'
-import Button from '@/src/components/shared/Button'
-import Spinner from '@/src/components/shared/Spinner'
-import Text from '@/src/components/shared/Text'
+import Button from '@/src/components/Button'
+import Spinner from '@/src/components/Spinner'
+import Text from '@/src/components/Text'
 import SelectedMenuBackground from './SelectedMenuBackground'
 import { wait } from '@/src/utils/wait'
-import { ZStack } from '@/src/components/shared/Stack'
+import { ZStack } from '@/src/components/Stack'
 
 interface Props {
   isSelected: boolean

@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 
 import PostCardContent from './PostCardContent'
-import { YStack } from '@/src/components/shared/Stack'
+import { YStack } from '@/src/components/Stack'
 import { routes } from '@/src/routes'
 import { IPostWithUserInfo } from '@/src/types/post'
 import PostHeader from './PostHeader'

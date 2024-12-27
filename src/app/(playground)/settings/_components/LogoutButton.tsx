@@ -1,8 +1,8 @@
 'use client'
 
-import Button from '@/src/components/shared/Button'
-import { YStack } from '@/src/components/shared/Stack'
-import Title from '@/src/components/shared/Title'
+import Button from '@/src/components/Button'
+import { YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
 import useMe from '@/src/hooks/useMe'
 import useSignOut from '@/src/services/mutates/auth/useSignOut'
 

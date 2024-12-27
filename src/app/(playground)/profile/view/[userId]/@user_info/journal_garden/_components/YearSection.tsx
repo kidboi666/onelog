@@ -1,6 +1,6 @@
-import Button from '@/src/components/shared/Button'
-import { DropDown } from '@/src/components/shared/DropDown'
-import Icon from '@/src/components/shared/Icon'
+import Button from '@/src/components/Button'
+import { DropDown } from '@/src/components/DropDown'
+import Icon from '@/src/components/Icon'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 

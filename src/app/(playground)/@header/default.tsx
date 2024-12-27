@@ -4,8 +4,8 @@ import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import ThemeToggleButton from './_components/ThemeToggleButton'
 import MenuButton from './_components/MenuButton'
-import { Container } from '@/src/components/shared/Container'
-import { XStack } from '@/src/components/shared/Stack'
+import { Container } from '@/src/components/Container'
+import { XStack } from '@/src/components/Stack'
 
 export default function Default() {
   const supabase = createServerClient()

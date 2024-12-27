@@ -1,12 +1,12 @@
-import { DropDown } from '@/src/components/shared/DropDown'
+import { DropDown } from '@/src/components/DropDown'
 import useToggle from '@/src/hooks/useToggle'
 import EmotionPickerWithDropDown from './EmotionPickerWithDropDown'
-import Text from '@/src/components/shared/Text'
+import Text from '@/src/components/Text'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
-import Icon from '@/src/components/shared/Icon'
-import ToolTip from '@/src/components/shared/Tooltip'
-import { ZStack } from '@/src/components/shared/Stack'
+import Icon from '@/src/components/Icon'
+import ToolTip from '@/src/components/Tooltip'
+import { ZStack } from '@/src/components/Stack'
 import { TEmotion } from '../page'
 
 interface Props {

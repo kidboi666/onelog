@@ -1,11 +1,11 @@
-import Icon from '@/src/components/shared/Icon'
+import Icon from '@/src/components/Icon'
 import BookMark from '../../@sidebar/_components/BookMark'
 import SelectedMenuBackground from '../../@sidebar/_components/SelectedMenuBackground'
-import Text from '@/src/components/shared/Text'
+import Text from '@/src/components/Text'
 import { useRouter } from 'next/navigation'
 import { wait } from '@/src/utils/wait'
-import Button from '@/src/components/shared/Button'
-import { ZStack } from '@/src/components/shared/Stack'
+import Button from '@/src/components/Button'
+import { ZStack } from '@/src/components/Stack'
 import { routes } from '@/src/routes'
 
 interface Props {

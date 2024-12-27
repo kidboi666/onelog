@@ -1,7 +1,7 @@
 'use client'
 
-import Icon from '@/src/components/shared/Icon'
-import LinkButton from '@/src/components/shared/LinkButton'
+import Icon from '@/src/components/Icon'
+import LinkButton from '@/src/components/LinkButton'
 import cn from '@/src/lib/cn'
 import { useTheme } from '@/src/store/useTheme'
 

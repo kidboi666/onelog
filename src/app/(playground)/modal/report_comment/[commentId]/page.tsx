@@ -8,11 +8,11 @@ import useInput from '@/src/hooks/useInput'
 import useReport from '@/src/services/mutates/report/useReport'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { routes } from '@/src/routes'
-import Button from '@/src/components/shared/Button'
-import Modal from '@/src/components/shared/Modal'
-import { XStack, YStack } from '@/src/components/shared/Stack'
-import TextArea from '@/src/components/shared/TextArea'
-import Title from '@/src/components/shared/Title'
+import Button from '@/src/components/Button'
+import Modal from '@/src/components/Modal'
+import { XStack, YStack } from '@/src/components/Stack'
+import TextArea from '@/src/components/TextArea'
+import Title from '@/src/components/Title'
 
 interface Props {
   params: { commentId: string }

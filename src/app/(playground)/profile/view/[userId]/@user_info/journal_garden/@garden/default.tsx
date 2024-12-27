@@ -8,14 +8,14 @@ import { Tables } from '@/src/types/supabase'
 import { IDateBlock } from '@/src/types/garden'
 import { getDaysInYear, getFirstDayInYear } from '@/src/utils/formatDate'
 
-import Title from '@/src/components/shared/Title'
+import Title from '@/src/components/Title'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import Block from '../_components/Block'
 import YearSection from '../_components/YearSection'
 import ColorInfoDisplay from '../_components/ColorInfoDisplay'
 import GardenBlockSection from '../_components/GardenBlockSection'
-import { Container } from '@/src/components/shared/Container'
-import { YStack } from '@/src/components/shared/Stack'
+import { Container } from '@/src/components/Container'
+import { YStack } from '@/src/components/Stack'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 이모션 레벨 기준 색칠)

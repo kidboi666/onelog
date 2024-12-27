@@ -10,10 +10,10 @@ import {
   TOP_NAVIGATE_MENUS,
 } from './_constants/Navigate'
 
-import ToolTip from '@/src/components/shared/Tooltip'
-import { Container } from '@/src/components/shared/Container'
-import { YStack, ZStack } from '@/src/components/shared/Stack'
-import Line from '@/src/components/shared/Line'
+import ToolTip from '@/src/components/Tooltip'
+import { Container } from '@/src/components/Container'
+import { YStack, ZStack } from '@/src/components/Stack'
+import Line from '@/src/components/Line'
 import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
 import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown'
 import SidebarWriteButtonWithLogo from './_components/SidebarWriteButtonWithLogo'

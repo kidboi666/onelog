@@ -1,6 +1,6 @@
 'use client'
 
-import { List } from '@/src/components/shared/List'
+import { List } from '@/src/components/List'
 import { useRef } from 'react'
 import Folder from '../../../_components/Folder'
 import { Tables } from '@/src/types/supabase'

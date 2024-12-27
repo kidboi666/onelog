@@ -18,12 +18,12 @@ import { meQuery } from '@/src/services/queries/auth/me-query'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
 import { routes } from '@/src/routes'
-import Spinner from '@/src/components/shared/Spinner'
-import { XStack, YStack } from '@/src/components/shared/Stack'
-import Button from '@/src/components/shared/Button'
-import Icon from '@/src/components/shared/Icon'
-import { List } from '@/src/components/shared/List'
-import Text from '@/src/components/shared/Text'
+import Spinner from '@/src/components/Spinner'
+import { XStack, YStack } from '@/src/components/Stack'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
+import { List } from '@/src/components/List'
+import Text from '@/src/components/Text'
 
 interface TodoProps {
   todo: Tables<'todo'>

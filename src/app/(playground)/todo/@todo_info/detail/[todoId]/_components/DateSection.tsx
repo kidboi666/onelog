@@ -1,7 +1,7 @@
 'use client'
 
-import Text from '@/src/components/shared/Text'
-import Title from '@/src/components/shared/Title'
+import Text from '@/src/components/Text'
+import Title from '@/src/components/Title'
 import { Tables } from '@/src/types/supabase'
 import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
 

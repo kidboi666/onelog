@@ -1,7 +1,7 @@
 import ColorPicker from './_components/ColorPicker'
 import DarkModeSwitch from './_components/DarkModeSwitch'
 import LogoutButton from './_components/LogoutButton'
-import { YStack } from '@/src/components/shared/Stack'
+import { YStack } from '@/src/components/Stack'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

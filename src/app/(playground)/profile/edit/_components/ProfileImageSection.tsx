@@ -1,9 +1,9 @@
-import Avatar from '@/src/components/shared/Avatar'
-import Button from '@/src/components/shared/Button'
-import Icon from '@/src/components/shared/Icon'
-import { XStack, YStack, ZStack } from '@/src/components/shared/Stack'
-import Text from '@/src/components/shared/Text'
-import Title from '@/src/components/shared/Title'
+import Avatar from '@/src/components/Avatar'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
+import { XStack, YStack, ZStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+import Title from '@/src/components/Title'
 import { ComponentProps, useRef } from 'react'
 
 interface Props extends ComponentProps<'input'> {

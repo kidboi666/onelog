@@ -9,10 +9,10 @@ import { postQuery } from '@/src/services/queries/post/post-query'
 import useMe from '@/src/hooks/useMe'
 import useIntersect from '@/src/hooks/useIntersect'
 
-import { Container } from '@/src/components/shared/Container'
-import Empty from '@/src/components/shared/Empty'
-import Spinner from '@/src/components/shared/Spinner'
-import { YStack } from '@/src/components/shared/Stack'
+import { Container } from '@/src/components/Container'
+import Empty from '@/src/components/Empty'
+import Spinner from '@/src/components/Spinner'
+import { YStack } from '@/src/components/Stack'
 import PostCard from '@/src/app/(playground)/(home)/_components/PostCard'
 
 interface Props {

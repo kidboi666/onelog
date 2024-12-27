@@ -1,7 +1,7 @@
 'use client'
 
-import Portal from '@/src/components/shared/Portal'
-import { ZStack } from '@/src/components/shared/Stack'
+import Portal from '@/src/components/Portal'
+import { ZStack } from '@/src/components/Stack'
 import { PropsWithChildren, ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 

@@ -15,11 +15,11 @@ import useUpdateTodoFolder from '@/src/services/mutates/todo/useUpdateTodoFolder
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
-import Button from '@/src/components/shared/Button'
+import Button from '@/src/components/Button'
 import FolderDropDown from './FolderDropDown'
-import { List } from '@/src/components/shared/List'
+import { List } from '@/src/components/List'
 import { Dot } from './Dot'
-import Spinner from '@/src/components/shared/Spinner'
+import Spinner from '@/src/components/Spinner'
 import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
 
 interface Props {

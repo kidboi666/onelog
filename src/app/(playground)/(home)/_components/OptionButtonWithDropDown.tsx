@@ -1,10 +1,10 @@
 'use client'
 
-import Icon from '@/src/components/shared/Icon'
+import Icon from '@/src/components/Icon'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import { MouseEvent } from 'react'
-import { DropDown } from '@/src/components/shared/DropDown'
+import { DropDown } from '@/src/components/DropDown'
 import { useRouter } from 'next/navigation'
 import { routes } from '@/src/routes'
 import { useSuspenseQuery } from '@tanstack/react-query'

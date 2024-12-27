@@ -5,8 +5,8 @@ import CommentInput from './CommentInput'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { commentQuery } from '@/src/services/queries/comment/comment-query'
 import { supabase } from '@/src/lib/supabase/client'
-import { List } from '@/src/components/shared/List'
-import Empty from '@/src/components/shared/Empty'
+import { List } from '@/src/components/List'
+import Empty from '@/src/components/Empty'
 import useMe from '@/src/hooks/useMe'
 
 interface Props {

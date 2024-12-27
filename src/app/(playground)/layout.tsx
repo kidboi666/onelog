@@ -1,8 +1,8 @@
 'use client'
 
-import { Container } from '@/src/components/shared/Container'
-import Portal from '@/src/components/shared/Portal'
-import ToastContainer from '@/src/components/shared/ToastContainer'
+import { Container } from '@/src/components/Container'
+import Portal from '@/src/components/Portal'
+import ToastContainer from '@/src/components/ToastContainer'
 import { usePathname } from 'next/navigation'
 import { PropsWithChildren, ReactNode } from 'react'
 

@@ -1,8 +1,8 @@
-import { XStack, YStack } from '@/src/components/shared/Stack'
-import Avatar from '@/src/components/shared/Avatar'
-import Title from '@/src/components/shared/Title'
-import Follow from '@/src/components/shared/Follow'
-import { DropDown } from '@/src/components/shared/DropDown'
+import { XStack, YStack } from '@/src/components/Stack'
+import Avatar from '@/src/components/Avatar'
+import Title from '@/src/components/Title'
+import Follow from '@/src/components/Follow'
+import { DropDown } from '@/src/components/DropDown'
 import { routes } from '@/src/routes'
 import { useTransition } from 'react'
 

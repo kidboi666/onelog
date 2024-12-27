@@ -5,7 +5,7 @@ import Button from './Button'
 import Icon from './Icon'
 import Text from './Text'
 import React, { useEffect, useRef } from 'react'
-import { XStack } from '@/src/components/shared/Stack'
+import { XStack } from '@/src/components/Stack'
 
 interface Props {
   content: ToastContent

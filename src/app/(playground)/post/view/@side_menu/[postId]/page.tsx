@@ -1,6 +1,6 @@
-import { Container } from '@/src/components/shared/Container'
-import { YStack } from '@/src/components/shared/Stack'
-import Line from '@/src/components/shared/Line'
+import { Container } from '@/src/components/Container'
+import { YStack } from '@/src/components/Stack'
+import Line from '@/src/components/Line'
 import PostCountInfo from '@/src/app/(playground)/post/view/@side_menu/[postId]/_components/PostCountInfo'
 import SideActionBar from '@/src/app/(playground)/post/view/@side_menu/[postId]/_components/SideActionBar'
 

@@ -1,8 +1,8 @@
 'use client'
 
-import Button from '@/src/components/shared/Button'
-import TextArea from '@/src/components/shared/TextArea'
-import Title from '@/src/components/shared/Title'
+import Button from '@/src/components/Button'
+import TextArea from '@/src/components/TextArea'
+import Title from '@/src/components/Title'
 import useInput from '@/src/hooks/useInput'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'

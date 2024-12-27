@@ -1,11 +1,11 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import Button from '@/src/components/shared/Button'
-import Modal from '@/src/components/shared/Modal'
-import Title from '@/src/components/shared/Title'
+import Button from '@/src/components/Button'
+import Modal from '@/src/components/Modal'
+import Title from '@/src/components/Title'
 import { useTransition } from 'react'
-import { XStack } from '@/src/components/shared/Stack'
+import { XStack } from '@/src/components/Stack'
 import useDeleteComment from '@/src/services/mutates/comment/useDeleteComment'
 
 interface Props {

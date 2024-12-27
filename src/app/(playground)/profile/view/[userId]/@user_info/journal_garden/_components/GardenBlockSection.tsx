@@ -1,5 +1,5 @@
 import { IDateBlock } from '@/src/types/garden'
-import Text from '@/src/components/shared/Text'
+import Text from '@/src/components/Text'
 import { createEmptySpaceByWeekday } from '../@garden/default'
 import { DAYS_OF_WEEK } from '../../../_constants'
 

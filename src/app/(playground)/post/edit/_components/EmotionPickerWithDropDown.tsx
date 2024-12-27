@@ -1,12 +1,12 @@
 import cn from '@/src/lib/cn'
-import { List } from '@/src/components/shared/List'
+import { List } from '@/src/components/List'
 import { RefObject } from 'react'
 import { useTheme } from '@/src/store/useTheme'
-import Icon from '@/src/components/shared/Icon'
-import { DropDown } from '@/src/components/shared/DropDown'
+import Icon from '@/src/components/Icon'
+import { DropDown } from '@/src/components/DropDown'
 import { TEmotion } from '../page'
 import { EMOTION_STATUS } from '../_constants'
-import { YStack } from '@/src/components/shared/Stack'
+import { YStack } from '@/src/components/Stack'
 
 interface Props {
   selectedEmotion: TEmotion | null

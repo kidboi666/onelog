@@ -1,7 +1,7 @@
 'use client'
 
-import Modal from '@/src/components/shared/Modal'
-import { YStack } from '@/src/components/shared/Stack'
+import Modal from '@/src/components/Modal'
+import { YStack } from '@/src/components/Stack'
 import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 import FollowUserCard from '../../_components/FollowUserCard'
 import { useRouter } from 'next/navigation'

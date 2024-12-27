@@ -1,5 +1,5 @@
-import Icon from '@/src/components/shared/Icon'
-import LinkButton from '@/src/components/shared/LinkButton'
+import Icon from '@/src/components/Icon'
+import LinkButton from '@/src/components/LinkButton'
 
 export default function HomeLogoSection() {
   return (

@@ -1,6 +1,6 @@
-import { YStack } from '@/src/components/shared/Stack'
+import { YStack } from '@/src/components/Stack'
 import { Suspense } from 'react'
-import Spinner from '@/src/components/shared/Spinner'
+import Spinner from '@/src/components/Spinner'
 import Comments from '@/src/app/(playground)/(home)/_components/Comments'
 
 interface Props {

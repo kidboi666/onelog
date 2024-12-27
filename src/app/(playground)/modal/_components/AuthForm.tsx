@@ -1,9 +1,9 @@
 import { ComponentProps } from 'react'
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
-import Input from '@/src/components/shared/Input'
-import { YStack } from '@/src/components/shared/Stack'
-import Text from '@/src/components/shared/Text'
-import Title from '@/src/components/shared/Title'
+import Input from '@/src/components/Input'
+import { YStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+import Title from '@/src/components/Title'
 
 interface Props extends ComponentProps<'input'> {
   register: UseFormRegisterReturn

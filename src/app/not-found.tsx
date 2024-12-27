@@ -1,9 +1,9 @@
-import BackButton from '@/src/components/shared/BackButton'
-import { Container } from '@/src/components/shared/Container'
-import LinkButton from '@/src/components/shared/LinkButton'
-import { XStack, YStack } from '@/src/components/shared/Stack'
-import Text from '@/src/components/shared/Text'
-import Title from '@/src/components/shared/Title'
+import BackButton from '@/src/components/BackButton'
+import { Container } from '@/src/components/Container'
+import LinkButton from '@/src/components/LinkButton'
+import { XStack, YStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+import Title from '@/src/components/Title'
 import { routes } from '@/src/routes'
 
 export default function NotFound() {

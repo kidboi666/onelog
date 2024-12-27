@@ -2,8 +2,8 @@
 
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
-import { DropDown } from '@/src/components/shared/DropDown'
-import Avatar from '@/src/components/shared/Avatar'
+import { DropDown } from '@/src/components/DropDown'
+import Avatar from '@/src/components/Avatar'
 import { routes } from '@/src/routes'
 import AvatarButtonWithDropDownContent from '@/src/app/(playground)/(home)/_components/AvatarButtonWithDropDownContent'
 import useMe from '@/src/hooks/useMe'

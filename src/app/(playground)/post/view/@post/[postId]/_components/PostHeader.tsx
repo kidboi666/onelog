@@ -1,9 +1,9 @@
 'use client'
 
-import { XStack, YStack } from '@/src/components/shared/Stack'
+import { XStack, YStack } from '@/src/components/Stack'
 import AvatarButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AvatarButtonWithDropDown'
-import Title from '@/src/components/shared/Title'
-import Text from '@/src/components/shared/Text'
+import Title from '@/src/components/Title'
+import Text from '@/src/components/Text'
 import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
 import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge'
 import { TEmotion } from '@/src/app/(playground)/post/edit/page'
