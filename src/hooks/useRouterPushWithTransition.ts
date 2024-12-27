@@ -1,17 +1,18 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useCallback, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function useRouterPushWithTransition(
-  route: string,
+  path: string,
+  scroll: boolean | undefined = true,
 ): [boolean, () => void] {
   const [isLoading, startTransition] = useTransition()
   const router = useRouter()
 
-  const handleStartTransition = (): void => {
-    startTransition(() => router.push(route))
-  }
+  const handleStartTransition = useCallback(() => {
+    startTransition(() => router.push(path, { scroll }))
+  }, [path, router, scroll, startTransition])
 
   return [isLoading, handleStartTransition]
 }

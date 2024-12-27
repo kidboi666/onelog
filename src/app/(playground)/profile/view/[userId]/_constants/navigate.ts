@@ -24,4 +24,4 @@ export const PROFILE_NAVIGATE_MENUS = [
     name: '좋아요한 게시글',
     path: 'liked',
   },
-]
+] as const

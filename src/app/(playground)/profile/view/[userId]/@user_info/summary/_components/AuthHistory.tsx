@@ -8,7 +8,7 @@ import { getSignUpDays } from '@/src/utils/formatDate'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
 import HistoryBlock from './HistoryBlock'
 import { XStack } from '@/src/components/Stack'
-import { countPostQuery } from '@/src/services/queries/post/count-post-query'
+import { postCountQuery } from '@/src/services/queries/post/post-count-query'
 import { Container } from '@/src/components/Container'
 
 interface Props {
@@ -21,7 +21,7 @@ export default function AuthHistory({ userId }: Props) {
     userQuery.getUserInfo(supabase, userId),
   )
   const { data: postLength } = useSuspenseQuery(
-    countPostQuery.countAllMyPost(supabase, userId),
+    postCountQuery.countAllMyPost(supabase, userId),
   )
   const { data: myAverageEmotion } = useSuspenseQuery(
     emotionQuery.getEmotionAverage(supabase, userId),

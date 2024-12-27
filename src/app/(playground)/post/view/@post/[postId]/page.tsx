@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function PostPage({ params }: Props) {
   const postId = Number(params.postId)
-  const state = await postPrefetchQuery.data(postId)
+  const state = await postPrefetchQuery.getPost(postId)
 
   return (
     <HydrationBoundary state={state}>
