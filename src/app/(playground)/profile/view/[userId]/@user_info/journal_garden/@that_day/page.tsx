@@ -21,7 +21,7 @@ export default function PrevOnePost({ params, searchParams }: Props) {
   const year = parseInt(searchParams.year)
   const month = parseInt(searchParams.month)
   const date = parseInt(searchParams.date)
-  const { me, session } = useMe()
+  const { me } = useMe()
   const [startOfDay, setStartOfDay] = useState('')
   const [endOfDay, setEndOfDay] = useState('')
 

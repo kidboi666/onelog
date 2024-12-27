@@ -52,6 +52,7 @@ export const postQuery = {
             *,
             post!like_post_id_fkey(
               *,
+              comment(count),
               like(count),
               user_info(
                 avatar_url,
@@ -102,6 +103,7 @@ export const postQuery = {
           .select(
             `
             *,
+            comment(count),
             like(count),
             user_info(
               email,
@@ -146,6 +148,7 @@ export const postQuery = {
           .select(
             `
             *,
+            comment(count),
             like(count),
             user_info(
               email,

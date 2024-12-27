@@ -44,7 +44,7 @@ export default function Journals({ params }: Props) {
 
   useEffect(() => {
     if (inView && hasNextPage) {
-      fetchNextPage()
+      void fetchNextPage()
     }
   }, [inView, hasNextPage, fetchNextPage])
 
