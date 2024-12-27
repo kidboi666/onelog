@@ -3,7 +3,7 @@
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { postQuery } from '@/src/services/queries/post/post-query'
-import PostCard from '../_components/PostCard'
+import PostCard from './PostCard'
 import useIntersect from '@/src/hooks/useIntersect'
 import { useEffect } from 'react'
 import Spinner from '@/src/components/Spinner'
