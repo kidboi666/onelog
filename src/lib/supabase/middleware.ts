@@ -1,11 +1,10 @@
 import { authRestrictedRoutes, protectedRoutes, routes } from '@/src/routes'
 import { createServerClient } from '@supabase/ssr'
-import { User } from '@supabase/supabase-js'
-import { NextResponse, type NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
-export async function updateSession(req: NextRequest) {
+export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
-    request: req,
+    request,
   })
 
   const supabase = createServerClient(
@@ -14,14 +13,14 @@ export async function updateSession(req: NextRequest) {
     {
       cookies: {
         getAll() {
-          return req.cookies.getAll()
+          return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) =>
-            req.cookies.set(name, value),
+            request.cookies.set(name, value),
           )
           supabaseResponse = NextResponse.next({
-            request: req,
+            request,
           })
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options),
@@ -39,27 +38,27 @@ export async function updateSession(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (shouldRedirectToHome(user, req)) {
-    return NextResponse.redirect(new URL(routes.home, req.url))
+  const attemptedUnauthorizedAccess =
+    user &&
+    authRestrictedRoutes.some((route) =>
+      request.nextUrl.pathname.startsWith(route),
+    )
+
+  if (attemptedUnauthorizedAccess) {
+    const url = request.nextUrl.clone()
+    url.pathname = routes.home
+    return NextResponse.redirect(url)
   }
 
-  if (shouldRedirectToAuthGuard(user, req)) {
-    return NextResponse.redirect(new URL(routes.modal.auth.guard, req.url))
+  const isUnauthorized =
+    !user &&
+    protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
+
+  if (isUnauthorized) {
+    const url = request.nextUrl.clone()
+    url.pathname = routes.modal.auth.guard
+    return NextResponse.redirect(url)
   }
 
   return supabaseResponse
-}
-
-function shouldRedirectToHome(user: User | null, req: NextRequest) {
-  return (
-    user &&
-    authRestrictedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))
-  )
-}
-
-function shouldRedirectToAuthGuard(user: User | null, req: NextRequest) {
-  return (
-    !user &&
-    protectedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))
-  )
 }
