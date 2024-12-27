@@ -20,35 +20,38 @@ interface Props {
 export default function useBlockEditor({
   content,
   setContent,
-  editable,
+  editable = false,
   limit,
   placeholder,
 }: Props) {
+  const extensions = [
+    StarterKit.configure({
+      codeBlock: false,
+    }),
+    Placeholder.configure({
+      placeholder,
+      showOnlyCurrent: false,
+    }),
+    Markdown,
+    Image.configure({
+      allowBase64: true,
+      inline: true,
+    }),
+    CodeBlock,
+    CharacterCount.configure({
+      limit,
+    }),
+  ]
   const editor = useEditor({
     immediatelyRender: false,
-    autofocus: !!editable,
-    editable: !!editable,
+    autofocus: editable,
+    editable: editable,
     content,
-    extensions: [
-      StarterKit.configure({
-        codeBlock: false,
-      }),
-      Placeholder.configure({
-        placeholder,
-        showOnlyCurrent: false,
-      }),
-      Markdown,
-      Image.configure({
-        allowBase64: true,
-        inline: true,
-      }),
-      CodeBlock,
-      CharacterCount.configure({
-        limit,
-      }),
-    ],
+    extensions,
     onUpdate({ editor }) {
-      setContent && setContent(editor.getHTML())
+      if (setContent) {
+        setContent(editor.getHTML())
+      }
     },
     editorProps: {
       attributes: {
