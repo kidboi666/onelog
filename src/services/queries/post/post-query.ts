@@ -4,6 +4,9 @@ import { Tables } from '@/src/types/supabase'
 import { queryKey } from '@/src/lib/tanstack/query-key'
 import { IPost } from '@/src/types/post'
 
+/**
+ * TODO 대충 any 로 휘갈긴 타입핑 지정 @kidboi666
+ */
 export const postQuery = {
   getAllPost: (supabase: SupabaseClient, limit: number, meId?: string | null) =>
     infiniteQueryOptions({
@@ -101,7 +104,7 @@ export const postQuery = {
     infiniteQueryOptions({
       queryKey: queryKey.post.liked(userId, meId),
       queryFn: async ({ pageParam = 0 }) => {
-        let query: any = supabase
+        let query = supabase
           .from('like')
           .select(
             `
@@ -109,8 +112,7 @@ export const postQuery = {
             post!like_post_id_fkey(
               *,
               comment_count:comment(count),
-              is_liked:like(user_id),
-              like_count:like(count),
+              liked_count:like(count),
               user_info(
                 avatar_url,
                 email,
@@ -123,10 +125,6 @@ export const postQuery = {
           .order('created_at', { ascending: false })
           .range(pageParam, pageParam + limit - 1)
 
-        if (meId) {
-          query = query.eq('like.user_id', meId)
-        }
-
         const { data, error } = await query
 
         if (error) {
@@ -134,17 +132,18 @@ export const postQuery = {
         }
 
         let publicData
-        const isMe = meId === userId
+        let isMe: boolean = false
+
+        if (meId) {
+          isMe = meId === userId
+        }
 
         isMe
           ? (publicData = data)
           : (publicData = data?.map((item: any) =>
               item.post.access_type === 'public'
                 ? item
-                : {
-                    ...item,
-                    post: { title: null, content: null },
-                  },
+                : { ...item, post: { title: null, content: null } },
             ))
 
         return publicData

@@ -65,7 +65,7 @@ export default function PostCard({
         postTitle={title}
         accessType={access_type}
         likeCount={like_count?.[0].count}
-        isLiked={is_liked.length > 0}
+        isLiked={is_liked?.length > 0}
         commentCount={comment_count?.[0].count}
         postId={postId}
         onClick={pushPostDetail}
