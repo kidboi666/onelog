@@ -28,7 +28,6 @@ export default function CommentButton({
         className={cn(
           'flex border-none text-xs font-light transition hover:text-blue-400 dark:hover:text-blue-400',
           isSide ? 'max-lg:flex-col' : 'gap-1',
-          commentCount && 'text-blue-400 dark:text-blue-400',
         )}
       >
         <Icon size={isSide ? 24 : 18} view={150}>

@@ -95,6 +95,9 @@ export const postQuery = {
       },
     }),
 
+  /**
+   * TODO is_liked 프로퍼티 구현 요망 (join 쿼리 추가해야 함) @kidboi666
+   */
   getLikedPost: (
     supabase: SupabaseClient,
     userId: string,
