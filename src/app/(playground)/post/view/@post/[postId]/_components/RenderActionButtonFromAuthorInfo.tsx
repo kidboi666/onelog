@@ -8,7 +8,7 @@ import { IUserInfoWithMBTI } from '@/src/types/auth'
 import useTransitionWithRoute from '@/src/hooks/useRouterPushWithTransition'
 
 interface Props {
-  me: IUserInfoWithMBTI
+  me?: IUserInfoWithMBTI | null
   isFollowing: boolean
   userId: string
 }
@@ -19,7 +19,6 @@ export default function RenderActionButtonFromAuthorInfo({
   userId,
 }: Props) {
   const { onFollow, isPending } = useFollowMutates({
-    me,
     isFollowing,
     userId,
   })

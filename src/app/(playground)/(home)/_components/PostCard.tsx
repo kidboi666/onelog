@@ -3,13 +3,13 @@ import useBlockEditor from '@/src/hooks/useBlockEditor'
 import PostCardContent from './PostCardContent'
 import { YStack } from '@/src/components/Stack'
 import { routes } from '@/src/routes'
-import { IPostWithUserInfo } from '@/src/types/post'
+import { IPost } from '@/src/types/post'
 import PostHeader from './PostHeader'
 import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
 
 interface Props {
-  post: IPostWithUserInfo
+  post: IPost
   postUserInfo?: any
   createdAtLiked?: string
   disabled?: boolean

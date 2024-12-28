@@ -2,7 +2,7 @@ import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { Tables } from '@/src/types/supabase'
 import { queryKey } from '@/src/lib/tanstack/query-key'
-import { IPostWithUserInfo } from '@/src/types/post'
+import { IPost } from '@/src/types/post'
 
 export const postQuery = {
   getAllPost: (supabase: SupabaseClient, limit: number) =>
@@ -182,7 +182,7 @@ export const postQuery = {
     }),
 
   getPost: (supabase: SupabaseClient, postId?: number) =>
-    queryOptions<IPostWithUserInfo>({
+    queryOptions<IPost>({
       queryKey: queryKey.post.detail(postId),
       queryFn: async () => {
         const { data } = await supabase
@@ -190,8 +190,16 @@ export const postQuery = {
           .select(
             `
             *,
-            comment(count),
-            like(count),
+            comments:comment(
+              *,
+              user_info(
+                email,
+                user_name,
+                avatar_url
+              )
+            ),
+            comment_count:comment(count),
+            like_count:like(count),
             user_info(
               email,
               user_name,

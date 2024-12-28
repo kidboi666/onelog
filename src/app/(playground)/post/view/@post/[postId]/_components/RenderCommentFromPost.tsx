@@ -1,6 +1,4 @@
 import { YStack } from '@/src/components/Stack'
-import { Suspense } from 'react'
-import Spinner from '@/src/components/Spinner'
 import Comments from '@/src/app/(playground)/(home)/_components/Comments'
 
 interface Props {
@@ -13,15 +11,7 @@ export default function RenderCommentFromPost({ postId }: Props) {
       gap={4}
       className="rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray"
     >
-      <Suspense
-        fallback={
-          <Spinner.Container>
-            <Spinner size={40} />
-          </Spinner.Container>
-        }
-      >
-        <Comments postId={postId} />
-      </Suspense>
+      <Comments postId={postId} />
     </YStack>
     /**
      * TODO #1 무한 대댓글이 가능함 @kidboi666

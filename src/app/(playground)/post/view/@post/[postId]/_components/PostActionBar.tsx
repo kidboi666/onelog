@@ -24,11 +24,11 @@ export default function PostActionBar({ postId }: Props) {
       <Line />
       <XStack gap={0} className="items-center justify-between">
         <LikeButton
-          likeCount={post?.like[0].count}
+          likeCount={post?.like_count[0].count}
           postId={postId}
           viewToolTip
         />
-        <CommentButton viewToolTip commentCount={post.comment[0].count} />
+        <CommentButton viewToolTip commentCount={post.comment_count[0].count} />
         <AccessTypeButtonWithDropDown
           accessType={post?.access_type}
           viewToolTip

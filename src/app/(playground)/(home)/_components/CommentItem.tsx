@@ -1,15 +1,9 @@
 'use client'
 
-import { Suspense, useState } from 'react'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
-import { countCommentQuery } from '@/src/services/queries/comment/count-comment-query'
+import { useState } from 'react'
 import { formatDateElapsed } from '@/src/utils/formatDate'
-import { ICommentWithUserInfo } from '@/src/types/comment'
-import { IUserInfoWithMBTI } from '@/src/types/auth'
 
 import Text from '@/src/components/Text'
-import Spinner from '@/src/components/Spinner'
 import { XStack, YStack } from '@/src/components/Stack'
 import CommentInputButton from './CommentInputButton'
 import CommentButton from './CommentButton'
@@ -17,22 +11,32 @@ import CommentInput from './CommentInput'
 import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import ReportButton from './ReportButton'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
-import { commentQuery } from '@/src/services/queries/comment/comment-query'
+import { IUserSession } from '@/src/services/queries/auth/me-query'
+import { IComment } from '@/src/types/comment'
+import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
+import { queryKey } from '@/src/lib/tanstack/query-key'
+import { IPost } from '@/src/types/post'
 
 interface Props {
-  comment: ICommentWithUserInfo
+  comment: IComment
   postId: number
-  me: IUserInfoWithMBTI
+  session?: IUserSession | null
 }
 
-export default function CommentItem({ comment, postId, me }: Props) {
+export default function CommentItem({ comment, postId, session }: Props) {
   const [showCommentInput, setShowCommentInput] = useState(false)
-  const { data: commentToComments } = useSuspenseQuery(
-    commentQuery.getCommentToComment(supabase, postId, comment?.id),
-  )
-  const { data: commentToCommentsCount } = useSuspenseQuery(
-    countCommentQuery.countCommentFromComment(supabase, postId, comment.id),
-  )
+  let setCommentToComments: IComment[] | null = null
+
+  if (comment.comment) {
+    const queryClient = getQueryClient()
+    const post = queryClient.getQueryData<IPost>(queryKey.post.detail(postId))
+    setCommentToComments = post!.comments
+      .filter((v) => v.comment_id === comment.id)
+      .sort(
+        (a, b) =>
+          Number(new Date(a.created_at)) - Number(new Date(b.created_at)),
+      )
+  }
 
   const handleShowCommentInput = () => {
     setShowCommentInput((prev) => !prev)
@@ -62,29 +66,33 @@ export default function CommentItem({ comment, postId, me }: Props) {
             <Text>{comment.content}</Text>
           </div>
           <XStack gap={0}>
-            {commentToComments.length >= 1 && (
-              <CommentButton commentCount={commentToCommentsCount ?? 0} />
+            {comment.comment_id && (
+              <CommentButton commentCount={comment.comment ?? 0} />
             )}
             <CommentInputButton onShowCommentInput={handleShowCommentInput} />
             <ReportButton commentId={comment.id} />
-            <OptionButtonWithDropDown commentId={comment.id} postId={postId} />
+            <OptionButtonWithDropDown
+              commentAuthorId={comment.user_id}
+              commentId={comment.id}
+              postId={postId}
+            />
           </XStack>
         </YStack>
         {showCommentInput && (
-          <CommentInput postId={postId} commentId={comment.id} me={me} />
+          <CommentInput
+            postId={postId}
+            commentId={comment.id}
+            session={session}
+          />
         )}
-        {commentToComments.length >= 1 &&
-          commentToComments.map((comment) => (
-            <Suspense
+        {setCommentToComments &&
+          setCommentToComments.map((comment) => (
+            <CommentItem
               key={comment.id}
-              fallback={
-                <Spinner.Container>
-                  <Spinner size={40} />
-                </Spinner.Container>
-              }
-            >
-              <CommentItem postId={postId} comment={comment} me={me} />
-            </Suspense>
+              postId={postId}
+              comment={comment}
+              session={session}
+            />
           ))}
       </YStack>
     </XStack>

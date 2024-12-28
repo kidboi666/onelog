@@ -7,7 +7,7 @@ import { IUserInfoWithMBTI } from '@/src/types/auth'
 
 export default function useMeQueries(): {
   me: IUserInfoWithMBTI
-  session: IUserSession | null
+  session?: IUserSession | null
 } {
   const { data: session } = useSuspenseQuery(meQuery.getUserSession(supabase))
   const { data: me } = useSuspenseQuery(

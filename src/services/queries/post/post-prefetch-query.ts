@@ -1,7 +1,7 @@
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { createServerClient } from '@/src/lib/supabase/server'
 import { postQuery } from '@/src/services/queries/post/post-query'
-import { IPostWithUserInfo } from '@/src/types/post'
+import { IPost } from '@/src/types/post'
 import { dehydrate } from '@tanstack/react-query'
 import { queryKey } from '@/src/lib/tanstack/query-key'
 import { postCountQuery } from '@/src/services/queries/post/post-count-query'
@@ -46,11 +46,9 @@ const prefetchLikedPostCount = async (userId: string) => {
 }
 
 export const postPrefetchQuery = {
-  metadata: async (postId: number): Promise<IPostWithUserInfo | undefined> => {
+  metadata: async (postId: number): Promise<IPost | undefined> => {
     const queryClient = await prefetchPost(postId)
-    return queryClient.getQueryData<IPostWithUserInfo>(
-      queryKey.post.detail(postId),
-    )
+    return queryClient.getQueryData<IPost>(queryKey.post.detail(postId))
   },
   getPost: async (postId: number): Promise<ReturnType<typeof dehydrate>> => {
     const queryClient = await prefetchPost(postId)

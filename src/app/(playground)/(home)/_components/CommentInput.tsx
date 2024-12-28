@@ -6,21 +6,24 @@ import Input from '@/src/components/Input'
 import { XStack } from '@/src/components/Stack'
 import { routes } from '@/src/routes'
 import useInput from '@/src/hooks/useInput'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import usePostComment from '@/src/services/mutates/comment/usePostComment'
-import { IUserInfoWithMBTI } from '@/src/types/auth'
-import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
+import useRouterPush from '@/src/hooks/useRouterPush'
+import { IUserSession, meQuery } from '@/src/services/queries/auth/me-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { supabase } from '@/src/lib/supabase/client'
 
 interface Props {
   postId: number
   commentId?: number
-  me?: IUserInfoWithMBTI
+  session?: IUserSession | null
 }
 
-export default function CommentInput({ postId, commentId, me }: Props) {
-  const router = useRouter()
-  const { session } = useMeQueries()
+export default function CommentInput({ postId, commentId, session }: Props) {
+  const authGuard = useRouterPush(routes.modal.auth.guard)
+  const { data: me } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, session?.userId),
+  )
   const [content, onChangeContent, setContent] = useInput('')
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
 
@@ -28,7 +31,7 @@ export default function CommentInput({ postId, commentId, me }: Props) {
     if (session) {
       return null
     } else {
-      router.push(routes.modal.auth.guard)
+      authGuard()
     }
   }
 
@@ -37,7 +40,7 @@ export default function CommentInput({ postId, commentId, me }: Props) {
     if (session) {
       postComment(
         {
-          userId: me?.id,
+          userId: session.userId,
           content,
           postId: postId,
           commentId: commentId || null,
@@ -65,12 +68,12 @@ export default function CommentInput({ postId, commentId, me }: Props) {
           value={content}
           onChange={onChangeContent}
           dimension="xs"
-          placeholder={me ? '댓글을 달아주세요.' : '로그인을 해주세요'}
+          placeholder={session ? '댓글을 달아주세요.' : '로그인을 해주세요'}
           className="w-full bg-var-lightgray dark:bg-var-dark"
         />
         <Button
           type="submit"
-          disabled={!content || !me}
+          disabled={!content || !session}
           isLoading={isPostPending}
           size="sm"
         >

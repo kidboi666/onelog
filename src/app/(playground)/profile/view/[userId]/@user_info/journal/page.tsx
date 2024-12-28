@@ -11,7 +11,7 @@ import Spinner from '@/src/components/Spinner'
 import { YStack } from '@/src/components/Stack'
 import Empty from '@/src/components/Empty'
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
-import { IPostWithUserInfo } from '@/src/types/post'
+import { IPost } from '@/src/types/post'
 import PostCard from '@/src/app/(playground)/(home)/_components/PostCard'
 
 interface Props {
@@ -60,7 +60,7 @@ export default function Journals({ params }: Props) {
     <Container className="animate-fade-in">
       {journals?.length! > 0 ? (
         <YStack gap={8}>
-          {journals?.map((journal: IPostWithUserInfo) =>
+          {journals?.map((journal: IPost) =>
             journal?.content ? (
               <PostCard
                 key={journal?.id}

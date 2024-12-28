@@ -16,12 +16,16 @@ export default function PostCountInfo({ postId }: Props) {
   return (
     <>
       <LikeButton
-        likeCount={post.like[0].count}
+        likeCount={post.like_count[0].count}
         postId={postId}
         viewToolTip
         isSide
       />
-      <CommentButton commentCount={post.comment[0].count} viewToolTip isSide />
+      <CommentButton
+        commentCount={post.comment_count[0].count}
+        viewToolTip
+        isSide
+      />
     </>
   )
 }
