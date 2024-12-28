@@ -8,7 +8,7 @@ import {
   BOTTOM_NAVIGATE_MENUS,
   TOP_NAVIGATE_MENUS,
 } from '../../@sidebar/_constants/Navigate'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
@@ -34,7 +34,7 @@ export default function MobileMenu({
   isOpen,
 }: Props) {
   const pathname = usePathname()
-  const { me, session } = useMe()
+  const { me, session } = useMeQueries()
 
   return (
     <>

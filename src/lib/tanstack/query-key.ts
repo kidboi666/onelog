@@ -71,8 +71,8 @@ export const queryKey = {
   garden: (userId: string) => ['garden', userId],
 
   follow: {
-    follower: (userId?: string) => ['follower', userId],
-    following: (userId?: string) => ['following', userId],
+    follower: (userId?: string | null) => ['follower', userId],
+    following: (userId?: string | null) => ['following', userId],
 
     count: {
       follower: (userId?: string) => ['count', 'follower', userId],

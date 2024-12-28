@@ -7,12 +7,12 @@ import { useTheme } from '@/src/store/useTheme'
 import cn from '@/src/lib/cn'
 import { XStack } from '@/src/components/Stack'
 import { Container } from '@/src/components/Container'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { routes } from '@/src/routes'
 
 export default function FakeFormContainer() {
   const router = useRouter()
-  const { me, session } = useMe()
+  const { me, session } = useMeQueries()
   const { color } = useTheme()
 
   const handlePostClick = () => {

@@ -12,7 +12,7 @@ import useAddPost from '@/src/services/mutates/post/useAddPost'
 import { TAccess, TEmotion, TPost } from '../page'
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 import useInput from '@/src/hooks/useInput'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { formatDateToMDY } from '@/src/utils/formatDate'
 import { routes } from '@/src/routes'
 
@@ -51,7 +51,7 @@ export default function PostContainer({
 }: Props) {
   const router = useRouter()
   const postId = Number(searchParams?.post_id)
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
   const [content, setContent] = useState(post?.content ?? '')
   const [title, onChangeTitle, setTitle] = useInput<string | null>(null)

@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import useUpdateTodoFolder from '@/src/services/mutates/todo/useUpdateTodoFolder'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
 
 interface Props {
@@ -23,7 +23,7 @@ const colors = ['black', 'green', 'yellow', 'blue', 'orange', 'red', 'purple']
 export default function EditTodoFolderModal({ params }: Props) {
   const folderId = params.folderId
   const router = useRouter()
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { data: folders } = useSuspenseQuery(
     todoFolderQuery.getTodoFolder(supabase, me?.id),
   )

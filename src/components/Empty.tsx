@@ -6,13 +6,19 @@ import Button from './Button'
 
 interface Props {
   className?: string
+  isShadow?: boolean
 }
 
-const Empty = ({ children, className }: PropsWithChildren<Props>) => {
+const Empty = ({
+  children,
+  isShadow = false,
+  className,
+}: PropsWithChildren<Props>) => {
   return (
     <div
       className={cn(
-        'flex w-full flex-col items-center justify-center rounded-md bg-white py-12 opacity-65 shadow-sm dark:bg-var-darkgray',
+        'flex w-full flex-col items-center justify-center rounded-md bg-white py-12 opacity-65 dark:bg-var-darkgray',
+        isShadow && 'shadow-sm',
         className,
       )}
     >

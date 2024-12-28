@@ -6,7 +6,7 @@ import useUploadAvatarImage from '@/src/services/mutates/auth/useUploadAvatarIma
 import useUpdateUserInfo from '@/src/services/mutates/auth/useUpdateUserInfo'
 import useDeleteAvatarImage from '@/src/services/mutates/auth/useDeleteAvatarImage'
 import useInput from '@/src/hooks/useInput'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { TMBTI } from '../_constants/mbti'
 
 import Button from '@/src/components/Button'
@@ -18,7 +18,7 @@ import MBTISection from '../_components/MBTISection'
 import EmailSection from '../_components/EmailSection'
 
 export default function EditProfileContainer() {
-  const { me, session } = useMe()
+  const { me, session } = useMeQueries()
   const [userName, onChangeUserName, setUserName] = useInput<string | null>('')
   const [aboutMe, onChangeAboutMe, setAboutMe] = useInput<string | null>('')
   const [avatarUrl, , setAvatarUrl] = useInput<string | null>('')

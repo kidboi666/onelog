@@ -6,7 +6,7 @@ import { supabase } from '@/src/lib/supabase/client'
 
 import { postQuery } from '@/src/services/queries/post/post-query'
 import useIntersect from '@/src/hooks/useIntersect'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 
 import { Container } from '@/src/components/Container'
 import Empty from '@/src/components/Empty'
@@ -20,7 +20,7 @@ interface Props {
 
 export default function LikedPage({ params }: Props) {
   const limit = 4
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { data, hasNextPage, fetchNextPage, isFetching, isLoading, isPending } =
     useInfiniteQuery(
       postQuery.getLikedPost(supabase, params.userId, limit, me?.id),

@@ -3,7 +3,7 @@
 import Button from '@/src/components/Button'
 import { routes } from '@/src/routes'
 import { XStack } from '@/src/components/Stack'
-import useFollowActions from '@/src/hooks/actions/useFollowActions'
+import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
 import { IUserInfoWithMBTI } from '@/src/types/auth'
 import useTransitionWithRoute from '@/src/hooks/useRouterPushWithTransition'
 
@@ -18,7 +18,7 @@ export default function RenderActionButtonFromAuthorInfo({
   isFollowing,
   userId,
 }: Props) {
-  const { onFollow, isPending } = useFollowActions({
+  const { onFollow, isPending } = useFollowMutates({
     me,
     isFollowing,
     userId,

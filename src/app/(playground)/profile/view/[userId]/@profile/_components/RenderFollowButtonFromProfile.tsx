@@ -1,21 +1,21 @@
 'use client'
 
 import Follow from '@/src/components/Follow'
-import useMe from '@/src/hooks/useMe'
-import useFollowQueries from '@/src/hooks/query/useFollowQueries'
-import useFollowActions from '@/src/hooks/actions/useFollowActions'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
 
 interface Props {
   userId: string
 }
 
 export default function RenderFollowButtonFromProfile({ userId }: Props) {
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { followingCount, followerCount, isFollowing } = useFollowQueries({
     meId: me.id,
     userId,
   })
-  const { pushFollowingList, pushFollowerList } = useFollowActions({
+  const { pushFollowingList, pushFollowerList } = useFollowMutates({
     isFollowing,
     me,
     userId,

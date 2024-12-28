@@ -10,7 +10,7 @@ import { TODO_MENU } from '../_constants'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { routes } from '@/src/routes'
 import { Container } from '@/src/components/Container'
 import { YStack } from '@/src/components/Stack'
@@ -31,7 +31,7 @@ interface Props {
 
 export default function SideBarPage({ searchParams }: Props) {
   const pathname = usePathname()
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { data: todoFolders } = useSuspenseQuery(
     todoFolderQuery.getTodoFolder(supabase, me?.id),
   )

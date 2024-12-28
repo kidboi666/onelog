@@ -14,7 +14,7 @@ interface Props {
   me: IUserInfoWithMBTI
 }
 
-export default function useLikeActions({ postId, me }: Props): {
+export default function useLikeMutates({ postId, me }: Props): {
   isLike: boolean | null
   onLikePost: (e: MouseEvent) => void
 } {

@@ -9,8 +9,8 @@ import RenderActionButtonFromAuthorInfo from '@/src/app/(playground)/post/view/@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { supabase } from '@/src/lib/supabase/client'
-import useMe from '@/src/hooks/useMe'
-import useFollowQueries from '@/src/hooks/query/useFollowQueries'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
 import useRouterPush from '@/src/hooks/useRouterPush'
 
 interface Props {
@@ -19,7 +19,7 @@ interface Props {
 
 export default function PostAuthorInfo({ postId }: Props) {
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const pushNewPostPage = useRouterPush(routes.profile.view(post?.user_id))
   const { isFollowing } = useFollowQueries({
     userId: post?.user_id,

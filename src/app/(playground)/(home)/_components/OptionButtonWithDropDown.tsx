@@ -10,7 +10,7 @@ import { routes } from '@/src/routes'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { supabase } from '@/src/lib/supabase/client'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 
 interface Props {
   postId?: number
@@ -28,7 +28,7 @@ export default function OptionButtonWithDropDown({
     useDataDrivenAnimation<HTMLDivElement>()
   const optionButtonRef = useOutsideClick<HTMLButtonElement>(close)
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const isOwner = me?.id === post?.user_id
 
   const handleButtonClick = (e: MouseEvent) => {

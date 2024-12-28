@@ -2,26 +2,26 @@
 
 import Button from '@/src/components/Button'
 import { XStack } from '@/src/components/Stack'
-import useFollowActions from '@/src/hooks/actions/useFollowActions'
+import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
 import { routes } from '@/src/routes'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { userQuery } from '@/src/services/queries/auth/user-query'
 import { supabase } from '@/src/lib/supabase/client'
-import useFollowQueries from '@/src/hooks/query/useFollowQueries'
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
 
 interface Props {
   userId: string
 }
 
 export default function RenderActionButtonFromProfile({ userId }: Props) {
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, userId),
   )
   const { isFollowing } = useFollowQueries({ meId: me.id, userId })
-  const { onFollow, isPending } = useFollowActions({
+  const { onFollow, isPending } = useFollowMutates({
     isFollowing,
     me,
     userId,

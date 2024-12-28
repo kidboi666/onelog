@@ -4,9 +4,9 @@ import ToolTip from '@/src/components/Tooltip'
 import useToggle from '@/src/hooks/useToggle'
 import cn from '@/src/lib/cn'
 import { MouseEvent } from 'react'
-import useLikeActions from '@/src/hooks/actions/useLikeActions'
+import useLikeMutates from '@/src/hooks/mutates/useLikeMutates'
 import { routes } from '@/src/routes'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { useRouter } from 'next/navigation'
 
 interface Props {
@@ -24,8 +24,8 @@ export default function LikeButton({
 }: Props) {
   const router = useRouter()
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
-  const { me } = useMe()
-  const { isLike, onLikePost } = useLikeActions({ me, postId })
+  const { me } = useMeQueries()
+  const { isLike, onLikePost } = useLikeMutates({ me, postId })
 
   const handleFavoritePost = (e: MouseEvent): void => {
     e.stopPropagation()

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import useAddTodoFolder from '@/src/services/mutates/todo/useAddTodoFolder'
 import { TTodoColor } from '@/src/types/todo'
 import useInput from '@/src/hooks/useInput'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import Modal from '@/src/components/Modal'
 import Text from '@/src/components/Text'
 import Input from '@/src/components/Input'
@@ -25,7 +25,7 @@ const colors: TTodoColor[] = [
 
 export default function AddTodoFolderModal() {
   const router = useRouter()
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const [name, onChangeName] = useInput('')
   const [color, setColor] = useState<TTodoColor>('black')
   const { mutate: addTodoFolder } = useAddTodoFolder()

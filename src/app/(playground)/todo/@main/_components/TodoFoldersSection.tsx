@@ -5,10 +5,10 @@ import TodoFolderCard from '../../_components/TodoFolderCard'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 
 export default function TodoFoldersSection() {
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { data: todoFolders } = useSuspenseQuery(
     todoFolderQuery.getTodoFolder(supabase, me?.id),
   )

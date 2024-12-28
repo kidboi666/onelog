@@ -2,12 +2,12 @@
 
 import { MouseEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { routes } from '@/src/routes'
 import Modal from '@/src/components/Modal'
 import { YStack } from '@/src/components/Stack'
 import FollowUserCard from '../../_components/FollowUserCard'
-import useFollowQueries from '@/src/hooks/query/useFollowQueries'
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
 import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
 export default function FollowerListModal({ params }: Props) {
   const router = useRouter()
   const userId = params.userId
-  const { me, session } = useMe()
+  const { me, session } = useMeQueries()
   const { followers, myFollows } = useFollowQueries({
     userId,
     meId: me.id,

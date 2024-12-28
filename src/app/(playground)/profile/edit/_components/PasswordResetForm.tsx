@@ -5,12 +5,12 @@ import { YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
 import Title from '@/src/components/Title'
 import { routes } from '@/src/routes'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { useRouter } from 'next/navigation'
 
 export default function PasswordResetForm() {
   const router = useRouter()
-  const { me, session } = useMe()
+  const { me, session } = useMeQueries()
   const handlePasswordReset = () => {
     router.push(routes.modal.updatePassword)
   }

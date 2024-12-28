@@ -7,14 +7,14 @@ import { commentQuery } from '@/src/services/queries/comment/comment-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { List } from '@/src/components/List'
 import Empty from '@/src/components/Empty'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 
 interface Props {
   postId: number
 }
 
 export default function Comments({ postId }: Props) {
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { data: comments } = useSuspenseQuery(
     commentQuery.getComment(supabase, postId),
   )

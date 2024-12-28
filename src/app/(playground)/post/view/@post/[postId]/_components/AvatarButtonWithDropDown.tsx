@@ -8,8 +8,8 @@ import Avatar from '@/src/components/Avatar'
 import { XStack, YStack } from '@/src/components/Stack'
 import Follow from '@/src/components/Follow'
 import { routes } from '@/src/routes'
-import useFollowActions from '@/src/hooks/actions/useFollowActions'
-import useMe from '@/src/hooks/useMe'
+import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 
 interface Props {
   avatarUrl: string | null
@@ -33,10 +33,10 @@ export default function AvatarButtonWithDropDown({
   const { close, open, ref, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
-  const { me } = useMe()
+  const { me } = useMeQueries()
 
   const { onFollow, isPending, pushFollowerList, pushFollowingList } =
-    useFollowActions({
+    useFollowMutates({
       isFollowing,
       me,
       userId,

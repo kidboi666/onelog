@@ -8,7 +8,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { Tables } from '@/src/types/supabase'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 
 interface Props {
   todoId: string
@@ -21,7 +21,7 @@ export default function MouseEventSection({
   folderId,
 }: PropsWithChildren<Props>) {
   const router = useRouter()
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { data: todos } = useSuspenseQuery(
     todoQuery.getTodoFromFolder(supabase, me?.id, Number(folderId)),
   )

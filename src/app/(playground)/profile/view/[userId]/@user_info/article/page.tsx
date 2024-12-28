@@ -6,7 +6,7 @@ import { supabase } from '@/src/lib/supabase/client'
 
 import { userQuery } from '@/src/services/queries/auth/user-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import useIntersect from '@/src/hooks/useIntersect'
 
 import { Container } from '@/src/components/Container'
@@ -21,7 +21,7 @@ interface Props {
 
 export default function Article({ params }: Props) {
   const limit = 4
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, params.userId),
   )

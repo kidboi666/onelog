@@ -3,11 +3,11 @@
 import Button from '@/src/components/Button'
 import { YStack } from '@/src/components/Stack'
 import Title from '@/src/components/Title'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import useSignOut from '@/src/services/mutates/auth/useSignOut'
 
 export default function LogoutButton() {
-  const { session } = useMe()
+  const { session } = useMeQueries()
   const { mutate: signOut } = useSignOut()
 
   const handleSingOut = () => {

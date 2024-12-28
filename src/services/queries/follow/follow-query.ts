@@ -5,7 +5,7 @@ import { queryOptions } from '@tanstack/react-query'
 
 export const followQuery = {
   /** 유저를 팔로우하는 유저의 Id들 */
-  getFollower: (supabase: SupabaseClient, userId?: string) =>
+  getFollower: (supabase: SupabaseClient, userId: string) =>
     queryOptions({
       queryKey: queryKey.follow.follower(userId),
       queryFn: async () => {
@@ -21,15 +21,17 @@ export const followQuery = {
 
         if (error) {
           console.error('팔로워 목록 조회 실패:', error)
+          throw error
         }
 
         return data
       },
+      enabled: !!userId,
     }),
 
   /** 유저가 팔로우하는 유저의 Id들 */
   getFollowing: (supabase: SupabaseClient, userId?: string) =>
-    queryOptions<TFollowings[] | null>({
+    queryOptions<TFollowings[]>({
       queryKey: queryKey.follow.following(userId),
       queryFn: async () => {
         const { data, error } = await supabase
@@ -44,9 +46,11 @@ export const followQuery = {
 
         if (error) {
           console.error('팔로잉 목록 조회 실패:', error)
+          throw error
         }
 
         return data
       },
+      enabled: !!userId,
     }),
 }

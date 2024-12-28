@@ -17,7 +17,7 @@ export interface IUserSession {
 
 export const meQuery = {
   getUserSession: (supabase: SupabaseClient) =>
-    queryOptions<IUserSession | null>({
+    queryOptions<IUserSession | null | undefined>({
       queryKey: queryKey.auth.session,
       queryFn: async () => {
         const { data, error } = await supabase.auth.getUser()

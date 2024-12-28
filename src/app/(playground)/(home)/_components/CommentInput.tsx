@@ -6,7 +6,7 @@ import Input from '@/src/components/Input'
 import { XStack } from '@/src/components/Stack'
 import { routes } from '@/src/routes'
 import useInput from '@/src/hooks/useInput'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import usePostComment from '@/src/services/mutates/comment/usePostComment'
 import { IUserInfoWithMBTI } from '@/src/types/auth'
 import { useRouter } from 'next/navigation'
@@ -20,7 +20,7 @@ interface Props {
 
 export default function CommentInput({ postId, commentId, me }: Props) {
   const router = useRouter()
-  const { session } = useMe()
+  const { session } = useMeQueries()
   const [content, onChangeContent, setContent] = useInput('')
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
 

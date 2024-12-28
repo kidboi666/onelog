@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 import { routes } from '@/src/routes'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import {
   BOTTOM_NAVIGATE_MENUS,
   TOP_NAVIGATE_MENUS,
@@ -20,7 +20,7 @@ import SidebarWriteButtonWithLogo from './_components/SidebarWriteButtonWithLogo
 import MenuButton from './_components/MenuButton'
 
 export default function Sidebar() {
-  const { me, session } = useMe()
+  const { me, session } = useMeQueries()
   const [isHover, setHover] = useState(false)
   const pathname = usePathname()
 

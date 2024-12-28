@@ -10,7 +10,7 @@ import { Container } from '@/src/components/Container'
 import Spinner from '@/src/components/Spinner'
 import { YStack } from '@/src/components/Stack'
 import Empty from '@/src/components/Empty'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { IPostWithUserInfo } from '@/src/types/post'
 import PostCard from '@/src/app/(playground)/(home)/_components/PostCard'
 
@@ -20,7 +20,7 @@ interface Props {
 
 export default function Journals({ params }: Props) {
   const limit = 4
-  const { me } = useMe()
+  const { me } = useMeQueries()
   const { data: user } = useSuspenseQuery(
     userQuery.getUserInfo(supabase, params.userId),
   )

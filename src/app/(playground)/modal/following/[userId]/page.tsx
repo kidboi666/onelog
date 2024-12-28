@@ -5,10 +5,10 @@ import { YStack } from '@/src/components/Stack'
 import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 import FollowUserCard from '../../_components/FollowUserCard'
 import { useRouter } from 'next/navigation'
-import useMe from '@/src/hooks/useMe'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { routes } from '@/src/routes'
 import { useState } from 'react'
-import useFollowQueries from '@/src/hooks/query/useFollowQueries'
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
 
 interface Props {
   params: { userId: string }
@@ -17,7 +17,7 @@ interface Props {
 export default function FollowingListModal({ params }: Props) {
   const router = useRouter()
   const userId = params.userId
-  const { me, session } = useMe()
+  const { me, session } = useMeQueries()
   const { followings, myFollows } = useFollowQueries({
     userId,
     meId: me.id,

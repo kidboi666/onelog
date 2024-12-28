@@ -5,7 +5,7 @@ import { IUserSession, meQuery } from '@/src/services/queries/auth/me-query'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { IUserInfoWithMBTI } from '@/src/types/auth'
 
-export default function useMe(): {
+export default function useMeQueries(): {
   me: IUserInfoWithMBTI
   session: IUserSession | null
 } {

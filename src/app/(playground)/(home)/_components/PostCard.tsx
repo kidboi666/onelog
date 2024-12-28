@@ -1,5 +1,3 @@
-import { useRouter } from 'next/navigation'
-
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 
 import PostCardContent from './PostCardContent'
@@ -8,6 +6,7 @@ import { routes } from '@/src/routes'
 import { IPostWithUserInfo } from '@/src/types/post'
 import PostHeader from './PostHeader'
 import { TEmotion } from '@/src/app/(playground)/post/edit/page'
+import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
 
 interface Props {
   post: IPostWithUserInfo
@@ -22,17 +21,16 @@ export default function PostCard({
   createdAtLiked,
   disabled,
 }: Props) {
-  const router = useRouter()
   const postId = Number(post?.id)
   const content = post?.content
   const tags = post?.tags || []
+  const [, pushPostDetail] = useRouterPushWithTransition(
+    routes.post.view(postId),
+  )
 
   const { editor } = useBlockEditor({
     content,
   })
-  const handlePostItemClick = () => {
-    router.push(routes.post.view(postId))
-  }
 
   if (!editor) return null
 
@@ -69,7 +67,7 @@ export default function PostCard({
         likeCount={like[0].count}
         commentCount={comment[0].count}
         postId={postId}
-        onClick={handlePostItemClick}
+        onClick={pushPostDetail}
         disabled={disabled}
       />
     </YStack>
