@@ -33,18 +33,9 @@ export default function usePostComment() {
       router.replace(routes.modal.success)
     },
     onSettled: (_, __, variables) => {
-      const { postId, commentId } = variables
-      queryClient.invalidateQueries({
-        queryKey: queryKey.comment.byPost(postId),
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKey.comment.byComment(postId, commentId),
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKey.comment.count.byPost(postId),
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKey.comment.count.byComment(postId, commentId),
+      const { postId } = variables
+      void queryClient.invalidateQueries({
+        queryKey: queryKey.post.detail(postId),
       })
     },
   })

@@ -17,6 +17,7 @@ export default function PostCountInfo({ postId }: Props) {
     <>
       <LikeButton
         likeCount={post.like_count[0].count}
+        isLiked={post.is_liked.length > 0}
         postId={postId}
         viewToolTip
         isSide

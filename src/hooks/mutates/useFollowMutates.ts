@@ -19,7 +19,7 @@ export default function useFollowMutates({ isFollowing, userId }: Props) {
   const [isLoadingFollowingRoute, pushFollowingList] =
     useRouterPushWithTransition(routes.modal.follow.following(userId))
   const authGuard = useRouterPush(routes.modal.auth.guard, false)
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
   const { mutate: followOrUnfollow, isPending } = useHandleFollow()
 
   const handleFollow = (options?: any) => {

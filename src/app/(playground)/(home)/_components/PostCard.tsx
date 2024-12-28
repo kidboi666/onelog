@@ -1,5 +1,4 @@
 import useBlockEditor from '@/src/hooks/useBlockEditor'
-
 import PostCardContent from './PostCardContent'
 import { YStack } from '@/src/components/Stack'
 import { routes } from '@/src/routes'
@@ -37,8 +36,9 @@ export default function PostCard({
   const {
     access_type,
     title,
-    like,
-    comment,
+    like_count,
+    is_liked,
+    comment_count,
     user_id,
     post_type,
     emotion_level,
@@ -64,8 +64,9 @@ export default function PostCard({
         editor={editor}
         postTitle={title}
         accessType={access_type}
-        likeCount={like[0].count}
-        commentCount={comment[0].count}
+        likeCount={like_count?.[0].count}
+        isLiked={is_liked.length > 0}
+        commentCount={comment_count?.[0].count}
         postId={postId}
         onClick={pushPostDetail}
         disabled={disabled}

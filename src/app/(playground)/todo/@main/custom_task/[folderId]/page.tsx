@@ -40,7 +40,7 @@ export default function TaskForm({ params, searchParams }: Props) {
   const { onClick, ref, close, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
 
   const { data: todoFolders } = useSuspenseQuery(
     todoFolderQuery.getTodoFolder(supabase, me!.userId),

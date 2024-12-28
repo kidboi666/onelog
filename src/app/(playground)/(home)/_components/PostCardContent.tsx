@@ -16,6 +16,7 @@ interface Props {
   onClick?: () => void
   disabled?: boolean
   likeCount: number
+  isLiked: boolean
   commentCount: number
   accessType: 'public' | 'private'
   postId: number
@@ -28,6 +29,7 @@ export default function PostCardContent({
   onClick,
   disabled = false,
   likeCount,
+  isLiked,
   commentCount,
   accessType,
   postId,
@@ -66,7 +68,12 @@ export default function PostCardContent({
           </XStack>
         )}
         <XStack as="nav" className="items-center justify-between">
-          <LikeButton likeCount={likeCount} postId={postId} viewToolTip />
+          <LikeButton
+            likeCount={likeCount}
+            isLiked={isLiked}
+            postId={postId}
+            viewToolTip
+          />
           <CommentButton
             commentCount={commentCount}
             disabled={disabled}

@@ -9,22 +9,21 @@ import RenderActionButtonFromAuthorInfo from '@/src/app/(playground)/post/view/@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { supabase } from '@/src/lib/supabase/client'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
 import useRouterPush from '@/src/hooks/useRouterPush'
+import { meQuery } from '@/src/services/queries/auth/me-query'
 
 interface Props {
   postId: number
 }
 
 export default function PostAuthorInfo({ postId }: Props) {
-  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
-  const { me } = useMeQueries()
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { data: post } = useSuspenseQuery(
+    postQuery.getPost(supabase, postId, session?.userId),
+  )
   const pushNewPostPage = useRouterPush(routes.profile.view(post?.user_id))
-  const { isFollowing } = useFollowQueries({
-    userId: post?.user_id,
-    meId: me?.id,
-  })
+  const { isFollowing } = useFollowQueries(post?.user_id)
 
   return (
     <YStack>
@@ -40,7 +39,7 @@ export default function PostAuthorInfo({ postId }: Props) {
             <Text>{post?.user_info.about_me}</Text>
           </YStack>
           <RenderActionButtonFromAuthorInfo
-            me={me}
+            session={session}
             isFollowing={isFollowing}
             userId={post?.user_id}
           />

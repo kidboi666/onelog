@@ -18,10 +18,7 @@ export default function FollowerListModal({ params }: Props) {
   const router = useRouter()
   const userId = params.userId
   const { me, session } = useMeQueries()
-  const { followers, myFollows } = useFollowQueries({
-    userId,
-    meId: me.id,
-  })
+  const { followers, myFollows } = useFollowQueries(userId)
   const { mutate: followOrUnfollow } = useHandleFollow()
   const [pendingList, setPendingList] = useState<Record<string, boolean>>({})
 

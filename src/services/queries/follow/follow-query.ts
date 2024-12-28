@@ -5,7 +5,7 @@ import { queryOptions } from '@tanstack/react-query'
 
 export const followQuery = {
   /** 유저를 팔로우하는 유저의 Id들 */
-  getFollower: (supabase: SupabaseClient, userId: string) =>
+  getFollower: (supabase: SupabaseClient, userId?: string) =>
     queryOptions({
       queryKey: queryKey.follow.follower(userId),
       queryFn: async () => {

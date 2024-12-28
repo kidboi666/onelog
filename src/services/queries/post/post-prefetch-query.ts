@@ -1,16 +1,9 @@
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { createServerClient } from '@/src/lib/supabase/server'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { IPost } from '@/src/types/post'
 import { dehydrate } from '@tanstack/react-query'
 import { queryKey } from '@/src/lib/tanstack/query-key'
 import { postCountQuery } from '@/src/services/queries/post/post-count-query'
-
-const initClient = () => {
-  const queryClient = getQueryClient()
-  const supabase = createServerClient()
-  return { queryClient, supabase }
-}
+import initClient from '@/src/services/queries/init-client'
 
 const prefetchPost = async (postId: number) => {
   const { queryClient, supabase } = initClient()

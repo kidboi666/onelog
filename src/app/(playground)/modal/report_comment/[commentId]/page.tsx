@@ -20,7 +20,7 @@ interface Props {
 
 export default function ReportCommentModal({ params }: Props) {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
   const [reason, onChangeReasonValue] = useInput('')
   const { mutate: report } = useReport()
   const [isLoading, startTransition] = useTransition()

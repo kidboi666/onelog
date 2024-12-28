@@ -9,14 +9,15 @@ import useInput from '@/src/hooks/useInput'
 import usePostComment from '@/src/services/mutates/comment/usePostComment'
 import { FormEvent } from 'react'
 import useRouterPush from '@/src/hooks/useRouterPush'
-import { IUserSession, meQuery } from '@/src/services/queries/auth/me-query'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
+import { IUserSession } from '@/src/types/auth'
+import { meQuery } from '@/src/services/queries/auth/me-query'
 
 interface Props {
   postId: number
   commentId?: number
-  session?: IUserSession | null
+  session: IUserSession
 }
 
 export default function CommentInput({ postId, commentId, session }: Props) {

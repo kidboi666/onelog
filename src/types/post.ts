@@ -15,7 +15,8 @@ export interface IPost
   post_type: 'article' | 'journal'
   access_type: 'public' | 'private'
   emotion_level: '0%' | '25%' | '50%' | '75%' | '100%' | null
-  comments: IComment[]
-  like_count: { count: number }[]
-  comment_count: { count: number }[]
+  comments: IComment[] | []
+  is_liked: { user_id: string }[] | []
+  like_count: { count: number }[] | []
+  comment_count: { count: number }[] | []
 }

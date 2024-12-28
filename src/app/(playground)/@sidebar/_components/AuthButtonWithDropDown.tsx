@@ -6,15 +6,14 @@ import useOutsideClick from '@/src/hooks/useOutsideClick'
 import LoggedInContent from './LoggedInContent'
 import GuestContent from './GuestContent'
 import Text from '@/src/components/Text'
-import { IUserInfoWithMBTI } from '@/src/types/auth'
-import { IUserSession } from '@/src/services/queries/auth/me-query'
+import { IUserInfoWithMBTI, IUserSession } from '@/src/types/auth'
 
 interface Props {
   pathname: string
   userId: string
   viewText?: boolean
   me?: IUserInfoWithMBTI
-  session?: IUserSession | null
+  session: IUserSession
   closeMenu?: () => void
 }
 

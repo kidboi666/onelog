@@ -4,17 +4,17 @@ import Button from '@/src/components/Button'
 import { routes } from '@/src/routes'
 import { XStack } from '@/src/components/Stack'
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
-import { IUserInfoWithMBTI } from '@/src/types/auth'
 import useTransitionWithRoute from '@/src/hooks/useRouterPushWithTransition'
+import { IUserSession } from '@/src/types/auth'
 
 interface Props {
-  me?: IUserInfoWithMBTI | null
+  session: IUserSession
   isFollowing: boolean
   userId: string
 }
 
 export default function RenderActionButtonFromAuthorInfo({
-  me,
+  session,
   isFollowing,
   userId,
 }: Props) {
@@ -34,7 +34,7 @@ export default function RenderActionButtonFromAuthorInfo({
       onClick={(e) => e.stopPropagation()}
       className="flex-col justify-center"
     >
-      {me?.id === userId ? (
+      {session?.userId === userId ? (
         <>
           <Button
             size="sm"

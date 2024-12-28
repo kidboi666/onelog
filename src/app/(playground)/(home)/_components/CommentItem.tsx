@@ -11,16 +11,16 @@ import CommentInput from './CommentInput'
 import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import ReportButton from './ReportButton'
 import OptionButtonWithDropDown from './OptionButtonWithDropDown'
-import { IUserSession } from '@/src/services/queries/auth/me-query'
 import { IComment } from '@/src/types/comment'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
 import { IPost } from '@/src/types/post'
+import { IUserSession } from '@/src/types/auth'
 
 interface Props {
   comment: IComment
   postId: number
-  session?: IUserSession | null
+  session: IUserSession
 }
 
 export default function CommentItem({ comment, postId, session }: Props) {

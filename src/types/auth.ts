@@ -23,3 +23,17 @@ export interface IUpdateUserInfo {
 export interface IUserInfoWithMBTI extends Tables<'user_info'> {
   mbti: TMBTI
 }
+
+interface IUser {
+  about_me: string
+  avatar_url: string | null
+  email: string
+  email_verified: boolean
+  user_name: string
+  phone_verified: boolean
+  sub: string
+  userId: string
+  provider: string
+}
+
+export type IUserSession = IUser | null

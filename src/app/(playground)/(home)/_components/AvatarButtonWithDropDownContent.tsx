@@ -20,11 +20,8 @@ export default function AvatarButtonWithDropDownContent({
   avatarUrl,
 }: Props) {
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
-  const { followingCount, followerCount, isFollowing, isMe } = useFollowQueries(
-    {
-      userId,
-    },
-  )
+  const { followingCount, followerCount, isFollowing, isMe } =
+    useFollowQueries(userId)
   const {
     onFollow,
     pushFollowingList,

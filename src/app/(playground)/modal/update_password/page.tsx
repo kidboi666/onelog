@@ -12,7 +12,7 @@ import { useTransition } from 'react'
 
 export default function ResetPasswordConfirmModal() {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
   const { mutate: resetPassword } = useResetPassword()
   const [isLoading, startTransition] = useTransition()
 

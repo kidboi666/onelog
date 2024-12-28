@@ -6,14 +6,17 @@ import cn from '@/src/lib/cn'
 import { MouseEvent } from 'react'
 import useLikeMutates from '@/src/hooks/mutates/useLikeMutates'
 import { routes } from '@/src/routes'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-import { useRouter } from 'next/navigation'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { supabase } from '@/src/lib/supabase/client'
+import useRouterPush from '@/src/hooks/useRouterPush'
 
 interface Props {
   viewToolTip?: boolean
   isSide?: boolean
   postId: number
   likeCount: number
+  isLiked: boolean
 }
 
 export default function LikeButton({
@@ -21,15 +24,16 @@ export default function LikeButton({
   isSide,
   likeCount,
   postId,
+  isLiked,
 }: Props) {
-  const router = useRouter()
+  const authGuard = useRouterPush(routes.modal.auth.guard, false)
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
-  const { me } = useMeQueries()
-  const { isLike, onLikePost } = useLikeMutates({ me, postId })
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { onLikePost } = useLikeMutates({ isLiked, postId })
 
   const handleFavoritePost = (e: MouseEvent): void => {
     e.stopPropagation()
-    me ? onLikePost(e) : router.push(routes.modal.auth.guard, { scroll: false })
+    session ? onLikePost(e) : authGuard()
   }
 
   return (
@@ -45,7 +49,7 @@ export default function LikeButton({
         className={cn(
           'flex border-none text-xs font-light hover:text-red-500 dark:hover:text-red-500',
           isSide ? 'max-lg:flex-col' : 'gap-1',
-          me?.id && isLike && 'text-red-500 dark:text-red-500',
+          session && isLiked && 'text-red-500 dark:text-red-500',
         )}
       >
         <Icon size={isSide ? 24 : 18} view={150}>

@@ -2,15 +2,15 @@
 
 import Title from '@/src/components/Title'
 import Empty from '@/src/components/Empty'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { YStack } from '@/src/components/Stack'
 import Spinner from '@/src/components/Spinner'
 import { Fragment, useEffect, useState } from 'react'
 import { Container } from '@/src/components/Container'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import PostCard from '@/src/app/(playground)/(home)/_components/PostCard'
+import { meQuery } from '@/src/services/queries/auth/me-query'
 
 interface Props {
   params: { userId: string }
@@ -21,7 +21,7 @@ export default function PrevOnePost({ params, searchParams }: Props) {
   const year = parseInt(searchParams.year)
   const month = parseInt(searchParams.month)
   const date = parseInt(searchParams.date)
-  const { me } = useMeQueries()
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const [startOfDay, setStartOfDay] = useState('')
   const [endOfDay, setEndOfDay] = useState('')
 
@@ -31,7 +31,7 @@ export default function PrevOnePost({ params, searchParams }: Props) {
       params.userId,
       startOfDay,
       endOfDay,
-      me?.id,
+      session?.userId,
     ),
   )
 

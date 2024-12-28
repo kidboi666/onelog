@@ -9,7 +9,6 @@ import { XStack, YStack } from '@/src/components/Stack'
 import Follow from '@/src/components/Follow'
 import { routes } from '@/src/routes'
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
 
 interface Props {
   avatarUrl: string | null
@@ -33,14 +32,18 @@ export default function AvatarButtonWithDropDown({
   const { close, open, ref, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
-  const { me } = useMeQueries()
 
-  const { onFollow, isPending, pushFollowerList, pushFollowingList } =
-    useFollowMutates({
-      isFollowing,
-      me,
-      userId,
-    })
+  const {
+    onFollow,
+    isPending,
+    pushFollowerList,
+    isLoadingFollowerRoute,
+    pushFollowingList,
+    isLoadingFollowingRoute,
+  } = useFollowMutates({
+    isFollowing,
+    userId,
+  })
 
   return (
     <DropDown.Root>
@@ -71,10 +74,12 @@ export default function AvatarButtonWithDropDown({
             <Follow>
               <Follow.Follower
                 followerCount={followerCount}
+                isLoading={isLoadingFollowerRoute}
                 onClick={pushFollowerList}
               />
               <Follow.Following
                 followingCount={followingCount}
+                isLoading={isLoadingFollowingRoute}
                 onClick={pushFollowingList}
               />
             </Follow>

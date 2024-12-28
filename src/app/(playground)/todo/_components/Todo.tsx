@@ -46,7 +46,7 @@ export default function Todo({
   dragOverItem,
   orderFrom,
 }: TodoProps) {
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: todos } = useSuspenseQuery(
     todoQuery.getTodoFromFolder(supabase, me!.userId, todo.folder_id),
   )

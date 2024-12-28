@@ -36,7 +36,7 @@ export default function Folder({
   dragOverItem,
 }: Props) {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: todoFolders } = useSuspenseQuery(
     todoFolderQuery.getTodoFolder(supabase, me!.userId),
   )

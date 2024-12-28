@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function Comments({ postId }: Props) {
-  const { data: session } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
 
   const comments = post.comments.sort(

@@ -5,17 +5,18 @@ import { queryKey } from '@/src/lib/tanstack/query-key'
 import { IPost } from '@/src/types/post'
 
 export const postQuery = {
-  getAllPost: (supabase: SupabaseClient, limit: number) =>
+  getAllPost: (supabase: SupabaseClient, limit: number, meId?: string | null) =>
     infiniteQueryOptions({
       queryKey: queryKey.post.public,
       queryFn: async ({ pageParam = 0 }) => {
-        const { data } = await supabase
+        let query: any = supabase
           .from('post')
           .select(
             `
             *,
-            comment(count),
-            like(count),
+            comment_count:comment(count),
+            is_liked:like(user_id),
+            like_count:like(count),
             user_info(
               email,
               user_name,
@@ -27,12 +28,67 @@ export const postQuery = {
           .order('created_at', { ascending: false })
           .range(pageParam, pageParam + limit - 1)
 
+        if (meId) {
+          query = query.eq('like.user_id', meId)
+        }
+
+        const { data } = await query
+
         return data
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage && lastPage.length < limit) return undefined // 마지막 페이지에 도달하면 undefined 반환
         return allPages.length * limit // 다음 페이지의 offset 반환
+      },
+    }),
+
+  getPost: (supabase: SupabaseClient, postId: number, meId?: string | null) =>
+    queryOptions<IPost>({
+      queryKey: queryKey.post.detail(postId),
+      queryFn: async () => {
+        /**
+         * 필요 이상으로 복잡한 타입핑 때문에 any
+         */
+        let query: any = supabase
+          .from('post')
+          .select(
+            `
+            *,
+            comments:comment(
+              *,
+              user_info(
+                email,
+                user_name,
+                avatar_url
+              )
+            ),
+            comment_count:comment(count),
+            is_liked:like(user_id),
+            like_count:like(count),
+            user_info(
+              email,
+              user_name,
+              avatar_url,
+              about_me
+            )
+            `,
+          )
+          .eq('id', postId)
+
+        if (meId) {
+          query = query.eq('like.user_id', meId)
+        }
+        query = query.single()
+
+        const { data, error } = await query
+
+        if (error) {
+          console.error(error)
+          throw error
+        }
+
+        return data
       },
     }),
 
@@ -45,15 +101,16 @@ export const postQuery = {
     infiniteQueryOptions({
       queryKey: queryKey.post.liked(userId, meId),
       queryFn: async ({ pageParam = 0 }) => {
-        const { data } = await supabase
+        let query: any = supabase
           .from('like')
           .select(
             `
             *,
             post!like_post_id_fkey(
               *,
-              comment(count),
-              like(count),
+              comment_count:comment(count),
+              is_liked:like(user_id),
+              like_count:like(count),
               user_info(
                 avatar_url,
                 email,
@@ -65,12 +122,23 @@ export const postQuery = {
           .eq('user_id', userId)
           .order('created_at', { ascending: false })
           .range(pageParam, pageParam + limit - 1)
+
+        if (meId) {
+          query = query.eq('like.user_id', meId)
+        }
+
+        const { data, error } = await query
+
+        if (error) {
+          console.error(error)
+        }
+
         let publicData
         const isMe = meId === userId
 
         isMe
           ? (publicData = data)
-          : (publicData = data?.map((item) =>
+          : (publicData = data?.map((item: any) =>
               item.post.access_type === 'public'
                 ? item
                 : {
@@ -98,13 +166,14 @@ export const postQuery = {
     queryOptions({
       queryKey: queryKey.post.thatDay(startOfDay, endOfDay, authorId),
       queryFn: async () => {
-        const { data } = await supabase
+        let query = supabase
           .from('post')
           .select(
             `
             *,
-            comment(count),
-            like(count),
+            comment_count:comment(count),
+            is_liked:like(user_id),
+            like_count:like(count),
             user_info(
               email,
               user_name,
@@ -115,10 +184,25 @@ export const postQuery = {
           .gte('created_at', startOfDay)
           .lte('created_at', endOfDay)
           .eq('user_id', authorId)
+          .eq('like.user_id', authorId)
           .order('created_at', { ascending: false })
 
+        if (meId) {
+          query = query.eq('like.user_id', meId)
+        }
+
+        const { data, error } = await query
+
+        if (error) {
+          console.error(error)
+        }
+
         let publicData
-        const isMe = meId === authorId
+        let isMe
+
+        if (meId) {
+          isMe = meId === authorId
+        }
 
         isMe
           ? (publicData = data)
@@ -143,13 +227,14 @@ export const postQuery = {
     infiniteQueryOptions({
       queryKey: queryKey.post.byPostType(postType, authorId),
       queryFn: async ({ pageParam = 0 }) => {
-        const { data } = await supabase
+        let query = supabase
           .from('post')
           .select(
             `
             *,
-            comment(count),
-            like(count),
+            comment_count:comment(count),
+            is_liked:like(user_id),
+            like_count:like(count),
             user_info(
               email,
               user_name,
@@ -161,8 +246,23 @@ export const postQuery = {
           .eq('post_type', postType)
           .order('created_at', { ascending: false })
           .range(pageParam, pageParam + limit - 1)
+
+        if (meId) {
+          query = query.eq('like.user_id', meId)
+        }
+
+        const { data, error } = await query
+
+        if (error) {
+          console.error(error)
+        }
+
         let publicData
-        const isMe = meId === authorId
+        let isMe
+
+        if (meId) {
+          isMe = meId === authorId
+        }
 
         isMe
           ? (publicData = data)
@@ -179,60 +279,6 @@ export const postQuery = {
         if (lastPage && lastPage.length < limit) return undefined
         return allPages.length * limit
       },
-    }),
-
-  getPost: (supabase: SupabaseClient, postId?: number) =>
-    queryOptions<IPost>({
-      queryKey: queryKey.post.detail(postId),
-      queryFn: async () => {
-        const { data } = await supabase
-          .from('post')
-          .select(
-            `
-            *,
-            comments:comment(
-              *,
-              user_info(
-                email,
-                user_name,
-                avatar_url
-              )
-            ),
-            comment_count:comment(count),
-            like_count:like(count),
-            user_info(
-              email,
-              user_name,
-              avatar_url,
-              about_me
-            )
-            `,
-          )
-          .eq('id', postId)
-          .single()
-
-        return data
-      },
-      enabled: !!postId,
-    }),
-
-  checkLiked: (
-    supabase: SupabaseClient,
-    postId?: number,
-    meId?: string | null,
-  ) =>
-    queryOptions({
-      queryKey: queryKey.post.checkLiked(postId, meId),
-      queryFn: async () => {
-        const { data } = await supabase
-          .from('like')
-          .select('*')
-          .eq('post_id', postId)
-          .eq('user_id', meId)
-
-        return data && data?.length >= 1
-      },
-      enabled: !!meId,
     }),
 
   getMyUsedWords: (supabase: SupabaseClient, userId: string) =>

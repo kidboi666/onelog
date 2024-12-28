@@ -3,20 +3,21 @@ import { createServerClient } from '@/src/lib/supabase/server'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 
 import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
-import { IUserSession, meQuery } from '@/src/services/queries/auth/me-query'
 
 import Title from '@/src/components/Title'
 import TodoFoldersSection from '../_components/TodoFoldersSection'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { IUserSession } from '@/src/types/auth'
 
 export default async function TodoDashBoard() {
   const supabase = createServerClient()
   const queryClient = getQueryClient()
 
-  await queryClient.prefetchQuery(meQuery.getUserSession(supabase))
+  await queryClient.prefetchQuery(meQuery.getSession(supabase))
   const res = queryClient.getQueryData<IUserSession>(['me', 'session'])
 
   if (res) {
-    queryClient.prefetchQuery(
+    await queryClient.prefetchQuery(
       todoFolderQuery.getTodoFolder(supabase, res.userId),
     )
   }

@@ -5,36 +5,30 @@ import { MouseEvent } from 'react'
 import { routes } from '@/src/routes'
 import { useRouter } from 'next/navigation'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { postQuery } from '@/src/services/queries/post/post-query'
+import { meQuery } from '@/src/services/queries/auth/me-query'
 import { supabase } from '@/src/lib/supabase/client'
-import { IUserInfoWithMBTI } from '@/src/types/auth'
 
 interface Props {
   postId: number
-  me: IUserInfoWithMBTI
+  isLiked: boolean
 }
 
-export default function useLikeMutates({ postId, me }: Props): {
-  isLike: boolean | null
+export default function useLikeMutates({ postId, isLiked }: Props): {
   onLikePost: (e: MouseEvent) => void
 } {
   const router = useRouter()
-  const { data: isLike } = useSuspenseQuery(
-    postQuery.checkLiked(supabase, postId, me?.id),
-  )
-  const { mutate: likeOrUnlike } = useHandleLikePost(isLike)
-
-  const handleLike = () => {
-    likeOrUnlike({
-      meId: me?.id,
-      postId,
-    })
-  }
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { mutate: likeOrUnlike } = useHandleLikePost(isLiked)
 
   const handleLikePost = (e: MouseEvent) => {
     e.stopPropagation()
-    me ? handleLike() : router.push(routes.modal.auth.guard, { scroll: false })
+    session
+      ? likeOrUnlike({
+          meId: session?.userId,
+          postId,
+        })
+      : router.push(routes.modal.auth.guard, { scroll: false })
   }
 
-  return { isLike, onLikePost: handleLikePost }
+  return { onLikePost: handleLikePost }
 }

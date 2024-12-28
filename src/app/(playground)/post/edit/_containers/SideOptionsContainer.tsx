@@ -38,7 +38,7 @@ export default function SideOptionsContainer({
   const postId = Number(searchParams.post_id)
   const router = useRouter()
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
 
   const isOwner = me?.userId === post?.user_id
   const handleChangeEmotion = (emotion: TEmotion | null) =>

@@ -5,29 +5,27 @@ import { XStack } from '@/src/components/Stack'
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
 import { routes } from '@/src/routes'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { userQuery } from '@/src/services/queries/auth/user-query'
 import { supabase } from '@/src/lib/supabase/client'
 import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+import { meQuery } from '@/src/services/queries/auth/me-query'
 
 interface Props {
   userId: string
 }
 
 export default function RenderActionButtonFromProfile({ userId }: Props) {
-  const { me } = useMeQueries()
-  const { data: user } = useSuspenseQuery(
-    userQuery.getUserInfo(supabase, userId),
-  )
-  const { isFollowing } = useFollowQueries({ meId: me.id, userId })
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { isFollowing } = useFollowQueries(userId)
   const { onFollow, isPending } = useFollowMutates({
     isFollowing,
-    me,
     userId,
   })
+  let isMyProfilePage: boolean = false
 
-  const isMyProfilePage = me?.id === user?.id
+  if (session) {
+    isMyProfilePage = session?.userId === userId
+  }
 
   const [isLoadingProfile, handlePushEditProfilePage] =
     useRouterPushWithTransition(routes.profile.edit)

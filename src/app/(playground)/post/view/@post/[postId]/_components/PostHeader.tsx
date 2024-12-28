@@ -10,13 +10,17 @@ import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { supabase } from '@/src/lib/supabase/client'
+import { meQuery } from '@/src/services/queries/auth/me-query'
 
 interface Props {
   postId: number
 }
 
 export default function PostHeader({ postId }: Props) {
-  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { data: post } = useSuspenseQuery(
+    postQuery.getPost(supabase, postId, session?.userId),
+  )
 
   return (
     <XStack gap={4} className="items-center">
@@ -36,7 +40,8 @@ export default function PostHeader({ postId }: Props) {
           </Text>
         </XStack>
         <Text type="caption" size="sm">
-          {formatDateToMDY(post.created_at)} · {formatDateToHM(post.created_at)}
+          {formatDateToMDY(post?.created_at)} ·{' '}
+          {formatDateToHM(post?.created_at)}
         </Text>
       </YStack>
       <XStack className="h-full flex-1 items-end justify-end p-2">

@@ -1,15 +1,15 @@
 'use client'
 
 import { supabase } from '@/src/lib/supabase/client'
-import { IUserSession, meQuery } from '@/src/services/queries/auth/me-query'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { IUserInfoWithMBTI } from '@/src/types/auth'
+import { IUserInfoWithMBTI, IUserSession } from '@/src/types/auth'
+import { meQuery } from '@/src/services/queries/auth/me-query'
 
 export default function useMeQueries(): {
   me: IUserInfoWithMBTI
-  session?: IUserSession | null
+  session: IUserSession
 } {
-  const { data: session } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: me } = useSuspenseQuery(
     meQuery.getUserInfo(supabase, session?.userId),
   )

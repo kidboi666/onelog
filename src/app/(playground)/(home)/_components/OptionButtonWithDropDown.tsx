@@ -13,7 +13,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 
 interface Props {
-  postId?: number
+  postId: number
   commentId?: number
   commentAuthorId?: string
   isSide?: boolean
@@ -30,7 +30,7 @@ export default function OptionButtonWithDropDown({
     useDataDrivenAnimation<HTMLDivElement>()
   const optionButtonRef = useOutsideClick<HTMLButtonElement>(close)
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
-  const { data: session } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const isOwner =
     session?.userId === post?.user_id || session?.userId === commentAuthorId
 

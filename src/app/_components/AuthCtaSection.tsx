@@ -12,7 +12,7 @@ import { useEffect } from 'react'
 
 export default function AuthCtaSection() {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getUserSession(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
 
   useEffect(() => {
     if (me) {
