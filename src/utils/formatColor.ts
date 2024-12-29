@@ -1,6 +1,6 @@
-import { TColor } from '@/src/types/theme'
+import { TColor } from '@/src/types/theme';
+import { ButtonProps } from '@/src/components/Button';
 
-import { ButtonProps } from '@/src/components/Button'
 
 export const formatColor = (color: TColor) => {
   switch (color) {
@@ -20,10 +20,7 @@ export const formatColor = (color: TColor) => {
   }
 }
 
-export const formatButtonColor = (
-  color: TColor,
-  variant: ButtonProps['variant'],
-) => {
+export const formatButtonColor = (color: TColor, variant: ButtonProps['variant']) => {
   if (color === 'blue' && variant === 'primary') {
     return 'bg-var-blue ring-var-blue'
   }

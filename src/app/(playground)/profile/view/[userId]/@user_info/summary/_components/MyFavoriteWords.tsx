@@ -1,29 +1,23 @@
-'use client'
+'use client';
 
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { supabase } from '@/src/lib/supabase/client';
+import { postQuery } from '@/src/services/queries/post/post-query';
+import { IFavoriteWord } from '@/src/types/post';
+import { Container } from '@/src/components/Container';
+import Empty from '@/src/components/Empty';
+import { List } from '@/src/components/List';
+import { YStack } from '@/src/components/Stack';
+import Title from '@/src/components/Title';
+import FavoriteWordTag from './FavoriteWordTag';
 
-import { supabase } from '@/src/lib/supabase/client'
-
-import { postQuery } from '@/src/services/queries/post/post-query'
-
-import { IFavoriteWord } from '@/src/types/post'
-
-import { Container } from '@/src/components/Container'
-import Empty from '@/src/components/Empty'
-import { List } from '@/src/components/List'
-import { YStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
-
-import FavoriteWordTag from './FavoriteWordTag'
 
 interface Props {
   userId: string
 }
 
 export default function MyFavoriteWords({ userId }: Props) {
-  const { data: words } = useSuspenseQuery(
-    postQuery.getMyUsedWords(supabase, userId),
-  )
+  const { data: words } = useSuspenseQuery(postQuery.getMyUsedWords(supabase, userId))
   const typedWords = words?.words as unknown as IFavoriteWord[]
   const sortedUsedWords = typedWords?.sort((a, b) => b?.count - a?.count)
   const shouldRenderWords = sortedUsedWords?.filter((word) => word.count > 1)

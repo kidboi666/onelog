@@ -1,5 +1,4 @@
 import { ComponentProps, PropsWithChildren, RefObject } from 'react'
-
 import cn from '@/src/lib/cn'
 
 interface Props extends ComponentProps<'ul'> {
@@ -44,12 +43,7 @@ interface RowProps extends ComponentProps<'li'> {
   targetRef?: RefObject<HTMLLIElement>
 }
 
-List.Row = ({
-  children,
-  className,
-  targetRef,
-  ...props
-}: PropsWithChildren<RowProps>) => {
+List.Row = ({ children, className, targetRef, ...props }: PropsWithChildren<RowProps>) => {
   return (
     <li ref={targetRef} className={cn(className)} {...props}>
       {children}

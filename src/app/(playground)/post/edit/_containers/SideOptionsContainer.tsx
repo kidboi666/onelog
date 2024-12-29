@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
-
 import { Container } from '@/src/components/Container'
 import Line from '@/src/components/Line'
 import { YStack } from '@/src/components/Stack'
-
 import EmotionSection from '../_components/EmotionSection'
 import PostTypeSection from '../_components/PostTypeSection'
 import PublishSection from '../_components/PublishSection'
@@ -34,16 +32,8 @@ export default function SideOptionsContainer({
   return (
     <Container className="sticky left-4 top-8 hidden h-fit animate-fade-in-reverse rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
       <YStack as="nav" className="items-center">
-        <PublishSection
-          accessType={accessType}
-          onChangeAccessType={onChangeAccessType}
-          isSide
-        />
-        <PostTypeSection
-          postType={postType}
-          onChangePostType={onChangePostType}
-          isSide
-        />
+        <PublishSection accessType={accessType} onChangeAccessType={onChangeAccessType} isSide />
+        <PostTypeSection postType={postType} onChangePostType={onChangePostType} isSide />
         <Line className="w-full" />
         <EmotionSection
           selectedEmotion={selectedEmotion}

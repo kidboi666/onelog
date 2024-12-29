@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation'
 import { PropsWithChildren, ReactNode } from 'react'
-
 import Portal from '@/src/components/Portal'
 import { ZStack } from '@/src/components/Stack'
 
@@ -12,11 +11,7 @@ interface Props {
   todo_info: ReactNode
 }
 
-export default function Layout({
-  sidebar,
-  main,
-  todo_info,
-}: PropsWithChildren<Props>) {
+export default function Layout({ sidebar, main, todo_info }: PropsWithChildren<Props>) {
   const pathname = usePathname()
   const isDetailOpen = pathname.startsWith('/todo/detail')
 

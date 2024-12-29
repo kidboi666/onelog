@@ -1,6 +1,6 @@
 module.exports = {
   tabWidth: 2,
-  printWidth: 80,
+  printWidth: 100,
   semi: false,
   singleQuote: true,
   bracketSpacing: true,
@@ -8,10 +8,7 @@ module.exports = {
   arrowParens: 'always',
   endOfLine: 'lf',
   useTabs: false,
-  plugins: [
-    'prettier-plugin-tailwindcss',
-    '@trivago/prettier-plugin-sort-imports',
-  ],
+  plugins: ['prettier-plugin-tailwindcss', '@trivago/prettier-plugin-sort-imports'],
   tailwindFunctions: ['clsx', 'cva'],
   importOrder: [
     '<THIRD_PARTY_MODULES>',
@@ -20,10 +17,10 @@ module.exports = {
     '^@/src/types/(.*)$',
     '^@/src/hooks/(.*)$',
     '^@/src/utils/(.*)$',
+    '^@/src/routes$',
     '^@/src/components/(.*)$',
     '^@/src/app/(.*)$',
     '^[./]',
   ],
-  importOrderSeparation: true,
   importOrderSortSpecifiers: true,
 }

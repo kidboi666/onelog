@@ -1,15 +1,11 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-
 import { supabase } from '@/src/lib/supabase/client'
-
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
-
 import Empty from '@/src/components/Empty'
 import { List } from '@/src/components/List'
-
 import CommentInput from './CommentInput'
 import CommentItem from './CommentItem'
 
@@ -37,14 +33,7 @@ export default function Comments({ postId }: Props) {
           {comments.map((comment, idx) => {
             if (comment.comment_id) return null
 
-            return (
-              <CommentItem
-                key={idx}
-                comment={comment}
-                postId={postId}
-                session={session}
-              />
-            )
+            return <CommentItem key={idx} comment={comment} postId={postId} session={session} />
           })}
         </List>
       )}

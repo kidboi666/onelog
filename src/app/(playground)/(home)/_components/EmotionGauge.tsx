@@ -1,9 +1,6 @@
 import { useTheme } from '@/src/store/useTheme'
-
 import cn from '@/src/lib/cn'
-
 import { TColor } from '@/src/types/theme'
-
 import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 
 interface Props {
@@ -13,11 +10,7 @@ interface Props {
   onClick?: (emotion: TEmotion | null) => void
 }
 
-export default function EmotionGauge({
-  emotionLevel,
-  className,
-  onClick,
-}: Props) {
+export default function EmotionGauge({ emotionLevel, className, onClick }: Props) {
   const { color } = useTheme()
 
   let emotionBlock = [0, 0, 0, 0, 0]
@@ -66,12 +59,7 @@ interface EmotionBlockProps {
   onClick?: (emotion: TEmotion | null) => void
 }
 
-function EmotionBlock({
-  shouldRender,
-  color,
-  index,
-  onClick,
-}: EmotionBlockProps) {
+function EmotionBlock({ shouldRender, color, index, onClick }: EmotionBlockProps) {
   let currentEmotion: TEmotion
   let blockOpacity: string
   let sizeString: string
@@ -130,12 +118,8 @@ function EmotionBlock({
           'size-full h-2 rounded-full bg-zinc-300/35 p-1 shadow-sm transition-all dark:bg-zinc-300/15',
           sizeString!,
           blockOpacity!,
-          shouldRender &&
-            color === 'yellow' &&
-            'bg-var-yellow dark:bg-var-yellow',
-          shouldRender &&
-            color === 'orange' &&
-            'bg-var-orange dark:bg-var-orange',
+          shouldRender && color === 'yellow' && 'bg-var-yellow dark:bg-var-yellow',
+          shouldRender && color === 'orange' && 'bg-var-orange dark:bg-var-orange',
           shouldRender && color === 'black' && 'bg-black/60 dark:bg-white/60',
           shouldRender && color === 'blue' && 'bg-var-blue dark:bg-var-blue',
           shouldRender && color === 'green' && 'bg-var-green dark:bg-var-green',

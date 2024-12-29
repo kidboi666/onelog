@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react'
-
 import cn from '@/src/lib/cn'
 
 export interface IconProps {
@@ -32,9 +31,7 @@ export default function Icon({
     <svg
       width={sizeX || size}
       height={sizeY || size}
-      viewBox={cn(
-        viewProp ? viewProp : `0 0 ${viewX || view} ${viewY || view}`,
-      )}
+      viewBox={cn(viewProp ? viewProp : `0 0 ${viewX || view} ${viewY || view}`)}
       className={cn(className)}
       aria-valuetext={name}
       stroke="currentColor"

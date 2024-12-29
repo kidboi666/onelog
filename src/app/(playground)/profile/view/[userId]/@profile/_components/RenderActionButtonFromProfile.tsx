@@ -1,18 +1,15 @@
-'use client'
+'use client';
 
-import { routes } from '@/src/routes'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { supabase } from '@/src/lib/supabase/client';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+import useFollowMutates from '@/src/hooks/mutates/useFollowMutates';
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries';
+import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition';
+import { routes } from '@/src/routes';
+import Button from '@/src/components/Button';
+import { XStack } from '@/src/components/Stack';
 
-import { supabase } from '@/src/lib/supabase/client'
-
-import { meQuery } from '@/src/services/queries/auth/me-query'
-
-import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
-import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
-
-import Button from '@/src/components/Button'
-import { XStack } from '@/src/components/Stack'
 
 interface Props {
   userId: string
@@ -31,11 +28,10 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
     isMyProfilePage = session?.userId === userId
   }
 
-  const [isLoadingProfile, handlePushEditProfilePage] =
-    useRouterPushWithTransition(routes.profile.edit)
-  const [isLoadingWrite, handlePushNewPostPage] = useRouterPushWithTransition(
-    routes.post.new,
+  const [isLoadingProfile, handlePushEditProfilePage] = useRouterPushWithTransition(
+    routes.profile.edit,
   )
+  const [isLoadingWrite, handlePushNewPostPage] = useRouterPushWithTransition(routes.post.new)
 
   const handleSendMessageButtonClick = () => {
     return null
@@ -57,11 +53,7 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
           >
             프로필 수정
           </Button>
-          <Button
-            size="sm"
-            isLoading={isLoadingWrite}
-            onClick={handlePushNewPostPage}
-          >
+          <Button size="sm" isLoading={isLoadingWrite} onClick={handlePushNewPostPage}>
             글쓰기
           </Button>
         </>
@@ -75,11 +67,7 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
           >
             {isFollowing ? '팔로우 취소' : '팔로우 하기'}
           </Button>
-          <Button
-            size="sm"
-            variant="secondary"
-            onClick={handleSendMessageButtonClick}
-          >
+          <Button size="sm" variant="secondary" onClick={handleSendMessageButtonClick}>
             메시지 보내기
           </Button>
         </>

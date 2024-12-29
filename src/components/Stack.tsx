@@ -1,6 +1,5 @@
 import { cva } from 'class-variance-authority'
 import { ComponentProps, PropsWithChildren } from 'react'
-
 import cn from '@/src/lib/cn'
 
 type GapSizes = 'px' | 0 | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12
@@ -54,12 +53,8 @@ const Stack = ({
   )
 }
 
-export const XStack = (props: PropsWithChildren<StackProps>) => (
-  <Stack {...props} direction="row" />
-)
-export const YStack = (props: PropsWithChildren<StackProps>) => (
-  <Stack {...props} direction="col" />
-)
+export const XStack = (props: PropsWithChildren<StackProps>) => <Stack {...props} direction="row" />
+export const YStack = (props: PropsWithChildren<StackProps>) => <Stack {...props} direction="col" />
 export const ZStack = (props: PropsWithChildren<StackProps>) => (
   <Stack {...props} className="relative" />
 )

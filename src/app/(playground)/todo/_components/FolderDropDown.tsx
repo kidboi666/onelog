@@ -1,6 +1,5 @@
 import { useRouter } from 'next/navigation'
 import { RefObject } from 'react'
-
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Text from '@/src/components/Text'
@@ -11,11 +10,7 @@ interface Props {
   folderId: number
 }
 
-export default function FolderDropDown({
-  targetRef,
-  onTransitionEnd,
-  folderId,
-}: Props) {
+export default function FolderDropDown({ targetRef, onTransitionEnd, folderId }: Props) {
   const router = useRouter()
   return (
     <div

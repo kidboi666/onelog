@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation'
 import { PropsWithChildren, ReactNode } from 'react'
-
 import { Container } from '@/src/components/Container'
 import Portal from '@/src/components/Portal'
 import ToastContainer from '@/src/components/ToastContainer'
@@ -13,12 +12,7 @@ interface Props {
   modal: ReactNode
 }
 
-export default function Layout({
-  header,
-  sidebar,
-  children,
-  modal,
-}: PropsWithChildren<Props>) {
+export default function Layout({ header, sidebar, children, modal }: PropsWithChildren<Props>) {
   const pathname = usePathname()
   const isModalOpen = pathname.startsWith('/modal')
 

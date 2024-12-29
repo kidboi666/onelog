@@ -1,22 +1,18 @@
-'use client'
+'use client';
 
-import { routes } from '@/src/routes'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { supabase } from '@/src/lib/supabase/client';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+import { postQuery } from '@/src/services/queries/post/post-query';
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries';
+import useRouterPush from '@/src/hooks/useRouterPush';
+import { routes } from '@/src/routes';
+import Avatar from '@/src/components/Avatar';
+import { XStack, YStack } from '@/src/components/Stack';
+import Text from '@/src/components/Text';
+import Title from '@/src/components/Title';
+import RenderActionButtonFromAuthorInfo from '@/src/app/(playground)/post/view/@post/[postId]/_components/RenderActionButtonFromAuthorInfo';
 
-import { supabase } from '@/src/lib/supabase/client'
-
-import { meQuery } from '@/src/services/queries/auth/me-query'
-import { postQuery } from '@/src/services/queries/post/post-query'
-
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
-import useRouterPush from '@/src/hooks/useRouterPush'
-
-import Avatar from '@/src/components/Avatar'
-import { XStack, YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
-import Title from '@/src/components/Title'
-
-import RenderActionButtonFromAuthorInfo from '@/src/app/(playground)/post/view/@post/[postId]/_components/RenderActionButtonFromAuthorInfo'
 
 interface Props {
   postId: number
@@ -24,9 +20,7 @@ interface Props {
 
 export default function PostAuthorInfo({ postId }: Props) {
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
-  const { data: post } = useSuspenseQuery(
-    postQuery.getPost(supabase, postId, session?.userId),
-  )
+  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId, session?.userId))
   const pushNewPostPage = useRouterPush(routes.profile.view(post?.user_id))
   const { isFollowing } = useFollowQueries(post?.user_id)
 

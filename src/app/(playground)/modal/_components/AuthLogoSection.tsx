@@ -1,9 +1,7 @@
 'use client'
 
 import { useTheme } from '@/src/store/useTheme'
-
 import cn from '@/src/lib/cn'
-
 import Icon from '@/src/components/Icon'
 import LinkButton from '@/src/components/LinkButton'
 
@@ -13,10 +11,7 @@ export default function AuthLogoSection() {
     <LinkButton
       href="/"
       variant="none"
-      className={cn(
-        'h-fit w-full',
-        theme === 'dark' ? 'text-white' : 'text-black',
-      )}
+      className={cn('h-fit w-full', theme === 'dark' ? 'text-white' : 'text-black')}
     >
       <Icon name="logo" sizeX={384} sizeY={200} viewX={323.33} viewY={160}>
         <path d="M181.76,65.27h-6.64V10.83h6.64v24.57h11.2v6.22h-11.2v23.65Z" />

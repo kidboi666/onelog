@@ -1,25 +1,14 @@
 'use client';
 
-import { routes } from '@/src/routes';
-import { useRouter } from 'next/navigation'
-import { MouseEvent, useState } from 'react'
-
-import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
-
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+import { useRouter } from 'next/navigation';
+import { MouseEvent, useState } from 'react';
+import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow';
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries';
 import useMeQueries from '@/src/hooks/queries/useMeQueries';
-
-
-
+import { routes } from '@/src/routes';
 import Modal from '@/src/components/Modal';
 import { YStack } from '@/src/components/Stack';
-
-
-
 import FollowUserCard from '../../_components/FollowUserCard';
-
-
-
 
 
 interface Props {
@@ -34,11 +23,7 @@ export default function FollowerListModal({ params }: Props) {
   const { mutate: followOrUnfollow } = useHandleFollow()
   const [pendingList, setPendingList] = useState<Record<string, boolean>>({})
 
-  const handleFollow = (
-    e: MouseEvent,
-    userId: string,
-    isFollowing: boolean,
-  ) => {
+  const handleFollow = (e: MouseEvent, userId: string, isFollowing: boolean) => {
     e.stopPropagation()
     if (!session) return router.push(routes.modal.auth.guard)
 
@@ -66,8 +51,7 @@ export default function FollowerListModal({ params }: Props) {
       <YStack className="w-full">
         {followers?.map((follower) => {
           const isFollowing = myFollows?.find(
-            (myFollower: any) =>
-              myFollower.followed_user_id === follower.user_info.id,
+            (myFollower: any) => myFollower.followed_user_id === follower.user_info.id,
           )
           const isMe = me?.id === follower.user_info.id
           const isPending = pendingList[follower.user_info.id] || false
@@ -78,9 +62,7 @@ export default function FollowerListModal({ params }: Props) {
               isFollowing={!!isFollowing}
               isMe={isMe}
               follower={follower}
-              onFollow={(e: MouseEvent) =>
-                handleFollow(e, follower.user_info.id, !!isFollowing)
-              }
+              onFollow={(e: MouseEvent) => handleFollow(e, follower.user_info.id, !!isFollowing)}
               isPending={isPending}
               pushUserPage={() => handlePushUserPage(follower.user_info.id)}
             />

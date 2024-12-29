@@ -1,30 +1,20 @@
 'use client';
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { ReactElement, useMemo, useState } from 'react'
-
-
-import { supabase } from '@/src/lib/supabase/client'
-
-import { meQuery } from '@/src/services/queries/auth/me-query'
-import { gardenQuery } from '@/src/services/queries/garden/garden-query'
-
-
-import { IDateBlock } from '@/src/types/garden'
-import { Tables } from '@/src/types/supabase'
-
-
-import { getDaysInYear, getFirstDayInYear } from '@/src/utils/formatDate'
-
-
-import { Container } from '@/src/components/Container'
-import Block from '../_components/Block'
-import ColorInfoDisplay from '../_components/ColorInfoDisplay'
-import GardenBlockSection from '../_components/GardenBlockSection'
-import YearSection from '../_components/YearSection'
-
-mport { YStack } from '@/src/components/Stack';
-mport Title from '@/src/components/Title';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { ReactElement, useMemo, useState } from 'react';
+import { supabase } from '@/src/lib/supabase/client';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+import { gardenQuery } from '@/src/services/queries/garden/garden-query';
+import { IDateBlock } from '@/src/types/garden';
+import { Tables } from '@/src/types/supabase';
+import { getDaysInYear, getFirstDayInYear } from '@/src/utils/formatDate';
+import { Container } from '@/src/components/Container';
+import { YStack } from '@/src/components/Stack';
+import Title from '@/src/components/Title';
+import Block from '../_components/Block';
+import ColorInfoDisplay from '../_components/ColorInfoDisplay';
+import GardenBlockSection from '../_components/GardenBlockSection';
+import YearSection from '../_components/YearSection';
 
 
 /**
@@ -37,9 +27,7 @@ const getRenderedBlockFromEmotionLevel = (
 ) => {
   return months.map((days, i) => {
     let blocks = []
-    const foundTargetMonth = targetDays.find(
-      (v) => new Date(v.created_at).getMonth() === i,
-    )
+    const foundTargetMonth = targetDays.find((v) => new Date(v.created_at).getMonth() === i)
 
     for (let day = 1; day <= days; day++) {
       const weekDay = new Date(year, i, day).getDay()
@@ -48,9 +36,7 @@ const getRenderedBlockFromEmotionLevel = (
         const targetDays = foundTargetMonth.posts.filter(
           (v: any) => new Date(v.created_at).getDate() === day,
         )
-        const levels = targetDays.map((v: any) =>
-          Number(v.emotion_level?.replace('%', '')),
-        )
+        const levels = targetDays.map((v: any) => Number(v.emotion_level?.replace('%', '')))
         const sum = levels.reduce((total, num) => total + num, 0)
         targetDaysForEmotionLevel = sum / levels.length
         if (targetDaysForEmotionLevel) {
@@ -64,12 +50,7 @@ const getRenderedBlockFromEmotionLevel = (
           continue
         }
       }
-      blocks.push(
-        <Block
-          key={day}
-          blockInfo={{ month: i + 1, date: day, weekDay, year }}
-        />,
-      )
+      blocks.push(<Block key={day} blockInfo={{ month: i + 1, date: day, weekDay, year }} />)
     }
     return { month: i + 1, days: [...blocks] }
   })
@@ -78,10 +59,7 @@ const getRenderedBlockFromEmotionLevel = (
 /**
  * 계산된 365개의 요소가 든 배열에 1월1일과 일요일로 시작되는 구간의 줄맞춤을 위해 빈블럭을 채워넣는 함수
  */
-export const createEmptySpaceByWeekday = (
-  yearMonth: IDateBlock[],
-  firstDayIndex: number,
-) => {
+export const createEmptySpaceByWeekday = (yearMonth: IDateBlock[], firstDayIndex: number) => {
   const trueResult: ReactElement[][] = []
 
   yearMonth.map((data, i) => {
@@ -106,9 +84,7 @@ interface Props {
 export default function Garden({ params }: Props) {
   const userId = params.userId
   const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, userId))
-  const { data: garden } = useSuspenseQuery(
-    gardenQuery.getGarden(supabase, userId),
-  )
+  const { data: garden } = useSuspenseQuery(gardenQuery.getGarden(supabase, userId))
   const currentYear = new Date().getFullYear()
   const signedYear = new Date(me?.created_at).getFullYear()
   const [selectedYear, setSelectedYear] = useState(currentYear)
@@ -119,11 +95,7 @@ export default function Garden({ params }: Props) {
     garden,
   )
   const yearList = useMemo(
-    () =>
-      Array.from(
-        { length: currentYear - signedYear + 1 },
-        (_, index) => currentYear - index,
-      ),
+    () => Array.from({ length: currentYear - signedYear + 1 }, (_, index) => currentYear - index),
     [signedYear, currentYear],
   )
 
@@ -136,11 +108,7 @@ export default function Garden({ params }: Props) {
       <YStack gap={8}>
         <div className="flex flex-col justify-between sm:flex-row">
           <Title>감정 한 눈에 보기</Title>
-          <YearSection
-            yearList={yearList}
-            selectedYear={selectedYear}
-            onSelect={handleSelect}
-          />
+          <YearSection yearList={yearList} selectedYear={selectedYear} onSelect={handleSelect} />
         </div>
         <GardenBlockSection
           shouldRenderElement={shouldRenderElement}

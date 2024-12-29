@@ -1,14 +1,13 @@
-import { routes } from '@/src/routes'
-import { useTransition } from 'react'
+import { useTransition } from 'react';
+import useFollowMutates from '@/src/hooks/mutates/useFollowMutates';
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries';
+import { routes } from '@/src/routes';
+import Avatar from '@/src/components/Avatar';
+import { DropDown } from '@/src/components/DropDown';
+import Follow from '@/src/components/Follow';
+import { XStack, YStack } from '@/src/components/Stack';
+import Title from '@/src/components/Title';
 
-import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
-
-import Avatar from '@/src/components/Avatar'
-import { DropDown } from '@/src/components/DropDown'
-import Follow from '@/src/components/Follow'
-import { XStack, YStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
 
 interface Props {
   avatarUrl: string | null
@@ -16,14 +15,9 @@ interface Props {
   userId: string
 }
 
-export default function AvatarButtonWithDropDownContent({
-  userId,
-  userName,
-  avatarUrl,
-}: Props) {
+export default function AvatarButtonWithDropDownContent({ userId, userName, avatarUrl }: Props) {
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
-  const { followingCount, followerCount, isFollowing, isMe } =
-    useFollowQueries(userId)
+  const { followingCount, followerCount, isFollowing, isMe } = useFollowQueries(userId)
   const {
     onFollow,
     pushFollowingList,
@@ -59,10 +53,7 @@ export default function AvatarButtonWithDropDownContent({
         <XStack gap={4}>
           {isMe ? (
             <>
-              <DropDown.LinkButton
-                href={routes.profile.edit}
-                variant="secondary"
-              >
+              <DropDown.LinkButton href={routes.profile.edit} variant="secondary">
                 프로필 수정
               </DropDown.LinkButton>
               <DropDown.LinkButton href={routes.profile.view(userId)}>

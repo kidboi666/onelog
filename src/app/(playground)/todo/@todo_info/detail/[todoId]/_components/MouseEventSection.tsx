@@ -1,19 +1,15 @@
-'use client'
+'use client';
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
-import { PropsWithChildren, useEffect, useRef } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { PropsWithChildren, useEffect, useRef } from 'react';
+import { supabase } from '@/src/lib/supabase/client';
+import { todoQuery } from '@/src/services/queries/todo/todo-query';
+import { Tables } from '@/src/types/supabase';
+import useMeQueries from '@/src/hooks/queries/useMeQueries';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
+import BackButtonSection from './BackButtonSection';
 
-import { supabase } from '@/src/lib/supabase/client'
-
-import { todoQuery } from '@/src/services/queries/todo/todo-query'
-
-import { Tables } from '@/src/types/supabase'
-
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-
-import BackButtonSection from './BackButtonSection'
 
 interface Props {
   todoId: string
@@ -31,11 +27,7 @@ export default function MouseEventSection({
     todoQuery.getTodoFromFolder(supabase, me?.id, Number(folderId)),
   )
   const isMouseDown = useRef<boolean>(false)
-  const {
-    close,
-    open,
-    ref: insideRef,
-  } = useDataDrivenAnimation<HTMLDivElement>()
+  const { close, open, ref: insideRef } = useDataDrivenAnimation<HTMLDivElement>()
   let todo: Tables<'todo'>
 
   if (todos) {

@@ -1,50 +1,26 @@
 'use client';
 
-import { routes } from '@/src/routes'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { usePathname } from 'next/navigation'
-
-import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/client'
-
-
-import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
-
-
-import { TodoFolder } from '@/src/types/todo'
-
-
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-
-
-import { Container } from '@/src/components/Container'
-import Line from '@/src/components/Line'
-import MenuButton from '../../@sidebar/_components/MenuButton'
-import { TODO_MENU } from '../_constants'
-import TaskFolderSection from './_components/TaskFolderSection'
-
-imort { List } from '@/src/components/List';
-imort { YStack } from '@/src/components/Stack';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { usePathname } from 'next/navigation';
+import cn from '@/src/lib/cn';
+import { supabase } from '@/src/lib/supabase/client';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query';
+import { routes } from '@/src/routes';
+import { Container } from '@/src/components/Container';
+import Line from '@/src/components/Line';
+import { List } from '@/src/components/Lis';
+import { YStack } from '@/src/components/Stac';
+import MenuButton from '../../@sidebar/_components/MenuButton';
+import { TODO_MENU } from '../_constants';
+import TaskFolderSection from './_components/TaskFolderSection';
 
 
-export const INIT_TODO_FOLDER: TodoFolder = {
-  id: 0,
-  name: '새로운 폴더',
-  createdAt: 0,
-  updatedAt: 0,
-  dotColor: 'black',
-  index: 0,
-}
-
-interface Props {
-  searchParams: { folder_id: string; color?: string }
-}
-
-export default function SideBarPage({ searchParams }: Props) {
+export default function SideBarPage() {
   const pathname = usePathname()
-  const { me } = useMeQueries()
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: todoFolders } = useSuspenseQuery(
-    todoFolderQuery.getTodoFolder(supabase, me?.id),
+    todoFolderQuery.getTodoFolder(supabase, session?.userId),
   )
 
   return (

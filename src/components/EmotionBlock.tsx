@@ -1,7 +1,5 @@
 import { useTheme } from '@/src/store/useTheme'
-
 import cn from '@/src/lib/cn'
-
 import Button, { ButtonProps } from '@/src/components/Button'
 
 interface Props extends ButtonProps {
@@ -25,12 +23,7 @@ export default function EmotionBlock({ level, onClick, className }: Props) {
     }
   }
   return (
-    <div
-      className={cn(
-        'size-full overflow-hidden rounded-full ring-1 ring-zinc-400',
-        className,
-      )}
-    >
+    <div className={cn('size-full overflow-hidden rounded-full ring-1 ring-zinc-400', className)}>
       <Button
         variant="primary"
         onClick={onClick}

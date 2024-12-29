@@ -1,14 +1,11 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { IFavoriteWord } from '@/src/types/post';
+import useOutsideClick from '@/src/hooks/useOutsideClick';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
+import Button from '@/src/components/Button';
+import { List } from '@/src/components/List';
+import TagInfo from './TagInfo';
 
-import { IFavoriteWord } from '@/src/types/post'
-
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-
-import Button from '@/src/components/Button'
-import { List } from '@/src/components/List'
-
-import TagInfo from './TagInfo'
 
 interface Props {
   word: IFavoriteWord
@@ -16,8 +13,7 @@ interface Props {
 
 export default function FavoriteWordTag({ word }: Props) {
   const [trigger, setTrigger] = useState(false)
-  const { onClick, ref, close, onTransitionEnd } =
-    useDataDrivenAnimation<HTMLDivElement>()
+  const { onClick, ref, close, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   const handleTagClick = () => {
@@ -35,12 +31,7 @@ export default function FavoriteWordTag({ word }: Props) {
       >
         {word.word}
       </Button>
-      <TagInfo
-        word={word}
-        trigger={trigger}
-        onTransitionEnd={onTransitionEnd}
-        targetRef={ref}
-      />
+      <TagInfo word={word} trigger={trigger} onTransitionEnd={onTransitionEnd} targetRef={ref} />
     </List.Row>
   )
 }

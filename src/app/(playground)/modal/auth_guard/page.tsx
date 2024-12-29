@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
-
 import Button from '@/src/components/Button'
 import Modal from '@/src/components/Modal'
 import { XStack } from '@/src/components/Stack'

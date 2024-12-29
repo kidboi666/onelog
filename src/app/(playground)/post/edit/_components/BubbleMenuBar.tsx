@@ -1,7 +1,7 @@
-import { Editor } from '@tiptap/react'
-import { Fragment } from 'react'
+import { Editor } from '@tiptap/react';
+import { Fragment } from 'react';
+import MenuItem from './MenuItem';
 
-import MenuItem from './MenuItem'
 
 interface Props {
   editor: Editor
@@ -84,9 +84,7 @@ export default function BubbleMenuBar({ editor }: Props) {
       isActive: () => editor.isActive('bold'),
     },
     {
-      icon: (
-        <path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z" />
-      ),
+      icon: <path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z" />,
       title: 'Italic',
       action: () => editor.chain().focus().toggleItalic().run(),
       isActive: () => editor.isActive('italic'),

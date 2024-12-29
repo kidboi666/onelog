@@ -1,21 +1,17 @@
-'use client'
+'use client';
 
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { supabase } from '@/src/lib/supabase/client';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+import { postQuery } from '@/src/services/queries/post/post-query';
+import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate';
+import { XStack, YStack } from '@/src/components/Stack';
+import Text from '@/src/components/Text';
+import Title from '@/src/components/Title';
+import AvatarButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AvatarButtonWithDropDown';
+import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge';
+import { TEmotion } from '@/src/app/(playground)/post/edit/page';
 
-import { supabase } from '@/src/lib/supabase/client'
-
-import { meQuery } from '@/src/services/queries/auth/me-query'
-import { postQuery } from '@/src/services/queries/post/post-query'
-
-import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
-
-import { XStack, YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
-import Title from '@/src/components/Title'
-
-import AvatarButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AvatarButtonWithDropDown'
-import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge'
-import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 
 interface Props {
   postId: number
@@ -23,9 +19,7 @@ interface Props {
 
 export default function PostHeader({ postId }: Props) {
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
-  const { data: post } = useSuspenseQuery(
-    postQuery.getPost(supabase, postId, session?.userId),
-  )
+  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId, session?.userId))
 
   const {
     user_id,
@@ -56,10 +50,7 @@ export default function PostHeader({ postId }: Props) {
         </Text>
       </YStack>
       <XStack className="h-full flex-1 items-end justify-end p-2">
-        <EmotionGauge
-          emotionLevel={emotion_level as TEmotion}
-          className="h-full"
-        />
+        <EmotionGauge emotionLevel={emotion_level as TEmotion} className="h-full" />
       </XStack>
     </XStack>
   )

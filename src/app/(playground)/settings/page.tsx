@@ -1,7 +1,5 @@
 import { Metadata } from 'next'
-
 import { YStack } from '@/src/components/Stack'
-
 import ColorPicker from './_components/ColorPicker'
 import DarkModeSwitch from './_components/DarkModeSwitch'
 import LogoutButton from './_components/LogoutButton'

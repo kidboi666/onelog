@@ -1,8 +1,7 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react';
+import cn from '@/src/lib/cn';
+import Icon from './Icon';
 
-import cn from '@/src/lib/cn'
-
-import Icon from './Icon'
 
 interface Props {
   size?: number
@@ -17,11 +16,7 @@ const Spinner = ({ size = 40, variants = 'logo' }: Props) => {
     return (
       <div className={cn(sizePx, 'relative')}>
         <div className="absolute size-full animate-ping rounded-full bg-zinc-300 dark:bg-zinc-600" />
-        <Icon
-          size={size}
-          view="0 0 386 386"
-          className="relative text-zinc-300 dark:text-zinc-600"
-        >
+        <Icon size={size} view="0 0 386 386" className="relative text-zinc-300 dark:text-zinc-600">
           <circle cx="185" cy="185" r="185" fill="currentColor" />
           <ellipse cx="100" cy="336" rx="83" ry="21" fill="#B9B9B9" />
           <path
@@ -33,11 +28,7 @@ const Spinner = ({ size = 40, variants = 'logo' }: Props) => {
     )
   }
   return (
-    <Icon
-      size={size}
-      view={100}
-      className="relative animate-spin text-zinc-800 dark:text-zinc-200"
-    >
+    <Icon size={size} view={100} className="relative animate-spin text-zinc-800 dark:text-zinc-200">
       <circle
         cx="50"
         cy="50"
@@ -55,16 +46,9 @@ interface ContainerProps {
   className?: string
 }
 
-const Container = ({
-  children,
-  className,
-}: PropsWithChildren<ContainerProps>) => {
+const Container = ({ children, className }: PropsWithChildren<ContainerProps>) => {
   return (
-    <div
-      className={cn('flex size-full items-center justify-center', className)}
-    >
-      {children}
-    </div>
+    <div className={cn('flex size-full items-center justify-center', className)}>{children}</div>
   )
 }
 

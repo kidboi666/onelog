@@ -1,5 +1,4 @@
 import Text from '@/src/components/Text'
-
 import Block from './Block'
 
 export default function ColorInfoDisplay() {

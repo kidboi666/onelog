@@ -1,28 +1,16 @@
 'use client'
 
-import { routes } from '@/src/routes'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import {
-  DragEvent,
-  MouseEvent,
-  MutableRefObject,
-  useRef,
-  useState,
-  useTransition,
-} from 'react'
-
+import { DragEvent, MouseEvent, MutableRefObject, useRef, useState, useTransition } from 'react'
 import cn from '@/src/lib/cn'
 import { supabase } from '@/src/lib/supabase/client'
-
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
-import { meQuery } from '@/src/services/queries/auth/me-quer'
+import { meQuery } from '@/src/services/queries/auth/me-query'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
-
 import { Tables } from '@/src/types/supabase'
-
 import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
-
+import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
@@ -62,12 +50,9 @@ export default function Todo({
   const [isPending, startTransition] = useTransition()
 
   const handleTodoClick = () => {
-    router.push(
-      routes.todo.view.detail(todo.id, todo.folder_id, folderColor, orderFrom),
-      {
-        scroll: false,
-      },
-    )
+    router.push(routes.todo.view.detail(todo.id, todo.folder_id, folderColor, orderFrom), {
+      scroll: false,
+    })
   }
 
   const dragStart = () => {
@@ -120,8 +105,7 @@ export default function Todo({
     if (dragItem.current!.index < dragOverItem.current!.index) {
       targetItemList = todos.filter(
         (todo) =>
-          todo.index !== dragItem.current!.index &&
-          todo.index <= dragOverItem.current!.index,
+          todo.index !== dragItem.current!.index && todo.index <= dragOverItem.current!.index,
       )
       sortedList = targetItemList.map((item) => ({
         ...item,
@@ -134,8 +118,7 @@ export default function Todo({
     } else {
       targetItemList = todos.filter(
         (todo) =>
-          todo.index !== dragItem.current!.index &&
-          todo.index >= dragOverItem.current!.index,
+          todo.index !== dragItem.current!.index && todo.index >= dragOverItem.current!.index,
       )
       sortedList = targetItemList.map((item) => ({
         ...item,

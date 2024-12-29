@@ -1,7 +1,5 @@
 import { ComponentProps } from 'react'
-
 import cn from '@/src/lib/cn'
-
 import { XStack, YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
 import TextArea from '@/src/components/TextArea'

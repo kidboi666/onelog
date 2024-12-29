@@ -1,28 +1,22 @@
-import { routes } from '@/src/routes'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
-
 import cn from '@/src/lib/cn'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-
 import useAddTodo from '@/src/services/mutates/todo/useAddTodo'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
-
 import { Tables } from '@/src/types/supabase'
-
 import useInput from '@/src/hooks/useInput'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-
+import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
-import Input from '@/src/components/Inpu'
-import LinkButton from '@/src/components/LinkButto'
+import Input from '@/src/components/Input'
+import LinkButton from '@/src/components/LinkButton'
 import { List } from '@/src/components/List'
 import Title from '@/src/components/Title'
-
 import TaskOptionDropDown from './TaskOptionDropDown'
 import Todo from './Todo'
 
@@ -31,17 +25,11 @@ interface TodoFolderCardProps {
   userId: string
 }
 
-export default function TodoFolderCard({
-  folder,
-  userId,
-}: TodoFolderCardProps) {
+export default function TodoFolderCard({ folder, userId }: TodoFolderCardProps) {
   const queryClient = getQueryClient()
-  const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoInProgress(supabase, userId),
-  )
+  const { data: todos } = useSuspenseQuery(todoQuery.getTodoInProgress(supabase, userId))
   const localTodos = todos?.filter((todo) => todo.folder_id === folder.id)
-  const { ref, onClick, onTransitionEnd, close } =
-    useDataDrivenAnimation<HTMLDivElement>()
+  const { ref, onClick, onTransitionEnd, close } = useDataDrivenAnimation<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
   const [name, onChangeName, setName] = useInput<string>('')
 
@@ -51,10 +39,7 @@ export default function TodoFolderCard({
   const dragItem = useRef(null)
   const dragOverItem = useRef(null)
 
-  const handleUpdateButtonClick = (
-    e: MouseEvent,
-    selectedTodo: Tables<'todo'>,
-  ) => {
+  const handleUpdateButtonClick = (e: MouseEvent, selectedTodo: Tables<'todo'>) => {
     updateTodo(
       { ...selectedTodo, is_complete: true },
       {
@@ -131,13 +116,7 @@ export default function TodoFolderCard({
               <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
             </Icon>
           </Button>
-          <Button
-            ref={dropdownRef}
-            variant="icon"
-            size="none"
-            onClick={onClick}
-            className="p-1"
-          >
+          <Button ref={dropdownRef} variant="icon" size="none" onClick={onClick} className="p-1">
             <Icon view="0 -960 960 960" size={20}>
               <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
             </Icon>
@@ -150,10 +129,7 @@ export default function TodoFolderCard({
         />
       </div>
       {(showInput || localTodos.length === 0) && (
-        <form
-          onSubmit={handleSubmitTodo}
-          className="relative mt-2 flex flex-col gap-2"
-        >
+        <form onSubmit={handleSubmitTodo} className="relative mt-2 flex flex-col gap-2">
           <Input
             value={name}
             onChange={onChangeName}

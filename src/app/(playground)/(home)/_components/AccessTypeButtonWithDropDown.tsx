@@ -1,16 +1,11 @@
-import { MouseEvent } from 'react'
-
-
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import useToggle from '@/src/hooks/useToggle'
-
-
-import { DropDown } from '@/src/components/DropDown'
-import Icon from '@/src/components/Icon'
-import ToolTip from '@/src/components/Tooltip'
-
-mport Text from '@/src/components/Text';
+import { MouseEvent } from 'react';
+import useOutsideClick from '@/src/hooks/useOutsideClick';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
+import useToggle from '@/src/hooks/useToggle';
+import { DropDown } from '@/src/components/DropDown';
+import Icon from '@/src/components/Icon';
+import Text from '@/src/components/Text';
+import ToolTip from '@/src/components/Tooltip';
 
 
 interface Props {
@@ -19,13 +14,8 @@ interface Props {
   accessType: 'public' | 'private'
 }
 
-export default function AccessTypeButtonWithDropDown({
-  viewToolTip,
-  isSide,
-  accessType,
-}: Props) {
-  const { close, ref, onClick, onTransitionEnd } =
-    useDataDrivenAnimation<HTMLDivElement>()
+export default function AccessTypeButtonWithDropDown({ viewToolTip, isSide, accessType }: Props) {
+  const { close, ref, onClick, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
 

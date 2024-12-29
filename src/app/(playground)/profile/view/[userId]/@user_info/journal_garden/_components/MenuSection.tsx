@@ -1,17 +1,14 @@
-'use client'
+'use client';
 
-import { useSuspenseQueries, useSuspenseQuery } from '@tanstack/react-query'
-import { useSelectedLayoutSegment } from 'next/navigation'
-import { Fragment } from 'react'
+import { useSuspenseQueries, useSuspenseQuery } from '@tanstack/react-query';
+import { useSelectedLayoutSegment } from 'next/navigation';
+import { Fragment } from 'react';
+import cn from '@/src/lib/cn';
+import { supabase } from '@/src/lib/supabase/client';
+import { postCountQuery } from '@/src/services/queries/post/post-count-query';
+import NavigationMenuButton from '@/src/app/(playground)/profile/view/[userId]/@user_info/journal_garden/_components/NavigationMenuButton';
+import { PROFILE_NAVIGATE_MENUS } from '../../../_constants/navigate';
 
-import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/client'
-
-import { postCountQuery } from '@/src/services/queries/post/post-count-query'
-
-import NavigationMenuButton from '@/src/app/(playground)/profile/view/[userId]/@user_info/journal_garden/_components/NavigationMenuButton'
-
-import { PROFILE_NAVIGATE_MENUS } from '../../../_constants/navigate'
 
 interface Props {
   userId: string
@@ -29,9 +26,7 @@ export default function MenuSection({ userId }: Props) {
       }
     },
   })
-  const { data: likedCount } = useSuspenseQuery(
-    postCountQuery.countLikedPost(supabase, userId),
-  )
+  const { data: likedCount } = useSuspenseQuery(postCountQuery.countLikedPost(supabase, userId))
   const segment = useSelectedLayoutSegment()
 
   return PROFILE_NAVIGATE_MENUS.map((menu, idx) => {
@@ -45,11 +40,7 @@ export default function MenuSection({ userId }: Props) {
           userId={userId}
         />
         {PROFILE_NAVIGATE_MENUS.length === idx + 1 ? null : (
-          <div
-            className={cn(
-              'my-auto h-3 border-r border-zinc-200 dark:border-zinc-600',
-            )}
-          />
+          <div className={cn('my-auto h-3 border-r border-zinc-200 dark:border-zinc-600')} />
         )}
       </Fragment>
     )

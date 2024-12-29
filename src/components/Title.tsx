@@ -1,6 +1,5 @@
 import { cva } from 'class-variance-authority'
 import { ElementType, PropsWithChildren } from 'react'
-
 import cn from '@/src/lib/cn'
 
 interface Props {
@@ -37,10 +36,7 @@ export default function Title({
   ...props
 }: PropsWithChildren<Props>) {
   return (
-    <Component
-      className={cn(TITLE_VARIANTS({ type, size }), className)}
-      {...props}
-    >
+    <Component className={cn(TITLE_VARIANTS({ type, size }), className)} {...props}>
       {children}
     </Component>
   )

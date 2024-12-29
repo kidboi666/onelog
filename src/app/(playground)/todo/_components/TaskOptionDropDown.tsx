@@ -1,7 +1,6 @@
-import { routes } from '@/src/routes'
 import { useRouter } from 'next/navigation'
 import { RefObject } from 'react'
-
+import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Text from '@/src/components/Text'
@@ -12,11 +11,7 @@ interface Props {
   folderId?: number
 }
 
-export default function TaskOptionDropDown({
-  targetRef,
-  onTransitionEnd,
-  folderId,
-}: Props) {
+export default function TaskOptionDropDown({ targetRef, onTransitionEnd, folderId }: Props) {
   const router = useRouter()
 
   const handleFolderDelete = () => {

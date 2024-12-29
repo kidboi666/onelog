@@ -1,19 +1,15 @@
-'use client'
+'use client';
 
-import { colorTheme, useTheme } from '@/src/store/useTheme'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useRef } from 'react'
+import { colorTheme, useTheme } from '@/src/store/useTheme';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useRef } from 'react';
+import cn from '@/src/lib/cn';
+import { IBlockInfo } from '@/src/types/garden';
+import { colorizeOpacity } from '@/src/utils/formatColor';
+import Button from '@/src/components/Button';
+import Text from '@/src/components/Text';
+import { WEEKDAY } from '@/src/app/(playground)/post/edit/_constants';
 
-import cn from '@/src/lib/cn'
-
-import { IBlockInfo } from '@/src/types/garden'
-
-import { colorizeOpacity } from '@/src/utils/formatColor'
-
-import Button from '@/src/components/Button'
-import Text from '@/src/components/Text'
-
-import { WEEKDAY } from '@/src/app/(playground)/post/edit/_constants'
 
 interface BlockProps {
   empty?: boolean
@@ -23,13 +19,7 @@ interface BlockProps {
   disabled?: boolean
 }
 
-export default function Block({
-  className,
-  empty,
-  average,
-  blockInfo,
-  disabled,
-}: BlockProps) {
+export default function Block({ className, empty, average, blockInfo, disabled }: BlockProps) {
   const router = useRouter()
   const infoRef = useRef<HTMLDivElement>(null)
   const { color } = useTheme()
@@ -57,18 +47,13 @@ export default function Block({
   const handleBlockClick = () => {
     infoRef.current?.setAttribute('data-status', 'closed')
 
-    router.push(
-      `?year=${blockInfo?.year}&month=${blockInfo?.month}&date=${blockInfo?.date}`,
-    )
+    router.push(`?year=${blockInfo?.year}&month=${blockInfo?.month}&date=${blockInfo?.date}`)
   }
 
   return (
     <div className="relative">
       {blockInfo?.date === 1 && (
-        <div
-          className="absolute text-nowrap"
-          style={{ top: -calculateMonthPoint(blockInfo) }}
-        >
+        <div className="absolute text-nowrap" style={{ top: -calculateMonthPoint(blockInfo) }}>
           <Text type="caption" size="xs">
             {`${blockInfo?.month}월`}
           </Text>
@@ -77,12 +62,8 @@ export default function Block({
       <Button
         variant="none"
         size="none"
-        onMouseEnter={() =>
-          infoRef.current?.setAttribute('data-status', 'opened')
-        }
-        onMouseLeave={() =>
-          infoRef.current?.setAttribute('data-status', 'closed')
-        }
+        onMouseEnter={() => infoRef.current?.setAttribute('data-status', 'opened')}
+        onMouseLeave={() => infoRef.current?.setAttribute('data-status', 'closed')}
         disabled={disabled}
         onClick={handleBlockClick}
         className={cn(
@@ -91,10 +72,7 @@ export default function Block({
         )}
       >
         <div
-          className={cn(
-            'absolute size-full rounded-[4px]',
-            isSelected && 'animate-ping ring-2',
-          )}
+          className={cn('absolute size-full rounded-[4px]', isSelected && 'animate-ping ring-2')}
         />
         <div
           className={cn(
@@ -110,9 +88,7 @@ export default function Block({
           data-status="closed"
           className={cn(
             'absolute z-30 flex h-fit w-fit items-center justify-center text-nowrap rounded-md bg-white p-1 shadow-md transition data-[status=closed]:scale-0 dark:bg-var-darkgray',
-            blockInfo.month! > 10
-              ? 'right-full origin-top-right'
-              : 'left-full origin-top-left',
+            blockInfo.month! > 10 ? 'right-full origin-top-right' : 'left-full origin-top-left',
             blockInfo.weekDay >= 5 ? 'bottom-0' : 'top-0',
           )}
         >

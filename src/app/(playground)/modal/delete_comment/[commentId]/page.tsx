@@ -2,9 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-
 import useDeleteComment from '@/src/services/mutates/comment/useDeleteComment'
-
 import Button from '@/src/components/Button'
 import Modal from '@/src/components/Modal'
 import { XStack } from '@/src/components/Stack'
@@ -36,17 +34,10 @@ export default function DeleteCommentModal({ params, searchParams }: Props) {
     <Modal>
       <Title>정말 댓글을 삭제하시겠습니까?</Title>
       <XStack>
-        <Button
-          variant="secondary"
-          disabled={isLoading}
-          onClick={() => router.back()}
-        >
+        <Button variant="secondary" disabled={isLoading} onClick={() => router.back()}>
           취소하기
         </Button>
-        <Button
-          onClick={() => startTransition(() => handleCommentDelete())}
-          isLoading={isLoading}
-        >
+        <Button onClick={() => startTransition(() => handleCommentDelete())} isLoading={isLoading}>
           삭제하기
         </Button>
       </XStack>

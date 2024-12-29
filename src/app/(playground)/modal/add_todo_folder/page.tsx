@@ -1,32 +1,19 @@
-'use client'
+'use client';
 
-import { useRouter } from 'next/navigation'
-import { FormEvent, useState } from 'react'
-
-import cn from '@/src/lib/cn'
-
-import useAddTodoFolder from '@/src/services/mutates/todo/useAddTodoFolder'
-
-import { TTodoColor } from '@/src/types/todo'
-
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-import useInput from '@/src/hooks/useInput'
-
-import Button from '@/src/components/Button'
-import Icon from '@/src/components/Icon'
-import Input from '@/src/components/Input'
-import Modal from '@/src/components/Modal'
+import { useRouter } from 'next/navigation';
+import { FormEvent, useState } from 'react';
+import cn from '@/src/lib/cn';
+import useAddTodoFolder from '@/src/services/mutates/todo/useAddTodoFolder';
+import { TTodoColor } from '@/src/types/todo';
+import useMeQueries from '@/src/hooks/queries/useMeQueries';
+import useInput from '@/src/hooks/useInput';
+import Button from '@/src/components/Button';
+import Icon from '@/src/components/Icon';
+import Input from '@/src/components/Input';
+import Modal from '@/src/components/Modal';
 import Text from '@/src/components/Text'
 
-const colors: TTodoColor[] = [
-  'black',
-  'green',
-  'yellow',
-  'blue',
-  'orange',
-  'red',
-  'purple',
-]
+const colors: TTodoColor[] = ['black', 'green', 'yellow', 'blue', 'orange', 'red', 'purple']
 
 export default function AddTodoFolderModal() {
   const router = useRouter()

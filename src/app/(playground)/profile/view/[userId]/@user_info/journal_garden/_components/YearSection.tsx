@@ -1,6 +1,5 @@
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-
 import Button from '@/src/components/Button'
 import { DropDown } from '@/src/components/DropDown'
 import Icon from '@/src/components/Icon'
@@ -11,11 +10,7 @@ interface Props {
   onSelect: (year: number) => void
 }
 
-export default function YearSection({
-  yearList,
-  selectedYear,
-  onSelect,
-}: Props) {
+export default function YearSection({ yearList, selectedYear, onSelect }: Props) {
   const {
     onClick: onClickButton,
     close,
@@ -26,12 +21,7 @@ export default function YearSection({
 
   return (
     <DropDown.Root className="self-end">
-      <DropDown.Trigger
-        onClick={onClickButton}
-        variant="secondary"
-        targetRef={buttonRef}
-        size="sm"
-      >
+      <DropDown.Trigger onClick={onClickButton} variant="secondary" targetRef={buttonRef} size="sm">
         {selectedYear}
         <Icon view="0 -960 960 960" size={18}>
           <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />

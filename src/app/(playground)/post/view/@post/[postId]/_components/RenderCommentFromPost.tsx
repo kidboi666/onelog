@@ -1,5 +1,4 @@
 import { YStack } from '@/src/components/Stack'
-
 import Comments from '@/src/app/(playground)/(home)/_components/Comments'
 
 interface Props {
@@ -8,10 +7,7 @@ interface Props {
 
 export default function RenderCommentFromPost({ postId }: Props) {
   return (
-    <YStack
-      gap={4}
-      className="rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray"
-    >
+    <YStack gap={4} className="rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray">
       <Comments postId={postId} />
     </YStack>
     /**

@@ -29,9 +29,7 @@ export const useToast = create<ToastState>((set) => ({
 
   closeToast: (toastId) =>
     set((state) => {
-      const nextToastContents = state.toastContents.filter(
-        (toast) => toast.id !== toastId,
-      )
+      const nextToastContents = state.toastContents.filter((toast) => toast.id !== toastId)
       return { toastContents: nextToastContents }
     }),
 }))

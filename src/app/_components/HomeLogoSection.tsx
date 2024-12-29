@@ -4,18 +4,8 @@ import LinkButton from '@/src/components/LinkButton'
 export default function HomeLogoSection() {
   return (
     <div className="h-80 w-full md:size-full">
-      <LinkButton
-        href="/"
-        disabled
-        variant="none"
-        className="relative h-fit w-full"
-      >
-        <Icon
-          name="logo"
-          size={400}
-          view={200}
-          className="text-var-black dark:text-white"
-        >
+      <LinkButton href="/" disabled variant="none" className="relative h-fit w-full">
+        <Icon name="logo" size={400} view={200} className="text-var-black dark:text-white">
           <g>
             <g>
               <path d="M62.8,7.33v37.45h9.78v4.22h-9.78v95.6h-4.89V7.33h4.89M30.02,7.33v10.21h17.84v3.73H6.63v-3.73h18.34V7.33h5.05M27.62,27.33c10.21,0,17.34,7.1,17.34,17.26s-7.13,17.42-17.34,17.42-17.59-7.16-17.59-17.42,7.23-17.26,17.59-17.26M27.62,58.2c7.31,0,12.62-5.66,12.62-13.45s-5.19-13.62-12.62-13.62-12.79,5.6-12.79,13.62,5.38,13.45,12.79,13.45M63.8,6.33h-6.89v139.28h6.89V50.01h9.78v-6.22h-9.78V6.33h0ZM31.02,6.33h-7.05v10.21H5.63v5.73h43.24v-5.73h-17.84V6.33h0ZM27.62,26.33c-11.12,0-18.59,7.88-18.59,18.26s7.47,18.42,18.59,18.42,18.34-7.8,18.34-18.42-7.3-18.26-18.34-18.26h0ZM27.62,57.2c-6.81,0-11.79-5.06-11.79-12.45s4.98-12.62,11.79-12.62,11.62,4.9,11.62,12.62-4.9,12.45-11.62,12.45h0Z" />

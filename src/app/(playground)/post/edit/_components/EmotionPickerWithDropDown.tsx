@@ -1,13 +1,10 @@
 import { useTheme } from '@/src/store/useTheme'
 import { RefObject } from 'react'
-
 import cn from '@/src/lib/cn'
-
 import { DropDown } from '@/src/components/DropDown'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
 import { YStack } from '@/src/components/Stack'
-
 import { EMOTION_STATUS } from '../_constants'
 import { TEmotion } from '../page'
 
@@ -55,12 +52,7 @@ interface EmotionBlockProps {
   index: number
 }
 
-function EmotionBlock({
-  emotion,
-  selectedEmotion,
-  onChangeEmotion,
-  index,
-}: EmotionBlockProps) {
+function EmotionBlock({ emotion, selectedEmotion, onChangeEmotion, index }: EmotionBlockProps) {
   const { color } = useTheme()
   let blockOpacity: string
   switch (index) {

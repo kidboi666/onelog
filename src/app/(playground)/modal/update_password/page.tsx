@@ -1,24 +1,14 @@
 'use client';
 
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
-
-import { supabase } from '@/src/lib/supabase/client'
-
-
-
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
+import { supabase } from '@/src/lib/supabase/client';
 import useResetPassword from '@/src/services/mutates/auth/useResetPassword';
 import { meQuery } from '@/src/services/queries/auth/me-query';
-
-
-
 import Button from '@/src/components/Button';
 import Modal from '@/src/components/Modal';
 import Title from '@/src/components/Title';
-
-
-
 
 
 export default function ResetPasswordConfirmModal() {

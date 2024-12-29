@@ -1,12 +1,10 @@
-import { routes } from '@/src/routes'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-
+import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Spinner from '@/src/components/Spinner'
 import { ZStack } from '@/src/components/Stack'
-
 import BookMark from './BookMark'
 import SelectedMenuBackground from './SelectedMenuBackground'
 
@@ -15,10 +13,7 @@ interface Props {
   closeToolTip: () => void
 }
 
-export default function SidebarWriteButtonWithLogo({
-  isSelected,
-  closeToolTip,
-}: Props) {
+export default function SidebarWriteButtonWithLogo({ isSelected, closeToolTip }: Props) {
   const router = useRouter()
   const [isLoading, startTransition] = useTransition()
 
@@ -30,22 +25,14 @@ export default function SidebarWriteButtonWithLogo({
   return (
     <ZStack>
       <BookMark isSelected={isSelected} />
-      <Button
-        variant="icon"
-        size="icon"
-        onClick={() => startTransition(() => pushWritePage())}
-      >
+      <Button variant="icon" size="icon" onClick={() => startTransition(() => pushWritePage())}>
         <SelectedMenuBackground isSelected={isSelected} />
         {isLoading ? (
           <Spinner.Container>
             <Spinner size={34} />
           </Spinner.Container>
         ) : (
-          <Icon
-            size={34}
-            view="0 0 386 386"
-            className="relative text-zinc-300 dark:text-zinc-600"
-          >
+          <Icon size={34} view="0 0 386 386" className="relative text-zinc-300 dark:text-zinc-600">
             <circle cx="185" cy="185" r="185" fill="currentColor" />
             <ellipse cx="100" cy="336" rx="83" ry="21" fill="#B9B9B9" />
             <path

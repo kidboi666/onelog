@@ -20,9 +20,6 @@
     "paths": {
       "@/*": [
         "./*"
-      ],
-      "@components/*": [
-        "src/components/*"
       ]
     }
   },

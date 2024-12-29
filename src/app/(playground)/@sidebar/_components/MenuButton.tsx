@@ -1,22 +1,14 @@
-import { useRouter } from 'next/navigation'
-import { ReactNode, useTransition } from 'react'
-
-
-import cn from '@/src/lib/cn'
-
-
-import { wait } from '@/src/utils/wait'
-
-
-import Button from '@/src/components/Button'
-import Icon from '@/src/components/Icon'
+import { useRouter } from 'next/navigation';
+import { ReactNode, useTransition } from 'react';
+import cn from '@/src/lib/cn';
+import { wait } from '@/src/utils/wait';
+import Button from '@/src/components/Button';
+import Icon from '@/src/components/Icon';
 import Spinner from '@/src/components/Spinner'
-import Text from '@/src/components/Text'
-
-
-import BookMark from './BookMark'
-import SelectedMenuBackground from './SelectedMenuBackground'
-import { ZStack } from '@/src/components/Stack;
+import { ZStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text';
+import BookMark from './BookMark';
+import SelectedMenuBackground from './SelectedMenuBackground';
 
 
 interface Props {

@@ -1,15 +1,12 @@
 'use client'
 
-import { routes } from '@/src/routes'
 import { useSuspenseQuery } from '@tanstack/react-query'
-
 import { supabase } from '@/src/lib/supabase/client'
-
 import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 import { meQuery } from '@/src/services/queries/auth/me-query'
-
 import useRouterPush from '@/src/hooks/useRouterPush'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
+import { routes } from '@/src/routes'
 
 interface Props {
   isFollowing: boolean
@@ -17,10 +14,12 @@ interface Props {
 }
 
 export default function useFollowMutates({ isFollowing, userId }: Props) {
-  const [isLoadingFollowerRoute, pushFollowerList] =
-    useRouterPushWithTransition(routes.modal.follow.follower(userId))
-  const [isLoadingFollowingRoute, pushFollowingList] =
-    useRouterPushWithTransition(routes.modal.follow.following(userId))
+  const [isLoadingFollowerRoute, pushFollowerList] = useRouterPushWithTransition(
+    routes.modal.follow.follower(userId),
+  )
+  const [isLoadingFollowingRoute, pushFollowingList] = useRouterPushWithTransition(
+    routes.modal.follow.following(userId),
+  )
   const authGuard = useRouterPush(routes.modal.auth.guard, false)
   const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
   const { mutate: followOrUnfollow, isPending } = useHandleFollow()

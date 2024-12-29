@@ -1,38 +1,33 @@
-'use client'
+'use client';
 
-import { routes } from '@/src/routes'
-import { useTheme } from '@/src/store/useTheme'
-import { useRouter } from 'next/navigation'
+import { useTheme } from '@/src/store/useTheme';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import cn from '@/src/lib/cn';
+import { supabase } from '@/src/lib/supabase/client';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+import useRouterPush from '@/src/hooks/useRouterPush';
+import { routes } from '@/src/routes';
+import Avatar from '@/src/components/Avatar';
+import { Container } from '@/src/components/Container';
+import { XStack } from '@/src/components/Stack';
+import Text from '@/src/components/Text';
 
-import cn from '@/src/lib/cn'
-
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-
-import Avatar from '@/src/components/Avatar'
-import { Container } from '@/src/components/Container'
-import { XStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
 
 export default function FakeFormContainer() {
-  const router = useRouter()
-  const { me, session } = useMeQueries()
+  const pushNewPost = useRouterPush(routes.post.new)
+  const authGuard = useRouterPush(routes.modal.auth.guard)
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase))
   const { color } = useTheme()
 
   const handlePostClick = () => {
-    session
-      ? router.push(routes.post.new)
-      : router.push(routes.modal.auth.guard)
+    session ? pushNewPost() : authGuard()
   }
 
   return (
     <Container onClick={handlePostClick}>
       <XStack gap={4}>
-        <Avatar
-          src={me?.avatar_url}
-          size="sm"
-          shadow="sm"
-          className="max-sm:hidden"
-        />
+        <Avatar src={me?.avatar_url} size="sm" shadow="sm" className="max-sm:hidden" />
         <Container
           className={cn(
             'w-full min-w-0 animate-cta-fadein-out items-center rounded-md bg-white p-2 text-sm dark:bg-var-darkgray',

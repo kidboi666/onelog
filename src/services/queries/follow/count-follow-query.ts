@@ -1,6 +1,5 @@
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
-
 import { queryKey } from '@/src/lib/tanstack/query-key'
 
 export const countFollowQuery = {

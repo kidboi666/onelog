@@ -1,5 +1,4 @@
 import cn from '@/src/lib/cn'
-
 import { Container } from '@/src/components/Container'
 import { YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
@@ -12,12 +11,7 @@ interface Props {
   className?: string
 }
 
-export default function HistoryBlock({
-  title,
-  content,
-  unit,
-  className,
-}: Props) {
+export default function HistoryBlock({ title, content, unit, className }: Props) {
   return (
     <Container
       className={cn(
@@ -30,28 +24,19 @@ export default function HistoryBlock({
           <Title
             type="caption"
             size="xs"
-            className={cn(
-              title === '평균 감정 농도' && 'text-white dark:text-white',
-              className,
-            )}
+            className={cn(title === '평균 감정 농도' && 'text-white dark:text-white', className)}
           >
             {title}
           </Title>
         </YStack>
         <Text
           size="bigger"
-          className={cn(
-            title === '평균 감정 농도' && 'text-white dark:text-white',
-            className,
-          )}
+          className={cn(title === '평균 감정 농도' && 'text-white dark:text-white', className)}
         >
           {content}
           <Text
             as="span"
-            className={cn(
-              title === '평균 감정 농도' && 'text-white dark:text-white',
-              className,
-            )}
+            className={cn(title === '평균 감정 농도' && 'text-white dark:text-white', className)}
           >
             {unit}
           </Text>

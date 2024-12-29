@@ -2,9 +2,7 @@
 
 import { ToastContent, useToast } from '@/src/store/useToast'
 import React, { useEffect, useRef } from 'react'
-
 import { XStack } from '@/src/components/Stack'
-
 import Button from './Button'
 import Icon from './Icon'
 import Text from './Text'

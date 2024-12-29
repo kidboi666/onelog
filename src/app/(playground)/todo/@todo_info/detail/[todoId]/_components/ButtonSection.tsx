@@ -1,19 +1,16 @@
-'use client'
+'use client';
 
-import { routes } from '@/src/routes'
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
+import { getQueryClient } from '@/src/lib/tanstack/get-query-client';
+import { queryKey } from '@/src/lib/tanstack/query-key';
+import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo';
+import { Tables } from '@/src/types/supabase';
+import { routes } from '@/src/routes';
+import Button from '@/src/components/Button';
+import Icon from '@/src/components/Icon';
+import Spinner from '@/src/components/Spinner';
 
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
-
-import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
-
-import { Tables } from '@/src/types/supabase'
-
-import Button from '@/src/components/Button'
-import Icon from '@/src/components/Icon'
-import Spinner from '@/src/components/Spinner'
 
 interface Props {
   todoId: string
@@ -23,13 +20,7 @@ interface Props {
   orderFrom: 'main' | 'folder'
 }
 
-export default function ButtonSection({
-  todoId,
-  folderId,
-  todo,
-  color,
-  orderFrom,
-}: Props) {
+export default function ButtonSection({ todoId, folderId, todo, color, orderFrom }: Props) {
   const router = useRouter()
   const queryClient = getQueryClient()
 
@@ -39,12 +30,9 @@ export default function ButtonSection({
 
   const handleDeleteButtonClick = () => {
     startTransitionDelete(() =>
-      router.push(
-        routes.modal.todo.delete(todoId, folderId, color, orderFrom),
-        {
-          scroll: false,
-        },
-      ),
+      router.push(routes.modal.todo.delete(todoId, folderId, color, orderFrom), {
+        scroll: false,
+      }),
     )
   }
 
@@ -80,10 +68,7 @@ export default function ButtonSection({
   }
 
   return (
-    <div
-      onMouseDown={(e) => e.stopPropagation()}
-      className="flex justify-between gap-4"
-    >
+    <div onMouseDown={(e) => e.stopPropagation()} className="flex justify-between gap-4">
       <Button variant="icon" onClick={handleUpdateButtonClick}>
         <Icon view="0 -960 960 960">
           {todo?.is_complete ? (

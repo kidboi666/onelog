@@ -1,24 +1,19 @@
-'use client'
+'use client';
 
-import { routes } from '@/src/routes'
-import { usePathname } from 'next/navigation'
-import { useState } from 'react'
-
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-
-import { Container } from '@/src/components/Container'
-import Line from '@/src/components/Line'
-import { YStack, ZStack } from '@/src/components/Stack'
-import ToolTip from '@/src/components/Tooltip'
-
-import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
-import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown'
-import MenuButton from './_components/MenuButton'
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import useMeQueries from '@/src/hooks/queries/useMeQueries';
+import { routes } from '@/src/routes';
+import { Container } from '@/src/components/Container';
+import Line from '@/src/components/Line';
+import { YStack, ZStack } from '@/src/components/Stack';
+import ToolTip from '@/src/components/Tooltip';
+import ThemeToggleButton from '../@header/_components/ThemeToggleButton';
+import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown';
+import MenuButton from './_components/MenuButton';
 import SidebarWriteButtonWithLogo from './_components/SidebarWriteButtonWithLogo'
-import {
-  BOTTOM_NAVIGATE_MENUS,
-  TOP_NAVIGATE_MENUS,
-} from './_constants/Navigate'
+import { BOTTOM_NAVIGATE_MENUS, TOP_NAVIGATE_MENUS } from './_constants/Navigate'
+
 
 export default function Sidebar() {
   const { me, session } = useMeQueries()
@@ -54,20 +49,14 @@ export default function Sidebar() {
             <ZStack key={menu.id}>
               <MenuButton
                 isSelected={
-                  pathname === menu.path ||
-                  pathname.split('/')[1] === menu.path.split('/')[1]
+                  pathname === menu.path || pathname.split('/')[1] === menu.path.split('/')[1]
                 }
                 icon={menu.icon}
                 name={menu.name}
                 path={menu.path}
                 closeToolTip={handleToolTipClose}
               />
-              <ToolTip
-                position="right"
-                size="sm"
-                isHover={isHover}
-                text={menu.toolTip}
-              />
+              <ToolTip position="right" size="sm" isHover={isHover} text={menu.toolTip} />
             </ZStack>
           ))}
         </YStack>
@@ -81,22 +70,12 @@ export default function Sidebar() {
                 path={menu.path}
                 closeToolTip={handleToolTipClose}
               />
-              <ToolTip
-                position="right"
-                size="sm"
-                isHover={isHover}
-                text={menu.toolTip}
-              />
+              <ToolTip position="right" size="sm" isHover={isHover} text={menu.toolTip} />
             </ZStack>
           ))}
           <ZStack>
             <ThemeToggleButton />
-            <ToolTip
-              position="right"
-              size="sm"
-              isHover={isHover}
-              text="테마 버튼"
-            />
+            <ToolTip position="right" size="sm" isHover={isHover} text="테마 버튼" />
           </ZStack>
           <Line className="mb-2" />
           <ZStack>
@@ -106,12 +85,7 @@ export default function Sidebar() {
               userId={pathname.split('/')[2] || ''}
               session={session}
             />
-            <ToolTip
-              position="right"
-              size="sm"
-              isHover={isHover}
-              text={me ? me.email : '게스트'}
-            />
+            <ToolTip position="right" size="sm" isHover={isHover} text={me ? me.email : '게스트'} />
           </ZStack>
         </YStack>
       </YStack>

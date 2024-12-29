@@ -1,6 +1,7 @@
-import { authRestrictedRoutes, protectedRoutes, routes } from '@/src/routes'
-import { createServerClient } from '@supabase/ssr'
-import { type NextRequest, NextResponse } from 'next/server'
+import { createServerClient } from '@supabase/ssr';
+import { type NextRequest, NextResponse } from 'next/server';
+import { authRestrictedRoutes, protectedRoutes, routes } from '@/src/routes';
+
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -16,9 +17,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            request.cookies.set(name, value),
-          )
+          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
           supabaseResponse = NextResponse.next({
             request,
           })
@@ -39,10 +38,7 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const attemptedUnauthorizedAccess =
-    user &&
-    authRestrictedRoutes.some((route) =>
-      request.nextUrl.pathname.startsWith(route),
-    )
+    user && authRestrictedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
 
   if (attemptedUnauthorizedAccess) {
     const url = request.nextUrl.clone()
@@ -51,8 +47,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   const isUnauthorized =
-    !user &&
-    protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
+    !user && protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
 
   if (isUnauthorized) {
     const url = request.nextUrl.clone()

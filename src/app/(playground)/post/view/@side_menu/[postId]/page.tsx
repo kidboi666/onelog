@@ -1,14 +1,8 @@
 import { Container } from '@/src/components/Container';
-import Line from '@/src/components/Line'
+import Line from '@/src/components/Line';
 import { YStack } from '@/src/components/Stack'
-
-
-
-import PostCountInfo from '@/src/app/(playground)/post/view/@side_menu/[postId]/_components/PostCountInfo';
-import SideActionBar from '@/src/app/(playground)/post/view/@side_menu/[postId]/_components/SideActionBar';
-
-
-
+import PostCountInfo from '@/src/app/(playground)/post/view/@side_menu/[postId]/_components/PostCountInfo'
+import SideActionBar from '@/src/app/(playground)/post/view/@side_menu/[postId]/_components/SideActionBar'
 
 
 interface Props {

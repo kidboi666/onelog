@@ -1,14 +1,10 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import React from 'react'
-
 import { createServerClient } from '@/src/lib/supabase/server'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
-
 import { IUserSession } from '@/src/types/auth'
-
 import DataAccess from './_components/DataAccess'
 import MouseEventSection from './_components/MouseEventSection'
 
@@ -42,12 +38,7 @@ export default async function Page({ params, searchParams }: Props) {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="fixed inset-0 z-40">
         <MouseEventSection todoId={todoId} folderId={folderId}>
-          <DataAccess
-            todoId={todoId}
-            folderId={folderId}
-            orderFrom={orderFrom}
-            color={color}
-          />
+          <DataAccess todoId={todoId} folderId={folderId} orderFrom={orderFrom} color={color} />
         </MouseEventSection>
       </div>
     </HydrationBoundary>

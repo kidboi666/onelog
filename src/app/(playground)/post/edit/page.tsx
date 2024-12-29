@@ -1,18 +1,9 @@
 'use client';
 
-import { useCallback, useState } from 'react';
-
-
-
-import { XStack } from '@/src/components/Stack';
-
-
-
-import PostContainer from './_containers/PostContainer';
-import SideOptionsContainer from './_containers/SideOptionsContainer';
-
-
-
+import { useCallback, useState } from 'react'
+import { XStack } from '@/src/components/Stack'
+import PostContainer from './_containers/PostContainer'
+import SideOptionsContainer from './_containers/SideOptionsContainer'
 
 
 export type TAccess = 'public' | 'private'

@@ -1,7 +1,6 @@
 import { Container } from '@/src/components/Container'
 import Line from '@/src/components/Line'
 import { YStack } from '@/src/components/Stack'
-
 import ProfileAboutMe from '@/src/app/(playground)/profile/view/[userId]/@profile/_components/ProfileAboutMe'
 import ProfileHeader from '@/src/app/(playground)/profile/view/[userId]/@profile/_components/ProfileHeader'
 import RenderActionButtonFromProfile from '@/src/app/(playground)/profile/view/[userId]/@profile/_components/RenderActionButtonFromProfile'

@@ -2,19 +2,13 @@
 
 import { useRouter } from 'next/navigation'
 import { PropsWithChildren } from 'react'
-
 import cn from '@/src/lib/cn'
-
 import Button, { ButtonProps } from './Button'
 import Icon from './Icon'
 
 interface Props extends ButtonProps {}
 
-export default function BackButton({
-  className,
-  children,
-  ...props
-}: PropsWithChildren<Props>) {
+export default function BackButton({ className, children, ...props }: PropsWithChildren<Props>) {
   const router = useRouter()
   const handleButtonClick = () => {
     router.back()

@@ -1,16 +1,12 @@
-import { routes } from '@/src/routes'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { MouseEvent } from 'react'
-
 import cn from '@/src/lib/cn'
 import { supabase } from '@/src/lib/supabase/client'
-
 import { meQuery } from '@/src/services/queries/auth/me-query'
-
 import useLikeMutates from '@/src/hooks/mutates/useLikeMutates'
 import useRouterPush from '@/src/hooks/useRouterPush'
 import useToggle from '@/src/hooks/useToggle'
-
+import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import ToolTip from '@/src/components/Tooltip'
@@ -23,13 +19,7 @@ interface Props {
   isLiked: boolean
 }
 
-export default function LikeButton({
-  viewToolTip,
-  isSide,
-  likeCount,
-  postId,
-  isLiked,
-}: Props) {
+export default function LikeButton({ viewToolTip, isSide, likeCount, postId, isLiked }: Props) {
   const authGuard = useRouterPush(routes.modal.auth.guard, false)
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
@@ -41,11 +31,7 @@ export default function LikeButton({
   }
 
   return (
-    <div
-      onMouseEnter={hover}
-      onMouseLeave={leave}
-      className="relative size-fit"
-    >
+    <div onMouseEnter={hover} onMouseLeave={leave} className="relative size-fit">
       <Button
         variant="icon"
         size={isSide ? 'md' : 'icon'}

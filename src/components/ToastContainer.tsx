@@ -1,5 +1,4 @@
 import { useToast } from '@/src/store/useToast'
-
 import Portal from './Portal'
 import Toast from './Toast'
 

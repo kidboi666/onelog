@@ -1,31 +1,20 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
-import {
-  DragEvent,
-  MutableRefObject,
-  useRef,
-  useState,
-  useTransition,
-} from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { DragEvent, MutableRefObject, useRef, useState, useTransition } from 'react';
+import cn from '@/src/lib/cn';
+import { supabase } from '@/src/lib/supabase/client';
+import useUpdateTodoFolder from '@/src/services/mutates/todo/useUpdateTodoFolder';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query';
+import { Tables } from '@/src/types/supabase';
+import useOutsideClick from '@/src/hooks/useOutsideClick';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
+import Button from '@/src/components/Button';
+import { List } from '@/src/components/List';
+import Spinner from '@/src/components/Spinner';
+import { Dot } from './Dot';
+import FolderDropDown from './FolderDropDown';
 
-import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/client'
-
-import useUpdateTodoFolder from '@/src/services/mutates/todo/useUpdateTodoFolder'
-import { meQuery } from '@/src/services/queries/auth/me-query'
-import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
-
-import { Tables } from '@/src/types/supabase'
-
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-
-import Button from '@/src/components/Button'
-import { List } from '@/src/components/List'
-import Spinner from '@/src/components/Spinner'
-
-import { Dot } from './Dot'
-import FolderDropDown from './FolderDropDown'
 
 interface Props {
   isSelected: boolean
@@ -34,23 +23,14 @@ interface Props {
   dragOverItem: MutableRefObject<Tables<'todo_folder'> | null>
 }
 
-export default function Folder({
-  isSelected = false,
-  folder,
-  dragItem,
-  dragOverItem,
-}: Props) {
+export default function Folder({ isSelected = false, folder, dragItem, dragOverItem }: Props) {
   const router = useRouter()
   const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: todoFolders } = useSuspenseQuery(
     todoFolderQuery.getTodoFolder(supabase, me!.userId),
   )
   const { mutate: updateTodoFolder } = useUpdateTodoFolder()
-  const {
-    ref: dropdownRef,
-    close,
-    onTransitionEnd,
-  } = useDataDrivenAnimation<HTMLDivElement>()
+  const { ref: dropdownRef, close, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   const dropdownButtonRef = useOutsideClick<HTMLButtonElement>(close)
   const [showKebabButton, setShowKebabButton] = useState(false)
   const folderRef = useRef<HTMLLIElement>(null)
@@ -103,8 +83,7 @@ export default function Folder({
     if (dragItem.current!.index < dragOverItem.current!.index) {
       targetItemList = todoFolders.filter(
         (folder) =>
-          folder.index !== dragItem.current!.index &&
-          folder.index <= dragOverItem.current!.index,
+          folder.index !== dragItem.current!.index && folder.index <= dragOverItem.current!.index,
       )
       sortedList = targetItemList.map((item) => ({
         ...item,
@@ -117,8 +96,7 @@ export default function Folder({
     } else {
       targetItemList = todoFolders.filter(
         (folder) =>
-          folder.index !== dragItem.current!.index &&
-          folder.index >= dragOverItem.current!.index,
+          folder.index !== dragItem.current!.index && folder.index >= dragOverItem.current!.index,
       )
       sortedList = targetItemList.map((item) => ({
         ...item,

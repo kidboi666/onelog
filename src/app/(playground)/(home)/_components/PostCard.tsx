@@ -1,16 +1,12 @@
-import { routes } from '@/src/routes'
+import { IPost } from '@/src/types/post';
+import useBlockEditor from '@/src/hooks/useBlockEditor';
+import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition';
+import { routes } from '@/src/routes';
+import { YStack } from '@/src/components/Stack';
+import { TEmotion } from '@/src/app/(playground)/post/edit/page';
+import PostCardContent from './PostCardContent';
+import PostHeader from './PostHeader';
 
-import { IPost } from '@/src/types/post'
-
-import useBlockEditor from '@/src/hooks/useBlockEditor'
-import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
-
-import { YStack } from '@/src/components/Stack'
-
-import { TEmotion } from '@/src/app/(playground)/post/edit/page'
-
-import PostCardContent from './PostCardContent'
-import PostHeader from './PostHeader'
 
 interface Props {
   post: IPost
@@ -19,18 +15,11 @@ interface Props {
   disabled?: boolean
 }
 
-export default function PostCard({
-  post,
-  postUserInfo,
-  createdAtLiked,
-  disabled,
-}: Props) {
+export default function PostCard({ post, postUserInfo, createdAtLiked, disabled }: Props) {
   const postId = Number(post?.id)
   const content = post?.content
   const tags = post?.tags || []
-  const [, pushPostDetail] = useRouterPushWithTransition(
-    routes.post.view(postId),
-  )
+  const [, pushPostDetail] = useRouterPushWithTransition(routes.post.view(postId))
 
   const { editor } = useBlockEditor({
     content,

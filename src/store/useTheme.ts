@@ -2,7 +2,6 @@
 
 import { cva } from 'class-variance-authority'
 import { create } from 'zustand'
-
 import { TColor, TTheme } from '@/src/types/theme'
 
 interface ThemeState {

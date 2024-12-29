@@ -1,12 +1,11 @@
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import useOutsideClick from '@/src/hooks/useOutsideClick';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
+import { DropDown } from '@/src/components/DropDown';
+import Icon from '@/src/components/Icon';
+import { YStack } from '@/src/components/Stack';
+import Title from '@/src/components/Title';
+import { MBTI, TMBTI } from '../_constants/mbti';
 
-import { DropDown } from '@/src/components/DropDown'
-import Icon from '@/src/components/Icon'
-import { YStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
-
-import { MBTI, TMBTI } from '../_constants/mbti'
 
 interface Props {
   mbti?: TMBTI
@@ -14,8 +13,7 @@ interface Props {
 }
 
 export default function MBTISection({ mbti, setMbti }: Props) {
-  const { ref, close, onClick, onTransitionEnd } =
-    useDataDrivenAnimation<HTMLDivElement>()
+  const { ref, close, onClick, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   const handleListClick = (mbti: (typeof MBTI)[number]) => {
@@ -27,11 +25,7 @@ export default function MBTISection({ mbti, setMbti }: Props) {
     <YStack gap={4}>
       <Title>MBTI</Title>
       <DropDown.Root>
-        <DropDown.Trigger
-          variant="secondary"
-          targetRef={buttonRef}
-          onClick={onClick}
-        >
+        <DropDown.Trigger variant="secondary" targetRef={buttonRef} onClick={onClick}>
           <DropDown.Text>{mbti || 'MBTI 선택'}</DropDown.Text>
           <Icon view="0 -960 960 960" size={18}>
             <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />

@@ -1,5 +1,4 @@
 import { formatDateElapsed } from '@/src/utils/formatDate'
-
 import { YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
 import Title from '@/src/components/Title'

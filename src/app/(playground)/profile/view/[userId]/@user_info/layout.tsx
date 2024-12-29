@@ -1,21 +1,15 @@
 import { HydrationBoundary } from '@tanstack/react-query'
 import { PropsWithChildren } from 'react'
-
 import { postPrefetchQuery } from '@/src/services/queries/post/post-prefetch-query'
-
 import { Container } from '@/src/components/Container'
 import { ZStack } from '@/src/components/Stack'
-
 import MenuSection from './journal_garden/_components/MenuSection'
 
 interface Props {
   params: { userId: string }
 }
 
-export default async function Layout({
-  params,
-  children,
-}: PropsWithChildren<Props>) {
+export default async function Layout({ params, children }: PropsWithChildren<Props>) {
   const userId = params.userId
 
   const state = await Promise.all([

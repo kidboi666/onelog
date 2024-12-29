@@ -1,7 +1,5 @@
 import { Metadata } from 'next'
-
 import { YStack } from '@/src/components/Stack'
-
 import FakeFormContainer from './_components/FakeFormContainer'
 import PostContainer from './_components/PostContainer'
 

@@ -1,8 +1,8 @@
-import { cva } from 'class-variance-authority'
-import { ComponentProps, PropsWithRef, forwardRef } from 'react'
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
+import { cva } from 'class-variance-authority';
+import { ComponentProps, PropsWithRef, forwardRef } from 'react';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+import cn from '@/src/lib/cn';
 
-import cn from '@/src/lib/cn'
 
 interface Props extends ComponentProps<'input'> {
   className?: string
@@ -38,15 +38,7 @@ const INPUT_VARIANTS = cva(
 
 const Input = forwardRef<HTMLInputElement, PropsWithRef<Props>>(
   (
-    {
-      className,
-      register,
-      variant = 'primary',
-      dimension = 'sm',
-      error,
-      dataStatus,
-      ...props
-    },
+    { className, register, variant = 'primary', dimension = 'sm', error, dataStatus, ...props },
     ref,
   ) => {
     return (

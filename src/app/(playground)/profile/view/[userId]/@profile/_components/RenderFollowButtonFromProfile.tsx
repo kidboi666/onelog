@@ -1,26 +1,21 @@
-'use client'
+'use client';
 
-import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+import useFollowMutates from '@/src/hooks/mutates/useFollowMutates';
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries';
+import Follow from '@/src/components/Follow';
 
-import Follow from '@/src/components/Follow'
 
 interface Props {
   userId: string
 }
 
 export default function RenderFollowButtonFromProfile({ userId }: Props) {
-  const { followingCount, followerCount, isFollowing } =
-    useFollowQueries(userId)
-  const {
-    pushFollowingList,
-    isLoadingFollowingRoute,
-    pushFollowerList,
-    isLoadingFollowerRoute,
-  } = useFollowMutates({
-    isFollowing,
-    userId,
-  })
+  const { followingCount, followerCount, isFollowing } = useFollowQueries(userId)
+  const { pushFollowingList, isLoadingFollowingRoute, pushFollowerList, isLoadingFollowerRoute } =
+    useFollowMutates({
+      isFollowing,
+      userId,
+    })
 
   return (
     <Follow>

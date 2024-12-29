@@ -2,7 +2,6 @@
 
 import { cva } from 'class-variance-authority'
 import { ComponentProps, RefObject } from 'react'
-
 import cn from '@/src/lib/cn'
 
 interface Props extends ComponentProps<'textarea'> {

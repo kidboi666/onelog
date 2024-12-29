@@ -10,28 +10,20 @@ export const queryKey = {
 
   post: {
     public: ['all_post'],
-    liked: (userId?: string | null, meId?: string | null) => [
+    liked: (userId?: string | null, meId?: string | null) => ['post', 'liked', userId, meId],
+    thatDay: (startOfDay?: string | null, endOfDay?: string | null, authorId?: string | null) => [
       'post',
-      'liked',
-      userId,
-      meId,
+      startOfDay,
+      endOfDay,
+      authorId,
     ],
-    thatDay: (
-      startOfDay?: string | null,
-      endOfDay?: string | null,
-      authorId?: string | null,
-    ) => ['post', startOfDay, endOfDay, authorId],
-    byPostType: (
-      postType?: 'journal' | 'article',
-      authorId?: string | null,
-    ) => ['post', postType, authorId],
+    byPostType: (postType?: 'journal' | 'article', authorId?: string | null) => [
+      'post',
+      postType,
+      authorId,
+    ],
     detail: (postId?: number) => ['post', postId],
-    checkLiked: (postId?: number, meId?: string | null) => [
-      'post',
-      'isLiked',
-      postId,
-      meId,
-    ],
+    checkLiked: (postId?: number, meId?: string | null) => ['post', 'isLiked', postId, meId],
 
     count: {
       liked: (userId: string) => ['count', 'post', userId],
@@ -47,11 +39,7 @@ export const queryKey = {
 
   comment: {
     byPost: (postId: number) => ['comment', postId],
-    byComment: (postId: number, commentId: number | null) => [
-      'comment',
-      postId,
-      commentId,
-    ],
+    byComment: (postId: number, commentId: number | null) => ['comment', postId, commentId],
     count: {
       byPost: (postId?: number) => ['count', 'comment', postId],
       byComment: (postId?: number, commentId?: number | null) => [

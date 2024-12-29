@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query'
-
 import { supabase } from '@/src/lib/supabase/client'
 
 export default function useResetPassword() {

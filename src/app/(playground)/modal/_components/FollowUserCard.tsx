@@ -31,11 +31,7 @@ export default function FollowUserCard({
         className="w-full cursor-pointer rounded-md p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700"
       >
         <XStack gap={4} key={follower.id} className="items-center">
-          <Avatar
-            size="base"
-            src={follower.user_info.avatar_url}
-            className="size-8"
-          />
+          <Avatar size="base" src={follower.user_info.avatar_url} className="size-8" />
           <YStack gap={0} className="flex-1 justify-center">
             <Text>{follower.user_info.user_name}</Text>
             <Text type="caption" size="sm">
@@ -52,11 +48,7 @@ export default function FollowUserCard({
       className="w-full cursor-pointer rounded-md p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700"
     >
       <XStack gap={4} key={follower.id} className="items-center">
-        <Avatar
-          size="base"
-          src={follower.user_info.avatar_url}
-          className="size-8"
-        />
+        <Avatar size="base" src={follower.user_info.avatar_url} className="size-8" />
         <YStack gap={0} className="flex-1 justify-center">
           <Text>{follower.user_info.user_name}</Text>
           <Text type="caption" size="sm">
@@ -64,21 +56,11 @@ export default function FollowUserCard({
           </Text>
         </YStack>
         {isFollowing ? (
-          <Button
-            variant="secondary"
-            size="sm"
-            isLoading={isPending}
-            onClick={onFollow}
-          >
+          <Button variant="secondary" size="sm" isLoading={isPending} onClick={onFollow}>
             팔로우 취소
           </Button>
         ) : (
-          <Button
-            className="h-fit"
-            size="sm"
-            isLoading={isPending}
-            onClick={onFollow}
-          >
+          <Button className="h-fit" size="sm" isLoading={isPending} onClick={onFollow}>
             팔로우 하기
           </Button>
         )}

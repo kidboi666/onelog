@@ -1,11 +1,4 @@
-export type TTodoColor =
-  | 'black'
-  | 'green'
-  | 'yellow'
-  | 'blue'
-  | 'orange'
-  | 'red'
-  | 'purple'
+export type TTodoColor = 'black' | 'green' | 'yellow' | 'blue' | 'orange' | 'red' | 'purple'
 
 export interface Todo {
   id: number

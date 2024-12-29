@@ -1,15 +1,13 @@
-import { IUserInfoWithMBTI, IUserSession } from '@/src/types/auth'
+import { IUserInfoWithMBTI, IUserSession } from '@/src/types/auth';
+import useOutsideClick from '@/src/hooks/useOutsideClick';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
+import Avatar from '@/src/components/Avatar';
+import { DropDown } from '@/src/components/DropDown';
+import Text from '@/src/components/Text';
+import BookMark from './BookMark';
+import GuestContent from './GuestContent';
+import LoggedInContent from './LoggedInContent';
 
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-
-import Avatar from '@/src/components/Avatar'
-import { DropDown } from '@/src/components/DropDown'
-import Text from '@/src/components/Text'
-
-import BookMark from './BookMark'
-import GuestContent from './GuestContent'
-import LoggedInContent from './LoggedInContent'
 
 interface Props {
   pathname: string
@@ -20,16 +18,8 @@ interface Props {
   closeMenu?: () => void
 }
 
-export default function AuthButtonWithDropDown({
-  pathname,
-  userId,
-  viewText,
-  me,
-  session,
-  closeMenu,
-}: Props) {
-  const { ref, close, onClick, onTransitionEnd } =
-    useDataDrivenAnimation<HTMLDivElement>()
+export default function AuthButtonWithDropDown({ pathname, userId, viewText, me, session, closeMenu }: Props) {
+  const { ref, close, onClick, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   return (

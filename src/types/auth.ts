@@ -1,5 +1,4 @@
 import { TMBTI } from '@/src/app/(playground)/profile/edit/_constants/mbti'
-
 import { Tables } from './supabase'
 
 export interface ISignIn {

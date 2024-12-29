@@ -1,23 +1,14 @@
-'use client';
+'use client'
 
-import { routes } from '@/src/routes'
 import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
-
 import cn from '@/src/lib/cn'
-
 import useToggle from '@/src/hooks/useToggle'
-
-
+import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import { Container } from '@/src/components/Container'
 import Icon from '@/src/components/Icon'
-
-imprt ToolTip from '@/src/components/Tooltip';
-
-
-
-
+import ToolTip from '@/src/components/Tooltip'
 
 interface Props {
   postId?: number
@@ -26,12 +17,7 @@ interface Props {
   isSide?: boolean
 }
 
-export default function ReportButton({
-  viewToolTip,
-  postId,
-  commentId,
-  isSide,
-}: Props) {
+export default function ReportButton({ viewToolTip, postId, commentId, isSide }: Props) {
   const router = useRouter()
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
 

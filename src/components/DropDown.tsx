@@ -1,10 +1,9 @@
-import Link from 'next/link'
-import { ComponentProps, PropsWithChildren, RefObject, forwardRef } from 'react'
+import Link from 'next/link';
+import { ComponentProps, PropsWithChildren, RefObject, forwardRef } from 'react';
+import cn from '@/src/lib/cn';
+import Button, { ButtonProps } from './Button';
+import Text, { TextProps } from './Text';
 
-import cn from '@/src/lib/cn'
-
-import Button, { ButtonProps } from './Button'
-import Text, { TextProps } from './Text'
 
 interface DropDownRootProps extends ComponentProps<'div'> {
   className?: string
@@ -67,21 +66,8 @@ const DROPDOWN_POSITION = {
   bottomRight: 'top-[calc(100%--6px)] left-0 origin-top-left',
 }
 
-const DropDownContent = forwardRef<
-  HTMLDivElement,
-  PropsWithChildren<DropDownContentProps>
->(
-  (
-    {
-      children,
-      onTransitionEnd,
-      initStatus,
-      onClick,
-      className,
-      position = 'topRight',
-    },
-    ref,
-  ) => {
+const DropDownContent = forwardRef<HTMLDivElement, PropsWithChildren<DropDownContentProps>>(
+  ({ children, onTransitionEnd, initStatus, onClick, className, position = 'topRight' }, ref) => {
     return (
       <nav
         ref={ref}
@@ -112,12 +98,7 @@ const DropDownButton = ({
   onClick,
 }: DropDownButtonProps) => {
   return (
-    <Button
-      variant={variant}
-      size={size}
-      onClick={onClick}
-      className={cn('w-full', className)}
-    >
+    <Button variant={variant} size={size} onClick={onClick} className={cn('w-full', className)}>
       {children}
     </Button>
   )
@@ -140,12 +121,7 @@ const DropDownLinkButton = ({
 }: PropsWithChildren<DropDownLinkButtonProps>) => {
   return (
     <Link href={href} className={className}>
-      <Button
-        variant={variant}
-        size={size}
-        onClick={onClick}
-        className={innerClassName}
-      >
+      <Button variant={variant} size={size} onClick={onClick} className={innerClassName}>
         {children}
       </Button>
     </Link>
@@ -154,10 +130,7 @@ const DropDownLinkButton = ({
 
 interface DropDownTextProps extends TextProps {}
 
-const DropDownText = ({
-  children,
-  ...props
-}: PropsWithChildren<DropDownTextProps>) => {
+const DropDownText = ({ children, ...props }: PropsWithChildren<DropDownTextProps>) => {
   return <Text {...props}>{children}</Text>
 }
 

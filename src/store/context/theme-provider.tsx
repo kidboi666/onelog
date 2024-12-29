@@ -2,7 +2,6 @@
 
 import { useTheme } from '@/src/store/useTheme'
 import { PropsWithChildren, useLayoutEffect } from 'react'
-
 import { TColor } from '@/src/types/theme'
 
 export default function ThemeProvider({ children }: PropsWithChildren) {

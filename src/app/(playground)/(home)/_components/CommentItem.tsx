@@ -1,25 +1,21 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
+import { useState } from 'react';
+import { getQueryClient } from '@/src/lib/tanstack/get-query-client';
+import { queryKey } from '@/src/lib/tanstack/query-key';
+import { IUserSession } from '@/src/types/auth';
+import { IComment } from '@/src/types/comment';
+import { IPost } from '@/src/types/post';
+import { formatDateElapsed } from '@/src/utils/formatDate';
+import { XStack, YStack } from '@/src/components/Stack';
+import Text from '@/src/components/Text';
+import CommentInputButton from '@/src/app/(playground)/(home)/_components/CommentInputButton';
+import OptionButtonWithDropDown from '@/src/app/(playground)/(home)/_components/OptionButtonWithDropDown';
+import AvatarButtonWithDropDown from './AvatarButtonWithDropDown';
+import CommentButton from './CommentButton';
+import CommentInput from './CommentInput';
+import ReportButton from './ReportButton';
 
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
-
-import { IUserSession } from '@/src/types/auth'
-import { IComment } from '@/src/types/comment'
-import { IPost } from '@/src/types/post'
-
-import { formatDateElapsed } from '@/src/utils/formatDate'
-
-import { XStack, YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
-
-import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
-import CommentButton from './CommentButton'
-import CommentInput from './CommentInput'
-import CommentInputButton from './CommentInputButon'
-import OptionButtonWithDropDown from './OptionButtonWithDropown'
-import ReportButton from './ReportButton'
 
 interface Props {
   comment: IComment
@@ -36,10 +32,7 @@ export default function CommentItem({ comment, postId, session }: Props) {
     const post = queryClient.getQueryData<IPost>(queryKey.post.detail(postId))
     setCommentToComments = post!.comments
       .filter((v) => v.comment_id === comment.id)
-      .sort(
-        (a, b) =>
-          Number(new Date(a.created_at)) - Number(new Date(b.created_at)),
-      )
+      .sort((a, b) => Number(new Date(a.created_at)) - Number(new Date(b.created_at)))
   }
 
   const handleShowCommentInput = () => {
@@ -70,9 +63,7 @@ export default function CommentItem({ comment, postId, session }: Props) {
             <Text>{comment.content}</Text>
           </div>
           <XStack gap={0}>
-            {comment.comment_id && (
-              <CommentButton commentCount={comment.comment ?? 0} />
-            )}
+            {comment.comment_id && <CommentButton commentCount={comment.comment ?? 0} />}
             <CommentInputButton onShowCommentInput={handleShowCommentInput} />
             <ReportButton commentId={comment.id} />
             <OptionButtonWithDropDown
@@ -83,20 +74,11 @@ export default function CommentItem({ comment, postId, session }: Props) {
           </XStack>
         </YStack>
         {showCommentInput && (
-          <CommentInput
-            postId={postId}
-            commentId={comment.id}
-            session={session}
-          />
+          <CommentInput postId={postId} commentId={comment.id} session={session} />
         )}
         {setCommentToComments &&
           setCommentToComments.map((comment) => (
-            <CommentItem
-              key={comment.id}
-              postId={postId}
-              comment={comment}
-              session={session}
-            />
+            <CommentItem key={comment.id} postId={postId} comment={comment} session={session} />
           ))}
       </YStack>
     </XStack>

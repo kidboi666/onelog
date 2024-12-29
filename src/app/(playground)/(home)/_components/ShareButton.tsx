@@ -1,14 +1,13 @@
-import { useToast } from '@/src/store/useToast'
-import { isServer } from '@tanstack/react-query'
-import { MouseEvent } from 'react'
+import { useToast } from '@/src/store/useToast';
+import { isServer } from '@tanstack/react-query';
+import { MouseEvent } from 'react';
+import useOutsideClick from '@/src/hooks/useOutsideClick';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
+import useToggle from '@/src/hooks/useToggle';
+import { DropDown } from '@/src/components/DropDown';
+import Icon from '@/src/components/Icon';
+import ToolTip from '@/src/components/Tooltip';
 
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import useToggle from '@/src/hooks/useToggle'
-
-import { DropDown } from '@/src/components/DropDown'
-import Icon from '@/src/components/Icon'
-import ToolTip from '@/src/components/Tooltip'
 
 interface Props {
   isSide?: boolean
@@ -16,8 +15,7 @@ interface Props {
 }
 
 export default function ShareButton({ isSide, viewToolTip }: Props) {
-  const { close, ref, onClick, onTransitionEnd } =
-    useDataDrivenAnimation<HTMLDivElement>()
+  const { close, ref, onClick, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
   const { openToast } = useToast()

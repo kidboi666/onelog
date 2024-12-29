@@ -1,23 +1,20 @@
-'use client'
+'use client';
 
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import useDeleteAvatarImage from '@/src/services/mutates/auth/useDeleteAvatarImage';
+import useUpdateUserInfo from '@/src/services/mutates/auth/useUpdateUserInfo';
+import useUploadAvatarImage from '@/src/services/mutates/auth/useUploadAvatarImage';
+import useMeQueries from '@/src/hooks/queries/useMeQueries';
+import useInput from '@/src/hooks/useInput';
+import Button from '@/src/components/Button';
+import { YStack } from '@/src/components/Stack';
+import AboutMeSection from '../_components/AboutMeSection';
+import EmailSection from '../_components/EmailSection';
+import MBTISection from '../_components/MBTISection';
+import ProfileImageSection from '../_components/ProfileImageSection';
+import UserNameSection from '../_components/UserNameSection';
+import { TMBTI } from '../_constants/mbti';
 
-import useDeleteAvatarImage from '@/src/services/mutates/auth/useDeleteAvatarImage'
-import useUpdateUserInfo from '@/src/services/mutates/auth/useUpdateUserInfo'
-import useUploadAvatarImage from '@/src/services/mutates/auth/useUploadAvatarImage'
-
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-import useInput from '@/src/hooks/useInput'
-
-import Button from '@/src/components/Button'
-import { YStack } from '@/src/components/Stack'
-
-import AboutMeSection from '../_components/AboutMeSection'
-import EmailSection from '../_components/EmailSection'
-import MBTISection from '../_components/MBTISection'
-import ProfileImageSection from '../_components/ProfileImageSection'
-import UserNameSection from '../_components/UserNameSection'
-import { TMBTI } from '../_constants/mbti'
 
 export default function EditProfileContainer() {
   const { me, session } = useMeQueries()
@@ -32,8 +29,7 @@ export default function EditProfileContainer() {
     isPending: isPendingUpdateUserInfo,
     isSuccess: isSuccessUpdateUserInfo,
   } = useUpdateUserInfo()
-  const { mutateAsync: uploadImage, isPending: isPendingImageUpload } =
-    useUploadAvatarImage()
+  const { mutateAsync: uploadImage, isPending: isPendingImageUpload } = useUploadAvatarImage()
   const { mutate: deletePrevImage } = useDeleteAvatarImage()
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -97,21 +93,14 @@ export default function EditProfileContainer() {
       className="animate-fade-in rounded-md bg-white p-2 shadow-sm sm:p-8 dark:bg-var-darkgray"
     >
       <YStack gap={8}>
-        <ProfileImageSection
-          onChange={handleChangeImage}
-          imagePreview={avatarUrl}
-        />
+        <ProfileImageSection onChange={handleChangeImage} imagePreview={avatarUrl} />
         <EmailSection email={me?.email} provider={session?.provider} />
         <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
         <AboutMeSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
         <MBTISection mbti={mbti} setMbti={setMbti} />
         <Button
           type="submit"
-          isLoading={
-            isPendingImageUpload ||
-            isPendingUpdateUserInfo ||
-            isSuccessUpdateUserInfo
-          }
+          isLoading={isPendingImageUpload || isPendingUpdateUserInfo || isSuccessUpdateUserInfo}
           disabled={
             (userName === me?.user_name &&
               aboutMe === me?.about_me &&

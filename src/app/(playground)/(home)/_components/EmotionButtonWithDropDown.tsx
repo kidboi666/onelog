@@ -1,20 +1,17 @@
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import useOutsideClick from '@/src/hooks/useOutsideClick';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
+import { DropDown } from '@/src/components/DropDown';
+import Text from '@/src/components/Text';
+import { TEmotion } from '@/src/app/(playground)/post/edit/page';
+import EmotionGauge from './EmotionGauge';
 
-import { DropDown } from '@/src/components/DropDown'
-import Text from '@/src/components/Text'
-
-import { TEmotion } from '@/src/app/(playground)/post/edit/page'
-
-import EmotionGauge from './EmotionGauge'
 
 interface Props {
   emotionLevel: TEmotion | null
 }
 
 export default function EmotionButtonWithDropDown({ emotionLevel }: Props) {
-  const { close, ref, onClick, onTransitionEnd } =
-    useDataDrivenAnimation<HTMLDivElement>()
+  const { close, ref, onClick, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
   let emotionState: string
 

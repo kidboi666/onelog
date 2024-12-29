@@ -1,14 +1,12 @@
 'use client'
 
-import { routes } from '@/src/routes'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
-
 import { supabase } from '@/src/lib/supabase/client'
-
 import useHandleLikePost from '@/src/services/mutates/post/useHandleLikePost'
 import { meQuery } from '@/src/services/queries/auth/me-query'
+import { routes } from '@/src/routes'
 
 interface Props {
   postId: number

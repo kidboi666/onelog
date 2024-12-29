@@ -1,14 +1,13 @@
-'use client'
+'use client';
 
-import { routes } from '@/src/routes'
-import { useRouter } from 'next/navigation'
-
+import { useRouter } from 'next/navigation';
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import { routes } from '@/src/routes'
+import Button from '@/src/components/Button';
+import { YStack } from '@/src/components/Stack';
+import Text from '@/src/components/Text';
+import Title from '@/src/components/Title';
 
-import Button from '@/src/components/Button'
-import { YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
-import Title from '@/src/components/Title'
 
 export default function PasswordResetForm() {
   const router = useRouter()

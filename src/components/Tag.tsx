@@ -1,7 +1,5 @@
 import { cva } from 'class-variance-authority'
-
 import cn from '@/src/lib/cn'
-
 import Button from './Button'
 import Icon from './Icon'
 import { XStack } from './Stack'

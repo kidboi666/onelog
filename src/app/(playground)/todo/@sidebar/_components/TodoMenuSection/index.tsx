@@ -1,13 +1,10 @@
 import { usePathname } from 'next/navigation'
 import { useTransition } from 'react'
-
 import cn from '@/src/lib/cn'
-
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
 import Spinner from '@/src/components/Spinner'
-
 import { TODO_MENU } from '../../../_constants'
 
 interface Props {
@@ -30,8 +27,7 @@ export default function TodoMenuSection({ onMenuSelect, menu }: Props) {
         <div
           className={cn(
             'relative flex size-2 items-center justify-center rounded-full text-zinc-400 transition',
-            isSelected &&
-              'bg-zinc-200 ring-8 ring-zinc-200 dark:bg-zinc-700 dark:ring-zinc-700',
+            isSelected && 'bg-zinc-200 ring-8 ring-zinc-200 dark:bg-zinc-700 dark:ring-zinc-700',
           )}
         >
           <div className="absolute">

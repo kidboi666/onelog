@@ -1,10 +1,8 @@
-import { colorTheme, useTheme } from '@/src/store/useTheme'
+import { colorTheme, useTheme } from '@/src/store/useTheme';
+import cn from '@/src/lib/cn';
+import { IUserInfoWithMBTI } from '@/src/types/auth';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
 
-import cn from '@/src/lib/cn'
-
-import { IUserInfoWithMBTI } from '@/src/types/auth'
-
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
 interface Props {
   pathname?: string
@@ -15,8 +13,7 @@ interface Props {
 
 export default function BookMark({ pathname, userId, me, isSelected }: Props) {
   const { color } = useTheme()
-  const { open, close, ref, onTransitionEnd } =
-    useDataDrivenAnimation<HTMLDivElement>()
+  const { open, close, ref, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   if ((pathname === 'profile' && userId === me?.id) || isSelected) {
     open()
   } else {

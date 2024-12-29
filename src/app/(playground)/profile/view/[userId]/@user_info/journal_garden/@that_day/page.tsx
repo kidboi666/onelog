@@ -2,28 +2,15 @@
 
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { Fragment, useEffect, useState } from 'react';
-
-
-
-import { supabase } from '@/src/lib/supabase/client'
-
-import { meQuery } from '@/src/services/queries/auth/me-query'
-import { postQuery } from '@/src/services/queries/post/post-query'
-
-
-
+import { supabase } from '@/src/lib/supabase/client';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+import { postQuery } from '@/src/services/queries/post/post-query';
 import { Container } from '@/src/components/Container';
 import Empty from '@/src/components/Empty';
 import Spinner from '@/src/components/Spinner';
 import { YStack } from '@/src/components/Stack';
 import Title from '@/src/components/Title';
-
-
-
 import PostCard from '@/src/app/(playground)/(home)/_components/PostCard';
-
-
-
 
 
 interface Props {
@@ -40,13 +27,7 @@ export default function PrevOnePost({ params, searchParams }: Props) {
   const [endOfDay, setEndOfDay] = useState('')
 
   const { data: posts, isFetching } = useQuery(
-    postQuery.getUserPostThatDay(
-      supabase,
-      params.userId,
-      startOfDay,
-      endOfDay,
-      session?.userId,
-    ),
+    postQuery.getUserPostThatDay(supabase, params.userId, startOfDay, endOfDay, session?.userId),
   )
 
   useEffect(() => {

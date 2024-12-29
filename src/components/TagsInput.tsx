@@ -1,16 +1,7 @@
 /* eslint-disable react/no-array-index-key */
-import {
-  Dispatch,
-  KeyboardEvent,
-  SetStateAction,
-  useRef,
-  useState,
-} from 'react'
-
+import { Dispatch, KeyboardEvent, SetStateAction, useRef, useState } from 'react'
 import cn from '@/src/lib/cn'
-
 import useInput from '@/src/hooks/useInput'
-
 import Input from './Input'
 import { XStack } from './Stack'
 import Tag from './Tag'

@@ -7,10 +7,7 @@ interface Props {
   onSideMenu?: () => void
 }
 
-export default function SideMenuButtonSection({
-  isOpenSide,
-  onSideMenu,
-}: Props) {
+export default function SideMenuButtonSection({ isOpenSide, onSideMenu }: Props) {
   return (
     <div className="flex justify-between">
       {isOpenSide && <Title>할일</Title>}

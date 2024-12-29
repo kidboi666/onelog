@@ -1,7 +1,5 @@
 import { ComponentProps } from 'react'
-
 import cn from '@/src/lib/cn'
-
 import Input from '@/src/components/Input'
 import { XStack, YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
@@ -16,11 +14,7 @@ export default function UserNameSection({ value, onChange }: Props) {
     <YStack gap={4} className="max-w-52">
       <Title>필명</Title>
       <XStack className="items-end">
-        <Input
-          value={value}
-          onChange={onChange}
-          className="bg-var-lightgray dark:bg-var-dark"
-        />
+        <Input value={value} onChange={onChange} className="bg-var-lightgray dark:bg-var-dark" />
         {value && (
           <Text
             size="sm"

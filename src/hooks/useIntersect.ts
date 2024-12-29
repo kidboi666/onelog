@@ -17,10 +17,7 @@ export default function useIntersect<T extends HTMLElement>(
   const target = useRef(null)
 
   const handleIntersect = useCallback(
-    (
-      entries: IntersectionObserverEntry[],
-      observer: IntersectionObserver,
-    ): void => {
+    (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
       entries.forEach((entry) => {
         setIntersecting(entry.isIntersecting)
         if (once && entry.isIntersecting) {

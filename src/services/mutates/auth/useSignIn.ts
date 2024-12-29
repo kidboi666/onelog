@@ -1,11 +1,9 @@
-import { routes } from '@/src/routes'
 import { useMutation } from '@tanstack/react-query'
-
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
-
 import { ISignIn } from '@/src/types/auth'
+import { routes } from '@/src/routes'
 
 export default function useSignIn() {
   const queryClient = getQueryClient()

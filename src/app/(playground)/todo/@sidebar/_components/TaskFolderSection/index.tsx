@@ -2,11 +2,8 @@
 
 import { useParams } from 'next/navigation'
 import { useRef } from 'react'
-
 import { Tables } from '@/src/types/supabase'
-
 import { List } from '@/src/components/List'
-
 import Folder from '../../../_components/Folder'
 
 interface Props {

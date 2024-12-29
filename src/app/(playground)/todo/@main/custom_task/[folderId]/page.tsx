@@ -1,33 +1,20 @@
 'use client';
 
-import { routes } from '@/src/routes';
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
-import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
-
-import cn from '@/src/lib/cn'
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react';
+import cn from '@/src/lib/cn';
 import { supabase } from '@/src/lib/supabase/client';
-
-
-
 import useAddTodo from '@/src/services/mutates/todo/useAddTodo';
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo';
 import { meQuery } from '@/src/services/queries/auth/me-query';
-imprt { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query';
+import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query';
 import { todoQuery } from '@/src/services/queries/todo/todo-query';
-
-
-
 import { Tables } from '@/src/types/supabase';
-
-
-
 import useInput from '@/src/hooks/useInput';
 import useOutsideClick from '@/src/hooks/useOutsideClick';
 import useDataDrivenAnimation from '@/src/hooks/useStateChange';
-
-
-
+import { routes } from '@/src/routes';
 import Button from '@/src/components/Button';
 import { Container } from '@/src/components/Container';
 import Icon from '@/src/components/Icon';
@@ -36,14 +23,8 @@ import { List } from '@/src/components/List';
 import { XStack, YStack, ZStack } from '@/src/components/Stack';
 import Text from '@/src/components/Text';
 import Title from '@/src/components/Title';
-
-
-
 import TaskOptionDropDown from '../../../_components/TaskOptionDropDown';
 import Todo from '../../../_components/Todo';
-
-
-
 
 
 interface Props {
@@ -56,8 +37,7 @@ export default function TaskForm({ params, searchParams }: Props) {
   const folderId = params.folderId
   const color = searchParams.color
   const [todoText, onChangeTodoText, setTodoText] = useInput('')
-  const { onClick, ref, close, onTransitionEnd } =
-    useDataDrivenAnimation<HTMLDivElement>()
+  const { onClick, ref, close, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
   const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
 
@@ -70,9 +50,7 @@ export default function TaskForm({ params, searchParams }: Props) {
   const sortedTodos = fetchedTodos.sort((a, b) => a.index - b.index)
   const todos = sortedTodos.filter((todo) => todo.is_complete === false)
   const completedTodos = sortedTodos.filter((todo) => todo.is_complete === true)
-  const currentFolder = todoFolders.find(
-    (folder) => folder.id === Number(folderId),
-  )
+  const currentFolder = todoFolders.find((folder) => folder.id === Number(folderId))
   const { mutate: addTodo } = useAddTodo()
   const { mutate: updateTodo } = useUpdateTodo()
 
@@ -104,10 +82,7 @@ export default function TaskForm({ params, searchParams }: Props) {
     })
   }
 
-  const handleUpdateButtonClick = (
-    e: MouseEvent,
-    selectedTodo: Tables<'todo'>,
-  ) => {
+  const handleUpdateButtonClick = (e: MouseEvent, selectedTodo: Tables<'todo'>) => {
     e.stopPropagation()
     const folderIndex = JSON.parse(localStorage.getItem(folderId)!)
     const inProgressLastIndex = folderIndex.in_progress ?? 0
@@ -177,12 +152,7 @@ export default function TaskForm({ params, searchParams }: Props) {
           <XStack className="items-center justify-between">
             <Title className="text-nowrap">{currentFolder?.name}</Title>
             <ZStack>
-              <Button
-                ref={dropdownRef}
-                variant="icon"
-                size="none"
-                onClick={onClick}
-              >
+              <Button ref={dropdownRef} variant="icon" size="none" onClick={onClick}>
                 <Icon view="0 -960 960 960" size={20}>
                   <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
                 </Icon>

@@ -1,13 +1,10 @@
-import { routes } from '@/src/routes'
 import { useRouter } from 'next/navigation'
-
 import { wait } from '@/src/utils/wait'
-
+import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { ZStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
-
 import BookMark from '../../@sidebar/_components/BookMark'
 import SelectedMenuBackground from '../../@sidebar/_components/SelectedMenuBackground'
 
@@ -16,10 +13,7 @@ interface Props {
   closeMenu: () => void
 }
 
-export default function MobileWriteButtonWithLogo({
-  isSelected,
-  closeMenu,
-}: Props) {
+export default function MobileWriteButtonWithLogo({ isSelected, closeMenu }: Props) {
   const router = useRouter()
 
   const pushWritePage = async () => {

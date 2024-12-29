@@ -1,16 +1,15 @@
-'use client'
+'use client';
 
-import { routes } from '@/src/routes'
-
-import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-
+import useFollowMutates from '@/src/hooks/mutates/useFollowMutates';
+import useOutsideClick from '@/src/hooks/useOutsideClick';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
+import { routes } from '@/src/routes';
 import Avatar from '@/src/components/Avatar'
-import { DropDown } from '@/src/components/DropDow'
-import Follow from '@/src/components/Follow'
-import { XStack, YStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
+import { DropDown } from '@/src/components/DropDown'
+import Follow from '@/src/components/Follow';
+import { XStack, YStack } from '@/src/components/Stack';
+import Title from '@/src/components/Title';
+
 
 interface Props {
   avatarUrl: string | null
@@ -31,8 +30,7 @@ export default function AvatarButtonWithDropDown({
   userId,
   userName,
 }: Props) {
-  const { close, open, ref, onClick, onTransitionEnd } =
-    useDataDrivenAnimation<HTMLDivElement>()
+  const { close, open, ref, onClick, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
 
   const {
@@ -49,12 +47,7 @@ export default function AvatarButtonWithDropDown({
 
   return (
     <DropDown.Root>
-      <DropDown.Trigger
-        targetRef={buttonRef}
-        variant="none"
-        onClick={onClick}
-        className="p-0"
-      >
+      <DropDown.Trigger targetRef={buttonRef} variant="none" onClick={onClick} className="p-0">
         <Avatar src={avatarUrl} size="sm" shadow="sm" />
       </DropDown.Trigger>
       <DropDown.Content
@@ -88,10 +81,7 @@ export default function AvatarButtonWithDropDown({
             <XStack gap={4}>
               {isMe ? (
                 <>
-                  <DropDown.LinkButton
-                    href={routes.profile.edit}
-                    variant="secondary"
-                  >
+                  <DropDown.LinkButton href={routes.profile.edit} variant="secondary">
                     프로필 수정
                   </DropDown.LinkButton>
                   <DropDown.LinkButton href={routes.profile.view(userId)}>
@@ -100,11 +90,7 @@ export default function AvatarButtonWithDropDown({
                 </>
               ) : (
                 <>
-                  <DropDown.Button
-                    variant="secondary"
-                    isLoading={isPending}
-                    onClick={onFollow}
-                  >
+                  <DropDown.Button variant="secondary" isLoading={isPending} onClick={onFollow}>
                     {isFollowing ? '팔로우 취소' : '팔로우 하기'}
                   </DropDown.Button>
                   <DropDown.LinkButton href={routes.profile.view(userId)}>

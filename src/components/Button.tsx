@@ -3,9 +3,7 @@
 import { colorTheme, useTheme } from '@/src/store/useTheme'
 import { cva } from 'class-variance-authority'
 import { ComponentProps, PropsWithRef, forwardRef } from 'react'
-
 import cn from '@/src/lib/cn'
-
 import Spinner from './Spinner'
 
 export interface ButtonProps extends ComponentProps<'button'> {
@@ -87,9 +85,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         {...props}
       >
         {children}
-        {isLoading && (
-          <Spinner size={size === 'sm' ? 16 : 20} variants="circle" />
-        )}
+        {isLoading && <Spinner size={size === 'sm' ? 16 : 20} variants="circle" />}
       </button>
     )
   },

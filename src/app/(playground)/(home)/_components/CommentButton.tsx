@@ -1,7 +1,5 @@
 import cn from '@/src/lib/cn'
-
 import useToggle from '@/src/hooks/useToggle'
-
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import ToolTip from '@/src/components/Tooltip'
@@ -13,12 +11,7 @@ interface Props {
   isSide?: boolean
 }
 
-export default function CommentButton({
-  disabled,
-  viewToolTip,
-  isSide,
-  commentCount,
-}: Props) {
+export default function CommentButton({ disabled, viewToolTip, isSide, commentCount }: Props) {
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
 
   return (

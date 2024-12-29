@@ -1,23 +1,19 @@
-'use client'
+'use client';
 
-import { routes } from '@/src/routes'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { FormEvent } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { FormEvent } from 'react';
+import { supabase } from '@/src/lib/supabase/client';
+import usePostComment from '@/src/services/mutates/comment/usePostComment';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+import { IUserSession } from '@/src/types/auth';
+import useInput from '@/src/hooks/useInput';
+import useRouterPush from '@/src/hooks/useRouterPush';
+import { routes } from '@/src/routes';
+import Avatar from '@/src/components/Avatar';
+import Button from '@/src/components/Button';
+import Input from '@/src/components/Input';
+import { XStack } from '@/src/components/Stack';
 
-import { supabase } from '@/src/lib/supabase/client'
-
-import usePostComment from '@/src/services/mutates/comment/usePostComment'
-import { meQuery } from '@/src/services/queries/auth/me-query'
-
-import { IUserSession } from '@/src/types/auth'
-
-import useInput from '@/src/hooks/useInput'
-import useRouterPush from '@/src/hooks/useRouterPush'
-
-import Avatar from '@/src/components/Avatar'
-import Button from '@/src/components/Button'
-import Input from '@/src/components/Input'
-import { XStack } from '@/src/components/Stack'
 
 interface Props {
   postId: number
@@ -27,9 +23,7 @@ interface Props {
 
 export default function CommentInput({ postId, commentId, session }: Props) {
   const authGuard = useRouterPush(routes.modal.auth.guard)
-  const { data: me } = useSuspenseQuery(
-    meQuery.getUserInfo(supabase, session?.userId),
-  )
+  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, session?.userId))
   const [content, onChangeContent, setContent] = useInput('')
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
 
@@ -63,11 +57,7 @@ export default function CommentInput({ postId, commentId, session }: Props) {
   }
 
   return (
-    <form
-      onClick={handleRouterGuard}
-      onSubmit={handlePostComment}
-      className="mb-2 w-full"
-    >
+    <form onClick={handleRouterGuard} onSubmit={handlePostComment} className="mb-2 w-full">
       <XStack gap={4}>
         <Avatar src={me?.avatar_url} size="sm" shadow="sm" />
         <Input
@@ -77,12 +67,7 @@ export default function CommentInput({ postId, commentId, session }: Props) {
           placeholder={session ? '댓글을 달아주세요.' : '로그인을 해주세요'}
           className="w-full bg-var-lightgray dark:bg-var-dark"
         />
-        <Button
-          type="submit"
-          disabled={!content || !session}
-          isLoading={isPostPending}
-          size="sm"
-        >
+        <Button type="submit" disabled={!content || !session} isLoading={isPostPending} size="sm">
           댓글달기
         </Button>
       </XStack>

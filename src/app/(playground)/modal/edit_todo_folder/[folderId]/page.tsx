@@ -2,33 +2,18 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useEffect, useState } from 'react'
-
-
-
+import { FormEvent, useEffect, useState } from 'react';
 import cn from '@/src/lib/cn';
 import { supabase } from '@/src/lib/supabase/client';
-
-
-
 import useUpdateTodoFolder from '@/src/services/mutates/todo/useUpdateTodoFolder';
 import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query';
-
-
-
 import useMeQueries from '@/src/hooks/queries/useMeQueries';
 import useInput from '@/src/hooks/useInput';
-
-
-
 import Button from '@/src/components/Button';
 import Icon from '@/src/components/Icon';
 import Input from '@/src/components/Input';
 import Modal from '@/src/components/Modal';
 import Text from '@/src/components/Text';
-
-
-
 
 
 interface Props {
@@ -41,9 +26,7 @@ export default function EditTodoFolderModal({ params }: Props) {
   const folderId = params.folderId
   const router = useRouter()
   const { me } = useMeQueries()
-  const { data: folders } = useSuspenseQuery(
-    todoFolderQuery.getTodoFolder(supabase, me.id),
-  )
+  const { data: folders } = useSuspenseQuery(todoFolderQuery.getTodoFolder(supabase, me.id))
   const folder = folders.find((item) => item.id === Number(folderId))
   const [name, onChangeName, setName] = useInput<string>('')
   const [color, setColor] = useState<string>('black')
@@ -69,11 +52,7 @@ export default function EditTodoFolderModal({ params }: Props) {
       <form onSubmit={handleSubmit} className="flex w-full flex-col gap-8">
         <div className="flex flex-col gap-2">
           <Text>폴더명</Text>
-          <Input
-            value={name}
-            onChange={onChangeName}
-            className="dark:bg-var-dark"
-          />
+          <Input value={name} onChange={onChangeName} className="dark:bg-var-dark" />
         </div>
         <div className="flex flex-col gap-2">
           <Text>색상</Text>
@@ -107,10 +86,7 @@ export default function EditTodoFolderModal({ params }: Props) {
             ))}
           </div>
         </div>
-        <Button
-          type="submit"
-          disabled={folder?.name === name && folder?.color === color}
-        >
+        <Button type="submit" disabled={folder?.name === name && folder?.color === color}>
           수정하기
         </Button>
       </form>

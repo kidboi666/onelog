@@ -1,21 +1,13 @@
-import { Editor, EditorContent } from '@tiptap/react'
-import { useEffect, useRef, useState } from 'react'
-
-
-import { Container } from '@/src/components/Container'
-import { XStack, YStack, ZStack } from '@/src/components/Stack'
-import Tag from '@/src/components/Tag'
-import Title from '@/src/components/Title'
-
-
-import AccessTypeButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown'
+import { Editor, EditorContent } from '@tiptap/react';
+import { useEffect, useRef, useState } from 'react';
+import { Container } from '@/src/components/Container';
+import { XStack, YStack, ZStack } from '@/src/components/Stack';
+import Tag from '@/src/components/Tag';
+import Title from '@/src/components/Title';
+import AccessTypeButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown';
 import CommentButton from '@/src/app/(playground)/(home)/_components/CommentButton'
-
-iport LikeButton from '@/src/app/(playground)/(home)/_components/LikeButton';
-iport ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton';
-
-
-
+import LikeButton from '@/src/app/(playground)/(home)/_components/LikeButton'
+import ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton'
 
 
 interface Props {
@@ -62,11 +54,7 @@ export default function PostCardContent({
       <YStack gap={4}>
         <ZStack direction="col" className="max-h-64 overflow-hidden">
           {postTitle && <Title>{postTitle}</Title>}
-          <EditorContent
-            innerRef={contentRef}
-            editor={editor}
-            className="line-clamp-6"
-          />
+          <EditorContent innerRef={contentRef} editor={editor} className="line-clamp-6" />
           {showGradient && (
             <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-var-darkgray" />
           )}
@@ -77,17 +65,8 @@ export default function PostCardContent({
           </XStack>
         )}
         <XStack as="nav" className="items-center justify-between">
-          <LikeButton
-            likeCount={likeCount}
-            isLiked={isLiked}
-            postId={postId}
-            viewToolTip
-          />
-          <CommentButton
-            commentCount={commentCount}
-            disabled={disabled}
-            viewToolTip
-          />
+          <LikeButton likeCount={likeCount} isLiked={isLiked} postId={postId} viewToolTip />
+          <CommentButton commentCount={commentCount} disabled={disabled} viewToolTip />
           <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
           <ReportButton postId={postId} viewToolTip />
         </XStack>

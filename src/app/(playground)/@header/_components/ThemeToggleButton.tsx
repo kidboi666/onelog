@@ -1,11 +1,8 @@
 'use client'
 
 import { useTheme } from '@/src/store/useTheme'
-
 import cn from '@/src/lib/cn'
-
 import { TTheme } from '@/src/types/theme'
-
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { XStack, ZStack } from '@/src/components/Stack'
