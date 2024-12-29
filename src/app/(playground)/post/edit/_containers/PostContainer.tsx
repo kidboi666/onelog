@@ -1,33 +1,32 @@
-'use client';
+'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { BubbleMenu, EditorContent } from '@tiptap/react';
-import { useRouter } from 'next/navigation';
-import { FormEvent, useEffect, useState } from 'react';
-import { supabase } from '@/src/lib/supabase/client';
-import useAddPost from '@/src/services/mutates/post/useAddPost';
-import useUpdatePost from '@/src/services/mutates/post/useUpdatePost';
-import { meQuery } from '@/src/services/queries/auth/me-query';
-import { postQuery } from '@/src/services/queries/post/post-query';
-import useBlockEditor from '@/src/hooks/useBlockEditor';
-import useInput from '@/src/hooks/useInput';
-import { formatDateToMDY } from '@/src/utils/formatDate';
-import { routes } from '@/src/routes';
-import Avatar from '@/src/components/Avatar';
-import Button from '@/src/components/Button';
-import Input from '@/src/components/Input';
-import Line from '@/src/components/Line';
-import { XStack, YStack } from '@/src/components/Stack';
-import { TagsInput } from '@/src/components/TagsInput';
-import Text from '@/src/components/Text';
-import Title from '@/src/components/Title';
-import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge';
-import PostTypeSection from '@/src/app/(playground)/post/edit/_components/PostTypeSectio';
-import BubbleMenuBar from '../_components/BubbleMenuBar';
-import EmotionSection from '../_components/EmotionSection';
-import PublishSection from '../_components/PublishSection';
-import { TAccess, TEmotion, TPost } from '../page';
-
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { BubbleMenu, EditorContent } from '@tiptap/react'
+import { useRouter } from 'next/navigation'
+import { FormEvent, useEffect, useState } from 'react'
+import { supabase } from '@/src/lib/supabase/client'
+import useAddPost from '@/src/services/mutates/post/useAddPost'
+import useUpdatePost from '@/src/services/mutates/post/useUpdatePost'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+import useBlockEditor from '@/src/hooks/useBlockEditor'
+import useInput from '@/src/hooks/useInput'
+import { formatDateToMDY } from '@/src/utils/formatDate'
+import { routes } from '@/src/routes'
+import Avatar from '@/src/components/Avatar'
+import Button from '@/src/components/Button'
+import Input from '@/src/components/Input'
+import Line from '@/src/components/Line'
+import { XStack, YStack } from '@/src/components/Stack'
+import { TagsInput } from '@/src/components/TagsInput'
+import Text from '@/src/components/Text'
+import Title from '@/src/components/Title'
+import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge'
+import BubbleMenuBar from '../_components/BubbleMenuBar'
+import EmotionSection from '../_components/EmotionSection'
+import PostTypeSection from '../_components/PostTypeSection'
+import PublishSection from '../_components/PublishSection'
+import { TAccess, TEmotion, TPost } from '../page'
 
 interface Props {
   searchParams: { post_id: string }

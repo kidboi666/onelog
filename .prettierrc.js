@@ -13,6 +13,7 @@ module.exports = {
   importOrder: [
     '<THIRD_PARTY_MODULES>',
     '^@/src/lib/(.*)$',
+    '^@/src/store/(.*)$',
     '^@/src/services/(.*)$',
     '^@/src/types/(.*)$',
     '^@/src/hooks/(.*)$',

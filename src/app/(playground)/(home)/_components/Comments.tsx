@@ -15,7 +15,7 @@ interface Props {
 
 export default function Comments({ postId }: Props) {
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
-  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
+  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId, session?.userId))
 
   const comments = post.comments.sort(
     (a, b) => Number(new Date(a.created_at)) - Number(new Date(b.created_at)),

@@ -1,21 +1,21 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client';
-import { queryKey } from '@/src/lib/tanstack/query-key';
-import { IUserSession } from '@/src/types/auth';
-import { IComment } from '@/src/types/comment';
-import { IPost } from '@/src/types/post';
-import { formatDateElapsed } from '@/src/utils/formatDate';
-import { XStack, YStack } from '@/src/components/Stack';
-import Text from '@/src/components/Text';
-import CommentInputButton from '@/src/app/(playground)/(home)/_components/CommentInputButton';
-import OptionButtonWithDropDown from '@/src/app/(playground)/(home)/_components/OptionButtonWithDropDown';
-import AvatarButtonWithDropDown from './AvatarButtonWithDropDown';
-import CommentButton from './CommentButton';
-import CommentInput from './CommentInput';
-import ReportButton from './ReportButton';
-
+import { useState } from 'react'
+import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
+import { queryKey } from '@/src/lib/tanstack/query-key'
+import { IUserSession } from '@/src/types/auth'
+import { IComment } from '@/src/types/comment'
+import { IPost } from '@/src/types/post'
+import { formatDateElapsed } from '@/src/utils/formatDate'
+import { XStack, YStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+import CommentInputButton from '@/src/app/(playground)/(home)/_components/CommentInputButton'
+import CommentModifyInput from '@/src/app/(playground)/(home)/_components/CommentModifyInput'
+import OptionButtonWithDropDown from '@/src/app/(playground)/(home)/_components/OptionButtonWithDropDown'
+import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
+import CommentButton from './CommentButton'
+import CommentInput from './CommentInput'
+import ReportButton from './ReportButton'
 
 interface Props {
   comment: IComment
@@ -25,14 +25,22 @@ interface Props {
 
 export default function CommentItem({ comment, postId, session }: Props) {
   const [showCommentInput, setShowCommentInput] = useState(false)
+  const [isModify, setIsModify] = useState(false)
   let setCommentToComments: IComment[] | null = null
 
+  /**
+   * 대댓글 찾는 로직
+   */
   if (comment.comment) {
     const queryClient = getQueryClient()
     const post = queryClient.getQueryData<IPost>(queryKey.post.detail(postId))
     setCommentToComments = post!.comments
       .filter((v) => v.comment_id === comment.id)
       .sort((a, b) => Number(new Date(a.created_at)) - Number(new Date(b.created_at)))
+  }
+
+  const handleModify = () => {
+    setIsModify((prev) => !prev)
   }
 
   const handleShowCommentInput = () => {
@@ -59,14 +67,21 @@ export default function CommentItem({ comment, postId, session }: Props) {
               {formatDateElapsed(comment.created_at)}
             </Text>
           </XStack>
-          <div className="w-fit rounded-md bg-var-lightgray p-2 dark:bg-var-dark">
-            <Text>{comment.content}</Text>
-          </div>
+
+          {isModify ? (
+            <CommentModifyInput comment={comment} onModify={handleModify} />
+          ) : (
+            <div className="w-fit rounded-md bg-var-lightgray p-2 dark:bg-var-dark">
+              <Text>{comment.content}</Text>
+            </div>
+          )}
+
           <XStack gap={0}>
             {comment.comment_id && <CommentButton commentCount={comment.comment ?? 0} />}
             <CommentInputButton onShowCommentInput={handleShowCommentInput} />
             <ReportButton commentId={comment.id} />
             <OptionButtonWithDropDown
+              onModify={handleModify}
               commentAuthorId={comment.user_id}
               commentId={comment.id}
               postId={postId}

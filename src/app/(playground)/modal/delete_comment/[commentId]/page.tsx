@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
+import { useToast } from '@/src/store/useToast'
 import useDeleteComment from '@/src/services/mutates/comment/useDeleteComment'
 import Button from '@/src/components/Button'
 import Modal from '@/src/components/Modal'
@@ -15,6 +16,7 @@ interface Props {
 
 export default function DeleteCommentModal({ params, searchParams }: Props) {
   const router = useRouter()
+  const { openToast } = useToast()
   const { mutate: deleteComment } = useDeleteComment()
   const [isLoading, startTransition] = useTransition()
 
@@ -25,7 +27,13 @@ export default function DeleteCommentModal({ params, searchParams }: Props) {
         postId: Number(searchParams.post_id),
       },
       {
-        onSettled: () => router.back(),
+        onSettled: () => {
+          router.back()
+          openToast({
+            text: '댓글을 삭제하였습니다.',
+            type: 'info',
+          })
+        },
       },
     )
   }

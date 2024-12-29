@@ -1,20 +1,19 @@
-'use client';
+'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { usePathname } from 'next/navigation';
-import cn from '@/src/lib/cn';
-import { supabase } from '@/src/lib/supabase/client';
-import { meQuery } from '@/src/services/queries/auth/me-query';
-import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query';
-import { routes } from '@/src/routes';
-import { Container } from '@/src/components/Container';
-import Line from '@/src/components/Line';
-import { List } from '@/src/components/Lis';
-import { YStack } from '@/src/components/Stac';
-import MenuButton from '../../@sidebar/_components/MenuButton';
-import { TODO_MENU } from '../_constants';
-import TaskFolderSection from './_components/TaskFolderSection';
-
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
+import cn from '@/src/lib/cn'
+import { supabase } from '@/src/lib/supabase/client'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
+import { routes } from '@/src/routes'
+import { Container } from '@/src/components/Container'
+import Line from '@/src/components/Line'
+import { List } from '@/src/components/List'
+import { YStack } from '@/src/components/Stack'
+import MenuButton from '../../@sidebar/_components/MenuButton'
+import { TODO_MENU } from '../_constants'
+import TaskFolderSection from './_components/TaskFolderSection'
 
 export default function SideBarPage() {
   const pathname = usePathname()

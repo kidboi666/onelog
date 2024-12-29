@@ -3,6 +3,7 @@
 import CharacterCount from '@tiptap/extension-character-count'
 import CodeBlock from '@tiptap/extension-code-block'
 import Image from '@tiptap/extension-image'
+import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -40,6 +41,9 @@ export default function useBlockEditor({
     CodeBlock,
     CharacterCount.configure({
       limit,
+    }),
+    Link.configure({
+      defaultProtocol: 'https',
     }),
   ]
   const editor = useEditor({

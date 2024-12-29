@@ -1,9 +1,8 @@
-import Link from 'next/link';
-import { ComponentProps, PropsWithChildren, RefObject, forwardRef } from 'react';
-import cn from '@/src/lib/cn';
-import Button, { ButtonProps } from './Button';
-import Text, { TextProps } from './Text';
-
+import Link from 'next/link'
+import { ComponentProps, PropsWithChildren, RefObject, forwardRef } from 'react'
+import cn from '@/src/lib/cn'
+import Button, { ButtonProps } from './Button'
+import Text, { TextProps } from './Text'
 
 interface DropDownRootProps extends ComponentProps<'div'> {
   className?: string
@@ -75,7 +74,7 @@ const DropDownContent = forwardRef<HTMLDivElement, PropsWithChildren<DropDownCon
         data-status={initStatus}
         onClick={onClick}
         className={cn(
-          'absolute z-50 hidden rounded-md bg-white p-2 shadow-lg ring-1 ring-zinc-200 transition data-[status=closed]:scale-95 data-[status=closed]:opacity-0 dark:bg-var-darkgray dark:ring-zinc-700',
+          'absolute z-50 hidden rounded-md bg-white p-1 shadow-lg ring-1 ring-zinc-200 transition data-[status=closed]:scale-95 data-[status=closed]:opacity-0 dark:bg-var-darkgray dark:ring-zinc-700',
           DROPDOWN_POSITION[position],
           className,
         )}
