@@ -1,7 +1,9 @@
+import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
+import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface IUpdatePost {
   user_id: string
@@ -16,23 +18,42 @@ interface IUpdatePost {
 
 export default function useUpdatePost() {
   const queryClient = getQueryClient()
+  const { openToast } = useToast()
 
   return useMutation({
     mutationFn: async (params: IUpdatePost) => {
-      return supabase
+      const { data, error } = await supabase
         .from('post')
         .update({ ...params })
         .eq('id', params.id)
+
+      if (error) {
+        console.error(error)
+        throw error
+      }
+
+      return data
     },
     onSuccess: (_, variables) => {
       const { id, user_id: meId } = variables
-      queryClient.invalidateQueries({ queryKey: queryKey.post.public })
-      queryClient.invalidateQueries({ queryKey: queryKey.post.detail(id) })
-      queryClient.invalidateQueries({
-        queryKey: queryKey.post.byPostType('article', meId),
+      const queryKeys = [
+        queryKey.post.public,
+        queryKey.post.detail(id),
+        queryKey.post.byPostType('article', meId),
+        queryKey.post.byPostType('journal', meId),
+      ]
+      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+
+      openToast({
+        text: TOAST_MESSAGE.POST.UPDATE.SUCCESS,
+        type: TOAST_TYPE.SUCCESS,
       })
-      queryClient.invalidateQueries({
-        queryKey: queryKey.post.byPostType('journal', meId),
+    },
+    onError: (error) => {
+      openToast({
+        text: TOAST_MESSAGE.POST.DELETE.EXCEPTION,
+        message: error.message,
+        type: TOAST_TYPE.ERROR,
       })
     },
   })

@@ -1,6 +1,6 @@
+import { ROUTES } from '@/src/ROUTES'
 import { useRouter } from 'next/navigation'
 import { RefObject } from 'react'
-import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Text from '@/src/components/Text'
@@ -15,11 +15,11 @@ export default function TaskOptionDropDown({ targetRef, onTransitionEnd, folderI
   const router = useRouter()
 
   const handleFolderDelete = () => {
-    router.push(routes.modal.todo.deleteFolder(folderId))
+    router.push(ROUTES.modal.todo.deleteFolder(folderId))
   }
 
   const handleFolderEdit = () => {
-    router.push(routes.modal.todo.edit(folderId))
+    router.push(ROUTES.modal.todo.edit(folderId))
   }
 
   return (

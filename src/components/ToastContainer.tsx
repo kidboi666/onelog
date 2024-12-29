@@ -9,9 +9,10 @@ export default function ToastContainer() {
     toastContents.length > 0 && (
       <Portal>
         <div className="fixed bottom-10 right-10 z-50 flex flex-col gap-2 transition">
-          {toastContents.map((content) => (
-            <Toast key={content.id} content={content} />
-          ))}
+          {toastContents.map((content) => {
+            const { id, text, type, message } = content
+            return <Toast key={content.id} id={id} text={text} message={message} type={type} />
+          })}
         </div>
       </Portal>
     )

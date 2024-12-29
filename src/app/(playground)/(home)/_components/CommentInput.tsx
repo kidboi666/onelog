@@ -1,19 +1,18 @@
-'use client';
+'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { FormEvent } from 'react';
-import { supabase } from '@/src/lib/supabase/client';
-import usePostComment from '@/src/services/mutates/comment/usePostComment';
-import { meQuery } from '@/src/services/queries/auth/me-query';
-import { IUserSession } from '@/src/types/auth';
-import useInput from '@/src/hooks/useInput';
-import useRouterPush from '@/src/hooks/useRouterPush';
-import { routes } from '@/src/routes';
-import Avatar from '@/src/components/Avatar';
-import Button from '@/src/components/Button';
-import Input from '@/src/components/Input';
-import { XStack } from '@/src/components/Stack';
-
+import { ROUTES } from '@/src/ROUTES'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { FormEvent } from 'react'
+import { supabase } from '@/src/lib/supabase/client'
+import usePostComment from '@/src/services/mutates/comment/usePostComment'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { IUserSession } from '@/src/types/auth'
+import useInput from '@/src/hooks/useInput'
+import useRouterPush from '@/src/hooks/useRouterPush'
+import Avatar from '@/src/components/Avatar'
+import Button from '@/src/components/Button'
+import Input from '@/src/components/Input'
+import { XStack } from '@/src/components/Stack'
 
 interface Props {
   postId: number
@@ -22,7 +21,7 @@ interface Props {
 }
 
 export default function CommentInput({ postId, commentId, session }: Props) {
-  const authGuard = useRouterPush(routes.modal.auth.guard)
+  const authGuard = useRouterPush(ROUTES.modal.auth.guard)
   const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, session?.userId))
   const [content, onChangeContent, setContent] = useInput('')
   const { mutate: postComment, isPending: isPostPending } = usePostComment()

@@ -1,10 +1,11 @@
-import { useToast } from '@/src/store/useToast'
+import { ROUTES } from '@/src/ROUTES'
+import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
-import { routes } from '@/src/routes'
+import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface ITodoFolder {
   name: string
@@ -20,7 +21,7 @@ export default function useUpdateTodoFolder() {
 
   return useMutation({
     mutationFn: async (params: ITodoFolder) => {
-      return supabase
+      const { data, error } = await supabase
         .from('todo_folder')
         .update({
           name: params.name,
@@ -29,11 +30,29 @@ export default function useUpdateTodoFolder() {
         })
         .eq('id', params.id)
         .select()
+
+      if (error) {
+        console.error(error)
+        throw error
+      }
+
+      return data
     },
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: queryKey.todo.main })
-      router.push(routes.todo.view.folder(variables.id, variables.color))
-      openToast({ text: '할일 폴더가 수정되었습니다.', type: 'info' })
+    onSuccess: (_, variables) => {
+      void queryClient.invalidateQueries({ queryKey: queryKey.todo.main })
+      router.push(ROUTES.todo.view.folder(variables.id, variables.color))
+
+      openToast({
+        text: TOAST_MESSAGE.TODO_FOLDER.UPDATE.SUCCESS,
+        type: TOAST_TYPE.SUCCESS,
+      })
+    },
+    onError: (error) => {
+      openToast({
+        text: TOAST_MESSAGE.TODO_FOLDER.UPDATE.EXCEPTION,
+        message: error.message,
+        type: TOAST_TYPE.ERROR,
+      })
     },
   })
 }

@@ -1,8 +1,9 @@
-import { useToast } from '@/src/store/useToast'
+import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
+import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface IFavorite {
   postId?: number
@@ -35,34 +36,35 @@ export default function useHandleLikePost(isLike: boolean | null | undefined) {
       const { data, error } = await query
 
       if (error) {
-        console.error('좋아요/삭제 실패:', error)
+        console.error(error)
+        throw error
       }
 
       return data
     },
-    onSettled: (data, error, variables) => {
+    onError: (error) => {
       openToast({
-        text: isLike ? '좋아하는 게시물에서 삭제하였습니다.' : '좋아하는 게시물로 등록하였습니다.',
-        type: 'info',
+        text: isLike ? TOAST_MESSAGE.LIKE.CANCEL.EXCEPTION : TOAST_MESSAGE.LIKE.SEND.EXCEPTION,
+        message: error.message,
+        type: TOAST_TYPE.ERROR,
+      })
+    },
+    onSettled: (_, __, variables) => {
+      openToast({
+        text: isLike ? TOAST_MESSAGE.LIKE.CANCEL.SUCCESS : TOAST_MESSAGE.LIKE.SEND.SUCCESS,
+        type: TOAST_TYPE.SUCCESS,
       })
       const { postId, meId, authorId, postType, startOfDay = null, endOfDay = null } = variables
 
-      void queryClient.invalidateQueries({ queryKey: queryKey.post.public })
-      void queryClient.invalidateQueries({
-        queryKey: queryKey.post.liked(authorId, meId),
-      })
-      void queryClient.invalidateQueries({
-        queryKey: queryKey.post.thatDay(startOfDay, endOfDay, authorId),
-      })
-      void queryClient.invalidateQueries({
-        queryKey: queryKey.post.detail(postId),
-      })
-      void queryClient.invalidateQueries({
-        queryKey: queryKey.post.byPostType(postType, authorId),
-      })
-      void queryClient.invalidateQueries({
-        queryKey: queryKey.post.checkLiked(postId, meId),
-      })
+      const queryKeys = [
+        queryKey.post.public,
+        queryKey.post.liked(authorId, meId),
+        queryKey.post.thatDay(startOfDay, endOfDay, authorId),
+        queryKey.post.detail(postId),
+        queryKey.post.byPostType(postType, authorId),
+        queryKey.post.checkLiked(postId, meId),
+      ]
+      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
     },
   })
 }

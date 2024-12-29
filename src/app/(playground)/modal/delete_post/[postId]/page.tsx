@@ -1,14 +1,13 @@
-'use client';
+'use client'
 
+import { ROUTES } from '@/src/ROUTES'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import useDeletePost from '@/src/services/mutates/post/useDeletePost'
-import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Modal from '@/src/components/Modal'
-import { XStack } from '@/src/components/Stack';
-import Title from '@/src/components/Title';
-
+import { XStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
 
 interface Props {
   params: { postId: string }
@@ -21,7 +20,7 @@ export default function DeletePostModal({ params }: Props) {
 
   const handlePostDelete = () => {
     deletePost(Number(params.postId), {
-      onSettled: () => router.push(routes.home),
+      onSettled: () => router.push(ROUTES.home),
     })
   }
 

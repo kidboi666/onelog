@@ -1,17 +1,33 @@
+import { ROUTES } from '@/src/ROUTES'
+import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { routes } from '@/src/routes'
+import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 export default function useSignOut() {
   const queryClient = getQueryClient()
+  const { openToast } = useToast()
 
   return useMutation({
     mutationFn: async () => {
-      await supabase.auth.signOut()
+      const { error } = await supabase.auth.signOut()
+
+      if (error) {
+        console.error(error)
+        throw error
+      }
+
       queryClient.removeQueries()
       alert('로그아웃 하였습니다.')
-      window.location.href = routes.home
+      window.location.href = ROUTES.home
+    },
+    onError: (error) => {
+      openToast({
+        text: TOAST_MESSAGE.AUTH.SIGN_OUT.EXCEPTION,
+        message: error.message,
+        type: TOAST_TYPE.ERROR,
+      })
     },
   })
 }

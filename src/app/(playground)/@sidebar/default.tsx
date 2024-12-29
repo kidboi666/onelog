@@ -1,19 +1,18 @@
-'use client';
+'use client'
 
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import useMeQueries from '@/src/hooks/queries/useMeQueries';
-import { routes } from '@/src/routes';
-import { Container } from '@/src/components/Container';
-import Line from '@/src/components/Line';
-import { YStack, ZStack } from '@/src/components/Stack';
-import ToolTip from '@/src/components/Tooltip';
-import ThemeToggleButton from '../@header/_components/ThemeToggleButton';
-import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown';
-import MenuButton from './_components/MenuButton';
+import { ROUTES } from '@/src/ROUTES'
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import { Container } from '@/src/components/Container'
+import Line from '@/src/components/Line'
+import { YStack, ZStack } from '@/src/components/Stack'
+import ToolTip from '@/src/components/Tooltip'
+import ThemeToggleButton from '../@header/_components/ThemeToggleButton'
+import AuthButtonWithDropDown from './_components/AuthButtonWithDropDown'
+import MenuButton from './_components/MenuButton'
 import SidebarWriteButtonWithLogo from './_components/SidebarWriteButtonWithLogo'
 import { BOTTOM_NAVIGATE_MENUS, TOP_NAVIGATE_MENUS } from './_constants/Navigate'
-
 
 export default function Sidebar() {
   const { me, session } = useMeQueries()
@@ -39,7 +38,7 @@ export default function Sidebar() {
         <ZStack>
           <SidebarWriteButtonWithLogo
             closeToolTip={handleToolTipClose}
-            isSelected={pathname === routes.post.new}
+            isSelected={pathname === ROUTES.post.new}
           />
           <ToolTip position="right" size="sm" isHover={isHover} text="글쓰기" />
         </ZStack>

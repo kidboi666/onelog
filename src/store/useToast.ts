@@ -1,10 +1,17 @@
 import { create } from 'zustand'
 
+export enum TOAST_TYPE {
+  INFO = 'info',
+  ERROR = 'error',
+  WARNING = 'warning',
+  SUCCESS = 'success',
+}
+
 export interface ToastContent {
   id: number
   text: string
-  type: 'info' | 'warning'
-  icon?: string
+  type: TOAST_TYPE
+  message?: string
 }
 
 interface ToastState {

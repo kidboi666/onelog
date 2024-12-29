@@ -1,3 +1,4 @@
+import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
 import cn from '@/src/lib/cn'
@@ -10,7 +11,6 @@ import { Tables } from '@/src/types/supabase'
 import useInput from '@/src/hooks/useInput'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Input from '@/src/components/Input'
@@ -98,7 +98,7 @@ export default function TodoFolderCard({ folder, userId }: TodoFolderCardProps) 
         <LinkButton
           variant="teritory"
           size="none"
-          href={routes.todo.view.folder(folder.id, folder.color)}
+          href={ROUTES.todo.view.folder(folder.id, folder.color)}
           innerClassName="justify-start"
         >
           <Title size="sm" className="line-clamp-1">

@@ -1,13 +1,12 @@
-import { useTransition } from 'react';
-import useFollowMutates from '@/src/hooks/mutates/useFollowMutates';
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries';
-import { routes } from '@/src/routes';
-import Avatar from '@/src/components/Avatar';
-import { DropDown } from '@/src/components/DropDown';
-import Follow from '@/src/components/Follow';
-import { XStack, YStack } from '@/src/components/Stack';
-import Title from '@/src/components/Title';
-
+import { ROUTES } from '@/src/ROUTES'
+import { useTransition } from 'react'
+import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+import Avatar from '@/src/components/Avatar'
+import { DropDown } from '@/src/components/DropDown'
+import Follow from '@/src/components/Follow'
+import { XStack, YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
 
 interface Props {
   avatarUrl: string | null
@@ -53,10 +52,10 @@ export default function AvatarButtonWithDropDownContent({ userId, userName, avat
         <XStack gap={4}>
           {isMe ? (
             <>
-              <DropDown.LinkButton href={routes.profile.edit} variant="secondary">
+              <DropDown.LinkButton href={ROUTES.profile.edit} variant="secondary">
                 프로필 수정
               </DropDown.LinkButton>
-              <DropDown.LinkButton href={routes.profile.view(userId)}>
+              <DropDown.LinkButton href={ROUTES.profile.view(userId)}>
                 마이 페이지
               </DropDown.LinkButton>
             </>
@@ -69,7 +68,7 @@ export default function AvatarButtonWithDropDownContent({ userId, userName, avat
               >
                 {isFollowing ? '팔로우 취소' : '팔로우 하기'}
               </DropDown.Button>
-              <DropDown.LinkButton href={routes.profile.view(userId)}>
+              <DropDown.LinkButton href={ROUTES.profile.view(userId)}>
                 프로필 페이지
               </DropDown.LinkButton>
             </>

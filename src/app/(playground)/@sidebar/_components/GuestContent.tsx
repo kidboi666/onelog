@@ -1,9 +1,8 @@
-import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/src/ROUTES'
+import { useRouter } from 'next/navigation'
 import { wait } from '@/src/utils/wait'
-import { routes } from '@/src/routes'
-import { DropDown } from '@/src/components/DropDown';
-import Icon from '@/src/components/Icon';
-
+import { DropDown } from '@/src/components/DropDown'
+import Icon from '@/src/components/Icon'
 
 interface Props {
   closeMenu?: () => void
@@ -13,13 +12,13 @@ export default function GuestContent({ closeMenu }: Props) {
   const router = useRouter()
 
   const pushSignUpPage = async () => {
-    router.push(routes.modal.auth.signup)
+    router.push(ROUTES.modal.auth.signup)
     await wait(100)
     closeMenu && closeMenu()
   }
 
   const pushSignInPage = async () => {
-    router.push(routes.modal.auth.signin)
+    router.push(ROUTES.modal.auth.signin)
     await wait(100)
     closeMenu && closeMenu()
   }

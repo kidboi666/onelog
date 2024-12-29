@@ -1,7 +1,6 @@
-import { createServerClient } from '@supabase/ssr';
-import { type NextRequest, NextResponse } from 'next/server';
-import { authRestrictedRoutes, protectedRoutes, routes } from '@/src/routes';
-
+import { ROUTES, authRestrictedRoutes, protectedRoutes } from '@/src/ROUTES'
+import { createServerClient } from '@supabase/ssr'
+import { type NextRequest, NextResponse } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -42,7 +41,7 @@ export async function updateSession(request: NextRequest) {
 
   if (attemptedUnauthorizedAccess) {
     const url = request.nextUrl.clone()
-    url.pathname = routes.home
+    url.pathname = ROUTES.home
     return NextResponse.redirect(url)
   }
 
@@ -51,7 +50,7 @@ export async function updateSession(request: NextRequest) {
 
   if (isUnauthorized) {
     const url = request.nextUrl.clone()
-    url.pathname = routes.modal.auth.guard
+    url.pathname = ROUTES.modal.auth.guard
     return NextResponse.redirect(url)
   }
 

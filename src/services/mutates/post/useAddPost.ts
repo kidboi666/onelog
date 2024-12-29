@@ -1,7 +1,9 @@
+import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
+import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface IAddpost {
   user_id: string
@@ -15,20 +17,41 @@ interface IAddpost {
 
 export default function useAddPost() {
   const queryClient = getQueryClient()
+  const { openToast } = useToast()
 
   return useMutation({
     mutationFn: async (params: IAddpost) => {
-      return supabase
+      const { data, error } = await supabase
         .from('post')
         .insert({ ...params })
         .select()
+
+      if (error) {
+        console.error(error)
+        throw error
+      }
+
+      return data
     },
     onSuccess: (_, variables) => {
       const { user_id: userId } = variables
-      queryClient.invalidateQueries({ queryKey: queryKey.post.public })
-      queryClient.invalidateQueries({ queryKey: queryKey.garden(userId) })
-      queryClient.invalidateQueries({
-        queryKey: queryKey.post.count.total(userId),
+      const queryKeys = [
+        queryKey.post.public,
+        queryKey.garden(userId),
+        queryKey.post.count.total(userId),
+      ]
+      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+
+      openToast({
+        text: TOAST_MESSAGE.POST.POST.SUCCESS,
+        type: TOAST_TYPE.SUCCESS,
+      })
+    },
+    onError: (error) => {
+      openToast({
+        text: TOAST_MESSAGE.POST.POST.EXCEPTION,
+        message: error.message,
+        type: TOAST_TYPE.ERROR,
       })
     },
   })

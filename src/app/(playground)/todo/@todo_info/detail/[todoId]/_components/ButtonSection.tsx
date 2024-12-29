@@ -1,16 +1,15 @@
-'use client';
+'use client'
 
-import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client';
-import { queryKey } from '@/src/lib/tanstack/query-key';
-import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo';
-import { Tables } from '@/src/types/supabase';
-import { routes } from '@/src/routes';
-import Button from '@/src/components/Button';
-import Icon from '@/src/components/Icon';
-import Spinner from '@/src/components/Spinner';
-
+import { ROUTES } from '@/src/ROUTES'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
+import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
+import { queryKey } from '@/src/lib/tanstack/query-key'
+import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
+import { Tables } from '@/src/types/supabase'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
+import Spinner from '@/src/components/Spinner'
 
 interface Props {
   todoId: string
@@ -30,7 +29,7 @@ export default function ButtonSection({ todoId, folderId, todo, color, orderFrom
 
   const handleDeleteButtonClick = () => {
     startTransitionDelete(() =>
-      router.push(routes.modal.todo.delete(todoId, folderId, color, orderFrom), {
+      router.push(ROUTES.modal.todo.delete(todoId, folderId, color, orderFrom), {
         scroll: false,
       }),
     )

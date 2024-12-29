@@ -1,8 +1,9 @@
-import { useToast } from '@/src/store/useToast'
+import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
+import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface IDeleteTodo {
   todoId: number
@@ -15,14 +16,29 @@ export default function useDeleteTodo() {
 
   return useMutation({
     mutationFn: async (params: IDeleteTodo) => {
-      const { data } = await supabase.from('todo').delete().eq('id', params.todoId)
-      return data
+      const { error } = await supabase.from('todo').delete().eq('id', params.todoId)
+
+      if (error) {
+        console.error(error)
+        throw error
+      }
     },
-    onSuccess(_, variables) {
-      queryClient.invalidateQueries({
+    onSuccess: (_, variables) => {
+      void queryClient.invalidateQueries({
         queryKey: queryKey.todo.folder(variables.folderId),
       })
-      openToast({ text: '할일이 삭제되었습니다.', type: 'info' })
+
+      openToast({
+        text: TOAST_MESSAGE.TODO.DELETE.SUCCESS,
+        type: TOAST_TYPE.SUCCESS,
+      })
+    },
+    onError: (error) => {
+      openToast({
+        text: TOAST_MESSAGE.TODO.DELETE.EXCEPTION,
+        message: error.message,
+        type: TOAST_TYPE.ERROR,
+      })
     },
   })
 }

@@ -1,12 +1,15 @@
+import { ROUTES } from '@/src/ROUTES'
+import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
+import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 import { ISignIn } from '@/src/types/auth'
-import { routes } from '@/src/routes'
 
 export default function useSignIn() {
   const queryClient = getQueryClient()
+  const { openToast } = useToast()
 
   return useMutation({
     mutationFn: async (authData: ISignIn) => {
@@ -16,17 +19,30 @@ export default function useSignIn() {
       })
 
       if (error) {
+        console.error(error)
         throw error
       }
 
       return data
     },
     onSuccess: () => {
-      window.location.href = routes.home
+      window.location.href = ROUTES.home
+      openToast({
+        text: TOAST_MESSAGE.AUTH.SIGN_IN.SUCCESS,
+        type: TOAST_TYPE.SUCCESS,
+        message: TOAST_MESSAGE.AUTH.SIGN_IN.MESSAGE,
+      })
+    },
+    onError: (error) => {
+      openToast({
+        text: TOAST_MESSAGE.AUTH.SIGN_IN.EXCEPTION,
+        message: error.message,
+        type: TOAST_TYPE.ERROR,
+      })
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: queryKey.auth.info })
-      queryClient.invalidateQueries({ queryKey: queryKey.auth.session })
+      const queryKeys = [queryKey.auth.info, queryKey.auth.session]
+      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
     },
   })
 }

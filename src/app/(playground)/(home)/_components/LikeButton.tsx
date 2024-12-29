@@ -1,3 +1,4 @@
+import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { MouseEvent } from 'react'
 import cn from '@/src/lib/cn'
@@ -6,7 +7,6 @@ import { meQuery } from '@/src/services/queries/auth/me-query'
 import useLikeMutates from '@/src/hooks/mutates/useLikeMutates'
 import useRouterPush from '@/src/hooks/useRouterPush'
 import useToggle from '@/src/hooks/useToggle'
-import { routes } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import ToolTip from '@/src/components/Tooltip'
@@ -20,7 +20,7 @@ interface Props {
 }
 
 export default function LikeButton({ viewToolTip, isSide, likeCount, postId, isLiked }: Props) {
-  const authGuard = useRouterPush(routes.modal.auth.guard, false)
+  const authGuard = useRouterPush(ROUTES.modal.auth.guard, false)
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { onLikePost } = useLikeMutates({ isLiked, postId })

@@ -11,7 +11,7 @@ export const protectedRoutes = [
   '/modal/delete_post',
 ]
 
-export const routes = {
+export const ROUTES = {
   home: '/',
   settings: '/settings',
   profile: {

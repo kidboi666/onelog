@@ -1,23 +1,27 @@
 'use client'
 
-import { ToastContent, useToast } from '@/src/store/useToast'
 import React, { useEffect, useRef } from 'react'
-import { XStack } from '@/src/components/Stack'
+import cn from '@/src/lib/cn'
+import { useToast } from '@/src/store/useToast'
+import { XStack, YStack } from '@/src/components/Stack'
 import Button from './Button'
 import Icon from './Icon'
 import Text from './Text'
 
 interface Props {
-  content: ToastContent
+  id: number
+  text: string
+  type: 'info' | 'success' | 'warning' | 'error'
+  message?: string
 }
 
-export default function Toast({ content }: Props) {
+export default function Toast({ id, type, text, message }: Props) {
   const { closeToast } = useToast()
   const toastRef = useRef<HTMLDivElement>(null)
 
   const handleClose = () => {
     toastRef.current?.setAttribute('data-status', 'closed')
-    setTimeout(() => closeToast(content.id), 500)
+    setTimeout(() => closeToast(id), 500)
   }
 
   useEffect(() => {
@@ -28,7 +32,7 @@ export default function Toast({ content }: Props) {
     return () => {
       clearTimeout(closeTimeout)
     }
-  }, [content.id, closeToast])
+  }, [id, closeToast])
 
   return (
     <div
@@ -40,19 +44,21 @@ export default function Toast({ content }: Props) {
         <Button
           variant="icon"
           size="none"
-          className="rounded-full bg-green-400 text-white dark:bg-green-500 dark:text-white"
+          className={cn(
+            'rounded-full text-white dark:text-white',
+            type === 'success' && 'bg-green-400 dark:bg-green-500',
+            type === 'info' && 'bg-zinc-400 dark:bg-zinc-500',
+            type === 'warning' && 'bg-yellow-400 dark:bg-yellow-500',
+            type === 'error' && 'bg-red-400 dark:bg-red-500',
+          )}
         >
           <Icon view="0 -960 960 960" size={14}>
-            <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+            <path d="M480-120q-33 0-56.5-23.5T400-200q0-33 23.5-56.5T480-280q33 0 56.5 23.5T560-200q0 33-23.5 56.5T480-120Zm-80-240v-480h160v480H400Z" />
           </Icon>
         </Button>
-        <Text type="caption" size="sm">
-          요청 성공
+        <Text type="caption" size="sm" className="flex-1">
+          {(type === 'success' && '요청 성공') || (type === 'error' && '요청 실패')}
         </Text>
-      </XStack>
-      <XStack className="w-full items-center justify-between">
-        <Text>{content.text}</Text>
-
         <Button
           variant="icon"
           size="icon"
@@ -61,11 +67,15 @@ export default function Toast({ content }: Props) {
           }}
           className="p-0"
         >
-          <Icon view="0 -960 960 960">
+          <Icon view="0 -960 960 960" size={14}>
             <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
           </Icon>
         </Button>
       </XStack>
+      <YStack>
+        <Text>{text}</Text>
+        {message && <Text size="xs">{message}</Text>}
+      </YStack>
     </div>
   )
 }

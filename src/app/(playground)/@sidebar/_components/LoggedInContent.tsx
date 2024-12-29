@@ -1,12 +1,11 @@
-import { useRouter } from 'next/navigation';
-import useSignOut from '@/src/services/mutates/auth/useSignOut';
-import { IUserInfoWithMBTI } from '@/src/types/auth';
+import { ROUTES } from '@/src/ROUTES'
+import { useRouter } from 'next/navigation'
+import useSignOut from '@/src/services/mutates/auth/useSignOut'
+import { IUserInfoWithMBTI } from '@/src/types/auth'
 import { wait } from '@/src/utils/wait'
-import { routes } from '@/src/routes'
-import { DropDown } from '@/src/components/DropDown';
-import Icon from '@/src/components/Icon';
-import Line from '@/src/components/Line';
-
+import { DropDown } from '@/src/components/DropDown'
+import Icon from '@/src/components/Icon'
+import Line from '@/src/components/Line'
 
 interface Props {
   me?: IUserInfoWithMBTI
@@ -18,13 +17,13 @@ export default function LoggedInContent({ me, closeMenu }: Props) {
   const { mutate: signOut } = useSignOut()
 
   const pushProfilePage = async () => {
-    router.push(routes.profile.view(me?.id!))
+    router.push(ROUTES.profile.view(me?.id!))
     await wait(100)
     closeMenu && closeMenu()
   }
 
   const pushEditProfilePage = async () => {
-    router.push(routes.profile.edit)
+    router.push(ROUTES.profile.edit)
     await wait(100)
     closeMenu && closeMenu()
   }

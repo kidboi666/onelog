@@ -1,11 +1,14 @@
-import { IComment } from '@/src/types/comment';
-import { Tables } from './supabase';
-
+import { IComment } from '@/src/types/comment'
+import { Tables } from './supabase'
 
 export interface IFavoriteWord {
   word: string
   count: number
 }
+
+/**
+ * TODO enum 적용 @kidboi666
+ */
 
 export interface IPost extends Omit<Tables<'post'>, 'post_type' | 'access_type' | 'emotion_level'> {
   user_info: Pick<Tables<'user_info'>, 'user_name' | 'email' | 'avatar_url' | 'about_me'>

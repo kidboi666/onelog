@@ -1,13 +1,16 @@
+import { ROUTES } from '@/src/ROUTES'
+import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
+import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 import { IUpdateUserInfo } from '@/src/types/auth'
-import { routes } from '@/src/routes'
 
 export default function useUpdateUserInfo() {
   const queryClient = getQueryClient()
+  const { openToast } = useToast()
   const router = useRouter()
 
   return useMutation({
@@ -23,6 +26,7 @@ export default function useUpdateUserInfo() {
         .eq('id', params.userId)
 
       if (error) {
+        console.error(error)
         throw error
       }
 
@@ -30,12 +34,22 @@ export default function useUpdateUserInfo() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKey.auth.info })
-      queryClient.invalidateQueries({ queryKey: queryKey.auth.session })
-      router.replace(routes.modal.success)
+      const queryKeys = [queryKey.auth.info, queryKey.auth.session]
+      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+
+      openToast({
+        text: TOAST_MESSAGE.USER_INFO.EDIT.SUCCESS,
+        type: TOAST_TYPE.SUCCESS,
+      })
+
+      router.replace(ROUTES.modal.success)
     },
     onError: (error) => {
-      console.log('에러발생', error)
+      openToast({
+        text: TOAST_MESSAGE.USER_INFO.EDIT.EXCEPTION,
+        message: error.message,
+        type: TOAST_TYPE.ERROR,
+      })
     },
   })
 }
