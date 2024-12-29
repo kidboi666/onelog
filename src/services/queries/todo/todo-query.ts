@@ -1,8 +1,9 @@
-import { queryKey } from '@/src/lib/tanstack/query-key'
-import { routes } from '@/src/routes'
-import { Tables } from '@/src/types/supabase'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
+
+import { queryKey } from '@/src/lib/tanstack/query-key'
+
+import { Tables } from '@/src/types/supabase'
 
 export const todoQuery = {
   getTodoInProgress: (supabase: SupabaseClient, userId: string) =>

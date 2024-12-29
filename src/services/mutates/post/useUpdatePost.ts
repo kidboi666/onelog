@@ -1,7 +1,8 @@
+import { useMutation } from '@tanstack/react-query'
+
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
-import { useMutation } from '@tanstack/react-query'
 
 interface IUpdatePost {
   user_id: string

@@ -2,20 +2,22 @@
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
-import useUploadAvatarImage from '@/src/services/mutates/auth/useUploadAvatarImage'
-import useUpdateUserInfo from '@/src/services/mutates/auth/useUpdateUserInfo'
 import useDeleteAvatarImage from '@/src/services/mutates/auth/useDeleteAvatarImage'
-import useInput from '@/src/hooks/useInput'
+import useUpdateUserInfo from '@/src/services/mutates/auth/useUpdateUserInfo'
+import useUploadAvatarImage from '@/src/services/mutates/auth/useUploadAvatarImage'
+
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
-import { TMBTI } from '../_constants/mbti'
+import useInput from '@/src/hooks/useInput'
 
 import Button from '@/src/components/Button'
 import { YStack } from '@/src/components/Stack'
+
+import AboutMeSection from '../_components/AboutMeSection'
+import EmailSection from '../_components/EmailSection'
+import MBTISection from '../_components/MBTISection'
 import ProfileImageSection from '../_components/ProfileImageSection'
 import UserNameSection from '../_components/UserNameSection'
-import AboutMeSection from '../_components/AboutMeSection'
-import MBTISection from '../_components/MBTISection'
-import EmailSection from '../_components/EmailSection'
+import { TMBTI } from '../_constants/mbti'
 
 export default function EditProfileContainer() {
   const { me, session } = useMeQueries()

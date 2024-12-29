@@ -1,18 +1,23 @@
 'use client'
 
+import { routes } from '@/src/routes'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { FormEvent } from 'react'
+
+import { supabase } from '@/src/lib/supabase/client'
+
+import usePostComment from '@/src/services/mutates/comment/usePostComment'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+
+import { IUserSession } from '@/src/types/auth'
+
+import useInput from '@/src/hooks/useInput'
+import useRouterPush from '@/src/hooks/useRouterPush'
+
 import Avatar from '@/src/components/Avatar'
 import Button from '@/src/components/Button'
 import Input from '@/src/components/Input'
 import { XStack } from '@/src/components/Stack'
-import { routes } from '@/src/routes'
-import useInput from '@/src/hooks/useInput'
-import usePostComment from '@/src/services/mutates/comment/usePostComment'
-import { FormEvent } from 'react'
-import useRouterPush from '@/src/hooks/useRouterPush'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
-import { IUserSession } from '@/src/types/auth'
-import { meQuery } from '@/src/services/queries/auth/me-query'
 
 interface Props {
   postId: number

@@ -1,13 +1,15 @@
-import { DropDown } from '@/src/components/DropDown'
-import useToggle from '@/src/hooks/useToggle'
-import EmotionPickerWithDropDown from './EmotionPickerWithDropDown'
-import Text from '@/src/components/Text'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import useToggle from '@/src/hooks/useToggle'
+
+import { DropDown } from '@/src/components/DropDown'
 import Icon from '@/src/components/Icon'
-import ToolTip from '@/src/components/Tooltip'
 import { ZStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+import ToolTip from '@/src/components/Tooltip'
+
 import { TEmotion } from '../page'
+import EmotionPickerWithDropDown from './EmotionPickerWithDropDown'
 
 interface Props {
   onChangeEmotion: (emotion: TEmotion | null) => void

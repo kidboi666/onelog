@@ -1,8 +1,9 @@
 'use client'
 
 import { useTheme } from '@/src/store/useTheme'
-import { TColor } from '@/src/types/theme'
 import { PropsWithChildren, useLayoutEffect } from 'react'
+
+import { TColor } from '@/src/types/theme'
 
 export default function ThemeProvider({ children }: PropsWithChildren) {
   const { setColor, setTheme } = useTheme()

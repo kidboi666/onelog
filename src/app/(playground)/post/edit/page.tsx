@@ -1,9 +1,19 @@
-'use client'
+'use client';
 
-import { XStack } from '@/src/components/Stack'
-import SideOptionsContainer from './_containers/SideOptionsContainer'
-import { useState } from 'react'
-import PostContainer from './_containers/PostContainer'
+import { useCallback, useState } from 'react';
+
+
+
+import { XStack } from '@/src/components/Stack';
+
+
+
+import PostContainer from './_containers/PostContainer';
+import SideOptionsContainer from './_containers/SideOptionsContainer';
+
+
+
+
 
 export type TAccess = 'public' | 'private'
 export type TPost = 'journal' | 'article'
@@ -18,25 +28,37 @@ export default function Default({ searchParams }: Props) {
   const [accessType, setAccessType] = useState<TAccess>('public')
   const [postType, setPostType] = useState<TPost>('journal')
 
+  const handleChangeEmotion = useCallback((emotion: TEmotion) => {
+    setSelectedEmotion(emotion)
+  }, [])
+
+  const handleChangeAccessType = useCallback((accessType: TAccess) => {
+    setAccessType(accessType)
+  }, [])
+
+  const handleChangePostType = useCallback((postType: TPost) => {
+    setPostType(postType)
+  }, [])
+
   return (
     <XStack gap={8} className="flex-1 animate-fade-in">
       <PostContainer
         searchParams={searchParams}
         selectedEmotion={selectedEmotion}
-        setSelectedEmotion={setSelectedEmotion}
+        onChangeEmotion={handleChangeEmotion}
         accessType={accessType}
-        setAccessType={setAccessType}
+        onChangeAccessType={handleChangeAccessType}
         postType={postType}
-        setPostType={setPostType}
+        onChangePostType={handleChangePostType}
       />
       <SideOptionsContainer
         searchParams={searchParams}
         selectedEmotion={selectedEmotion}
-        setSelectedEmotion={setSelectedEmotion}
+        onChangeEmotion={handleChangeEmotion}
         accessType={accessType}
-        setAccessType={setAccessType}
+        onChangeAccessType={handleChangeAccessType}
         postType={postType}
-        setPostType={setPostType}
+        onChangePostType={handleChangePostType}
       />
     </XStack>
   )

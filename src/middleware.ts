@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server'
+
 import { updateSession } from '@/src/lib/supabase/middleware'
 
 export default function middleware(req: NextRequest) {

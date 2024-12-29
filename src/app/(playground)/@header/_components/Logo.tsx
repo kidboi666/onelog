@@ -1,10 +1,12 @@
 'use client'
 
-import Icon from '@/src/components/Icon'
-import LinkButton from '@/src/components/LinkButton'
-import cn from '@/src/lib/cn'
 import { routes } from '@/src/routes'
 import { useTheme } from '@/src/store/useTheme'
+
+import cn from '@/src/lib/cn'
+
+import Icon from '@/src/components/Icon'
+import LinkButton from '@/src/components/LinkButton'
 
 export default function Logo() {
   const { theme } = useTheme()

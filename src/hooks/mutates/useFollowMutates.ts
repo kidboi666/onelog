@@ -1,12 +1,15 @@
 'use client'
 
-import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 import { routes } from '@/src/routes'
-import { supabase } from '@/src/lib/supabase/client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
+
+import { supabase } from '@/src/lib/supabase/client'
+
+import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+
 import useRouterPush from '@/src/hooks/useRouterPush'
+import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
 
 interface Props {
   isFollowing: boolean

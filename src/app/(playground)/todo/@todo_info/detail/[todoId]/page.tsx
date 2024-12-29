@@ -1,12 +1,16 @@
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import React from 'react'
-import MouseEventSection from './_components/MouseEventSection'
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
+
 import { createServerClient } from '@/src/lib/supabase/server'
-import { todoQuery } from '@/src/services/queries/todo/todo-query'
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
-import DataAccess from './_components/DataAccess'
+import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
+
 import { meQuery } from '@/src/services/queries/auth/me-query'
+import { todoQuery } from '@/src/services/queries/todo/todo-query'
+
 import { IUserSession } from '@/src/types/auth'
+
+import DataAccess from './_components/DataAccess'
+import MouseEventSection from './_components/MouseEventSection'
 
 interface Props {
   params: { todoId: string }

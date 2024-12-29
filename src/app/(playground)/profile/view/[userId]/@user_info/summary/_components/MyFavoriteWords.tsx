@@ -1,15 +1,20 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
+
 import { supabase } from '@/src/lib/supabase/client'
+
 import { postQuery } from '@/src/services/queries/post/post-query'
-import Empty from '@/src/components/Empty'
-import Title from '@/src/components/Title'
-import { List } from '@/src/components/List'
-import FavoriteWordTag from './FavoriteWordTag'
-import { Container } from '@/src/components/Container'
-import { YStack } from '@/src/components/Stack'
+
 import { IFavoriteWord } from '@/src/types/post'
+
+import { Container } from '@/src/components/Container'
+import Empty from '@/src/components/Empty'
+import { List } from '@/src/components/List'
+import { YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
+
+import FavoriteWordTag from './FavoriteWordTag'
 
 interface Props {
   userId: string

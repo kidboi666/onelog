@@ -1,11 +1,16 @@
 'use client'
 
-import { List } from '@/src/components/List'
-import TodoFolderCard from '../../_components/TodoFolderCard'
 import { useSuspenseQuery } from '@tanstack/react-query'
+
 import { supabase } from '@/src/lib/supabase/client'
+
 import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
+
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
+
+import { List } from '@/src/components/List'
+
+import TodoFolderCard from '../../_components/TodoFolderCard'
 
 export default function TodoFoldersSection() {
   const { me } = useMeQueries()

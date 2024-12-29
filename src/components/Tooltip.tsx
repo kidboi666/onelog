@@ -1,10 +1,12 @@
 'use client'
 
-import cn from '@/src/lib/cn'
-import { cva } from 'class-variance-authority'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import { colorTheme, useTheme } from '@/src/store/useTheme'
+import { cva } from 'class-variance-authority'
 import { useEffect } from 'react'
+
+import cn from '@/src/lib/cn'
+
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
 interface Props {
   text: string

@@ -1,7 +1,9 @@
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import cn from '@/src/lib/cn'
 import { colorTheme, useTheme } from '@/src/store/useTheme'
 import { useEffect } from 'react'
+
+import cn from '@/src/lib/cn'
+
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
 interface Props {
   isSelected?: boolean

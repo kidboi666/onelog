@@ -1,14 +1,18 @@
 'use client'
 
-import Title from '@/src/components/Title'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { EditorContent } from '@tiptap/react'
+
+import { supabase } from '@/src/lib/supabase/client'
+
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+
+import useBlockEditor from '@/src/hooks/useBlockEditor'
+
 import { XStack, YStack } from '@/src/components/Stack'
 import Tag from '@/src/components/Tag'
-import useBlockEditor from '@/src/hooks/useBlockEditor'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import { supabase } from '@/src/lib/supabase/client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import Title from '@/src/components/Title'
 
 interface Props {
   postId: number

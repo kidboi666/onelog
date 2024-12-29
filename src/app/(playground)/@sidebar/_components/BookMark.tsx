@@ -1,7 +1,10 @@
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import cn from '@/src/lib/cn'
 import { colorTheme, useTheme } from '@/src/store/useTheme'
+
+import cn from '@/src/lib/cn'
+
 import { IUserInfoWithMBTI } from '@/src/types/auth'
+
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
 interface Props {
   pathname?: string

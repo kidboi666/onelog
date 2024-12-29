@@ -1,12 +1,15 @@
 'use client'
 
+import { useTheme } from '@/src/store/useTheme'
+
+import cn from '@/src/lib/cn'
+
+import { TTheme } from '@/src/types/theme'
+
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { XStack, YStack } from '@/src/components/Stack'
 import Title from '@/src/components/Title'
-import cn from '@/src/lib/cn'
-import { useTheme } from '@/src/store/useTheme'
-import { TTheme } from '@/src/types/theme'
 
 export default function DarkModeSwitch() {
   const { theme, setTheme } = useTheme()

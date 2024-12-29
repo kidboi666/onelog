@@ -1,7 +1,9 @@
+import { ReactNode } from 'react'
+
+import cn from '@/src/lib/cn'
+
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
-import cn from '@/src/lib/cn'
-import { ReactNode } from 'react'
 
 export default function MenuItem({
   icon,

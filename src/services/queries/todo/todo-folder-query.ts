@@ -1,6 +1,7 @@
-import { Tables } from '@/src/types/supabase'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
+
+import { Tables } from '@/src/types/supabase'
 
 export const todoFolderQuery = {
   getTodoFolder: (supabase: SupabaseClient, userId: string) =>

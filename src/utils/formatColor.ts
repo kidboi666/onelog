@@ -1,5 +1,6 @@
-import { ButtonProps } from '@/src/components/Button'
 import { TColor } from '@/src/types/theme'
+
+import { ButtonProps } from '@/src/components/Button'
 
 export const formatColor = (color: TColor) => {
   switch (color) {

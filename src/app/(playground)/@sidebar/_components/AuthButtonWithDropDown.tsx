@@ -1,12 +1,15 @@
+import { IUserInfoWithMBTI, IUserSession } from '@/src/types/auth'
+
+import useOutsideClick from '@/src/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+
 import Avatar from '@/src/components/Avatar'
 import { DropDown } from '@/src/components/DropDown'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import BookMark from './BookMark'
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import LoggedInContent from './LoggedInContent'
-import GuestContent from './GuestContent'
 import Text from '@/src/components/Text'
-import { IUserInfoWithMBTI, IUserSession } from '@/src/types/auth'
+
+import BookMark from './BookMark'
+import GuestContent from './GuestContent'
+import LoggedInContent from './LoggedInContent'
 
 interface Props {
   pathname: string

@@ -1,8 +1,9 @@
+import { useRouter } from 'next/navigation'
+import { RefObject } from 'react'
+
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Text from '@/src/components/Text'
-import { useRouter } from 'next/navigation'
-import { RefObject } from 'react'
 
 interface Props {
   targetRef: RefObject<HTMLDivElement>

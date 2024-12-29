@@ -1,10 +1,12 @@
+import useOutsideClick from '@/src/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+
 import { DropDown } from '@/src/components/DropDown'
+import Icon from '@/src/components/Icon'
 import { YStack } from '@/src/components/Stack'
 import Title from '@/src/components/Title'
+
 import { MBTI, TMBTI } from '../_constants/mbti'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import Icon from '@/src/components/Icon'
 
 interface Props {
   mbti?: TMBTI

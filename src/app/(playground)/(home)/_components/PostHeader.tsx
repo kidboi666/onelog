@@ -1,11 +1,14 @@
+import useToggle from '@/src/hooks/useToggle'
+
+import { Container } from '@/src/components/Container'
+import { XStack, ZStack } from '@/src/components/Stack'
 import ToolTip from '@/src/components/Tooltip'
+
+import { TEmotion } from '@/src/app/(playground)/post/edit/page'
+
 import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
 import EmotionButtonWithDropDown from './EmotionButtonWithDropDown'
 import NameWithDateSection from './NameWithDateSection'
-import useToggle from '@/src/hooks/useToggle'
-import { XStack, ZStack } from '@/src/components/Stack'
-import { Container } from '@/src/components/Container'
-import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 
 interface Props {
   avatarUrl: string | null

@@ -1,8 +1,15 @@
-import { Container } from '@/src/components/Container'
-import { YStack } from '@/src/components/Stack'
+import { Container } from '@/src/components/Container';
 import Line from '@/src/components/Line'
-import PostCountInfo from '@/src/app/(playground)/post/view/@side_menu/[postId]/_components/PostCountInfo'
-import SideActionBar from '@/src/app/(playground)/post/view/@side_menu/[postId]/_components/SideActionBar'
+import { YStack } from '@/src/components/Stack'
+
+
+
+import PostCountInfo from '@/src/app/(playground)/post/view/@side_menu/[postId]/_components/PostCountInfo';
+import SideActionBar from '@/src/app/(playground)/post/view/@side_menu/[postId]/_components/SideActionBar';
+
+
+
+
 
 interface Props {
   params: { postId: string }

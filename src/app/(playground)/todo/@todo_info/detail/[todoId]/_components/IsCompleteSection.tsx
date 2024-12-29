@@ -1,8 +1,9 @@
 'use client'
 
+import { Tables } from '@/src/types/supabase'
+
 import Text from '@/src/components/Text'
 import Title from '@/src/components/Title'
-import { Tables } from '@/src/types/supabase'
 
 interface Props {
   todo?: Tables<'todo'>

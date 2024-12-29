@@ -1,15 +1,19 @@
 'use client'
 
+import { routes } from '@/src/routes'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
+
+import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
+import { queryKey } from '@/src/lib/tanstack/query-key'
+
+import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
+
+import { Tables } from '@/src/types/supabase'
+
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Spinner from '@/src/components/Spinner'
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
-import { routes } from '@/src/routes'
-import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
-import { Tables } from '@/src/types/supabase'
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
 
 interface Props {
   todoId: string
@@ -66,7 +70,7 @@ export default function ButtonSection({
           },
           {
             onSuccess: () => {
-              queryClient.invalidateQueries({
+              void queryClient.invalidateQueries({
                 queryKey: queryKey.todo.folder(Number(folderId)),
               })
               router.back()

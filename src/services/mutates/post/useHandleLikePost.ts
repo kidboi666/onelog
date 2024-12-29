@@ -1,8 +1,9 @@
+import { useToast } from '@/src/store/useToast'
+import { useMutation } from '@tanstack/react-query'
+
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
-import { useToast } from '@/src/store/useToast'
-import { useMutation } from '@tanstack/react-query'
 
 interface IFavorite {
   postId?: number
@@ -19,24 +20,23 @@ export default function useHandleLikePost(isLike: boolean | null | undefined) {
 
   return useMutation({
     mutationFn: async (params: IFavorite) => {
-      let data
-      let error
+      let query: any = supabase.from('like')
 
       if (isLike) {
-        ;({ data, error } = await supabase
-          .from('like')
+        query = query
           .delete()
           .eq('user_id', params.meId)
-          .eq('post_id', params.postId))
+          .eq('post_id', params.postId)
       } else {
-        ;({ data, error } = await supabase
-          .from('like')
+        query = query
           .insert({
             post_id: Number(params.postId),
             user_id: params.meId,
           })
-          .select())
+          .select()
       }
+
+      const { data, error } = await query
 
       if (error) {
         console.error('좋아요/삭제 실패:', error)
@@ -44,10 +44,13 @@ export default function useHandleLikePost(isLike: boolean | null | undefined) {
 
       return data
     },
-    onSuccess: () => {
-      openToast({ text: '좋아하는 게시물로 등록하였습니다.', type: 'info' })
-    },
-    onSettled: (_, __, variables) => {
+    onSettled: (data, error, variables) => {
+      openToast({
+        text: isLike
+          ? '좋아하는 게시물에서 삭제하였습니다.'
+          : '좋아하는 게시물로 등록하였습니다.',
+        type: 'info',
+      })
       const {
         postId,
         meId,
@@ -56,20 +59,21 @@ export default function useHandleLikePost(isLike: boolean | null | undefined) {
         startOfDay = null,
         endOfDay = null,
       } = variables
-      queryClient.invalidateQueries({ queryKey: queryKey.post.public })
-      queryClient.invalidateQueries({
+
+      void queryClient.invalidateQueries({ queryKey: queryKey.post.public })
+      void queryClient.invalidateQueries({
         queryKey: queryKey.post.liked(authorId, meId),
       })
-      queryClient.invalidateQueries({
+      void queryClient.invalidateQueries({
         queryKey: queryKey.post.thatDay(startOfDay, endOfDay, authorId),
       })
-      queryClient.invalidateQueries({
+      void queryClient.invalidateQueries({
         queryKey: queryKey.post.detail(postId),
       })
-      queryClient.invalidateQueries({
+      void queryClient.invalidateQueries({
         queryKey: queryKey.post.byPostType(postType, authorId),
       })
-      queryClient.invalidateQueries({
+      void queryClient.invalidateQueries({
         queryKey: queryKey.post.checkLiked(postId, meId),
       })
     },

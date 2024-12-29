@@ -1,8 +1,9 @@
+import cn from '@/src/lib/cn'
+
 import { Container } from '@/src/components/Container'
 import { YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
 import Title from '@/src/components/Title'
-import cn from '@/src/lib/cn'
 
 interface Props {
   title: string

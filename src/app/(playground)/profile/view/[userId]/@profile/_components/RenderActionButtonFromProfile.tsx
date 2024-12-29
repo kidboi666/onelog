@@ -1,14 +1,18 @@
 'use client'
 
-import Button from '@/src/components/Button'
-import { XStack } from '@/src/components/Stack'
-import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
-import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
 import { routes } from '@/src/routes'
 import { useSuspenseQuery } from '@tanstack/react-query'
+
 import { supabase } from '@/src/lib/supabase/client'
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+
 import { meQuery } from '@/src/services/queries/auth/me-query'
+
+import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
+
+import Button from '@/src/components/Button'
+import { XStack } from '@/src/components/Stack'
 
 interface Props {
   userId: string

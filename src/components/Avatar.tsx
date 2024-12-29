@@ -1,8 +1,9 @@
-import cn from '@/src/lib/cn'
-import { cva } from 'class-variance-authority'
-import Image from 'next/image'
 import profileImage from '@/public/profile.svg'
 import { useTheme } from '@/src/store/useTheme'
+import { cva } from 'class-variance-authority'
+import Image from 'next/image'
+
+import cn from '@/src/lib/cn'
 
 interface Props {
   src?: string | null

@@ -1,11 +1,16 @@
-import useBlockEditor from '@/src/hooks/useBlockEditor'
-import PostCardContent from './PostCardContent'
-import { YStack } from '@/src/components/Stack'
 import { routes } from '@/src/routes'
+
 import { IPost } from '@/src/types/post'
-import PostHeader from './PostHeader'
-import { TEmotion } from '@/src/app/(playground)/post/edit/page'
+
+import useBlockEditor from '@/src/hooks/useBlockEditor'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
+
+import { YStack } from '@/src/components/Stack'
+
+import { TEmotion } from '@/src/app/(playground)/post/edit/page'
+
+import PostCardContent from './PostCardContent'
+import PostHeader from './PostHeader'
 
 interface Props {
   post: IPost

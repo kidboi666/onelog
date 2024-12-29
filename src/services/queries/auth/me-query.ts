@@ -1,7 +1,9 @@
-import { queryKey } from '@/src/lib/tanstack/query-key'
-import { IUserInfoWithMBTI, IUserSession } from '@/src/types/auth'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
+
+import { queryKey } from '@/src/lib/tanstack/query-key'
+
+import { IUserInfoWithMBTI, IUserSession } from '@/src/types/auth'
 
 export const meQuery = {
   getSession: (supabase: SupabaseClient) =>

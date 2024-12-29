@@ -1,5 +1,6 @@
-import cn from '@/src/lib/cn'
 import { ComponentProps, PropsWithChildren, RefObject } from 'react'
+
+import cn from '@/src/lib/cn'
 
 interface Props extends ComponentProps<'ul'> {
   className?: string

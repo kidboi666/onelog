@@ -1,15 +1,20 @@
 'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
 import { colorTheme, useTheme } from '@/src/store/useTheme'
+import { useSuspenseQuery } from '@tanstack/react-query'
+
+import { supabase } from '@/src/lib/supabase/client'
+
 import { userQuery } from '@/src/services/queries/auth/user-query'
-import { getSignUpDays } from '@/src/utils/formatDate'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
-import HistoryBlock from './HistoryBlock'
-import { XStack } from '@/src/components/Stack'
 import { postCountQuery } from '@/src/services/queries/post/post-count-query'
+
+import { getSignUpDays } from '@/src/utils/formatDate'
+
 import { Container } from '@/src/components/Container'
+import { XStack } from '@/src/components/Stack'
+
+import HistoryBlock from './HistoryBlock'
 
 interface Props {
   userId: string

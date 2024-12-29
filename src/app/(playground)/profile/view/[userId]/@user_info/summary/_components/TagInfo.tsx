@@ -1,10 +1,14 @@
-import Spinner from '@/src/components/Spinner'
-import Text from '@/src/components/Text'
-import { supabase } from '@/src/lib/supabase/client'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import { IFavoriteWord } from '@/src/types/post'
 import { useQuery } from '@tanstack/react-query'
 import { RefObject } from 'react'
+
+import { supabase } from '@/src/lib/supabase/client'
+
+import { postQuery } from '@/src/services/queries/post/post-query'
+
+import { IFavoriteWord } from '@/src/types/post'
+
+import Spinner from '@/src/components/Spinner'
+import Text from '@/src/components/Text'
 
 interface Props {
   word: IFavoriteWord

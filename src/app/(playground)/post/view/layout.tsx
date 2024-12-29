@@ -1,5 +1,6 @@
-import { ZStack } from '@/src/components/Stack'
 import { ReactNode } from 'react'
+
+import { ZStack } from '@/src/components/Stack'
 
 interface Props {
   post: ReactNode

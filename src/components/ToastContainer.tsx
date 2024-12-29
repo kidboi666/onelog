@@ -1,6 +1,7 @@
 import { useToast } from '@/src/store/useToast'
-import Toast from './Toast'
+
 import Portal from './Portal'
+import Toast from './Toast'
 
 export default function ToastContainer() {
   const { toastContents } = useToast()

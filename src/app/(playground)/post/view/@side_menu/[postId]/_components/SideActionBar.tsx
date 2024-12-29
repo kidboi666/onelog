@@ -1,24 +1,33 @@
 'use client'
 
-import AccessTypeButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown'
-import ShareButton from '@/src/app/(playground)/(home)/_components/ShareButton'
-import ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton'
-import OptionButtonWithDropDown from '@/src/app/(playground)/(home)/_components/OptionButtonWithDropDown'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { postQuery } from '@/src/services/queries/post/post-query'
+
 import { supabase } from '@/src/lib/supabase/client'
+
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+
+import AccessTypeButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown'
+import OptionButtonWithDropDown from '@/src/app/(playground)/(home)/_components/OptionButtonWithDropDown'
+import ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton'
+import ShareButton from '@/src/app/(playground)/(home)/_components/ShareButton'
 
 interface Props {
   postId: number
 }
 
 export default function SideActionBar({ postId }: Props) {
-  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { data: post } = useSuspenseQuery(
+    postQuery.getPost(supabase, postId, session?.userId),
+  )
+
+  const { access_type } = post
 
   return (
     <>
       <AccessTypeButtonWithDropDown
-        accessType={post.access_type}
+        accessType={access_type}
         viewToolTip
         isSide
       />

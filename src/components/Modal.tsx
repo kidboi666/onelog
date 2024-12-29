@@ -2,8 +2,10 @@
 
 import { useRouter } from 'next/navigation'
 import { ComponentProps, PropsWithChildren, useEffect, useRef } from 'react'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+
 import cn from '@/src/lib/cn'
+
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
 interface Props extends ComponentProps<'div'> {
   className?: string

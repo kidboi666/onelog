@@ -1,13 +1,23 @@
-'use client'
+'use client';
 
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
-import useDeletePost from '@/src/services/mutates/post/useDeletePost'
-import { routes } from '@/src/routes'
+import { routes } from '@/src/routes';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
+
+
+
+import useDeletePost from '@/src/services/mutates/post/useDeletePost';
+
+
+
+import Button from '@/src/components/Button';
+import Modal from '@/src/components/Modal';
 import { XStack } from '@/src/components/Stack'
-import Button from '@/src/components/Button'
-import Modal from '@/src/components/Modal'
-import Title from '@/src/components/Title'
+import Title from '@/src/components/Title';
+
+
+
+
 
 interface Props {
   params: { postId: string }

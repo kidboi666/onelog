@@ -1,10 +1,12 @@
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { IUpdateUserInfo } from '@/src/types/auth'
-import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
-import { useRouter } from 'next/navigation'
 import { routes } from '@/src/routes'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
+
+import { supabase } from '@/src/lib/supabase/client'
+import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
+
+import { IUpdateUserInfo } from '@/src/types/auth'
 
 export default function useUpdateUserInfo() {
   const queryClient = getQueryClient()

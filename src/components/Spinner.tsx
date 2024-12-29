@@ -1,6 +1,8 @@
-import cn from '@/src/lib/cn'
-import Icon from './Icon'
 import { PropsWithChildren } from 'react'
+
+import cn from '@/src/lib/cn'
+
+import Icon from './Icon'
 
 interface Props {
   size?: number

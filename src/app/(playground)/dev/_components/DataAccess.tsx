@@ -1,8 +1,10 @@
 'use client'
 
-import { postQuery } from '@/src/services/queries/post/post-query'
-import { supabase } from '@/src/lib/supabase/client'
 import { useQuery } from '@tanstack/react-query'
+
+import { supabase } from '@/src/lib/supabase/client'
+
+import { postQuery } from '@/src/services/queries/post/post-query'
 
 interface Props {
   className?: string

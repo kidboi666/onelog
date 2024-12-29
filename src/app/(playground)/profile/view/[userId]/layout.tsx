@@ -1,9 +1,13 @@
-import { YStack } from '@/src/components/Stack'
+import { PropsWithChildren, ReactNode } from 'react'
+
 import { createServerClient } from '@/src/lib/supabase/server'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
+
 import { userQuery } from '@/src/services/queries/auth/user-query'
+
 import { Tables } from '@/src/types/supabase'
-import { PropsWithChildren, ReactNode } from 'react'
+
+import { YStack } from '@/src/components/Stack'
 
 interface MetadataProps {
   params: { userId: string }

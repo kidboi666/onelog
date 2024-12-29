@@ -1,6 +1,7 @@
-import { queryKey } from '@/src/lib/tanstack/query-key'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
+
+import { queryKey } from '@/src/lib/tanstack/query-key'
 
 export const postCountQuery = {
   countLikedPost: (supabase: SupabaseClient, userId: string) =>

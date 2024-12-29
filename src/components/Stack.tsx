@@ -1,6 +1,7 @@
-import cn from '@/src/lib/cn'
 import { cva } from 'class-variance-authority'
 import { ComponentProps, PropsWithChildren } from 'react'
+
+import cn from '@/src/lib/cn'
 
 type GapSizes = 'px' | 0 | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12
 

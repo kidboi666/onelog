@@ -1,10 +1,12 @@
 'use client'
 
-import cn from '@/src/lib/cn'
-import { cva } from 'class-variance-authority'
-import { ComponentProps, forwardRef, PropsWithRef } from 'react'
-import Spinner from './Spinner'
 import { colorTheme, useTheme } from '@/src/store/useTheme'
+import { cva } from 'class-variance-authority'
+import { ComponentProps, PropsWithRef, forwardRef } from 'react'
+
+import cn from '@/src/lib/cn'
+
+import Spinner from './Spinner'
 
 export interface ButtonProps extends ComponentProps<'button'> {
   isLoading?: boolean

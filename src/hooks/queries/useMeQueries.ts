@@ -1,9 +1,12 @@
 'use client'
 
-import { supabase } from '@/src/lib/supabase/client'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { IUserInfoWithMBTI, IUserSession } from '@/src/types/auth'
+
+import { supabase } from '@/src/lib/supabase/client'
+
 import { meQuery } from '@/src/services/queries/auth/me-query'
+
+import { IUserInfoWithMBTI, IUserSession } from '@/src/types/auth'
 
 export default function useMeQueries(): {
   me: IUserInfoWithMBTI

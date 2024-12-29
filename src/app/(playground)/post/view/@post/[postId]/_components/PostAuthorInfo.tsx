@@ -1,17 +1,22 @@
 'use client'
 
-import { XStack, YStack } from '@/src/components/Stack'
 import { routes } from '@/src/routes'
-import Avatar from '@/src/components/Avatar'
-import Title from '@/src/components/Title'
-import Text from '@/src/components/Text'
-import RenderActionButtonFromAuthorInfo from '@/src/app/(playground)/post/view/@post/[postId]/_components/RenderActionButtonFromAuthorInfo'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { postQuery } from '@/src/services/queries/post/post-query'
+
 import { supabase } from '@/src/lib/supabase/client'
+
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+
 import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
 import useRouterPush from '@/src/hooks/useRouterPush'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+
+import Avatar from '@/src/components/Avatar'
+import { XStack, YStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+import Title from '@/src/components/Title'
+
+import RenderActionButtonFromAuthorInfo from '@/src/app/(playground)/post/view/@post/[postId]/_components/RenderActionButtonFromAuthorInfo'
 
 interface Props {
   postId: number

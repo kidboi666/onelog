@@ -1,19 +1,30 @@
-'use client'
+'use client';
 
-import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+
+
 import cn from '@/src/lib/cn'
-import { useSignInOAuth } from '@/src/services/mutates/auth/useSignInOAuth'
 import { signInSchema } from '@/src/lib/validators/auth'
+
+
 import useSignIn from '@/src/services/mutates/auth/useSignIn'
+import { useSignInOAuth } from '@/src/services/mutates/auth/useSignInOAuth'
+
+
 import { ISignIn } from '@/src/types/auth'
-import Title from '@/src/components/Title'
+
+
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { YStack } from '@/src/components/Stack'
-import Modal from '@/src/components/Modal'
+import Title from '@/src/components/Title'
+
+
 import AuthForm from '../../_components/AuthForm'
+import Modal from '@/src/components/Modal;
+
 
 export default function SignInModal() {
   const router = useRouter()

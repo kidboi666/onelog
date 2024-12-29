@@ -1,31 +1,50 @@
-'use client'
+'use client';
 
-import Input from '@/src/components/Input'
-import { List } from '@/src/components/List'
-import Title from '@/src/components/Title'
-import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import Text from '@/src/components/Text'
-import Button from '@/src/components/Button'
-import Icon from '@/src/components/Icon'
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-
+import { routes } from '@/src/routes';
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
-import Todo from '../../../_components/Todo'
-import TaskOptionDropDown from '../../../_components/TaskOptionDropDown'
-import useInput from '@/src/hooks/useInput'
-import useAddTodo from '@/src/services/mutates/todo/useAddTodo'
-import { Tables } from '@/src/types/supabase'
-import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { useRouter } from 'next/navigation'
+import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
+
 import cn from '@/src/lib/cn'
-import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
-import { todoQuery } from '@/src/services/queries/todo/todo-query'
-import { XStack, YStack, ZStack } from '@/src/components/Stack'
-import { Container } from '@/src/components/Container'
-import { routes } from '@/src/routes'
+import { supabase } from '@/src/lib/supabase/client';
+
+
+
+import useAddTodo from '@/src/services/mutates/todo/useAddTodo';
+import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+imprt { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query';
+import { todoQuery } from '@/src/services/queries/todo/todo-query';
+
+
+
+import { Tables } from '@/src/types/supabase';
+
+
+
+import useInput from '@/src/hooks/useInput';
+import useOutsideClick from '@/src/hooks/useOutsideClick';
+import useDataDrivenAnimation from '@/src/hooks/useStateChange';
+
+
+
+import Button from '@/src/components/Button';
+import { Container } from '@/src/components/Container';
+import Icon from '@/src/components/Icon';
+import Input from '@/src/components/Input';
+import { List } from '@/src/components/List';
+import { XStack, YStack, ZStack } from '@/src/components/Stack';
+import Text from '@/src/components/Text';
+import Title from '@/src/components/Title';
+
+
+
+import TaskOptionDropDown from '../../../_components/TaskOptionDropDown';
+import Todo from '../../../_components/Todo';
+
+
+
+
 
 interface Props {
   params: { folderId: string }

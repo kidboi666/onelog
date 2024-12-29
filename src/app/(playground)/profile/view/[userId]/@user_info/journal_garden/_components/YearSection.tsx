@@ -1,8 +1,9 @@
+import useOutsideClick from '@/src/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+
 import Button from '@/src/components/Button'
 import { DropDown } from '@/src/components/DropDown'
 import Icon from '@/src/components/Icon'
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
 interface Props {
   yearList: number[]

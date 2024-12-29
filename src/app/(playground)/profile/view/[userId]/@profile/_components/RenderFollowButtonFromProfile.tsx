@@ -1,8 +1,9 @@
 'use client'
 
-import Follow from '@/src/components/Follow'
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+
+import Follow from '@/src/components/Follow'
 
 interface Props {
   userId: string

@@ -1,12 +1,14 @@
 'use client'
 
-import Button from '@/src/components/Button'
-import Icon from '@/src/components/Icon'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import MobileMenu from './MobileMenu'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
-import { Container } from '@/src/components/Container'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useToggle from '@/src/hooks/useToggle'
+
+import Button from '@/src/components/Button'
+import { Container } from '@/src/components/Container'
+import Icon from '@/src/components/Icon'
+
+import MobileMenu from './MobileMenu'
 
 export default function MenuButton() {
   const { close, onClick, ref, onTransitionEnd } =

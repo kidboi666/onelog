@@ -1,9 +1,11 @@
 'use client'
 
+import { Tables } from '@/src/types/supabase'
+
+import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
+
 import Text from '@/src/components/Text'
 import Title from '@/src/components/Title'
-import { Tables } from '@/src/types/supabase'
-import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
 
 interface Props {
   todo?: Tables<'todo'>

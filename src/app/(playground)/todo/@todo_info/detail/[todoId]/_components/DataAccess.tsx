@@ -1,15 +1,19 @@
 'use client'
 
-import Line from '@/src/components/Line'
-import TitleSection from './TitleSection'
-import DateSection from './DateSection'
-import MemoSection from './MemoSection'
-import IsCompleteSection from './IsCompleteSection'
-import ButtonSection from './ButtonSection'
 import { useSuspenseQuery } from '@tanstack/react-query'
+
 import { supabase } from '@/src/lib/supabase/client'
+
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
+
+import Line from '@/src/components/Line'
+
+import ButtonSection from './ButtonSection'
+import DateSection from './DateSection'
+import IsCompleteSection from './IsCompleteSection'
+import MemoSection from './MemoSection'
+import TitleSection from './TitleSection'
 
 interface Props {
   todoId: string

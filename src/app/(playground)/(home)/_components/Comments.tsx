@@ -1,13 +1,17 @@
 'use client'
 
-import CommentItem from './CommentItem'
-import CommentInput from './CommentInput'
 import { useSuspenseQuery } from '@tanstack/react-query'
+
 import { supabase } from '@/src/lib/supabase/client'
-import { List } from '@/src/components/List'
-import Empty from '@/src/components/Empty'
+
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
+
+import Empty from '@/src/components/Empty'
+import { List } from '@/src/components/List'
+
+import CommentInput from './CommentInput'
+import CommentItem from './CommentItem'
 
 interface Props {
   postId: number

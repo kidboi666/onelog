@@ -1,13 +1,17 @@
 'use client'
 
-import { YStack, ZStack } from '@/src/components/Stack'
-import Avatar from '@/src/components/Avatar'
-import EmotionAverage from '@/src/app/(playground)/profile/view/[userId]/@profile/_components/EmotionAverage'
-import Title from '@/src/components/Title'
-import Text from '@/src/components/Text'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { userQuery } from '@/src/services/queries/auth/user-query'
+
 import { supabase } from '@/src/lib/supabase/client'
+
+import { userQuery } from '@/src/services/queries/auth/user-query'
+
+import Avatar from '@/src/components/Avatar'
+import { YStack, ZStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+import Title from '@/src/components/Title'
+
+import EmotionAverage from '@/src/app/(playground)/profile/view/[userId]/@profile/_components/EmotionAverage'
 
 interface Props {
   userId: string

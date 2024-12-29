@@ -1,16 +1,30 @@
-'use client'
+'use client';
 
-import Title from '@/src/components/Title'
-import Empty from '@/src/components/Empty'
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
-import { postQuery } from '@/src/services/queries/post/post-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { Fragment, useEffect, useState } from 'react';
+
+
+
 import { supabase } from '@/src/lib/supabase/client'
-import { YStack } from '@/src/components/Stack'
-import Spinner from '@/src/components/Spinner'
-import { Fragment, useEffect, useState } from 'react'
-import { Container } from '@/src/components/Container'
-import PostCard from '@/src/app/(playground)/(home)/_components/PostCard'
+
 import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+
+
+
+import { Container } from '@/src/components/Container';
+import Empty from '@/src/components/Empty';
+import Spinner from '@/src/components/Spinner';
+import { YStack } from '@/src/components/Stack';
+import Title from '@/src/components/Title';
+
+
+
+import PostCard from '@/src/app/(playground)/(home)/_components/PostCard';
+
+
+
+
 
 interface Props {
   params: { userId: string }

@@ -1,7 +1,9 @@
-import { queryKey } from '@/src/lib/tanstack/query-key'
-import { TFollowings } from '@/src/types/follow'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
+
+import { queryKey } from '@/src/lib/tanstack/query-key'
+
+import { TFollowings } from '@/src/types/follow'
 
 export const followQuery = {
   /** 유저를 팔로우하는 유저의 Id들 */

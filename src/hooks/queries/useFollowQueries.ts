@@ -1,10 +1,12 @@
 'use client'
 
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
-import { countFollowQuery } from '@/src/services/queries/follow/count-follow-query'
+
 import { supabase } from '@/src/lib/supabase/client'
-import { followQuery } from '@/src/services/queries/follow/follow-query'
+
 import { meQuery } from '@/src/services/queries/auth/me-query'
+import { countFollowQuery } from '@/src/services/queries/follow/count-follow-query'
+import { followQuery } from '@/src/services/queries/follow/follow-query'
 
 export default function useFollowQueries(userId: string) {
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))

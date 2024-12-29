@@ -1,11 +1,14 @@
+import { usePathname } from 'next/navigation'
+import { useTransition } from 'react'
+
+import cn from '@/src/lib/cn'
+
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
-import cn from '@/src/lib/cn'
-import { TODO_MENU } from '../../../_constants'
-import { useTransition } from 'react'
 import Spinner from '@/src/components/Spinner'
-import { usePathname } from 'next/navigation'
+
+import { TODO_MENU } from '../../../_constants'
 
 interface Props {
   onMenuSelect: (selectedMenu: any) => any

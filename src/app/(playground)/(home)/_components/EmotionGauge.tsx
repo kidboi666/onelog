@@ -1,7 +1,10 @@
-import { TEmotion } from '@/src/app/(playground)/post/edit/page'
-import cn from '@/src/lib/cn'
 import { useTheme } from '@/src/store/useTheme'
+
+import cn from '@/src/lib/cn'
+
 import { TColor } from '@/src/types/theme'
+
+import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 
 interface Props {
   emotionLevel: TEmotion | null

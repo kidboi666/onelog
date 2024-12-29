@@ -1,12 +1,15 @@
-import cn from '@/src/lib/cn'
-import { List } from '@/src/components/List'
-import { RefObject } from 'react'
 import { useTheme } from '@/src/store/useTheme'
-import Icon from '@/src/components/Icon'
+import { RefObject } from 'react'
+
+import cn from '@/src/lib/cn'
+
 import { DropDown } from '@/src/components/DropDown'
-import { TEmotion } from '../page'
-import { EMOTION_STATUS } from '../_constants'
+import Icon from '@/src/components/Icon'
+import { List } from '@/src/components/List'
 import { YStack } from '@/src/components/Stack'
+
+import { EMOTION_STATUS } from '../_constants'
+import { TEmotion } from '../page'
 
 interface Props {
   selectedEmotion: TEmotion | null

@@ -1,12 +1,15 @@
 'use client'
 
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import { DropDown } from '@/src/components/DropDown'
-import Avatar from '@/src/components/Avatar'
-import AvatarButtonWithDropDownContent from '@/src/app/(playground)/(home)/_components/AvatarButtonWithDropDownContent'
-import { Container } from '@/src/components/Container'
 import { useState } from 'react'
+
+import useOutsideClick from '@/src/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+
+import Avatar from '@/src/components/Avatar'
+import { Container } from '@/src/components/Container'
+import { DropDown } from '@/src/components/DropDown'
+
+import AvatarButtonWithDropDownContent from '@/src/app/(playground)/(home)/_components/AvatarButtonWithDropDownContent'
 
 interface Props {
   avatarUrl: string | null

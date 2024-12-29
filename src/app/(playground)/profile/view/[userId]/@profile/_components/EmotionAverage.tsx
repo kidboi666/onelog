@@ -1,10 +1,13 @@
-import { Container } from '@/src/components/Container'
-import Text from '@/src/components/Text'
-import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/client'
-import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
 import { colorTheme, useTheme } from '@/src/store/useTheme'
 import { useSuspenseQuery } from '@tanstack/react-query'
+
+import cn from '@/src/lib/cn'
+import { supabase } from '@/src/lib/supabase/client'
+
+import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
+
+import { Container } from '@/src/components/Container'
+import Text from '@/src/components/Text'
 
 interface Props {
   userId: string

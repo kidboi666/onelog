@@ -1,16 +1,20 @@
 'use client'
 
-import Icon from '@/src/components/Icon'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import { MouseEvent } from 'react'
-import { DropDown } from '@/src/components/DropDown'
-import { useRouter } from 'next/navigation'
 import { routes } from '@/src/routes'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { postQuery } from '@/src/services/queries/post/post-query'
+import { useRouter } from 'next/navigation'
+import { MouseEvent } from 'react'
+
 import { supabase } from '@/src/lib/supabase/client'
+
 import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+
+import useOutsideClick from '@/src/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+
+import { DropDown } from '@/src/components/DropDown'
+import Icon from '@/src/components/Icon'
 
 interface Props {
   postId: number

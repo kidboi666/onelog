@@ -1,19 +1,36 @@
-'use client'
+'use client';
 
-import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
-import { supabase } from '@/src/lib/supabase/client'
+import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
-import { userQuery } from '@/src/services/queries/auth/user-query'
+
+
+import { supabase } from '@/src/lib/supabase/client';
+
+
+
+import { userQuery } from '@/src/services/queries/auth/user-query';
 import { postQuery } from '@/src/services/queries/post/post-query'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-import useIntersect from '@/src/hooks/useIntersect'
 
-import { Container } from '@/src/components/Container'
-import Empty from '@/src/components/Empty'
-import Spinner from '@/src/components/Spinner'
-import { YStack } from '@/src/components/Stack'
-import PostCard from '@/src/app/(playground)/(home)/_components/PostCard'
+
+
+import useMeQueries from '@/src/hooks/queries/useMeQueries';
+import useIntersect from '@/src/hooks/useIntersect';
+
+
+
+import { Container } from '@/src/components/Container';
+import Empty from '@/src/components/Empty';
+import Spinner from '@/src/components/Spinner';
+import { YStack } from '@/src/components/Stack';
+
+
+
+import PostCard from '@/src/app/(playground)/(home)/_components/PostCard';
+
+
+
+
 
 interface Props {
   params: { userId: string }

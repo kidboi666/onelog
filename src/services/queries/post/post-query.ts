@@ -1,8 +1,10 @@
-import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 import { SupabaseClient } from '@supabase/supabase-js'
-import { Tables } from '@/src/types/supabase'
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
+
 import { queryKey } from '@/src/lib/tanstack/query-key'
+
 import { IPost } from '@/src/types/post'
+import { Tables } from '@/src/types/supabase'
 
 /**
  * TODO 대충 any 로 휘갈긴 타입핑 지정 @kidboi666
@@ -58,6 +60,9 @@ export const postQuery = {
           .select(
             `
             *,
+            comment_count:comment(count),
+            is_liked:like(user_id),
+            like_count:like(count),
             comments:comment(
               *,
               user_info(
@@ -66,9 +71,6 @@ export const postQuery = {
                 avatar_url
               )
             ),
-            comment_count:comment(count),
-            is_liked:like(user_id),
-            like_count:like(count),
             user_info(
               email,
               user_name,
@@ -88,7 +90,6 @@ export const postQuery = {
 
         if (error) {
           console.error(error)
-          throw error
         }
 
         return data

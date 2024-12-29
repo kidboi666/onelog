@@ -1,14 +1,17 @@
 'use client'
 
-import LinkButton from '@/src/components/LinkButton'
-import { XStack, YStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
-import { supabase } from '@/src/lib/supabase/client'
 import { routes } from '@/src/routes'
-import { meQuery } from '@/src/services/queries/auth/me-query'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+
+import { supabase } from '@/src/lib/supabase/client'
+
+import { meQuery } from '@/src/services/queries/auth/me-query'
+
+import LinkButton from '@/src/components/LinkButton'
+import { XStack, YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
 
 export default function AuthCtaSection() {
   const router = useRouter()

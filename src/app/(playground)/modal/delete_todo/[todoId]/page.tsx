@@ -1,13 +1,26 @@
-'use client'
+'use client';
 
+import { routes } from '@/src/routes';
 import { useRouter } from 'next/navigation'
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
-import useDeleteTodo from '@/src/services/mutates/todo/useDeleteTodo'
-import { routes } from '@/src/routes'
-import Button from '@/src/components/Button'
-import Modal from '@/src/components/Modal'
-import Title from '@/src/components/Title'
+
+
+
+import { getQueryClient } from '@/src/lib/tanstack/get-query-client';
+import { queryKey } from '@/src/lib/tanstack/query-key';
+
+
+
+import useDeleteTodo from '@/src/services/mutates/todo/useDeleteTodo';
+
+
+
+import Button from '@/src/components/Button';
+import Modal from '@/src/components/Modal';
+import Title from '@/src/components/Title';
+
+
+
+
 
 interface Props {
   params: { todoId: string }

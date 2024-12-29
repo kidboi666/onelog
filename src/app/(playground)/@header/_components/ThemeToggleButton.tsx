@@ -1,11 +1,13 @@
 'use client'
 
-import Button from '@/src/components/Button'
-
 import { useTheme } from '@/src/store/useTheme'
-import { TTheme } from '@/src/types/theme'
-import Icon from '@/src/components/Icon'
+
 import cn from '@/src/lib/cn'
+
+import { TTheme } from '@/src/types/theme'
+
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
 import { XStack, ZStack } from '@/src/components/Stack'
 
 interface Props {

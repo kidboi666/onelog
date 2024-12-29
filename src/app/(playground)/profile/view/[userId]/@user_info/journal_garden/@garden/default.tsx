@@ -1,21 +1,31 @@
-'use client'
+'use client';
 
-import { ReactElement, useMemo, useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { ReactElement, useMemo, useState } from 'react'
+
+
 import { supabase } from '@/src/lib/supabase/client'
+
+import { meQuery } from '@/src/services/queries/auth/me-query'
 import { gardenQuery } from '@/src/services/queries/garden/garden-query'
-import { Tables } from '@/src/types/supabase'
+
+
 import { IDateBlock } from '@/src/types/garden'
+import { Tables } from '@/src/types/supabase'
+
+
 import { getDaysInYear, getFirstDayInYear } from '@/src/utils/formatDate'
 
-import Title from '@/src/components/Title'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+
+import { Container } from '@/src/components/Container'
 import Block from '../_components/Block'
-import YearSection from '../_components/YearSection'
 import ColorInfoDisplay from '../_components/ColorInfoDisplay'
 import GardenBlockSection from '../_components/GardenBlockSection'
-import { Container } from '@/src/components/Container'
-import { YStack } from '@/src/components/Stack'
+import YearSection from '../_components/YearSection'
+
+mport { YStack } from '@/src/components/Stack';
+mport Title from '@/src/components/Title';
+
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 이모션 레벨 기준 색칠)

@@ -1,11 +1,14 @@
 'use client'
 
-import Button from '@/src/components/Button'
 import { routes } from '@/src/routes'
-import { XStack } from '@/src/components/Stack'
+
+import { IUserSession } from '@/src/types/auth'
+
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
 import useTransitionWithRoute from '@/src/hooks/useRouterPushWithTransition'
-import { IUserSession } from '@/src/types/auth'
+
+import Button from '@/src/components/Button'
+import { XStack } from '@/src/components/Stack'
 
 interface Props {
   session: IUserSession

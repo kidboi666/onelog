@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Title from '@/src/components/Title'
+import React, { useEffect } from 'react'
+
 import Button from '@/src/components/Button'
 import Modal from '@/src/components/Modal'
 import { XStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
 
 export default function AuthGuardModal() {
   const router = useRouter()

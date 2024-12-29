@@ -1,8 +1,9 @@
+import { useToast } from '@/src/store/useToast'
+import { useMutation } from '@tanstack/react-query'
+
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { useMutation } from '@tanstack/react-query'
 import { queryKey } from '@/src/lib/tanstack/query-key'
-import { useToast } from '@/src/store/useToast'
 
 interface ITodo {
   name: string

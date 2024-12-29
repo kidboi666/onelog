@@ -1,13 +1,16 @@
 'use client'
 
+import { colorTheme, useTheme } from '@/src/store/useTheme'
+
+import cn from '@/src/lib/cn'
+
+import { TColor } from '@/src/types/theme'
+
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
 import { YStack } from '@/src/components/Stack'
 import Title from '@/src/components/Title'
-import cn from '@/src/lib/cn'
-import { colorTheme, useTheme } from '@/src/store/useTheme'
-import { TColor } from '@/src/types/theme'
 
 const colors: TColor[] = ['black', 'green', 'yellow', 'blue', 'orange']
 

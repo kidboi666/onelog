@@ -1,9 +1,12 @@
+import { HydrationBoundary } from '@tanstack/react-query'
 import { PropsWithChildren } from 'react'
+
+import { postPrefetchQuery } from '@/src/services/queries/post/post-prefetch-query'
+
 import { Container } from '@/src/components/Container'
 import { ZStack } from '@/src/components/Stack'
+
 import MenuSection from './journal_garden/_components/MenuSection'
-import { postPrefetchQuery } from '@/src/services/queries/post/post-prefetch-query'
-import { HydrationBoundary } from '@tanstack/react-query'
 
 interface Props {
   params: { userId: string }

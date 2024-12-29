@@ -1,14 +1,26 @@
-'use client'
+'use client';
 
-import { MouseEvent, useState } from 'react'
+import { routes } from '@/src/routes';
 import { useRouter } from 'next/navigation'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-import { routes } from '@/src/routes'
-import Modal from '@/src/components/Modal'
-import { YStack } from '@/src/components/Stack'
-import FollowUserCard from '../../_components/FollowUserCard'
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+import { MouseEvent, useState } from 'react'
+
 import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
+
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+import useMeQueries from '@/src/hooks/queries/useMeQueries';
+
+
+
+import Modal from '@/src/components/Modal';
+import { YStack } from '@/src/components/Stack';
+
+
+
+import FollowUserCard from '../../_components/FollowUserCard';
+
+
+
+
 
 interface Props {
   params: { userId: string }

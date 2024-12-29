@@ -1,9 +1,10 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
+import { PropsWithChildren, ReactNode } from 'react'
+
 import Portal from '@/src/components/Portal'
 import { ZStack } from '@/src/components/Stack'
-import { PropsWithChildren, ReactNode } from 'react'
-import { usePathname } from 'next/navigation'
 
 interface Props {
   sidebar: ReactNode

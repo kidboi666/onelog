@@ -1,14 +1,17 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import Avatar from '@/src/components/Avatar'
-import Text from '@/src/components/Text'
-import { useTheme } from '@/src/store/useTheme'
-import cn from '@/src/lib/cn'
-import { XStack } from '@/src/components/Stack'
-import { Container } from '@/src/components/Container'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { routes } from '@/src/routes'
+import { useTheme } from '@/src/store/useTheme'
+import { useRouter } from 'next/navigation'
+
+import cn from '@/src/lib/cn'
+
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
+
+import Avatar from '@/src/components/Avatar'
+import { Container } from '@/src/components/Container'
+import { XStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
 
 export default function FakeFormContainer() {
   const router = useRouter()

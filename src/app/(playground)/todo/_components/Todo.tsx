@@ -1,5 +1,8 @@
 'use client'
 
+import { routes } from '@/src/routes'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import {
   DragEvent,
   MouseEvent,
@@ -8,21 +11,23 @@ import {
   useState,
   useTransition,
 } from 'react'
-import { useRouter } from 'next/navigation'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
+
 import cn from '@/src/lib/cn'
-import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
-import { Tables } from '@/src/types/supabase'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { supabase } from '@/src/lib/supabase/client'
+
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
+import { meQuery } from '@/src/services/queries/auth/me-quer'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
-import { routes } from '@/src/routes'
-import Spinner from '@/src/components/Spinner'
-import { XStack, YStack } from '@/src/components/Stack'
+
+import { Tables } from '@/src/types/supabase'
+
+import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
+
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
+import Spinner from '@/src/components/Spinner'
+import { XStack, YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
 
 interface TodoProps {

@@ -1,8 +1,10 @@
 import { cva } from 'class-variance-authority'
-import Button from './Button'
+
 import cn from '@/src/lib/cn'
-import { XStack } from './Stack'
+
+import Button from './Button'
 import Icon from './Icon'
+import { XStack } from './Stack'
 
 interface Props {
   border?: 'border' | 'none'

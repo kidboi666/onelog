@@ -1,5 +1,6 @@
-import cn from '@/src/lib/cn'
 import { PropsWithChildren } from 'react'
+
+import cn from '@/src/lib/cn'
 
 export interface IconProps {
   name?: string

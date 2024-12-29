@@ -1,20 +1,25 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { signUpSchema } from '@/src/lib/validators/auth'
-import { ISignUp } from '@/src/types/auth'
-import Title from '@/src/components/Title'
-import Button from '@/src/components/Button'
-import useSignUp from '@/src/services/mutates/auth/useSignUp'
-import { useSignInOAuth } from '@/src/services/mutates/auth/useSignInOAuth'
-import Icon from '@/src/components/Icon'
-import { useMemo } from 'react'
-import cn from '@/src/lib/cn'
 import { useRouter } from 'next/navigation'
+import { useMemo } from 'react'
+import { useForm } from 'react-hook-form'
+
+import cn from '@/src/lib/cn'
+import { signUpSchema } from '@/src/lib/validators/auth'
+
+import { useSignInOAuth } from '@/src/services/mutates/auth/useSignInOAuth'
+import useSignUp from '@/src/services/mutates/auth/useSignUp'
+
+import { ISignUp } from '@/src/types/auth'
+
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
+import Modal from '@/src/components/Moda'
 import { YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
+
 import AuthForm from '../../_components/AuthForm'
-import Modal from '@/src/components/Modal'
 
 export default function SignUpModal() {
   const router = useRouter()

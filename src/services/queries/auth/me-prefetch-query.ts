@@ -1,6 +1,7 @@
-import initClient from '@/src/services/queries/init-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
 import { dehydrate } from '@tanstack/react-query'
+
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import initClient from '@/src/services/queries/init-client'
 
 const prefetchSession = async () => {
   const { queryClient, supabase } = initClient()

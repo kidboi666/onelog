@@ -1,7 +1,8 @@
+import { useMutation } from '@tanstack/react-query'
+
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
-import { useMutation } from '@tanstack/react-query'
 
 interface Params {
   followed_user_id: string
@@ -42,7 +43,7 @@ export default function useHandleFollow() {
     },
     onSettled: (_, __, variables) => {
       const { followed_user_id, follower_user_id } = variables
-      
+
       void queryClient.invalidateQueries({
         queryKey: queryKey.follow.follower(followed_user_id),
       })

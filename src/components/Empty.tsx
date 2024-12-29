@@ -1,8 +1,10 @@
 import { PropsWithChildren } from 'react'
+
 import cn from '@/src/lib/cn'
-import Text from './Text'
-import Icon, { IconProps } from './Icon'
+
 import Button from './Button'
+import Icon, { IconProps } from './Icon'
+import Text from './Text'
 
 interface Props {
   className?: string

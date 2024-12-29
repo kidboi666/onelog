@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react'
-import { XStack } from './Stack'
+
 import Button from './Button'
+import { XStack } from './Stack'
 
 const Follow = ({ children }: PropsWithChildren) => {
   return <XStack>{children}</XStack>

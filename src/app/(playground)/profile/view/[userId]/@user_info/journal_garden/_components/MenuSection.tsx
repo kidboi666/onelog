@@ -1,13 +1,17 @@
 'use client'
 
-import cn from '@/src/lib/cn'
-import { Fragment } from 'react'
-import { PROFILE_NAVIGATE_MENUS } from '../../../_constants/navigate'
-import { useSelectedLayoutSegment } from 'next/navigation'
 import { useSuspenseQueries, useSuspenseQuery } from '@tanstack/react-query'
-import { postCountQuery } from '@/src/services/queries/post/post-count-query'
+import { useSelectedLayoutSegment } from 'next/navigation'
+import { Fragment } from 'react'
+
+import cn from '@/src/lib/cn'
 import { supabase } from '@/src/lib/supabase/client'
+
+import { postCountQuery } from '@/src/services/queries/post/post-count-query'
+
 import NavigationMenuButton from '@/src/app/(playground)/profile/view/[userId]/@user_info/journal_garden/_components/NavigationMenuButton'
+
+import { PROFILE_NAVIGATE_MENUS } from '../../../_constants/navigate'
 
 interface Props {
   userId: string

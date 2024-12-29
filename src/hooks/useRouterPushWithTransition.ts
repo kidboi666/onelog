@@ -1,7 +1,7 @@
 'use client'
 
-import { useCallback, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import { useCallback, useTransition } from 'react'
 
 export default function useRouterPushWithTransition(
   path: string,

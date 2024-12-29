@@ -1,7 +1,8 @@
-import cn from '@/src/lib/cn'
 import { cva } from 'class-variance-authority'
-import { ComponentProps, forwardRef, PropsWithRef } from 'react'
+import { ComponentProps, PropsWithRef, forwardRef } from 'react'
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
+
+import cn from '@/src/lib/cn'
 
 interface Props extends ComponentProps<'input'> {
   className?: string

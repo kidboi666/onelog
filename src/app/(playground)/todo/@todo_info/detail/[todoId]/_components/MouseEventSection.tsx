@@ -1,14 +1,19 @@
 'use client'
 
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { PropsWithChildren, useEffect, useRef } from 'react'
-import BackButtonSection from './BackButtonSection'
-import { useSuspenseQuery } from '@tanstack/react-query'
+
 import { supabase } from '@/src/lib/supabase/client'
-import { Tables } from '@/src/types/supabase'
+
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
+
+import { Tables } from '@/src/types/supabase'
+
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+
+import BackButtonSection from './BackButtonSection'
 
 interface Props {
   todoId: string

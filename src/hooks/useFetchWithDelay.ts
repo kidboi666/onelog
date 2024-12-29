@@ -1,7 +1,8 @@
 'use client'
 
-import { wait } from '@/src/utils/wait'
 import { useCallback, useEffect, useState } from 'react'
+
+import { wait } from '@/src/utils/wait'
 
 export default function useFetchWithDelay(
   pending: boolean,

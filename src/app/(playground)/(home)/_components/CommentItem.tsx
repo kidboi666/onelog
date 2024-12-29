@@ -1,21 +1,25 @@
 'use client'
 
 import { useState } from 'react'
-import { formatDateElapsed } from '@/src/utils/formatDate'
 
-import Text from '@/src/components/Text'
-import { XStack, YStack } from '@/src/components/Stack'
-import CommentInputButton from './CommentInputButton'
-import CommentButton from './CommentButton'
-import CommentInput from './CommentInput'
-import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
-import ReportButton from './ReportButton'
-import OptionButtonWithDropDown from './OptionButtonWithDropDown'
-import { IComment } from '@/src/types/comment'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { queryKey } from '@/src/lib/tanstack/query-key'
-import { IPost } from '@/src/types/post'
+
 import { IUserSession } from '@/src/types/auth'
+import { IComment } from '@/src/types/comment'
+import { IPost } from '@/src/types/post'
+
+import { formatDateElapsed } from '@/src/utils/formatDate'
+
+import { XStack, YStack } from '@/src/components/Stack'
+import Text from '@/src/components/Text'
+
+import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
+import CommentButton from './CommentButton'
+import CommentInput from './CommentInput'
+import CommentInputButton from './CommentInputButon'
+import OptionButtonWithDropDown from './OptionButtonWithDropown'
+import ReportButton from './ReportButton'
 
 interface Props {
   comment: IComment

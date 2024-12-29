@@ -1,5 +1,6 @@
-import { supabase } from '@/src/lib/supabase/client'
 import { useMutation } from '@tanstack/react-query'
+
+import { supabase } from '@/src/lib/supabase/client'
 
 interface IFile {
   email?: string | null
@@ -16,7 +17,7 @@ export default function useUploadAvatarImage() {
       if (error) {
         throw error
       }
-      
+
       return `${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_BASE_URL!}/${data?.fullPath}`
     },
   })

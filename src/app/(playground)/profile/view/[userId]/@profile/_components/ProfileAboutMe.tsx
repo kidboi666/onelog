@@ -1,10 +1,13 @@
 'use client'
 
+import { useSuspenseQuery } from '@tanstack/react-query'
+
+import { supabase } from '@/src/lib/supabase/client'
+
+import { userQuery } from '@/src/services/queries/auth/user-query'
+
 import { ZStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { userQuery } from '@/src/services/queries/auth/user-query'
-import { supabase } from '@/src/lib/supabase/client'
 
 interface Props {
   userId: string

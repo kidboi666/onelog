@@ -1,5 +1,6 @@
-import { Tables } from './supabase'
 import { IComment } from '@/src/types/comment'
+
+import { Tables } from './supabase'
 
 export interface IFavoriteWord {
   word: string
@@ -16,7 +17,7 @@ export interface IPost
   access_type: 'public' | 'private'
   emotion_level: '0%' | '25%' | '50%' | '75%' | '100%' | null
   comments: IComment[] | []
-  is_liked: { user_id: string }[] | []
+  is_liked: { like: string }[] | []
   like_count: { count: number }[] | []
   comment_count: { count: number }[] | []
 }

@@ -1,57 +1,74 @@
-'use client'
+'use client';
 
-import { FormEvent, useEffect, useState } from 'react'
+import { routes } from '@/src/routes'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { BubbleMenu, EditorContent } from '@tiptap/react'
 import { useRouter } from 'next/navigation'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { FormEvent, useEffect, useState } from 'react'
+
+
 import { supabase } from '@/src/lib/supabase/client'
 
-import { postQuery } from '@/src/services/queries/post/post-query'
-import useUpdatePost from '@/src/services/mutates/post/useUpdatePost'
+
 import useAddPost from '@/src/services/mutates/post/useAddPost'
-import { TAccess, TEmotion, TPost } from '../page'
+import useUpdatePost from '@/src/services/mutates/post/useUpdatePost'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+
+
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 import useInput from '@/src/hooks/useInput'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-import { formatDateToMDY } from '@/src/utils/formatDate'
-import { routes } from '@/src/routes'
 
-import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge'
-import { TagsInput } from '@/src/components/TagsInput'
+
+import { formatDateToMDY } from '@/src/utils/formatDate'
+
+
+import Avatar from '@/src/components/Avatar'
 import Button from '@/src/components/Button'
 import Input from '@/src/components/Input'
 import Line from '@/src/components/Line'
-import Avatar from '@/src/components/Avatar'
+import { XStack, YStack } from '@/src/components/Stac'
+import { TagsInput } from '@/src/components/TagsInpu'
 import Text from '@/src/components/Text'
 import Title from '@/src/components/Title'
-import { XStack, YStack } from '@/src/components/Stack'
+
+
+import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge'
+
+
+import BubbleMenuBar from '../_components/BubbleMenuBar'
 import EmotionSection from '../_components/EmotionSection'
 import PublishSection from '../_components/PublishSection'
-import BubbleMenuBar from '../_components/BubbleMenuBar'
-import PostTypeSection from '../_components/PostTypeSection'
+import { TAccess, TEmotion, TPost } from '../page'
+
+mport PostTypeSection from '../_components/PostTypeSection';
+
 
 interface Props {
   searchParams: { post_id: string }
   selectedEmotion: TEmotion
-  setSelectedEmotion: (emotio: TEmotion) => void
+  onChangeEmotion: (emotion: TEmotion) => void
   accessType: TAccess
-  setAccessType: (accessType: TAccess) => void
+  onChangeAccessType: (accessType: TAccess) => void
   postType: TPost
-  setPostType: (postType: TPost) => void
+  onChangePostType: (postType: TPost) => void
 }
 
 export default function PostContainer({
   searchParams,
   selectedEmotion,
-  setSelectedEmotion,
+                                        onChangeEmotion,
   accessType,
-  setAccessType,
+                                        onChangeAccessType,
   postType,
-  setPostType,
+                                        onChangePostType,
 }: Props) {
   const router = useRouter()
   const postId = Number(searchParams?.post_id)
-  const { me } = useMeQueries()
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { data: me } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, session?.userId),
+  )
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
   const [content, setContent] = useState(post?.content ?? '')
   const [title, onChangeTitle, setTitle] = useInput<string | null>(null)
@@ -66,18 +83,14 @@ export default function PostContainer({
   const { mutate: addPost, isPending, isSuccess } = useAddPost()
   const { mutate: updatePost } = useUpdatePost()
 
-  const handleChangeEmotion = (emotion: TEmotion | null) =>
-    setSelectedEmotion(emotion)
-
-  const handleChangeAccessType = (order: TAccess) => setAccessType(order)
-  const handleChangePostType = (order: TPost) => setPostType(order)
   const handleInputFocus = () => editor?.commands.focus('end')
+
   const handleInitPostData = () => {
     setTitle(post.title)
     editor?.commands.setContent(content)
-    setPostType(post.post_type)
-    setAccessType(post.access_type)
-    setSelectedEmotion(post.emotion_level ? post.emotion_level : null)
+    onChangePostType(post.post_type)
+    onChangeAccessType(post.access_type)
+    onChangeEmotion(post.emotion_level ? post.emotion_level : null)
   }
 
   const handleSubmitPost = (e: FormEvent) => {
@@ -86,7 +99,7 @@ export default function PostContainer({
     const newPost = {
       content,
       emotion_level: postType === 'journal' ? selectedEmotion : null,
-      user_id: me!.id,
+      user_id: session!.userId,
       tags,
       title,
       access_type: accessType,
@@ -113,9 +126,7 @@ export default function PostContainer({
   }
 
   useEffect(() => {
-    postType === 'article'
-      ? handleChangeEmotion(null)
-      : handleChangeEmotion('50%')
+    postType === 'article' ? onChangeEmotion(null) : onChangeEmotion('50%')
   }, [postType])
 
   useEffect(() => {
@@ -124,6 +135,8 @@ export default function PostContainer({
     }
   }, [post, editor])
 
+  const { avatar_url, user_name, email } = me
+
   return (
     <form
       onSubmit={handleSubmitPost}
@@ -131,14 +144,14 @@ export default function PostContainer({
     >
       <YStack gap={0}>
         <XStack gap={4}>
-          <Avatar src={me?.avatar_url} size="sm" ring />
+          <Avatar src={avatar_url} size="sm" ring />
           <YStack gap={0} className="self-end">
             <XStack gap={1} className="items-end">
               <Title size="xs" type="sub">
-                {me?.user_name}
+                {user_name}
               </Title>
               <Text as="span" type="caption" size="sm">
-                · @{me?.email?.split('@')[0]}
+                · @{email?.split('@')[0]}
               </Text>
             </XStack>
             <Text type="caption" size="sm">
@@ -148,7 +161,7 @@ export default function PostContainer({
           <XStack className="flex-1 justify-end">
             <EmotionGauge
               emotionLevel={selectedEmotion}
-              onClick={handleChangeEmotion}
+              onClick={onChangeEmotion}
             />
           </XStack>
         </XStack>
@@ -177,15 +190,15 @@ export default function PostContainer({
             <XStack gap={4} className="items-center sm:hidden">
               <PublishSection
                 accessType={accessType}
-                onChangeAccessType={handleChangeAccessType}
+                onChangeAccessType={onChangeAccessType}
               />
               <PostTypeSection
                 postType={postType}
-                onChangePostType={handleChangePostType}
+                onChangePostType={onChangePostType}
               />
               <EmotionSection
                 selectedEmotion={selectedEmotion}
-                onChangeEmotion={handleChangeEmotion}
+                onChangeEmotion={onChangeEmotion}
               />
             </XStack>
             <XStack className="flex-1 justify-end">

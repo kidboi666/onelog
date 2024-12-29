@@ -1,13 +1,22 @@
-import Tag from '@/src/components/Tag'
 import { Editor, EditorContent } from '@tiptap/react'
 import { useEffect, useRef, useState } from 'react'
-import Title from '@/src/components/Title'
-import { XStack, YStack, ZStack } from '@/src/components/Stack'
+
+
 import { Container } from '@/src/components/Container'
-import LikeButton from '@/src/app/(playground)/(home)/_components/LikeButton'
-import CommentButton from '@/src/app/(playground)/(home)/_components/CommentButton'
+import { XStack, YStack, ZStack } from '@/src/components/Stack'
+import Tag from '@/src/components/Tag'
+import Title from '@/src/components/Title'
+
+
 import AccessTypeButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown'
-import ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton'
+import CommentButton from '@/src/app/(playground)/(home)/_components/CommentButton'
+
+iport LikeButton from '@/src/app/(playground)/(home)/_components/LikeButton';
+iport ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton';
+
+
+
+
 
 interface Props {
   tags?: string[]

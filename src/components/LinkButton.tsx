@@ -1,6 +1,8 @@
 import Link from 'next/link'
-import Button, { ButtonProps } from './Button'
+
 import cn from '@/src/lib/cn'
+
+import Button, { ButtonProps } from './Button'
 
 interface Props extends ButtonProps {
   href: string

@@ -1,5 +1,6 @@
 import { Editor } from '@tiptap/react'
 import { Fragment } from 'react'
+
 import MenuItem from './MenuItem'
 
 interface Props {

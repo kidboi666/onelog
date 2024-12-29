@@ -8,8 +8,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 * {
   box-sizing: border-box;
   font-family: 'goorm-sans';
@@ -32,4 +30,3 @@
     @apply scale-95 opacity-0;
   }
 }
-

@@ -1,55 +1,34 @@
-'use client'
-
 import { useEffect } from 'react'
-import { supabase } from '@/src/lib/supabase/client'
-import { useRouter } from 'next/navigation'
-import { useSuspenseQuery } from '@tanstack/react-query'
-
-import { postQuery } from '@/src/services/queries/post/post-query'
-import { meQuery } from '@/src/services/queries/auth/me-query'
 
 import { Container } from '@/src/components/Container'
-import { YStack } from '@/src/components/Stack'
 import Line from '@/src/components/Line'
-import PublishSection from '../_components/PublishSection'
-import PostTypeSection from '../_components/PostTypeSection'
+import { YStack } from '@/src/components/Stack'
+
 import EmotionSection from '../_components/EmotionSection'
+import PostTypeSection from '../_components/PostTypeSection'
+import PublishSection from '../_components/PublishSection'
 import { TAccess, TEmotion, TPost } from '../page'
 
 interface Props {
   searchParams: { post_id: string }
   selectedEmotion: TEmotion
-  setSelectedEmotion: (emotion: TEmotion) => void
+  onChangeEmotion: (emotion: TEmotion) => void
   accessType: TAccess
-  setAccessType: (accessType: TAccess) => void
+  onChangeAccessType: (accessType: TAccess) => void
   postType: TPost
-  setPostType: (postType: TPost) => void
+  onChangePostType: (postType: TPost) => void
 }
 
 export default function SideOptionsContainer({
-  searchParams,
   selectedEmotion,
-  setSelectedEmotion,
+  onChangeEmotion,
   accessType,
-  setAccessType,
+  onChangeAccessType,
   postType,
-  setPostType,
+  onChangePostType,
 }: Props) {
-  const postId = Number(searchParams.post_id)
-  const router = useRouter()
-  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
-  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
-
-  const isOwner = me?.userId === post?.user_id
-  const handleChangeEmotion = (emotion: TEmotion | null) =>
-    setSelectedEmotion(emotion)
-  const handleChangeAccessType = (order: TAccess) => setAccessType(order)
-  const handleChangePostType = (order: TPost) => setPostType(order)
-
   useEffect(() => {
-    postType === 'article'
-      ? handleChangeEmotion(null)
-      : handleChangeEmotion('50%')
+    postType === 'article' ? onChangeEmotion(null) : onChangeEmotion('50%')
   }, [postType])
 
   return (
@@ -57,18 +36,18 @@ export default function SideOptionsContainer({
       <YStack as="nav" className="items-center">
         <PublishSection
           accessType={accessType}
-          onChangeAccessType={handleChangeAccessType}
+          onChangeAccessType={onChangeAccessType}
           isSide
         />
         <PostTypeSection
           postType={postType}
-          onChangePostType={handleChangePostType}
+          onChangePostType={onChangePostType}
           isSide
         />
         <Line className="w-full" />
         <EmotionSection
           selectedEmotion={selectedEmotion}
-          onChangeEmotion={handleChangeEmotion}
+          onChangeEmotion={onChangeEmotion}
           isSide
         />
       </YStack>

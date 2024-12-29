@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import {
   DragEvent,
@@ -6,21 +7,25 @@ import {
   useState,
   useTransition,
 } from 'react'
+
 import cn from '@/src/lib/cn'
-import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
-import { Tables } from '@/src/types/supabase'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+
 import useUpdateTodoFolder from '@/src/services/mutates/todo/useUpdateTodoFolder'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
+
+import { Tables } from '@/src/types/supabase'
+
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
 import Button from '@/src/components/Button'
-import FolderDropDown from './FolderDropDown'
 import { List } from '@/src/components/List'
-import { Dot } from './Dot'
 import Spinner from '@/src/components/Spinner'
-import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
+
+import { Dot } from './Dot'
+import FolderDropDown from './FolderDropDown'
 
 interface Props {
   isSelected: boolean

@@ -1,9 +1,12 @@
-import { DropDown } from '@/src/components/DropDown'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
-import EmotionGauge from './EmotionGauge'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+
+import { DropDown } from '@/src/components/DropDown'
 import Text from '@/src/components/Text'
+
 import { TEmotion } from '@/src/app/(playground)/post/edit/page'
+
+import EmotionGauge from './EmotionGauge'
 
 interface Props {
   emotionLevel: TEmotion | null

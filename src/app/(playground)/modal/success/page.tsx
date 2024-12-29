@@ -1,10 +1,17 @@
-'use client'
+'use client';
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import Title from '@/src/components/Title'
-import Button from '@/src/components/Button'
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
+
+
+import Button from '@/src/components/Button';
 import Modal from '@/src/components/Modal'
+import Title from '@/src/components/Title'
+
+
+
+
 
 export default function SuccessModal() {
   const router = useRouter()

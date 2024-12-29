@@ -1,11 +1,20 @@
 /* eslint-disable react/no-array-index-key */
-import { Dispatch, KeyboardEvent, SetStateAction, useRef, useState } from 'react'
-import Text from './Text'
-import useInput from '@/src/hooks/useInput'
+import {
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
+  useRef,
+  useState,
+} from 'react'
+
 import cn from '@/src/lib/cn'
-import Tag from './Tag'
+
+import useInput from '@/src/hooks/useInput'
+
 import Input from './Input'
 import { XStack } from './Stack'
+import Tag from './Tag'
+import Text from './Text'
 
 interface Props {
   tags: string[]

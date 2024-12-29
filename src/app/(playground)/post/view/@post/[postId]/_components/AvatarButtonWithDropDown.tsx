@@ -1,14 +1,16 @@
 'use client'
 
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import { DropDown } from '@/src/components/DropDown'
-import Title from '@/src/components/Title'
-import Avatar from '@/src/components/Avatar'
-import { XStack, YStack } from '@/src/components/Stack'
-import Follow from '@/src/components/Follow'
 import { routes } from '@/src/routes'
+
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
+import useOutsideClick from '@/src/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+
+import Avatar from '@/src/components/Avatar'
+import { DropDown } from '@/src/components/DropDow'
+import Follow from '@/src/components/Follow'
+import { XStack, YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
 
 interface Props {
   avatarUrl: string | null

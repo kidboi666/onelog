@@ -1,9 +1,11 @@
+import { ComponentProps } from 'react'
+
+import cn from '@/src/lib/cn'
+
 import Input from '@/src/components/Input'
 import { XStack, YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
 import Title from '@/src/components/Title'
-import cn from '@/src/lib/cn'
-import { ComponentProps } from 'react'
 
 interface Props extends ComponentProps<'input'> {
   value: string

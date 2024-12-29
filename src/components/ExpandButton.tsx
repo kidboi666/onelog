@@ -1,8 +1,9 @@
 'use client'
 
+import cn from '@/src/lib/cn'
+
 import Button from './Button'
 import Icon from './Icon'
-import cn from '@/src/lib/cn'
 
 interface Props {
   className?: string

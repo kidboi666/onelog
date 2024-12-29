@@ -1,12 +1,14 @@
-import { XStack, YStack } from '@/src/components/Stack'
-import Avatar from '@/src/components/Avatar'
-import Title from '@/src/components/Title'
-import Follow from '@/src/components/Follow'
-import { DropDown } from '@/src/components/DropDown'
 import { routes } from '@/src/routes'
 import { useTransition } from 'react'
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
+import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
+
+import Avatar from '@/src/components/Avatar'
+import { DropDown } from '@/src/components/DropDown'
+import Follow from '@/src/components/Follow'
+import { XStack, YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
 
 interface Props {
   avatarUrl: string | null

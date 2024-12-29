@@ -1,11 +1,15 @@
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
+
 import { createServerClient } from '@/src/lib/supabase/server'
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
+
 import { meQuery } from '@/src/services/queries/auth/me-query'
-import ThemeToggleButton from './_components/ThemeToggleButton'
-import MenuButton from './_components/MenuButton'
+
 import { Container } from '@/src/components/Container'
 import { XStack } from '@/src/components/Stack'
+
+import MenuButton from './_components/MenuButton'
+import ThemeToggleButton from './_components/ThemeToggleButton'
 
 export default function Default() {
   const supabase = createServerClient()

@@ -1,10 +1,12 @@
 'use client'
 
+import useSignOut from '@/src/services/mutates/auth/useSignOut'
+
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
+
 import Button from '@/src/components/Button'
 import { YStack } from '@/src/components/Stack'
 import Title from '@/src/components/Title'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
-import useSignOut from '@/src/services/mutates/auth/useSignOut'
 
 export default function LogoutButton() {
   const { session } = useMeQueries()
