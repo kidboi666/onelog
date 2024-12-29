@@ -1,14 +1,14 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
 import { supabase } from '@/src/lib/supabase/client'
 import usePostComment from '@/src/services/mutates/comment/usePostComment'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { IUserSession } from '@/src/types/auth'
 import useInput from '@/src/hooks/useInput'
-import useRouterPush from '@/src/hooks/useRouterPush'
+import { ROUTES } from '@/src/routes'
 import Avatar from '@/src/components/Avatar'
 import Button from '@/src/components/Button'
 import Input from '@/src/components/Input'
@@ -21,10 +21,12 @@ interface Props {
 }
 
 export default function CommentInput({ postId, commentId, session }: Props) {
-  const authGuard = useRouterPush(ROUTES.modal.auth.guard)
+  const router = useRouter()
   const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, session?.userId))
   const [content, onChangeContent, setContent] = useInput('')
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
+
+  const authGuard = () => router.push(ROUTES.MODAL.AUTH.GUARD)
 
   const handleRouterGuard = () => {
     if (session) {

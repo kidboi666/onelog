@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { IUserSession } from '@/src/types/auth'
 import { IComment } from '@/src/types/comment'
 import { IPost } from '@/src/types/post'
@@ -33,7 +33,7 @@ export default function CommentItem({ comment, postId, session }: Props) {
    */
   if (comment.comment) {
     const queryClient = getQueryClient()
-    const post = queryClient.getQueryData<IPost>(queryKey.post.detail(postId))
+    const post = queryClient.getQueryData<IPost>(QUERY_KEY.POST.DETAIL(postId))
     setCommentToComments = post!.comments
       .filter((v) => v.comment_id === comment.id)
       .sort((a, b) => Number(new Date(a.created_at)) - Number(new Date(b.created_at)))

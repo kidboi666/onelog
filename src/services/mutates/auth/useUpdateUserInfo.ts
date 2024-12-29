@@ -1,12 +1,12 @@
-import { ROUTES } from '@/src/ROUTES'
 import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 import { IUpdateUserInfo } from '@/src/types/auth'
+import { ROUTES } from '@/src/routes'
 
 export default function useUpdateUserInfo() {
   const queryClient = getQueryClient()
@@ -34,7 +34,7 @@ export default function useUpdateUserInfo() {
     },
 
     onSuccess: () => {
-      const queryKeys = [queryKey.auth.info, queryKey.auth.session]
+      const queryKeys = [QUERY_KEY.AUTH.INFO, QUERY_KEY.AUTH.SESSION]
       queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
 
       openToast({
@@ -42,7 +42,7 @@ export default function useUpdateUserInfo() {
         type: TOAST_TYPE.SUCCESS,
       })
 
-      router.replace(ROUTES.modal.success)
+      router.replace(ROUTES.MODAL.SUCCESS)
     },
     onError: (error) => {
       openToast({

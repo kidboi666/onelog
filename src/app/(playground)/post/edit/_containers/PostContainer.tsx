@@ -1,6 +1,5 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { BubbleMenu, EditorContent } from '@tiptap/react'
 import { useRouter } from 'next/navigation'
@@ -13,6 +12,7 @@ import { postQuery } from '@/src/services/queries/post/post-query'
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 import useInput from '@/src/hooks/useInput'
 import { formatDateToMDY } from '@/src/utils/formatDate'
+import { ROUTES } from '@/src/routes'
 import Avatar from '@/src/components/Avatar'
 import Button from '@/src/components/Button'
 import Input from '@/src/components/Input'
@@ -96,13 +96,13 @@ export default function PostContainer({
           },
           {
             onSuccess: () => {
-              router.replace(ROUTES.modal.success)
+              router.replace(ROUTES.MODAL.SUCCESS)
             },
           },
         )
       : addPost(newPost, {
           onSuccess: () => {
-            router.replace(ROUTES.modal.success)
+            router.replace(ROUTES.MODAL.SUCCESS)
           },
         })
   }

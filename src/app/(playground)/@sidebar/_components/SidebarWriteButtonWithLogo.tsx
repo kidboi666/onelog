@@ -1,6 +1,6 @@
-import { ROUTES } from '@/src/ROUTES'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Spinner from '@/src/components/Spinner'
@@ -18,7 +18,7 @@ export default function SidebarWriteButtonWithLogo({ isSelected, closeToolTip }:
   const [isLoading, startTransition] = useTransition()
 
   const pushWritePage = () => {
-    router.push(ROUTES.post.new)
+    router.push(ROUTES.POST.NEW)
     closeToolTip()
   }
 

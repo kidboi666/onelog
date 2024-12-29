@@ -2,7 +2,7 @@ import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 export default function useDeleteTodoFolder() {
@@ -26,7 +26,7 @@ export default function useDeleteTodoFolder() {
       })
     },
     onSettled: () => {
-      void queryClient.invalidateQueries({ queryKey: queryKey.todo.main })
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY.TODO.MAIN })
 
       openToast({ text: TOAST_MESSAGE.TODO_FOLDER.DELETE.SUCCESS, type: TOAST_TYPE.SUCCESS })
     },

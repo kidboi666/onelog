@@ -1,34 +1,34 @@
-export const queryKey = {
-  auth: {
-    session: ['me', 'session'],
-    info: ['me', 'info'],
+export const QUERY_KEY = {
+  AUTH: {
+    SESSION: ['me', 'session'],
+    INFO: ['me', 'info'],
   },
 
-  user: {
-    info: (userId: string) => ['user', 'info', userId],
+  USER: {
+    INFO: (userId: string) => ['user', 'info', userId],
   },
 
-  post: {
-    public: ['all_post'],
-    liked: (userId?: string | null, meId?: string | null) => ['post', 'liked', userId, meId],
-    thatDay: (startOfDay?: string | null, endOfDay?: string | null, authorId?: string | null) => [
+  POST: {
+    PUBLIC: ['all_post'],
+    LIKED: (userId?: string | null, meId?: string | null) => ['post', 'liked', userId, meId],
+    THAT_DAY: (startOfDay?: string | null, endOfDay?: string | null, authorId?: string | null) => [
       'post',
       startOfDay,
       endOfDay,
       authorId,
     ],
-    byPostType: (postType?: 'journal' | 'article', authorId?: string | null) => [
+    POST_TYPE: (postType?: 'journal' | 'article', authorId?: string | null) => [
       'post',
       postType,
       authorId,
     ],
-    detail: (postId?: number) => ['post', postId],
-    checkLiked: (postId?: number, meId?: string | null) => ['post', 'isLiked', postId, meId],
+    DETAIL: (postId?: number) => ['post', postId],
+    CHECK_LIKED: (postId?: number, meId?: string | null) => ['post', 'isLiked', postId, meId],
 
-    count: {
-      liked: (userId: string) => ['count', 'post', userId],
-      total: (userId: string) => ['count', 'allPost', userId],
-      byPostType: (userId: string, postType?: 'journal' | 'article') => [
+    COUNT: {
+      LIKED: (userId: string) => ['count', 'post', userId],
+      TOTAL: (userId: string) => ['count', 'allPost', userId],
+      POST_TYPE: (userId: string, postType?: 'journal' | 'article') => [
         'count',
         'post',
         postType,
@@ -37,42 +37,28 @@ export const queryKey = {
     },
   },
 
-  comment: {
-    byPost: (postId: number) => ['comment', postId],
-    byComment: (postId: number, commentId: number | null) => ['comment', postId, commentId],
-    count: {
-      byPost: (postId?: number) => ['count', 'comment', postId],
-      byComment: (postId?: number, commentId?: number | null) => [
-        'count',
-        'comment',
-        postId,
-        commentId,
-      ],
+  WORD: {
+    USED: (authorId: string) => ['word', authorId],
+    DETAIL: (word: string) => ['word', word],
+  },
+
+  GARDEN: (userId: string) => ['garden', userId],
+
+  FOLLOW: {
+    FOLLOWER: (userId?: string | null) => ['follower', userId],
+    FOLLOWING: (userId?: string | null) => ['following', userId],
+
+    COUNT: {
+      FOLLOWER: (userId?: string) => ['count', 'follower', userId],
+      FOLLOWING: (userId?: string) => ['count', 'following', userId],
     },
   },
 
-  word: {
-    used: (authorId: string) => ['word', authorId],
-    detail: (word: string) => ['word', word],
-  },
-
-  garden: (userId: string) => ['garden', userId],
-
-  follow: {
-    follower: (userId?: string | null) => ['follower', userId],
-    following: (userId?: string | null) => ['following', userId],
-
-    count: {
-      follower: (userId?: string) => ['count', 'follower', userId],
-      following: (userId?: string) => ['count', 'following', userId],
-    },
-  },
-
-  todo: {
-    inProgress: ['todo', 'in_progress'],
-    completed: ['todo', 'completed'],
-    main: ['todo_folder'],
-    folder: (folderId: number) => ['todo', folderId],
-    index: (folderId: number) => ['todo', 'index', folderId],
+  TODO: {
+    IN_PROGRESS: ['todo', 'in_progress'],
+    COMPLETED: ['todo', 'completed'],
+    MAIN: ['todo_folder'],
+    FOLDER: (folderId: number) => ['todo', folderId],
+    INDEX: (folderId: number) => ['todo', 'index', folderId],
   },
 }

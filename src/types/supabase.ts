@@ -68,11 +68,11 @@ export type Database = {
             isOneToOne: false
 						referencedRelation: 'post'
 						referencedColumns: ['id']
-          },
-          {
+					},
+					{
 						foreignKeyName: 'comment_user_id_fkey'
 						columns: ['user_id']
-            isOneToOne: false
+						isOneToOne: false
 						referencedRelation: 'user_info'
 						referencedColumns: ['id']
           },
@@ -490,7 +490,7 @@ export type Database = {
 type PublicSchema = Database[Extract<keyof Database, 'public'>]
 
 export type Tables<
-  PublicTableNameOrOptions extends | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
+	PublicTableNameOrOptions extends | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
 		? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &

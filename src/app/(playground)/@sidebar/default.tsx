@@ -1,9 +1,9 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import { ROUTES } from '@/src/routes'
 import { Container } from '@/src/components/Container'
 import Line from '@/src/components/Line'
 import { YStack, ZStack } from '@/src/components/Stack'
@@ -38,7 +38,7 @@ export default function Sidebar() {
         <ZStack>
           <SidebarWriteButtonWithLogo
             closeToolTip={handleToolTipClose}
-            isSelected={pathname === ROUTES.post.new}
+            isSelected={pathname === ROUTES.POST.NEW}
           />
           <ToolTip position="right" size="sm" isHover={isHover} text="글쓰기" />
         </ZStack>

@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface IDeleteComment {
@@ -31,7 +31,7 @@ export default function useDeleteComment() {
       }
 
       void queryClient.invalidateQueries({
-        queryKey: queryKey.post.detail(postId),
+        queryKey: QUERY_KEY.POST.DETAIL(postId),
       })
     },
     onError: (error) => {

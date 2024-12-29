@@ -2,7 +2,7 @@ import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 import { Tables } from '@/src/types/supabase'
 
@@ -35,7 +35,7 @@ export default function useUpdateTodo() {
     },
     onSuccess: (_, variables) => {
       const { folder_id } = variables
-      const queryKeys = [queryKey.todo.folder(folder_id), queryKey.todo.inProgress]
+      const queryKeys = [QUERY_KEY.TODO.FOLDER(folder_id), QUERY_KEY.TODO.IN_PROGRESS]
       void queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
 
       openToast({

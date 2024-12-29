@@ -1,12 +1,12 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { Tables } from '@/src/types/supabase'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Spinner from '@/src/components/Spinner'
@@ -29,7 +29,7 @@ export default function ButtonSection({ todoId, folderId, todo, color, orderFrom
 
   const handleDeleteButtonClick = () => {
     startTransitionDelete(() =>
-      router.push(ROUTES.modal.todo.delete(todoId, folderId, color, orderFrom), {
+      router.push(ROUTES.MODAL.TODO.DELETE(todoId, folderId, color, orderFrom), {
         scroll: false,
       }),
     )
@@ -58,7 +58,7 @@ export default function ButtonSection({ todoId, folderId, todo, color, orderFrom
           {
             onSuccess: () => {
               void queryClient.invalidateQueries({
-                queryKey: queryKey.todo.folder(Number(folderId)),
+                queryKey: QUERY_KEY.TODO.FOLDER(Number(folderId)),
               })
               router.back()
             },

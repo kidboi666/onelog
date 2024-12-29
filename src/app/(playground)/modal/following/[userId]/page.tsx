@@ -1,11 +1,11 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import { ROUTES } from '@/src/routes'
 import Modal from '@/src/components/Modal'
 import { YStack } from '@/src/components/Stack'
 import FollowUserCard from '../../_components/FollowUserCard'
@@ -24,7 +24,7 @@ export default function FollowingListModal({ params }: Props) {
 
   const handleFollow = (e: MouseEvent, userId: string, isFollowing: boolean) => {
     e.stopPropagation()
-    if (!session) return router.push(ROUTES.modal.auth.guard)
+    if (!session) return router.push(ROUTES.MODAL.AUTH.GUARD)
 
     setPendingList((prev) => ({ ...prev, [userId]: true }))
     followOrUnfollow(
@@ -42,7 +42,7 @@ export default function FollowingListModal({ params }: Props) {
   }
 
   const handlePushUserPage = (userId: string) => {
-    router.push(ROUTES.profile.view(userId), { scroll: false })
+    router.push(ROUTES.PROFILE.VIEW(userId), { scroll: false })
   }
 
   return (

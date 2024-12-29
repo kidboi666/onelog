@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect } from 'react'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { Tables } from '@/src/types/supabase'
 import useInput from '@/src/hooks/useInput'
@@ -28,7 +28,7 @@ export default function MemoSection({ todo }: Props) {
       {
         onSuccess: () => {
           void queryClient.invalidateQueries({
-            queryKey: queryKey.todo.inProgress,
+            queryKey: QUERY_KEY.TODO.IN_PROGRESS,
           })
         },
       },

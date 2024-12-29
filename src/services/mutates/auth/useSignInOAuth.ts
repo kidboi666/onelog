@@ -2,7 +2,7 @@ import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 import { isDevelop } from '@/src/utils/isDevelop'
 
@@ -45,7 +45,7 @@ export const useSignInOAuth = () => {
       })
     },
     onSettled: () => {
-      const queryKeys = [queryKey.auth.info, queryKey.auth.session]
+      const queryKeys = [QUERY_KEY.AUTH.INFO, QUERY_KEY.AUTH.SESSION]
       queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
     },
   })

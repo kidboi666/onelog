@@ -1,9 +1,8 @@
-import { SupabaseClient } from '@supabase/supabase-js';
-import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
-import { queryKey } from '@/src/lib/tanstack/query-key';
-import { IPost } from '@/src/types/post';
-import { Tables } from '@/src/types/supabase';
-
+import { SupabaseClient } from '@supabase/supabase-js'
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
+import { IPost } from '@/src/types/post'
+import { Tables } from '@/src/types/supabase'
 
 /**
  * TODO 대충 any 로 휘갈긴 타입핑 지정 @kidboi666
@@ -11,7 +10,7 @@ import { Tables } from '@/src/types/supabase';
 export const postQuery = {
   getAllPost: (supabase: SupabaseClient, limit: number, meId?: string | null) =>
     infiniteQueryOptions({
-      queryKey: queryKey.post.public,
+      queryKey: QUERY_KEY.POST.PUBLIC,
       queryFn: async ({ pageParam = 0 }) => {
         let query: any = supabase
           .from('post')
@@ -49,7 +48,7 @@ export const postQuery = {
 
   getPost: (supabase: SupabaseClient, postId: number, meId?: string | null) =>
     queryOptions<IPost>({
-      queryKey: queryKey.post.detail(postId),
+      queryKey: QUERY_KEY.POST.DETAIL(postId),
       queryFn: async () => {
         /**
          * 필요 이상으로 복잡한 타입핑 때문에 any
@@ -100,7 +99,7 @@ export const postQuery = {
    */
   getLikedPost: (supabase: SupabaseClient, userId: string, limit: number, meId?: string) =>
     infiniteQueryOptions({
-      queryKey: queryKey.post.liked(userId, meId),
+      queryKey: QUERY_KEY.POST.LIKED(userId, meId),
       queryFn: async ({ pageParam = 0 }) => {
         let query = supabase
           .from('like')
@@ -161,7 +160,7 @@ export const postQuery = {
     meId?: string,
   ) =>
     queryOptions({
-      queryKey: queryKey.post.thatDay(startOfDay, endOfDay, authorId),
+      queryKey: QUERY_KEY.POST.THAT_DAY(startOfDay, endOfDay, authorId),
       queryFn: async () => {
         let query = supabase
           .from('post')
@@ -220,7 +219,7 @@ export const postQuery = {
     meId?: string,
   ) =>
     infiniteQueryOptions({
-      queryKey: queryKey.post.byPostType(postType, authorId),
+      queryKey: QUERY_KEY.POST.POST_TYPE(postType, authorId),
       queryFn: async ({ pageParam = 0 }) => {
         let query = supabase
           .from('post')
@@ -276,7 +275,7 @@ export const postQuery = {
 
   getMyUsedWords: (supabase: SupabaseClient, userId: string) =>
     queryOptions<Tables<'user_words'>>({
-      queryKey: queryKey.word.used(userId),
+      queryKey: QUERY_KEY.WORD.USED(userId),
       queryFn: async () => {
         const { data } = await supabase.from('user_words').select().eq('user_id', userId).single()
 
@@ -286,7 +285,7 @@ export const postQuery = {
 
   getUsedWords: (supabase: SupabaseClient, word: string, trigger: boolean) =>
     queryOptions<Tables<'word_dictionary'>>({
-      queryKey: queryKey.word.detail(word),
+      queryKey: QUERY_KEY.WORD.DETAIL(word),
       queryFn: async () => {
         const { data } = await supabase.from('word_dictionary').select().eq('word', word).single()
 

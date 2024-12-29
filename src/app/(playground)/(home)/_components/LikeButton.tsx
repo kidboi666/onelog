@@ -1,12 +1,12 @@
-import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 import cn from '@/src/lib/cn'
 import { supabase } from '@/src/lib/supabase/client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import useLikeMutates from '@/src/hooks/mutates/useLikeMutates'
-import useRouterPush from '@/src/hooks/useRouterPush'
 import useToggle from '@/src/hooks/useToggle'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import ToolTip from '@/src/components/Tooltip'
@@ -20,10 +20,12 @@ interface Props {
 }
 
 export default function LikeButton({ viewToolTip, isSide, likeCount, postId, isLiked }: Props) {
-  const authGuard = useRouterPush(ROUTES.modal.auth.guard, false)
+  const router = useRouter()
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { onLikePost } = useLikeMutates({ isLiked, postId })
+
+  const authGuard = () => router.push(ROUTES.MODAL.AUTH.GUARD, { scroll: false })
 
   const handleFavoritePost = (e: MouseEvent): void => {
     e.stopPropagation()

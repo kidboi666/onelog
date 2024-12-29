@@ -1,12 +1,12 @@
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { Tables } from '@/src/types/supabase'
 
 export const todoQuery = {
   getTodoInProgress: (supabase: SupabaseClient, userId: string) =>
     queryOptions<Tables<'todo'>[]>({
-      queryKey: queryKey.todo.inProgress,
+      queryKey: QUERY_KEY.TODO.IN_PROGRESS,
       queryFn: async () => {
         const { data } = await supabase
           .from('todo')
@@ -20,7 +20,7 @@ export const todoQuery = {
 
   getTodoInCompleted: (supabase: SupabaseClient, userId: string) =>
     queryOptions<Tables<'todo'>[]>({
-      queryKey: queryKey.todo.completed,
+      queryKey: QUERY_KEY.TODO.COMPLETED,
       queryFn: async () => {
         const { data } = await supabase
           .from('todo')
@@ -34,7 +34,7 @@ export const todoQuery = {
 
   getTodoFromFolder: (supabase: SupabaseClient, userId: string, folderId: number) =>
     queryOptions<Tables<'todo'>[]>({
-      queryKey: queryKey.todo.folder(folderId),
+      queryKey: QUERY_KEY.TODO.FOLDER(folderId),
       queryFn: async () => {
         let myTodo
         const { data } = await supabase.from('todo').select().eq('user_id', userId)
@@ -48,7 +48,7 @@ export const todoQuery = {
 
   getTodoIndex: (supabase: SupabaseClient, userId: string, folderId: number) =>
     queryOptions({
-      queryKey: queryKey.todo.index(folderId),
+      queryKey: QUERY_KEY.TODO.INDEX(folderId),
       queryFn: async () => {
         const { data } = await supabase.from('todo').select().eq('user_id', userId)
       },

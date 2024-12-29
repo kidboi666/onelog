@@ -1,6 +1,6 @@
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 
 export const countFollowQuery = {
   /** 유저를 팔로우하는 유저의 Id들 */
@@ -10,11 +10,11 @@ export const countFollowQuery = {
     isMount: boolean | undefined = false,
   ) =>
     queryOptions({
-      queryKey: queryKey.follow.count.follower(userId),
+      queryKey: QUERY_KEY.FOLLOW.COUNT.FOLLOWER(userId),
       queryFn: async () => {
         const { count, error } = await supabase
           .from('follow')
-          .select('followed_user_id', { count: 'exact', head: true })
+          .select('followed_user_id', { COUNT: 'exact', head: true })
           .eq('followed_user_id', userId)
 
         if (error) {
@@ -33,11 +33,11 @@ export const countFollowQuery = {
     isMount: boolean | undefined = false,
   ) =>
     queryOptions({
-      queryKey: queryKey.follow.count.following(userId),
+      queryKey: QUERY_KEY.FOLLOW.COUNT.FOLLOWING(userId),
       queryFn: async () => {
         const { count, error } = await supabase
           .from('follow')
-          .select('follower_user_id', { count: 'exact', head: true })
+          .select('follower_user_id', { COUNT: 'exact', head: true })
           .eq('follower_user_id', userId)
 
         if (error) {

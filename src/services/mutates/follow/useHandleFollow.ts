@@ -2,7 +2,7 @@ import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface Params {
@@ -79,10 +79,10 @@ export default function useHandleFollow() {
       }
 
       const queryKeys = [
-        queryKey.follow.follower(followed_user_id),
-        queryKey.follow.count.follower(followed_user_id),
-        queryKey.follow.following(follower_user_id),
-        queryKey.follow.count.following(follower_user_id),
+        QUERY_KEY.FOLLOW.FOLLOWER(followed_user_id),
+        QUERY_KEY.FOLLOW.COUNT.FOLLOWER(followed_user_id),
+        QUERY_KEY.FOLLOW.FOLLOWING(follower_user_id),
+        QUERY_KEY.FOLLOW.COUNT.FOLLOWING(follower_user_id),
       ]
       queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
     },

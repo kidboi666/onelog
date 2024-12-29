@@ -1,6 +1,6 @@
-import { ROUTES, authRestrictedRoutes, protectedRoutes } from '@/src/ROUTES'
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
+import { AUTH_RESTRICTED_ROUTES, PROTECTED_ROUTES, ROUTES } from '@/src/routes'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -37,20 +37,20 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const attemptedUnauthorizedAccess =
-    user && authRestrictedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
+    user && AUTH_RESTRICTED_ROUTES.some((route) => request.nextUrl.pathname.startsWith(route))
 
   if (attemptedUnauthorizedAccess) {
     const url = request.nextUrl.clone()
-    url.pathname = ROUTES.home
+    url.pathname = ROUTES.HOME
     return NextResponse.redirect(url)
   }
 
   const isUnauthorized =
-    !user && protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
+    !user && PROTECTED_ROUTES.some((route) => request.nextUrl.pathname.startsWith(route))
 
   if (isUnauthorized) {
     const url = request.nextUrl.clone()
-    url.pathname = ROUTES.modal.auth.guard
+    url.pathname = ROUTES.MODAL.AUTH.GUARD
     return NextResponse.redirect(url)
   }
 

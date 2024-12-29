@@ -1,6 +1,5 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
@@ -15,6 +14,7 @@ import { Tables } from '@/src/types/supabase'
 import useInput from '@/src/hooks/useInput'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import { Container } from '@/src/components/Container'
 import Icon from '@/src/components/Icon'
@@ -129,7 +129,7 @@ export default function TaskForm({ params, searchParams }: Props) {
 
   useEffect(() => {
     if (!currentFolder) {
-      router.push(ROUTES.todo.main)
+      router.push(ROUTES.TODO.MAIN)
     }
   }, [currentFolder])
 

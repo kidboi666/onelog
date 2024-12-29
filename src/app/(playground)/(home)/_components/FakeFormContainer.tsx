@@ -1,23 +1,25 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import cn from '@/src/lib/cn'
 import { supabase } from '@/src/lib/supabase/client'
 import { useTheme } from '@/src/store/useTheme'
 import { meQuery } from '@/src/services/queries/auth/me-query'
-import useRouterPush from '@/src/hooks/useRouterPush'
+import { ROUTES } from '@/src/routes'
 import Avatar from '@/src/components/Avatar'
 import { Container } from '@/src/components/Container'
 import { XStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
 
 export default function FakeFormContainer() {
-  const pushNewPost = useRouterPush(ROUTES.post.new)
-  const authGuard = useRouterPush(ROUTES.modal.auth.guard)
+  const router = useRouter()
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase))
   const { color } = useTheme()
+
+  const pushNewPost = () => router.push(ROUTES.POST.NEW)
+  const authGuard = () => router.push(ROUTES.MODAL.AUTH.GUARD)
 
   const handlePostClick = () => {
     session ? pushNewPost() : authGuard()

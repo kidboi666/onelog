@@ -1,7 +1,7 @@
-import { ROUTES } from '@/src/ROUTES'
 import { IPost } from '@/src/types/post'
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
+import { ROUTES } from '@/src/routes'
 import { YStack } from '@/src/components/Stack'
 import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 import PostCardContent from './PostCardContent'
@@ -18,7 +18,7 @@ export default function PostCard({ post, postUserInfo, createdAtLiked, disabled 
   const postId = Number(post?.id)
   const content = post?.content
   const tags = post?.tags || []
-  const [, pushPostDetail] = useRouterPushWithTransition(ROUTES.post.view(postId))
+  const [, pushPostDetail] = useRouterPushWithTransition(ROUTES.POST.VIEW(postId))
 
   const { editor } = useBlockEditor({
     content,

@@ -1,6 +1,5 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
@@ -8,6 +7,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import useReport from '@/src/services/mutates/report/useReport'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import useInput from '@/src/hooks/useInput'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Modal from '@/src/components/Modal'
 import { XStack, YStack } from '@/src/components/Stack'
@@ -34,7 +34,7 @@ export default function ReportCommentModal({ params }: Props) {
       },
       {
         onSuccess: () => {
-          router.push(ROUTES.modal.success, { scroll: false })
+          router.push(ROUTES.MODAL.SUCCESS, { scroll: false })
         },
       },
     )

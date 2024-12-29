@@ -1,10 +1,9 @@
-import { dehydrate } from '@tanstack/react-query';
-import { queryKey } from '@/src/lib/tanstack/query-key';
-import initClient from '@/src/services/queries/init-client';
-import { postCountQuery } from '@/src/services/queries/post/post-count-query';
-import { postQuery } from '@/src/services/queries/post/post-query';
-import { IPost } from '@/src/types/post';
-
+import { dehydrate } from '@tanstack/react-query'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
+import initClient from '@/src/services/queries/init-client'
+import { postCountQuery } from '@/src/services/queries/post/post-count-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+import { IPost } from '@/src/types/post'
 
 const prefetchPost = async (postId: number) => {
   const { queryClient, supabase } = initClient()
@@ -33,7 +32,7 @@ const prefetchLikedPostCount = async (userId: string) => {
 export const postPrefetchQuery = {
   metadata: async (postId: number): Promise<IPost | undefined> => {
     const queryClient = await prefetchPost(postId)
-    return queryClient.getQueryData<IPost>(queryKey.post.detail(postId))
+    return queryClient.getQueryData<IPost>(QUERY_KEY.POST.DETAIL(postId))
   },
   getPost: async (postId: number): Promise<ReturnType<typeof dehydrate>> => {
     const queryClient = await prefetchPost(postId)

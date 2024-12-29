@@ -1,8 +1,8 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useRouter } from 'next/navigation'
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import { YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
@@ -12,7 +12,7 @@ export default function PasswordResetForm() {
   const router = useRouter()
   const { me, session } = useMeQueries()
   const handlePasswordReset = () => {
-    router.push(ROUTES.modal.updatePassword)
+    router.push(ROUTES.MODAL.UPDATE_PASSWORD)
   }
 
   return (

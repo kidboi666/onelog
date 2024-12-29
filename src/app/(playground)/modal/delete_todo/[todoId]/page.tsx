@@ -1,10 +1,10 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useRouter } from 'next/navigation'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import useDeleteTodo from '@/src/services/mutates/todo/useDeleteTodo'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Modal from '@/src/components/Modal'
 import Title from '@/src/components/Title'
@@ -35,15 +35,15 @@ export default function DeleteTodoModal({ params, searchParams }: Props) {
       {
         onSettled: (data, error, variables, context) => {
           queryClient.invalidateQueries({
-            queryKey: queryKey.todo.folder(Number(folderId)),
+            queryKey: QUERY_KEY.TODO.FOLDER(Number(folderId)),
           })
           queryClient.invalidateQueries({
-            queryKey: queryKey.todo.inProgress,
+            queryKey: QUERY_KEY.TODO.IN_PROGRESS,
           })
           if (orderFrom === 'main') {
-            router.push(ROUTES.todo.main)
+            router.push(ROUTES.TODO.MAIN)
           } else {
-            router.push(ROUTES.todo.view.folder(Number(folderId), color))
+            router.push(ROUTES.TODO.VIEW.FOLDER(Number(folderId), color))
           }
         },
       },

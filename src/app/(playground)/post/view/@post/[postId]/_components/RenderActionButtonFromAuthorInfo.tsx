@@ -1,9 +1,9 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { IUserSession } from '@/src/types/auth'
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
 import useTransitionWithRoute from '@/src/hooks/useRouterPushWithTransition'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import { XStack } from '@/src/components/Stack'
 
@@ -19,9 +19,9 @@ export default function RenderActionButtonFromAuthorInfo({ session, isFollowing,
     userId,
   })
 
-  const [isLoadingWrite, startTransitionWrite] = useTransitionWithRoute(ROUTES.post.new)
+  const [isLoadingWrite, startTransitionWrite] = useTransitionWithRoute(ROUTES.POST.NEW)
   const [isLoadingEditProfile, startTransitionEditProfile] = useTransitionWithRoute(
-    ROUTES.profile.edit,
+    ROUTES.PROFILE.EDIT,
   )
 
   return (

@@ -2,7 +2,7 @@ import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface IAddpost {
@@ -36,9 +36,9 @@ export default function useAddPost() {
     onSuccess: (_, variables) => {
       const { user_id: userId } = variables
       const queryKeys = [
-        queryKey.post.public,
-        queryKey.garden(userId),
-        queryKey.post.count.total(userId),
+        QUERY_KEY.POST.PUBLIC,
+        QUERY_KEY.GARDEN(userId),
+        QUERY_KEY.POST.COUNT.TOTAL(userId),
       ]
       queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
 

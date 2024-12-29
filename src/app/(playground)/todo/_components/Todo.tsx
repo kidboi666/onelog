@@ -1,6 +1,5 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { DragEvent, MouseEvent, MutableRefObject, useRef, useState, useTransition } from 'react'
@@ -11,6 +10,7 @@ import { meQuery } from '@/src/services/queries/auth/me-query'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
 import { Tables } from '@/src/types/supabase'
 import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
@@ -50,7 +50,7 @@ export default function Todo({
   const [isPending, startTransition] = useTransition()
 
   const handleTodoClick = () => {
-    router.push(ROUTES.todo.view.detail(todo.id, todo.folder_id, folderColor, orderFrom), {
+    router.push(ROUTES.TODO.VIEW.DETAIL(todo.id, todo.folder_id, folderColor, orderFrom), {
       scroll: false,
     })
   }

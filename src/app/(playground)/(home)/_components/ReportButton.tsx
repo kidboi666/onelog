@@ -1,10 +1,10 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 import cn from '@/src/lib/cn'
 import useToggle from '@/src/hooks/useToggle'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import { Container } from '@/src/components/Container'
 import Icon from '@/src/components/Icon'
@@ -24,9 +24,9 @@ export default function ReportButton({ viewToolTip, postId, commentId, isSide }:
   const pushReportModal = (e: MouseEvent) => {
     e.stopPropagation()
     if (commentId) {
-      router.push(ROUTES.modal.report.comment(commentId), { scroll: false })
+      router.push(ROUTES.MODAL.REPORT.COMMENT(commentId), { scroll: false })
     } else {
-      router.push(ROUTES.modal.report.post(postId!), { scroll: false })
+      router.push(ROUTES.MODAL.REPORT.POST(postId!), { scroll: false })
     }
   }
 

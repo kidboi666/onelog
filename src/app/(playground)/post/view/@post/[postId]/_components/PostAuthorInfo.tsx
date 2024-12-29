@@ -1,12 +1,12 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
-import useRouterPush from '@/src/hooks/useRouterPush'
+import useFollowValidate from '@/src/hooks/queries/useFollowValidate'
+import { ROUTES } from '@/src/routes'
 import Avatar from '@/src/components/Avatar'
 import { XStack, YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
@@ -18,10 +18,14 @@ interface Props {
 }
 
 export default function PostAuthorInfo({ postId }: Props) {
+  const router = useRouter()
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId, session?.userId))
-  const pushNewPostPage = useRouterPush(ROUTES.profile.view(post?.user_id))
-  const { isFollowing } = useFollowQueries(post?.user_id)
+  const { isFollowing } = useFollowValidate(post?.user_id, session?.userId)
+
+  const pushNewPostPage = () => router.push(ROUTES.PROFILE.VIEW(post?.user_id))
+
+  const { user_info, user_id } = post || {}
 
   return (
     <YStack>
@@ -30,16 +34,16 @@ export default function PostAuthorInfo({ postId }: Props) {
         className="w-full rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark"
       >
         <XStack onClick={pushNewPostPage} className="flex flex-1 gap-4">
-          <Avatar src={post?.user_info.avatar_url} size="md" />
+          <Avatar src={user_info.avatar_url} size="md" />
           <YStack gap={1} className="w-full">
-            <Title size="sm">{post?.user_info.user_name}</Title>
-            <Text type="caption">{post?.user_info.email}</Text>
-            <Text>{post?.user_info.about_me}</Text>
+            <Title size="sm">{user_info.user_name}</Title>
+            <Text type="caption">{user_info.email}</Text>
+            <Text>{user_info.about_me}</Text>
           </YStack>
           <RenderActionButtonFromAuthorInfo
             session={session}
             isFollowing={isFollowing}
-            userId={post?.user_id}
+            userId={user_id}
           />
         </XStack>
       </YStack>

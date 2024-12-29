@@ -1,12 +1,12 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
 import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import { XStack } from '@/src/components/Stack'
 
@@ -28,9 +28,9 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
   }
 
   const [isLoadingProfile, handlePushEditProfilePage] = useRouterPushWithTransition(
-    ROUTES.profile.edit,
+    ROUTES.PROFILE.EDIT,
   )
-  const [isLoadingWrite, handlePushNewPostPage] = useRouterPushWithTransition(ROUTES.post.new)
+  const [isLoadingWrite, handlePushNewPostPage] = useRouterPushWithTransition(ROUTES.POST.NEW)
 
   const handleSendMessageButtonClick = () => {
     return null

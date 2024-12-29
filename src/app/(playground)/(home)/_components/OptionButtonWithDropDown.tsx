@@ -1,13 +1,13 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useRouterPush from '@/src/hooks/useRouterPush'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import { ROUTES } from '@/src/routes'
 import { DropDown } from '@/src/components/DropDown'
 import Icon from '@/src/components/Icon'
 
@@ -26,13 +26,16 @@ export default function OptionButtonWithDropDown({
   onModify,
   isSide,
 }: Props) {
+  const router = useRouter()
   const { close, ref, onClick, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
   const optionButtonRef = useOutsideClick<HTMLButtonElement>(close)
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId, session?.userId))
-  const pushEditPostPage = useRouterPush(ROUTES.post.edit(postId))
-  const pushDeleteCommentModal = useRouterPush(ROUTES.modal.delete.comment(commentId!, postId))
-  const pushDeletePostModal = useRouterPush(ROUTES.modal.delete.post(postId))
+
+  const pushEditPostPage = () => router.push(ROUTES.POST.EDIT(postId))
+  const pushDeleteCommentModal = () => router.push(ROUTES.MODAL.DELETE.COMMENT(commentId!, postId))
+  const pushDeletePostModal = () => router.push(ROUTES.MODAL.DELETE.POST(postId))
+
   let isOwner
 
   if (commentId) {

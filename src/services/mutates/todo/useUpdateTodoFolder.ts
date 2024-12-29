@@ -1,11 +1,11 @@
-import { ROUTES } from '@/src/ROUTES'
 import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
+import { ROUTES } from '@/src/routes'
 
 interface ITodoFolder {
   name: string
@@ -39,8 +39,8 @@ export default function useUpdateTodoFolder() {
       return data
     },
     onSuccess: (_, variables) => {
-      void queryClient.invalidateQueries({ queryKey: queryKey.todo.main })
-      router.push(ROUTES.todo.view.folder(variables.id, variables.color))
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY.TODO.MAIN })
+      router.push(ROUTES.TODO.VIEW.FOLDER(variables.id, variables.color))
 
       openToast({
         text: TOAST_MESSAGE.TODO_FOLDER.UPDATE.SUCCESS,

@@ -1,8 +1,8 @@
 'use client'
 
-import { ROUTES } from '@/src/ROUTES'
 import cn from '@/src/lib/cn'
 import { useTheme } from '@/src/store/useTheme'
+import { ROUTES } from '@/src/routes'
 import Icon from '@/src/components/Icon'
 import LinkButton from '@/src/components/LinkButton'
 
@@ -10,7 +10,7 @@ export default function Logo() {
   const { theme } = useTheme()
   return (
     <LinkButton
-      href={ROUTES.home}
+      href={ROUTES.HOME}
       variant="none"
       className={cn('w-fit', theme === 'dark' ? 'text-white' : 'text-black')}
       innerClassName="py-0"

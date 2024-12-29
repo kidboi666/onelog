@@ -1,7 +1,7 @@
-import { ROUTES } from '@/src/ROUTES'
 import { Fragment } from 'react'
 import cn from '@/src/lib/cn'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Text from '@/src/components/Text'
 import { PROFILE_NAVIGATE_MENUS } from '@/src/app/(playground)/profile/view/[userId]/_constants/navigate'
@@ -16,7 +16,7 @@ interface Props {
 
 export default function NavigationMenuButton({ segment, menu, counts, likedCount, userId }: Props) {
   const [isLoading, pushProfileView] = useRouterPushWithTransition(
-    ROUTES.profile.view(userId, menu.path),
+    ROUTES.PROFILE.VIEW(userId, menu.path),
   )
   return (
     <Button

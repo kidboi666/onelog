@@ -2,7 +2,7 @@ import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface IUpdatePost {
@@ -37,10 +37,10 @@ export default function useUpdatePost() {
     onSuccess: (_, variables) => {
       const { id, user_id: meId } = variables
       const queryKeys = [
-        queryKey.post.public,
-        queryKey.post.detail(id),
-        queryKey.post.byPostType('article', meId),
-        queryKey.post.byPostType('journal', meId),
+        QUERY_KEY.POST.PUBLIC,
+        QUERY_KEY.POST.DETAIL(id),
+        QUERY_KEY.POST.POST_TYPE('article', meId),
+        QUERY_KEY.POST.POST_TYPE('journal', meId),
       ]
       queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
 

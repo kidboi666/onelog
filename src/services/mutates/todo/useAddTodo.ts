@@ -2,7 +2,7 @@ import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface ITodo {
@@ -43,7 +43,7 @@ export default function useAddTodo() {
       })
     },
     onSuccess: (_, variables) => {
-      const queryKeys = [queryKey.todo.folder(variables.folderId), queryKey.todo.main]
+      const queryKeys = [QUERY_KEY.TODO.FOLDER(variables.folderId), QUERY_KEY.TODO.MAIN]
       void queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
 
       openToast({

@@ -1,4 +1,4 @@
-import { ROUTES } from '@/src/ROUTES'
+import { ROUTES } from '@/src/routes'
 import BackButton from '@/src/components/BackButton'
 import { Container } from '@/src/components/Container'
 import LinkButton from '@/src/components/LinkButton'
@@ -22,7 +22,7 @@ export default function NotFound() {
           <BackButton variant="secondary" size="md" className="p-3">
             뒤로가기
           </BackButton>
-          <LinkButton href={ROUTES.home}>메인 화면으로</LinkButton>
+          <LinkButton href={ROUTES.HOME}>메인 화면으로</LinkButton>
         </XStack>
       </YStack>
     </Container>

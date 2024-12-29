@@ -2,7 +2,7 @@ import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { queryKey } from '@/src/lib/tanstack/query-key'
+import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 
 interface IFavorite {
@@ -57,12 +57,12 @@ export default function useHandleLikePost(isLike: boolean | null | undefined) {
       const { postId, meId, authorId, postType, startOfDay = null, endOfDay = null } = variables
 
       const queryKeys = [
-        queryKey.post.public,
-        queryKey.post.liked(authorId, meId),
-        queryKey.post.thatDay(startOfDay, endOfDay, authorId),
-        queryKey.post.detail(postId),
-        queryKey.post.byPostType(postType, authorId),
-        queryKey.post.checkLiked(postId, meId),
+        QUERY_KEY.POST.PUBLIC,
+        QUERY_KEY.POST.LIKED(authorId, meId),
+        QUERY_KEY.POST.THAT_DAY(startOfDay, endOfDay, authorId),
+        QUERY_KEY.POST.DETAIL(postId),
+        QUERY_KEY.POST.POST_TYPE(postType, authorId),
+        QUERY_KEY.POST.CHECK_LIKED(postId, meId),
       ]
       queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
     },
