@@ -1,6 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
+import { PostType } from '@/src/types/post'
 
 export const postCountQuery = {
   countLikedPost: (supabase: SupabaseClient, userId: string) =>
@@ -9,7 +10,7 @@ export const postCountQuery = {
       queryFn: async () => {
         const { count } = await supabase
           .from('like')
-          .select('*', { COUNT: 'exact', head: true })
+          .select('*', { count: 'exact', head: true })
           .eq('user_id', userId)
         return count
       },
@@ -22,7 +23,7 @@ export const postCountQuery = {
       queryFn: async () => {
         const { count } = await supabase
           .from('post')
-          .select('*', { COUNT: 'exact', head: true })
+          .select('*', { count: 'exact', head: true })
           .eq('user_id', userId)
 
         return count
@@ -30,13 +31,13 @@ export const postCountQuery = {
       enabled: !!userId,
     }),
 
-  countAllPost: (supabase: SupabaseClient, userId: string, postType: 'journal' | 'article') =>
+  countAllPost: (supabase: SupabaseClient, userId: string, postType: PostType) =>
     queryOptions({
       queryKey: QUERY_KEY.POST.COUNT.POST_TYPE(userId, postType),
       queryFn: async () => {
         const { count } = await supabase
           .from('post')
-          .select('*', { COUNT: 'exact', head: true })
+          .select('*', { count: 'exact', head: true })
           .eq('user_id', userId)
           .eq('post_type', postType)
 

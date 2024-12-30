@@ -1,6 +1,7 @@
+import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { isServer } from '@tanstack/react-query'
 import { MouseEvent } from 'react'
-import { useToast } from '@/src/store/useToast'
+import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useToggle from '@/src/hooks/useToggle'
@@ -27,7 +28,10 @@ export default function ShareButton({ isSide, viewToolTip }: Props) {
   const copyURL = async () => {
     const fullURL = !isServer ? window.location.href : ''
     await navigator.clipboard.writeText(fullURL)
-    openToast({ text: '주소가 복사되었습니다.', type: 'success' })
+    openToast({
+      text: TOAST_MESSAGE.SHARE.CLIPBOARD,
+      type: TOAST_TYPE.SUCCESS,
+    })
   }
 
   return (

@@ -9,6 +9,7 @@ import useAddPost from '@/src/services/mutates/post/useAddPost'
 import useUpdatePost from '@/src/services/mutates/post/useUpdatePost'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
+import { AccessType, PostType } from '@/src/types/post'
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 import useInput from '@/src/hooks/useInput'
 import { formatDateToMDY } from '@/src/utils/formatDate'
@@ -26,16 +27,16 @@ import BubbleMenuBar from '../_components/BubbleMenuBar'
 import EmotionSection from '../_components/EmotionSection'
 import PostTypeSection from '../_components/PostTypeSection'
 import PublishSection from '../_components/PublishSection'
-import { TAccess, TEmotion, TPost } from '../page'
+import { TEmotion } from '../page'
 
 interface Props {
   searchParams: { post_id: string }
   selectedEmotion: TEmotion
   onChangeEmotion: (emotion: TEmotion) => void
-  accessType: TAccess
-  onChangeAccessType: (accessType: TAccess) => void
-  postType: TPost
-  onChangePostType: (postType: TPost) => void
+  accessType: AccessType
+  onChangeAccessType: (accessType: AccessType) => void
+  postType: PostType
+  onChangePostType: (postType: PostType) => void
 }
 
 export default function PostContainer({

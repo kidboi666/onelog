@@ -1,14 +1,14 @@
-import { Editor, EditorContent } from '@tiptap/react';
-import { useEffect, useRef, useState } from 'react';
-import { Container } from '@/src/components/Container';
-import { XStack, YStack, ZStack } from '@/src/components/Stack';
-import Tag from '@/src/components/Tag';
-import Title from '@/src/components/Title';
-import AccessTypeButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown';
+import { Editor, EditorContent } from '@tiptap/react'
+import { useEffect, useRef, useState } from 'react'
+import { AccessType } from '@/src/types/post'
+import { Container } from '@/src/components/Container'
+import { XStack, YStack, ZStack } from '@/src/components/Stack'
+import Tag from '@/src/components/Tag'
+import Title from '@/src/components/Title'
+import AccessTypeButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown'
 import CommentButton from '@/src/app/(playground)/(home)/_components/CommentButton'
 import LikeButton from '@/src/app/(playground)/(home)/_components/LikeButton'
 import ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton'
-
 
 interface Props {
   tags?: string[]
@@ -19,7 +19,7 @@ interface Props {
   likeCount: number
   isLiked: boolean
   commentCount: number
-  accessType: 'public' | 'private'
+  accessType: AccessType
   postId: number
 }
 

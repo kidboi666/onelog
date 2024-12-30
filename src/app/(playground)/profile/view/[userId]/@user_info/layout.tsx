@@ -1,6 +1,7 @@
 import { HydrationBoundary } from '@tanstack/react-query'
 import { PropsWithChildren } from 'react'
 import { postPrefetchQuery } from '@/src/services/queries/post/post-prefetch-query'
+import { PostType } from '@/src/types/post'
 import { Container } from '@/src/components/Container'
 import { ZStack } from '@/src/components/Stack'
 import MenuSection from './journal_garden/_components/MenuSection'
@@ -13,8 +14,8 @@ export default async function Layout({ params, children }: PropsWithChildren<Pro
   const userId = params.userId
 
   const state = await Promise.all([
-    await postPrefetchQuery.countAllPost(userId, 'journal'),
-    await postPrefetchQuery.countAllPost(userId, 'article'),
+    await postPrefetchQuery.countAllPost(userId, PostType.Journal),
+    await postPrefetchQuery.countAllPost(userId, PostType.Article),
     await postPrefetchQuery.countLikedPost(userId),
   ])
 

@@ -14,7 +14,7 @@ export const countFollowQuery = {
       queryFn: async () => {
         const { count, error } = await supabase
           .from('follow')
-          .select('followed_user_id', { COUNT: 'exact', head: true })
+          .select('followed_user_id', { count: 'exact', head: true })
           .eq('followed_user_id', userId)
 
         if (error) {
@@ -37,7 +37,7 @@ export const countFollowQuery = {
       queryFn: async () => {
         const { count, error } = await supabase
           .from('follow')
-          .select('follower_user_id', { COUNT: 'exact', head: true })
+          .select('follower_user_id', { count: 'exact', head: true })
           .eq('follower_user_id', userId)
 
         if (error) {

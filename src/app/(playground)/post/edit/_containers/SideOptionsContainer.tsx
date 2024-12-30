@@ -1,20 +1,21 @@
 import { useEffect } from 'react'
+import { AccessType, PostType } from '@/src/types/post'
 import { Container } from '@/src/components/Container'
 import Line from '@/src/components/Line'
 import { YStack } from '@/src/components/Stack'
 import EmotionSection from '../_components/EmotionSection'
 import PostTypeSection from '../_components/PostTypeSection'
 import PublishSection from '../_components/PublishSection'
-import { TAccess, TEmotion, TPost } from '../page'
+import { TEmotion } from '../page'
 
 interface Props {
   searchParams: { post_id: string }
   selectedEmotion: TEmotion
   onChangeEmotion: (emotion: TEmotion) => void
-  accessType: TAccess
-  onChangeAccessType: (accessType: TAccess) => void
-  postType: TPost
-  onChangePostType: (postType: TPost) => void
+  accessType: AccessType
+  onChangeAccessType: (accessType: AccessType) => void
+  postType: PostType
+  onChangePostType: (postType: PostType) => void
 }
 
 export default function SideOptionsContainer({

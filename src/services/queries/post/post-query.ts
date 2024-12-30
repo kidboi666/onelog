@@ -1,7 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js'
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import { IPost } from '@/src/types/post'
+import { AccessType, IPost, PostType } from '@/src/types/post'
 import { Tables } from '@/src/types/supabase'
 
 /**
@@ -27,7 +27,7 @@ export const postQuery = {
             )
             `,
           )
-          .eq('access_type', 'public')
+          .eq('access_type', AccessType.Public)
           .order('created_at', { ascending: false })
           .range(pageParam, pageParam + limit - 1)
 
@@ -138,7 +138,7 @@ export const postQuery = {
         isMe
           ? (publicData = data)
           : (publicData = data?.map((item: any) =>
-              item.post.access_type === 'public'
+              item.post.access_type === AccessType.Public
                 ? item
                 : { ...item, post: { title: null, content: null } },
             ))
@@ -203,7 +203,9 @@ export const postQuery = {
         isMe
           ? (publicData = data)
           : (publicData = data?.map((item) =>
-              item.access_type === 'public' ? item : { ...item, title: null, content: null },
+              item.access_type === AccessType.Public
+                ? item
+                : { ...item, title: null, content: null },
             ))
 
         return publicData
@@ -214,7 +216,7 @@ export const postQuery = {
   getAllUserPost: (
     supabase: SupabaseClient,
     authorId: string,
-    postType: 'journal' | 'article',
+    postType: PostType,
     limit: number = 10,
     meId?: string,
   ) =>
@@ -261,7 +263,9 @@ export const postQuery = {
         isMe
           ? (publicData = data)
           : (publicData = data?.map((item) =>
-              item.access_type === 'public' ? item : { ...item, content: null, title: null },
+              item.access_type === AccessType.Public
+                ? item
+                : { ...item, content: null, title: null },
             ))
 
         return publicData

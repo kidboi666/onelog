@@ -122,4 +122,7 @@ export const TOAST_MESSAGE = {
       EXCEPTION: '할일 폴더 수정에 실패했습니다.',
     },
   },
+  SHARE: {
+    CLIPBOARD: '주소가 복사되었습니다.',
+  },
 }

@@ -3,7 +3,7 @@ import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import initClient from '@/src/services/queries/init-client'
 import { postCountQuery } from '@/src/services/queries/post/post-count-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
-import { IPost } from '@/src/types/post'
+import { IPost, PostType } from '@/src/types/post'
 
 const prefetchPost = async (postId: number) => {
   const { queryClient, supabase } = initClient()
@@ -17,7 +17,7 @@ const prefetchPostCount = async (userId: string) => {
   return queryClient
 }
 
-const prefetchPostTypeCount = async (userId: string, postType: 'journal' | 'article') => {
+const prefetchPostTypeCount = async (userId: string, postType: PostType) => {
   const { queryClient, supabase } = initClient()
   await queryClient.prefetchQuery(postCountQuery.countAllPost(supabase, userId, postType))
   return queryClient
@@ -44,7 +44,7 @@ export const postPrefetchQuery = {
   },
   countAllPost: async (
     userId: string,
-    postType: 'journal' | 'article',
+    postType: PostType,
   ): Promise<ReturnType<typeof dehydrate>> => {
     const queryClient = await prefetchPostTypeCount(userId, postType)
     return dehydrate(queryClient)

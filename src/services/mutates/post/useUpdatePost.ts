@@ -4,6 +4,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
+import { AccessType, PostType } from '@/src/types/post'
 
 interface IUpdatePost {
   user_id: string
@@ -12,8 +13,8 @@ interface IUpdatePost {
   content: string
   emotion_level: string | null
   tags: string[]
-  access_type: 'private' | 'public'
-  post_type: 'article' | 'journal'
+  access_type: AccessType
+  post_type: PostType
 }
 
 export default function useUpdatePost() {
@@ -39,8 +40,8 @@ export default function useUpdatePost() {
       const queryKeys = [
         QUERY_KEY.POST.PUBLIC,
         QUERY_KEY.POST.DETAIL(id),
-        QUERY_KEY.POST.POST_TYPE('article', meId),
-        QUERY_KEY.POST.POST_TYPE('journal', meId),
+        QUERY_KEY.POST.POST_TYPE(PostType.Article, meId),
+        QUERY_KEY.POST.POST_TYPE(PostType.Journal, meId),
       ]
       queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
 

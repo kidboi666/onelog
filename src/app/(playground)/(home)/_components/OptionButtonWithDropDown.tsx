@@ -15,7 +15,7 @@ interface Props {
   postId: number
   commentId?: number
   commentAuthorId?: string
-  onModify: () => void
+  onModify?: () => void
   isSide?: boolean
 }
 
@@ -54,7 +54,7 @@ export default function OptionButtonWithDropDown({
 
   const pushEditPage = () => {
     void close()
-    if (commentId) {
+    if (commentId && onModify) {
       onModify()
     } else {
       pushEditPostPage()

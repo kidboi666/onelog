@@ -1,14 +1,14 @@
-import useOutsideClick from '@/src/hooks/useOutsideClick';
-import useDataDrivenAnimation from '@/src/hooks/useStateChange';
-import useToggle from '@/src/hooks/useToggle';
-import { DropDown } from '@/src/components/DropDown';
-import Icon from '@/src/components/Icon';
-import ToolTip from '@/src/components/Tooltip';
-
+import { PostType } from '@/src/types/post'
+import useOutsideClick from '@/src/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import useToggle from '@/src/hooks/useToggle'
+import { DropDown } from '@/src/components/DropDown'
+import Icon from '@/src/components/Icon'
+import ToolTip from '@/src/components/Tooltip'
 
 interface Props {
-  onChangePostType: (postType: 'article' | 'journal') => void
-  postType: 'article' | 'journal'
+  onChangePostType: (postType: PostType) => void
+  postType: PostType
   isSide?: boolean
 }
 
@@ -41,7 +41,7 @@ export default function PostTypeSection({ onChangePostType, postType, isSide }: 
       >
         <DropDown.Button
           variant="list"
-          onClick={() => onChangePostType('journal')}
+          onClick={() => onChangePostType(PostType.Journal)}
           className="flex gap-2"
         >
           감정 일기
@@ -53,7 +53,7 @@ export default function PostTypeSection({ onChangePostType, postType, isSide }: 
         </DropDown.Button>
         <DropDown.Button
           variant="list"
-          onClick={() => onChangePostType('article')}
+          onClick={() => onChangePostType(PostType.Article)}
           className="flex gap-2"
         >
           아티클

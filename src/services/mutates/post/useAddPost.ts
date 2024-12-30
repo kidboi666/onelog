@@ -4,6 +4,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
+import { AccessType, PostType } from '@/src/types/post'
 
 interface IAddpost {
   user_id: string
@@ -11,8 +12,8 @@ interface IAddpost {
   content: string
   emotion_level: string | null
   tags: string[]
-  access_type: 'private' | 'public'
-  post_type: 'article' | 'journal'
+  access_type: AccessType
+  post_type: PostType
 }
 
 export default function useAddPost() {

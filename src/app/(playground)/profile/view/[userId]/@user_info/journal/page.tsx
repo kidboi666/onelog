@@ -1,19 +1,18 @@
-'use client';
+'use client'
 
-import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { supabase } from '@/src/lib/supabase/client';
-import { userQuery } from '@/src/services/queries/auth/user-query';
-import { postQuery } from '@/src/services/queries/post/post-query';
-import { IPost } from '@/src/types/post';
-import useMeQueries from '@/src/hooks/queries/useMeQueries';
-import useIntersect from '@/src/hooks/useIntersect';
-import { Container } from '@/src/components/Container';
-import Empty from '@/src/components/Empty';
-import Spinner from '@/src/components/Spinner';
-import { YStack } from '@/src/components/Stack';
-import PostCard from '@/src/app/(playground)/(home)/_components/PostCard';
-
+import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { supabase } from '@/src/lib/supabase/client'
+import { userQuery } from '@/src/services/queries/auth/user-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+import { IPost, PostType } from '@/src/types/post'
+import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import useIntersect from '@/src/hooks/useIntersect'
+import { Container } from '@/src/components/Container'
+import Empty from '@/src/components/Empty'
+import Spinner from '@/src/components/Spinner'
+import { YStack } from '@/src/components/Stack'
+import PostCard from '@/src/app/(playground)/(home)/_components/PostCard'
 
 interface Props {
   params: { userId: string }
@@ -24,7 +23,7 @@ export default function Journals({ params }: Props) {
   const { me } = useMeQueries()
   const { data: user } = useSuspenseQuery(userQuery.getUserInfo(supabase, params.userId))
   const { data, fetchNextPage, hasNextPage, isFetching, isPending, isLoading } = useInfiniteQuery(
-    postQuery.getAllUserPost(supabase, params.userId, 'journal', limit, me?.id),
+    postQuery.getAllUserPost(supabase, params.userId, PostType.Journal, limit, me?.id),
   )
   const journals = data?.pages.flatMap((journal) => journal || [])
   const [ref, inView] = useIntersect<HTMLDivElement>({}, isLoading)
