@@ -53,7 +53,6 @@ export default function Modal({
       document.body.classList.remove('overflow-hidden')
     }
   }, [])
-
   return (
     <>
       <div
@@ -62,7 +61,7 @@ export default function Modal({
         onMouseUp={handleMouseUp}
         data-status="closed"
         onTransitionEnd={outsideOnTransitionEnd}
-        className="fixed inset-0 z-40 overflow-hidden bg-var-dark/25 backdrop-blur-sm transition-opacity ease-in-out data-[status=closed]:opacity-0 dark:bg-var-gray/25"
+        className="fixed inset-0 z-40 overflow-hidden bg-var-dark/25  transition-opacity ease-in-out data-[status=closed]:opacity-0 dark:bg-var-gray/25"
       />
       <div
         ref={insideRef}
