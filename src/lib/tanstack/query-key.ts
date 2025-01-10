@@ -42,7 +42,7 @@ export const QUERY_KEY = {
     DETAIL: (word: string) => ['word', word],
   },
 
-  GARDEN: (userId: string, selectedYear: number) => ['garden', userId, selectedYear],
+  GARDEN: (userId: string, selectedYear?: number) => ['garden', userId, selectedYear],
 
   FOLLOW: {
     FOLLOWER: (userId?: string | null) => ['follower', userId],
