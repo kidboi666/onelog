@@ -1,3 +1,4 @@
+import cn from '@/src/lib/cn'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import Button from '@/src/components/Button'
@@ -32,7 +33,7 @@ export default function YearSection({ yearList, selectedYear, onSelect }: Props)
         position="bottomLeft"
         onTransitionEnd={onTransitionEnd}
         initStatus="closed"
-        className="p-0"
+        className=""
       >
         {yearList.map((year) => (
           <Button
@@ -43,11 +44,13 @@ export default function YearSection({ yearList, selectedYear, onSelect }: Props)
             className="gap-2"
           >
             {year}
-            {selectedYear === year && (
-              <Icon view="0 -960 960 960" size={16}>
-                <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
-              </Icon>
-            )}
+            <Icon
+              view="0 -960 960 960"
+              size={16}
+              className={cn(selectedYear === year ? 'opacity-100' : 'opacity-0')}
+            >
+              <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+            </Icon>
           </Button>
         ))}
       </DropDown.Content>

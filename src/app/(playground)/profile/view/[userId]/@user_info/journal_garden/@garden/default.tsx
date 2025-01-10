@@ -1,21 +1,20 @@
-'use client';
+'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { ReactElement, useMemo, useState } from 'react';
-import { supabase } from '@/src/lib/supabase/client';
-import { meQuery } from '@/src/services/queries/auth/me-query';
-import { gardenQuery } from '@/src/services/queries/garden/garden-query';
-import { IDateBlock } from '@/src/types/garden';
-import { Tables } from '@/src/types/supabase';
-import { getDaysInYear, getFirstDayInYear } from '@/src/utils/formatDate';
-import { Container } from '@/src/components/Container';
-import { YStack } from '@/src/components/Stack';
-import Title from '@/src/components/Title';
-import Block from '../_components/Block';
-import ColorInfoDisplay from '../_components/ColorInfoDisplay';
-import GardenBlockSection from '../_components/GardenBlockSection';
-import YearSection from '../_components/YearSection';
-
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { ReactElement, useMemo, useState } from 'react'
+import { supabase } from '@/src/lib/supabase/client'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { gardenQuery } from '@/src/services/queries/garden/garden-query'
+import { IDateBlock } from '@/src/types/garden'
+import { Tables } from '@/src/types/supabase'
+import { getDaysInYear, getFirstDayInYear } from '@/src/utils/formatDate'
+import { Container } from '@/src/components/Container'
+import { YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
+import Block from '../_components/Block'
+import ColorInfoDisplay from '../_components/ColorInfoDisplay'
+import GardenBlockSection from '../_components/GardenBlockSection'
+import YearSection from '../_components/YearSection'
 
 /**
  * 각 달의 일을 블록으로 렌더링 해주는 함수 + 색칠 (ver. 이모션 레벨 기준 색칠)
@@ -83,15 +82,17 @@ interface Props {
 
 export default function Garden({ params }: Props) {
   const userId = params.userId
-  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, userId))
-  const { data: garden } = useSuspenseQuery(gardenQuery.getGarden(supabase, userId))
   const currentYear = new Date().getFullYear()
-  const signedYear = new Date(me?.created_at).getFullYear()
   const [selectedYear, setSelectedYear] = useState(currentYear)
-  const firstDayIndex = getFirstDayInYear(currentYear)
+
+  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, userId))
+  const signedYear = new Date(me?.created_at).getFullYear()
+
+  const firstDayIndex = getFirstDayInYear(selectedYear)
+  const { data: garden } = useSuspenseQuery(gardenQuery.getGarden(supabase, userId, selectedYear))
   const shouldRenderElement = getRenderedBlockFromEmotionLevel(
-    currentYear,
-    getDaysInYear(currentYear),
+    selectedYear,
+    getDaysInYear(selectedYear),
     garden,
   )
   const yearList = useMemo(
@@ -102,7 +103,7 @@ export default function Garden({ params }: Props) {
   const handleSelect = (year: number) => {
     setSelectedYear(year)
   }
-
+  console.log(shouldRenderElement)
   return (
     <Container className="animate-fade-in">
       <YStack gap={8}>
