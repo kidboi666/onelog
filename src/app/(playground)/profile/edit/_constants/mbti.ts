@@ -17,4 +17,4 @@ export const MBTI = [
   'ESFP',
 ] as const
 
-export type TMBTI = (typeof MBTI)[number] | null
+export type TMBTI = (typeof MBTI)[number]

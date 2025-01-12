@@ -1,35 +1,36 @@
-'use client';
+'use client'
 
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import useDeleteAvatarImage from '@/src/services/mutates/auth/useDeleteAvatarImage';
-import useUpdateUserInfo from '@/src/services/mutates/auth/useUpdateUserInfo';
-import useUploadAvatarImage from '@/src/services/mutates/auth/useUploadAvatarImage';
-import useMeQueries from '@/src/hooks/queries/useMeQueries';
-import useInput from '@/src/hooks/useInput';
-import Button from '@/src/components/Button';
-import { YStack } from '@/src/components/Stack';
-import AboutMeSection from '../_components/AboutMeSection';
-import EmailSection from '../_components/EmailSection';
-import MBTISection from '../_components/MBTISection';
-import ProfileImageSection from '../_components/ProfileImageSection';
-import UserNameSection from '../_components/UserNameSection';
-import { TMBTI } from '../_constants/mbti';
-
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { supabase } from '@/src/lib/supabase/client'
+import useDeleteAvatarImage from '@/src/services/mutates/auth/useDeleteAvatarImage'
+import useUpdateUserInfo from '@/src/services/mutates/auth/useUpdateUserInfo'
+import useUploadAvatarImage from '@/src/services/mutates/auth/useUploadAvatarImage'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import useInput from '@/src/hooks/useInput'
+import Button from '@/src/components/Button'
+import { YStack } from '@/src/components/Stack'
+import AboutMeSection from '../_components/AboutMeSection'
+import EmailSection from '../_components/EmailSection'
+import ProfileImageSection from '../_components/ProfileImageSection'
+import UserNameSection from '../_components/UserNameSection'
 
 export default function EditProfileContainer() {
-  const { me, session } = useMeQueries()
-  const [userName, onChangeUserName, setUserName] = useInput<string | null>('')
-  const [aboutMe, onChangeAboutMe, setAboutMe] = useInput<string | null>('')
-  const [avatarUrl, , setAvatarUrl] = useInput<string | null>('')
-  const [mbti, setMbti] = useState<TMBTI>(null)
+  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
+  const [userName, onChangeUserName, setUserName] = useInput<string | null>(
+    null,
+  )
+  const [aboutMe, onChangeAboutMe, setAboutMe] = useInput<string | null>(null)
+  const [avatarUrl, , setAvatarUrl] = useInput<string | null>(null)
   const [image, setImage] = useState<File | null>(null)
-  const [prevAvatarUrl, , setPrevAvatarUrl] = useInput<string | null>('')
+  const [prevAvatarUrl, , setPrevAvatarUrl] = useInput<string | null>(null)
   const {
     mutate: updateProfile,
     isPending: isPendingUpdateUserInfo,
     isSuccess: isSuccessUpdateUserInfo,
   } = useUpdateUserInfo()
-  const { mutateAsync: uploadImage, isPending: isPendingImageUpload } = useUploadAvatarImage()
+  const { mutateAsync: uploadImage, isPending: isPendingImageUpload } =
+    useUploadAvatarImage()
   const { mutate: deletePrevImage } = useDeleteAvatarImage()
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,11 +50,9 @@ export default function EditProfileContainer() {
       {
         onSuccess: (data) => {
           updateProfile({
-            userId: me?.id,
             aboutMe,
             avatarUrl: data,
             userName,
-            mbti,
           })
         },
       },
@@ -62,10 +61,8 @@ export default function EditProfileContainer() {
 
   const handleProfileUpdateWithoutImage = () => {
     updateProfile({
-      userId: me?.id,
       aboutMe,
       userName,
-      mbti,
     })
   }
 
@@ -83,7 +80,6 @@ export default function EditProfileContainer() {
     setAboutMe(me ? me.about_me : null)
     setAvatarUrl(me ? me.avatar_url : null)
     setPrevAvatarUrl(me ? me.avatar_url : null)
-    setMbti(me ? me.mbti : null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me?.avatar_url, me?.user_name, me?.about_me])
 
@@ -93,19 +89,24 @@ export default function EditProfileContainer() {
       className="animate-fade-in rounded-md bg-white p-2 shadow-sm sm:p-8 dark:bg-var-darkgray"
     >
       <YStack gap={8}>
-        <ProfileImageSection onChange={handleChangeImage} imagePreview={avatarUrl} />
-        <EmailSection email={me?.email} provider={session?.provider} />
+        <ProfileImageSection
+          onChange={handleChangeImage}
+          imagePreview={avatarUrl}
+        />
+        <EmailSection email={me?.email} provider={me?.provider} />
         <UserNameSection value={userName ?? ''} onChange={onChangeUserName} />
         <AboutMeSection value={aboutMe ?? ''} onChange={onChangeAboutMe} />
-        <MBTISection mbti={mbti} setMbti={setMbti} />
         <Button
           type="submit"
-          isLoading={isPendingImageUpload || isPendingUpdateUserInfo || isSuccessUpdateUserInfo}
+          isLoading={
+            isPendingImageUpload ||
+            isPendingUpdateUserInfo ||
+            isSuccessUpdateUserInfo
+          }
           disabled={
             (userName === me?.user_name &&
               aboutMe === me?.about_me &&
-              avatarUrl === me?.avatar_url &&
-              mbti === me?.mbti) ||
+              avatarUrl === me?.avatar_url) ||
             userName?.length! > 10 ||
             aboutMe?.length! > 150
           }

@@ -14,14 +14,16 @@ import Text from '@/src/components/Text'
 export default function FakeFormContainer() {
   const router = useRouter()
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
-  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase))
+  const { data: me } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, session?.userId),
+  )
   const { color } = useTheme()
 
   const pushNewPost = () => router.push(ROUTES.POST.NEW)
   const authGuard = () => router.push(ROUTES.MODAL.AUTH.GUARD)
 
   const handlePostClick = () => {
-    session ? pushNewPost() : authGuard()
+    me ? pushNewPost() : authGuard()
   }
 
   return (

@@ -35,6 +35,7 @@ const DropDownTrigger = ({
   size,
   targetRef,
   className,
+  ...props
 }: DropDownTriggerProps) => {
   return (
     <Button
@@ -44,13 +45,14 @@ const DropDownTrigger = ({
       onTransitionEnd={onTransitionEnd}
       onClick={onClick}
       className={className}
+      {...props}
     >
       {children}
     </Button>
   )
 }
 
-interface DropDownContentProps {
+interface DropDownContentProps extends ComponentProps<'div'> {
   onTransitionEnd?: () => void
   initStatus?: string
   onClick?: (params: any) => void
@@ -58,15 +60,29 @@ interface DropDownContentProps {
   position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
 }
 
-const DROPDOWN_POSITION = {
+const DROPDOWN_POSITION: Record<string, string> = {
   topLeft: 'bottom-[calc(100%--6px)] right-0 origin-bottom-right',
   topRight: 'bottom-[calc(100%--6px)] left-0 origin-bottom-left',
   bottomLeft: 'top-[calc(100%--6px)] right-0 origin-top-right',
   bottomRight: 'top-[calc(100%--6px)] left-0 origin-top-left',
 }
 
-const DropDownContent = forwardRef<HTMLDivElement, PropsWithChildren<DropDownContentProps>>(
-  ({ children, onTransitionEnd, initStatus, onClick, className, position = 'topRight' }, ref) => {
+const DropDownContent = forwardRef<
+  HTMLDivElement,
+  PropsWithChildren<DropDownContentProps>
+>(
+  (
+    {
+      children,
+      onTransitionEnd,
+      initStatus,
+      onClick,
+      className,
+      position = 'topRight',
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <nav
         ref={ref}
@@ -78,6 +94,7 @@ const DropDownContent = forwardRef<HTMLDivElement, PropsWithChildren<DropDownCon
           DROPDOWN_POSITION[position],
           className,
         )}
+        {...props}
       >
         {children}
       </nav>
@@ -95,9 +112,16 @@ const DropDownButton = ({
   className,
   children,
   onClick,
+  ...props
 }: DropDownButtonProps) => {
   return (
-    <Button variant={variant} size={size} onClick={onClick} className={cn('w-full', className)}>
+    <Button
+      variant={variant}
+      size={size}
+      onClick={onClick}
+      className={cn('w-full', className)}
+      {...props}
+    >
       {children}
     </Button>
   )
@@ -117,10 +141,17 @@ const DropDownLinkButton = ({
   children,
   className,
   innerClassName,
+  ...props
 }: PropsWithChildren<DropDownLinkButtonProps>) => {
   return (
     <Link href={href} className={className}>
-      <Button variant={variant} size={size} onClick={onClick} className={innerClassName}>
+      <Button
+        variant={variant}
+        size={size}
+        onClick={onClick}
+        className={innerClassName}
+        {...props}
+      >
         {children}
       </Button>
     </Link>
@@ -129,7 +160,10 @@ const DropDownLinkButton = ({
 
 interface DropDownTextProps extends TextProps {}
 
-const DropDownText = ({ children, ...props }: PropsWithChildren<DropDownTextProps>) => {
+const DropDownText = ({
+  children,
+  ...props
+}: PropsWithChildren<DropDownTextProps>) => {
   return <Text {...props}>{children}</Text>
 }
 

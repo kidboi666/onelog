@@ -19,7 +19,7 @@ export default function MenuButton() {
   }
 
   const handleClose = () => {
-    close()
+    void close()
     closeMenu()
   }
 

@@ -1,8 +1,10 @@
 'use client'
 
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import { supabase } from '@/src/lib/supabase/client'
+import { meQuery } from '@/src/services/queries/auth/me-query'
 import { ROUTES } from '@/src/routes'
 import Line from '@/src/components/Line'
 import { YStack, ZStack } from '@/src/components/Stack'
@@ -17,7 +19,7 @@ import {
 } from './_constants/Navigate'
 
 export default function Sidebar() {
-  const { me, session } = useMeQueries()
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const [isHover, setHover] = useState(false)
   const pathname = usePathname()
 
@@ -97,7 +99,6 @@ export default function Sidebar() {
           <Line className="mb-2" />
           <ZStack>
             <AuthButtonWithDropDown
-              me={me}
               pathname={pathname.split('/')[1]}
               userId={pathname.split('/')[2] || ''}
               session={session}
@@ -106,7 +107,7 @@ export default function Sidebar() {
               position="right"
               size="sm"
               isHover={isHover}
-              text={me ? me.email : '게스트'}
+              text={session ? session.email : '게스트'}
             />
           </ZStack>
         </YStack>

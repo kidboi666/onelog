@@ -15,15 +15,14 @@ export default function useUpdateUserInfo() {
 
   return useMutation({
     mutationFn: async (params: IUpdateUserInfo) => {
-      const { data, error } = await supabase
-        .from('user_info')
-        .update({
+      const { data, error } = await supabase.auth.updateUser({
+        data: {
           about_me: params.aboutMe,
           avatar_url: params.avatarUrl,
           user_name: params.userName,
           mbti: params.mbti,
-        })
-        .eq('id', params.userId)
+        },
+      })
 
       if (error) {
         console.error(error)
@@ -35,7 +34,9 @@ export default function useUpdateUserInfo() {
 
     onSuccess: () => {
       const queryKeys = [QUERY_KEY.AUTH.INFO, QUERY_KEY.AUTH.SESSION]
-      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+      queryKeys.forEach((queryKey) =>
+        queryClient.invalidateQueries({ queryKey }),
+      )
 
       openToast({
         text: TOAST_MESSAGE.USER_INFO.EDIT.SUCCESS,

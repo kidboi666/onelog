@@ -19,6 +19,9 @@ export default function useSignUp() {
         options: {
           data: {
             user_name: authData.userName,
+            avatar_url: '',
+            about_me: '',
+            mbti: '',
           },
         },
       })
@@ -47,7 +50,9 @@ export default function useSignUp() {
     },
     onSettled: () => {
       const queryKeys = [QUERY_KEY.AUTH.INFO, QUERY_KEY.AUTH.SESSION]
-      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+      queryKeys.forEach((queryKey) =>
+        queryClient.invalidateQueries({ queryKey }),
+      )
     },
   })
 }
