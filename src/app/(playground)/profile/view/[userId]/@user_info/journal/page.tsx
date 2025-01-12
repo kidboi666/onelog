@@ -21,10 +21,19 @@ interface Props {
 export default function Journals({ params }: Props) {
   const limit = 4
   const { me } = useMeQueries()
-  const { data: user } = useSuspenseQuery(userQuery.getUserInfo(supabase, params.userId))
-  const { data, fetchNextPage, hasNextPage, isFetching, isPending, isLoading } = useInfiniteQuery(
-    postQuery.getAllUserPost(supabase, params.userId, PostType.Journal, limit, me?.id),
+  const { data: user } = useSuspenseQuery(
+    userQuery.getUserInfo(supabase, params.userId),
   )
+  const { data, fetchNextPage, hasNextPage, isFetching, isPending, isLoading } =
+    useInfiniteQuery(
+      postQuery.getAllUserPost(
+        supabase,
+        params.userId,
+        PostType.JOURNAL,
+        limit,
+        me?.id,
+      ),
+    )
   const journals = data?.pages.flatMap((journal) => journal || [])
   const [ref, inView] = useIntersect<HTMLDivElement>({}, isLoading)
   const postUserInfo = {
@@ -53,7 +62,11 @@ export default function Journals({ params }: Props) {
         <YStack gap={8}>
           {journals?.map((journal: IPost) =>
             journal?.content ? (
-              <PostCard key={journal?.id} post={journal} postUserInfo={postUserInfo} />
+              <PostCard
+                key={journal?.id}
+                post={journal}
+                postUserInfo={postUserInfo}
+              />
             ) : (
               <Empty key={journal?.id}>
                 <Empty.Icon view="0 -960 960 960" size={20}>

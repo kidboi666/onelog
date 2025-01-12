@@ -17,17 +17,23 @@ export default function TodoMenuSection({ onMenuSelect, menu }: Props) {
   const splitedPath = pathname.split('/')
   const isSelected = splitedPath.includes(menu.name)
   const [isLoading, startTransition] = useTransition()
+
+  const handleClick = () => {
+    startTransition(() => onMenuSelect(menu.name))
+  }
+
   return (
     <List.Row key={menu.id} className="size-full">
       <Button
         variant="list"
-        onClick={() => startTransition(() => onMenuSelect(menu.name))}
+        onClick={handleClick}
         className="relative h-10 w-full gap-4 p-4"
       >
         <div
           className={cn(
             'relative flex size-2 items-center justify-center rounded-full text-zinc-400 transition',
-            isSelected && 'bg-zinc-200 ring-8 ring-zinc-200 dark:bg-zinc-700 dark:ring-zinc-700',
+            isSelected &&
+              'bg-zinc-200 ring-8 ring-zinc-200 dark:bg-zinc-700 dark:ring-zinc-700',
           )}
         >
           <div className="absolute">

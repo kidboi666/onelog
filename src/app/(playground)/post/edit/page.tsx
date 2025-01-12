@@ -14,8 +14,8 @@ interface Props {
 
 export default function Default({ searchParams }: Props) {
   const [selectedEmotion, setSelectedEmotion] = useState<TEmotion | null>('50%')
-  const [accessType, setAccessType] = useState<AccessType>(AccessType.Public)
-  const [postType, setPostType] = useState<PostType>(PostType.Journal)
+  const [accessType, setAccessType] = useState<AccessType>(AccessType.PUBLIC)
+  const [postType, setPostType] = useState<PostType>(PostType.JOURNAL)
 
   const handleChangeEmotion = useCallback((emotion: TEmotion) => {
     setSelectedEmotion(emotion)

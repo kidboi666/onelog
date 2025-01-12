@@ -8,7 +8,7 @@ import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 interface ITodo {
   name: string
   folderId: number
-  userId: string
+  userId?: string
   index: number
 }
 
@@ -23,7 +23,7 @@ export default function useAddTodo() {
         .insert({
           name: params.name,
           folder_id: params.folderId,
-          user_id: params.userId,
+          user_id: params.userId || '',
           index: params.index,
         })
         .select()
@@ -43,8 +43,13 @@ export default function useAddTodo() {
       })
     },
     onSuccess: (_, variables) => {
-      const queryKeys = [QUERY_KEY.TODO.FOLDER(variables.folderId), QUERY_KEY.TODO.MAIN]
-      void queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+      const queryKeys = [
+        QUERY_KEY.TODO.FOLDER(variables.folderId),
+        QUERY_KEY.TODO.MAIN,
+      ]
+      void queryKeys.forEach((queryKey) =>
+        queryClient.invalidateQueries({ queryKey }),
+      )
 
       openToast({
         text: TOAST_MESSAGE.TODO.POST.SUCCESS,

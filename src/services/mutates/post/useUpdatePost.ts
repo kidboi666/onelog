@@ -40,10 +40,12 @@ export default function useUpdatePost() {
       const queryKeys = [
         QUERY_KEY.POST.PUBLIC,
         QUERY_KEY.POST.DETAIL(id),
-        QUERY_KEY.POST.POST_TYPE(PostType.Article, meId),
-        QUERY_KEY.POST.POST_TYPE(PostType.Journal, meId),
+        QUERY_KEY.POST.POST_TYPE(PostType.ARTICLE, meId),
+        QUERY_KEY.POST.POST_TYPE(PostType.JOURNAL, meId),
       ]
-      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+      queryKeys.forEach((queryKey) =>
+        queryClient.invalidateQueries({ queryKey }),
+      )
 
       openToast({
         text: TOAST_MESSAGE.POST.UPDATE.SUCCESS,

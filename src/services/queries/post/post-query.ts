@@ -27,7 +27,7 @@ export const postQuery = {
             )
             `,
           )
-          .eq('access_type', AccessType.Public)
+          .eq('access_type', AccessType.PUBLIC)
           .order('created_at', { ascending: false })
           .range(pageParam, pageParam + limit - 1)
 
@@ -97,7 +97,12 @@ export const postQuery = {
   /**
    * TODO is_liked 프로퍼티 구현 요망 (join 쿼리 추가해야 함) @kidboi666
    */
-  getLikedPost: (supabase: SupabaseClient, userId: string, limit: number, meId?: string) =>
+  getLikedPost: (
+    supabase: SupabaseClient,
+    userId: string,
+    limit: number,
+    meId?: string,
+  ) =>
     infiniteQueryOptions({
       queryKey: QUERY_KEY.POST.LIKED(userId, meId),
       queryFn: async ({ pageParam = 0 }) => {
@@ -138,7 +143,7 @@ export const postQuery = {
         isMe
           ? (publicData = data)
           : (publicData = data?.map((item: any) =>
-              item.post.access_type === AccessType.Public
+              item.post.access_type === AccessType.PUBLIC
                 ? item
                 : { ...item, post: { title: null, content: null } },
             ))
@@ -203,7 +208,7 @@ export const postQuery = {
         isMe
           ? (publicData = data)
           : (publicData = data?.map((item) =>
-              item.access_type === AccessType.Public
+              item.access_type === AccessType.PUBLIC
                 ? item
                 : { ...item, title: null, content: null },
             ))
@@ -263,7 +268,7 @@ export const postQuery = {
         isMe
           ? (publicData = data)
           : (publicData = data?.map((item) =>
-              item.access_type === AccessType.Public
+              item.access_type === AccessType.PUBLIC
                 ? item
                 : { ...item, content: null, title: null },
             ))
@@ -281,7 +286,11 @@ export const postQuery = {
     queryOptions<Tables<'user_words'>>({
       queryKey: QUERY_KEY.WORD.USED(userId),
       queryFn: async () => {
-        const { data } = await supabase.from('user_words').select().eq('user_id', userId).single()
+        const { data } = await supabase
+          .from('user_words')
+          .select()
+          .eq('user_id', userId)
+          .single()
 
         return data
       },
@@ -291,7 +300,11 @@ export const postQuery = {
     queryOptions<Tables<'word_dictionary'>>({
       queryKey: QUERY_KEY.WORD.DETAIL(word),
       queryFn: async () => {
-        const { data } = await supabase.from('word_dictionary').select().eq('word', word).single()
+        const { data } = await supabase
+          .from('word_dictionary')
+          .select()
+          .eq('word', word)
+          .single()
 
         return data
       },

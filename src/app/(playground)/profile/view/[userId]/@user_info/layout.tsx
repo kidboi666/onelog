@@ -10,12 +10,15 @@ interface Props {
   params: { userId: string }
 }
 
-export default async function Layout({ params, children }: PropsWithChildren<Props>) {
+export default async function Layout({
+  params,
+  children,
+}: PropsWithChildren<Props>) {
   const userId = params.userId
 
   const state = await Promise.all([
-    await postPrefetchQuery.countAllPost(userId, PostType.Journal),
-    await postPrefetchQuery.countAllPost(userId, PostType.Article),
+    await postPrefetchQuery.countAllPost(userId, PostType.JOURNAL),
+    await postPrefetchQuery.countAllPost(userId, PostType.ARTICLE),
     await postPrefetchQuery.countLikedPost(userId),
   ])
 
