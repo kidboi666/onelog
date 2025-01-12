@@ -12,13 +12,13 @@ import Title from '@/src/components/Title'
 
 export default function AuthCtaSection() {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
 
   useEffect(() => {
-    if (me) {
+    if (session) {
       router.replace('/home')
     }
-  }, [me])
+  }, [session])
 
   return (
     <XStack className="w-full justify-center">

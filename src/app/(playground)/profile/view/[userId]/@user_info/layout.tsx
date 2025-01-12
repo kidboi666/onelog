@@ -2,7 +2,6 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import { PropsWithChildren } from 'react'
 import { postPrefetchQuery } from '@/src/services/queries/post/post-prefetch-query'
 import { PostType } from '@/src/types/post'
-import { Container } from '@/src/components/Container'
 import { ZStack } from '@/src/components/Stack'
 import MenuSection from './journal_garden/_components/MenuSection'
 
@@ -24,11 +23,11 @@ export default async function Layout({
 
   return (
     <HydrationBoundary state={state}>
-      <Container className="overflow-x-auto rounded-md bg-white p-1 shadow-sm dark:bg-var-darkgray">
+      <div className="overflow-x-auto rounded-md bg-white p-1 shadow-sm dark:bg-var-darkgray">
         <ZStack gap={2}>
           <MenuSection userId={userId} />
         </ZStack>
-      </Container>
+      </div>
       {children}
     </HydrationBoundary>
   )

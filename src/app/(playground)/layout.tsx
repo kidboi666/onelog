@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation'
 import { PropsWithChildren, ReactNode } from 'react'
-import { Container } from '@/src/components/Container'
 import Portal from '@/src/components/Portal'
 import ToastContainer from '@/src/components/ToastContainer'
 
@@ -12,7 +11,12 @@ interface Props {
   modal: ReactNode
 }
 
-export default function Layout({ header, sidebar, children, modal }: PropsWithChildren<Props>) {
+export default function Layout({
+  header,
+  sidebar,
+  children,
+  modal,
+}: PropsWithChildren<Props>) {
   const pathname = usePathname()
   const isModalOpen = pathname.startsWith('/modal')
 
@@ -22,9 +26,9 @@ export default function Layout({ header, sidebar, children, modal }: PropsWithCh
       {sidebar}
       {isModalOpen && <Portal>{modal}</Portal>}
       <ToastContainer />
-      <Container className="my-8 flex flex-1 justify-center px-2 sm:ml-[80px] sm:px-4">
-        <Container className="w-full lg:w-[880px]">{children}</Container>
-      </Container>
+      <div className="my-8 flex flex-1 justify-center px-2 sm:ml-[80px] sm:px-4">
+        <div className="w-full lg:w-[880px]">{children}</div>
+      </div>
     </>
   )
 }

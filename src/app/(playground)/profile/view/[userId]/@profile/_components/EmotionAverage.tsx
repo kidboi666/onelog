@@ -1,9 +1,8 @@
-import { colorTheme, useTheme } from '@/src/store/useTheme'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import cn from '@/src/lib/cn'
 import { supabase } from '@/src/lib/supabase/client'
+import { colorTheme, useTheme } from '@/src/store/useTheme'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
-import { Container } from '@/src/components/Container'
 import Text from '@/src/components/Text'
 
 interface Props {
@@ -16,7 +15,7 @@ export default function EmotionAverage({ userId }: Props) {
     emotionQuery.getEmotionAverage(supabase, userId),
   )
   return (
-    <Container className="absolute -right-3 top-0">
+    <div className="absolute -right-3 top-0">
       <Text
         size="xs"
         className={cn(
@@ -31,6 +30,6 @@ export default function EmotionAverage({ userId }: Props) {
       >
         {myAverageEmotion}%
       </Text>
-    </Container>
+    </div>
   )
 }

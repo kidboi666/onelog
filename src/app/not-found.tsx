@@ -1,6 +1,5 @@
 import { ROUTES } from '@/src/routes'
 import BackButton from '@/src/components/BackButton'
-import { Container } from '@/src/components/Container'
 import LinkButton from '@/src/components/LinkButton'
 import { XStack, YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
@@ -8,7 +7,7 @@ import Title from '@/src/components/Title'
 
 export default function NotFound() {
   return (
-    <Container className="flex h-dvh flex-1 items-center justify-center">
+    <div className="flex h-dvh flex-1 items-center justify-center">
       <YStack gap={12} className="items-center">
         <XStack className="items-end">
           <Title size="bigger">404</Title>
@@ -25,6 +24,6 @@ export default function NotFound() {
           <LinkButton href={ROUTES.HOME}>메인 화면으로</LinkButton>
         </XStack>
       </YStack>
-    </Container>
+    </div>
   )
 }

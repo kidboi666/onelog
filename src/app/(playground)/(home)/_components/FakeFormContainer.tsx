@@ -8,7 +8,6 @@ import { useTheme } from '@/src/store/useTheme'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { ROUTES } from '@/src/routes'
 import Avatar from '@/src/components/Avatar'
-import { Container } from '@/src/components/Container'
 import { XStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
 
@@ -26,10 +25,15 @@ export default function FakeFormContainer() {
   }
 
   return (
-    <Container onClick={handlePostClick}>
+    <div onClick={handlePostClick}>
       <XStack gap={4}>
-        <Avatar src={me?.avatar_url} size="sm" shadow="sm" className="max-sm:hidden" />
-        <Container
+        <Avatar
+          src={me?.avatar_url}
+          size="sm"
+          shadow="sm"
+          className="max-sm:hidden"
+        />
+        <div
           className={cn(
             'w-full min-w-0 animate-cta-fadein-out items-center rounded-md bg-white p-2 text-sm dark:bg-var-darkgray',
             color === 'blue' && 'ring-var-blue/65',
@@ -45,8 +49,8 @@ export default function FakeFormContainer() {
            * tailwind.config 에 있는 animate 와 충돌이 있는듯 보임
            */}
           <Text type="caption">오늘 당신의 생각을 한 줄로 기록하세요.</Text>
-        </Container>
+        </div>
       </XStack>
-    </Container>
+    </div>
   )
 }

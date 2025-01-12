@@ -6,7 +6,6 @@ import cn from '@/src/lib/cn'
 import useToggle from '@/src/hooks/useToggle'
 import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
-import { Container } from '@/src/components/Container'
 import Icon from '@/src/components/Icon'
 import ToolTip from '@/src/components/Tooltip'
 
@@ -17,7 +16,12 @@ interface Props {
   isSide?: boolean
 }
 
-export default function ReportButton({ viewToolTip, postId, commentId, isSide }: Props) {
+export default function ReportButton({
+  viewToolTip,
+  postId,
+  commentId,
+  isSide,
+}: Props) {
   const router = useRouter()
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
 
@@ -31,7 +35,7 @@ export default function ReportButton({ viewToolTip, postId, commentId, isSide }:
   }
 
   return (
-    <Container onMouseEnter={hover} onMouseLeave={leave} className="relative">
+    <div onMouseEnter={hover} onMouseLeave={leave} className="relative">
       <Button
         variant="icon"
         size={isSide ? 'md' : 'icon'}
@@ -51,6 +55,6 @@ export default function ReportButton({ viewToolTip, postId, commentId, isSide }:
           text="신고하기"
         />
       )}
-    </Container>
+    </div>
   )
 }

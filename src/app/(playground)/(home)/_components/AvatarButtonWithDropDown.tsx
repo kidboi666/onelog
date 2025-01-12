@@ -1,13 +1,11 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import useOutsideClick from '@/src/hooks/useOutsideClick';
-import useDataDrivenAnimation from '@/src/hooks/useStateChange';
-import Avatar from '@/src/components/Avatar';
-import { Container } from '@/src/components/Container';
-import { DropDown } from '@/src/components/DropDown';
-import AvatarButtonWithDropDownContent from './AvatarButtonWithDropDownContent';
-
+import { useState } from 'react'
+import useOutsideClick from '@/src/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import Avatar from '@/src/components/Avatar'
+import { DropDown } from '@/src/components/DropDown'
+import AvatarButtonWithDropDownContent from './AvatarButtonWithDropDownContent'
 
 interface Props {
   avatarUrl: string | null
@@ -23,14 +21,20 @@ export default function AvatarButtonWithDropDown({
   position = 'topRight',
 }: Props) {
   const [isHover, setHover] = useState(false)
-  const { close, ref, onClick, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
+  const { close, ref, onClick, onTransitionEnd } =
+    useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
   const handleMountDropDownContent = () => setHover(true)
 
   return (
-    <Container onMouseEnter={handleMountDropDownContent}>
+    <div onMouseEnter={handleMountDropDownContent}>
       <DropDown.Root>
-        <DropDown.Trigger targetRef={buttonRef} variant="none" onClick={onClick} className="p-0">
+        <DropDown.Trigger
+          targetRef={buttonRef}
+          variant="none"
+          onClick={onClick}
+          className="p-0"
+        >
           <Avatar src={avatarUrl} size="sm" shadow="sm" />
         </DropDown.Trigger>
         <DropDown.Content
@@ -48,6 +52,6 @@ export default function AvatarButtonWithDropDown({
           )}
         </DropDown.Content>
       </DropDown.Root>
-    </Container>
+    </div>
   )
 }

@@ -1,17 +1,15 @@
-'use client';
+'use client'
 
-import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { supabase } from '@/src/lib/supabase/client';
-import { meQuery } from '@/src/services/queries/auth/me-query';
-import { postQuery } from '@/src/services/queries/post/post-query';
-import useIntersect from '@/src/hooks/useIntersect';
-import { Container } from '@/src/components/Container';
-import Empty from '@/src/components/Empty';
-import Spinner from '@/src/components/Spinner';
-import { YStack } from '@/src/components/Stack';
-import PostCard from '@/src/app/(playground)/(home)/_components/PostCard';
-
+import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { supabase } from '@/src/lib/supabase/client'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+import useIntersect from '@/src/hooks/useIntersect'
+import Empty from '@/src/components/Empty'
+import Spinner from '@/src/components/Spinner'
+import { YStack } from '@/src/components/Stack'
+import PostCard from '@/src/app/(playground)/(home)/_components/PostCard'
 
 interface Props {
   params: { userId: string }
@@ -20,9 +18,10 @@ interface Props {
 export default function LikedPage({ params }: Props) {
   const limit = 4
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
-  const { data, hasNextPage, fetchNextPage, isFetching, isLoading, isPending } = useInfiniteQuery(
-    postQuery.getLikedPost(supabase, params.userId, limit, session?.userId),
-  )
+  const { data, hasNextPage, fetchNextPage, isFetching, isLoading, isPending } =
+    useInfiniteQuery(
+      postQuery.getLikedPost(supabase, params.userId, limit, session?.userId),
+    )
   const likedPosts = data?.pages.flatMap((post) => post || [])
   const [ref, inView] = useIntersect<HTMLDivElement>({}, isLoading)
 
@@ -41,7 +40,7 @@ export default function LikedPage({ params }: Props) {
   }
 
   return (
-    <Container className="animate-fade-in">
+    <div className="animate-fade-in">
       {likedPosts && likedPosts?.length > 0 ? (
         <YStack gap={8}>
           {likedPosts.map((item) =>
@@ -73,6 +72,6 @@ export default function LikedPage({ params }: Props) {
           <Empty.Text>좋아요 한 게시글이 없습니다.</Empty.Text>
         </Empty>
       )}
-    </Container>
+    </div>
   )
 }

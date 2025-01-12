@@ -8,7 +8,6 @@ import { postQuery } from '@/src/services/queries/post/post-query'
 import { IPost, PostType } from '@/src/types/post'
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import useIntersect from '@/src/hooks/useIntersect'
-import { Container } from '@/src/components/Container'
 import Empty from '@/src/components/Empty'
 import Spinner from '@/src/components/Spinner'
 import { YStack } from '@/src/components/Stack'
@@ -57,7 +56,7 @@ export default function Journals({ params }: Props) {
   }
 
   return (
-    <Container className="animate-fade-in">
+    <div className="animate-fade-in">
       {journals?.length! > 0 ? (
         <YStack gap={8}>
           {journals?.map((journal: IPost) =>
@@ -88,6 +87,6 @@ export default function Journals({ params }: Props) {
         </Empty>
       )}
       <div ref={ref} />
-    </Container>
+    </div>
   )
 }

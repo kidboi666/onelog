@@ -1,17 +1,15 @@
-'use client';
+'use client'
 
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { Fragment, useEffect, useState } from 'react';
-import { supabase } from '@/src/lib/supabase/client';
-import { meQuery } from '@/src/services/queries/auth/me-query';
-import { postQuery } from '@/src/services/queries/post/post-query';
-import { Container } from '@/src/components/Container';
-import Empty from '@/src/components/Empty';
-import Spinner from '@/src/components/Spinner';
-import { YStack } from '@/src/components/Stack';
-import Title from '@/src/components/Title';
-import PostCard from '@/src/app/(playground)/(home)/_components/PostCard';
-
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { Fragment, useEffect, useState } from 'react'
+import { supabase } from '@/src/lib/supabase/client'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+import Empty from '@/src/components/Empty'
+import Spinner from '@/src/components/Spinner'
+import { YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
+import PostCard from '@/src/app/(playground)/(home)/_components/PostCard'
 
 interface Props {
   params: { userId: string }
@@ -27,7 +25,13 @@ export default function PrevOnePost({ params, searchParams }: Props) {
   const [endOfDay, setEndOfDay] = useState('')
 
   const { data: posts, isFetching } = useQuery(
-    postQuery.getUserPostThatDay(supabase, params.userId, startOfDay, endOfDay, session?.userId),
+    postQuery.getUserPostThatDay(
+      supabase,
+      params.userId,
+      startOfDay,
+      endOfDay,
+      session?.userId,
+    ),
   )
 
   useEffect(() => {
@@ -39,7 +43,7 @@ export default function PrevOnePost({ params, searchParams }: Props) {
 
   if (isFetching) {
     return (
-      <Container>
+      <div>
         <YStack gap={8}>
           <Title>그날의 기록</Title>
           <Title type="sub" size="sm" className="mb-4">
@@ -49,25 +53,25 @@ export default function PrevOnePost({ params, searchParams }: Props) {
             <Spinner size={60} />
           </Spinner.Container>
         </YStack>
-      </Container>
+      </div>
     )
   }
 
   if (!year || !month || !date) {
     return (
-      <Container className="animate-fade-in">
+      <div className="animate-fade-in">
         <YStack gap={8}>
           <Title>그날의 기록</Title>
           <Empty isShadow>
             <Empty.Text>선택된 날이 없습니다.</Empty.Text>
           </Empty>
         </YStack>
-      </Container>
+      </div>
     )
   }
 
   return (
-    <Container className="animate-fade-in">
+    <div className="animate-fade-in">
       <YStack gap={8}>
         <Title>그날의 기록</Title>
         <Title type="sub" size="sm" className="mb-4">
@@ -101,6 +105,6 @@ export default function PrevOnePost({ params, searchParams }: Props) {
           </Empty>
         )}
       </YStack>
-    </Container>
+    </div>
   )
 }

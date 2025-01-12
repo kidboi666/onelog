@@ -1,5 +1,4 @@
 import useToggle from '@/src/hooks/useToggle'
-import { Container } from '@/src/components/Container'
 import { XStack, ZStack } from '@/src/components/Stack'
 import ToolTip from '@/src/components/Tooltip'
 import { TEmotion } from '@/src/app/(playground)/post/edit/page'
@@ -49,10 +48,14 @@ export default function PostHeader({
       </XStack>
       {emotionLevel && (
         <ZStack>
-          <Container onMouseEnter={hover} onMouseLeave={leave}>
+          <div onMouseEnter={hover} onMouseLeave={leave}>
             <EmotionButtonWithDropDown emotionLevel={emotionLevel} />
-            <ToolTip isHover={isHover} position="bottomRight" text="감정 농도" />
-          </Container>
+            <ToolTip
+              isHover={isHover}
+              position="bottomRight"
+              text="감정 농도"
+            />
+          </div>
         </ZStack>
       )}
     </XStack>

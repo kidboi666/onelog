@@ -16,7 +16,6 @@ import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
-import { Container } from '@/src/components/Container'
 import Icon from '@/src/components/Icon'
 import Input from '@/src/components/Input'
 import { List } from '@/src/components/List'
@@ -36,7 +35,8 @@ export default function TaskForm({ params, searchParams }: Props) {
   const folderId = params.folderId
   const color = searchParams.color
   const [todoText, onChangeTodoText, setTodoText] = useInput('')
-  const { onClick, ref, close, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
+  const { onClick, ref, close, onTransitionEnd } =
+    useDataDrivenAnimation<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
   const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
 
@@ -49,7 +49,9 @@ export default function TaskForm({ params, searchParams }: Props) {
   const sortedTodos = fetchedTodos.sort((a, b) => a.index - b.index)
   const todos = sortedTodos.filter((todo) => todo.is_complete === false)
   const completedTodos = sortedTodos.filter((todo) => todo.is_complete === true)
-  const currentFolder = todoFolders.find((folder) => folder.id === Number(folderId))
+  const currentFolder = todoFolders.find(
+    (folder) => folder.id === Number(folderId),
+  )
   const { mutate: addTodo } = useAddTodo()
   const { mutate: updateTodo } = useUpdateTodo()
 
@@ -81,7 +83,10 @@ export default function TaskForm({ params, searchParams }: Props) {
     })
   }
 
-  const handleUpdateButtonClick = (e: MouseEvent, selectedTodo: Tables<'todo'>) => {
+  const handleUpdateButtonClick = (
+    e: MouseEvent,
+    selectedTodo: Tables<'todo'>,
+  ) => {
     e.stopPropagation()
     const folderIndex = JSON.parse(localStorage.getItem(folderId)!)
     const inProgressLastIndex = folderIndex.in_progress ?? 0
@@ -151,7 +156,12 @@ export default function TaskForm({ params, searchParams }: Props) {
           <XStack className="items-center justify-between">
             <Title className="text-nowrap">{currentFolder?.name}</Title>
             <ZStack>
-              <Button ref={dropdownRef} variant="icon" size="none" onClick={onClick}>
+              <Button
+                ref={dropdownRef}
+                variant="icon"
+                size="none"
+                onClick={onClick}
+              >
                 <Icon view="0 -960 960 960" size={20}>
                   <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
                 </Icon>
@@ -190,7 +200,7 @@ export default function TaskForm({ params, searchParams }: Props) {
           </YStack>
           <YStack gap={4} className="sm:flex-row">
             {todos.length >= 1 && (
-              <Container
+              <div
                 ref={inProgressZone}
                 className="flex w-full animate-fade-in flex-col gap-4 border border-transparent transition sm:w-72"
               >
@@ -214,10 +224,10 @@ export default function TaskForm({ params, searchParams }: Props) {
                     ))}
                   </List>
                 </YStack>
-              </Container>
+              </div>
             )}
             {showCompletedZone && (
-              <Container
+              <div
                 ref={completedZone}
                 className="flex w-full animate-fade-in flex-col gap-4 border border-transparent transition sm:w-72"
               >
@@ -241,7 +251,7 @@ export default function TaskForm({ params, searchParams }: Props) {
                     ))}
                   </List>
                 </YStack>
-              </Container>
+              </div>
             )}
           </YStack>
         </YStack>

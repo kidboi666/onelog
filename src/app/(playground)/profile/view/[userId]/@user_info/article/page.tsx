@@ -8,7 +8,6 @@ import { postQuery } from '@/src/services/queries/post/post-query'
 import { PostType } from '@/src/types/post'
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import useIntersect from '@/src/hooks/useIntersect'
-import { Container } from '@/src/components/Container'
 import Empty from '@/src/components/Empty'
 import Spinner from '@/src/components/Spinner'
 import { YStack } from '@/src/components/Stack'
@@ -57,7 +56,7 @@ export default function Article({ params }: Props) {
   }
 
   return (
-    <Container className="animate-fade-in">
+    <div className="animate-fade-in">
       {articles && articles?.length > 0 ? (
         <YStack gap={8}>
           {articles?.map((article) =>
@@ -88,6 +87,6 @@ export default function Article({ params }: Props) {
           <Empty.Text>아직 작성한 아티클이 없습니다.</Empty.Text>
         </Empty>
       )}
-    </Container>
+    </div>
   )
 }

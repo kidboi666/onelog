@@ -7,7 +7,6 @@ import { supabase } from '@/src/lib/supabase/client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
 import { ROUTES } from '@/src/routes'
-import { Container } from '@/src/components/Container'
 import Line from '@/src/components/Line'
 import { List } from '@/src/components/List'
 import { YStack } from '@/src/components/Stack'
@@ -23,7 +22,7 @@ export default function SideBarPage() {
   )
 
   return (
-    <Container
+    <div
       className={cn(
         'sticky left-4 top-8 hidden h-fit animate-fade-in-reverse rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray',
       )}
@@ -52,6 +51,6 @@ export default function SideBarPage() {
           }
         />
       </YStack>
-    </Container>
+    </div>
   )
 }
