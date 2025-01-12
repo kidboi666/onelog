@@ -1,7 +1,7 @@
 'use client'
 
 import { cva } from 'class-variance-authority'
-import { ComponentProps, PropsWithRef, forwardRef } from 'react'
+import { ComponentProps, PropsWithRef, forwardRef, useMemo } from 'react'
 import cn from '@/src/lib/cn'
 import { colorTheme, useTheme } from '@/src/store/useTheme'
 import Spinner from './Spinner'
@@ -65,26 +65,34 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
   ) => {
     const { color } = useTheme()
 
-    const buttonClasses = cn(
-      variant === 'primary' && colorTheme({ color }),
-      BUTTON_VARIANTS({
-        [isLoading || disabled ? 'disabled' : 'active']: variant,
-        size,
-      }),
-      className,
+    const isButtonDisabled = disabled || isLoading
+
+    const buttonClasses = useMemo(
+      () =>
+        cn(
+          variant === 'primary' && colorTheme({ color }),
+          BUTTON_VARIANTS({
+            [isButtonDisabled ? 'disabled' : 'active']: variant,
+            size,
+          }),
+          className,
+        ),
+      [variant, isButtonDisabled, size, color, className],
     )
 
     return (
       <button
         ref={ref}
-        disabled={disabled}
+        disabled={isButtonDisabled}
         data-status={dataStatus}
         onClick={onClick}
         type={type}
         className={buttonClasses}
         {...props}
       >
-        {isLoading && <Spinner size={size === 'sm' ? 16 : 20} variants="circle" />}
+        {isLoading && (
+          <Spinner size={size === 'sm' ? 16 : 20} variants="circle" />
+        )}
         {children}
       </button>
     )
