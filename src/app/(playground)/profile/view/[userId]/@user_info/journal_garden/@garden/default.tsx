@@ -120,7 +120,6 @@ export default function Garden({ params }: Props) {
   const handleSelect = (year: number) => {
     setSelectedYear(year)
   }
-  console.log(shouldRenderElement)
   return (
     <div className="animate-fade-in">
       <YStack gap={8}>

@@ -22,7 +22,11 @@ export default function FollowerListModal({ params }: Props) {
   const { mutate: followOrUnfollow } = useHandleFollow()
   const [pendingList, setPendingList] = useState<Record<string, boolean>>({})
 
-  const handleFollow = (e: MouseEvent, userId: string, isFollowing: boolean) => {
+  const handleFollow = (
+    e: MouseEvent,
+    userId: string,
+    isFollowing: boolean,
+  ) => {
     e.stopPropagation()
     if (!session) return router.push(ROUTES.MODAL.AUTH.GUARD)
 
@@ -50,7 +54,8 @@ export default function FollowerListModal({ params }: Props) {
       <YStack className="w-full">
         {followers?.map((follower) => {
           const isFollowing = myFollows?.find(
-            (myFollower: any) => myFollower.followed_user_id === follower.user_info.id,
+            (myFollower: any) =>
+              myFollower.followed_user_id === follower.user_info.id,
           )
           const isMe = me?.id === follower.user_info.id
           const isPending = pendingList[follower.user_info.id] || false
@@ -61,7 +66,9 @@ export default function FollowerListModal({ params }: Props) {
               isFollowing={!!isFollowing}
               isMe={isMe}
               follower={follower}
-              onFollow={(e: MouseEvent) => handleFollow(e, follower.user_info.id, !!isFollowing)}
+              onFollow={(e: MouseEvent) =>
+                handleFollow(e, follower.user_info.id, !!isFollowing)
+              }
               isPending={isPending}
               pushUserPage={() => handlePushUserPage(follower.user_info.id)}
             />

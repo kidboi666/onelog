@@ -60,7 +60,6 @@ export default function TaskForm({ params, searchParams }: Props) {
   const dragOverItem = useRef<Tables<'todo'> | null>(null)
   const completedZone = useRef<HTMLDivElement>(null)
   const inProgressZone = useRef<HTMLDivElement>(null)
-
   const currentMonth = new Date().getMonth() + 1
   const currentDate = new Date().getDate()
   const currentYear = new Date().getFullYear()

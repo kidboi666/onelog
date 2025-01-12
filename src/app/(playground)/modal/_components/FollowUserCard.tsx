@@ -1,20 +1,19 @@
+import { MouseEvent } from 'react'
+import { TFollower } from '@/src/types/follow'
 import Avatar from '@/src/components/Avatar'
 import Button from '@/src/components/Button'
 import { XStack, YStack } from '@/src/components/Stack'
 import Text from '@/src/components/Text'
 
 interface Props {
-  follower: any
-  onFollow: any
+  follower: TFollower
+  onFollow: (e: MouseEvent) => void
   isFollowing: boolean
   isMe: boolean
   pushUserPage: () => void
   isPending: boolean
 }
 
-/**
- * TODO 추후 타입핑 요망 @kidboi666
- */
 export default function FollowUserCard({
   follower,
   onFollow,
