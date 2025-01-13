@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { MouseEvent, useState } from 'react'
 import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
@@ -22,7 +22,11 @@ export default function FollowingListModal({ params }: Props) {
   const { mutate: followOrUnfollow } = useHandleFollow()
   const [pendingList, setPendingList] = useState<Record<string, boolean>>({})
 
-  const handleFollow = (e: MouseEvent, userId: string, isFollowing: boolean) => {
+  const handleFollow = (
+    e: MouseEvent,
+    userId: string,
+    isFollowing: boolean,
+  ) => {
     e.stopPropagation()
     if (!session) return router.push(ROUTES.MODAL.AUTH.GUARD)
 
@@ -50,7 +54,8 @@ export default function FollowingListModal({ params }: Props) {
       <YStack className="w-full">
         {followings?.map((user) => {
           const isFollowing = myFollows?.find(
-            (myFollower: any) => myFollower.followed_user_id === user.user_info.id,
+            (myFollower: any) =>
+              myFollower.followed_user_id === user.user_info.id,
           )
           const isMe = me?.id === user.followed_user_id
           const isPending = pendingList[user.user_info.id] || false
@@ -61,7 +66,9 @@ export default function FollowingListModal({ params }: Props) {
               isFollowing={!!isFollowing}
               isMe={isMe}
               follower={user}
-              onFollow={(e: MouseEvent) => handleFollow(e, user.user_info.id, !!isFollowing)}
+              onFollow={(e: MouseEvent) =>
+                handleFollow(e, user.user_info.id, !!isFollowing)
+              }
               pushUserPage={() => handlePushUserPage(user.user_info.id)}
               isPending={isPending}
             />
