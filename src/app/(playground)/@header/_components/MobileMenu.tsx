@@ -1,8 +1,10 @@
 'use client'
 
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import { RefObject } from 'react'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import { supabase } from '@/src/lib/supabase/client'
+import { meQuery } from '@/src/services/queries/auth/me-query'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Line from '@/src/components/Line'
@@ -25,9 +27,14 @@ interface Props {
   isOpen: boolean
 }
 
-export default function MobileMenu({ targetRef, close, onTransitionEnd, isOpen }: Props) {
+export default function MobileMenu({
+  targetRef,
+  close,
+  onTransitionEnd,
+  isOpen,
+}: Props) {
   const pathname = usePathname()
-  const { me, session } = useMeQueries()
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
 
   return (
     <>
@@ -49,7 +56,10 @@ export default function MobileMenu({ targetRef, close, onTransitionEnd, isOpen }
             </Icon>
           </Button>
           <Line className="my-2" />
-          <MobileWriteButtonWithLogo closeMenu={close} isSelected={pathname === '/write'} />
+          <MobileWriteButtonWithLogo
+            closeMenu={close}
+            isSelected={pathname === '/write'}
+          />
           <List className="flex flex-1 flex-col gap-2">
             {TOP_NAVIGATE_MENUS.map((menu) => (
               <List.Row key={menu.id}>
@@ -83,7 +93,6 @@ export default function MobileMenu({ targetRef, close, onTransitionEnd, isOpen }
           {session ? (
             <AuthButtonWithDropDown
               viewText
-              me={me}
               session={session}
               closeMenu={close}
               pathname={pathname.split('/')[1]}
@@ -113,7 +122,12 @@ export default function MobileMenu({ targetRef, close, onTransitionEnd, isOpen }
           </YStack>
         </YStack>
       </div>
-      {isOpen && <div className="fixed bottom-0 left-0 top-0 z-20 h-dvh w-full" onClick={close} />}
+      {isOpen && (
+        <div
+          className="fixed bottom-0 left-0 top-0 z-20 h-dvh w-full"
+          onClick={close}
+        />
+      )}
     </>
   )
 }

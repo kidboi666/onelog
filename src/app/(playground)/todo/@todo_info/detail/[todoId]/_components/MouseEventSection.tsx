@@ -1,15 +1,14 @@
-'use client';
+'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { PropsWithChildren, useEffect, useRef } from 'react';
-import { supabase } from '@/src/lib/supabase/client';
-import { todoQuery } from '@/src/services/queries/todo/todo-query';
-import { Tables } from '@/src/types/supabase';
-import useMeQueries from '@/src/hooks/queries/useMeQueries';
-import useDataDrivenAnimation from '@/src/hooks/useStateChange';
-import BackButtonSection from './BackButtonSection';
-
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
+import { PropsWithChildren, useEffect, useRef } from 'react'
+import { supabase } from '@/src/lib/supabase/client'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { todoQuery } from '@/src/services/queries/todo/todo-query'
+import { Tables } from '@/src/types/supabase'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import BackButtonSection from './BackButtonSection'
 
 interface Props {
   todoId: string
@@ -22,12 +21,16 @@ export default function MouseEventSection({
   folderId,
 }: PropsWithChildren<Props>) {
   const router = useRouter()
-  const { me } = useMeQueries()
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me?.id, Number(folderId)),
+    todoQuery.getTodoFromFolder(supabase, session!.userId, Number(folderId)),
   )
   const isMouseDown = useRef<boolean>(false)
-  const { close, open, ref: insideRef } = useDataDrivenAnimation<HTMLDivElement>()
+  const {
+    close,
+    open,
+    ref: insideRef,
+  } = useDataDrivenAnimation<HTMLDivElement>()
   let todo: Tables<'todo'>
 
   if (todos) {
@@ -35,7 +38,7 @@ export default function MouseEventSection({
   }
 
   const handleCloseTodoInfo = () => {
-    close()
+    void close()
     setTimeout(() => {
       router.back()
     }, 100)
@@ -54,7 +57,7 @@ export default function MouseEventSection({
 
   useEffect(() => {
     setTimeout(() => {
-      open()
+      void open()
     }, 100)
   }, [])
 

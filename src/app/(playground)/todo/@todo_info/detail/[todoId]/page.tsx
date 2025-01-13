@@ -38,7 +38,12 @@ export default async function Page({ params, searchParams }: Props) {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="fixed inset-0 z-40">
         <MouseEventSection todoId={todoId} folderId={folderId}>
-          <DataAccess todoId={todoId} folderId={folderId} orderFrom={orderFrom} color={color} />
+          <DataAccess
+            todoId={todoId}
+            folderId={folderId}
+            orderFrom={orderFrom}
+            color={color}
+          />
         </MouseEventSection>
       </div>
     </HydrationBoundary>

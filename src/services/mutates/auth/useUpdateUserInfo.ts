@@ -20,7 +20,6 @@ export default function useUpdateUserInfo() {
           about_me: params.aboutMe,
           avatar_url: params.avatarUrl,
           user_name: params.userName,
-          mbti: params.mbti,
         },
       })
 
