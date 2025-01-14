@@ -18,7 +18,7 @@ export class Post {
   id: number;
 
   @Column()
-  userId: number;
+  userId: string;
 
   @Column()
   postType: PostType;

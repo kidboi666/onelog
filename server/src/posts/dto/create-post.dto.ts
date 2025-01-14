@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { EmotionLevel } from '../enums/emotion-level.enum';
 
-export class createPostDto {
+export class CreatePostDto {
   @IsNotEmpty()
   @IsUUID()
   userId: string;
