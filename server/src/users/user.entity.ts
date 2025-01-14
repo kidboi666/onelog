@@ -9,29 +9,36 @@ import {
 import { Post } from '../posts/post.entity';
 import { Message } from '../messages/message.entity';
 import { Follow } from '../follows/follow.entity';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
+  @IsNotEmpty()
   @Column()
   email: string;
 
+  @IsNotEmpty()
+  @Column()
+  password: string;
+
+  @IsOptional()
   @Column({ nullable: true })
   avatarUrl: string;
 
+  @IsOptional()
   @Column({ nullable: true })
   userName: string;
 
+  @IsOptional()
   @Column({ nullable: true })
   aboutMe: string;
 
+  @IsOptional()
   @Column({ nullable: true })
   mbti: string;
-
-  @Column({ nullable: true })
-  favoriteWords: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;

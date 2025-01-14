@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { Post } from './post.entity';
 import { DATA_SOURCE } from '../../constants/data-source';
 import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -11,8 +12,8 @@ export class PostsService {
     private readonly postRepository: Repository<Post>,
   ) {}
 
-  findAll() {
-    return this.postRepository.find();
+  async findAll() {
+    return await this.postRepository.find();
   }
 
   async create(createPostDto: CreatePostDto) {
@@ -31,7 +32,21 @@ export class PostsService {
     return await this.postRepository.save(newPost);
   }
 
-  findOne(id: number) {
-    return this.postRepository.findOne({ where: { id } });
+  async findOne(id: number) {
+    return await this.postRepository.findOne({ where: { id } });
+  }
+
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    const { title, postType, accessType, tags, userId, emotionLevel, content } =
+      updatePostDto;
+    await this.postRepository.update(id, {
+      title,
+      postType,
+      accessType,
+      tags: tags ?? null,
+      userId,
+      emotionLevel: emotionLevel ?? null,
+      content,
+    });
   }
 }
