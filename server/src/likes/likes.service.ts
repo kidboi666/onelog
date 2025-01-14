@@ -1,12 +1,12 @@
+import { Like } from './like.entity';
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Todo } from './todo.entity';
 import { DATA_SOURCE } from '../../constants/data-source';
 
 @Injectable()
-export class TodoService {
+export class LikesService {
   constructor(
-    @Inject(DATA_SOURCE.REPOSITORIES.TODO)
-    private todoRepository: Repository<Todo>,
+    @Inject(DATA_SOURCE.REPOSITORIES.LIKE)
+    private likeRepository: Repository<Like>,
   ) {}
 }

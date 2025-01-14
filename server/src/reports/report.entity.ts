@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Post } from '../posts/post.entity';
 import { User } from '../users/user.entity';
+import { Comment } from '../comments/comment.entity';
 
 @Entity('reports')
 export class Report {

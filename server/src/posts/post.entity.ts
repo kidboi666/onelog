@@ -10,6 +10,7 @@ import {
 import { User } from '../users/user.entity';
 import { Comment } from '../comments/comment.entity';
 import { Like } from '../likes/like.entity';
+import { PostType } from './enums/post-type.enum';
 
 @Entity('posts')
 export class Post {
@@ -20,7 +21,7 @@ export class Post {
   userId: number;
 
   @Column()
-  postType: string;
+  postType: PostType;
 
   @Column({ nullable: true })
   emotionLevel: string;

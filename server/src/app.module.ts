@@ -1,42 +1,35 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { PostModule } from './posts/post.module';
-import { CommentModule } from './comments/comment.module';
-import { FollowModule } from './follows/follow.module';
-import { GardenModule } from './gardens/garden.module';
-import { LikeModule } from './likes/like.module';
-import { MessageModule } from './messages/message.module';
-import { ReportModule } from './reports/report.module';
-import { TodoFolderModule } from './todo-folders/todo-folder.module';
+import { PostsModule } from './posts/posts.module';
+import { CommentsModule } from './comments/comments.module';
+import { FollowsModule } from './follows/follows.module';
+import { GardensModule } from './gardens/gardens.module';
+import { LikesModule } from './likes/likes.module';
+import { MessagesModule } from './messages/messages.module';
+import { ReportsModule } from './reports/reports.module';
+import { TodoFoldersModule } from './todo-folders/todo-folders.module';
 import { TodoModule } from './todos/todo.module';
-import { UsedWordModule } from './used-words/used-word.module';
-import { UserModule } from './users/user.module';
-import { WordDictionaryModule } from './word-dictionaries/word-dictionary.module';
+import { UsedWordsModule } from './used-words/used-words.module';
+import { UsersModule } from './users/users.module';
+import { WordDictionariesModule } from './word-dictionaries/word-dictionaries.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: parseInt(process.env.DB_PORT),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      entities: ['./src/**/*.entity{.ts,.js}'],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
-    CommentModule,
-    FollowModule,
-    GardenModule,
-    LikeModule,
-    MessageModule,
-    PostModule,
-    ReportModule,
-    TodoFolderModule,
+    CommentsModule,
+    FollowsModule,
+    GardensModule,
+    LikesModule,
+    MessagesModule,
+    PostsModule,
+    ReportsModule,
+    TodoFoldersModule,
     TodoModule,
-    UsedWordModule,
-    UserModule,
-    WordDictionaryModule,
+    UsedWordsModule,
+    UsersModule,
+    WordDictionariesModule,
   ],
 })
 export class AppModule {}
