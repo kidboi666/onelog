@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { WordDictionary } from './word-dictionary.entity';
-import { DATA_SOURCE } from '../../constants/data-source';
+import { DATA_SOURCE } from '../constants';
 
 export const wordDictionariesProvider = [
   {

@@ -1,8 +1,9 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { DATA_SOURCE } from '../../constants/data-source';
-import { CreateUserDto } from './dto/create-user.dto';
+import { DATA_SOURCE } from '../constants';
+import { UpdateUserDto } from './dtos/request/update-user.dto';
+import { SignUpUserDto } from '../auth/dtos/request/sign-up-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +14,7 @@ export class UsersService {
 
   async findAll() {
     const result = await this.userRepository.find();
+
     if (!result) {
       throw new BadRequestException('User does not exist');
     }
@@ -20,26 +22,57 @@ export class UsersService {
     return result;
   }
 
-  async createUser(createUserDto: CreateUserDto) {
-    const { email } = createUserDto;
-    const alreadyExists = await this.userRepository.findOne({
-      where: { email },
+  async create(signUpUserDto: SignUpUserDto) {
+    const { email } = signUpUserDto;
+    const alreadyExists = await this.userRepository.findOneBy({
+      email,
     });
+
     if (alreadyExists) {
       throw new BadRequestException('User already exists');
     }
-    const newUser = this.userRepository.create(createUserDto);
 
-    return await this.userRepository.save(newUser);
+    await this.userRepository.save(signUpUserDto);
   }
 
   async findById(id: string) {
-    const result = await this.userRepository.findOne({ where: { id } });
+    const result = await this.userRepository.findOneBy({ id });
 
     if (!result) {
       throw new BadRequestException('User does not exist');
     }
 
     return result;
+  }
+
+  async findByEmail(email: string) {
+    const result = await this.userRepository.findOneBy({ email });
+
+    if (!result) {
+      throw new BadRequestException('User does not exist');
+    }
+
+    return result;
+  }
+
+  async update(id: string, updateUserDto: Partial<UpdateUserDto>) {
+    const user = await this.userRepository.findOneBy({ id });
+
+    if (!user) {
+      throw new BadRequestException('User does not exist');
+    }
+
+    Object.assign(user, updateUserDto);
+    await this.userRepository.save(user);
+  }
+
+  async remove(id: string) {
+    const user = await this.userRepository.findOneBy({ id });
+
+    if (!user) {
+      throw new BadRequestException('User does not exist or already removed');
+    }
+
+    await this.userRepository.remove(user);
   }
 }

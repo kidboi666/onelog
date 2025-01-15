@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { UsedWord } from './used-word.entity';
 import { Repository } from 'typeorm';
-import { DATA_SOURCE } from '../../constants/data-source';
+import { DATA_SOURCE } from '../constants';
 
 @Injectable()
 export class UsedWordsService {

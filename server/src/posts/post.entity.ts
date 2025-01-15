@@ -10,7 +10,8 @@ import {
 import { User } from '../users/user.entity';
 import { Comment } from '../comments/comment.entity';
 import { Like } from '../likes/like.entity';
-import { PostType } from './enums/post-type.enum';
+
+import { PostType } from '../enums';
 
 @Entity('posts')
 export class Post {

@@ -1,4 +1,7 @@
 import {
+  AfterInsert,
+  AfterRemove,
+  AfterUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -9,34 +12,27 @@ import {
 import { Post } from '../posts/post.entity';
 import { Message } from '../messages/message.entity';
 import { Follow } from '../follows/follow.entity';
-import { IsNotEmpty, IsOptional } from 'class-validator';
 
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @IsNotEmpty()
-  @Column()
+  @Column({ unique: true })
   email: string;
 
-  @IsNotEmpty()
   @Column()
   password: string;
 
-  @IsOptional()
   @Column({ nullable: true })
   avatarUrl: string;
 
-  @IsOptional()
   @Column({ nullable: true })
   userName: string;
 
-  @IsOptional()
   @Column({ nullable: true })
   aboutMe: string;
 
-  @IsOptional()
   @Column({ nullable: true })
   mbti: string;
 
@@ -60,4 +56,19 @@ export class User {
 
   @OneToMany(() => Follow, (follow) => follow.followed)
   followers: Follow[];
+
+  @AfterInsert()
+  logInsert() {
+    console.log('Inserted user with id : ', this.id);
+  }
+
+  @AfterUpdate()
+  logUpdate() {
+    console.log('Updated user with id : ', this.id);
+  }
+
+  @AfterRemove()
+  logRemove() {
+    console.log('Removed user with id : ', this.id);
+  }
 }

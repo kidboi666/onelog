@@ -1,5 +1,3 @@
-import { PostType } from '../enums/post-type.enum';
-import { AccessType } from '../enums/access-type.enum';
 import {
   IsArray,
   IsEnum,
@@ -8,7 +6,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { EmotionLevel } from '../enums/emotion-level.enum';
+import { AccessType, EmotionLevel, PostType } from '../../enums';
 
 export class CreatePostDto {
   @IsNotEmpty()

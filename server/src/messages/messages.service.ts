@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Message } from './message.entity';
-import { DATA_SOURCE } from '../../constants/data-source';
+import { DATA_SOURCE } from '../constants';
 
 @Injectable()
 export class MessagesService {

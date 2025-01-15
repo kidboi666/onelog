@@ -1,4 +1,4 @@
-import { DATA_SOURCE } from '../../constants/data-source';
+import { DATA_SOURCE } from '../constants';
 import { DataSource } from 'typeorm';
 import { TodoFolder } from './todo-folder.entity';
 

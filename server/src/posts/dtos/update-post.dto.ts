@@ -1,6 +1,4 @@
-import { EmotionLevel } from '../enums/emotion-level.enum';
-import { AccessType } from '../enums/access-type.enum';
-import { PostType } from '../enums/post-type.enum';
+import { AccessType, EmotionLevel, PostType } from '../../enums';
 
 export class UpdatePostDto {
   userId: string;

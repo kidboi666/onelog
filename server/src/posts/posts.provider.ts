@@ -1,4 +1,4 @@
-import { DATA_SOURCE } from '../../constants/data-source';
+import { DATA_SOURCE } from '../constants';
 import { Post } from './post.entity';
 import { DataSource } from 'typeorm';
 
