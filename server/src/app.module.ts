@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { PostsModule } from './posts/posts.module';
-import { CommentsModule } from './comments/comments.module';
-import { FollowsModule } from './follows/follows.module';
-import { GardensModule } from './gardens/gardens.module';
-import { LikesModule } from './likes/likes.module';
-import { MessagesModule } from './messages/messages.module';
-import { ReportsModule } from './reports/reports.module';
-import { TodoFoldersModule } from './todo-folders/todo-folders.module';
-import { TodoModule } from './todos/todo.module';
-import { UsedWordsModule } from './used-words/used-words.module';
-import { UsersModule } from './users/users.module';
-import { WordDictionariesModule } from './word-dictionaries/word-dictionaries.module';
+import { PostsModule } from './modules/posts.module';
+import { CommentsModule } from './modules/comments.module';
+import { FollowsModule } from './modules/follows.module';
+import { GardensModule } from './modules/gardens.module';
+import { LikesModule } from './modules/likes.module';
+import { MessagesModule } from './modules/messages.module';
+import { ReportsModule } from './modules/reports.module';
+import { TodoFoldersModule } from './modules/todo-folders.module';
+import { TodoModule } from './modules/todo.module';
+import { UsedWordsModule } from './modules/used-words.module';
+import { UsersModule } from './modules/users.module';
+import { WordDictionariesModule } from './modules/word-dictionaries.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
