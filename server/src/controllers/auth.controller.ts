@@ -11,17 +11,13 @@ import { SignUpUserDto } from '../dtos/request/sign-up-user.dto';
 import { SignInUserDto } from '../dtos/request/sign-in-user.dto';
 import { Serialize } from '../decorators/serialize.decorator';
 import { UserDto } from '../dtos/response/user.dto';
-import { UsersService } from '../services/users.service';
 import { CurrentUser } from '../decorators/current-user.decorator';
 import { User } from '../entities/user.entity';
 import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly usersService: UsersService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('/signup')
   async signUp(@Body() signUpUserDto: SignUpUserDto): Promise<void> {
