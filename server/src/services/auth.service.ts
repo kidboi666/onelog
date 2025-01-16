@@ -11,7 +11,7 @@ const scrypt = promisify(_scrypt);
 export class AuthService {
   constructor(private readonly usersService: UsersService) {}
 
-  async signup(signUpUserDto: SignUpUserDto) {
+  async signUp(signUpUserDto: SignUpUserDto) {
     const { email, password } = signUpUserDto;
     const salt = randomBytes(8).toString('hex');
     const hash = (await scrypt(password, salt, 32)) as Buffer;
@@ -20,7 +20,7 @@ export class AuthService {
     return this.usersService.create({ email, password: result });
   }
 
-  async signin(signInUserDto: SignInUserDto) {
+  async signIn(signInUserDto: SignInUserDto) {
     const { email, password } = signInUserDto;
 
     const user = await this.usersService.findByEmail(email);
