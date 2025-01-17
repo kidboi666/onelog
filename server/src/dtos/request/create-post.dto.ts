@@ -13,11 +13,16 @@ export class CreatePostDto {
   @IsUUID()
   userId: string;
 
-  @IsEnum(PostType)
+ž  @IsEnum(PostType, {
+    message: 'Post type must be one of the allowed values: journal, article',
+  })
   postType: PostType;
 
   @IsOptional()
-  @IsEnum(EmotionLevel)
+  @IsEnum(EmotionLevel, {
+    message:
+      'Emotion level must be one of the allowed values: 0%, 25%, 50%, 75%, 100%',
+  })
   emotionLevel: EmotionLevel;
 
   @IsOptional()
@@ -26,7 +31,9 @@ export class CreatePostDto {
   tags: string[];
 
   @IsNotEmpty()
-  @IsEnum(AccessType)
+  @IsEnum(AccessType, {
+    message: 'Access type must be one of the allowed values: public, private',
+  })
   accessType: AccessType;
 
   @IsOptional()

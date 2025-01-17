@@ -13,7 +13,7 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
 
-  async findAll() {
+  async findAll(): Promise<User[]> {
     const result = await this.userRepository.find();
 
     if (!result) {
@@ -23,20 +23,11 @@ export class UsersService {
     return result;
   }
 
-  async create(signUpUserDto: SignUpUserDto) {
-    const { email } = signUpUserDto;
-    const alreadyExists = await this.userRepository.findOneBy({
-      email,
-    });
-
-    if (alreadyExists) {
-      throw new BadRequestException('User already exists');
-    }
-
-    await this.userRepository.save(signUpUserDto);
+  async create(signUpUserDto: SignUpUserDto): Promise<User> {
+    return await this.userRepository.save(signUpUserDto);
   }
 
-  async findById(id: string) {
+  async findById(id: string): Promise<User> {
     if (!isUUID(id)) {
       throw new BadRequestException('Id is not UUID');
     }
@@ -50,7 +41,7 @@ export class UsersService {
     return result;
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<User> {
     const result = await this.userRepository.findOneBy({ email });
 
     if (!result) {
@@ -71,7 +62,7 @@ export class UsersService {
     await this.userRepository.save(user);
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<void> {
     const user = await this.userRepository.findOneBy({ id });
 
     if (!user) {
