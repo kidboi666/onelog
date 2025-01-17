@@ -42,8 +42,8 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Serialize(UserDto)
-  @Get('/whoami')
-  whoAmI(@CurrentUser() user: User): User {
+  @Get('/session')
+  getSession(@CurrentUser() user: User): User {
     return user;
   }
 }
