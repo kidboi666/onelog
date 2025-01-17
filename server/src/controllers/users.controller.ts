@@ -7,23 +7,29 @@ import { Serialize } from '../decorators/serialize.decorator';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Get()
   @Serialize(UserDto)
-  getUsers(): Promise<User[]> {
-    return this.userService.findAll();
+  findAll(): Promise<User[]> {
+    return this.usersService.findAll();
   }
 
   @Serialize(UserDto)
   @Get(':id')
-  getUser(@Param('id') id: string): Promise<User> {
-    return this.userService.findById(id);
+  findById(@Param('id') id: string): Promise<User> {
+    return this.usersService.findById(id);
+  }
+
+  @Serialize(UserDto)
+  @Get(':email')
+  findByEmail(@Param('email') email: string): Promise<User> {
+    return this.usersService.findByEmail(email);
   }
 
   @Delete(':id')
   removeUser(@Param('id') id: string): Promise<void> {
-    return this.userService.remove(id);
+    return this.usersService.remove(id);
   }
 
   @Patch(':id')
@@ -31,6 +37,6 @@ export class UsersController {
     @Param('id') id: string,
     @Body() updateUserDto: Partial<UpdateUserDto>,
   ): Promise<void> {
-    return this.userService.update(id, updateUserDto);
+    return this.usersService.update(id, updateUserDto);
   }
 }

@@ -15,8 +15,8 @@ export class Report {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  reporterId: number;
+  @Column({ type: 'uuid' })
+  reporterId: string;
 
   @Column({ nullable: true })
   targetPostId: number;

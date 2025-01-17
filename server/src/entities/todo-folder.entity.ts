@@ -24,8 +24,8 @@ export class TodoFolder {
   @Column()
   name: string;
 
-  @Column()
-  userId: number;
+  @Column({ type: 'uuid' })
+  userId: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;

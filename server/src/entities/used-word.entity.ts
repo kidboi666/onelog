@@ -16,8 +16,8 @@ export class UsedWord {
   @Column('simple-array')
   words: string[];
 
-  @Column()
-  userId: number;
+  @Column({ type: 'uuid' })
+  userId: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;

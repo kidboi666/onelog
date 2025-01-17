@@ -20,8 +20,8 @@ export class Comment {
   @Column()
   postId: number;
 
-  @Column()
-  userId: number;
+  @Column({ type: 'uuid' })
+  userId: string;
 
   @Column({ nullable: true })
   commentId: number;

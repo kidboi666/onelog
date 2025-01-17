@@ -13,11 +13,11 @@ export class Follow {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  followerUserId: number;
+  @Column({ type: 'uuid' })
+  followerUserId: string;
 
-  @Column()
-  followedUserId: number;
+  @Column({ type: 'uuid' })
+  followedUserId: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;

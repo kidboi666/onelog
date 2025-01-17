@@ -16,8 +16,8 @@ export class Garden {
   @Column()
   posts: number;
 
-  @Column()
-  userId: number;
+  @Column({ type: 'uuid' })
+  userId: string;
 
   @Column()
   yearMonth: string;
