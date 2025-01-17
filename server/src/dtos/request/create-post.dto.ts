@@ -13,7 +13,7 @@ export class CreatePostDto {
   @IsUUID()
   userId: string;
 
-ž  @IsEnum(PostType, {
+  @IsEnum(PostType, {
     message: 'Post type must be one of the allowed values: journal, article',
   })
   postType: PostType;
