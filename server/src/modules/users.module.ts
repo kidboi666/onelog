@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 import { UsersController } from '../controllers/users.controller';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { UsersService } from '../services/users.service';
-import { usersProvider } from '../providers/users.provider';
-import { DatabaseModule } from '../config/database.module';
 import { AuthService } from '../services/auth.service';
 import { AuthController } from '../controllers/auth.controller';
 import { CurrentUserInterceptor } from '../interceptors/current-user.interceptor';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from '../entities/user.entity';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [TypeOrmModule.forFeature([User])],
   controllers: [UsersController, AuthController],
   /**
    * providers는 DI 컨테이너에 주입하려 할 수 있는 모든 클래스의 리스트이다.
@@ -18,7 +18,6 @@ import { CurrentUserInterceptor } from '../interceptors/current-user.interceptor
    * 결론적으로 프로바이더 리스트는 DI 컨테이너에 등록하려는 클래스 리스트이다.
    */
   providers: [
-    ...usersProvider,
     UsersService,
     AuthService,
     {

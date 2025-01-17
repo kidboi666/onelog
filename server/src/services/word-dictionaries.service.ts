@@ -1,12 +1,12 @@
 import { WordDictionary } from '../entities/word-dictionary.entity';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { DATA_SOURCE } from '../constants/index.constant';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class WordDictionariesService {
   constructor(
-    @Inject(DATA_SOURCE.REPOSITORIES.WORD_DICTIONARY)
+    @InjectRepository(WordDictionary)
     private readonly wordDictionaryRepository: Repository<WordDictionary>,
   ) {}
 }

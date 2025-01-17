@@ -1,12 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UsedWord } from '../entities/used-word.entity';
 import { Repository } from 'typeorm';
-import { DATA_SOURCE } from '../constants/index.constant';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UsedWordsService {
   constructor(
-    @Inject(DATA_SOURCE.REPOSITORIES.USED_WORD)
+    @InjectRepository(UsedWord)
     private usedWordRepository: Repository<UsedWord>,
   ) {}
 }

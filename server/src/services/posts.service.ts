@@ -1,14 +1,14 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Post } from '../entities/post.entity';
-import { DATA_SOURCE } from '../constants/index.constant';
 import { CreatePostDto } from '../dtos/request/create-post.dto';
 import { UpdatePostDto } from '../dtos/request/update-post.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class PostsService {
   constructor(
-    @Inject(DATA_SOURCE.REPOSITORIES.POST)
+    @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
   ) {}
 

@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { WordDictionariesController } from '../controllers/word-dictionaries.controller';
 import { WordDictionariesService } from '../services/word-dictionaries.service';
-import { DatabaseModule } from '../config/database.module';
-import { wordDictionariesProvider } from '../providers/word-dictionaries.provider';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { WordDictionary } from '../entities/word-dictionary.entity';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [TypeOrmModule.forFeature([WordDictionary])],
   controllers: [WordDictionariesController],
-  providers: [...wordDictionariesProvider, WordDictionariesService],
+  providers: [WordDictionariesService],
 })
 export class WordDictionariesModule {}

@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { UsedWordsController } from '../controllers/used-words.controller';
 import { UsedWordsService } from '../services/used-words.service';
-import { usedWordsProvider } from '../providers/used-words.provider';
-import { DatabaseModule } from '../config/database.module';
+import { UsedWord } from '../entities/used-word.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [TypeOrmModule.forFeature([UsedWord])],
   controllers: [UsedWordsController],
-  providers: [...usedWordsProvider, UsedWordsService],
+  providers: [UsedWordsService],
 })
 export class UsedWordsModule {}

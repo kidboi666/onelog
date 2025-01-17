@@ -1,12 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Follow } from '../entities/follow.entity';
 import { Repository } from 'typeorm';
-import { DATA_SOURCE } from '../constants/index.constant';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class FollowsService {
   constructor(
-    @Inject(DATA_SOURCE.REPOSITORIES.FOLLOW)
+    @InjectRepository(Follow)
     private followRepository: Repository<Follow>,
   ) {}
 }

@@ -1,12 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Comment } from '../entities/comment.entity';
-import { DATA_SOURCE } from '../constants/index.constant';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CommentsService {
   constructor(
-    @Inject(DATA_SOURCE.REPOSITORIES.COMMENT)
+    @InjectRepository(Comment)
     private commentRepository: Repository<Comment>,
   ) {}
 }

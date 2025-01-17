@@ -1,12 +1,12 @@
 import { Repository } from 'typeorm';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Garden } from '../entities/garden.entity';
-import { DATA_SOURCE } from '../constants/index.constant';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class GardensService {
   constructor(
-    @Inject(DATA_SOURCE.REPOSITORIES.GARDEN)
+    @InjectRepository(Garden)
     private gardenRepository: Repository<Garden>,
   ) {}
 

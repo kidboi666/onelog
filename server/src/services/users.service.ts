@@ -1,15 +1,15 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
-import { DATA_SOURCE } from '../constants/index.constant';
 import { UpdateUserDto } from '../dtos/request/update-user.dto';
 import { SignUpUserDto } from '../dtos/request/sign-up-user.dto';
 import { isUUID } from 'class-validator';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject(DATA_SOURCE.REPOSITORIES.USER)
+    @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
 
