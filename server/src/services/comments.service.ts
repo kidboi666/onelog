@@ -24,7 +24,7 @@ export class CommentsService {
     await this.commentRepository.save(newComment);
   }
 
-  async update(id: number, updateCommentDto: UpdateCommentDto) {
+  async update(id: number, updateCommentDto: UpdateCommentDto): Promise<void> {
     const foundComment = await this.commentRepository.findOneBy({ id });
 
     if (!foundComment) {
@@ -35,7 +35,7 @@ export class CommentsService {
     await this.commentRepository.save(foundComment);
   }
 
-  async delete(id: number) {
+  async delete(id: number): Promise<void> {
     const foundComment = await this.commentRepository.findOneBy({ id });
 
     if (!foundComment) {
