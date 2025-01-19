@@ -28,7 +28,7 @@ export class AuthService {
     const hash = (await scrypt(password, salt, 32)) as Buffer;
     const result = salt + '.' + hash.toString('hex');
 
-    return this.usersService.create({ email, password: result });
+    return await this.usersService.create({ email, password: result });
   }
 
   async signIn(signInUserDto: SignInUserDto): Promise<User> {

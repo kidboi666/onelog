@@ -16,27 +16,27 @@ export class UsersController {
   }
 
   @Serialize(UserDto)
-  @Get(':id')
+  @Get('/:id')
   findById(@Param('id') id: string): Promise<User> {
     return this.usersService.findById(id);
   }
 
   @Serialize(UserDto)
-  @Get(':email')
+  @Get('/:email')
   findByEmail(@Param('email') email: string): Promise<User> {
     return this.usersService.findByEmail(email);
   }
 
-  @Delete(':id')
+  @Delete('/:id')
   removeUser(@Param('id') id: string): Promise<void> {
     return this.usersService.remove(id);
   }
 
-  @Patch(':id')
+  @Patch('/:id')
   updateUser(
     @Param('id') id: string,
     @Body() updateUserDto: Partial<UpdateUserDto>,
-  ): Promise<void> {
+  ): Promise<User> {
     return this.usersService.update(id, updateUserDto);
   }
 }

@@ -10,21 +10,17 @@ import { UpdateUserDto } from '../dtos/request/update-user.dto';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private repo: Repository<User>,
   ) {}
 
   async findAll(): Promise<User[]> {
-    const result = await this.userRepository.find();
-
-    if (!result) {
-      throw new BadRequestException('User does not exist');
-    }
-
-    return result;
+    return await this.repo.find();
   }
 
   async create(signUpUserDto: SignUpUserDto): Promise<User> {
-    return await this.userRepository.save(signUpUserDto);
+    const user = this.repo.create(signUpUserDto);
+
+    return await this.repo.save(user);
   }
 
   async findById(id: string): Promise<User> {
@@ -32,43 +28,34 @@ export class UsersService {
       throw new BadRequestException('Id is not UUID');
     }
 
-    const result = await this.userRepository.findOneBy({ id });
-
-    if (!result) {
-      throw new BadRequestException('User does not exist');
-    }
-
-    return result;
+    return await this.repo.findOneBy({ id });
   }
 
   async findByEmail(email: string): Promise<User> {
-    const result = await this.userRepository.findOneBy({ email });
-
-    if (!result) {
-      throw new BadRequestException('User does not exist');
-    }
-
-    return result;
+    return await this.repo.findOneBy({ email });
   }
 
-  async update(id: string, updateUserDto: Partial<UpdateUserDto>) {
-    const user = await this.userRepository.findOneBy({ id });
+  async update(
+    id: string,
+    updateUserDto: Partial<UpdateUserDto>,
+  ): Promise<User> {
+    const user = await this.repo.findOneBy({ id });
 
     if (!user) {
       throw new BadRequestException('User does not exist');
     }
 
     Object.assign(user, updateUserDto);
-    await this.userRepository.save(user);
+    return await this.repo.save(user);
   }
 
   async remove(id: string): Promise<void> {
-    const user = await this.userRepository.findOneBy({ id });
+    const user = await this.repo.findOneBy({ id });
 
     if (!user) {
       throw new BadRequestException('User does not exist or already removed');
     }
 
-    await this.userRepository.remove(user);
+    await this.repo.remove(user);
   }
 }

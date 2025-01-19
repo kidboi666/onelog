@@ -20,8 +20,14 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/signup')
-  async signUp(@Body() signUpUserDto: SignUpUserDto): Promise<void> {
-    await this.authService.signUp(signUpUserDto);
+  async signUp(
+    @Body() signUpUserDto: SignUpUserDto,
+    @Session() session: any,
+  ): Promise<User> {
+    const user = await this.authService.signUp(signUpUserDto);
+    session.userId = user.id;
+
+    return user;
   }
 
   @Post('/signin')
