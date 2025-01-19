@@ -1,54 +1,43 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Session,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { SignUpUserDto } from '../dtos/request/sign-up-user.dto';
 import { SignInUserDto } from '../dtos/request/sign-in-user.dto';
 import { Serialize } from '../decorators/serialize.decorator';
-import { UserDto } from '../dtos/response/user.dto';
+import { UserInfoResponseDto } from '../dtos/response/user-info-response.dto';
 import { CurrentUser } from '../decorators/current-user.decorator';
 import { User } from '../entities/user.entity';
 import { AuthGuard } from '../guards/auth.guard';
+import { SignInResponseDto } from '../dtos/response/sign-in-response.dto';
+import { TokenDto } from '../dtos/request/token.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/signup')
-  async signUp(
-    @Body() signUpUserDto: SignUpUserDto,
-    @Session() session: any,
-  ): Promise<User> {
-    const user = await this.authService.signUp(signUpUserDto);
-    session.userId = user.id;
-
-    return user;
+  @Post('join')
+  async signUp(@Body() dto: SignUpUserDto): Promise<User> {
+    return await this.authService.signUp(dto);
   }
 
-  @Post('/signin')
-  async signIn(
-    @Body() signInUserDto: SignInUserDto,
-    @Session() session: any,
-  ): Promise<User> {
-    const user = await this.authService.signIn(signInUserDto);
-    session.userId = user.id;
-
-    return user;
+  @Post('login')
+  async signIn(@Body() dto: SignInUserDto): Promise<SignInResponseDto> {
+    return await this.authService.signIn(dto);
   }
 
-  @Post('/signout')
-  signOut(@Session() session: any): void {
-    session.userId = null;
+  @Post('refresh')
+  async refresh(@Body() dto: TokenDto) {
+    return await this.authService.refresh(dto.refreshToken);
+  }
+
+  @Post('logout')
+  async signOut(@Req() req: any): Promise<{ message: string }> {
+    await this.authService.logout(req.user.sub);
+    return { message: 'you are logged out' };
   }
 
   @UseGuards(AuthGuard)
-  @Serialize(UserDto)
-  @Get('/session')
+  @Serialize(UserInfoResponseDto)
+  @Get('session')
   getSession(@CurrentUser() user: User): User {
     return user;
   }

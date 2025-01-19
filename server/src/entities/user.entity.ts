@@ -24,22 +24,28 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'avatar_url', nullable: true })
   avatarUrl: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'user_name', nullable: true })
   userName: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'about_me', nullable: true })
   aboutMe: string;
 
   @Column({ nullable: true })
   mbti: string;
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @Column({ name: 'refresh_token', nullable: true })
+  refreshToken: string;
+
+  @Column({ name: 'refresh_token_exp', nullable: true })
+  refreshTokenExp: Date;
+
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt: Date;
 
   @OneToMany(() => Post, (post) => post.user)

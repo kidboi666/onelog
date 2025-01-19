@@ -58,4 +58,27 @@ export class UsersService {
 
     await this.repo.remove(user);
   }
+
+  async saveRefreshToken(userId: string, refreshToken: string): Promise<void> {
+    const refreshTokenExp = new Date();
+    refreshTokenExp.setDate(refreshTokenExp.getDate() + 7); // 7일 후 만료
+
+    await this.repo.update(
+      { id: userId },
+      {
+        refreshToken,
+        refreshTokenExp,
+      },
+    );
+  }
+
+  async removeRefreshToken(userId: string): Promise<void> {
+    await this.repo.update(
+      { id: userId },
+      {
+        refreshToken: null,
+        refreshTokenExp: null,
+      },
+    );
+  }
 }

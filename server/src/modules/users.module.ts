@@ -7,9 +7,20 @@ import { AuthController } from '../controllers/auth.controller';
 import { CurrentUserInterceptor } from '../interceptors/current-user.interceptor';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET_KEY'),
+        signOptions: { expiresIn: '15m' },
+      }),
+    }),
+  ],
   controllers: [UsersController, AuthController],
   /**
    * providers는 DI 컨테이너에 주입하려 할 수 있는 모든 클래스의 리스트이다.

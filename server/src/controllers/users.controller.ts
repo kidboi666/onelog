@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { User } from '../entities/user.entity';
 import { UpdateUserDto } from '../dtos/request/update-user.dto';
-import { UserDto } from '../dtos/response/user.dto';
+import { UserInfoResponseDto } from '../dtos/response/user-info-response.dto';
 import { Serialize } from '../decorators/serialize.decorator';
 
 @Controller('users')
@@ -10,18 +10,18 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  @Serialize(UserDto)
+  @Serialize(UserInfoResponseDto)
   findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
-  @Serialize(UserDto)
+  @Serialize(UserInfoResponseDto)
   @Get('/:id')
   findById(@Param('id') id: string): Promise<User> {
     return this.usersService.findById(id);
   }
 
-  @Serialize(UserDto)
+  @Serialize(UserInfoResponseDto)
   @Get('/:email')
   findByEmail(@Param('email') email: string): Promise<User> {
     return this.usersService.findByEmail(email);
