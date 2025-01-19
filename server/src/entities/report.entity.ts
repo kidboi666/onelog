@@ -15,23 +15,23 @@ export class Report {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'uuid' })
+  @Column({ name: 'reporter_id', type: 'uuid' })
   reporterId: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'target_post_id', nullable: true })
   targetPostId: number;
 
   @Column()
   reason: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'target_comment_id', nullable: true })
   targetCommentId: number;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
-  updatedAt: Date;
-
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  updatedAt: Date;
 
   @ManyToOne(() => User)
   reporter: User;

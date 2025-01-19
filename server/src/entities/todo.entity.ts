@@ -14,13 +14,13 @@ export class Todo {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ name: 'folder_id' })
   folderId: number;
 
   @Column()
   index: number;
 
-  @Column({ default: false })
+  @Column({ name: 'is_complete', default: false })
   isComplete: boolean;
 
   @Column({ nullable: true })
@@ -29,13 +29,13 @@ export class Todo {
   @Column()
   content: string;
 
-  @Column({ type: 'uuid' })
+  @Column({ name: 'user_id', type: 'uuid' })
   userId: string;
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt: Date;
 
   @ManyToOne(() => User)

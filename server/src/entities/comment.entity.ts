@@ -17,19 +17,19 @@ export class Comment {
   @Column()
   content: string;
 
-  @Column()
+  @Column({ name: 'post_id' })
   postId: number;
 
-  @Column({ type: 'uuid' })
+  @Column({ name: 'user_id', type: 'uuid' })
   userId: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'comment_id', nullable: true })
   commentId: number;
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt: Date;
 
   @ManyToOne(() => User)

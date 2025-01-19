@@ -18,13 +18,13 @@ export class Post {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'uuid' })
+  @Column({ name: 'user_id', type: 'uuid' })
   userId: string;
 
-  @Column()
+  @Column({ name: 'post_type' })
   postType: PostType;
 
-  @Column({ nullable: true })
+  @Column({ name: 'emotion_level', nullable: true })
   emotionLevel: string;
 
   @Column()
@@ -33,16 +33,16 @@ export class Post {
   @Column('simple-array', { nullable: true })
   tags: string[];
 
-  @Column({ nullable: true })
+  @Column({ name: 'access_type', nullable: true })
   accessType: string;
 
   @Column({ nullable: true })
   title: string;
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.posts)

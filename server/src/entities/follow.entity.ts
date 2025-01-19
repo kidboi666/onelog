@@ -13,16 +13,16 @@ export class Follow {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'uuid' })
+  @Column({ name: 'follower_user_id', type: 'uuid' })
   followerUserId: string;
 
-  @Column({ type: 'uuid' })
+  @Column({ name: 'followed_user_id', type: 'uuid' })
   followedUserId: string;
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.following)
