@@ -1,17 +1,27 @@
 import { fetcher } from '@/src/api/fetcher'
 import { FETCH_URL } from '@/src/constants/url'
 
+interface SignInRequest {
+  email: string
+  password: string
+}
+
+interface SignUpRequest extends SignInRequest {}
+
+interface UpdateUserRequest {
+  avatarUrl: string
+  userName: string
+  aboutMe: string
+  mbti: string
+}
+
 export const authApi = {
-  getSession: async () => {
-    return await fetcher(FETCH_URL.AUTH.GET_SESSION)
-  },
-  signIn: async ({ email, password }: { email: string; password: string }) => {
-    return await fetcher(FETCH_URL.AUTH.SIGN_IN, 'POST', { email, password })
-  },
-  signUp: async ({ email, password }: { email: string; password: string }) => {
-    return await fetcher(FETCH_URL.AUTH.SIGN_UP, 'POST', { email, password })
-  },
-  signOut: async ({ id }: { id: string }) => {
-    return await fetcher(FETCH_URL.AUTH.SIGN_OUT, 'POST', { id })
-  },
+  signIn: (params: SignInRequest) =>
+    fetcher.post(FETCH_URL.AUTH.SIGN_IN, params),
+  signUp: (params: SignUpRequest) =>
+    fetcher.post(FETCH_URL.AUTH.SIGN_UP, params),
+  signOut: () => fetcher.post(FETCH_URL.AUTH.SIGN_OUT),
+  getSession: () => fetcher.get(FETCH_URL.AUTH.GET_SESSION),
+  updateUser: (id: string, params: UpdateUserRequest) =>
+    fetcher.patch(FETCH_URL.USER.UPDATE_USER(id), params),
 }

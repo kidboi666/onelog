@@ -1,20 +1,47 @@
-export const fetcher = async (
-  url: string,
-  method?: 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT',
-  body?: {},
-) => {
-  const response = await fetch(url, {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-    credentials: 'include',
-  })
+import axios from 'axios'
 
-  if (!response.ok) {
-    throw new Error(response.statusText)
-  }
+export const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
 
-  return await response.json()
+export const fetcher = {
+  post: async (url: string, data?: any) => {
+    try {
+      const response = await axiosInstance.post(url, data && data)
+      return response.data
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  },
+  get: async (url: string) => {
+    try {
+      const response = await axiosInstance.get(url)
+      return response.data
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  },
+  patch: async (url: string, data: any) => {
+    try {
+      const response = await axiosInstance.patch(url, data && data)
+      return response.data
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  },
+  delete: async (url: string) => {
+    try {
+      const response = await axiosInstance.delete(url)
+      return response.data
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  },
 }

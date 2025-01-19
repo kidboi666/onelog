@@ -1,6 +1,6 @@
+import { authApi } from '@/src/api/auth-api'
 import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
@@ -12,19 +12,7 @@ export default function useSignIn() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: async (authData: ISignIn) => {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: authData.email,
-        password: authData.password,
-      })
-
-      if (error) {
-        console.error(error)
-        throw error
-      }
-
-      return data
-    },
+    mutationFn: (authData: ISignIn) => authApi.signIn(authData),
     onSuccess: () => {
       window.location.href = ROUTES.HOME
       openToast({
@@ -42,7 +30,9 @@ export default function useSignIn() {
     },
     onSettled: () => {
       const queryKeys = [QUERY_KEY.AUTH.INFO, QUERY_KEY.AUTH.SESSION]
-      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+      queryKeys.forEach((queryKey) =>
+        queryClient.invalidateQueries({ queryKey }),
+      )
     },
   })
 }
