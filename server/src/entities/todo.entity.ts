@@ -20,14 +20,14 @@ export class Todo {
   @Column()
   index: number;
 
-  @Column()
+  @Column({ default: false })
   isComplete: boolean;
 
   @Column({ nullable: true })
   memo: string;
 
   @Column()
-  name: string;
+  content: string;
 
   @Column({ type: 'uuid' })
   userId: string;
