@@ -5,7 +5,7 @@ import { Post } from '../entities/post.entity';
 import { Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-import { AccessType, EmotionLevel, PostType } from '../types/enum.type';
+import { AccessType, EmotionLevel, PostType } from '../types/enums.type';
 
 describe('PostsService', () => {
   let service: PostsService;
@@ -46,7 +46,7 @@ describe('PostsService', () => {
     ];
     mockRepository.find.mockResolvedValue(expectedPosts);
 
-    const result = await service.findAll();
+    const result = await service.findAllPaginatedPosts();
 
     expect(result).toEqual(expectedPosts);
     expect(mockRepository.find).toHaveBeenCalled();
@@ -79,7 +79,7 @@ describe('PostsService', () => {
     mockRepository.create.mockReturnValue(newPost);
     mockRepository.save.mockResolvedValue(newPost);
 
-    const result = await service.create(createPostDto);
+    const result = await service.createPost(createPostDto);
 
     expect(result).toEqual(newPost);
     expect(mockRepository.create).toHaveBeenCalledWith({
@@ -105,7 +105,7 @@ describe('PostsService', () => {
       content: 'Updated Content',
     };
 
-    await service.update(1, updatePostDto);
+    await service.updatePost(1, updatePostDto);
 
     expect(mockRepository.update).toHaveBeenCalledWith(1, {
       title: updatePostDto.title,
@@ -122,7 +122,7 @@ describe('PostsService', () => {
     const post = { id: 1, title: 'Post 1' };
     mockRepository.findOne.mockResolvedValue(post);
 
-    await service.delete(1);
+    await service.deletePost(1);
 
     expect(mockRepository.findOne).toHaveBeenCalledWith({
       where: { id: 1 },
@@ -133,7 +133,7 @@ describe('PostsService', () => {
   it('should throw NotFoundException if post does not exist', async () => {
     mockRepository.findOne.mockResolvedValue(null);
 
-    await expect(service.delete(1)).rejects.toThrow(NotFoundException);
+    await expect(service.deletePost(1)).rejects.toThrow(NotFoundException);
     expect(mockRepository.delete).not.toHaveBeenCalled();
   });
 });

@@ -2,41 +2,35 @@ import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { User } from '../entities/user.entity';
 import { UpdateUserDto } from '../dtos/request/update-user.dto';
-import { UserInfoResponseDto } from '../dtos/response/user-info-response.dto';
+import { UserInfoDto } from '../dtos/response/user-info.dto';
 import { Serialize } from '../decorators/serialize.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
-  @Serialize(UserInfoResponseDto)
-  findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+  @Serialize(UserInfoDto)
+  @Get(':userId')
+  findById(@Param('userId') userId: string): Promise<User> {
+    return this.usersService.findById(userId);
   }
 
-  @Serialize(UserInfoResponseDto)
-  @Get('/:id')
-  findById(@Param('id') id: string): Promise<User> {
-    return this.usersService.findById(id);
-  }
-
-  @Serialize(UserInfoResponseDto)
-  @Get('/:email')
+  @Serialize(UserInfoDto)
+  @Get(':email')
   findByEmail(@Param('email') email: string): Promise<User> {
     return this.usersService.findByEmail(email);
   }
 
-  @Delete('/:id')
-  removeUser(@Param('id') id: string): Promise<void> {
-    return this.usersService.remove(id);
+  @Delete(':userId')
+  removeUser(@Param('userId') userId: string): Promise<void> {
+    return this.usersService.remove(userId);
   }
 
-  @Patch('/:id')
+  @Patch(':userId')
   updateUser(
-    @Param('id') id: string,
+    @Param('userId') userId: string,
     @Body() updateUserDto: Partial<UpdateUserDto>,
   ): Promise<User> {
-    return this.usersService.update(id, updateUserDto);
+    return this.usersService.update(userId, updateUserDto);
   }
 }

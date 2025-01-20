@@ -1,13 +1,6 @@
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  IsUUID,
-} from 'class-validator';
+import { IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class UpdateCommentDto {
-  @IsNotEmpty()
   @IsUUID()
   userId: string;
 

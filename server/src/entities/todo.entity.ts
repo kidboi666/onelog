@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -39,8 +40,10 @@ export class Todo {
   updatedAt: Date;
 
   @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user: User;
 
   @ManyToOne(() => TodoFolder)
+  @JoinColumn({ name: 'folder_id', referencedColumnName: 'id' })
   folder: TodoFolder;
 }

@@ -1,4 +1,4 @@
-import { AccessType, EmotionLevel, PostType } from '../../types/enum.type';
+import { AccessType, EmotionLevel, PostType } from '../../types/enums.type';
 import { IsArray, IsEnum, IsString } from 'class-validator';
 
 export class UpdatePostDto {

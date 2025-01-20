@@ -8,7 +8,6 @@ export const CurrentUser = createParamDecorator(
      * Param decorators exist outside the DI system,
      * so our decorator can't get an instance of UsersService directly
      */
-
     return request.currentUser;
     /**
      * @Solution

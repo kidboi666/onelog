@@ -9,39 +9,49 @@ import { UpdateCommentDto } from '../dtos/request/update-comment.dto';
 export class CommentsService {
   constructor(
     @InjectRepository(Comment)
-    private commentRepository: Repository<Comment>,
+    private repository: Repository<Comment>,
   ) {}
+
+  async findByPostId(postId: number) {
+    const comments = await this.repository.findBy({ postId });
+
+    if (comments.length === 0) {
+      throw new NotFoundException('comment not found');
+    }
+
+    return comments;
+  }
 
   async create(createCommentDto: CreateCommentDto): Promise<void> {
     const { userId, content, postId, commentId } = createCommentDto;
-    const newComment = this.commentRepository.create({
+    const newComment = this.repository.create({
       userId,
       content,
       postId,
       commentId: commentId ?? null,
     });
 
-    await this.commentRepository.save(newComment);
+    await this.repository.save(newComment);
   }
 
   async update(id: number, updateCommentDto: UpdateCommentDto): Promise<void> {
-    const foundComment = await this.commentRepository.findOneBy({ id });
+    const foundComment = await this.repository.findOneBy({ id });
 
     if (!foundComment) {
-      throw new NotFoundException('Comment does not exist');
+      throw new NotFoundException('comment does not exist');
     }
 
     Object.assign(foundComment, updateCommentDto);
-    await this.commentRepository.save(foundComment);
+    await this.repository.save(foundComment);
   }
 
   async delete(id: number): Promise<void> {
-    const foundComment = await this.commentRepository.findOneBy({ id });
+    const foundComment = await this.repository.findOneBy({ id });
 
     if (!foundComment) {
-      throw new NotFoundException('Comment does not exist');
+      throw new NotFoundException('comment does not exist');
     }
 
-    await this.commentRepository.delete(id);
+    await this.repository.delete(id);
   }
 }

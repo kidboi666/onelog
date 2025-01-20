@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CommentsService } from '../services/comments.service';
 import { CreateCommentDto } from '../dtos/request/create-comment.dto';
 import { UpdateCommentDto } from '../dtos/request/update-comment.dto';
@@ -6,6 +14,11 @@ import { UpdateCommentDto } from '../dtos/request/update-comment.dto';
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
+
+  @Get(':postId')
+  async findByPostId(@Param('postId') postId: number) {
+    return await this.commentsService.findByPostId(postId);
+  }
 
   @Post()
   async createComment(

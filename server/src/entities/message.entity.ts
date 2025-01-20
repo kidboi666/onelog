@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -31,9 +32,11 @@ export class Message {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.sentMessages)
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'from', referencedColumnName: 'id' })
   fromUser: User;
 
-  @ManyToOne(() => User, (user) => user.receivedMessages)
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'to', referencedColumnName: 'id' })
   toUser: User;
 }

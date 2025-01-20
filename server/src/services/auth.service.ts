@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -9,8 +10,9 @@ import { SignUpUserDto } from '../dtos/request/sign-up-user.dto';
 import { UsersService } from './users.service';
 import { User } from '../entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
-import { SignInResponseDto } from '../dtos/response/sign-in-response.dto';
+import { SignInDto } from '../dtos/response/sign-in.dto';
 import { SignInUserDto } from '../dtos/request/sign-in-user.dto';
+import { ConfigService } from '@nestjs/config';
 
 const scrypt = promisify(_scrypt);
 
@@ -19,33 +21,11 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    @Inject(ConfigService) private readonly configService: ConfigService,
   ) {}
 
-  async validateUser(dto: SignInUserDto): Promise<User> {
-    const { email, password } = dto;
-    const user = await this.usersService.findByEmail(email);
-
-    if (!user) {
-      throw new UnauthorizedException('User does not exist');
-    }
-
-    const [salt, storedHash] = user.password.split('.');
-    const hash = (await scrypt(password, salt, 32)) as Buffer;
-
-    if (storedHash !== hash.toString('hex')) {
-      throw new BadRequestException('password is incorrect');
-    }
-
-    return user;
-  }
-
   async signUp(dto: SignUpUserDto): Promise<User> {
-    const { email, password } = dto;
-    const user = await this.usersService.findByEmail(email);
-
-    if (user) {
-      throw new BadRequestException('User already exists');
-    }
+    const { email, password } = await this.validateNewUser(dto);
 
     const salt = randomBytes(8).toString('hex');
     const hash = (await scrypt(password, salt, 32)) as Buffer;
@@ -54,8 +34,8 @@ export class AuthService {
     return await this.usersService.create({ email, password: result });
   }
 
-  async signIn(dto: SignInUserDto): Promise<SignInResponseDto> {
-    const user = await this.validateUser(dto);
+  async signIn(dto: SignInUserDto): Promise<SignInDto> {
+    const user = await this.validateCredentials(dto);
     const payload = { sub: user.id, username: user.email };
 
     const accessToken = await this.jwtService.signAsync(payload);
@@ -67,12 +47,13 @@ export class AuthService {
     await this.usersService.saveRefreshToken(user.id, refreshToken);
 
     return {
+      id: user.id,
       accessToken,
       refreshToken,
     };
   }
 
-  async refresh(refreshToken: string) {
+  async refreshAccessToken(refreshToken: string) {
     try {
       const payload = await this.jwtService.verifyAsync(refreshToken, {
         secret: process.env.JWT_REFRESH_SECRET,
@@ -100,7 +81,38 @@ export class AuthService {
     }
   }
 
-  async logout(userId: string) {
+  async signOut(userId: string) {
     await this.usersService.removeRefreshToken(userId);
+  }
+
+  private async validateCredentials(dto: SignInUserDto): Promise<User> {
+    const { email, password } = dto;
+    const user = await this.usersService.findByEmail(email);
+
+    if (!user) {
+      throw new UnauthorizedException('User does not exist');
+    }
+
+    const [salt, storedHash] = user.password.split('.');
+    const hash = (await scrypt(password, salt, 32)) as Buffer;
+
+    if (storedHash !== hash.toString('hex')) {
+      throw new BadRequestException('Password is Incorrect');
+    }
+
+    return user;
+  }
+
+  async validateNewUser(
+    dto: SignUpUserDto,
+  ): Promise<{ email: string; password: string }> {
+    const { email, password } = dto;
+    const user = await this.usersService.findByEmail(email);
+
+    if (user) {
+      throw new BadRequestException('Email already exists');
+    }
+
+    return { email, password };
   }
 }

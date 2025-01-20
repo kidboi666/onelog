@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -34,11 +35,14 @@ export class Report {
   updatedAt: Date;
 
   @ManyToOne(() => User)
+  @JoinColumn({ name: 'reporter_id', referencedColumnName: 'id' })
   reporter: User;
 
   @ManyToOne(() => Post)
+  @JoinColumn({ name: 'target_post_id', referencedColumnName: 'id' })
   targetPost: Post;
 
   @ManyToOne(() => Comment)
+  @JoinColumn({ name: 'target_comment_id', referencedColumnName: 'id' })
   targetComment: Comment;
 }

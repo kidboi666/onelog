@@ -6,42 +6,54 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { PostsService } from '../services/posts.service';
 import { CreatePostDto } from '../dtos/request/create-post.dto';
 import { UpdatePostDto } from '../dtos/request/update-post.dto';
 import { AuthGuard } from '../guards/auth.guard';
+import { PostDto } from '../dtos/response/post.dto';
+import { Serialize } from '../decorators/serialize.decorator';
+import { PaginatedPostsDto } from '../dtos/response/paginated-posts.dto';
 
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @Serialize(PaginatedPostsDto)
   @Get()
-  getPosts() {
-    return this.postsService.findAll();
+  async findAllPaginatedPosts(
+    @Query('page') page = 1,
+    @Query('limit') limit = 10,
+  ) {
+    return await this.postsService.findAllPaginatedPosts(page, limit);
   }
 
-  @Get('/:id')
-  getPost(@Param('id') id: number) {
-    return this.postsService.findOne(id);
+  @Serialize(PostDto)
+  @Get(':postId')
+  async getPost(@Param('postId') postId: string): Promise<PostDto> {
+    return await this.postsService.findPostById(parseInt(postId));
   }
 
   @UseGuards(AuthGuard)
   @Post()
   createPost(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+    return this.postsService.createPost(createPostDto);
   }
 
   @UseGuards(AuthGuard)
-  @Patch('/:id')
-  updatePost(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(id, updatePostDto);
+  @Patch(':postId')
+  updatePost(
+    @Param('postId') postId: string,
+    @Body() updatePostDto: UpdatePostDto,
+  ) {
+    return this.postsService.updatePost(parseInt(postId), updatePostDto);
   }
 
   @UseGuards(AuthGuard)
-  @Delete('/:id')
-  deletePost(@Param('id') id: number) {
-    return this.postsService.delete(id);
+  @Delete(':postId')
+  deletePost(@Param('postId') postId: string) {
+    return this.postsService.deletePost(parseInt(postId));
   }
 }

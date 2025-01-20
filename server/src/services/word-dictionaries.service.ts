@@ -7,6 +7,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class WordDictionariesService {
   constructor(
     @InjectRepository(WordDictionary)
-    private readonly wordDictionaryRepository: Repository<WordDictionary>,
+    private readonly repository: Repository<WordDictionary>,
   ) {}
 }

@@ -8,9 +8,9 @@ import { UsersService } from '../services/users.service';
 
 @Injectable()
 export class CurrentUserInterceptor implements NestInterceptor {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private usersService: UsersService) {}
 
-  async intercept(ctx: ExecutionContext, next: CallHandler) {
+  async intercept(ctx: ExecutionContext, handler: CallHandler) {
     const request = ctx.switchToHttp().getRequest();
     const { userId } = request.session || {};
 
@@ -18,6 +18,6 @@ export class CurrentUserInterceptor implements NestInterceptor {
       request.currentUser = await this.usersService.findById(userId);
     }
 
-    return next.handle();
+    return handler.handle();
   }
 }

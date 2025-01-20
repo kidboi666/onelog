@@ -1,15 +1,7 @@
-import {
-  IsArray,
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsUUID,
-} from 'class-validator';
-import { AccessType, EmotionLevel, PostType } from '../../types/enum.type';
+import { IsArray, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
+import { AccessType, EmotionLevel, PostType } from '../../types/enums.type';
 
 export class CreatePostDto {
-  @IsNotEmpty()
   @IsUUID()
   userId: string;
 
@@ -30,7 +22,6 @@ export class CreatePostDto {
   @IsString({ each: true })
   tags: string[];
 
-  @IsNotEmpty()
   @IsEnum(AccessType, {
     message: 'Access type must be one of the allowed values: public, private',
   })
@@ -40,7 +31,6 @@ export class CreatePostDto {
   @IsString()
   title: string;
 
-  @IsNotEmpty()
   @IsString()
   content: string;
 }

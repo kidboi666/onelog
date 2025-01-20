@@ -9,36 +9,36 @@ import { UpdateTodoFolderDto } from '../dtos/request/update-todo-folder.dto';
 export class TodoFoldersService {
   constructor(
     @InjectRepository(TodoFolder)
-    private repo: Repository<TodoFolder>,
+    private repository: Repository<TodoFolder>,
   ) {}
 
   async create(createTodoFolderDto: CreateTodoFolderDto): Promise<TodoFolder> {
-    const todo = this.repo.create(createTodoFolderDto);
+    const todo = this.repository.create(createTodoFolderDto);
 
-    return await this.repo.save(todo);
+    return await this.repository.save(todo);
   }
 
   async update(
     id: number,
     updateTodoFolderDto: UpdateTodoFolderDto,
   ): Promise<TodoFolder> {
-    const todo = await this.repo.findOneBy({ id });
+    const todo = await this.repository.findOneBy({ id });
 
     if (!todo) {
       throw new NotFoundException('Not found todo');
     }
 
     Object.assign(todo, updateTodoFolderDto);
-    return await this.repo.save(todo);
+    return await this.repository.save(todo);
   }
 
   async delete(id: number): Promise<void> {
-    const todo = await this.repo.findOneBy({ id });
+    const todo = await this.repository.findOneBy({ id });
 
     if (!todo) {
       throw new NotFoundException('Not found todo');
     }
 
-    await this.repo.delete(todo);
+    await this.repository.delete(todo);
   }
 }

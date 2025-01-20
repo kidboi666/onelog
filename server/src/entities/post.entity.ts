@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -11,7 +12,7 @@ import { User } from './user.entity';
 import { Comment } from './comment.entity';
 import { Like } from './like.entity';
 
-import { PostType } from '../types/enum.type';
+import { PostType } from '../types/enums.type';
 
 @Entity('posts')
 export class Post {
@@ -45,7 +46,8 @@ export class Post {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.posts)
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user: User;
 
   @OneToMany(() => Comment, (comment) => comment.post)

@@ -1,23 +1,20 @@
 import { Expose } from 'class-transformer';
 
-export class UserInfoResponseDto {
+export class CommentDto {
   @Expose()
-  id: string;
+  id: number;
 
   @Expose()
-  email: string;
+  content: string;
 
   @Expose()
-  aboutMe: string;
+  postId: number;
 
   @Expose()
-  avatarUrl: string;
+  commentId: number;
 
   @Expose()
-  userName: string;
-
-  @Expose()
-  mbti: string;
+  userId: string;
 
   @Expose()
   createdAt: Date;

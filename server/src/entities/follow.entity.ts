@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -26,8 +27,10 @@ export class Follow {
   updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.following)
+  @JoinColumn({ name: 'follower_user_id', referencedColumnName: 'id' })
   follower: User;
 
   @ManyToOne(() => User, (user) => user.followers)
+  @JoinColumn({ name: 'followed_user_id', referencedColumnName: 'id' })
   followed: User;
 }

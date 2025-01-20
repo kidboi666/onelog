@@ -7,6 +7,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class UsedWordsService {
   constructor(
     @InjectRepository(UsedWord)
-    private usedWordRepository: Repository<UsedWord>,
+    private repository: Repository<UsedWord>,
   ) {}
 }
