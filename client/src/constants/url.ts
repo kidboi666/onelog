@@ -4,9 +4,10 @@ export const FETCH_URL = {
     SIGN_UP: `/auth/signup`,
     SIGN_OUT: `/auth/signout`,
     GET_SESSION: `/auth/session`,
+    GET_USER_INFO: `/auth/info`,
   },
   USER: {
-    GET_INFO: (id: string) => `/user/${id}`,
+    GET_USER_INFO: (id: string) => `/user/${id}`,
     UPDATE_USER: (id: string) => `/user/${id}`,
   },
   TODO: {

@@ -24,4 +24,5 @@ export const authApi = {
   getSession: () => fetcher.get(FETCH_URL.AUTH.GET_SESSION),
   updateUser: (id: string, params: UpdateUserRequest) =>
     fetcher.patch(FETCH_URL.USER.UPDATE_USER(id), params),
+  getUserInfo: () => fetcher.get(FETCH_URL.AUTH.GET_USER_INFO),
 }
