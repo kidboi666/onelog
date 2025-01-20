@@ -16,4 +16,8 @@ export const FETCH_URL = {
   TODO_FOLDER: {
     GET_ALL: '/todo_folders',
   },
+  POST: {
+    GET_ALL: '/posts',
+    GET_POST: (id: number) => `/posts/${id}`,
+  },
 }
