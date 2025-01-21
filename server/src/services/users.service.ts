@@ -25,6 +25,45 @@ export class UsersService {
     return await this.repository.findOneBy({ id });
   }
 
+  async findUserInfoById(id: string) {
+    const user = await this.repository
+      .createQueryBuilder('user')
+      .select([
+        'user.id',
+        'user.email',
+        'user.userName',
+        'user.avatarUrl',
+        'user.aboutMe',
+        'user.mbti',
+        'user.createdAt',
+        'user.updatedAt',
+      ])
+      .leftJoinAndSelect('user.followers', 'followers')
+      .leftJoinAndSelect('user.following', 'following')
+      .leftJoinAndSelect('user.posts', 'posts')
+      .where('user.id = :id', { id })
+      .loadRelationCountAndMap('user.followerCount', 'user.followers')
+      .loadRelationCountAndMap('user.followingCount', 'user.following')
+      .loadRelationCountAndMap('user.postCount', 'user.posts')
+      .getOne();
+
+    return {
+      id: user.id,
+      email: user.email,
+      userName: user.userName,
+      avatarUrl: user.avatarUrl,
+      aboutMe: user.aboutMe,
+      mbti: user.mbti,
+      stats: {
+        followerCount: user.followerCount,
+        followingCount: user.followingCount,
+        postCount: user.postCount,
+      },
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+  }
+
   async findByEmail(email: string): Promise<User> {
     return await this.repository.findOneBy({ email });
   }
