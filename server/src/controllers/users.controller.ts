@@ -12,13 +12,13 @@ export class UsersController {
   @Serialize(UserInfoDto)
   @Get(':userId')
   findById(@Param('userId') userId: string): Promise<User> {
-    return this.usersService.findById(userId);
+    return this.usersService.findUserById(userId);
   }
 
   @Serialize(UserInfoDto)
   @Get(':email')
   findByEmail(@Param('email') email: string): Promise<User> {
-    return this.usersService.findByEmail(email);
+    return this.usersService.findUserByEmail(email);
   }
 
   @Delete(':userId')
@@ -31,6 +31,6 @@ export class UsersController {
     @Param('userId') userId: string,
     @Body() updateUserDto: Partial<UpdateUserDto>,
   ): Promise<User> {
-    return this.usersService.update(userId, updateUserDto);
+    return this.usersService.updateUserInfo(userId, updateUserDto);
   }
 }

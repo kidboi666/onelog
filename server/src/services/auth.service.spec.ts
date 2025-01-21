@@ -13,11 +13,11 @@ describe('AuthService', () => {
     const users: User[] = [];
     // Create a fake copy of the users service
     fakeUsersService = {
-      findByEmail: (email: string) => {
+      findUserByEmail: (email: string) => {
         const filteredUser = users.find((user) => user.email === email);
         return Promise.resolve(filteredUser);
       },
-      create: (signUpUserDto: SignUpUserDto) => {
+      createUser: (signUpUserDto: SignUpUserDto) => {
         const newUser = {
           email: signUpUserDto.email,
           password: signUpUserDto.password,

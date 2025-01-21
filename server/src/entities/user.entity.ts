@@ -63,11 +63,12 @@ export class User {
   @OneToMany(() => Follow, (follow) => follow.followed)
   followers: Follow[];
 
-  followerCount?: number;
-
-  followingCount?: number;
-
-  postCount?: number;
+  @Column('json', { nullable: true })
+  stats: {
+    followerCount: number;
+    followingCount: number;
+    postCount: number;
+  };
 
   @AfterInsert()
   logInsert() {

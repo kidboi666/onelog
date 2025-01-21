@@ -4,9 +4,10 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService, TokenExpiredError } from '@nestjs/jwt';
 import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { JwtPayload } from '../types/interfaces.type';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -15,8 +16,8 @@ export class AuthGuard implements CanActivate {
     private configService: ConfigService,
   ) {}
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
+  async canActivate(ctx: ExecutionContext): Promise<boolean> {
+    const request = ctx.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
@@ -24,18 +25,26 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      request.user = await this.jwtService.verifyAsync(token, {
-        secret: this.configService.get<string>('JWT_SECRET_KEY'),
+      request.user = await this.jwtService.verifyAsync<JwtPayload>(token, {
+        secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
       });
-    } catch (e) {
-      throw new UnauthorizedException('token expired');
+      return true;
+    } catch (err) {
+      if (err instanceof TokenExpiredError) {
+        throw new UnauthorizedException('Access token has expired');
+      }
+      throw new UnauthorizedException('Invalid access token');
     }
-
-    return true;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    if (!type || !token) {
+      throw new UnauthorizedException('Invalid authorization header format');
+    }
+    if (type.toLowerCase() !== 'bearer') {
+      throw new UnauthorizedException('Invalid token type');
+    }
+    return token;
   }
 }

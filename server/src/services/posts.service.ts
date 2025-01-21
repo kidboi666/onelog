@@ -47,8 +47,9 @@ export class PostsService {
     return post;
   }
 
-  async createPost(createPostDto: CreatePostDto) {
+  async createPost(userId: string, createPostDto: CreatePostDto) {
     const newPost = this.repository.create({
+      userId,
       ...createPostDto,
       title: createPostDto.title ?? null,
       tags: createPostDto.tags ?? null,

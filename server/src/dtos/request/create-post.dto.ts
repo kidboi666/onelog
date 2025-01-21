@@ -1,10 +1,7 @@
-import { IsArray, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsArray, IsEnum, IsOptional, IsString } from 'class-validator';
 import { AccessType, EmotionLevel, PostType } from '../../types/enums.type';
 
 export class CreatePostDto {
-  @IsUUID()
-  userId: string;
-
   @IsEnum(PostType, {
     message: 'Post type must be one of the allowed values: journal, article',
   })
@@ -15,12 +12,12 @@ export class CreatePostDto {
     message:
       'Emotion level must be one of the allowed values: 0%, 25%, 50%, 75%, 100%',
   })
-  emotionLevel: EmotionLevel;
+  emotionLevel?: EmotionLevel;
 
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  tags: string[];
+  tags?: string[];
 
   @IsEnum(AccessType, {
     message: 'Access type must be one of the allowed values: public, private',
@@ -29,7 +26,7 @@ export class CreatePostDto {
 
   @IsOptional()
   @IsString()
-  title: string;
+  title?: string;
 
   @IsString()
   content: string;

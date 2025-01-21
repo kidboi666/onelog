@@ -11,21 +11,21 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   @MaxLength(200)
-  avatarUrl: string;
+  avatarUrl?: string;
 
   @IsOptional()
   @IsString()
   @MinLength(2)
   @MaxLength(20)
-  userName: string;
+  userName?: string;
 
   @IsOptional()
   @IsString()
   @MaxLength(100)
-  aboutMe: string;
+  aboutMe?: string;
 
   @IsOptional()
   @IsString()
   @IsEnum(MbtiType)
-  mbti: string;
+  mbti?: string;
 }

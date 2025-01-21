@@ -7,8 +7,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { CurrentUserInterceptor } from '../interceptors/current-user.interceptor';
 
 @Module({
   imports: [
@@ -16,19 +14,14 @@ import { CurrentUserInterceptor } from '../interceptors/current-user.interceptor
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET_KEY'),
-        signOptions: { expiresIn: '15m' },
+        secret: configService.get<string>('JWT_ACCESS_SECRET'),
+        signOptions: {
+          expiresIn: configService.get<string>('JWT_ACCESS_EXPIRES_IN'),
+        },
       }),
     }),
   ],
   controllers: [UsersController, AuthController],
-  providers: [
-    UsersService,
-    AuthService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: CurrentUserInterceptor,
-    },
-  ],
+  providers: [UsersService, AuthService],
 })
 export class UsersModule {}

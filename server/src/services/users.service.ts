@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { SignUpUserDto } from '../dtos/request/sign-up-user.dto';
@@ -13,16 +17,21 @@ export class UsersService {
     private repository: Repository<User>,
   ) {}
 
-  async create(dto: SignUpUserDto): Promise<User> {
+  async createUser(dto: SignUpUserDto): Promise<User> {
     const user = this.repository.create(dto);
     return await this.repository.save(user);
   }
 
-  async findById(id: string): Promise<User> {
+  async findUserById(id: string): Promise<User> {
     if (!isUUID(id)) {
-      throw new BadRequestException('Id is not UUID');
+      throw new BadRequestException('Invalid user ID format. ID must be UUID');
     }
-    return await this.repository.findOneBy({ id });
+    const user = await this.repository.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
   }
 
   async findUserInfoById(id: string) {
@@ -38,71 +47,59 @@ export class UsersService {
         'user.createdAt',
         'user.updatedAt',
       ])
-      .leftJoinAndSelect('user.followers', 'followers')
-      .leftJoinAndSelect('user.following', 'following')
-      .leftJoinAndSelect('user.posts', 'posts')
+      .leftJoin('user.followers', 'followers')
+      .leftJoin('user.following', 'following')
+      .leftJoin('user.posts', 'posts')
       .where('user.id = :id', { id })
-      .loadRelationCountAndMap('user.followerCount', 'user.followers')
-      .loadRelationCountAndMap('user.followingCount', 'user.following')
-      .loadRelationCountAndMap('user.postCount', 'user.posts')
+      .loadRelationCountAndMap('user.stats.followerCount', 'user.followers')
+      .loadRelationCountAndMap('user.stats.followingCount', 'user.following')
+      .loadRelationCountAndMap('user.stats.postCount', 'user.posts')
       .getOne();
 
-    return {
-      id: user.id,
-      email: user.email,
-      userName: user.userName,
-      avatarUrl: user.avatarUrl,
-      aboutMe: user.aboutMe,
-      mbti: user.mbti,
-      stats: {
-        followerCount: user.followerCount,
-        followingCount: user.followingCount,
-        postCount: user.postCount,
-      },
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
+
+    // return {
+    //   id: user.id,
+    //   email: user.email,
+    //   userName: user.userName,
+    //   avatarUrl: user.avatarUrl,
+    //   aboutMe: user.aboutMe,
+    //   mbti: user.mbti,
+    //   stats: {
+    //     followerCount: user.followerCount,
+    //     followingCount: user.followingCount,
+    //     postCount: user.postCount,
+    //   },
+    //   createdAt: user.createdAt,
+    //   updatedAt: user.updatedAt,
+    // };
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async findUserByEmail(email: string): Promise<User> {
     return await this.repository.findOneBy({ email });
   }
 
-  async update(
-    id: string,
-    updateUserDto: Partial<UpdateUserDto>,
-  ): Promise<User> {
-    const user = await this.repository.findOneBy({ id });
-
-    if (!user) {
-      throw new BadRequestException('User does not Exist');
-    }
-
-    Object.assign(user, updateUserDto);
-    return await this.repository.save(user);
+  async updateUserInfo(id: string, dto: Partial<UpdateUserDto>): Promise<User> {
+    await this.findUserById(id);
+    await this.repository.update(id, dto);
+    return await this.findUserById(id);
   }
 
   async remove(id: string): Promise<void> {
-    const user = await this.repository.findOneBy({ id });
-
-    if (!user) {
-      throw new BadRequestException('User does not Exist');
-    }
-
+    const user = await this.findUserById(id);
     await this.repository.remove(user);
   }
 
   async saveRefreshToken(userId: string, refreshToken: string): Promise<void> {
-    const refreshTokenExp = new Date();
-    refreshTokenExp.setDate(refreshTokenExp.getDate() + 7); // 7일 후 만료
+    const refreshTokenExp = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-    await this.repository.update(
-      { id: userId },
-      {
-        refreshToken,
-        refreshTokenExp,
-      },
-    );
+    await this.repository.update(userId, {
+      refreshToken,
+      refreshTokenExp,
+    });
   }
 
   async removeRefreshToken(userId: string): Promise<void> {

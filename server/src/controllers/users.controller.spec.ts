@@ -17,15 +17,15 @@ describe('UsersController', () => {
       findAll: () => {
         return Promise.resolve([...users]);
       },
-      findByEmail: (email: string) => {
+      findUserByEmail: (email: string) => {
         const foundUser = users.find((user) => user.email === email);
         return Promise.resolve(foundUser);
       },
-      findById: (id: string) => {
+      findUserById: (id: string) => {
         const foundUser = users.find((user) => user.id === id);
         return Promise.resolve(foundUser);
       },
-      create: (signUpUserDto: SignUpUserDto) => {
+      createUser: (signUpUserDto: SignUpUserDto) => {
         const newUser = {
           id: uuidv4(),
           email: signUpUserDto.email,
@@ -87,7 +87,7 @@ describe('UsersController', () => {
   });
 
   test('GET findById NotFound', () => {
-    usersService.findById = () => Promise.resolve(null);
+    usersService.findUserById = () => Promise.resolve(null);
     expect(controller.findById(uuidv4())).resolves.toBeNull();
   });
 });

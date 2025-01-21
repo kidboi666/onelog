@@ -15,12 +15,12 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const users: User[] = [];
     _usersService = {
-      findByEmail: (email: string) => {
+      findUserByEmail: (email: string) => {
         const filteredUser = users.find((user) => user.email === email);
         return Promise.resolve(filteredUser);
       },
-      findById: jest.fn(),
-      create: (signUpUserDto: SignUpUserDto) => {
+      findUserById: jest.fn(),
+      createUser: (signUpUserDto: SignUpUserDto) => {
         const newUser = {
           email: signUpUserDto.email,
           password: signUpUserDto.password,

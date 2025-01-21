@@ -16,6 +16,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { PostDto } from '../dtos/response/post.dto';
 import { Serialize } from '../decorators/serialize.decorator';
 import { PaginatedPostsDto } from '../dtos/response/paginated-posts.dto';
+import { CurrentUser } from '../decorators/current-user.decorator';
 
 @Controller('posts')
 export class PostsController {
@@ -38,8 +39,11 @@ export class PostsController {
 
   @UseGuards(AuthGuard)
   @Post()
-  createPost(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.createPost(createPostDto);
+  createPost(
+    @CurrentUser('sub') userId: string,
+    @Body() createPostDto: CreatePostDto,
+  ) {
+    return this.postsService.createPost(userId, createPostDto);
   }
 
   @UseGuards(AuthGuard)
