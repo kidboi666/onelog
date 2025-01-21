@@ -1,11 +1,6 @@
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostsModule } from './posts.module';
 import { CommentsModule } from './comments.module';
@@ -21,9 +16,7 @@ import { UsersModule } from './users.module';
 import { WordDictionariesModule } from './word-dictionaries.module';
 import { AppService } from '../services/app.service';
 import { AppController } from '../controllers/app.controller';
-import { LoggerMiddleware } from '../middlewares/logger.middleware';
-
-const cookieSession = require('cookie-session');
+import { ExceptionModule } from './expcetion.module';
 
 @Module({
   /**
@@ -47,9 +40,11 @@ const cookieSession = require('cookie-session');
           entities: [__dirname + '/../**/*.entity{.ts,.js}'],
           synchronize: config.get<string>('NODE_ENV') !== 'production',
           dropSchema: config.get<string>('NODE_ENV') === 'test',
+          // dropSchema: true,
         };
       },
     }),
+    ExceptionModule,
     CommentsModule,
     FollowsModule,
     GardensModule,
@@ -64,10 +59,6 @@ const cookieSession = require('cookie-session');
     WordDictionariesModule,
   ],
   /**
-   * @controllers 들어오는 요청을 받고 처리된 결과를 응답으로 돌려주는 인터페이스 역할
-   */
-  controllers: [AppController],
-  /**
    * @providers 앱이 제공하고자 하는 핵심 기능, 즉 비즈니스 로직을 수행하는 역할을 하는 것이 프로바이더
    * ex) service, repository, factory, helper
    */
@@ -80,20 +71,9 @@ const cookieSession = require('cookie-session');
       }),
     },
   ],
+  /**
+   * @controllers 들어오는 요청을 받고 처리된 결과를 응답으로 돌려주는 인터페이스 역할
+   */
+  controllers: [AppController],
 })
-export class AppModule implements NestModule {
-  constructor(private readonly configService: ConfigService) {}
-
-  // 애플리케이션이 들어오는 트래픽을 수신할 때 자동으로 호출 됨
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(
-        cookieSession({
-          keys: [this.configService.get<string>('COOKIE_SECRET')],
-        }),
-        LoggerMiddleware,
-      )
-      .forRoutes('*');
-    // 전체 애플리케이션에 들어오는 모든 요청에 이 미들웨어를 사용하겠다는 와일드카드
-  }
-}
+export class AppModule {}
