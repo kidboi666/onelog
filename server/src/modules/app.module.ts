@@ -1,6 +1,11 @@
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  ValidationPipe,
+} from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostsModule } from './posts.module';
 import { CommentsModule } from './comments.module';
@@ -16,6 +21,7 @@ import { UsersModule } from './users.module';
 import { WordDictionariesModule } from './word-dictionaries.module';
 import { AppService } from '../services/app.service';
 import { AppController } from '../controllers/app.controller';
+import { LoggerMiddleware } from '../middlewares/logger.middleware';
 
 const cookieSession = require('cookie-session');
 
@@ -75,7 +81,7 @@ const cookieSession = require('cookie-session');
     },
   ],
 })
-export class AppModule {
+export class AppModule implements NestModule {
   constructor(private readonly configService: ConfigService) {}
 
   // 애플리케이션이 들어오는 트래픽을 수신할 때 자동으로 호출 됨
@@ -85,6 +91,7 @@ export class AppModule {
         cookieSession({
           keys: [this.configService.get<string>('COOKIE_SECRET')],
         }),
+        LoggerMiddleware,
       )
       .forRoutes('*');
     // 전체 애플리케이션에 들어오는 모든 요청에 이 미들웨어를 사용하겠다는 와일드카드
