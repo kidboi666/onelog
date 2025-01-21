@@ -5,7 +5,7 @@ import { AuthController } from '../controllers/auth.controller';
 
 @Module({
   imports: [UsersModule],
-  providers: [AuthService], // 여기에 등록된 서비스들은 Injectable이 있어야 함
+  providers: [AuthService], // 여기에 등록된 서비스들은 @Injectable() 이 있어야 함
   controllers: [AuthController],
 })
 export class AuthModule {}
