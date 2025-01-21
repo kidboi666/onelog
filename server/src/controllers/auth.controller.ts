@@ -16,10 +16,15 @@ import { User } from '../entities/user.entity';
 import { AuthGuard } from '../guards/auth.guard';
 import { SignInDto } from '../dtos/response/sign-in.dto';
 import { TokenDto } from '../dtos/request/token.dto';
+import { UsersService } from '../services/users.service';
+import { SessionDto } from '../dtos/response/session.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Serialize(UserInfoDto)
   @Post('signup')
@@ -58,9 +63,15 @@ export class AuthController {
 
   @Get('session')
   @UseGuards(AuthGuard)
-  @Serialize(UserInfoDto)
+  @Serialize(SessionDto)
   getSession(@CurrentUser() user: User): User {
     return user;
+  }
+
+  @Get('info')
+  @UseGuards(AuthGuard)
+  async getMyInfo(@CurrentUser('sub') userId: string) {
+    return await this.usersService.findUserInfoById(userId);
   }
 
   private setUserSession(session: any, userId: string): void {

@@ -63,6 +63,12 @@ export class User {
   @OneToMany(() => Follow, (follow) => follow.followed)
   followers: Follow[];
 
+  followerCount?: number;
+
+  followingCount?: number;
+
+  postCount?: number;
+
   @AfterInsert()
   logInsert() {
     console.log('Inserted user with id : ', this.id);
