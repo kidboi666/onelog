@@ -16,6 +16,12 @@ import { ConfigService } from '@nestjs/config';
 
 const scrypt = promisify(_scrypt);
 
+/**
+ * 의존성 주입 활성화
+ * - AuthService는 UsersService와 JwtService가 필요해
+ * - @Injectable() 이 있으면 nest가 자동으로 UsersService와 JwtService를 주입해줌
+ * - 마치 "이 클래스는 다른 서비스들이 필요할 수 있으니, nest 너가 관리 해줘!" 라고 말하는 것과 같음
+ */
 @Injectable()
 export class AuthService {
   constructor(

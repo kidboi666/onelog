@@ -20,6 +20,9 @@ import { AppController } from '../controllers/app.controller';
 const cookieSession = require('cookie-session');
 
 @Module({
+  /**
+   * @imports 이 모듈에서 사용하기 위한 프로바이더를 가지고 있는 다른 모듈을 가져오는 곳.
+   */
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
@@ -54,7 +57,14 @@ const cookieSession = require('cookie-session');
     UsersModule,
     WordDictionariesModule,
   ],
+  /**
+   * @controllers 들어오는 요청을 받고 처리된 결과를 응답으로 돌려주는 인터페이스 역할
+   */
   controllers: [AppController],
+  /**
+   * @providers 앱이 제공하고자 하는 핵심 기능, 즉 비즈니스 로직을 수행하는 역할을 하는 것이 프로바이더
+   * ex) service, repository, factory, helper
+   */
   providers: [
     AppService,
     {
