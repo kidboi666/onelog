@@ -1,10 +1,10 @@
-import { authApi } from '@/src/api/auth-api'
 import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 import { ISignIn } from '@/src/types/auth'
+import { createAuthAdapter } from '@/src/utils/adapter'
 import { ROUTES } from '@/src/routes'
 
 export default function useSignIn() {
@@ -12,7 +12,10 @@ export default function useSignIn() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (authData: ISignIn) => authApi.signIn(authData),
+    mutationFn: async (authData: ISignIn) => {
+      const auth = createAuthAdapter()
+      return auth.signIn(authData)
+    },
     onSuccess: () => {
       window.location.href = ROUTES.HOME
       openToast({

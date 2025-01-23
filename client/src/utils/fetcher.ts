@@ -1,11 +1,13 @@
+import { AuthError } from '@supabase/auth-js'
+import { PostgrestError } from '@supabase/supabase-js'
 import { AxiosError, AxiosResponse } from 'axios'
 import { axiosInstance } from '@/src/lib/axios'
 
 export class APIError extends Error {
   constructor(
-    public status: number,
+    public status: number | string,
     public message: string,
-    public originalError: AxiosError,
+    public originalError: AxiosError | AuthError | PostgrestError,
   ) {
     super(message)
     this.name = 'APIError'
@@ -46,7 +48,7 @@ export const fetcher = {
   patch: async <T, D = void>(url: string, data: RequestData<D>) => {
     return makeRequest<T>(() => axiosInstance.patch(url, data))
   },
-  delete: async <T>(url: string) => {
+  delete: async <T = void>(url: string) => {
     return makeRequest<T>(() => axiosInstance.delete(url))
   },
 }

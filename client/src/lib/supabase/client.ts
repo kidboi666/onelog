@@ -1,15 +1,15 @@
-import { createBrowserClient } from '@supabase/ssr'
+import { createBrowserClient as createClient } from '@supabase/ssr'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { Database } from '@/src/types/supabase'
 
 let client: SupabaseClient | undefined
 
-const getSupabaseClient = () => {
+export const createBrowserClient = () => {
   if (client) {
     return client
   }
 
-  client = createBrowserClient<Database>(
+  client = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   )
@@ -17,4 +17,4 @@ const getSupabaseClient = () => {
   return client
 }
 
-export const supabase = getSupabaseClient()
+export const supabase = createBrowserClient()
