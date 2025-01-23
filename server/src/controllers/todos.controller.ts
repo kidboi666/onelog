@@ -27,10 +27,10 @@ export class TodosController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('/:folder_id')
+  @Get('/:folderId')
   async findByFolder(
     @Req() req: any,
-    @Param('folder_id') folderId: string,
+    @Param('folderId') folderId: string,
   ): Promise<Todo[]> {
     return await this.todosService.findTodosByFolderId({
       folderId: parseInt(folderId),

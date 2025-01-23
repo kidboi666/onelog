@@ -14,9 +14,6 @@ describe('UsersController', () => {
   beforeEach(async () => {
     const users: User[] = [];
     usersService = {
-      findAll: () => {
-        return Promise.resolve([...users]);
-      },
       findUserByEmail: (email: string) => {
         const foundUser = users.find((user) => user.email === email);
         return Promise.resolve(foundUser);
