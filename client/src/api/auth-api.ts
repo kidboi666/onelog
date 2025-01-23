@@ -1,5 +1,5 @@
-import { fetcher } from '@/src/api/fetcher'
 import { FETCH_URL } from '@/src/constants/url'
+import { fetcher } from '@/src/utils/fetcher'
 
 interface SignInRequest {
   email: string
