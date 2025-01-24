@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { AccessType, PostType } from '@/src/types/post'
+import { AccessType, PostType } from '@/src/types/enums'
 import Line from '@/src/components/Line'
 import { YStack } from '@/src/components/Stack'
 import EmotionSection from '../_components/EmotionSection'

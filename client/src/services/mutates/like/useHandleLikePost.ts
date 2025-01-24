@@ -4,7 +4,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
-import { PostType } from '@/src/types/post'
+import { PostType } from '@/src/types/enums'
 
 interface IFavorite {
   postId?: number

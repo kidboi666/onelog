@@ -4,7 +4,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
-import { AccessType, PostType } from '@/src/types/post'
+import { AccessType, PostType } from '@/src/types/enums'
 
 interface IAddpost {
   user_id: string
@@ -41,7 +41,9 @@ export default function useAddPost() {
         QUERY_KEY.GARDEN(userId),
         QUERY_KEY.POST.COUNT.TOTAL(userId),
       ]
-      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+      queryKeys.forEach((queryKey) =>
+        queryClient.invalidateQueries({ queryKey }),
+      )
 
       openToast({
         text: TOAST_MESSAGE.POST.POST.SUCCESS,

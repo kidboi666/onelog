@@ -1,7 +1,7 @@
 import { HydrationBoundary } from '@tanstack/react-query'
 import { PropsWithChildren } from 'react'
 import { postPrefetchQuery } from '@/src/services/queries/post/post-prefetch-query'
-import { PostType } from '@/src/types/post'
+import { PostType } from '@/src/types/enums'
 import { ZStack } from '@/src/components/Stack'
 import MenuSection from './journal_garden/_components/MenuSection'
 

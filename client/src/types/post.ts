@@ -1,30 +1,10 @@
 import { INestUserInfo } from '@/src/types/auth'
 import { IComment } from '@/src/types/comment'
+import { AccessType, EmotionLevel, PostType } from '@/src/types/enums'
 import { Tables } from './supabase'
 
 /**
- * enums
- */
-export enum AccessType {
-  PUBLIC = 'public',
-  PRIVATE = 'private',
-}
-
-export enum PostType {
-  ARTICLE = 'article',
-  JOURNAL = 'journal',
-}
-
-export enum EmotionLevel {
-  '0%' = '0%',
-  '25%' = '25%',
-  '50%' = '50%',
-  '75%' = '75%',
-  '100%' = '100%',
-}
-
-/**
- * class interface
+ * Class Interface
  */
 export interface IPostBaseAdapter {
   getAllPosts({ meId, pageParam, limit }: IGetAllPosts): Promise<IPost[]>
@@ -55,16 +35,10 @@ export interface IPostBaseAdapter {
     accessType,
     postType,
   }: ICreatePost): Promise<void>
-
-  /**
-   * @TODO 반환값 타입핑
-   */
-  getMyUsedWords({ userId }: IGetMyUsedWords): Promise<any>
-  getUsedWords({ word }: IGetUsedWords): Promise<any>
 }
 
 /**
- * object interfaces
+ * DTO
  */
 export interface IGetAllPosts {
   meId?: string | null
@@ -108,19 +82,9 @@ export interface ICreatePost {
   postType: PostType
 }
 
-export interface IGetMyUsedWords {
-  userId: string
-}
-
-export interface IGetUsedWords {
-  word: string
-}
-
-export interface IFavoriteWord {
-  word: string
-  count: number
-}
-
+/**
+ * Supabase
+ */
 export interface ISupabasePost
   extends Omit<Tables<'post'>, 'post_type' | 'access_type' | 'emotion_level'> {
   user_info: Pick<
@@ -135,14 +99,12 @@ export interface ISupabasePost
   comment_count: { count: number }[] | []
 }
 
-export interface INestPostDetail extends INestPost {
-  comments: IComment[] | []
-}
-
 export interface ISupabasePostDetail extends ISupabasePost {
   comments: IComment[] | []
 }
-
+/**
+ * Nest
+ */
 export interface INestPost {
   id: number
   userId: string
@@ -157,8 +119,12 @@ export interface INestPost {
   userInfo: INestUserInfo
 }
 
+export interface INestPostDetail extends INestPost {
+  comments: IComment[] | []
+}
+
 /**
- * adapter type
+ * Adapter
  */
 export type IPost = ISupabasePost | INestPost
 

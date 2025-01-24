@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useState } from 'react'
-import { AccessType, PostType } from '@/src/types/post'
+import { AccessType, PostType } from '@/src/types/enums'
 import { XStack } from '@/src/components/Stack'
 import PostContainer from './_containers/PostContainer'
 import SideOptionsContainer from './_containers/SideOptionsContainer'

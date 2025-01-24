@@ -2,6 +2,9 @@ import { AxiosResponse } from 'axios'
 import { Tables } from '@/src/types/supabase'
 import { TMBTI } from '@/src/app/(playground)/profile/edit/_constants/mbti'
 
+/**
+ * Class Interface
+ */
 export interface IAuthBaseAdapter {
   signIn(data: ISignIn): Promise<any>
   signUp(data: ISignUp): Promise<any>
@@ -10,6 +13,9 @@ export interface IAuthBaseAdapter {
   getUserInfo(userId?: string): Promise<IUserInfo | null>
 }
 
+/**
+ * DTO
+ */
 export interface ISignIn {
   email: string
   password: string
@@ -28,6 +34,23 @@ export interface IUpdateUserInfo {
   mbti?: TMBTI
 }
 
+export interface ISignInRequest {
+  email: string
+  password: string
+}
+
+export interface ISignInResponse extends AxiosResponse {
+  accessToken: string
+  refreshToken: string
+}
+
+export interface ISignUpRequest extends ISignInRequest {}
+
+export interface ISignUpResponse extends ISignInResponse {}
+
+/**
+ * Supabase
+ */
 export interface ISupabaseUserSession {
   about_me: string
   avatar_url: string | null
@@ -40,6 +63,9 @@ export interface ISupabaseUserSession {
   provider: string
 }
 
+/**
+ * Nest
+ */
 export interface INestUserInfo {
   id: string
   email: string
@@ -62,27 +88,9 @@ export interface INestUserSession {
   refreshTokenExp: string
 }
 
+/**
+ * Adapter
+ */
 export type IUserSession = ISupabaseUserSession | INestUserSession | null
 
 export type IUserInfo = Tables<'user_info'> | INestUserInfo | null
-
-export interface ISignInRequest {
-  email: string
-  password: string
-}
-
-export interface ISignInResponse extends AxiosResponse {
-  accessToken: string
-  refreshToken: string
-}
-
-export interface ISignUpRequest extends ISignInRequest {}
-
-export interface ISignUpResponse extends ISignInResponse {}
-
-interface UpdateUserRequest {
-  avatarUrl: string
-  userName: string
-  aboutMe: string
-  mbti: string
-}

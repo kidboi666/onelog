@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react'
-import { AccessType } from '@/src/types/post'
+import { AccessType } from '@/src/types/enums'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useToggle from '@/src/hooks/useToggle'

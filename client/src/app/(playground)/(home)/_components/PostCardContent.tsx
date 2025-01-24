@@ -1,6 +1,6 @@
 import { Editor, EditorContent } from '@tiptap/react'
 import { useEffect, useRef, useState } from 'react'
-import { AccessType } from '@/src/types/post'
+import { AccessType } from '@/src/types/enums'
 import { XStack, YStack, ZStack } from '@/src/components/Stack'
 import Tag from '@/src/components/Tag'
 import Title from '@/src/components/Title'
