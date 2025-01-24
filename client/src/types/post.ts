@@ -1,15 +1,10 @@
+import { INestUserInfo } from '@/src/types/auth'
 import { IComment } from '@/src/types/comment'
 import { Tables } from './supabase'
 
-export interface IFavoriteWord {
-  word: string
-  count: number
-}
-
 /**
- * TODO enum 적용 @kidboi666
+ * enums
  */
-
 export enum AccessType {
   PUBLIC = 'public',
   PRIVATE = 'private',
@@ -20,7 +15,113 @@ export enum PostType {
   JOURNAL = 'journal',
 }
 
-export interface IPost
+export enum EmotionLevel {
+  '0%' = '0%',
+  '25%' = '25%',
+  '50%' = '50%',
+  '75%' = '75%',
+  '100%' = '100%',
+}
+
+/**
+ * class interface
+ */
+export interface IPostBaseAdapter {
+  getAllPosts({ meId, pageParam, limit }: IGetAllPosts): Promise<IPost[]>
+  getPost({ postId, meId }: IGetPost): Promise<IPostDetail>
+  getLikedPosts({
+    authorId,
+    meId,
+    pageParam,
+    limit,
+  }: IGetLikedPosts): Promise<IPost[]>
+  getUserPostThatDay({
+    authorId,
+    startOfDay,
+    endOfDay,
+    meId,
+  }: IGetUserPostsThatDay): Promise<IPost[]>
+  getAllUserPosts({
+    authorId,
+    postType,
+    pageParam,
+    limit,
+  }: IGetAllUserPosts): Promise<IPost[]>
+  createPost({
+    title,
+    content,
+    emotionLevel,
+    tags,
+    accessType,
+    postType,
+  }: ICreatePost): Promise<void>
+
+  /**
+   * @TODO 반환값 타입핑
+   */
+  getMyUsedWords({ userId }: IGetMyUsedWords): Promise<any>
+  getUsedWords({ word }: IGetUsedWords): Promise<any>
+}
+
+/**
+ * object interfaces
+ */
+export interface IGetAllPosts {
+  meId?: string | null
+  pageParam: number
+  limit: number
+}
+
+export interface IGetPost {
+  postId: number
+  meId?: string | null
+}
+
+export interface IGetLikedPosts {
+  authorId: string
+  meId?: string | null
+  pageParam: number
+  limit: number
+}
+
+export interface IGetUserPostsThatDay {
+  authorId: string
+  startOfDay: string | null
+  endOfDay: string | null
+  meId?: string | null
+}
+
+export interface IGetAllUserPosts {
+  authorId: string
+  postType: PostType
+  pageParam: number
+  limit: number
+  meId?: string | null
+}
+
+export interface ICreatePost {
+  title: string | null
+  content: string
+  emotionLevel: EmotionLevel
+  tags: string[]
+  accessType: AccessType
+  postType: PostType
+}
+
+export interface IGetMyUsedWords {
+  userId: string
+}
+
+export interface IGetUsedWords {
+  word: string
+}
+
+export interface IFavoriteWord {
+  word: string
+  count: number
+}
+
+export interface ISupabasePost
   extends Omit<Tables<'post'>, 'post_type' | 'access_type' | 'emotion_level'> {
   user_info: Pick<
     Tables<'user_info'>,
@@ -29,8 +130,36 @@ export interface IPost
   post_type: PostType
   access_type: AccessType
   emotion_level: '0%' | '25%' | '50%' | '75%' | '100%' | null
-  comments: IComment[] | []
   is_liked: { like: string }[] | []
   like_count: { count: number }[] | []
   comment_count: { count: number }[] | []
 }
+
+export interface INestPostDetail extends INestPost {
+  comments: IComment[] | []
+}
+
+export interface ISupabasePostDetail extends ISupabasePost {
+  comments: IComment[] | []
+}
+
+export interface INestPost {
+  id: number
+  userId: string
+  postType: PostType
+  accessType: AccessType
+  emotionLevel: EmotionLevel
+  content: string
+  tags: string[]
+  commentCount: number
+  createdAt: string
+  updatedAt: string
+  userInfo: INestUserInfo
+}
+
+/**
+ * adapter type
+ */
+export type IPost = ISupabasePost | INestPost
+
+export type IPostDetail = ISupabasePostDetail | INestPostDetail

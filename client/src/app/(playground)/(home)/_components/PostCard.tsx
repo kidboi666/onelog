@@ -14,11 +14,18 @@ interface Props {
   disabled?: boolean
 }
 
-export default function PostCard({ post, postUserInfo, createdAtLiked, disabled }: Props) {
+export default function PostCard({
+  post,
+  postUserInfo,
+  createdAtLiked,
+  disabled,
+}: Props) {
   const postId = Number(post?.id)
   const content = post?.content
   const tags = post?.tags || []
-  const [, pushPostDetail] = useRouterPushWithTransition(ROUTES.POST.VIEW(postId))
+  const [, pushPostDetail] = useRouterPushWithTransition(
+    ROUTES.POST.VIEW(postId),
+  )
 
   const { editor } = useBlockEditor({
     content,
