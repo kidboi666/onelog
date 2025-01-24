@@ -11,7 +11,6 @@ import {
 } from '@/src/types/auth'
 import { createAuthAdapter } from '@/src/utils/adapter'
 import { APIError } from '@/src/utils/fetcher'
-import { ROUTES } from '@/src/routes'
 
 export const meQuery = {
   getSession: (supabase: SupabaseClient) =>
@@ -46,8 +45,6 @@ export class SupabaseAuthAdapter implements IAuthBaseAdapter {
     if (error instanceof AuthError) {
       throw new APIError(error.status!, error.code!, error)
     }
-
-    window.location.href = ROUTES.HOME
   }
 
   async signUp(authData: ISignUp): Promise<void> {
