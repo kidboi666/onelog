@@ -31,12 +31,10 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
       .order('created_at', { ascending: false })
       .range(pageParam, pageParam + limit - 1)
 
-    if (meId) {
-      query = query.eq('like.user_id', meId)
-    }
-
+    query = this.addUserFilter(query, undefined, meId)
     const { data, error } = await query
     this.handleError(error)
+
     return data ?? []
   }
 
@@ -51,13 +49,14 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
       .select<string, ISupabaseLikedPost>(
         '*, post!like_post_id_fkey(*, comment_count:comment(count), liked_count:like(count), user_info(user_name, avatar_url, email, about_me))',
       )
-      .eq('user_id', authorId)
       .order('created_at', { ascending: false })
       .range(pageParam, pageParam + limit - 1)
 
+    query = this.addUserFilter(query, authorId, meId)
     const { data, error } = await query
     this.handleError(error)
     const isMe = this.isCurrentUserAuthor(authorId, meId)
+
     return this.filterPrivateLikedPosts(data, isMe)
   }
 
@@ -69,13 +68,11 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
       )
       .eq('id', postId)
 
-    if (meId) {
-      query = query.eq('like.user_id', meId)
-    }
+    query = this.addUserFilter(query, undefined, meId)
     query = query.single()
-
     const { data, error } = await query
     this.handleError(error)
+
     return data
   }
 
@@ -93,17 +90,14 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
       >('*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)')
       .gte('created_at', startOfDay)
       .lte('created_at', endOfDay)
-      .eq('user_id', authorId)
       .eq('like.user_id', authorId)
       .order('created_at', { ascending: false })
 
-    if (meId) {
-      query = query.eq('like.user_id', meId)
-    }
-
+    query = this.addUserFilter(query, authorId, meId)
     const { data, error } = await query
     this.handleError(error)
     const isMe = this.isCurrentUserAuthor(authorId, meId)
+
     return this.filterPrivatePosts(data, isMe)
   }
 
@@ -119,19 +113,24 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
       .select(
         '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)',
       )
-      .eq('user_id', authorId)
       .eq('post_type', postType)
       .order('created_at', { ascending: false })
       .range(pageParam, pageParam + limit - 1)
 
-    if (meId) {
-      query = query.eq('like.user_id', meId)
-    }
-
+    query = this.addUserFilter(query, authorId, meId)
     const { data, error } = await query
     this.handleError(error)
     const isMe = this.isCurrentUserAuthor(authorId, meId)
+
     return this.filterPrivatePosts(data, isMe)
+  }
+
+  private addUserFilter(query: any, authorId?: string, meId?: string | null) {
+    if (meId) {
+      query = query.eq('like.user_id', meId)
+    }
+    query = query.eq('user_id', authorId)
+    return query
   }
 
   createPost({
