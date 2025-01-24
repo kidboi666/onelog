@@ -1,10 +1,10 @@
+import { createAuthAdapter } from '@/src/adapters'
 import { TOAST_MESSAGE } from '@/src/constants/toast-message'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 import { ISignIn } from '@/src/types/auth'
-import { createAuthAdapter } from '@/src/utils/adapter'
 import { ROUTES } from '@/src/routes'
 
 export default function useSignIn() {

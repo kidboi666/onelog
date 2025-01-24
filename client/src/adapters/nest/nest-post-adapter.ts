@@ -3,9 +3,7 @@ import {
   IGetAllPosts,
   IGetAllUserPosts,
   IGetLikedPosts,
-  IGetMyUsedWords,
   IGetPost,
-  IGetUsedWords,
   IGetUserPostsThatDay,
   IPost,
   IPostBaseAdapter,
@@ -16,9 +14,11 @@ export class NestPostAdapter implements IPostBaseAdapter {
   getAllPosts({ meId, pageParam, limit }: IGetAllPosts): Promise<IPost[]> {
     throw new Error('Method not implemented.')
   }
+
   getPost({ postId, meId }: IGetPost): Promise<IPostDetail> {
     throw new Error('Method not implemented.')
   }
+
   getLikedPosts({
     authorId,
     meId,
@@ -27,6 +27,7 @@ export class NestPostAdapter implements IPostBaseAdapter {
   }: IGetLikedPosts): Promise<IPost[]> {
     throw new Error('Method not implemented.')
   }
+
   getUserPostThatDay({
     authorId,
     startOfDay,
@@ -35,6 +36,7 @@ export class NestPostAdapter implements IPostBaseAdapter {
   }: IGetUserPostsThatDay): Promise<IPost[]> {
     throw new Error('Method not implemented.')
   }
+
   getAllUserPosts({
     authorId,
     postType,
@@ -43,6 +45,7 @@ export class NestPostAdapter implements IPostBaseAdapter {
   }: IGetAllUserPosts): Promise<IPost[]> {
     throw new Error('Method not implemented.')
   }
+
   createPost({
     title,
     content,
@@ -51,12 +54,6 @@ export class NestPostAdapter implements IPostBaseAdapter {
     accessType,
     postType,
   }: ICreatePost): Promise<void> {
-    throw new Error('Method not implemented.')
-  }
-  getMyUsedWords({ userId }: IGetMyUsedWords): Promise<any> {
-    throw new Error('Method not implemented.')
-  }
-  getUsedWords({ word }: IGetUsedWords): Promise<any> {
     throw new Error('Method not implemented.')
   }
 }

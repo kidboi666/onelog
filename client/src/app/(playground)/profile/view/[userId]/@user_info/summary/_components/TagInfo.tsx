@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { RefObject } from 'react'
 import { supabase } from '@/src/lib/supabase/client'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import { IFavoriteWord } from '@/src/types/post'
+import { wordQuery } from '@/src/services/queries/word/word-query'
+import { IFavoriteWord } from '@/src/types/word'
 import Spinner from '@/src/components/Spinner'
 import Text from '@/src/components/Text'
 
@@ -13,8 +13,15 @@ interface Props {
   targetRef: RefObject<HTMLDivElement>
 }
 
-export default function TagInfo({ word, onTransitionEnd, trigger, targetRef }: Props) {
-  const { data, isFetching } = useQuery(postQuery.getUsedWords(supabase, word.word, trigger))
+export default function TagInfo({
+  word,
+  onTransitionEnd,
+  trigger,
+  targetRef,
+}: Props) {
+  const { data, isFetching } = useQuery(
+    wordQuery.getUsedWords(supabase, word.word, trigger),
+  )
 
   return (
     <div

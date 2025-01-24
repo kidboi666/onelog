@@ -10,20 +10,29 @@ export const QUERY_KEY = {
 
   POST: {
     PUBLIC: ['all_post'],
-    LIKED: (userId?: string | null, meId?: string | null) => ['post', 'liked', userId, meId],
-    THAT_DAY: (startOfDay?: string | null, endOfDay?: string | null, authorId?: string | null) => [
+    LIKED: (authorId: string, meId?: string | null) => [
       'post',
-      startOfDay,
-      endOfDay,
+      'liked',
       authorId,
+      meId,
     ],
+    THAT_DAY: (
+      startOfDay?: string | null,
+      endOfDay?: string | null,
+      authorId?: string | null,
+    ) => ['post', startOfDay, endOfDay, authorId],
     POST_TYPE: (postType?: 'journal' | 'article', authorId?: string | null) => [
       'post',
       postType,
       authorId,
     ],
     DETAIL: (postId?: number) => ['post', postId],
-    CHECK_LIKED: (postId?: number, meId?: string | null) => ['post', 'isLiked', postId, meId],
+    CHECK_LIKED: (postId?: number, meId?: string | null) => [
+      'post',
+      'isLiked',
+      postId,
+      meId,
+    ],
 
     COUNT: {
       LIKED: (userId: string) => ['count', 'post', userId],
@@ -42,7 +51,11 @@ export const QUERY_KEY = {
     DETAIL: (word: string) => ['word', word],
   },
 
-  GARDEN: (userId: string, selectedYear?: number) => ['garden', userId, selectedYear],
+  GARDEN: (userId: string, selectedYear?: number) => [
+    'garden',
+    userId,
+    selectedYear,
+  ],
 
   FOLLOW: {
     FOLLOWER: (userId?: string | null) => ['follower', userId],

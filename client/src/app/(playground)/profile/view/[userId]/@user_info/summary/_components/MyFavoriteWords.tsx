@@ -2,8 +2,8 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import { IFavoriteWord } from '@/src/types/post'
+import { wordQuery } from '@/src/services/queries/word/word-query'
+import { IFavoriteWord } from '@/src/types/word'
 import Empty from '@/src/components/Empty'
 import { List } from '@/src/components/List'
 import { YStack } from '@/src/components/Stack'
@@ -16,7 +16,7 @@ interface Props {
 
 export default function MyFavoriteWords({ userId }: Props) {
   const { data: words } = useSuspenseQuery(
-    postQuery.getMyUsedWords(supabase, userId),
+    wordQuery.getMyUsedWords(supabase, userId),
   )
   const typedWords = words?.words as unknown as IFavoriteWord[]
   const sortedUsedWords = typedWords?.sort((a, b) => b?.count - a?.count)

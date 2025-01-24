@@ -9,7 +9,7 @@ import useAddPost from '@/src/services/mutates/post/useAddPost'
 import useUpdatePost from '@/src/services/mutates/post/useUpdatePost'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
-import { AccessType, PostType } from '@/src/types/post'
+import { AccessType, PostType } from '@/src/types/enums'
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 import useInput from '@/src/hooks/useInput'
 import { formatDateToMDY } from '@/src/utils/formatDate'
@@ -28,6 +28,7 @@ import EmotionSection from '../_components/EmotionSection'
 import PostTypeSection from '../_components/PostTypeSection'
 import PublishSection from '../_components/PublishSection'
 import { TEmotion } from '../page'
+import { Text } from '@tiptap/extension-text';
 
 interface Props {
   searchParams: { post_id: string }
@@ -51,7 +52,9 @@ export default function PostContainer({
   const router = useRouter()
   const postId = Number(searchParams?.post_id)
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
-  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, session?.userId))
+  const { data: me } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, session?.userId),
+  )
   const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId))
   const [content, setContent] = useState(post?.content ?? '')
   const [title, onChangeTitle, setTitle] = useInput<string | null>(null)
@@ -142,7 +145,10 @@ export default function PostContainer({
             </Text>
           </YStack>
           <XStack className="flex-1 justify-end">
-            <EmotionGauge emotionLevel={selectedEmotion} onClick={onChangeEmotion} />
+            <EmotionGauge
+              emotionLevel={selectedEmotion}
+              onClick={onChangeEmotion}
+            />
           </XStack>
         </XStack>
         <Line className="my-4" />
@@ -168,15 +174,26 @@ export default function PostContainer({
           <TagsInput tags={tags} setTags={setTags} disabled={me === null} />
           <XStack className="justify-between">
             <XStack gap={4} className="items-center sm:hidden">
-              <PublishSection accessType={accessType} onChangeAccessType={onChangeAccessType} />
-              <PostTypeSection postType={postType} onChangePostType={onChangePostType} />
-              <EmotionSection selectedEmotion={selectedEmotion} onChangeEmotion={onChangeEmotion} />
+              <PublishSection
+                accessType={accessType}
+                onChangeAccessType={onChangeAccessType}
+              />
+              <PostTypeSection
+                postType={postType}
+                onChangePostType={onChangePostType}
+              />
+              <EmotionSection
+                selectedEmotion={selectedEmotion}
+                onChangeEmotion={onChangeEmotion}
+              />
             </XStack>
             <XStack className="flex-1 justify-end">
               <Button
                 isLoading={isPending}
                 disabled={
-                  editor?.storage.characterCount.characters() === 0 || tags.length > 10 || isSuccess
+                  editor?.storage.characterCount.characters() === 0 ||
+                  tags.length > 10 ||
+                  isSuccess
                 }
                 type="submit"
                 size="sm"
