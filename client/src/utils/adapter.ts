@@ -1,54 +1,49 @@
 import { NestAuthAdapter } from '@/src/api/auth-api'
+import { NestPostAdapter } from '@/src/api/post-api'
 import { SupabaseClient } from '@supabase/supabase-js'
-import { isServer } from '@tanstack/react-query'
-import { createBrowserClient } from '@/src/lib/supabase/client'
 import { SupabaseAuthAdapter } from '@/src/services/queries/auth/me-query'
+import { SupabasePostAdapter } from '@/src/services/queries/post/post-query'
 import { IAuthBaseAdapter } from '@/src/types/auth'
-import { createServerClient } from '../lib/supabase/server'
+import { IPostBaseAdapter } from '@/src/types/post'
 
-enum Provider {
+export enum Provider {
   SUPABASE = 'supabase',
   NEST = 'nest',
 }
 
-function extracted(provider: Provider, supabaseClient?: SupabaseClient) {
-  switch (provider) {
-    case Provider.SUPABASE:
-      if (supabaseClient) {
-        return new SupabaseAuthAdapter(supabaseClient)
-      }
+const databaseProvider =
+  (process.env.NEXT_PUBLIC_DB_PROVIDER as Provider) ?? Provider.SUPABASE
 
-      let client: SupabaseClient
-
-      if (isServer) {
-        client = createServerClient()
-      } else {
-        client = createBrowserClient()
-      }
-
-      return new SupabaseAuthAdapter(client)
-    case Provider.NEST:
-    default:
-      return new NestAuthAdapter()
+const createAdapter = <T>(
+  provider: Provider,
+  client: SupabaseClient | undefined,
+  supabaseCallback: (client: SupabaseClient) => T,
+  nestCallback: () => T,
+): T => {
+  if (provider === Provider.SUPABASE && client) {
+    return supabaseCallback(client)
   }
+  return nestCallback()
 }
 
 export function createAuthAdapter(
   supabaseClient?: SupabaseClient,
 ): IAuthBaseAdapter {
-  const provider = process.env.NEXT_PUBLIC_DB_PROVIDER ?? Provider.SUPABASE
-
-  return extracted(provider as Provider, supabaseClient)
+  return createAdapter<IAuthBaseAdapter>(
+    databaseProvider,
+    supabaseClient,
+    (client) => new SupabaseAuthAdapter(client),
+    () => new NestAuthAdapter(),
+  )
 }
 
-export function createPostAdapter(supabaseClient?: SupabaseClient) {
-  const provider = process.env.NEXT_PUBLIC_DB_PROVIDER ?? Provider.SUPABASE
-
-  return extracted(provider as Provider, supabaseClient)
-}
-
-export function createTodoAdapter(supabaseClient?: SupabaseClient) {
-  const provider = process.env.NEXT_PUBLIC_DB_PROVIDER ?? Provider.SUPABASE
-
-  return extracted(provider as Provider, supabaseClient)
+export function createPostAdapter(
+  supabaseClient?: SupabaseClient,
+): IPostBaseAdapter {
+  return createAdapter<IPostBaseAdapter>(
+    databaseProvider,
+    supabaseClient,
+    (client) => new SupabasePostAdapter(client),
+    () => new NestPostAdapter(),
+  )
 }
