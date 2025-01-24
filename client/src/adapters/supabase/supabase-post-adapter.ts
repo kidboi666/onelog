@@ -7,68 +7,60 @@ import {
   IGetLikedPosts,
   IGetPost,
   IGetUserPostsThatDay,
+  ILikedPost,
+  IPost,
   IPostBaseAdapter,
-  ISupabaseLikedPost,
+  IPostDetail,
   ISupabasePost,
-  ISupabasePostDetail,
 } from '@/src/types/post'
 import { APIError } from '@/src/utils/fetcher'
 
 export class SupabasePostAdapter implements IPostBaseAdapter {
   constructor(private readonly supabase: SupabaseClient) {}
 
-  async getAllPosts({
-    pageParam,
-    limit,
-    meId,
-  }: IGetAllPosts): Promise<ISupabasePost[]> {
+  async getAllPosts(params: IGetAllPosts): Promise<IPost[]> {
     let query = this.supabase
       .from('post')
-      .select<string, ISupabasePost>(
+      .select<string, IPost>(
         '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)',
       )
       .eq('access_type', AccessType.PUBLIC)
       .order('created_at', { ascending: false })
-      .range(pageParam, pageParam + limit - 1)
+      .range(params.pageParam, params.pageParam + params.limit - 1)
 
-    query = this.addUserFilter(query, undefined, meId)
+    query = this.addUserFilter(query, undefined, params.meId)
     const { data, error } = await query
     this.handleError(error)
 
     return data ?? []
   }
 
-  async getLikedPosts({
-    pageParam,
-    limit,
-    authorId,
-    meId,
-  }: IGetLikedPosts): Promise<ISupabaseLikedPost[]> {
+  async getLikedPosts(params: IGetLikedPosts): Promise<ILikedPost[]> {
     let query = this.supabase
       .from('like')
-      .select<string, ISupabaseLikedPost>(
+      .select<string, ILikedPost>(
         '*, post!like_post_id_fkey(*, comment_count:comment(count), liked_count:like(count), user_info(user_name, avatar_url, email, about_me))',
       )
       .order('created_at', { ascending: false })
-      .range(pageParam, pageParam + limit - 1)
+      .range(params.pageParam, params.pageParam + params.limit - 1)
 
-    query = this.addUserFilter(query, authorId, meId)
+    query = this.addUserFilter(query, params.authorId, params.meId)
     const { data, error } = await query
     this.handleError(error)
-    const isMe = this.isCurrentUserAuthor(authorId, meId)
+    const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
 
     return this.filterPrivateLikedPosts(data, isMe)
   }
 
-  async getPost({ postId, meId }: IGetPost): Promise<ISupabasePostDetail> {
+  async getPost(params: IGetPost): Promise<IPostDetail> {
     let query: any = this.supabase
       .from('post')
       .select(
         '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), comments:comment(*, user_info(email, user_name, avatar_url, about_me)), user_info(email, user_name, avatar_url, about_me)',
       )
-      .eq('id', postId)
+      .eq('id', params.postId)
 
-    query = this.addUserFilter(query, undefined, meId)
+    query = this.addUserFilter(query, undefined, params.meId)
     query = query.single()
     const { data, error } = await query
     this.handleError(error)
@@ -76,51 +68,40 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     return data
   }
 
-  async getUserPostThatDay({
-    authorId,
-    startOfDay,
-    endOfDay,
-    meId,
-  }: IGetUserPostsThatDay): Promise<ISupabasePost[]> {
+  async getUserPostThatDay(params: IGetUserPostsThatDay): Promise<IPost[]> {
     let query = this.supabase
       .from('post')
       .select<
         string,
-        ISupabasePost
+        IPost
       >('*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)')
-      .gte('created_at', startOfDay)
-      .lte('created_at', endOfDay)
-      .eq('like.user_id', authorId)
+      .gte('created_at', params.startOfDay)
+      .lte('created_at', params.endOfDay)
+      .eq('like.user_id', params.authorId)
       .order('created_at', { ascending: false })
 
-    query = this.addUserFilter(query, authorId, meId)
+    query = this.addUserFilter(query, params.authorId, params.meId)
     const { data, error } = await query
     this.handleError(error)
-    const isMe = this.isCurrentUserAuthor(authorId, meId)
+    const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
 
-    return this.filterPrivatePosts(data, isMe)
+    return this.filterPrivatePosts(data as ISupabasePost[], isMe)
   }
 
-  async getAllUserPosts({
-    limit,
-    authorId,
-    postType,
-    pageParam,
-    meId,
-  }: IGetAllUserPosts): Promise<ISupabasePost[]> {
+  async getAllUserPosts(params: IGetAllUserPosts): Promise<IPost[]> {
     let query: any = this.supabase
       .from('post')
       .select(
         '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)',
       )
-      .eq('post_type', postType)
+      .eq('post_type', params.postType)
       .order('created_at', { ascending: false })
-      .range(pageParam, pageParam + limit - 1)
+      .range(params.pageParam, params.pageParam + params.limit - 1)
 
-    query = this.addUserFilter(query, authorId, meId)
+    query = this.addUserFilter(query, params.authorId, params.meId)
     const { data, error } = await query
     this.handleError(error)
-    const isMe = this.isCurrentUserAuthor(authorId, meId)
+    const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
 
     return this.filterPrivatePosts(data, isMe)
   }
@@ -155,9 +136,9 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
   }
 
   private filterPrivateLikedPosts(
-    data: ISupabaseLikedPost[] | null,
+    data: ILikedPost[] | null,
     isMe: boolean,
-  ): ISupabaseLikedPost[] {
+  ): ILikedPost[] {
     if (!data) {
       return []
     }
@@ -170,13 +151,11 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
         )
   }
 
-  private filterPrivatePosts(
-    data: ISupabasePost[] | null,
-    isMe: boolean,
-  ): ISupabasePost[] {
+  private filterPrivatePosts(data: ISupabasePost[], isMe: boolean): IPost[] {
     if (!data) {
       return []
     }
+
     return isMe
       ? data
       : data?.map((item) =>

@@ -1,3 +1,4 @@
+import { FETCH_URL } from '@/src/constants/url'
 import {
   ICreatePost,
   IGetAllPosts,
@@ -5,14 +6,20 @@ import {
   IGetLikedPosts,
   IGetPost,
   IGetUserPostsThatDay,
+  ILikedPost,
   IPost,
   IPostBaseAdapter,
   IPostDetail,
 } from '@/src/types/post'
+import { fetcher } from '@/src/utils/fetcher'
 
 export class NestPostAdapter implements IPostBaseAdapter {
-  getAllPosts({ meId, pageParam, limit }: IGetAllPosts): Promise<IPost[]> {
-    throw new Error('Method not implemented.')
+  async getAllPosts(params: IGetAllPosts): Promise<IPost[]> {
+    try {
+      return await fetcher.get<IPost[]>(FETCH_URL.POST.GET_ALL)
+    } catch (err) {
+      throw err
+    }
   }
 
   getPost({ postId, meId }: IGetPost): Promise<IPostDetail> {
@@ -24,7 +31,7 @@ export class NestPostAdapter implements IPostBaseAdapter {
     meId,
     pageParam,
     limit,
-  }: IGetLikedPosts): Promise<IPost[]> {
+  }: IGetLikedPosts): Promise<ILikedPost[]> {
     throw new Error('Method not implemented.')
   }
 
