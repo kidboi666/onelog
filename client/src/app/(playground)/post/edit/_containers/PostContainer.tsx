@@ -1,33 +1,33 @@
-'use client'
+'use client';
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { BubbleMenu, EditorContent } from '@tiptap/react'
-import { useRouter } from 'next/navigation'
-import { FormEvent, useEffect, useState } from 'react'
-import { supabase } from '@/src/lib/supabase/client'
-import useAddPost from '@/src/services/mutates/post/useAddPost'
-import useUpdatePost from '@/src/services/mutates/post/useUpdatePost'
-import { meQuery } from '@/src/services/queries/auth/me-query'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import { AccessType, PostType } from '@/src/types/enums'
-import useBlockEditor from '@/src/hooks/useBlockEditor'
-import useInput from '@/src/hooks/useInput'
-import { formatDateToMDY } from '@/src/utils/formatDate'
-import { ROUTES } from '@/src/routes'
-import Avatar from '@/src/components/Avatar'
-import Button from '@/src/components/Button'
-import Input from '@/src/components/Input'
-import Line from '@/src/components/Line'
-import { XStack, YStack } from '@/src/components/Stack'
-import { TagsInput } from '@/src/components/TagsInput'
-import Text from '@/src/components/Text'
-import Title from '@/src/components/Title'
-import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge'
-import BubbleMenuBar from '../_components/BubbleMenuBar'
-import EmotionSection from '../_components/EmotionSection'
-import PostTypeSection from '../_components/PostTypeSection'
-import PublishSection from '../_components/PublishSection'
-import { TEmotion } from '../page'
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { BubbleMenu, EditorContent } from '@tiptap/react';
+import { useRouter } from 'next/navigation';
+import { FormEvent, useEffect, useState } from 'react';
+import { supabase } from '@/src/lib/supabase/client';
+import useCreatePost from '@/src/services/mutates/post/use-create-post';
+import useUpdatePost from '@/src/services/mutates/post/use-update-post';
+import { meQuery } from '@/src/services/queries/auth/me-query';
+import { postQuery } from '@/src/services/queries/post/post-query';
+import { AccessType, PostType } from '@/src/types/enums';
+import useBlockEditor from '@/src/hooks/useBlockEditor';
+import useInput from '@/src/hooks/useInput';
+import { formatDateToMDY } from '@/src/utils/formatDate';
+import { ROUTES } from '@/src/routes';
+import Avatar from '@/src/components/Avatar';
+import Button from '@/src/components/Button';
+import Input from '@/src/components/Input';
+import Line from '@/src/components/Line';
+import { XStack, YStack } from '@/src/components/Stack';
+import { TagsInput } from '@/src/components/TagsInput';
+import Text from '@/src/components/Text';
+import Title from '@/src/components/Title';
+import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge';
+import BubbleMenuBar from '../_components/BubbleMenuBar';
+import EmotionSection from '../_components/EmotionSection';
+import PostTypeSection from '../_components/PostTypeSection';
+import PublishSection from '../_components/PublishSection';
+import { TEmotion } from '../page';
 import { Text } from '@tiptap/extension-text';
 
 interface Props {
@@ -66,7 +66,7 @@ export default function PostContainer({
     placeholder: '오늘 당신의 생각과 감정을 기록하세요.',
   })
   const [tags, setTags] = useState<string[]>([])
-  const { mutate: addPost, isPending, isSuccess } = useAddPost()
+  const { mutate: addPost, isPending, isSuccess } = useCreatePost()
   const { mutate: updatePost } = useUpdatePost()
 
   const handleInputFocus = () => editor?.commands.focus('end')

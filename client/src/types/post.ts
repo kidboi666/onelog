@@ -7,34 +7,14 @@ import { Tables } from './supabase'
  * Class Interface
  */
 export interface IPostBaseAdapter {
-  getAllPosts({ meId, pageParam, limit }: IGetAllPosts): Promise<IPost[]>
-  getPost({ postId, meId }: IGetPost): Promise<IPostDetail>
-  getLikedPosts({
-    authorId,
-    meId,
-    pageParam,
-    limit,
-  }: IGetLikedPosts): Promise<ILikedPost[]>
-  getUserPostThatDay({
-    authorId,
-    startOfDay,
-    endOfDay,
-    meId,
-  }: IGetUserPostsThatDay): Promise<IPost[]>
-  getAllUserPosts({
-    authorId,
-    postType,
-    pageParam,
-    limit,
-  }: IGetAllUserPosts): Promise<IPost[]>
-  createPost({
-    title,
-    content,
-    emotionLevel,
-    tags,
-    accessType,
-    postType,
-  }: ICreatePost): Promise<void>
+  getAllPosts(params: IGetAllPosts): Promise<IPost[]>
+  getPost(params: IGetPost): Promise<IPostDetail>
+  getLikedPosts(params: IGetLikedPosts): Promise<ILikedPost[]>
+  getUserPostThatDay(params: IGetUserPostsThatDay): Promise<IPost[]>
+  getAllUserPosts(params: IGetAllUserPosts): Promise<IPost[]>
+  createPost(params: ICreatePost): Promise<void>
+  deletePost(postId: number): Promise<void>
+  updatePost(params: IUpdatePost): Promise<void>
 }
 
 /**
@@ -77,6 +57,18 @@ export interface ICreatePost {
   title: string | null
   content: string
   emotionLevel: EmotionLevel
+  tags: string[]
+  accessType: AccessType
+  postType: PostType
+  meId: string
+}
+
+export interface IUpdatePost {
+  id: number
+  meId: string
+  title: string | null
+  content: string
+  emotionLevel: string | null
   tags: string[]
   accessType: AccessType
   postType: PostType

@@ -1,6 +1,6 @@
 'use client'
 
-import useSignOut from '@/src/services/mutates/auth/useSignOut'
+import useSignOut from '@/src/services/mutates/auth/use-sign-out'
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import Button from '@/src/components/Button'
 import { YStack } from '@/src/components/Stack'
@@ -17,7 +17,12 @@ export default function LogoutButton() {
   return (
     <YStack>
       <Title>로그아웃</Title>
-      <Button size="sm" onClick={handleSingOut} disabled={!session} className="w-fit">
+      <Button
+        size="sm"
+        onClick={handleSingOut}
+        disabled={!session}
+        className="w-fit"
+      >
         로그아웃 하기
       </Button>
     </YStack>

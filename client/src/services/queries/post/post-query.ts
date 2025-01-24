@@ -3,7 +3,7 @@ import { SupabaseClient } from '@supabase/supabase-js'
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { PostType } from '@/src/types/enums'
-import { IPost } from '@/src/types/post'
+import { ILikedPost, IPost } from '@/src/types/post'
 import { APIError } from '@/src/utils/fetcher'
 
 export const postQuery = {
@@ -30,9 +30,9 @@ export const postQuery = {
     meId?: string | null,
   ) =>
     infiniteQueryOptions<
-      IPost[],
+      ILikedPost[],
       APIError,
-      IPost[],
+      ILikedPost[],
       (string | null | undefined)[],
       number
     >({

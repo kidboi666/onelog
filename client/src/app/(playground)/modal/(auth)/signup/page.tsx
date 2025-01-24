@@ -1,21 +1,20 @@
-'use client';
+'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
-import { useForm } from 'react-hook-form';
-import cn from '@/src/lib/cn';
-import { signUpSchema } from '@/src/lib/validators/auth';
-import { useSignInOAuth } from '@/src/services/mutates/auth/useSignInOAuth';
-import useSignUp from '@/src/services/mutates/auth/useSignUp';
-import { ISignUp } from '@/src/types/auth';
-import Button from '@/src/components/Button';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { useMemo } from 'react'
+import { useForm } from 'react-hook-form'
+import cn from '@/src/lib/cn'
+import { signUpSchema } from '@/src/lib/validators/auth'
+import { useSignInOauth } from '@/src/services/mutates/auth/use-sign-in-oauth'
+import useSignUp from '@/src/services/mutates/auth/use-sign-up'
+import { ISignUp } from '@/src/types/auth'
+import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Modal from '@/src/components/Modal'
-import { YStack } from '@/src/components/Stack';
-import Title from '@/src/components/Title';
-import AuthForm from '../../_components/AuthForm';
-
+import { YStack } from '@/src/components/Stack'
+import Title from '@/src/components/Title'
+import AuthForm from '../../_components/AuthForm'
 
 export default function SignUpModal() {
   const router = useRouter()
@@ -28,7 +27,7 @@ export default function SignUpModal() {
     mutate: signUpOAuth,
     isPending: isOAuthPending,
     isSuccess: isOAuthSuccess,
-  } = useSignInOAuth()
+  } = useSignInOauth()
   const {
     register,
     handleSubmit,
@@ -73,7 +72,12 @@ export default function SignUpModal() {
       <form onSubmit={handleSubmit(handleSubmitSignUp)} className="w-full">
         <YStack gap={4}>
           <Title>회원가입</Title>
-          <AuthForm register={register('email')} error={errors.email} type="email" name="이메일" />
+          <AuthForm
+            register={register('email')}
+            error={errors.email}
+            type="email"
+            name="이메일"
+          />
           <AuthForm
             register={register('userName')}
             error={errors.userName}

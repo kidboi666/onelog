@@ -10,15 +10,15 @@ import {
   ILikedPost,
   IPost,
   IPostBaseAdapter,
-  IPostDetail,
   ISupabasePost,
+  IUpdatePost,
 } from '@/src/types/post'
 import { APIError } from '@/src/utils/fetcher'
 
 export class SupabasePostAdapter implements IPostBaseAdapter {
   constructor(private readonly supabase: SupabaseClient) {}
 
-  async getAllPosts(params: IGetAllPosts): Promise<IPost[]> {
+  async getAllPosts(params: IGetAllPosts) {
     let query = this.supabase
       .from('post')
       .select<string, IPost>(
@@ -35,7 +35,7 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     return data ?? []
   }
 
-  async getLikedPosts(params: IGetLikedPosts): Promise<ILikedPost[]> {
+  async getLikedPosts(params: IGetLikedPosts) {
     let query = this.supabase
       .from('like')
       .select<string, ILikedPost>(
@@ -52,7 +52,7 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     return this.filterPrivateLikedPosts(data, isMe)
   }
 
-  async getPost(params: IGetPost): Promise<IPostDetail> {
+  async getPost(params: IGetPost) {
     let query: any = this.supabase
       .from('post')
       .select(
@@ -68,7 +68,7 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     return data
   }
 
-  async getUserPostThatDay(params: IGetUserPostsThatDay): Promise<IPost[]> {
+  async getUserPostThatDay(params: IGetUserPostsThatDay) {
     let query = this.supabase
       .from('post')
       .select<
@@ -88,10 +88,10 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     return this.filterPrivatePosts(data as ISupabasePost[], isMe)
   }
 
-  async getAllUserPosts(params: IGetAllUserPosts): Promise<IPost[]> {
-    let query: any = this.supabase
+  async getAllUserPosts(params: IGetAllUserPosts) {
+    let query = this.supabase
       .from('post')
-      .select(
+      .select<string, IPost>(
         '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)',
       )
       .eq('post_type', params.postType)
@@ -103,7 +103,38 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     this.handleError(error)
     const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
 
-    return this.filterPrivatePosts(data, isMe)
+    return this.filterPrivatePosts(data as ISupabasePost[], isMe)
+  }
+
+  async createPost(params: ICreatePost) {
+    const { error } = await this.supabase
+      .from('post')
+      .insert({
+        ...params,
+        emotion_level: params.emotionLevel,
+        access_type: params.accessType,
+        post_type: params.postType,
+      })
+      .select()
+    this.handleError(error)
+  }
+
+  async deletePost(postId: number) {
+    const { error } = await this.supabase.from('post').delete().eq('id', postId)
+    this.handleError(error)
+  }
+
+  async updatePost(params: IUpdatePost) {
+    const { error } = await this.supabase
+      .from('post')
+      .update({
+        ...params,
+        emotion_level: params.emotionLevel,
+        access_type: params.accessType,
+        post_type: params.postType,
+      })
+      .eq('id', params.id)
+    this.handleError(error)
   }
 
   private addUserFilter(query: any, authorId?: string, meId?: string | null) {
@@ -114,24 +145,13 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     return query
   }
 
-  createPost({
-    title,
-    content,
-    emotionLevel,
-    tags,
-    accessType,
-    postType,
-  }: ICreatePost): Promise<void> {
-    return Promise.resolve(undefined)
-  }
-
   private handleError(error: PostgrestError | null) {
     if (error?.code && error?.message) {
       throw new APIError(error.code, error.message, error)
     }
   }
 
-  private isCurrentUserAuthor(authorId: string, meId?: string | null): boolean {
+  private isCurrentUserAuthor(authorId: string, meId?: string | null) {
     return authorId === meId
   }
 

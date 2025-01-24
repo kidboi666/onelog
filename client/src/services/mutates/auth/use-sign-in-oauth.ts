@@ -7,10 +7,12 @@ import { TOAST_TYPE, useToast } from '@/src/store/useToast'
 import { isDevelop } from '@/src/utils/isDevelop'
 
 const getRedirectUri = () => {
-  return isDevelop ? 'http://localhost:3000' : 'https://one-sentence-gray.vercel.app'
+  return isDevelop
+    ? 'http://localhost:3000'
+    : 'https://one-sentence-gray.vercel.app'
 }
 
-export const useSignInOAuth = () => {
+export const useSignInOauth = () => {
   const queryClient = getQueryClient()
   const { openToast } = useToast()
 
@@ -46,7 +48,9 @@ export const useSignInOAuth = () => {
     },
     onSettled: () => {
       const queryKeys = [QUERY_KEY.AUTH.INFO, QUERY_KEY.AUTH.SESSION]
-      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+      queryKeys.forEach((queryKey) =>
+        queryClient.invalidateQueries({ queryKey }),
+      )
     },
   })
 }

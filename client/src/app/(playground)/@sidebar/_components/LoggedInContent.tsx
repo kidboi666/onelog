@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation'
-import useSignOut from '@/src/services/mutates/auth/useSignOut'
+import useSignOut from '@/src/services/mutates/auth/use-sign-out'
 import { IUserSession } from '@/src/types/auth'
 import { wait } from '@/src/utils/wait'
 import { ROUTES } from '@/src/routes'
