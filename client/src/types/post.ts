@@ -14,7 +14,7 @@ export interface IPostBaseAdapter {
     meId,
     pageParam,
     limit,
-  }: IGetLikedPosts): Promise<IPost[]>
+  }: IGetLikedPosts): Promise<ILikedPost[]>
   getUserPostThatDay({
     authorId,
     startOfDay,
@@ -102,6 +102,11 @@ export interface ISupabasePost
 export interface ISupabasePostDetail extends ISupabasePost {
   comments: IComment[] | []
 }
+
+export interface ISupabaseLikedPost extends Omit<ISupabasePost, 'is_liked'> {
+  post: ISupabasePost
+}
+
 /**
  * Nest
  */
@@ -127,5 +132,7 @@ export interface INestPostDetail extends INestPost {
  * Adapter
  */
 export type IPost = ISupabasePost | INestPost
+
+export type ILikedPost = ISupabaseLikedPost
 
 export type IPostDetail = ISupabasePostDetail | INestPostDetail
