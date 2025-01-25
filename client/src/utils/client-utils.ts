@@ -1,3 +1,28 @@
+import { createServerClient } from '@/src/lib/supabase/server'
+import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
+
+export const initClientForServer = () => {
+  const queryClient = getQueryClient()
+  const supabase = createServerClient()
+  return { queryClient, supabase }
+}
+
+export const colorizeOpacity = (orderBy: number) => {
+  if (orderBy) {
+    if (orderBy <= 20) {
+      return 'opacity-20'
+    } else if (orderBy <= 40) {
+      return 'opacity-40'
+    } else if (orderBy <= 60) {
+      return 'opacity-60'
+    } else if (orderBy <= 80) {
+      return 'opacity-80'
+    } else {
+      return 'opacity-100'
+    }
+  }
+}
+
 export const formatDateToYMD = (date: string | number) => {
   const newDate = new Date(date)
   const year = newDate.getFullYear().toString().slice(2)
@@ -83,4 +108,10 @@ export const getDaysInYear = (year: number) => {
     daysInYear.push(daysInMonth)
   }
   return daysInYear
+}
+
+export const isDevelop = process.env.NODE_ENV === 'development'
+
+export const wait = (time: number = 1000) => {
+  return new Promise((resolve) => setTimeout(resolve, time))
 }
