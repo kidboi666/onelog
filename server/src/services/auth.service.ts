@@ -14,6 +14,7 @@ import { AuthResponseDto } from '../dtos/response/auth-response.dto';
 import { SignInUserDto } from '../dtos/request/sign-in-user.dto';
 import { ConfigService } from '@nestjs/config';
 import { TokensResponseDto } from '../dtos/response/tokens-response.dto';
+import { SessionDto } from '../dtos/response/session.dto';
 
 const scrypt = promisify(_scrypt);
 
@@ -61,6 +62,15 @@ export class AuthService {
 
   async signOut(userId: string): Promise<void> {
     await this.usersService.removeRefreshToken(userId);
+  }
+
+  async findSession(userId: string): Promise<SessionDto> {
+    const user = await this.usersService.findUserById(userId);
+    return {
+      id: userId,
+      refreshToken: user.refreshToken,
+      refreshTokenExp: user.refreshTokenExp,
+    };
   }
 
   async refreshAccessToken(refreshToken: string): Promise<TokensResponseDto> {

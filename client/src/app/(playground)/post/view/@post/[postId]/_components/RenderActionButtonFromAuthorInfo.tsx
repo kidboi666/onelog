@@ -1,32 +1,39 @@
 'use client'
 
-import { IUserSession } from '@/src/types/auth'
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
+import useFollowValidate from '@/src/hooks/queries/useFollowValidate'
 import useTransitionWithRoute from '@/src/hooks/useRouterPushWithTransition'
 import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import { XStack } from '@/src/components/Stack'
 
 interface Props {
-  session: IUserSession
-  isFollowing: boolean
+  meId?: string | null
   userId: string
 }
 
-export default function RenderActionButtonFromAuthorInfo({ session, isFollowing, userId }: Props) {
+export default function RenderActionButtonFromAuthorInfo({
+  meId,
+  userId,
+}: Props) {
+  const { isFollowing } = useFollowValidate(userId, meId)
   const { onFollow, isPending } = useFollowMutates({
     isFollowing,
     userId,
   })
 
-  const [isLoadingWrite, startTransitionWrite] = useTransitionWithRoute(ROUTES.POST.NEW)
-  const [isLoadingEditProfile, startTransitionEditProfile] = useTransitionWithRoute(
-    ROUTES.PROFILE.EDIT,
+  const [isLoadingWrite, startTransitionWrite] = useTransitionWithRoute(
+    ROUTES.POST.NEW,
   )
+  const [isLoadingEditProfile, startTransitionEditProfile] =
+    useTransitionWithRoute(ROUTES.PROFILE.EDIT)
 
   return (
-    <XStack onClick={(e) => e.stopPropagation()} className="flex-col justify-center">
-      {session?.userId === userId ? (
+    <XStack
+      onClick={(e) => e.stopPropagation()}
+      className="flex-col justify-center"
+    >
+      {meId === userId ? (
         <>
           <Button
             size="sm"
@@ -48,7 +55,12 @@ export default function RenderActionButtonFromAuthorInfo({ session, isFollowing,
         </>
       ) : (
         <>
-          <Button size="sm" isLoading={isPending} onClick={onFollow} className="w-full self-end">
+          <Button
+            size="sm"
+            isLoading={isPending}
+            onClick={onFollow}
+            className="w-full self-end"
+          >
             {isFollowing ? '팔로우 취소' : '팔로우 하기'}
           </Button>
           <Button variant="secondary" size="sm" className="w-full self-end">

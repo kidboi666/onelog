@@ -1,12 +1,12 @@
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 import Block from './Block'
 
 export default function ColorInfoDisplay() {
   return (
     <div className="flex items-center gap-2 self-end">
-      <Text type="caption" size="sm" className="leading-none">
+      <TextDisplay type="caption" size="sm" className="leading-none">
         아주나쁨
-      </Text>
+      </TextDisplay>
       {/* <div className="size-3 rounded-sm bg-[#ff6666]" />
       <div className="size-3 rounded-sm bg-[#ffb266]" />
       <div className="size-3 rounded-sm bg-[#f8db4d]" />
@@ -17,9 +17,9 @@ export default function ColorInfoDisplay() {
       <Block disabled average={60} />
       <Block disabled average={80} />
       <Block disabled average={100} />
-      <Text type="caption" size="sm">
+      <TextDisplay type="caption" size="sm">
         아주좋음
-      </Text>
+      </TextDisplay>
     </div>
   )
 }

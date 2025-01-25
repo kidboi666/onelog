@@ -1,15 +1,14 @@
-import { useRouter } from 'next/navigation';
-import { ReactNode, useTransition } from 'react';
-import cn from '@/src/lib/cn';
-import { wait } from '@/src/utils/wait';
-import Button from '@/src/components/Button';
-import Icon from '@/src/components/Icon';
+import { useRouter } from 'next/navigation'
+import { ReactNode, useTransition } from 'react'
+import cn from '@/src/lib/cn'
+import { wait } from '@/src/utils/client-utils'
+import Button from '@/src/components/Button'
+import Icon from '@/src/components/Icon'
 import Spinner from '@/src/components/Spinner'
 import { ZStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text';
-import BookMark from './BookMark';
-import SelectedMenuBackground from './SelectedMenuBackground';
-
+import TextDisplay from '@/src/components/TextDisplay'
+import BookMark from './BookMark'
+import SelectedMenuBackground from './SelectedMenuBackground'
 
 interface Props {
   isSelected: boolean
@@ -58,7 +57,11 @@ export default function MenuButton({
             {icon}
           </Icon>
         )}
-        {viewText && <Text type={isSelected ? 'body' : 'caption'}>{name}</Text>}
+        {viewText && (
+          <TextDisplay type={isSelected ? 'body' : 'caption'}>
+            {name}
+          </TextDisplay>
+        )}
       </Button>
     </ZStack>
   )

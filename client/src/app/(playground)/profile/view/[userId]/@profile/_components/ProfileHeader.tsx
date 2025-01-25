@@ -1,21 +1,22 @@
-'use client';
+'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { supabase } from '@/src/lib/supabase/client';
-import { userQuery } from '@/src/services/queries/auth/user-query';
-import Avatar from '@/src/components/Avatar';
-import { YStack, ZStack } from '@/src/components/Stack';
-import Text from '@/src/components/Text';
-import Title from '@/src/components/Title';
-import EmotionAverage from '@/src/app/(playground)/profile/view/[userId]/@profile/_components/EmotionAverage';
-
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { supabase } from '@/src/lib/supabase/client'
+import { userQuery } from '@/src/services/queries/auth/user-query'
+import Avatar from '@/src/components/Avatar'
+import { YStack, ZStack } from '@/src/components/Stack'
+import TextDisplay from '@/src/components/TextDisplay'
+import Title from '@/src/components/Title'
+import EmotionAverage from '@/src/app/(playground)/profile/view/[userId]/@profile/_components/EmotionAverage'
 
 interface Props {
   userId: string
 }
 
 export default function ProfileHeader({ userId }: Props) {
-  const { data: user } = useSuspenseQuery(userQuery.getUserInfo(supabase, userId))
+  const { data: user } = useSuspenseQuery(
+    userQuery.getUserInfo(supabase, userId),
+  )
   return (
     <>
       <ZStack className="relative">
@@ -24,9 +25,9 @@ export default function ProfileHeader({ userId }: Props) {
       </ZStack>
       <YStack className="items-center sm:flex-row sm:items-end">
         <Title>{user.user_name}</Title>
-        <Text as="span" type="caption" size="sm">
+        <TextDisplay as="span" type="caption" size="sm">
           {user.email}
-        </Text>
+        </TextDisplay>
       </YStack>
     </>
   )

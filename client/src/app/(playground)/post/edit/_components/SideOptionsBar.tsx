@@ -1,4 +1,5 @@
 import { AccessType, EmotionLevel, PostType } from '@/src/types/enums/index'
+import Line from '@/src/components/Line'
 import { YStack } from '@/src/components/Stack'
 import EmotionSection from '@/src/app/(playground)/post/edit/_components/EmotionSection'
 import PostTypeSection from '@/src/app/(playground)/post/edit/_components/PostTypeSection'
@@ -13,7 +14,7 @@ interface Props {
   onChangeAccessType: (accessType: AccessType) => void
 }
 
-export default function SideOptionsContainer({
+export default function SideOptionsBar({
   accessType,
   emotionLevel,
   postType,
@@ -35,11 +36,14 @@ export default function SideOptionsContainer({
           isSide
         />
         {emotionLevel && (
-          <EmotionSection
-            selectedEmotion={emotionLevel}
-            onChangeEmotion={onChangeEmotion}
-            isSide
-          />
+          <>
+            <Line className="w-full" />
+            <EmotionSection
+              selectedEmotion={emotionLevel}
+              onChangeEmotion={onChangeEmotion}
+              isSide
+            />
+          </>
         )}
       </YStack>
     </div>

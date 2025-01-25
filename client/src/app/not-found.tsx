@@ -2,7 +2,7 @@ import { ROUTES } from '@/src/routes'
 import BackButton from '@/src/components/BackButton'
 import LinkButton from '@/src/components/LinkButton'
 import { XStack, YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 import Title from '@/src/components/Title'
 
 export default function NotFound() {
@@ -14,8 +14,8 @@ export default function NotFound() {
           <Title>Page</Title>
         </XStack>
         <YStack className="justify-center">
-          <Text>이 페이지는 존재하지 않습니다. </Text>
-          <Text>처음으로 돌아가세요. </Text>
+          <TextDisplay>이 페이지는 존재하지 않습니다. </TextDisplay>
+          <TextDisplay>처음으로 돌아가세요. </TextDisplay>
         </YStack>
         <XStack>
           <BackButton variant="secondary" size="md" className="p-3">

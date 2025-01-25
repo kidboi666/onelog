@@ -1,11 +1,17 @@
 /* eslint-disable react/no-array-index-key */
-import { Dispatch, KeyboardEvent, SetStateAction, useRef, useState } from 'react'
+import {
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
+  useRef,
+  useState,
+} from 'react'
 import cn from '@/src/lib/cn'
 import useInput from '@/src/hooks/useInput'
+import TextDisplay from '@/src/components/TextDisplay'
 import Input from './Input'
 import { XStack } from './Stack'
 import Tag from './Tag'
-import Text from './Text'
 
 interface Props {
   tags: string[]
@@ -86,9 +92,9 @@ export const TagsInput = ({ tags, setTags, disabled }: Props) => {
         />
       </div>
       {error && (
-        <Text as="span" type="error">
+        <TextDisplay as="span" type="error">
           {error}
-        </Text>
+        </TextDisplay>
       )}
     </>
   )

@@ -27,12 +27,16 @@ const TEXT_VARIANTS = cva('transition', {
   },
 })
 
-export default function Text({
+export default function TextDisplay({
   as: Component = 'p',
   children,
   className,
   type = 'body',
   size = 'md',
 }: PropsWithChildren<TextProps>) {
-  return <Component className={cn(TEXT_VARIANTS({ type, size }), className)}>{children}</Component>
+  return (
+    <Component className={cn(TEXT_VARIANTS({ type, size }), className)}>
+      {children}
+    </Component>
+  )
 }

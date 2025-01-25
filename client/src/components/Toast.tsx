@@ -4,9 +4,9 @@ import React, { useEffect, useRef } from 'react'
 import cn from '@/src/lib/cn'
 import { useToast } from '@/src/store/useToast'
 import { XStack, YStack } from '@/src/components/Stack'
+import TextDisplay from '@/src/components/TextDisplay'
 import Button from './Button'
 import Icon from './Icon'
-import Text from './Text'
 
 interface Props {
   id: number
@@ -56,9 +56,10 @@ export default function Toast({ id, type, text, message }: Props) {
             <path d="M480-120q-33 0-56.5-23.5T400-200q0-33 23.5-56.5T480-280q33 0 56.5 23.5T560-200q0 33-23.5 56.5T480-120Zm-80-240v-480h160v480H400Z" />
           </Icon>
         </Button>
-        <Text type="caption" size="sm" className="flex-1">
-          {(type === 'success' && '요청 성공') || (type === 'error' && '요청 실패')}
-        </Text>
+        <TextDisplay type="caption" size="sm" className="flex-1">
+          {(type === 'success' && '요청 성공') ||
+            (type === 'error' && '요청 실패')}
+        </TextDisplay>
         <Button
           variant="icon"
           size="icon"
@@ -73,8 +74,8 @@ export default function Toast({ id, type, text, message }: Props) {
         </Button>
       </XStack>
       <YStack>
-        <Text>{text}</Text>
-        {message && <Text size="xs">{message}</Text>}
+        <TextDisplay>{text}</TextDisplay>
+        {message && <TextDisplay size="xs">{message}</TextDisplay>}
       </YStack>
     </div>
   )

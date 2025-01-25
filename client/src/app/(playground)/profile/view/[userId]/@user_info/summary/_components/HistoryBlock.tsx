@@ -1,6 +1,6 @@
 import cn from '@/src/lib/cn'
 import { YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 import Title from '@/src/components/Title'
 
 interface Props {
@@ -36,7 +36,7 @@ export default function HistoryBlock({
             {title}
           </Title>
         </YStack>
-        <Text
+        <TextDisplay
           size="bigger"
           className={cn(
             title === '평균 감정 농도' && 'text-white dark:text-white',
@@ -44,7 +44,7 @@ export default function HistoryBlock({
           )}
         >
           {content}
-          <Text
+          <TextDisplay
             as="span"
             className={cn(
               title === '평균 감정 농도' && 'text-white dark:text-white',
@@ -52,8 +52,8 @@ export default function HistoryBlock({
             )}
           >
             {unit}
-          </Text>
-        </Text>
+          </TextDisplay>
+        </TextDisplay>
       </YStack>
     </div>
   )

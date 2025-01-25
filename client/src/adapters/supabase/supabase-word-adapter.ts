@@ -1,4 +1,6 @@
-import { SupabaseClient } from '@supabase/supabase-js'
+'use client'
+
+import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
 import {
   IGetMyUsedWords,
   IGetUsedWords,
@@ -16,9 +18,7 @@ export class SupabaseWordAdapter implements IWordBaseAdapter {
       .eq('user_id', userId)
       .single()
 
-    if (error) {
-      throw new APIError(error.code, error.message, error)
-    }
+    this.handleError(error)
 
     return data
   }
@@ -30,10 +30,14 @@ export class SupabaseWordAdapter implements IWordBaseAdapter {
       .eq('word', word)
       .single()
 
-    if (error) {
-      throw new APIError(error.code, error.message, error)
-    }
+    this.handleError(error)
 
     return data
+  }
+
+  private handleError(error: PostgrestError | null) {
+    if (error && error?.code && error?.message) {
+      throw new APIError(error.code, error.message, error)
+    }
   }
 }

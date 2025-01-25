@@ -8,11 +8,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from './user.entity';
-import { Comment } from './comment.entity';
-import { Like } from './like.entity';
 
 import { PostType } from '../types/enums.type';
+import { Comment } from './comment.entity';
+import { Like } from './like.entity';
+import { User } from './user.entity';
 
 @Entity('posts')
 export class Post {

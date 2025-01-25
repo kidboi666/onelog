@@ -1,6 +1,7 @@
-import { useTheme } from '@/src/store/useTheme'
 import { RefObject } from 'react'
 import cn from '@/src/lib/cn'
+import { useTheme } from '@/src/store/useTheme'
+import { EmotionLevel } from '@/src/types/enums'
 import { DropDown } from '@/src/components/DropDown'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
@@ -9,9 +10,9 @@ import { EMOTION_STATUS } from '../_constants'
 import { TEmotion } from '../page'
 
 interface Props {
-  selectedEmotion: TEmotion | null
+  selectedEmotion: EmotionLevel | null
   targetRef: RefObject<HTMLDivElement>
-  onChangeEmotion: (emotion: TEmotion | null) => void
+  onChangeEmotion: (emotion: EmotionLevel | null) => void
   onTransitionEnd: () => void
   isSide?: boolean
 }
@@ -32,7 +33,7 @@ export default function EmotionPickerWithDropDown({
     >
       <YStack className="items-start justify-between gap-2">
         {EMOTION_STATUS.map((emotion, index) => (
-          <EmotionBlock
+          <RenderEmotionPicker
             key={emotion.status}
             emotion={emotion}
             index={index}
@@ -45,14 +46,19 @@ export default function EmotionPickerWithDropDown({
   )
 }
 
-interface EmotionBlockProps {
+interface RenderEmotionPickerProps {
   emotion: (typeof EMOTION_STATUS)[number]
-  onChangeEmotion: (emotion: TEmotion) => void
+  onChangeEmotion: (emotion: EmotionLevel | null) => void
   selectedEmotion: TEmotion | null
   index: number
 }
 
-function EmotionBlock({ emotion, selectedEmotion, onChangeEmotion, index }: EmotionBlockProps) {
+function RenderEmotionPicker({
+  emotion,
+  selectedEmotion,
+  onChangeEmotion,
+  index,
+}: RenderEmotionPickerProps) {
   const { color } = useTheme()
   let blockOpacity: string
   switch (index) {

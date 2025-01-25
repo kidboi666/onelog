@@ -1,4 +1,4 @@
-import { TOAST_MESSAGE } from '@/src/constants/toast-message'
+import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'

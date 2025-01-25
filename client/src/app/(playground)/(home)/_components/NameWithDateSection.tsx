@@ -1,6 +1,6 @@
-import { formatDateElapsed } from '@/src/utils/formatDate'
+import { formatDateElapsed } from '@/src/utils/client-utils'
 import { YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 import Title from '@/src/components/Title'
 
 interface Props {
@@ -23,12 +23,12 @@ export default function NameWithDateSection({
       <Title size="xs" type="sub" className="line-clamp-1">
         {userName}
       </Title>
-      <Text type="caption" size="sm">
+      <TextDisplay type="caption" size="sm">
         @{email?.split('@')[0]} · {formatDateElapsed(createdAt)} ·{' '}
         {postType === 'journal' ? '감정 일기' : '아티클'}
         {createdAtLiked && ' ·  업데이트 '}
         {createdAtLiked && formatDateElapsed(createdAtLiked)}
-      </Text>
+      </TextDisplay>
     </YStack>
   )
 }

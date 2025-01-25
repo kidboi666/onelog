@@ -1,4 +1,8 @@
-import { FETCH_URL } from '@/src/constants/url'
+'use client'
+
+import { FETCH_URL } from '@/src/constants'
+import Error from 'next/error'
+import { undefined } from 'zod'
 import {
   ICreatePost,
   IGetAllPosts,
@@ -10,6 +14,7 @@ import {
   IPost,
   IPostBaseAdapter,
   IPostDetail,
+  IUpdatePost,
 } from '@/src/types/post'
 import { fetcher } from '@/src/utils/fetcher'
 
@@ -35,7 +40,7 @@ export class NestPostAdapter implements IPostBaseAdapter {
     throw new Error('Method not implemented.')
   }
 
-  getUserPostThatDay({
+  getUserPostsThatDay({
     authorId,
     startOfDay,
     endOfDay,
@@ -44,7 +49,7 @@ export class NestPostAdapter implements IPostBaseAdapter {
     throw new Error('Method not implemented.')
   }
 
-  getAllUserPosts({
+  getUserPosts({
     authorId,
     postType,
     pageParam,
@@ -62,5 +67,11 @@ export class NestPostAdapter implements IPostBaseAdapter {
     postType,
   }: ICreatePost): Promise<void> {
     throw new Error('Method not implemented.')
+  }
+
+  deletePost(postId: number): Promise<void> {}
+
+  updatePost(params: IUpdatePost): Promise<void> {
+    return Promise.resolve(undefined)
   }
 }

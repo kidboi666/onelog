@@ -1,3 +1,5 @@
+import { SupabaseTransformer } from '@/src/adapters/supabase/supabase-transformer'
+import { SUPABASE_QUERY } from '@/src/constants'
 import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
 import { AccessType } from '@/src/types/enums'
 import {
@@ -10,20 +12,24 @@ import {
   ILikedPost,
   IPost,
   IPostBaseAdapter,
+  IPostDetail,
   ISupabasePost,
   IUpdatePost,
 } from '@/src/types/post'
 import { APIError } from '@/src/utils/fetcher'
 
-export class SupabasePostAdapter implements IPostBaseAdapter {
-  constructor(private readonly supabase: SupabaseClient) {}
+export class SupabasePostAdapter
+  extends SupabaseTransformer
+  implements IPostBaseAdapter
+{
+  constructor(private readonly supabase: SupabaseClient) {
+    super()
+  }
 
   async getAllPosts(params: IGetAllPosts) {
     let query = this.supabase
       .from('post')
-      .select<string, IPost>(
-        '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)',
-      )
+      .select<string, IPost>(SUPABASE_QUERY.GET_POSTS_WITH_AUTHOR_INFO)
       .eq('access_type', AccessType.PUBLIC)
       .order('created_at', { ascending: false })
       .range(params.pageParam, params.pageParam + params.limit - 1)
@@ -31,15 +37,14 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     query = this.addUserFilter(query, undefined, params.meId)
     const { data, error } = await query
     this.handleError(error)
-
-    return data ?? []
+    return this.transformResponse(data ?? [])
   }
 
   async getLikedPosts(params: IGetLikedPosts) {
     let query = this.supabase
       .from('like')
       .select<string, ILikedPost>(
-        '*, post!like_post_id_fkey(*, comment_count:comment(count), liked_count:like(count), user_info(user_name, avatar_url, email, about_me))',
+        SUPABASE_QUERY.GET_LIKED_POSTS_WITH_AUTHOR_INFO,
       )
       .order('created_at', { ascending: false })
       .range(params.pageParam, params.pageParam + params.limit - 1)
@@ -48,33 +53,31 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     const { data, error } = await query
     this.handleError(error)
     const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
-
-    return this.filterPrivateLikedPosts(data, isMe)
+    const filteredPosts = this.filterPrivateLikedPosts(data, isMe)
+    return this.transformResponse(filteredPosts ?? [])
   }
 
-  async getPost(params: IGetPost) {
-    let query: any = this.supabase
-      .from('post')
-      .select(
-        '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), comments:comment(*, user_info(email, user_name, avatar_url, about_me)), user_info(email, user_name, avatar_url, about_me)',
-      )
-      .eq('id', params.postId)
-
-    query = this.addUserFilter(query, undefined, params.meId)
-    query = query.single()
-    const { data, error } = await query
-    this.handleError(error)
-
-    return data
-  }
-
-  async getUserPostThatDay(params: IGetUserPostsThatDay) {
+  async getPost(params: IGetPost): Promise<IPostDetail | null> {
     let query = this.supabase
       .from('post')
       .select<
         string,
-        IPost
-      >('*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)')
+        IPostDetail
+      >(SUPABASE_QUERY.GET_POST_DETAIL_WITH_AUTHOR_INFO_AND_COMMENTS)
+      .eq('id', params.postId)
+      .single()
+
+    query = this.addUserFilter(query, undefined, params.meId)
+    const { data, error } = await query
+    this.handleError(error)
+
+    return this.transformResponse(data)
+  }
+
+  async getUserPostsThatDay(params: IGetUserPostsThatDay) {
+    let query = this.supabase
+      .from('post')
+      .select<string, IPost>(SUPABASE_QUERY.GET_POSTS_WITH_AUTHOR_INFO)
       .gte('created_at', params.startOfDay)
       .lte('created_at', params.endOfDay)
       .eq('like.user_id', params.authorId)
@@ -84,16 +87,15 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     const { data, error } = await query
     this.handleError(error)
     const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
+    const filteredPosts = this.filterPrivatePosts(data as ISupabasePost[], isMe)
 
-    return this.filterPrivatePosts(data as ISupabasePost[], isMe)
+    return this.transformResponse(filteredPosts ?? [])
   }
 
-  async getAllUserPosts(params: IGetAllUserPosts) {
+  async getUserPosts(params: IGetAllUserPosts) {
     let query = this.supabase
       .from('post')
-      .select<string, IPost>(
-        '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)',
-      )
+      .select<string, IPost>(SUPABASE_QUERY.GET_POSTS_WITH_AUTHOR_INFO)
       .eq('post_type', params.postType)
       .order('created_at', { ascending: false })
       .range(params.pageParam, params.pageParam + params.limit - 1)
@@ -102,8 +104,9 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     const { data, error } = await query
     this.handleError(error)
     const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
+    const filteredPosts = this.filterPrivatePosts(data as ISupabasePost[], isMe)
 
-    return this.filterPrivatePosts(data as ISupabasePost[], isMe)
+    return this.transformResponse(filteredPosts ?? [])
   }
 
   async createPost(params: ICreatePost) {
@@ -141,7 +144,9 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     if (meId) {
       query = query.eq('like.user_id', meId)
     }
-    query = query.eq('user_id', authorId)
+    if (authorId) {
+      query = query.eq('user_id', authorId)
+    }
     return query
   }
 
@@ -165,7 +170,7 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     return isMe
       ? data
       : data?.map((item) =>
-          item.post.access_type === AccessType.PUBLIC
+          item.post.accessType === AccessType.PUBLIC
             ? item
             : { ...item, post: { ...item.post, title: null, content: '' } },
         )
@@ -179,7 +184,7 @@ export class SupabasePostAdapter implements IPostBaseAdapter {
     return isMe
       ? data
       : data?.map((item) =>
-          item.access_type === AccessType.PUBLIC
+          item.accessType === AccessType.PUBLIC
             ? item
             : { ...item, title: null, content: '' },
         )

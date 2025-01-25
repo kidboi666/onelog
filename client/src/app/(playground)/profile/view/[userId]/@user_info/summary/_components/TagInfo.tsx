@@ -4,7 +4,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import { wordQuery } from '@/src/services/queries/word/word-query'
 import { IFavoriteWord } from '@/src/types/word'
 import Spinner from '@/src/components/Spinner'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 
 interface Props {
   word: IFavoriteWord
@@ -34,8 +34,10 @@ export default function TagInfo({
         <Spinner size={20} />
       ) : (
         <>
-          <Text size="xs">단어 사용 횟수 : {word.count}</Text>
-          <Text size="xs">다른 사람들이 사용한 횟수 : {data?.count}</Text>
+          <TextDisplay size="xs">단어 사용 횟수 : {word.count}</TextDisplay>
+          <TextDisplay size="xs">
+            다른 사람들이 사용한 횟수 : {data?.count}
+          </TextDisplay>
         </>
       )}
     </div>

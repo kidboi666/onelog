@@ -1,15 +1,15 @@
 import { dehydrate } from '@tanstack/react-query'
 import { meQuery } from '@/src/services/queries/auth/me-query'
-import initClient from '@/src/services/queries/init-client'
+import { initClientForServer } from '@/src/utils/server-utils'
 
 const prefetchSession = async () => {
-  const { queryClient, supabase } = initClient()
+  const { queryClient, supabase } = initClientForServer()
   await queryClient.prefetchQuery(meQuery.getSession(supabase))
   return queryClient
 }
 
 const prefetchUserInfo = async (userId: string) => {
-  const { queryClient, supabase } = initClient()
+  const { queryClient, supabase } = initClientForServer()
   await queryClient.prefetchQuery(meQuery.getUserInfo(supabase, userId))
   return queryClient
 }

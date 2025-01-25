@@ -1,19 +1,27 @@
 import { createPostAdapter } from '@/src/adapters'
 import { SupabaseClient } from '@supabase/supabase-js'
-import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
+import {
+  InfiniteData,
+  infiniteQueryOptions,
+  queryOptions,
+} from '@tanstack/react-query'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { PostType } from '@/src/types/enums'
-import { ILikedPost, IPost } from '@/src/types/post'
+import { ILikedPost, IPost, IPostDetail } from '@/src/types/post'
 import { APIError } from '@/src/utils/fetcher'
 
 export const postQuery = {
   getAllPost: (supabase: SupabaseClient, limit: number, meId?: string | null) =>
-    infiniteQueryOptions<IPost[], APIError, IPost[], string[], number>({
+    infiniteQueryOptions<
+      IPost[],
+      APIError,
+      InfiniteData<IPost[]>,
+      string[],
+      number
+    >({
       queryKey: QUERY_KEY.POST.PUBLIC,
-      queryFn: ({ pageParam = 0 }) => {
-        const adapter = createPostAdapter(supabase)
-        return adapter.getAllPosts({ pageParam, limit, meId })
-      },
+      queryFn: ({ pageParam = 0 }) =>
+        createPostAdapter(supabase).getAllPosts({ pageParam, limit, meId }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage && lastPage.length < limit) {
@@ -37,10 +45,13 @@ export const postQuery = {
       number
     >({
       queryKey: QUERY_KEY.POST.LIKED(authorId, meId),
-      queryFn: ({ pageParam = 0 }) => {
-        const adapter = createPostAdapter(supabase)
-        return adapter.getLikedPosts({ pageParam, limit, authorId, meId })
-      },
+      queryFn: ({ pageParam = 0 }) =>
+        createPostAdapter(supabase).getLikedPosts({
+          pageParam,
+          limit,
+          authorId,
+          meId,
+        }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage && lastPage.length < limit) {
@@ -51,12 +62,9 @@ export const postQuery = {
     }),
 
   getPost: (supabase: SupabaseClient, postId: number, meId?: string | null) =>
-    queryOptions<IPost, APIError>({
+    queryOptions<IPostDetail | null, APIError>({
       queryKey: QUERY_KEY.POST.DETAIL(postId),
-      queryFn: () => {
-        const adapter = createPostAdapter(supabase)
-        return adapter.getPost({ postId, meId })
-      },
+      queryFn: () => createPostAdapter(supabase).getPost({ postId, meId }),
     }),
 
   getUserPostThatDay: (
@@ -68,15 +76,13 @@ export const postQuery = {
   ) =>
     queryOptions<IPost[], APIError>({
       queryKey: QUERY_KEY.POST.THAT_DAY(startOfDay, endOfDay, authorId),
-      queryFn: () => {
-        const adapter = createPostAdapter(supabase)
-        return adapter.getUserPostThatDay({
+      queryFn: () =>
+        createPostAdapter(supabase).getUserPostsThatDay({
           authorId,
           startOfDay,
           endOfDay,
           meId,
-        })
-      },
+        }),
       enabled: !!startOfDay && !!endOfDay,
     }),
 
@@ -95,16 +101,14 @@ export const postQuery = {
       number
     >({
       queryKey: QUERY_KEY.POST.POST_TYPE(postType, authorId),
-      queryFn: async ({ pageParam = 0 }) => {
-        const adapter = createPostAdapter(supabase)
-        return adapter.getAllUserPosts({
+      queryFn: async ({ pageParam = 0 }) =>
+        createPostAdapter(supabase).getUserPosts({
           pageParam,
           authorId,
           postType,
           limit,
           meId,
-        })
-      },
+        }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage && lastPage.length < limit) {

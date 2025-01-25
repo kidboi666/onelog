@@ -16,6 +16,7 @@ import { AuthResponseDto } from '../dtos/response/auth-response.dto';
 import { RefreshTokenDto } from '../dtos/request/refresh-token.dto';
 import { UsersService } from '../services/users.service';
 import { TokensResponseDto } from '../dtos/response/tokens-response.dto';
+import { SessionDto } from '../dtos/response/session.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -47,6 +48,12 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async signOut(@CurrentUser('sub') userId: string): Promise<void> {
     await this.authService.signOut(userId);
+  }
+
+  @Get('session')
+  @UseGuards(AuthGuard)
+  async findSession(@CurrentUser('sub') userId: string): Promise<SessionDto> {
+    return await this.authService.findSession(userId);
   }
 
   @Get('me')

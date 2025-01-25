@@ -10,8 +10,9 @@ import { Provider } from '@/src/types/enums'
 import { IPostBaseAdapter } from '@/src/types/post'
 import { IWordBaseAdapter } from '@/src/types/word'
 
-const databaseProvider =
+export const databaseProvider =
   (process.env.NEXT_PUBLIC_DB_PROVIDER as Provider) ?? Provider.SUPABASE
+
 const createAdapter = <T>(
   provider: Provider,
   client: SupabaseClient | undefined,

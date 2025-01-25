@@ -1,19 +1,19 @@
 import { dehydrate } from '@tanstack/react-query'
 import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import initClient from '@/src/services/queries/init-client'
 import { postCountQuery } from '@/src/services/queries/post/post-count-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { PostType } from '@/src/types/enums'
-import { IPost } from '@/src/types/post'
+import { IPostDetail } from '@/src/types/post'
+import { initClientForServer } from '@/src/utils/server-utils'
 
 const prefetchPost = async (postId: number) => {
-  const { queryClient, supabase } = initClient()
+  const { queryClient, supabase } = initClientForServer()
   await queryClient.prefetchQuery(postQuery.getPost(supabase, postId))
   return queryClient
 }
 
 const prefetchPostCount = async (userId: string) => {
-  const { queryClient, supabase } = initClient()
+  const { queryClient, supabase } = initClientForServer()
   await queryClient.prefetchQuery(
     postCountQuery.countAllMyPost(supabase, userId),
   )
@@ -21,7 +21,7 @@ const prefetchPostCount = async (userId: string) => {
 }
 
 const prefetchPostTypeCount = async (userId: string, postType: PostType) => {
-  const { queryClient, supabase } = initClient()
+  const { queryClient, supabase } = initClientForServer()
   await queryClient.prefetchQuery(
     postCountQuery.countAllPost(supabase, userId, postType),
   )
@@ -29,7 +29,7 @@ const prefetchPostTypeCount = async (userId: string, postType: PostType) => {
 }
 
 const prefetchLikedPostCount = async (userId: string) => {
-  const { queryClient, supabase } = initClient()
+  const { queryClient, supabase } = initClientForServer()
   await queryClient.prefetchQuery(
     postCountQuery.countLikedPost(supabase, userId),
   )
@@ -37,9 +37,9 @@ const prefetchLikedPostCount = async (userId: string) => {
 }
 
 export const postPrefetchQuery = {
-  metadata: async (postId: number): Promise<IPost | undefined> => {
+  metadata: async (postId: number): Promise<IPostDetail | undefined> => {
     const queryClient = await prefetchPost(postId)
-    return queryClient.getQueryData<IPost>(QUERY_KEY.POST.DETAIL(postId))
+    return queryClient.getQueryData<IPostDetail>(QUERY_KEY.POST.DETAIL(postId))
   },
   getPost: async (postId: number): Promise<ReturnType<typeof dehydrate>> => {
     const queryClient = await prefetchPost(postId)

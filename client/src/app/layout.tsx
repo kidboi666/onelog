@@ -1,6 +1,8 @@
+import type { Metadata } from 'next'
+import { ReactNode } from 'react'
 import ReactQueryProvider from '@/src/store/context/query-client-provider'
 import ThemeProvider from '@/src/store/context/theme-provider'
-import type { Metadata } from 'next'
+import { ErrorBoundary } from '@/src/components/ErrorBoundary'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -14,16 +16,18 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: ReactNode
 }>) {
   return (
     <html lang="ko">
       <ThemeProvider>
         <body className="hidden bg-var-lightgray transition dark:bg-var-dark">
-          <ReactQueryProvider>
-            {children}
-            <div id="portal" />
-          </ReactQueryProvider>
+          <ErrorBoundary>
+            <ReactQueryProvider>
+              {children}
+              <div id="portal" />
+            </ReactQueryProvider>
+          </ErrorBoundary>
         </body>
       </ThemeProvider>
     </html>

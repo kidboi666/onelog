@@ -1,4 +1,4 @@
-import { TOAST_MESSAGE } from '@/src/constants/toast-message'
+import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'

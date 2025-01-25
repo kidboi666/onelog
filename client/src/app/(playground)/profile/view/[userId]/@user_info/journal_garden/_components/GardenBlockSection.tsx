@@ -1,5 +1,5 @@
 import { IDateBlock } from '@/src/types/garden'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 import { DAYS_OF_WEEK } from '../../../_constants'
 import { createEmptySpaceByWeekday } from '../@garden/default'
 
@@ -17,9 +17,9 @@ export default function GardenBlockSection({
       <div className="mt-4 flex gap-2">
         <div className="grid grid-rows-7 gap-1">
           {DAYS_OF_WEEK.map((day) => (
-            <Text key={day} type="caption" className="h-1 text-[10px]">
+            <TextDisplay key={day} type="caption" className="h-1 text-[10px]">
               {day}
-            </Text>
+            </TextDisplay>
           ))}
         </div>
         <div className="grid grid-flow-col grid-rows-7 gap-1">

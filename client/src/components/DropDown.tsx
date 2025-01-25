@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { ComponentProps, PropsWithChildren, RefObject, forwardRef } from 'react'
 import cn from '@/src/lib/cn'
+import TextDisplay, { TextProps } from '@/src/components/TextDisplay'
 import Button, { ButtonProps } from './Button'
-import Text, { TextProps } from './Text'
 
 interface DropDownRootProps extends ComponentProps<'div'> {
   className?: string
@@ -164,7 +164,7 @@ const DropDownText = ({
   children,
   ...props
 }: PropsWithChildren<DropDownTextProps>) => {
-  return <Text {...props}>{children}</Text>
+  return <TextDisplay {...props}>{children}</TextDisplay>
 }
 
 export const DropDown = {

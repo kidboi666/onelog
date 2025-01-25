@@ -20,7 +20,7 @@ import Icon from '@/src/components/Icon'
 import Input from '@/src/components/Input'
 import { List } from '@/src/components/List'
 import { XStack, YStack, ZStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 import Title from '@/src/components/Title'
 import TaskOptionDropDown from '../../../_components/TaskOptionDropDown'
 import Todo from '../../../_components/Todo'
@@ -193,9 +193,9 @@ export default function TaskForm({ params, searchParams }: Props) {
                 </Icon>
               </Button>
             </ZStack>
-            <Text type="caption" size="sm" className="text-nowrap">
+            <TextDisplay type="caption" size="sm" className="text-nowrap">
               {`${currentYear}년 ${currentMonth}월 ${currentDate}일 오늘 할 일`}
-            </Text>
+            </TextDisplay>
           </YStack>
           <YStack gap={4} className="sm:flex-row">
             {todos.length >= 1 && (

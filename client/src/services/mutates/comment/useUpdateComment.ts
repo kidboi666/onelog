@@ -1,4 +1,4 @@
-import { TOAST_MESSAGE } from '@/src/constants/toast-message'
+import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -43,7 +43,10 @@ export default function useUpdateComment() {
         queryKey: QUERY_KEY.POST.DETAIL(postId),
       })
 
-      openToast({ text: TOAST_MESSAGE.COMMENT.UPDATE.SUCCESS, type: TOAST_TYPE.SUCCESS })
+      openToast({
+        text: TOAST_MESSAGE.COMMENT.UPDATE.SUCCESS,
+        type: TOAST_TYPE.SUCCESS,
+      })
     },
     onError: (error) => {
       openToast({

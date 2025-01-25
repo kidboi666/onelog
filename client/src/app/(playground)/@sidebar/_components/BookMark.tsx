@@ -1,25 +1,24 @@
 import cn from '@/src/lib/cn'
 import { colorTheme, useTheme } from '@/src/store/useTheme'
-import { IUserSession } from '@/src/types/auth'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
 interface Props {
   pathname?: string
   userId?: string
-  session?: IUserSession
+  meId?: string | null
   isSelected?: boolean
 }
 
 export default function BookMark({
   pathname,
   userId,
-  session,
+  meId,
   isSelected,
 }: Props) {
   const { color } = useTheme()
   const { open, close, ref, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
-  if ((pathname === 'profile' && userId === session?.userId) || isSelected) {
+  if ((pathname === 'profile' && userId === meId) || isSelected) {
     void open()
   } else {
     void close()

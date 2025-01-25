@@ -3,7 +3,7 @@ import cn from '@/src/lib/cn'
 import { supabase } from '@/src/lib/supabase/client'
 import { colorTheme, useTheme } from '@/src/store/useTheme'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 
 interface Props {
   userId: string
@@ -16,7 +16,7 @@ export default function EmotionAverage({ userId }: Props) {
   )
   return (
     <div className="absolute -right-3 top-0">
-      <Text
+      <TextDisplay
         size="xs"
         className={cn(
           'animate-cta-fadein-out rounded-lg px-1.5 py-1 font-semibold text-white',
@@ -29,7 +29,7 @@ export default function EmotionAverage({ userId }: Props) {
         )}
       >
         {myAverageEmotion}%
-      </Text>
+      </TextDisplay>
     </div>
   )
 }

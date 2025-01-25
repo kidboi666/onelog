@@ -1,4 +1,4 @@
-import { TOAST_MESSAGE } from '@/src/constants/toast-message'
+import { TOAST_MESSAGE } from '@/src/constants'
 import { isServer } from '@tanstack/react-query'
 import { MouseEvent } from 'react'
 import { TOAST_TYPE, useToast } from '@/src/store/useToast'
@@ -15,7 +15,8 @@ interface Props {
 }
 
 export default function ShareButton({ isSide, viewToolTip }: Props) {
-  const { close, ref, onClick, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
+  const { close, ref, onClick, onTransitionEnd } =
+    useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
   const { openToast } = useToast()

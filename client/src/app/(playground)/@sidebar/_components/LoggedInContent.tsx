@@ -1,23 +1,29 @@
 import { useRouter } from 'next/navigation'
 import useSignOut from '@/src/services/mutates/auth/use-sign-out'
-import { IUserSession } from '@/src/types/auth'
-import { wait } from '@/src/utils/wait'
+import { wait } from '@/src/utils/client-utils'
 import { ROUTES } from '@/src/routes'
 import { DropDown } from '@/src/components/DropDown'
 import Icon from '@/src/components/Icon'
 import Line from '@/src/components/Line'
 
 interface Props {
-  session?: IUserSession
+  email: string
+  userName: string | null
+  meId: string
   closeMenu?: () => void
 }
 
-export default function LoggedInContent({ session, closeMenu }: Props) {
+export default function LoggedInContent({
+  meId,
+  userName,
+  email,
+  closeMenu,
+}: Props) {
   const router = useRouter()
   const { mutate: signOut } = useSignOut()
 
   const pushProfilePage = async () => {
-    router.push(ROUTES.PROFILE.VIEW(session?.userId!))
+    router.push(ROUTES.PROFILE.VIEW(meId!))
     await wait(100)
     closeMenu && closeMenu()
   }
@@ -30,9 +36,9 @@ export default function LoggedInContent({ session, closeMenu }: Props) {
   return (
     <>
       <div className="px-1">
-        <DropDown.Text>{session?.user_name}</DropDown.Text>
+        <DropDown.Text>{userName}</DropDown.Text>
         <DropDown.Text type="caption" size="sm">
-          {session?.email}
+          {email}
         </DropDown.Text>
       </div>
       <Line className="mb-2 mt-4" />

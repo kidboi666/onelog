@@ -1,6 +1,8 @@
 'use client'
 
+import { PAGINATION } from '@/src/constants'
 import {
+  useQuery,
   useSuspenseInfiniteQuery,
   useSuspenseQuery,
 } from '@tanstack/react-query'
@@ -14,12 +16,12 @@ import { YStack } from '@/src/components/Stack'
 import PostCard from './PostCard'
 
 export default function PostContainer() {
-  const limit = 4
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data, fetchNextPage, hasNextPage, isFetching } =
     useSuspenseInfiniteQuery(
-      postQuery.getAllPost(supabase, limit, session?.userId),
+      postQuery.getAllPost(supabase, PAGINATION.LIMIT, session?.id),
     )
+  const { data: me } = useQuery(meQuery.getUserInfo(supabase, session?.id))
   const posts = useMemo(
     () => data.pages.flatMap((page) => page || []) ?? [],
     [data],
@@ -38,7 +40,7 @@ export default function PostContainer() {
   return (
     <YStack gap={12}>
       {posts?.map((post) => (
-        <PostCard key={post.id} post={post} postUserInfo={post.user_info} />
+        <PostCard key={post.id} post={post} postUserInfo={post.userInfo} />
       ))}
       <div ref={target} className="h-4" />
       {isFetching && (

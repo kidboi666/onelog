@@ -52,3 +52,5 @@ export const fetcher = {
     return makeRequest<T>(() => axiosInstance.delete(url))
   },
 }
+
+export const supabaseFetcher = (fetchFn: any) => {}

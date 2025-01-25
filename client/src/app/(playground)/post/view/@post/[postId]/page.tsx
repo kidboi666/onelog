@@ -1,12 +1,11 @@
-import { postPrefetchQuery } from '@/src/services/queries/post/post-prefetch-query';
-import Line from '@/src/components/Line';
-import { YStack } from '@/src/components/Stack';
-import PostActionBar from '@/src/app/(playground)/post/view/@post/[postId]/_components/PostActionBar';
-import PostAuthorInfo from '@/src/app/(playground)/post/view/@post/[postId]/_components/PostAuthorInfo';
-import PostBody from '@/src/app/(playground)/post/view/@post/[postId]/_components/PostBody';
+import { postPrefetchQuery } from '@/src/services/queries/post/post-prefetch-query'
+import Line from '@/src/components/Line'
+import { YStack } from '@/src/components/Stack'
+import PostActionBar from '@/src/app/(playground)/post/view/@post/[postId]/_components/PostActionBar'
+import PostAuthorInfo from '@/src/app/(playground)/post/view/@post/[postId]/_components/PostAuthorInfo'
+import PostBody from '@/src/app/(playground)/post/view/@post/[postId]/_components/PostBody'
 import PostHeader from '@/src/app/(playground)/post/view/@post/[postId]/_components/PostHeader'
 import RenderCommentFromPost from '@/src/app/(playground)/post/view/@post/[postId]/_components/RenderCommentFromPost'
-
 
 interface Props {
   params: { postId: string }
@@ -16,7 +15,7 @@ export async function generateMetadata({ params }: Props) {
   const postId = Number(params.postId)
   const post = await postPrefetchQuery.metadata(postId)
   return {
-    title: post?.title ?? `${post?.user_info.user_name}님의 글`,
+    title: post?.title ?? `${post?.userInfo.userName}님의 글`,
   }
 }
 

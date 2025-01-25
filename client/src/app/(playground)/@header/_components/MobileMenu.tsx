@@ -1,6 +1,6 @@
 'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import { RefObject } from 'react'
 import { supabase } from '@/src/lib/supabase/client'
@@ -10,7 +10,7 @@ import Icon from '@/src/components/Icon'
 import Line from '@/src/components/Line'
 import { List } from '@/src/components/List'
 import { YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 import AuthButtonWithDropDown from '../../@sidebar/_components/AuthButtonWithDropDown'
 import MenuButton from '../../@sidebar/_components/MenuButton'
 import {
@@ -34,7 +34,8 @@ export default function MobileMenu({
   isOpen,
 }: Props) {
   const pathname = usePathname()
-  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { data: session } = useQuery(meQuery.getSession(supabase))
+  const { data: me } = useQuery(meQuery.getUserInfo(supabase, session?.id))
 
   return (
     <>
@@ -90,10 +91,13 @@ export default function MobileMenu({
             ))}
           </List>
           <Line className="my-2" />
-          {session ? (
+          {me ? (
             <AuthButtonWithDropDown
               viewText
-              session={session}
+              email={me.email}
+              meId={me.id}
+              avatarUrl={me.avatarUrl}
+              userName={me.userName}
               closeMenu={close}
               pathname={pathname.split('/')[1]}
               userId={pathname.split('/')[2]}
@@ -116,9 +120,9 @@ export default function MobileMenu({
             </List>
           )}
           <YStack gap={4} className="my-4 items-center">
-            <Text type="caption" size="sm">
+            <TextDisplay type="caption" size="sm">
               © 2024 One-Sentence. All rights reserved.
-            </Text>
+            </TextDisplay>
           </YStack>
         </YStack>
       </div>

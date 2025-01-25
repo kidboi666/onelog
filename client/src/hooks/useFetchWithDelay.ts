@@ -1,9 +1,12 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { wait } from '@/src/utils/wait'
+import { wait } from '@/src/utils/client-utils'
 
-export default function useFetchWithDelay(pending: boolean, delay: number = 500) {
+export default function useFetchWithDelay(
+  pending: boolean,
+  delay: number = 500,
+) {
   const [isPending, setPending] = useState(false)
 
   const updatePendingState = useCallback(async () => {

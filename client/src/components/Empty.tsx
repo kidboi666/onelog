@@ -1,16 +1,19 @@
-import { PropsWithChildren } from 'react';
-import cn from '@/src/lib/cn';
-import Button from './Button';
-import Icon, { IconProps } from './Icon';
-import Text from './Text';
-
+import { PropsWithChildren } from 'react'
+import cn from '@/src/lib/cn'
+import TextDisplay from '@/src/components/TextDisplay'
+import Button from './Button'
+import Icon, { IconProps } from './Icon'
 
 interface Props {
   className?: string
   isShadow?: boolean
 }
 
-const Empty = ({ children, isShadow = false, className }: PropsWithChildren<Props>) => {
+const Empty = ({
+  children,
+  isShadow = false,
+  className,
+}: PropsWithChildren<Props>) => {
   return (
     <div
       className={cn(
@@ -25,7 +28,7 @@ const Empty = ({ children, isShadow = false, className }: PropsWithChildren<Prop
 }
 
 const EmptyText = ({ children }: PropsWithChildren) => {
-  return <Text type="caption">{children}</Text>
+  return <TextDisplay type="caption">{children}</TextDisplay>
 }
 
 const EmptyIcon = ({ children, ...props }: PropsWithChildren<IconProps>) => {

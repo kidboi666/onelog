@@ -1,17 +1,17 @@
-import useOutsideClick from '@/src/hooks/useOutsideClick';
-import useDataDrivenAnimation from '@/src/hooks/useStateChange';
-import { DropDown } from '@/src/components/DropDown';
-import Text from '@/src/components/Text';
-import { TEmotion } from '@/src/app/(playground)/post/edit/page';
-import EmotionGauge from './EmotionGauge';
-
+import useOutsideClick from '@/src/hooks/useOutsideClick'
+import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import { DropDown } from '@/src/components/DropDown'
+import TextDisplay from '@/src/components/TextDisplay'
+import { TEmotion } from '@/src/app/(playground)/post/edit/page'
+import EmotionGauge from './EmotionGauge'
 
 interface Props {
   emotionLevel: TEmotion | null
 }
 
 export default function EmotionButtonWithDropDown({ emotionLevel }: Props) {
-  const { close, ref, onClick, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
+  const { close, ref, onClick, onTransitionEnd } =
+    useDataDrivenAnimation<HTMLDivElement>()
   const buttonRef = useOutsideClick<HTMLButtonElement>(close)
   let emotionState: string
 
@@ -52,9 +52,9 @@ export default function EmotionButtonWithDropDown({ emotionLevel }: Props) {
         onTransitionEnd={onTransitionEnd}
         className="p-2"
       >
-        <Text size="sm" className="text-nowrap">
+        <TextDisplay size="sm" className="text-nowrap">
           감정 상태 : {emotionState!}
-        </Text>
+        </TextDisplay>
       </DropDown.Content>
     </DropDown.Root>
   )

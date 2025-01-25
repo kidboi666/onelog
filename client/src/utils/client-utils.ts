@@ -1,12 +1,3 @@
-import { createServerClient } from '@/src/lib/supabase/server'
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-
-export const initClientForServer = () => {
-  const queryClient = getQueryClient()
-  const supabase = createServerClient()
-  return { queryClient, supabase }
-}
-
 export const colorizeOpacity = (orderBy: number) => {
   if (orderBy) {
     if (orderBy <= 20) {
@@ -114,4 +105,10 @@ export const isDevelop = process.env.NODE_ENV === 'development'
 
 export const wait = (time: number = 1000) => {
   return new Promise((resolve) => setTimeout(resolve, time))
+}
+
+export const sortByDate = <T extends { createdAt: string }>(arr: T[]): T[] => {
+  return arr.sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+  )
 }

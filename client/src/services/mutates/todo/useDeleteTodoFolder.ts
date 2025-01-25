@@ -1,4 +1,4 @@
-import { TOAST_MESSAGE } from '@/src/constants/toast-message'
+import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -11,7 +11,10 @@ export default function useDeleteTodoFolder() {
 
   return useMutation({
     mutationFn: async (folderId: number) => {
-      const { error } = await supabase.from('todo_folder').delete().eq('id', folderId)
+      const { error } = await supabase
+        .from('todo_folder')
+        .delete()
+        .eq('id', folderId)
 
       if (error) {
         console.error(error)
@@ -28,7 +31,10 @@ export default function useDeleteTodoFolder() {
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: QUERY_KEY.TODO.MAIN })
 
-      openToast({ text: TOAST_MESSAGE.TODO_FOLDER.DELETE.SUCCESS, type: TOAST_TYPE.SUCCESS })
+      openToast({
+        text: TOAST_MESSAGE.TODO_FOLDER.DELETE.SUCCESS,
+        type: TOAST_TYPE.SUCCESS,
+      })
     },
   })
 }

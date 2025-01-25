@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Post } from '../entities/post.entity';
 import { CreatePostDto } from '../dtos/request/create-post.dto';
 import { UpdatePostDto } from '../dtos/request/update-post.dto';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Post } from '../entities/post.entity';
 import { PaginationResult } from '../types/interfaces.type';
 
 @Injectable()
@@ -37,6 +37,8 @@ export class PostsService {
     const post = await this.createPostQueryBuilder()
       .leftJoinAndSelect('post.user', 'user')
       .leftJoinAndSelect('post.comments', 'comments')
+      .loadRelationCountAndMap('post.count.likeCount', 'like.')
+      .loadRelationCountAndMap('post.count.postCount', 'user.posts')
       .where('post.id = :postId', { postId })
       .getOne();
 

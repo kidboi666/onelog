@@ -3,7 +3,6 @@ import useBlockEditor from '@/src/hooks/useBlockEditor'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
 import { ROUTES } from '@/src/routes'
 import { YStack } from '@/src/components/Stack'
-import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 import PostCardContent from './PostCardContent'
 import PostHeader from './PostHeader'
 
@@ -34,39 +33,39 @@ export default function PostCard({
   if (!editor) return null
 
   const {
-    access_type,
+    accessType,
     title,
-    like_count,
-    is_liked,
-    comment_count,
-    user_id,
-    post_type,
-    emotion_level,
-    created_at,
+    likeCount,
+    isLiked,
+    commentCount,
+    userId,
+    postType,
+    emotionLevel,
+    createdAt,
   } = post
 
   return (
     <YStack>
       {post ? (
         <PostHeader
-          userId={user_id}
+          userId={userId}
           createdAtLiked={createdAtLiked}
-          postType={post_type}
+          postType={postType}
           email={postUserInfo.email}
           avatarUrl={postUserInfo.avatar_url}
           userName={postUserInfo.user_name}
-          emotionLevel={emotion_level as TEmotion}
-          createdAt={created_at}
+          emotionLevel={emotionLevel}
+          createdAt={createdAt}
         />
       ) : null}
       <PostCardContent
         tags={tags}
         editor={editor}
         postTitle={title}
-        accessType={access_type}
-        likeCount={like_count?.[0].count}
-        isLiked={is_liked?.length > 0}
-        commentCount={comment_count?.[0].count}
+        accessType={accessType}
+        likeCount={likeCount?.[0].count}
+        isLiked={isLiked?.length > 0}
+        commentCount={commentCount?.[0].count}
         postId={postId}
         onClick={pushPostDetail}
         disabled={disabled}

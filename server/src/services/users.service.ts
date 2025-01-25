@@ -3,12 +3,12 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
-import { SignUpUserDto } from '../dtos/request/sign-up-user.dto';
-import { isUUID } from 'class-validator';
 import { InjectRepository } from '@nestjs/typeorm';
+import { isUUID } from 'class-validator';
+import { Repository } from 'typeorm';
+import { SignUpUserDto } from '../dtos/request/sign-up-user.dto';
 import { UpdateUserDto } from '../dtos/request/update-user.dto';
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -60,22 +60,6 @@ export class UsersService {
       throw new NotFoundException('User not found');
     }
     return user;
-
-    // return {
-    //   id: user.id,
-    //   email: user.email,
-    //   userName: user.userName,
-    //   avatarUrl: user.avatarUrl,
-    //   aboutMe: user.aboutMe,
-    //   mbti: user.mbti,
-    //   stats: {
-    //     followerCount: user.followerCount,
-    //     followingCount: user.followingCount,
-    //     postCount: user.postCount,
-    //   },
-    //   createdAt: user.createdAt,
-    //   updatedAt: user.updatedAt,
-    // };
   }
 
   async findUserByEmail(email: string): Promise<User> {

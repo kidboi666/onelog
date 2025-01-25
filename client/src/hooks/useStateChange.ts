@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { wait } from '@/src/utils/wait'
+import { wait } from '@/src/utils/client-utils'
 
 export default function useDataDrivenAnimation<T extends HTMLElement>(
   initClass: string = 'hidden',

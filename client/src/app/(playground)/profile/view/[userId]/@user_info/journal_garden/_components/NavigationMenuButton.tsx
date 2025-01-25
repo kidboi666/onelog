@@ -3,7 +3,7 @@ import cn from '@/src/lib/cn'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
 import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 import { PROFILE_NAVIGATE_MENUS } from '@/src/app/(playground)/profile/view/[userId]/_constants/navigate'
 
 interface Props {
@@ -14,7 +14,13 @@ interface Props {
   userId: string
 }
 
-export default function NavigationMenuButton({ segment, menu, counts, likedCount, userId }: Props) {
+export default function NavigationMenuButton({
+  segment,
+  menu,
+  counts,
+  likedCount,
+  userId,
+}: Props) {
   const [isLoading, pushProfileView] = useRouterPushWithTransition(
     ROUTES.PROFILE.VIEW(userId, menu.path),
   )
@@ -34,16 +40,16 @@ export default function NavigationMenuButton({ segment, menu, counts, likedCount
         (data: any) =>
           data.postType === menu.path && (
             <Fragment key={data.postType}>
-              <Text type="caption" size="xs" className="ml-1">
+              <TextDisplay type="caption" size="xs" className="ml-1">
                 {data.count}
-              </Text>
+              </TextDisplay>
             </Fragment>
           ),
       )}
       {menu.path === 'liked' && (
-        <Text type="caption" size="xs" className="ml-1">
+        <TextDisplay type="caption" size="xs" className="ml-1">
           {likedCount}
-        </Text>
+        </TextDisplay>
       )}
     </Button>
   )

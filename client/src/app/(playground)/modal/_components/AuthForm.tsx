@@ -2,7 +2,7 @@ import { ComponentProps } from 'react'
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
 import Input from '@/src/components/Input'
 import { YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 import Title from '@/src/components/Title'
 
 interface Props extends ComponentProps<'input'> {
@@ -10,7 +10,13 @@ interface Props extends ComponentProps<'input'> {
   error?: FieldError
 }
 
-export default function AuthForm({ placeholder, type, name, register, error }: Props) {
+export default function AuthForm({
+  placeholder,
+  type,
+  name,
+  register,
+  error,
+}: Props) {
   return (
     <YStack className="w-full">
       <Title as="h2" type="sub" size="xs">
@@ -27,9 +33,9 @@ export default function AuthForm({ placeholder, type, name, register, error }: P
         />
       </label>
       {error?.message && (
-        <Text type="error" size="sm">
+        <TextDisplay type="error" size="sm">
           {error.message}
-        </Text>
+        </TextDisplay>
       )}
     </YStack>
   )

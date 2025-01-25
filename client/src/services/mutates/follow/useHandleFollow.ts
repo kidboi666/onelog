@@ -1,4 +1,4 @@
-import { TOAST_MESSAGE } from '@/src/constants/toast-message'
+import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -84,7 +84,9 @@ export default function useHandleFollow() {
         QUERY_KEY.FOLLOW.FOLLOWING(follower_user_id),
         QUERY_KEY.FOLLOW.COUNT.FOLLOWING(follower_user_id),
       ]
-      queryKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }))
+      queryKeys.forEach((queryKey) =>
+        queryClient.invalidateQueries({ queryKey }),
+      )
     },
   })
 }

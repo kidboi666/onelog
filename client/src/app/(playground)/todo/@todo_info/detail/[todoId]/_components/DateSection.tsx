@@ -1,8 +1,8 @@
 'use client'
 
 import { Tables } from '@/src/types/supabase'
-import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
-import Text from '@/src/components/Text'
+import { formatDateToHM, formatDateToMDY } from '@/src/utils/client-utils'
+import TextDisplay from '@/src/components/TextDisplay'
 import Title from '@/src/components/Title'
 
 interface Props {
@@ -16,15 +16,15 @@ export default function DateSection({ todo }: Props) {
   return (
     <>
       <Title size="xs">등록일</Title>
-      <Text type="caption">
+      <TextDisplay type="caption">
         {formatDateToMDY(createdAt!)}년 {formatDateToHM(createdAt!)}
-      </Text>
+      </TextDisplay>
       {updatedAt && (
         <>
           <Title size="xs">최종 수정일</Title>
-          <Text type="caption">
+          <TextDisplay type="caption">
             {formatDateToMDY(updatedAt)}년 {formatDateToHM(updatedAt)}
-          </Text>
+          </TextDisplay>
         </>
       )}
     </>

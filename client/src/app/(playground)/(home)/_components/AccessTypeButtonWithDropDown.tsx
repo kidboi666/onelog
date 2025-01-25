@@ -5,7 +5,7 @@ import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useToggle from '@/src/hooks/useToggle'
 import { DropDown } from '@/src/components/DropDown'
 import Icon from '@/src/components/Icon'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 import ToolTip from '@/src/components/Tooltip'
 
 interface Props {
@@ -51,9 +51,9 @@ export default function AccessTypeButtonWithDropDown({
         position="topLeft"
         onTransitionEnd={onTransitionEnd}
       >
-        <Text size="sm" className="text-nowrap">
+        <TextDisplay size="sm" className="text-nowrap">
           {accessType === AccessType.PUBLIC ? '공개' : '비공개'}
-        </Text>
+        </TextDisplay>
       </DropDown.Content>
       {viewToolTip && <ToolTip isHover={isHover} text="게시 여부" />}
     </DropDown.Root>

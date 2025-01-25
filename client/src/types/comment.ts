@@ -1,8 +1,15 @@
-import { Tables } from '@/src/types/supabase'
-
-export interface IComment extends Tables<'comment'> {
-  user_info: Pick<
-    Tables<'user_info'>,
-    'user_name' | 'email' | 'avatar_url' | 'about_me'
-  >
+export interface IComment {
+  userInfo: {
+    userName: string
+    avatarUrl: string
+    email: string
+    aboutMe: string
+  }
+  comment: number | null
+  commentId: number | null
+  content: string
+  createdAt: string
+  id: number
+  postId: number
+  userId: string
 }

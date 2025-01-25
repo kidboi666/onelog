@@ -1,15 +1,14 @@
-'use client';
+'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { EditorContent } from '@tiptap/react';
-import { supabase } from '@/src/lib/supabase/client';
-import { meQuery } from '@/src/services/queries/auth/me-query';
-import { postQuery } from '@/src/services/queries/post/post-query';
-import useBlockEditor from '@/src/hooks/useBlockEditor';
-import { XStack, YStack } from '@/src/components/Stack';
-import Tag from '@/src/components/Tag';
-import Title from '@/src/components/Title';
-
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { EditorContent } from '@tiptap/react'
+import { supabase } from '@/src/lib/supabase/client'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
+import useBlockEditor from '@/src/hooks/useBlockEditor'
+import { XStack, YStack } from '@/src/components/Stack'
+import Tag from '@/src/components/Tag'
+import Title from '@/src/components/Title'
 
 interface Props {
   postId: number
@@ -17,7 +16,9 @@ interface Props {
 
 export default function PostBody({ postId }: Props) {
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
-  const { data: post } = useSuspenseQuery(postQuery.getPost(supabase, postId, session?.userId))
+  const { data: post } = useSuspenseQuery(
+    postQuery.getPost(supabase, postId, session?.id),
+  )
   const { editor } = useBlockEditor({ content: post?.content })
 
   if (!editor) {

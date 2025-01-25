@@ -1,19 +1,26 @@
+import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { INestUserInfo } from '@/src/types/auth'
 import { IComment } from '@/src/types/comment'
 import { AccessType, EmotionLevel, PostType } from '@/src/types/enums'
-import { Tables } from './supabase'
 
 /**
  * Class Interface
  */
 export interface IPostBaseAdapter {
   getAllPosts(params: IGetAllPosts): Promise<IPost[]>
-  getPost(params: IGetPost): Promise<IPostDetail>
+
+  getPost(params: IGetPost): Promise<IPostDetail | null>
+
   getLikedPosts(params: IGetLikedPosts): Promise<ILikedPost[]>
-  getUserPostThatDay(params: IGetUserPostsThatDay): Promise<IPost[]>
-  getAllUserPosts(params: IGetAllUserPosts): Promise<IPost[]>
+
+  getUserPostsThatDay(params: IGetUserPostsThatDay): Promise<IPost[]>
+
+  getUserPosts(params: IGetAllUserPosts): Promise<IPost[]>
+
   createPost(params: ICreatePost): Promise<void>
+
   deletePost(postId: number): Promise<void>
+
   updatePost(params: IUpdatePost): Promise<void>
 }
 
@@ -56,7 +63,7 @@ export interface IGetAllUserPosts {
 export interface ICreatePost {
   title: string | null
   content: string
-  emotionLevel: EmotionLevel
+  emotionLevel: EmotionLevel | null
   tags: string[]
   accessType: AccessType
   postType: PostType
@@ -74,21 +81,46 @@ export interface IUpdatePost {
   postType: PostType
 }
 
+export interface IUpdatePostFormStates {
+  emotionLevel: EmotionLevel | null
+  accessType: AccessType
+  postType: PostType
+  content: string
+  title: string | null
+  tags: string[]
+}
+
+export interface IUpdatePostFormActions {
+  onChangeEmotion: (emotionLevel: EmotionLevel | null) => void
+  onChangeAccessType: (accessType: AccessType) => void
+  onChangePostType: (postType: PostType) => void
+  setContent: Dispatch<SetStateAction<string>>
+  onChangeTitle: (e: ChangeEvent<HTMLInputElement>) => void
+  setTags: Dispatch<SetStateAction<string[]>>
+}
+
 /**
  * Supabase
  */
-export interface ISupabasePost
-  extends Omit<Tables<'post'>, 'post_type' | 'access_type' | 'emotion_level'> {
-  user_info: Pick<
-    Tables<'user_info'>,
-    'user_name' | 'email' | 'avatar_url' | 'about_me'
-  >
-  post_type: PostType
-  access_type: AccessType
-  emotion_level: '0%' | '25%' | '50%' | '75%' | '100%' | null
-  is_liked: { like: string }[] | []
-  like_count: { count: number }[] | []
-  comment_count: { count: number }[] | []
+export interface ISupabasePost {
+  id: number
+  tags: string[] | null
+  title: string | null
+  userId: string
+  createdAt: string
+  content: string
+  postType: PostType
+  accessType: AccessType
+  emotionLevel: EmotionLevel | null
+  userInfo: {
+    userName: string
+    email: string
+    avatarUrl: string
+    aboutMe: string
+  }
+  isLiked: { like: string }[] | []
+  likeCount: { count: number }[] | []
+  commentCount: { count: number }[] | []
 }
 
 export interface ISupabasePostDetail extends ISupabasePost {
@@ -107,13 +139,16 @@ export interface INestPost {
   userId: string
   postType: PostType
   accessType: AccessType
-  emotionLevel: EmotionLevel
+  emotionLevel: EmotionLevel | null
+  title: string | null
   content: string
   tags: string[]
-  commentCount: number
   createdAt: string
   updatedAt: string
   userInfo: INestUserInfo
+  isLiked: { like: string }[]
+  likeCount: { count: number }[]
+  commentCount: { count: number }[]
 }
 
 export interface INestPostDetail extends INestPost {

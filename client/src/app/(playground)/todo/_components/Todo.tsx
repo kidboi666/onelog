@@ -2,21 +2,28 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { DragEvent, MouseEvent, MutableRefObject, useRef, useState, useTransition } from 'react'
+import {
+  DragEvent,
+  MouseEvent,
+  MutableRefObject,
+  useRef,
+  useState,
+  useTransition,
+} from 'react'
 import cn from '@/src/lib/cn'
 import { supabase } from '@/src/lib/supabase/client'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
 import { Tables } from '@/src/types/supabase'
-import { formatDateToHM, formatDateToMDY } from '@/src/utils/formatDate'
+import { formatDateToHM, formatDateToMDY } from '@/src/utils/client-utils'
 import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
 import Spinner from '@/src/components/Spinner'
 import { XStack, YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 
 interface TodoProps {
   todo: Tables<'todo'>
@@ -50,9 +57,12 @@ export default function Todo({
   const [isPending, startTransition] = useTransition()
 
   const handleTodoClick = () => {
-    router.push(ROUTES.TODO.VIEW.DETAIL(todo.id, todo.folder_id, folderColor, orderFrom), {
-      scroll: false,
-    })
+    router.push(
+      ROUTES.TODO.VIEW.DETAIL(todo.id, todo.folder_id, folderColor, orderFrom),
+      {
+        scroll: false,
+      },
+    )
   }
 
   const dragStart = () => {
@@ -105,7 +115,8 @@ export default function Todo({
     if (dragItem.current!.index < dragOverItem.current!.index) {
       targetItemList = todos.filter(
         (todo) =>
-          todo.index !== dragItem.current!.index && todo.index <= dragOverItem.current!.index,
+          todo.index !== dragItem.current!.index &&
+          todo.index <= dragOverItem.current!.index,
       )
       sortedList = targetItemList.map((item) => ({
         ...item,
@@ -118,7 +129,8 @@ export default function Todo({
     } else {
       targetItemList = todos.filter(
         (todo) =>
-          todo.index !== dragItem.current!.index && todo.index >= dragOverItem.current!.index,
+          todo.index !== dragItem.current!.index &&
+          todo.index >= dragOverItem.current!.index,
       )
       sortedList = targetItemList.map((item) => ({
         ...item,
@@ -183,19 +195,19 @@ export default function Todo({
           </Button>
 
           <YStack gap={0}>
-            <Text
+            <TextDisplay
               className={cn(
                 'line-clamp-4 break-all text-xs',
                 isComplete ? 'text-zinc-400 dark:text-zinc-600' : '',
               )}
             >
               {todo.name}
-            </Text>
-            <Text type="caption" size="xs" className="line-clamp-1">
+            </TextDisplay>
+            <TextDisplay type="caption" size="xs" className="line-clamp-1">
               {isComplete
                 ? `완료일 : ${formatDateToMDY(todo.updated_at ?? '')} ${formatDateToHM(todo.updated_at ?? '')}`
                 : `등록일 : ${formatDateToMDY(todo.created_at)} ${formatDateToHM(todo.created_at)}`}
-            </Text>
+            </TextDisplay>
           </YStack>
         </XStack>
         <div className="flex justify-between gap-2">

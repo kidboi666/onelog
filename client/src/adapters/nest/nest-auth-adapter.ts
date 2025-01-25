@@ -1,4 +1,6 @@
-import { FETCH_URL } from '@/src/constants/url'
+'use client'
+
+import { FETCH_URL } from '@/src/constants'
 import {
   IAuthBaseAdapter,
   INestUserInfo,

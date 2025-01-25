@@ -3,7 +3,7 @@ import { TFollower } from '@/src/types/follow'
 import Avatar from '@/src/components/Avatar'
 import Button from '@/src/components/Button'
 import { XStack, YStack } from '@/src/components/Stack'
-import Text from '@/src/components/Text'
+import TextDisplay from '@/src/components/TextDisplay'
 
 interface Props {
   follower: TFollower
@@ -35,10 +35,10 @@ export default function FollowUserCard({
             className="size-8"
           />
           <YStack gap={0} className="flex-1 justify-center">
-            <Text>{follower.user_info.user_name}</Text>
-            <Text type="caption" size="sm">
+            <TextDisplay>{follower.user_info.user_name}</TextDisplay>
+            <TextDisplay type="caption" size="sm">
               @{follower.user_info.email.split('@')[0]}
-            </Text>
+            </TextDisplay>
           </YStack>
         </XStack>
       </div>
@@ -56,10 +56,10 @@ export default function FollowUserCard({
           className="size-8"
         />
         <YStack gap={0} className="flex-1 justify-center">
-          <Text>{follower.user_info.user_name}</Text>
-          <Text type="caption" size="sm">
+          <TextDisplay>{follower.user_info.user_name}</TextDisplay>
+          <TextDisplay type="caption" size="sm">
             @{follower.user_info.email.split('@')[0]}
-          </Text>
+          </TextDisplay>
         </YStack>
         {isFollowing ? (
           <Button

@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios'
-import { Tables } from '@/src/types/supabase'
 import { TMBTI } from '@/src/app/(playground)/profile/edit/_constants/mbti'
 
 /**
@@ -52,15 +51,20 @@ export interface ISignUpResponse extends ISignInResponse {}
  * Supabase
  */
 export interface ISupabaseUserSession {
-  about_me: string
-  avatar_url: string | null
-  email: string
-  email_verified: boolean
-  user_name: string
-  phone_verified: boolean
   sub: string
-  userId: string
+  id: string
   provider: string
+}
+
+export interface ISupabaseUserInfo {
+  aboutMe: string | null
+  avatarUrl: string | null
+  createdAt: string
+  email: string
+  favoriteWords: string[] | null
+  id: string
+  mbti: string | null
+  userName: string | null
 }
 
 /**
@@ -93,4 +97,4 @@ export interface INestUserSession {
  */
 export type IUserSession = ISupabaseUserSession | INestUserSession | null
 
-export type IUserInfo = Tables<'user_info'> | INestUserInfo | null
+export type IUserInfo = ISupabaseUserInfo | INestUserInfo | null

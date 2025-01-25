@@ -1,53 +1,52 @@
 'use client'
 
-import { useCallback, useState } from 'react'
-import { AccessType, PostType } from '@/src/types/enums'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { supabase } from '@/src/lib/supabase/client'
+import { meQuery } from '@/src/services/queries/auth/me-query'
+import { postQuery } from '@/src/services/queries/post/post-query'
 import { XStack } from '@/src/components/Stack'
-import PostContainer from './_containers/PostContainer'
-import SideOptionsContainer from './_containers/SideOptionsContainer'
-
-export type TEmotion = '0%' | '25%' | '50%' | '75%' | '100%' | null
+import PostForm from '@/src/app/(playground)/post/edit/_components/PostForm'
+import SideOptionsBar from '@/src/app/(playground)/post/edit/_components/SideOptionsBar'
+import usePostForm from '@/src/app/(playground)/post/edit/_hooks/usePostForm'
 
 interface Props {
   searchParams: { post_id: string }
 }
 
-export default function Default({ searchParams }: Props) {
-  const [selectedEmotion, setSelectedEmotion] = useState<TEmotion | null>('50%')
-  const [accessType, setAccessType] = useState<AccessType>(AccessType.PUBLIC)
-  const [postType, setPostType] = useState<PostType>(PostType.JOURNAL)
+export default function Page({ searchParams }: Props) {
+  const postId = Number(searchParams?.post_id)
+  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { data: me } = useQuery(meQuery.getUserInfo(supabase, session?.id))
+  const { data: post } = useQuery(postQuery.getPost(supabase, postId))
+  const { formState, actions } = usePostForm(post ?? null)
 
-  const handleChangeEmotion = useCallback((emotion: TEmotion) => {
-    setSelectedEmotion(emotion)
-  }, [])
+  const { accessType, postType, emotionLevel } = formState
+  const { onChangeAccessType, onChangePostType, onChangeEmotion } = actions
 
-  const handleChangeAccessType = useCallback((accessType: AccessType) => {
-    setAccessType(accessType)
-  }, [])
+  if (!me) {
+    return null
+  }
 
-  const handleChangePostType = useCallback((postType: PostType) => {
-    setPostType(postType)
-  }, [])
+  const { avatarUrl, userName, email } = me
 
   return (
     <XStack gap={8} className="flex-1 animate-fade-in">
-      <PostContainer
-        searchParams={searchParams}
-        selectedEmotion={selectedEmotion}
-        onChangeEmotion={handleChangeEmotion}
-        accessType={accessType}
-        onChangeAccessType={handleChangeAccessType}
-        postType={postType}
-        onChangePostType={handleChangePostType}
+      <PostForm
+        postId={postId}
+        meId={me.id}
+        avatarUrl={avatarUrl}
+        userName={userName}
+        email={email}
+        formState={formState}
+        actions={actions}
       />
-      <SideOptionsContainer
-        searchParams={searchParams}
-        selectedEmotion={selectedEmotion}
-        onChangeEmotion={handleChangeEmotion}
+      <SideOptionsBar
         accessType={accessType}
-        onChangeAccessType={handleChangeAccessType}
+        emotionLevel={emotionLevel}
         postType={postType}
-        onChangePostType={handleChangePostType}
+        onChangeEmotion={onChangeEmotion}
+        onChangePostType={onChangePostType}
+        onChangeAccessType={onChangeAccessType}
       />
     </XStack>
   )

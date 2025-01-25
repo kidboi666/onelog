@@ -1,34 +1,38 @@
-import { useTheme } from '@/src/store/useTheme'
 import cn from '@/src/lib/cn'
+import { useTheme } from '@/src/store/useTheme'
+import { EmotionLevel } from '@/src/types/enums'
 import { TColor } from '@/src/types/theme'
-import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 
 interface Props {
-  emotionLevel: TEmotion | null
+  emotionLevel: EmotionLevel | null
   className?: string
   size?: number
-  onClick?: (emotion: TEmotion | null) => void
+  onClick?: (emotion: EmotionLevel | null) => void
 }
 
-export default function EmotionGauge({ emotionLevel, className, onClick }: Props) {
+export default function EmotionGauge({
+  emotionLevel,
+  className,
+  onClick,
+}: Props) {
   const { color } = useTheme()
 
   let emotionBlock = [0, 0, 0, 0, 0]
 
   switch (emotionLevel) {
-    case '0%':
+    case EmotionLevel['0%']:
       emotionBlock = [1, 0, 0, 0, 0]
       break
-    case '25%':
+    case EmotionLevel['25%']:
       emotionBlock = [1, 1, 0, 0, 0]
       break
-    case '50%':
+    case EmotionLevel['50%']:
       emotionBlock = [1, 1, 1, 0, 0]
       break
-    case '75%':
+    case EmotionLevel['75%']:
       emotionBlock = [1, 1, 1, 1, 0]
       break
-    case '100%':
+    case EmotionLevel['100%']:
       emotionBlock = [1, 1, 1, 1, 1]
       break
     default:
@@ -39,7 +43,7 @@ export default function EmotionGauge({ emotionLevel, className, onClick }: Props
     emotionLevel && (
       <div className={cn('flex items-end', className)}>
         {emotionBlock!.map((shouldRender, index) => (
-          <EmotionBlock
+          <RenderEmotionBlock
             key={index}
             index={index}
             onClick={onClick}
@@ -52,32 +56,37 @@ export default function EmotionGauge({ emotionLevel, className, onClick }: Props
   )
 }
 
-interface EmotionBlockProps {
+interface RenderEmotionBlockProps {
   shouldRender: number
   color: TColor
   index: number
-  onClick?: (emotion: TEmotion | null) => void
+  onClick?: (emotion: EmotionLevel | null) => void
 }
 
-function EmotionBlock({ shouldRender, color, index, onClick }: EmotionBlockProps) {
-  let currentEmotion: TEmotion
+function RenderEmotionBlock({
+  shouldRender,
+  color,
+  index,
+  onClick,
+}: RenderEmotionBlockProps) {
+  let currentEmotion: EmotionLevel
   let blockOpacity: string
   let sizeString: string
   switch (index) {
     case 0:
-      currentEmotion = '0%'
+      currentEmotion = EmotionLevel['0%']
       break
     case 1:
-      currentEmotion = '25%'
+      currentEmotion = EmotionLevel['25%']
       break
     case 2:
-      currentEmotion = '50%'
+      currentEmotion = EmotionLevel['50%']
       break
     case 3:
-      currentEmotion = '75%'
+      currentEmotion = EmotionLevel['75%']
       break
     case 4:
-      currentEmotion = '100%'
+      currentEmotion = EmotionLevel['100%']
       break
     default:
       break
@@ -89,21 +98,22 @@ function EmotionBlock({ shouldRender, color, index, onClick }: EmotionBlockProps
     case 1:
       blockOpacity = `opacity-40`
       sizeString = shouldRender ? 'h-[12px]' : ''
-      currentEmotion = '25%'
+      currentEmotion = EmotionLevel['25%']
       break
     case 2:
       blockOpacity = 'opacity-60'
       sizeString = shouldRender ? 'h-[16px]' : ''
-      currentEmotion = '50%'
+      currentEmotion = EmotionLevel['50%']
       break
     case 3:
       blockOpacity = 'opacity-80'
       sizeString = shouldRender ? 'h-[20px]' : ''
+      currentEmotion = EmotionLevel['75%']
       break
     case 4:
       blockOpacity = 'opacity-100'
       sizeString = shouldRender ? 'h-[24px]' : ''
-      currentEmotion = '100%'
+      currentEmotion = EmotionLevel['100%']
       break
     default:
       break
@@ -118,8 +128,12 @@ function EmotionBlock({ shouldRender, color, index, onClick }: EmotionBlockProps
           'size-full h-2 rounded-full bg-zinc-300/35 p-1 shadow-sm transition-all dark:bg-zinc-300/15',
           sizeString!,
           blockOpacity!,
-          shouldRender && color === 'yellow' && 'bg-var-yellow dark:bg-var-yellow',
-          shouldRender && color === 'orange' && 'bg-var-orange dark:bg-var-orange',
+          shouldRender &&
+            color === 'yellow' &&
+            'bg-var-yellow dark:bg-var-yellow',
+          shouldRender &&
+            color === 'orange' &&
+            'bg-var-orange dark:bg-var-orange',
           shouldRender && color === 'black' && 'bg-black/60 dark:bg-white/60',
           shouldRender && color === 'blue' && 'bg-var-blue dark:bg-var-blue',
           shouldRender && color === 'green' && 'bg-var-green dark:bg-var-green',

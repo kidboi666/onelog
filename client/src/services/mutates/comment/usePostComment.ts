@@ -1,4 +1,4 @@
-import { TOAST_MESSAGE } from '@/src/constants/toast-message'
+import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/src/lib/supabase/client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -36,7 +36,9 @@ export default function usePostComment() {
     },
     onSuccess: (_, variables) => {
       const { postId } = variables
-      void queryClient.invalidateQueries({ queryKey: QUERY_KEY.POST.DETAIL(postId) })
+      void queryClient.invalidateQueries({
+        queryKey: QUERY_KEY.POST.DETAIL(postId),
+      })
 
       openToast({
         text: TOAST_MESSAGE.COMMENT.POST.SUCCESS,

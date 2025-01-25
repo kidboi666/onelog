@@ -22,7 +22,9 @@ interface Props {
 
 export default function CommentInput({ postId, commentId, session }: Props) {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, session?.userId))
+  const { data: me } = useSuspenseQuery(
+    meQuery.getUserInfo(supabase, session?.id),
+  )
   const [content, onChangeContent, setContent] = useInput('')
   const { mutate: postComment, isPending: isPostPending } = usePostComment()
 
@@ -41,7 +43,7 @@ export default function CommentInput({ postId, commentId, session }: Props) {
     if (session) {
       postComment(
         {
-          userId: session.userId,
+          userId: session.id,
           content,
           postId: postId,
           commentId: commentId || null,
@@ -58,9 +60,13 @@ export default function CommentInput({ postId, commentId, session }: Props) {
   }
 
   return (
-    <form onClick={handleRouterGuard} onSubmit={handlePostComment} className="mb-2 w-full">
+    <form
+      onClick={handleRouterGuard}
+      onSubmit={handlePostComment}
+      className="mb-2 w-full"
+    >
       <XStack gap={4}>
-        <Avatar src={me?.avatar_url} size="sm" shadow="sm" />
+        <Avatar src={me?.avatarUrl} size="sm" shadow="sm" />
         <Input
           value={content}
           onChange={onChangeContent}
@@ -68,7 +74,12 @@ export default function CommentInput({ postId, commentId, session }: Props) {
           placeholder={session ? '댓글을 달아주세요.' : '로그인을 해주세요'}
           className="w-full bg-var-lightgray dark:bg-var-dark"
         />
-        <Button type="submit" disabled={!content || !session} isLoading={isPostPending} size="sm">
+        <Button
+          type="submit"
+          disabled={!content || !session}
+          isLoading={isPostPending}
+          size="sm"
+        >
           댓글달기
         </Button>
       </XStack>

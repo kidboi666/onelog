@@ -6,7 +6,7 @@ import { colorTheme, useTheme } from '@/src/store/useTheme'
 import { userQuery } from '@/src/services/queries/auth/user-query'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
 import { postCountQuery } from '@/src/services/queries/post/post-count-query'
-import { getSignUpDays } from '@/src/utils/formatDate'
+import { getSignUpDays } from '@/src/utils/client-utils'
 import { XStack } from '@/src/components/Stack'
 import HistoryBlock from './HistoryBlock'
 

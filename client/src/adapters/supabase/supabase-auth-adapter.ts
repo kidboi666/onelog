@@ -1,6 +1,6 @@
+import { SupabaseTransformer } from '@/src/adapters/supabase/supabase-transformer'
 import { AuthError } from '@supabase/auth-js'
 import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
-import { AxiosError } from 'axios'
 import {
   IAuthBaseAdapter,
   ISignIn,
@@ -10,8 +10,13 @@ import {
 } from '@/src/types/auth'
 import { APIError } from '@/src/utils/fetcher'
 
-export class SupabaseAuthAdapter implements IAuthBaseAdapter {
-  constructor(private readonly supabase: SupabaseClient) {}
+export class SupabaseAuthAdapter
+  extends SupabaseTransformer
+  implements IAuthBaseAdapter
+{
+  constructor(private readonly supabase: SupabaseClient) {
+    super()
+  }
 
   async signIn(authData: ISignIn): Promise<void> {
     const { error } = await this.supabase.auth.signInWithPassword({
@@ -44,19 +49,15 @@ export class SupabaseAuthAdapter implements IAuthBaseAdapter {
 
   async getSession(): Promise<IUserSession> {
     const { data, error } = await this.supabase.auth.getUser()
-    this.handleAuthError(error)
     if (!data.user) {
-      throw new APIError(
-        401,
-        'USER_NOT_FOUND',
-        new AxiosError('Session not found'),
-      )
+      return null
     }
-    return {
+    this.handleAuthError(error)
+    return this.transformResponse({
       ...data.user?.user_metadata,
-      userId: data.user?.id,
+      id: data.user?.id,
       provider: data.user?.app_metadata.provider,
-    } as IUserSession
+    } as IUserSession)
   }
 
   async getUserInfo(userId: string): Promise<IUserInfo> {
@@ -65,8 +66,13 @@ export class SupabaseAuthAdapter implements IAuthBaseAdapter {
       .select()
       .eq('id', userId)
       .single()
+
+    if (!data.id) {
+      return null
+    }
+
     this.handlePostgrestError(error as PostgrestError)
-    return data
+    return this.transformResponse(data)
   }
 
   private handleAuthError(error: AuthError | null) {
