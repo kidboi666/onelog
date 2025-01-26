@@ -1,13 +1,16 @@
 import { NestAuthAdapter } from '@/src/adapters/nest/nest-auth-adapter'
 import { NestPostAdapter } from '@/src/adapters/nest/nest-post-adapter'
+import { NestTodoAdapter } from '@/src/adapters/nest/nest-todo-adapter'
 import { NestWordAdapter } from '@/src/adapters/nest/nest-word-adapter'
 import { SupabaseAuthAdapter } from '@/src/adapters/supabase/supabase-auth-adapter'
 import { SupabasePostAdapter } from '@/src/adapters/supabase/supabase-post-adapter'
+import { SupabaseTodoAdapter } from '@/src/adapters/supabase/supabase-todo-adapter'
 import { SupabaseWordAdapter } from '@/src/adapters/supabase/supabase-word-adapter'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { IAuthBaseAdapter } from '@/src/types/auth'
 import { Provider } from '@/src/types/enums'
 import { IPostBaseAdapter } from '@/src/types/post'
+import { ITodoBaseAdapter } from '@/src/types/todo'
 import { IWordBaseAdapter } from '@/src/types/word'
 
 export const databaseProvider =
@@ -55,5 +58,16 @@ export function createWordAdapter(
     supabaseClient,
     (client) => new SupabaseWordAdapter(client),
     () => new NestWordAdapter(),
+  )
+}
+
+export function createTodoAdapter(
+  supabaseClient?: SupabaseClient,
+): ITodoBaseAdapter {
+  return createAdapter(
+    databaseProvider,
+    supabaseClient,
+    (client) => new SupabaseTodoAdapter(client),
+    () => new NestTodoAdapter(),
   )
 }

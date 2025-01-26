@@ -7,7 +7,6 @@ import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
 import { YStack } from '@/src/components/Stack'
 import { EMOTION_STATUS } from '../_constants'
-import { TEmotion } from '../page'
 
 interface Props {
   selectedEmotion: EmotionLevel | null
@@ -49,7 +48,7 @@ export default function EmotionPickerWithDropDown({
 interface RenderEmotionPickerProps {
   emotion: (typeof EMOTION_STATUS)[number]
   onChangeEmotion: (emotion: EmotionLevel | null) => void
-  selectedEmotion: TEmotion | null
+  selectedEmotion: EmotionLevel | null
   index: number
 }
 

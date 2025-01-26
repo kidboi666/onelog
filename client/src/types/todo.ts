@@ -1,6 +1,20 @@
-export type TTodoColor = 'black' | 'green' | 'yellow' | 'blue' | 'orange' | 'red' | 'purple'
+export type TTodoColor =
+  | 'black'
+  | 'green'
+  | 'yellow'
+  | 'blue'
+  | 'orange'
+  | 'red'
+  | 'purple'
 
-export interface Todo {
+export interface ITodoBaseAdapter {
+  getTodoInProgress: (userId: string) => Promise<ITodo[]>
+  getTodoInCompleted: (userId: string) => Promise<ITodo[]>
+  getTodoFromFolder: (params: IGetTodoFromFolder) => Promise<ITodo[]>
+  getTodoIndex: (params: IGetTodoIndex) => Promise<ITodo[]>
+}
+
+export interface ITodo {
   id: number
   name: string
   createdAt: number
@@ -11,8 +25,8 @@ export interface Todo {
 }
 
 export interface TTodo {
-  pending: Todo[]
-  success: Todo[]
+  pending: ITodo[]
+  success: ITodo[]
 }
 
 export interface TodoFolder {
@@ -22,4 +36,14 @@ export interface TodoFolder {
   updatedAt: number
   dotColor: TTodoColor
   index: number
+}
+
+export interface IGetTodoFromFolder {
+  meId: string
+  folderId: number
+}
+
+export interface IGetTodoIndex {
+  meId: string
+  folderId: number
 }

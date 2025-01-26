@@ -43,7 +43,6 @@ export default function PostCard({
     emotionLevel,
     createdAt,
   } = post
-
   return (
     <YStack>
       {post ? (

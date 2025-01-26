@@ -4,7 +4,6 @@ import { Tables } from '@/src/types/supabase'
  * Class Interface
  */
 export interface IWordBaseAdapter {
-  // @TODO 반환값 타입핑
   getMyUsedWords({ userId }: IGetMyUsedWords): Promise<IUsedWord[]>
   getUsedWords({ word }: IGetUsedWords): Promise<IWord[]>
 }

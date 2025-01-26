@@ -21,7 +21,6 @@ export default function PostContainer() {
     useSuspenseInfiniteQuery(
       postQuery.getAllPost(supabase, PAGINATION.LIMIT, session?.id),
     )
-  const { data: me } = useQuery(meQuery.getUserInfo(supabase, session?.id))
   const posts = useMemo(
     () => data.pages.flatMap((page) => page || []) ?? [],
     [data],
