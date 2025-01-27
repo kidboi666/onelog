@@ -10,11 +10,11 @@ import LoggedInContent from './LoggedInContent'
 interface Props {
   pathname: string
   userId: string
-  meId: string
+  meId?: string | null
   viewText?: boolean
-  email: string
-  userName: string | null
-  avatarUrl: string | null
+  email?: string | null
+  userName?: string | null
+  avatarUrl?: string | null
   closeMenu?: () => void
 }
 
@@ -52,8 +52,8 @@ export default function AuthButtonWithDropDown({
       >
         {meId ? (
           <LoggedInContent
-            email={email}
-            userName={userName}
+            email={email!}
+            userName={userName!}
             meId={meId}
             closeMenu={closeMenu}
           />

@@ -1,15 +1,14 @@
-import { SupabaseTransformer } from '@/src/adapters/supabase/supabase-transformer'
-import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
+import { SupabaseHelpers } from '@/src/adapters/supabase/supabase-helpers'
+import { SupabaseClient } from '@supabase/supabase-js'
 import {
   IGetTodoFromFolder,
   IGetTodoIndex,
   ITodo,
   ITodoBaseAdapter,
 } from '@/src/types/todo'
-import { APIError } from '@/src/utils/fetcher'
 
 export class SupabaseTodoAdapter
-  extends SupabaseTransformer
+  extends SupabaseHelpers
   implements ITodoBaseAdapter
 {
   constructor(private readonly supabase: SupabaseClient) {
@@ -53,12 +52,6 @@ export class SupabaseTodoAdapter
       .eq('user_id', params.meId)
     this.handleError(error)
     return this.transformResponse(data ?? [])
-  }
-
-  private handleError(error: PostgrestError | null) {
-    if (error?.code && error?.message) {
-      throw new APIError(error.code, error.message, error)
-    }
   }
 
   private filterSelectedTodo(data: ITodo[] | null, folderId: number) {

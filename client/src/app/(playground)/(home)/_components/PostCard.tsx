@@ -8,7 +8,12 @@ import PostHeader from './PostHeader'
 
 interface Props {
   post: IPost
-  postUserInfo?: any
+  postUserInfo: {
+    email: string
+    avatarUrl: string | null
+    userName: string | null
+    aboutMe: string | null
+  }
   createdAtLiked?: string
   disabled?: boolean
 }
@@ -51,8 +56,8 @@ export default function PostCard({
           createdAtLiked={createdAtLiked}
           postType={postType}
           email={postUserInfo.email}
-          avatarUrl={postUserInfo.avatar_url}
-          userName={postUserInfo.user_name}
+          avatarUrl={postUserInfo.avatarUrl}
+          userName={postUserInfo.userName}
           emotionLevel={emotionLevel}
           createdAt={createdAt}
         />

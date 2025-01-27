@@ -1,6 +1,6 @@
 'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { supabase } from '@/src/lib/supabase/client'
@@ -20,6 +20,7 @@ import {
 
 export default function Sidebar() {
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { data: me } = useQuery(meQuery.getUserInfo(supabase, session?.id))
   const [isHover, setHover] = useState(false)
   const pathname = usePathname()
 
@@ -101,13 +102,16 @@ export default function Sidebar() {
             <AuthButtonWithDropDown
               pathname={pathname.split('/')[1]}
               userId={pathname.split('/')[2] || ''}
-              session={session}
+              meId={session?.id}
+              userName={me?.userName}
+              avatarUrl={me?.avatarUrl}
+              email={me?.email}
             />
             <ToolTip
               position="right"
               size="sm"
               isHover={isHover}
-              text={session ? session.email : '게스트'}
+              text={me ? me.email : '게스트'}
             />
           </ZStack>
         </YStack>

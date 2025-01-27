@@ -1,6 +1,6 @@
-import { SupabaseTransformer } from '@/src/adapters/supabase/supabase-transformer'
+import { SupabaseHelpers } from '@/src/adapters/supabase/supabase-helpers'
 import { AuthError } from '@supabase/auth-js'
-import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
+import { SupabaseClient } from '@supabase/supabase-js'
 import {
   IAuthBaseAdapter,
   ISignIn,
@@ -11,7 +11,7 @@ import {
 import { APIError } from '@/src/utils/fetcher'
 
 export class SupabaseAuthAdapter
-  extends SupabaseTransformer
+  extends SupabaseHelpers
   implements IAuthBaseAdapter
 {
   constructor(private readonly supabase: SupabaseClient) {
@@ -71,19 +71,13 @@ export class SupabaseAuthAdapter
       return null
     }
 
-    this.handlePostgrestError(error as PostgrestError)
+    this.handleError(error)
     return this.transformResponse(data)
   }
 
   private handleAuthError(error: AuthError | null) {
     if (error?.status && error?.code) {
       throw new APIError(error.status, error.code, error)
-    }
-  }
-
-  private handlePostgrestError(error: PostgrestError | null) {
-    if (error?.code && error?.message) {
-      throw new APIError(error.code, error.message, error)
     }
   }
 }

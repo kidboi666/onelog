@@ -21,32 +21,40 @@ import { fetcher } from '@/src/utils/fetcher'
 export class NestPostAdapter implements IPostBaseAdapter {
   async getAllPosts(params: IGetAllPosts): Promise<IPost[]> {
     try {
-      return await fetcher.get<IPost[]>(FETCH_URL.POST.GET_ALL)
+      return await fetcher.get<IPost[]>(
+        FETCH_URL.POST.GET_POSTS(params.pageParam, params.limit),
+      )
     } catch (err) {
       throw err
     }
   }
 
-  getPost({ postId, meId }: IGetPost): Promise<IPostDetail> {
-    throw new Error('Method not implemented.')
+  async getPost(params: IGetPost): Promise<IPostDetail> {
+    try {
+      return await fetcher.get<IPostDetail>(
+        FETCH_URL.POST.GET_POST(params.postId),
+      )
+    } catch (err) {
+      throw err
+    }
   }
 
-  getLikedPosts({
-    authorId,
-    meId,
-    pageParam,
-    limit,
-  }: IGetLikedPosts): Promise<ILikedPost[]> {
-    throw new Error('Method not implemented.')
+  async getLikedPosts(params: IGetLikedPosts): Promise<ILikedPost[]> {
+    try {
+      return await fetcher.get<ILikedPost[]>(
+        FETCH_URL.POST.GET_LIKED_POSTS(params.authorId),
+      )
+    } catch (err) {
+      throw err
+    }
   }
 
-  getUserPostsThatDay({
-    authorId,
-    startOfDay,
-    endOfDay,
-    meId,
-  }: IGetUserPostsThatDay): Promise<IPost[]> {
-    throw new Error('Method not implemented.')
+  async getUserPostsThatDay(params: IGetUserPostsThatDay): Promise<IPost[]> {
+    try {
+      return await fetcher.get(FETCH_URL.POST.GET_POSTS_THAT_DAY(params))
+    } catch (err) {
+      throw err
+    }
   }
 
   getUserPosts({

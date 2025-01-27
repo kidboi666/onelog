@@ -1,5 +1,4 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { INestUserInfo } from '@/src/types/auth'
 import { IComment } from '@/src/types/comment'
 import { AccessType, EmotionLevel, PostType } from '@/src/types/enums'
 
@@ -113,10 +112,10 @@ export interface ISupabasePost {
   accessType: AccessType
   emotionLevel: EmotionLevel | null
   userInfo: {
-    userName: string
+    userName: string | null
     email: string
-    avatarUrl: string
-    aboutMe: string
+    avatarUrl: string | null
+    aboutMe: string | null
   }
   isLiked: { like: string }[] | []
   likeCount: { count: number }[] | []
@@ -145,7 +144,12 @@ export interface INestPost {
   tags: string[]
   createdAt: string
   updatedAt: string
-  userInfo: INestUserInfo
+  userInfo: {
+    email: string
+    userName: string | null
+    avatarUrl: string | null
+    aboutMe: string | null
+  }
   isLiked: { like: string }[]
   likeCount: { count: number }[]
   commentCount: { count: number }[]

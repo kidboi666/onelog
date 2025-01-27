@@ -1,3 +1,5 @@
+import { IGetUserPostsThatDay } from '@/src/types/post'
+
 export const TOAST_MESSAGE = {
   AUTH: {
     SIGN_IN: {
@@ -135,19 +137,23 @@ export const FETCH_URL = {
     GET_USER_INFO: `/auth/info`,
   },
   USER: {
-    GET_USER_INFO: (id: string) => `/user/${id}`,
-    UPDATE_USER: (id: string) => `/user/${id}`,
+    GET_USER_INFO: (userId: string) => `/user/${userId}`,
+    UPDATE_USER: (userId: string) => `/user/${userId}`,
   },
   TODO: {
-    GET_BY_COMPLETION: '/todos',
-    GET_BY_FOLDER_ID: (id: number) => `/todos/${id}`,
+    GET_TODOS_BY_COMPLETION: '/todos',
+    GET_TODOS_BY_FOLDER_ID: (userId: number) => `/todos/${userId}`,
   },
   TODO_FOLDER: {
-    GET_ALL: '/todo_folders',
+    GET_TODOS: '/todo_folders',
   },
   POST: {
-    GET_ALL: '/posts',
-    GET_POST: (id: number) => `/posts/${id}`,
+    GET_POSTS: (page: number, limit: number) =>
+      `/posts?page=${page}&limit=${limit}`,
+    GET_POST: (postId: number) => `/posts/${postId}`,
+    GET_LIKED_POSTS: (userId: string) => `/posts/liked/${userId}`,
+    GET_POSTS_THAT_DAY: (params: IGetUserPostsThatDay) =>
+      `/posts/garden/${params.authorId}?startOfDay=${params.startOfDay}&endOfDay=${params.endOfDay}`,
   },
 }
 

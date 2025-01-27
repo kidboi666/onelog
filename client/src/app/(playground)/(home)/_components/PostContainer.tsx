@@ -2,7 +2,6 @@
 
 import { PAGINATION } from '@/src/constants'
 import {
-  useQuery,
   useSuspenseInfiniteQuery,
   useSuspenseQuery,
 } from '@tanstack/react-query'

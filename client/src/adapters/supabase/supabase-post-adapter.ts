@@ -1,7 +1,7 @@
-import { SupabaseTransformer } from '@/src/adapters/supabase/supabase-transformer'
-import { SUPABASE_QUERY } from '@/src/constants'
-import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
-import { AccessType } from '@/src/types/enums'
+import { SupabaseHelpers } from '@/src/adapters/supabase/supabase-helpers'
+import { SUPABASE_QUERY } from '@/src/constants/index'
+import { SupabaseClient } from '@supabase/supabase-js'
+import { AccessType } from '@/src/types/enums/index'
 import {
   ICreatePost,
   IGetAllPosts,
@@ -16,10 +16,9 @@ import {
   ISupabasePost,
   IUpdatePost,
 } from '@/src/types/post'
-import { APIError } from '@/src/utils/fetcher'
 
 export class SupabasePostAdapter
-  extends SupabaseTransformer
+  extends SupabaseHelpers
   implements IPostBaseAdapter
 {
   constructor(private readonly supabase: SupabaseClient) {
@@ -35,9 +34,7 @@ export class SupabasePostAdapter
       .range(params.pageParam, params.pageParam + params.limit - 1)
 
     query = this.addUserFilter(query, undefined, params.meId)
-    const { data, error } = await query
-    this.handleError(error)
-    return this.transformResponse(data ?? [])
+    return this.processQuery(query)
   }
 
   async getLikedPosts(params: IGetLikedPosts) {
@@ -48,13 +45,11 @@ export class SupabasePostAdapter
       )
       .order('created_at', { ascending: false })
       .range(params.pageParam, params.pageParam + params.limit - 1)
-
     query = this.addUserFilter(query, params.authorId, params.meId)
-    const { data, error } = await query
-    this.handleError(error)
+
+    const data = await this.processQuery(query)
     const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
-    const filteredPosts = this.filterPrivateLikedPosts(data, isMe)
-    return this.transformResponse(filteredPosts ?? [])
+    return this.filterPrivateLikedPosts(data, isMe)
   }
 
   async getPost(params: IGetPost): Promise<IPostDetail | null> {
@@ -66,12 +61,9 @@ export class SupabasePostAdapter
       >(SUPABASE_QUERY.GET_POST_DETAIL_WITH_AUTHOR_INFO_AND_COMMENTS)
       .eq('id', params.postId)
       .single()
-
     query = this.addUserFilter(query, undefined, params.meId)
-    const { data, error } = await query
-    this.handleError(error)
 
-    return this.transformResponse(data)
+    return this.processQuery(query)
   }
 
   async getUserPostsThatDay(params: IGetUserPostsThatDay) {
@@ -82,14 +74,11 @@ export class SupabasePostAdapter
       .lte('created_at', params.endOfDay)
       .eq('like.user_id', params.authorId)
       .order('created_at', { ascending: false })
-
     query = this.addUserFilter(query, params.authorId, params.meId)
-    const { data, error } = await query
-    this.handleError(error)
-    const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
-    const filteredPosts = this.filterPrivatePosts(data as ISupabasePost[], isMe)
 
-    return this.transformResponse(filteredPosts ?? [])
+    const data = await this.processQuery(query)
+    const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
+    return this.filterPrivatePosts(data, isMe)
   }
 
   async getUserPosts(params: IGetAllUserPosts) {
@@ -99,14 +88,11 @@ export class SupabasePostAdapter
       .eq('post_type', params.postType)
       .order('created_at', { ascending: false })
       .range(params.pageParam, params.pageParam + params.limit - 1)
-
     query = this.addUserFilter(query, params.authorId, params.meId)
-    const { data, error } = await query
-    this.handleError(error)
-    const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
-    const filteredPosts = this.filterPrivatePosts(data as ISupabasePost[], isMe)
 
-    return this.transformResponse(filteredPosts ?? [])
+    const data = await this.processQuery(query)
+    const isMe = this.isCurrentUserAuthor(params.authorId, params.meId)
+    return this.filterPrivatePosts(data, isMe)
   }
 
   async createPost(params: ICreatePost) {
@@ -138,22 +124,6 @@ export class SupabasePostAdapter
       })
       .eq('id', params.id)
     this.handleError(error)
-  }
-
-  private addUserFilter(query: any, authorId?: string, meId?: string | null) {
-    if (meId) {
-      query = query.eq('like.user_id', meId)
-    }
-    if (authorId) {
-      query = query.eq('user_id', authorId)
-    }
-    return query
-  }
-
-  private handleError(error: PostgrestError | null) {
-    if (error?.code && error?.message) {
-      throw new APIError(error.code, error.message, error)
-    }
   }
 
   private isCurrentUserAuthor(authorId: string, meId?: string | null) {
