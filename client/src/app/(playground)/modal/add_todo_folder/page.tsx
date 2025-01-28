@@ -2,35 +2,26 @@
 
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
-import cn from '@/src/lib/cn'
 import useAddTodoFolder from '@/src/services/mutates/todo/useAddTodoFolder'
-import { TTodoColor } from '@/src/types/todo'
+import { TodoFolderColorType } from '@/src/types/enums/index'
 import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import useInput from '@/src/hooks/useInput'
 import Button from '@/src/components/Button'
-import Icon from '@/src/components/Icon'
 import Input from '@/src/components/Input'
 import Modal from '@/src/components/Modal'
 import TextDisplay from '@/src/components/TextDisplay'
-
-const colors: TTodoColor[] = [
-  'black',
-  'green',
-  'yellow',
-  'blue',
-  'orange',
-  'red',
-  'purple',
-]
+import ColorSelectButton from '@/src/app/(playground)/modal/_components/ColorSelectButton'
 
 export default function AddTodoFolderModal() {
   const router = useRouter()
   const { me } = useMeQueries()
   const [name, onChangeName] = useInput('')
-  const [color, setColor] = useState<TTodoColor>('black')
+  const [color, setColor] = useState<TodoFolderColorType>(
+    TodoFolderColorType.BLACK,
+  )
   const { mutate: addTodoFolder } = useAddTodoFolder()
 
-  const handleColorClick = (selectedColor: TTodoColor) => {
+  const handleColorClick = (selectedColor: TodoFolderColorType) => {
     setColor(selectedColor)
   }
 
@@ -59,32 +50,13 @@ export default function AddTodoFolderModal() {
         <div className="flex flex-col gap-2">
           <TextDisplay>색상</TextDisplay>
           <div className="flex gap-2">
-            {colors.map((prefaredColor) => (
-              <Button
+            {Object.values(TodoFolderColorType).map((prefaredColor) => (
+              <ColorSelectButton
                 key={prefaredColor}
-                variant="none"
-                onClick={() => handleColorClick(prefaredColor)}
-                className={cn(
-                  'relative size-4 rounded-full',
-                  prefaredColor === 'yellow' && 'bg-var-yellow',
-                  prefaredColor === 'orange' && 'bg-var-orange',
-                  prefaredColor === 'black' && 'bg-var-black',
-                  prefaredColor === 'blue' && 'bg-var-blue',
-                  prefaredColor === 'green' && 'bg-var-green',
-                  prefaredColor === 'red' && 'bg-red-500',
-                  prefaredColor === 'purple' && 'bg-purple-500',
-                )}
-              >
-                {prefaredColor === color && (
-                  <Icon size={18} view={20} className="absolute text-white">
-                    <path
-                      fillRule="evenodd"
-                      d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                      clipRule="evenodd"
-                    />
-                  </Icon>
-                )}
-              </Button>
+                selectedColor={color}
+                color={prefaredColor}
+                onColorClick={handleColorClick}
+              />
             ))}
           </div>
         </div>

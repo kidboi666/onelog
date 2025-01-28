@@ -1,16 +1,13 @@
+import { createUserAdapter } from '@/src/adapters/index'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import { Tables } from '@/src/types/supabase'
+import { IUserInfo } from '@/src/types/auth'
 
 export const userQuery = {
   getUserInfo: (supabase: SupabaseClient, userId: string) =>
-    queryOptions<Tables<'user_info'>>({
+    queryOptions<Promise<IUserInfo>>({
       queryKey: QUERY_KEY.USER.INFO(userId),
-      queryFn: async () => {
-        const { data } = await supabase.from('user_info').select().eq('id', userId).single()
-
-        return data
-      },
+      queryFn: () => createUserAdapter(supabase).getUserInfo(userId),
     }),
 }

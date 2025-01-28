@@ -1,5 +1,5 @@
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { dehydrate } from '@tanstack/react-query'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { postCountQuery } from '@/src/services/queries/post/post-count-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { PostType } from '@/src/types/enums'

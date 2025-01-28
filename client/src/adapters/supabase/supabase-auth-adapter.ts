@@ -1,17 +1,20 @@
-import { SupabaseHelpers } from '@/src/adapters/supabase/supabase-helpers'
+import { QueryHelpers } from '@/src/adapters/query-helpers'
 import { AuthError } from '@supabase/auth-js'
+import { StorageError } from '@supabase/storage-js'
 import { SupabaseClient } from '@supabase/supabase-js'
 import {
   IAuthBaseAdapter,
   ISignIn,
   ISignUp,
+  IUpdateUserInfo,
+  IUploadAvatar,
   IUserInfo,
   IUserSession,
 } from '@/src/types/auth'
 import { APIError } from '@/src/utils/fetcher'
 
 export class SupabaseAuthAdapter
-  extends SupabaseHelpers
+  extends QueryHelpers
   implements IAuthBaseAdapter
 {
   constructor(private readonly supabase: SupabaseClient) {
@@ -75,9 +78,54 @@ export class SupabaseAuthAdapter
     return this.transformResponse(data)
   }
 
+  async updateUserInfo(params: IUpdateUserInfo): Promise<void> {
+    const { error } = await this.supabase.auth.updateUser({
+      data: {
+        about_me: params.aboutMe,
+        avatar_url: params.avatarUrl,
+        user_name: params.userName,
+      },
+    })
+
+    this.handleAuthError(error)
+  }
+
+  async uploadAvatarImage(params: IUploadAvatar): Promise<string> {
+    const { data, error } = await this.supabase.storage
+      .from('profile_image')
+      .upload(`${params.email}/${new Date().getTime()}`, params.image!)
+
+    this.handleStorageError(error)
+    const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_IMAGE_BASE_URL!
+    return `${baseUrl}/${data?.fullPath}`
+  }
+
+  async deleteAvatarImage(imageUrl: string): Promise<void> {
+    const imageUrlPath = this.processImageUrlPath(imageUrl)
+    const { error } = await this.supabase.storage
+      .from('profile_image')
+      .remove([imageUrlPath])
+
+    this.handleStorageError(error)
+  }
+
+  private handleStorageError(error: StorageError | null) {
+    if (error?.message) {
+      throw new APIError(500, error.message, error)
+    }
+  }
+
   private handleAuthError(error: AuthError | null) {
     if (error?.status && error?.code) {
       throw new APIError(error.status, error.code, error)
     }
+  }
+
+  private processImageUrlPath(imageUrl: string): string {
+    const splitPath = imageUrl.split('/')
+    const email = splitPath[splitPath.length - 2]
+    const fileName = splitPath[splitPath.length - 1]
+
+    return `${email}/${fileName}`
   }
 }

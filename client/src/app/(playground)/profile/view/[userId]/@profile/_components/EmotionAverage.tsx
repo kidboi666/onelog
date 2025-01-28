@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/client'
-import { colorTheme, useTheme } from '@/src/store/useTheme'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
+import { colorTheme, useTheme } from '@/src/store/hooks/useTheme'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
 import TextDisplay from '@/src/components/TextDisplay'
 

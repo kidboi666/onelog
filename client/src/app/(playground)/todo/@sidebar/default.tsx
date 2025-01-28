@@ -3,9 +3,9 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
-import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
+import { todoQuery } from '@/src/services/queries/todo/todo-query'
 import { ROUTES } from '@/src/routes'
 import Line from '@/src/components/Line'
 import { List } from '@/src/components/List'
@@ -18,7 +18,7 @@ export default function SideBarPage() {
   const pathname = usePathname()
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { data: todoFolders } = useSuspenseQuery(
-    todoFolderQuery.getTodoFolder(supabase, session?.userId),
+    todoQuery.getTodoFolder(supabase, session?.userId),
   )
 
   return (

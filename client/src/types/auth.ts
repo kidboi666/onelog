@@ -1,15 +1,19 @@
 import { AxiosResponse } from 'axios'
+import { AuthProvider } from '@/src/types/enums/index'
 import { TMBTI } from '@/src/app/(playground)/profile/edit/_constants/mbti'
 
 /**
  * Class Interface
  */
 export interface IAuthBaseAdapter {
-  signIn(data: ISignIn): Promise<any>
-  signUp(data: ISignUp): Promise<any>
+  signIn(params: ISignIn): Promise<any>
+  signUp(params: ISignUp): Promise<any>
   signOut(): Promise<void>
   getSession(): Promise<IUserSession | null>
   getUserInfo(userId?: string): Promise<IUserInfo | null>
+  updateUserInfo(params: IUpdateUserInfo): Promise<void>
+  uploadAvatarImage(params: IUploadAvatar): Promise<string>
+  deleteAvatarImage(imageUrl: string): Promise<void>
 }
 
 /**
@@ -31,6 +35,15 @@ export interface IUpdateUserInfo {
   userName?: string | null
   avatarUrl?: string | null
   mbti?: TMBTI
+}
+
+export interface IUpdateProfileFormStates {
+  userName: string | null
+  aboutMe: string | null
+  avatarUrl: string | null
+  imageFile: File | null
+  prevAvatarUrl: string | null
+  mbti: TMBTI | null
 }
 
 export interface ISignInRequest {
@@ -63,8 +76,14 @@ export interface ISupabaseUserInfo {
   email: string
   favoriteWords: string[] | null
   id: string
-  mbti: string | null
+  provider: AuthProvider
+  mbti: TMBTI | null
   userName: string | null
+}
+
+export interface IUploadAvatar {
+  email: string
+  image: File | null
 }
 
 /**
@@ -76,7 +95,8 @@ export interface INestUserInfo {
   avatarUrl: string | null
   userName: string | null
   aboutMe: string | null
-  mbti: string | null
+  mbti: TMBTI | null
+  provider: AuthProvider
   createdAt: string
   updatedAt: string
   stats: {
@@ -88,6 +108,7 @@ export interface INestUserInfo {
 
 export interface INestUserSession {
   id: string
+  provider: string
   refreshToken: string
   refreshTokenExp: string
 }

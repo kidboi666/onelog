@@ -1,8 +1,8 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
-import { colorTheme, useTheme } from '@/src/store/useTheme'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
+import { colorTheme, useTheme } from '@/src/store/hooks/useTheme'
 import { userQuery } from '@/src/services/queries/auth/user-query'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
 import { postCountQuery } from '@/src/services/queries/post/post-count-query'

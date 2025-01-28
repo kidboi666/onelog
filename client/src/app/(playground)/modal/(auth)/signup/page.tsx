@@ -1,11 +1,11 @@
 'use client'
 
+import { signUpSchema } from '@/src/schemas/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import cn from '@/src/lib/cn'
-import { signUpSchema } from '@/src/lib/validators/auth'
 import { useSignInOauth } from '@/src/services/mutates/auth/use-sign-in-oauth'
 import useSignUp from '@/src/services/mutates/auth/use-sign-up'
 import { ISignUp } from '@/src/types/auth'

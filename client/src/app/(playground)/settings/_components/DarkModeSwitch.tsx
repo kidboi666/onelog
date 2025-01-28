@@ -1,7 +1,7 @@
 'use client'
 
-import { useTheme } from '@/src/store/useTheme'
 import cn from '@/src/lib/cn'
+import { useTheme } from '@/src/store/hooks/useTheme'
 import { TTheme } from '@/src/types/theme'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
@@ -29,8 +29,16 @@ export default function DarkModeSwitch() {
     <YStack>
       <Title>다크 모드 설정</Title>
       <XStack>
-        <DarkModeBlock theme="dark" selectedTheme={theme} onBlockClick={handleThemeChange} />
-        <DarkModeBlock theme="light" selectedTheme={theme} onBlockClick={handleThemeChange} />
+        <DarkModeBlock
+          theme="dark"
+          selectedTheme={theme}
+          onBlockClick={handleThemeChange}
+        />
+        <DarkModeBlock
+          theme="light"
+          selectedTheme={theme}
+          onBlockClick={handleThemeChange}
+        />
       </XStack>
     </YStack>
   )
@@ -42,7 +50,11 @@ interface DarkModeBlockProps {
   selectedTheme: TTheme
 }
 
-function DarkModeBlock({ onBlockClick, theme, selectedTheme }: DarkModeBlockProps) {
+function DarkModeBlock({
+  onBlockClick,
+  theme,
+  selectedTheme,
+}: DarkModeBlockProps) {
   return (
     <Button
       onClick={() => onBlockClick(theme)}

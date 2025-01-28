@@ -1,9 +1,9 @@
 'use client'
 
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { Tables } from '@/src/types/supabase'
 import { ROUTES } from '@/src/routes'
@@ -19,7 +19,13 @@ interface Props {
   orderFrom: 'main' | 'folder'
 }
 
-export default function ButtonSection({ todoId, folderId, todo, color, orderFrom }: Props) {
+export default function ButtonSection({
+  todoId,
+  folderId,
+  todo,
+  color,
+  orderFrom,
+}: Props) {
   const router = useRouter()
   const queryClient = getQueryClient()
 
@@ -29,9 +35,12 @@ export default function ButtonSection({ todoId, folderId, todo, color, orderFrom
 
   const handleDeleteButtonClick = () => {
     startTransitionDelete(() =>
-      router.push(ROUTES.MODAL.TODO.DELETE(todoId, folderId, color, orderFrom), {
-        scroll: false,
-      }),
+      router.push(
+        ROUTES.MODAL.TODO.DELETE(todoId, folderId, color, orderFrom),
+        {
+          scroll: false,
+        },
+      ),
     )
   }
 
@@ -67,7 +76,10 @@ export default function ButtonSection({ todoId, folderId, todo, color, orderFrom
   }
 
   return (
-    <div onMouseDown={(e) => e.stopPropagation()} className="flex justify-between gap-4">
+    <div
+      onMouseDown={(e) => e.stopPropagation()}
+      className="flex justify-between gap-4"
+    >
       <Button variant="icon" onClick={handleUpdateButtonClick}>
         <Icon view="0 -960 960 960">
           {todo?.is_complete ? (

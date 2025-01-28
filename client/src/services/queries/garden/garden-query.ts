@@ -1,7 +1,7 @@
 import { createGardenAdapter } from '@/src/adapters/index'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { Tables } from '@/src/types/supabase'
 
 export const gardenQuery = {

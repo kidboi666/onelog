@@ -1,10 +1,11 @@
 import { TOAST_MESSAGE } from '@/src/constants'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import { TOAST_TYPE, useToast } from '@/src/store/useToast'
+import { useToast } from '@/src/store/hooks/useToast'
+import { ToastType } from '@/src/types/enums/index'
 
 interface IDeleteComment {
   postId: number
@@ -38,13 +39,13 @@ export default function useDeleteComment() {
       openToast({
         text: TOAST_MESSAGE.COMMENT.DELETE.EXCEPTION,
         message: error.message,
-        type: TOAST_TYPE.ERROR,
+        type: ToastType.ERROR,
       })
     },
     onSettled: () => {
       openToast({
         text: TOAST_MESSAGE.COMMENT.DELETE.SUCCESS,
-        type: TOAST_TYPE.SUCCESS,
+        type: ToastType.SUCCESS,
       })
 
       router.back()

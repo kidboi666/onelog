@@ -1,7 +1,7 @@
 'use client'
 
-import { useTheme } from '@/src/store/useTheme'
 import { PropsWithChildren, useLayoutEffect } from 'react'
+import { useTheme } from '@/src/store/hooks/useTheme'
 import { TColor } from '@/src/types/theme'
 
 export default function ThemeProvider({ children }: PropsWithChildren) {

@@ -3,7 +3,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import useHandleLikePost from '@/src/services/mutates/like/useHandleLikePost'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { ROUTES } from '@/src/routes'

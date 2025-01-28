@@ -1,20 +1,27 @@
 import { NestAuthAdapter } from '@/src/adapters/nest/nest-auth-adapter'
+import { NestEmotionAdapter } from '@/src/adapters/nest/nest-emotion-adapter'
+import { NestFollowAdapter } from '@/src/adapters/nest/nest-follow-adapter'
 import { NestGardenAdapter } from '@/src/adapters/nest/nest-garden-adapter'
 import { NestPostAdapter } from '@/src/adapters/nest/nest-post-adapter'
 import { NestTodoAdapter } from '@/src/adapters/nest/nest-todo-adapter'
 import { NestWordAdapter } from '@/src/adapters/nest/nest-word-adapter'
 import { SupabaseAuthAdapter } from '@/src/adapters/supabase/supabase-auth-adapter'
+import { SupabaseEmotionAdapter } from '@/src/adapters/supabase/supabase-emotion-adapter'
+import { SupabaseFollowAdapter } from '@/src/adapters/supabase/supabase-follow-adapter'
 import { SupabaseGardenAdapter } from '@/src/adapters/supabase/supabase-garden-adapter'
 import { SupabasePostAdapter } from '@/src/adapters/supabase/supabase-post-adapter'
 import { SupabaseTodoAdapter } from '@/src/adapters/supabase/supabase-todo-adapter'
+import { SupabaseUserAdapter } from '@/src/adapters/supabase/supabase-user-adapter'
 import { SupabaseWordAdapter } from '@/src/adapters/supabase/supabase-word-adapter'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { IAuthBaseAdapter } from '@/src/types/auth'
 import { Provider } from '@/src/types/enums'
+import { IFollowBaseAdapter } from '@/src/types/follow'
 import { IGardenBaseAdapter } from '@/src/types/garden'
 import { IPostBaseAdapter } from '@/src/types/post'
 import { ITodoBaseAdapter } from '@/src/types/todo'
 import { IWordBaseAdapter } from '@/src/types/word'
+import { NestUserAdapter } from './nest/nest-user-adapter'
 
 export const databaseProvider =
   (process.env.NEXT_PUBLIC_DB_PROVIDER as Provider) ?? Provider.SUPABASE
@@ -83,5 +90,34 @@ export function createGardenAdapter(
     supabaseClient,
     (client) => new SupabaseGardenAdapter(client),
     () => new NestGardenAdapter(),
+  )
+}
+
+export function createFollowAdapter(
+  supabaseClient?: SupabaseClient,
+): IFollowBaseAdapter {
+  return createAdapter(
+    databaseProvider,
+    supabaseClient,
+    (client) => new SupabaseFollowAdapter(client),
+    () => new NestFollowAdapter(),
+  )
+}
+
+export function createUserAdapter(supabaseClient?: SupabaseClient) {
+  return createAdapter(
+    databaseProvider,
+    supabaseClient,
+    (client) => new SupabaseUserAdapter(client),
+    () => new NestUserAdapter(),
+  )
+}
+
+export function createEmotionAdapter(supabaseClient?: SupabaseClient) {
+  return createAdapter(
+    databaseProvider,
+    supabaseClient,
+    (client) => new SupabaseEmotionAdapter(client),
+    () => new NestEmotionAdapter(),
   )
 }

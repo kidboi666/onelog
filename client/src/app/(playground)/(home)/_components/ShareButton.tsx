@@ -1,7 +1,8 @@
 import { TOAST_MESSAGE } from '@/src/constants'
 import { isServer } from '@tanstack/react-query'
 import { MouseEvent } from 'react'
-import { TOAST_TYPE, useToast } from '@/src/store/useToast'
+import { useToast } from '@/src/store/hooks/useToast'
+import { ToastType } from '@/src/types/enums/index'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useToggle from '@/src/hooks/useToggle'
@@ -31,7 +32,7 @@ export default function ShareButton({ isSide, viewToolTip }: Props) {
     await navigator.clipboard.writeText(fullURL)
     openToast({
       text: TOAST_MESSAGE.SHARE.CLIPBOARD,
-      type: TOAST_TYPE.SUCCESS,
+      type: ToastType.SUCCESS,
     })
   }
 

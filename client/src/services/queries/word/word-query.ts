@@ -1,7 +1,7 @@
 import { createWordAdapter } from '@/src/adapters'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { IUsedWord, IWord } from '@/src/types/word'
 import { APIError } from '@/src/utils/fetcher'
 

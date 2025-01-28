@@ -1,13 +1,15 @@
+import { createFollowAdapter } from '@/src/adapters/index'
 import { TOAST_MESSAGE } from '@/src/constants'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import { TOAST_TYPE, useToast } from '@/src/store/useToast'
+import { useToast } from '@/src/store/hooks/useToast'
+import { ToastType } from '@/src/types/enums/index'
 
 interface Params {
-  followed_user_id: string
-  follower_user_id: string
+  followedUserId: string
+  followerUserId: string
   isFollowing: boolean
 }
 
@@ -17,37 +19,21 @@ export default function useHandleFollow() {
 
   return useMutation({
     mutationFn: async (params: Params) => {
-      const { isFollowing, followed_user_id, follower_user_id } = params
-      let query: any = supabase.from('follow')
-
+      const { isFollowing, followedUserId, followerUserId } = params
+      const adapter = createFollowAdapter(supabase)
+      let result
       if (isFollowing) {
-        query = query
-          .delete()
-          .eq('followed_user_id', followed_user_id)
-          .eq('follower_user_id', follower_user_id)
+        result = await adapter.deleteFollow({ followedUserId, followerUserId })
       } else {
-        query = query
-          .insert({
-            followed_user_id,
-            follower_user_id,
-          })
-          .select()
+        result = await adapter.createFollow({ followedUserId, followerUserId })
       }
-
-      const { data, error } = await query
-
-      if (error) {
-        console.error(error)
-        throw error
-      }
-
-      return data
+      return result
     },
     onSuccess: (data) => {
       if (data) {
         openToast({
           text: TOAST_MESSAGE.FOLLOW.SEND.SUCCESS,
-          type: TOAST_TYPE.SUCCESS,
+          type: ToastType.SUCCESS,
         })
       }
     },
@@ -58,31 +44,31 @@ export default function useHandleFollow() {
         openToast({
           text: TOAST_MESSAGE.FOLLOW.CANCEL.EXCEPTION,
           message: error.message,
-          type: TOAST_TYPE.ERROR,
+          type: ToastType.ERROR,
         })
       } else {
         openToast({
           text: TOAST_MESSAGE.FOLLOW.SEND.EXCEPTION,
           message: error.message,
-          type: TOAST_TYPE.ERROR,
+          type: ToastType.ERROR,
         })
       }
     },
     onSettled: (_, __, variables) => {
-      const { isFollowing, followed_user_id, follower_user_id } = variables
+      const { isFollowing, followedUserId, followerUserId } = variables
 
       if (isFollowing) {
         openToast({
           text: TOAST_MESSAGE.FOLLOW.CANCEL.SUCCESS,
-          type: TOAST_TYPE.SUCCESS,
+          type: ToastType.SUCCESS,
         })
       }
 
       const queryKeys = [
-        QUERY_KEY.FOLLOW.FOLLOWER(followed_user_id),
-        QUERY_KEY.FOLLOW.COUNT.FOLLOWER(followed_user_id),
-        QUERY_KEY.FOLLOW.FOLLOWING(follower_user_id),
-        QUERY_KEY.FOLLOW.COUNT.FOLLOWING(follower_user_id),
+        QUERY_KEY.FOLLOW.FOLLOWER(followedUserId),
+        QUERY_KEY.FOLLOW.COUNT.FOLLOWER(followedUserId),
+        QUERY_KEY.FOLLOW.FOLLOWING(followerUserId),
+        QUERY_KEY.FOLLOW.COUNT.FOLLOWING(followerUserId),
       ]
       queryKeys.forEach((queryKey) =>
         queryClient.invalidateQueries({ queryKey }),

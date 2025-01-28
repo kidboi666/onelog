@@ -1,53 +1,33 @@
+import { createTodoAdapter } from '@/src/adapters/index'
 import { TOAST_MESSAGE } from '@/src/constants'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import { TOAST_TYPE, useToast } from '@/src/store/useToast'
-
-interface ITodoFolder {
-  name: string
-  color: string
-  index: number
-  userId: string
-}
+import { useToast } from '@/src/store/hooks/useToast'
+import { ToastType } from '@/src/types/enums/index'
+import { ICreateTodoFolder } from '@/src/types/todo'
 
 export default function useAddTodoFolder() {
   const queryClient = getQueryClient()
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: async (params: ITodoFolder) => {
-      const { data, error } = await supabase
-        .from('todo_folder')
-        .insert({
-          name: params.name,
-          color: params.color,
-          index: params.index,
-          user_id: params.userId,
-        })
-        .select()
-
-      if (error) {
-        console.error(error)
-        throw error
-      }
-
-      return data
-    },
+    mutationFn: (params: ICreateTodoFolder) =>
+      createTodoAdapter(supabase).createTodoFolder(params),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: QUERY_KEY.TODO.MAIN })
 
       openToast({
         text: TOAST_MESSAGE.TODO_FOLDER.POST.SUCCESS,
-        type: TOAST_TYPE.SUCCESS,
+        type: ToastType.SUCCESS,
       })
     },
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.TODO_FOLDER.POST.EXCEPTION,
         message: error.message,
-        type: TOAST_TYPE.ERROR,
+        type: ToastType.ERROR,
       })
     },
   })

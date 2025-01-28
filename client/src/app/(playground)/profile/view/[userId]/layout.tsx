@@ -1,5 +1,5 @@
 import { PropsWithChildren, ReactNode } from 'react'
-import { createServerClient } from '@/src/lib/supabase/server'
+import { createServerClient } from '@/src/lib/supabase/create-server-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { userQuery } from '@/src/services/queries/auth/user-query'
 import { Tables } from '@/src/types/supabase'
@@ -15,8 +15,14 @@ export async function generateMetadata({ params }: MetadataProps) {
   const queryClient = getQueryClient()
   const supabase = createServerClient()
 
-  await queryClient.prefetchQuery(userQuery.getUserInfo(supabase, params.userId))
-  const userInfo = queryClient.getQueryData<Tables<'user_info'>>(['user', 'info', params.userId])
+  await queryClient.prefetchQuery(
+    userQuery.getUserInfo(supabase, params.userId),
+  )
+  const userInfo = queryClient.getQueryData<Tables<'user_info'>>([
+    'user',
+    'info',
+    params.userId,
+  ])
 
   return {
     title: `${userInfo?.user_name}`,
@@ -28,7 +34,10 @@ interface Props {
   user_info: ReactNode
 }
 
-export default async function UserLayout({ profile, user_info }: PropsWithChildren<Props>) {
+export default async function UserLayout({
+  profile,
+  user_info,
+}: PropsWithChildren<Props>) {
   return (
     <YStack gap={8} className="animate-fade-in">
       {profile}

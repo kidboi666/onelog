@@ -1,7 +1,7 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { wordQuery } from '@/src/services/queries/word/word-query'
 import { IFavoriteWord } from '@/src/types/word'
 import Empty from '@/src/components/Empty'

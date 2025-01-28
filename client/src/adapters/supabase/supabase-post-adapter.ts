@@ -1,4 +1,4 @@
-import { SupabaseHelpers } from '@/src/adapters/supabase/supabase-helpers'
+import { QueryHelpers } from '@/src/adapters/query-helpers'
 import { SUPABASE_QUERY } from '@/src/constants/index'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { AccessType } from '@/src/types/enums/index'
@@ -18,7 +18,7 @@ import {
 } from '@/src/types/post'
 
 export class SupabasePostAdapter
-  extends SupabaseHelpers
+  extends QueryHelpers
   implements IPostBaseAdapter
 {
   constructor(private readonly supabase: SupabaseClient) {
@@ -28,7 +28,7 @@ export class SupabasePostAdapter
   async getAllPosts(params: IGetAllPosts) {
     let query = this.supabase
       .from('post')
-      .select<string, IPost>(SUPABASE_QUERY.GET_POSTS_WITH_AUTHOR_INFO)
+      .select<string, IPost>(SUPABASE_QUERY.POST.GET_POSTS_WITH_AUTHOR_INFO)
       .eq('access_type', AccessType.PUBLIC)
       .order('created_at', { ascending: false })
       .range(params.pageParam, params.pageParam + params.limit - 1)
@@ -41,7 +41,7 @@ export class SupabasePostAdapter
     let query = this.supabase
       .from('like')
       .select<string, ILikedPost>(
-        SUPABASE_QUERY.GET_LIKED_POSTS_WITH_AUTHOR_INFO,
+        SUPABASE_QUERY.POST.GET_LIKED_POSTS_WITH_AUTHOR_INFO,
       )
       .order('created_at', { ascending: false })
       .range(params.pageParam, params.pageParam + params.limit - 1)
@@ -58,7 +58,7 @@ export class SupabasePostAdapter
       .select<
         string,
         IPostDetail
-      >(SUPABASE_QUERY.GET_POST_DETAIL_WITH_AUTHOR_INFO_AND_COMMENTS)
+      >(SUPABASE_QUERY.POST.GET_POST_DETAIL_WITH_AUTHOR_INFO_AND_COMMENTS)
       .eq('id', params.postId)
       .single()
     query = this.addUserFilter(query, undefined, params.meId)
@@ -69,7 +69,7 @@ export class SupabasePostAdapter
   async getUserPostsThatDay(params: IGetUserPostsThatDay) {
     let query = this.supabase
       .from('post')
-      .select<string, IPost>(SUPABASE_QUERY.GET_POSTS_WITH_AUTHOR_INFO)
+      .select<string, IPost>(SUPABASE_QUERY.POST.GET_POSTS_WITH_AUTHOR_INFO)
       .gte('created_at', params.startOfDay)
       .lte('created_at', params.endOfDay)
       .eq('like.user_id', params.authorId)
@@ -84,7 +84,7 @@ export class SupabasePostAdapter
   async getUserPosts(params: IGetAllUserPosts) {
     let query = this.supabase
       .from('post')
-      .select<string, IPost>(SUPABASE_QUERY.GET_POSTS_WITH_AUTHOR_INFO)
+      .select<string, IPost>(SUPABASE_QUERY.POST.GET_POSTS_WITH_AUTHOR_INFO)
       .eq('post_type', params.postType)
       .order('created_at', { ascending: false })
       .range(params.pageParam, params.pageParam + params.limit - 1)

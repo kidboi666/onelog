@@ -7,19 +7,12 @@ import { AccessType, EmotionLevel, PostType } from '@/src/types/enums'
  */
 export interface IPostBaseAdapter {
   getAllPosts(params: IGetAllPosts): Promise<IPost[]>
-
   getPost(params: IGetPost): Promise<IPostDetail | null>
-
   getLikedPosts(params: IGetLikedPosts): Promise<ILikedPost[]>
-
   getUserPostsThatDay(params: IGetUserPostsThatDay): Promise<IPost[]>
-
   getUserPosts(params: IGetAllUserPosts): Promise<IPost[]>
-
   createPost(params: ICreatePost): Promise<void>
-
   deletePost(postId: number): Promise<void>
-
   updatePost(params: IUpdatePost): Promise<void>
 }
 

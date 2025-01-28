@@ -2,7 +2,7 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { ReactElement, useMemo, useState } from 'react'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { gardenQuery } from '@/src/services/queries/garden/garden-query'
 import { IDateBlock } from '@/src/types/garden'

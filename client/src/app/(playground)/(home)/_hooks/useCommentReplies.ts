@@ -1,6 +1,6 @@
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { useEffect, useState } from 'react'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { IComment } from '@/src/types/comment'
 import { IPostDetail } from '@/src/types/post'
 import { sortByDate } from '@/src/utils/client-utils'

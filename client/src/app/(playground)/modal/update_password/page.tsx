@@ -3,7 +3,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import useResetPassword from '@/src/services/mutates/auth/use-reset-password'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import Button from '@/src/components/Button'

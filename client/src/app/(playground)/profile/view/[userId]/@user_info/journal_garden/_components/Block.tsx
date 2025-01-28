@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useRef } from 'react'
 import cn from '@/src/lib/cn'
-import { colorTheme, useTheme } from '@/src/store/useTheme'
+import { colorTheme, useTheme } from '@/src/store/hooks/useTheme'
 import { IBlockInfo } from '@/src/types/garden'
 import { colorizeOpacity } from '@/src/utils/client-utils'
 import Button from '@/src/components/Button'

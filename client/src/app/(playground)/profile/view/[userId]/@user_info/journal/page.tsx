@@ -2,7 +2,7 @@
 
 import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { userQuery } from '@/src/services/queries/auth/user-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { PostType } from '@/src/types/enums'

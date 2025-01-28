@@ -4,11 +4,10 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
 import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import useAddTodo from '@/src/services/mutates/todo/useAddTodo'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { meQuery } from '@/src/services/queries/auth/me-query'
-import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
 import { Tables } from '@/src/types/supabase'
 import useInput from '@/src/hooks/useInput'
@@ -41,7 +40,7 @@ export default function TaskForm({ params, searchParams }: Props) {
   const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
 
   const { data: todoFolders } = useSuspenseQuery(
-    todoFolderQuery.getTodoFolder(supabase, me!.userId),
+    todoQuery.getTodoFolder(supabase, me!.userId),
   )
   const { data: fetchedTodos } = useSuspenseQuery(
     todoQuery.getTodoFromFolder(supabase, me!.userId, Number(folderId)),

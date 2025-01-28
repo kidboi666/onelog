@@ -1,7 +1,7 @@
-import { IGardenBaseAdapter } from '@/src/types/garden'
+import { IGardenBaseAdapter, IGetGarden } from '@/src/types/garden'
 
 export class NestGardenAdapter implements IGardenBaseAdapter {
-  getGarden(userId: string, selectedYear: number): Promise<any> {
+  getGarden(parmas: IGetGarden): Promise<any> {
     return Promise.resolve(undefined)
   }
 }

@@ -1,11 +1,12 @@
-import { NextRequest } from 'next/server';
-import { updateSession } from '@/src/lib/supabase/middleware';
-
+import { authGuard } from '@/src/middlewares/auth-guard'
+import { NextRequest } from 'next/server'
 
 export default function middleware(req: NextRequest) {
-  return updateSession(req)
+  return authGuard(req)
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
 }

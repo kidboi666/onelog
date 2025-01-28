@@ -1,11 +1,13 @@
+import { createAuthAdapter } from '@/src/adapters/index'
 import { TOAST_MESSAGE } from '@/src/constants'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import { TOAST_TYPE, useToast } from '@/src/store/useToast'
+import { useToast } from '@/src/store/hooks/useToast'
 import { IUpdateUserInfo } from '@/src/types/auth'
+import { ToastType } from '@/src/types/enums/index'
 import { ROUTES } from '@/src/routes'
 
 export default function useUpdateUserInfo() {
@@ -14,23 +16,8 @@ export default function useUpdateUserInfo() {
   const router = useRouter()
 
   return useMutation({
-    mutationFn: async (params: IUpdateUserInfo) => {
-      const { data, error } = await supabase.auth.updateUser({
-        data: {
-          about_me: params.aboutMe,
-          avatar_url: params.avatarUrl,
-          user_name: params.userName,
-        },
-      })
-
-      if (error) {
-        console.error(error)
-        throw error
-      }
-
-      return data
-    },
-
+    mutationFn: (params: IUpdateUserInfo) =>
+      createAuthAdapter(supabase).updateUserInfo(params),
     onSuccess: () => {
       const queryKeys = [QUERY_KEY.AUTH.INFO, QUERY_KEY.AUTH.SESSION]
       queryKeys.forEach((queryKey) =>
@@ -39,7 +26,7 @@ export default function useUpdateUserInfo() {
 
       openToast({
         text: TOAST_MESSAGE.USER_INFO.EDIT.SUCCESS,
-        type: TOAST_TYPE.SUCCESS,
+        type: ToastType.SUCCESS,
       })
 
       router.replace(ROUTES.MODAL.SUCCESS)
@@ -48,7 +35,7 @@ export default function useUpdateUserInfo() {
       openToast({
         text: TOAST_MESSAGE.USER_INFO.EDIT.EXCEPTION,
         message: error.message,
-        type: TOAST_TYPE.ERROR,
+        type: ToastType.ERROR,
       })
     },
   })

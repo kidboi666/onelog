@@ -7,7 +7,7 @@ import {
 } from '@/src/types/post'
 
 export default function usePostForm(initialPost: IPostDetail | null): {
-  formState: IUpdatePostFormStates
+  states: IUpdatePostFormStates
   actions: IUpdatePostFormActions
 } {
   const [formState, setFormState] = useState<
@@ -49,7 +49,7 @@ export default function usePostForm(initialPost: IPostDetail | null): {
   }, [formState.postType])
 
   return {
-    formState: { ...formState, content, tags },
+    states: { ...formState, content, tags },
     actions: {
       onChangeEmotion: handleChangeEmotion,
       onChangeAccessType: handleChangeAccessType,

@@ -2,7 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import useLikeMutates from '@/src/hooks/mutates/useLikeMutates'
 import useToggle from '@/src/hooks/useToggle'
@@ -19,13 +19,20 @@ interface Props {
   isLiked: boolean
 }
 
-export default function LikeButton({ viewToolTip, isSide, likeCount, postId, isLiked }: Props) {
+export default function LikeButton({
+  viewToolTip,
+  isSide,
+  likeCount,
+  postId,
+  isLiked,
+}: Props) {
   const router = useRouter()
   const { isOpen: isHover, open: hover, close: leave } = useToggle()
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
   const { onLikePost } = useLikeMutates({ isLiked, postId })
 
-  const authGuard = () => router.push(ROUTES.MODAL.AUTH.GUARD, { scroll: false })
+  const authGuard = () =>
+    router.push(ROUTES.MODAL.AUTH.GUARD, { scroll: false })
 
   const handleFavoritePost = (e: MouseEvent): void => {
     e.stopPropagation()
@@ -33,7 +40,11 @@ export default function LikeButton({ viewToolTip, isSide, likeCount, postId, isL
   }
 
   return (
-    <div onMouseEnter={hover} onMouseLeave={leave} className="relative size-fit">
+    <div
+      onMouseEnter={hover}
+      onMouseLeave={leave}
+      className="relative size-fit"
+    >
       <Button
         variant="icon"
         size={isSide ? 'md' : 'icon'}

@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
 import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import useAddTodo from '@/src/services/mutates/todo/useAddTodo'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'

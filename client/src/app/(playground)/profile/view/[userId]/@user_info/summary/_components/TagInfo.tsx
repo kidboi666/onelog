@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { RefObject } from 'react'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { wordQuery } from '@/src/services/queries/word/word-query'
 import { IFavoriteWord } from '@/src/types/word'
 import Spinner from '@/src/components/Spinner'

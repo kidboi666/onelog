@@ -1,17 +1,17 @@
-export type TTodoColor =
-  | 'black'
-  | 'green'
-  | 'yellow'
-  | 'blue'
-  | 'orange'
-  | 'red'
-  | 'purple'
+import { TodoFolderColorType } from '@/src/types/enums/index'
 
 export interface ITodoBaseAdapter {
-  getTodoInProgress: (userId: string) => Promise<ITodo[]>
-  getTodoInCompleted: (userId: string) => Promise<ITodo[]>
-  getTodoFromFolder: (params: IGetTodoFromFolder) => Promise<ITodo[]>
-  getTodoIndex: (params: IGetTodoIndex) => Promise<ITodo[]>
+  getTodoFolder(userId: string): Promise<ITodoFolder[]>
+  getTodoInProgress(userId: string): Promise<ITodo[]>
+  getTodoInCompleted(userId: string): Promise<ITodo[]>
+  getTodoFromFolder(params: IGetTodoFromFolder): Promise<ITodo[]>
+  getTodoIndex(params: IGetTodoIndex): Promise<ITodo[]>
+  createTodo(params: ICreateTodo): Promise<void>
+  createTodoFolder(params: ICreateTodoFolder): Promise<void>
+  updateTodo(params: IUpdateTodo): Promise<void>
+  updateTodoFolder(params: IUpdateTodoFolder): Promise<void>
+  deleteTodo(params: IDeleteTodo): Promise<void>
+  deleteTodoFolder(folderId: number): Promise<void>
 }
 
 export interface ITodo {
@@ -24,17 +24,49 @@ export interface ITodo {
   memo?: string
 }
 
-export interface TTodo {
-  pending: ITodo[]
-  success: ITodo[]
+export interface ITodoFolder {
+  color: TodoFolderColorType
+  createdAt: string
+  id: number
+  index: number
+  name: string
+  userId: string
 }
 
-export interface TodoFolder {
+export interface ICreateTodo {
+  name: string
+  folderId: number
+  userId?: string
+  index: number
+}
+
+export interface ICreateTodoFolder {
+  name: string
+  color: TodoFolderColorType
+  index: number
+  userId: string
+}
+
+export interface IDeleteTodo {
+  todoId: number
+  folderId: number
+}
+
+export interface IUpdateTodo {
   id: number
   name: string
-  createdAt: number
-  updatedAt: number
-  dotColor: TTodoColor
+  folderId: number
+  userId: string
+  memo: string
+  isComplete: boolean
+  updatedAt: string
+  index: number
+}
+
+export interface IUpdateTodoFolder {
+  id: number
+  name: string
+  color: TodoFolderColorType
   index: number
 }
 

@@ -1,7 +1,7 @@
 'use client'
 
-import { useTheme } from '@/src/store/useTheme'
 import cn from '@/src/lib/cn'
+import { useTheme } from '@/src/store/hooks/useTheme'
 import { TTheme } from '@/src/types/theme'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'

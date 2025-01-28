@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 
 export interface IGardenBaseAdapter {
-  getGarden: (params: IGetGarden) => Promise<any>
+  getGarden(params: IGetGarden): Promise<any>
 }
 
 export interface IDateBlock {

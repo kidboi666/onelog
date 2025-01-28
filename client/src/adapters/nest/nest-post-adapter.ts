@@ -1,8 +1,6 @@
 'use client'
 
 import { FETCH_URL } from '@/src/constants'
-import Error from 'next/error'
-import { undefined } from 'zod'
 import {
   ICreatePost,
   IGetAllPosts,
@@ -57,27 +55,17 @@ export class NestPostAdapter implements IPostBaseAdapter {
     }
   }
 
-  getUserPosts({
-    authorId,
-    postType,
-    pageParam,
-    limit,
-  }: IGetAllUserPosts): Promise<IPost[]> {
-    throw new Error('Method not implemented.')
+  createPost(params: ICreatePost): Promise<void> {
+    return Promise.resolve(undefined)
   }
 
-  createPost({
-    title,
-    content,
-    emotionLevel,
-    tags,
-    accessType,
-    postType,
-  }: ICreatePost): Promise<void> {
-    throw new Error('Method not implemented.')
+  deletePost(postId: number): Promise<void> {
+    return Promise.resolve(undefined)
   }
 
-  deletePost(postId: number): Promise<void> {}
+  getUserPosts(params: IGetAllUserPosts): Promise<IPost[]> {
+    return Promise.resolve([])
+  }
 
   updatePost(params: IUpdatePost): Promise<void> {
     return Promise.resolve(undefined)

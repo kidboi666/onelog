@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react'
 import cn from '@/src/lib/cn'
-import { useToast } from '@/src/store/useToast'
+import { useToast } from '@/src/store/hooks/useToast'
 import { XStack, YStack } from '@/src/components/Stack'
 import TextDisplay from '@/src/components/TextDisplay'
 import Button from './Button'

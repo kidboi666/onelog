@@ -3,7 +3,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import usePostComment from '@/src/services/mutates/comment/usePostComment'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { IUserSession } from '@/src/types/auth'

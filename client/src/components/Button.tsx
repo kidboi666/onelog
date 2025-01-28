@@ -3,7 +3,7 @@
 import { cva } from 'class-variance-authority'
 import { ComponentProps, PropsWithRef, forwardRef, useMemo } from 'react'
 import cn from '@/src/lib/cn'
-import { colorTheme, useTheme } from '@/src/store/useTheme'
+import { colorTheme, useTheme } from '@/src/store/hooks/useTheme'
 import Spinner from './Spinner'
 
 export interface ButtonProps extends ComponentProps<'button'> {

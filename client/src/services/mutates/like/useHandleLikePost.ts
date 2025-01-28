@@ -1,10 +1,10 @@
 import { TOAST_MESSAGE } from '@/src/constants'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import { TOAST_TYPE, useToast } from '@/src/store/useToast'
-import { PostType } from '@/src/types/enums'
+import { useToast } from '@/src/store/hooks/useToast'
+import { PostType, ToastType } from '@/src/types/enums'
 
 interface IFavorite {
   postId?: number
@@ -52,7 +52,7 @@ export default function useHandleLikePost(isLike: boolean | null | undefined) {
           ? TOAST_MESSAGE.LIKE.CANCEL.EXCEPTION
           : TOAST_MESSAGE.LIKE.SEND.EXCEPTION,
         message: error.message,
-        type: TOAST_TYPE.ERROR,
+        type: ToastType.ERROR,
       })
     },
     onSettled: (_, __, variables) => {
@@ -60,7 +60,7 @@ export default function useHandleLikePost(isLike: boolean | null | undefined) {
         text: isLike
           ? TOAST_MESSAGE.LIKE.CANCEL.SUCCESS
           : TOAST_MESSAGE.LIKE.SEND.SUCCESS,
-        type: TOAST_TYPE.SUCCESS,
+        type: ToastType.SUCCESS,
       })
       const {
         postId,

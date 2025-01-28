@@ -1,7 +1,8 @@
 import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
-import { TOAST_TYPE, useToast } from '@/src/store/useToast'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
+import { useToast } from '@/src/store/hooks/useToast'
+import { ToastType } from '@/src/types/enums/index'
 
 interface IReport {
   reporterId?: string
@@ -37,12 +38,12 @@ export default function useReport() {
       if (targetCommentId) {
         openToast({
           text: TOAST_MESSAGE.REPORT.COMMENT.SUCCESS,
-          type: TOAST_TYPE.SUCCESS,
+          type: ToastType.SUCCESS,
         })
       } else {
         openToast({
           text: TOAST_MESSAGE.REPORT.POST.SUCCESS,
-          type: TOAST_TYPE.SUCCESS,
+          type: ToastType.SUCCESS,
         })
       }
     },
@@ -52,13 +53,13 @@ export default function useReport() {
         openToast({
           text: TOAST_MESSAGE.REPORT.COMMENT.EXCEPTION,
           message: error.message,
-          type: TOAST_TYPE.ERROR,
+          type: ToastType.ERROR,
         })
       } else {
         openToast({
           text: TOAST_MESSAGE.REPORT.POST.EXCEPTION,
           message: error.message,
-          type: TOAST_TYPE.ERROR,
+          type: ToastType.ERROR,
         })
       }
     },

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createServerClient } from '@/src/lib/supabase/server'
+import { createServerClient } from '@/src/lib/supabase/create-server-client'
 import { ROUTES } from '@/src/routes'
 
 export async function GET(req: Request) {

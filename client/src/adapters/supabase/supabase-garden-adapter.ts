@@ -1,9 +1,9 @@
-import { SupabaseHelpers } from '@/src/adapters/supabase/supabase-helpers'
+import { QueryHelpers } from '@/src/adapters/query-helpers'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { IGardenBaseAdapter, IGetGarden } from '@/src/types/garden'
 
 export class SupabaseGardenAdapter
-  extends SupabaseHelpers
+  extends QueryHelpers
   implements IGardenBaseAdapter
 {
   constructor(private readonly supabase: SupabaseClient) {
@@ -21,10 +21,7 @@ export class SupabaseGardenAdapter
       .gte('created_at', startOfYear)
       .lte('created_at', endOfYear)
 
-    if (error) {
-      this.handleError(error)
-    }
-
+    this.handleError(error)
     return this.transformResponse(data)
   }
 }

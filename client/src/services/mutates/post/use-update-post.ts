@@ -1,11 +1,11 @@
 import { createPostAdapter } from '@/src/adapters'
 import { TOAST_MESSAGE } from '@/src/constants'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import { TOAST_TYPE, useToast } from '@/src/store/useToast'
-import { PostType } from '@/src/types/enums'
+import { useToast } from '@/src/store/hooks/useToast'
+import { PostType, ToastType } from '@/src/types/enums'
 import { IUpdatePost } from '@/src/types/post'
 
 export default function useUpdatePost() {
@@ -29,14 +29,14 @@ export default function useUpdatePost() {
 
       openToast({
         text: TOAST_MESSAGE.POST.UPDATE.SUCCESS,
-        type: TOAST_TYPE.SUCCESS,
+        type: ToastType.SUCCESS,
       })
     },
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.POST.DELETE.EXCEPTION,
         message: error.message,
-        type: TOAST_TYPE.ERROR,
+        type: ToastType.ERROR,
       })
     },
   })

@@ -1,16 +1,10 @@
 import { create } from 'zustand'
-
-export enum TOAST_TYPE {
-  INFO = 'info',
-  ERROR = 'error',
-  WARNING = 'warning',
-  SUCCESS = 'success',
-}
+import { ToastType } from '@/src/types/enums/index'
 
 export interface ToastContent {
   id: number
   text: string
-  type: TOAST_TYPE
+  type: ToastType
   message?: string
 }
 
@@ -36,7 +30,9 @@ export const useToast = create<ToastState>((set) => ({
 
   closeToast: (toastId) =>
     set((state) => {
-      const nextToastContents = state.toastContents.filter((toast) => toast.id !== toastId)
+      const nextToastContents = state.toastContents.filter(
+        (toast) => toast.id !== toastId,
+      )
       return { toastContents: nextToastContents }
     }),
 }))

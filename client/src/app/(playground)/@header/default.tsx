@@ -1,5 +1,5 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
-import { createServerClient } from '@/src/lib/supabase/server'
+import { createServerClient } from '@/src/lib/supabase/create-server-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { XStack } from '@/src/components/Stack'

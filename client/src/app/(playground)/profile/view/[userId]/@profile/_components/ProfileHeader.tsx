@@ -1,7 +1,7 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { userQuery } from '@/src/services/queries/auth/user-query'
 import Avatar from '@/src/components/Avatar'
 import { YStack, ZStack } from '@/src/components/Stack'

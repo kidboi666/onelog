@@ -1,7 +1,7 @@
 import { PostgrestError } from '@supabase/supabase-js'
 import { APIError } from '@/src/utils/fetcher'
 
-export class SupabaseHelpers {
+export class QueryHelpers {
   // 스네이크 -> 카멜 케이스 변환 실행기
   protected transformResponse<T>(data: T): T {
     if (Array.isArray(data)) {

@@ -1,8 +1,8 @@
 'use client'
 
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { useRouter } from 'next/navigation'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import useDeleteTodo from '@/src/services/mutates/todo/useDeleteTodo'
 import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'

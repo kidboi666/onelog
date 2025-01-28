@@ -1,7 +1,7 @@
 'use client'
 
 import cn from '@/src/lib/cn'
-import { useTheme } from '@/src/store/useTheme'
+import { useTheme } from '@/src/store/hooks/useTheme'
 import { ROUTES } from '@/src/routes'
 import Icon from '@/src/components/Icon'
 import LinkButton from '@/src/components/LinkButton'

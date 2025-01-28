@@ -1,8 +1,8 @@
 import { createTodoAdapter } from '@/src/adapters/index'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { queryOptions } from '@tanstack/react-query'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import { ITodo } from '@/src/types/todo'
+import { ITodo, ITodoFolder } from '@/src/types/todo'
 
 export const todoQuery = {
   getTodoFromFolder: (
@@ -33,5 +33,11 @@ export const todoQuery = {
       queryKey: QUERY_KEY.TODO.INDEX(folderId),
       queryFn: () =>
         createTodoAdapter(supabase).getTodoIndex({ meId, folderId }),
+    }),
+
+  getTodoFolder: (supabase: SupabaseClient, meId: string) =>
+    queryOptions<ITodoFolder[]>({
+      queryKey: QUERY_KEY.TODO.MAIN,
+      queryFn: () => createTodoAdapter(supabase).getTodoFolder(meId),
     }),
 }

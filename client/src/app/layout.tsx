@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { ReactNode } from 'react'
-import ReactQueryProvider from '@/src/store/context/query-client-provider'
-import ThemeProvider from '@/src/store/context/theme-provider'
+import ReactQueryProvider from '@/src/store/providers/query-client-provider'
+import ThemeProvider from '@/src/store/providers/theme-provider'
 import { ErrorBoundary } from '@/src/components/ErrorBoundary'
 import './globals.css'
 

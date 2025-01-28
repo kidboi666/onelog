@@ -1,11 +1,12 @@
 import { createAuthAdapter } from '@/src/adapters'
 import { TOAST_MESSAGE } from '@/src/constants'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
-import { TOAST_TYPE, useToast } from '@/src/store/useToast'
+import { useToast } from '@/src/store/hooks/useToast'
 import { ISignIn } from '@/src/types/auth'
+import { ToastType } from '@/src/types/enums/index'
 import { ROUTES } from '@/src/routes'
 
 export default function useSignIn() {
@@ -19,7 +20,7 @@ export default function useSignIn() {
       window.location.href = ROUTES.HOME
       openToast({
         text: TOAST_MESSAGE.AUTH.SIGN_IN.SUCCESS,
-        type: TOAST_TYPE.SUCCESS,
+        type: ToastType.SUCCESS,
         message: TOAST_MESSAGE.AUTH.SIGN_IN.MESSAGE,
       })
     },
@@ -27,7 +28,7 @@ export default function useSignIn() {
       openToast({
         text: TOAST_MESSAGE.AUTH.SIGN_IN.EXCEPTION,
         message: error.message,
-        type: TOAST_TYPE.ERROR,
+        type: ToastType.ERROR,
       })
     },
     onSettled: () => {

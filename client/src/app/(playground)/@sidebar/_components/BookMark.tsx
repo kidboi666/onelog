@@ -1,5 +1,5 @@
 import cn from '@/src/lib/cn'
-import { colorTheme, useTheme } from '@/src/store/useTheme'
+import { colorTheme, useTheme } from '@/src/store/hooks/useTheme'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
 interface Props {

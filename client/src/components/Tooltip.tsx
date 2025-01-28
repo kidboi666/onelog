@@ -1,9 +1,9 @@
 'use client'
 
-import { colorTheme, useTheme } from '@/src/store/useTheme'
 import { cva } from 'class-variance-authority'
 import { useEffect } from 'react'
 import cn from '@/src/lib/cn'
+import { colorTheme, useTheme } from '@/src/store/hooks/useTheme'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 
 interface Props {
@@ -20,9 +20,12 @@ const toolTipBox = cva(
     variants: {
       position: {
         top: '-top-full',
-        topLeft: '-top-[calc(100%-8px)] left-2 data-[status=closed]:translate-y-1',
-        bottomLeft: '-bottom-[calc(100%-4px)] left-2 data-[status=closed]:translate-y-1',
-        bottomRight: '-bottom-[calc(100%-4px)] right-2 data-[status=closed]:translate-y-1',
+        topLeft:
+          '-top-[calc(100%-8px)] left-2 data-[status=closed]:translate-y-1',
+        bottomLeft:
+          '-bottom-[calc(100%-4px)] left-2 data-[status=closed]:translate-y-1',
+        bottomRight:
+          '-bottom-[calc(100%-4px)] right-2 data-[status=closed]:translate-y-1',
         left: '-left-full',
         right:
           '-right-[calc(100%*2-4px)] top-1/2 -translate-y-1/2 data-[status=closed]:-translate-x-1',
@@ -57,7 +60,8 @@ export default function ToolTip({
   isHover,
   className,
 }: Props) {
-  const { ref, open, close, onTransitionEnd } = useDataDrivenAnimation<HTMLDivElement>()
+  const { ref, open, close, onTransitionEnd } =
+    useDataDrivenAnimation<HTMLDivElement>()
   const { color } = useTheme()
 
   useEffect(() => {
@@ -78,9 +82,14 @@ export default function ToolTip({
             colorTheme({ color }),
           )}
         >
-          <div className={cn(toolTipArrow({ position }), colorTheme({ color }))} />
+          <div
+            className={cn(toolTipArrow({ position }), colorTheme({ color }))}
+          />
           <span
-            className={cn(colorTheme({ color }), 'text-nowrap text-xs font-semibold text-white')}
+            className={cn(
+              colorTheme({ color }),
+              'text-nowrap text-xs font-semibold text-white',
+            )}
           >
             {text}
           </span>

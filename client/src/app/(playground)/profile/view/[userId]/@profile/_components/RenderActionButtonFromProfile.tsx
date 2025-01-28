@@ -1,7 +1,7 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
 import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
@@ -27,10 +27,11 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
     isMyProfilePage = session?.userId === userId
   }
 
-  const [isLoadingProfile, handlePushEditProfilePage] = useRouterPushWithTransition(
-    ROUTES.PROFILE.EDIT,
+  const [isLoadingProfile, handlePushEditProfilePage] =
+    useRouterPushWithTransition(ROUTES.PROFILE.EDIT)
+  const [isLoadingWrite, handlePushNewPostPage] = useRouterPushWithTransition(
+    ROUTES.POST.NEW,
   )
-  const [isLoadingWrite, handlePushNewPostPage] = useRouterPushWithTransition(ROUTES.POST.NEW)
 
   const handleSendMessageButtonClick = () => {
     return null
@@ -52,7 +53,11 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
           >
             프로필 수정
           </Button>
-          <Button size="sm" isLoading={isLoadingWrite} onClick={handlePushNewPostPage}>
+          <Button
+            size="sm"
+            isLoading={isLoadingWrite}
+            onClick={handlePushNewPostPage}
+          >
             글쓰기
           </Button>
         </>
@@ -66,7 +71,11 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
           >
             {isFollowing ? '팔로우 취소' : '팔로우 하기'}
           </Button>
-          <Button size="sm" variant="secondary" onClick={handleSendMessageButtonClick}>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={handleSendMessageButtonClick}
+          >
             메시지 보내기
           </Button>
         </>

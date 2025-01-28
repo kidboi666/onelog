@@ -1,11 +1,11 @@
 import { createPostAdapter } from '@/src/adapters'
+import { QUERY_KEY } from '@/src/constants/query-key'
 import { SupabaseClient } from '@supabase/supabase-js'
 import {
   InfiniteData,
   infiniteQueryOptions,
   queryOptions,
 } from '@tanstack/react-query'
-import { QUERY_KEY } from '@/src/lib/tanstack/query-key'
 import { PostType } from '@/src/types/enums'
 import { ILikedPost, IPost, IPostDetail } from '@/src/types/post'
 import { APIError } from '@/src/utils/fetcher'

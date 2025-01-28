@@ -11,7 +11,7 @@ import {
   useTransition,
 } from 'react'
 import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'

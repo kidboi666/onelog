@@ -1,10 +1,10 @@
 'use client'
 
+import { signInSchema } from '@/src/schemas/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import cn from '@/src/lib/cn'
-import { signInSchema } from '@/src/lib/validators/auth'
 import useSignIn from '@/src/services/mutates/auth/use-sign-in'
 import { useSignInOauth } from '@/src/services/mutates/auth/use-sign-in-oauth'
 import { ISignIn } from '@/src/types/auth'

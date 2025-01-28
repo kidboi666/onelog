@@ -1,8 +1,8 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
-import { createServerClient } from '@/src/lib/supabase/server'
+import { createServerClient } from '@/src/lib/supabase/create-server-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
-import { todoFolderQuery } from '@/src/services/queries/todo/todo-folder-query'
+import { todoQuery } from '@/src/services/queries/todo/todo-query'
 import { IUserSession } from '@/src/types/auth'
 import Title from '@/src/components/Title'
 import TodoFoldersSection from '../_components/TodoFoldersSection'
@@ -15,9 +15,7 @@ export default async function TodoDashBoard() {
   const res = queryClient.getQueryData<IUserSession>(['me', 'session'])
 
   if (res) {
-    await queryClient.prefetchQuery(
-      todoFolderQuery.getTodoFolder(supabase, res.id),
-    )
+    await queryClient.prefetchQuery(todoQuery.getTodoFolder(supabase, res.id))
   }
 
   return (

@@ -128,6 +128,7 @@ export const TOAST_MESSAGE = {
     CLIPBOARD: '주소가 복사되었습니다.',
   },
 }
+
 export const FETCH_URL = {
   AUTH: {
     SIGN_IN: `/auth/signin`,
@@ -158,14 +159,28 @@ export const FETCH_URL = {
 }
 
 export const SUPABASE_QUERY = {
-  GET_POSTS_WITH_AUTHOR_INFO:
-    '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)',
-  GET_LIKED_POSTS_WITH_AUTHOR_INFO:
-    '*, post!like_post_id_fkey(*, comment_count:comment(count), liked_count:like(count), user_info(user_name, avatar_url, email, about_me))',
-  GET_POST_DETAIL_WITH_AUTHOR_INFO_AND_COMMENTS:
-    '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), comments:comment(*, user_info(email, user_name, avatar_url, about_me)), user_info(email, user_name, avatar_url, about_me)',
-}
+  POST: {
+    GET_POSTS_WITH_AUTHOR_INFO:
+      '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), user_info(email, user_name, avatar_url, about_me)',
+    GET_LIKED_POSTS_WITH_AUTHOR_INFO:
+      '*, post!like_post_id_fkey(*, comment_count:comment(count), liked_count:like(count), user_info(user_name, avatar_url, email, about_me))',
+    GET_POST_DETAIL_WITH_AUTHOR_INFO_AND_COMMENTS:
+      '*, comment_count:comment(count), is_liked:like(user_id), like_count:like(count), comments:comment(*, user_info(email, user_name, avatar_url, about_me)), user_info(email, user_name, avatar_url, about_me)',
+  },
+  FOLLOW: {
+    GET_FOLLOWERS: '*, user_info!follow_follower_user_id_fkey(*)',
+    GET_FOLLOWINGS: '*, user_info!follow_followed_user_id_fkey(*)',
+    GET_FOLLOWERS_COUNT: {
+      query: 'followed_user_id',
+      options: { count: 'exact', head: true },
+    },
+    GET_FOLLOWINGS_COUNT: {
+      query: 'follower_user_id',
+      options: { count: 'exact', head: true },
+    },
+  },
+} as const
 
 export const PAGINATION = {
   LIMIT: 4,
-}
+} as const

@@ -1,4 +1,4 @@
-import { createServerClient } from '@/src/lib/supabase/server'
+import { createServerClient } from '@/src/lib/supabase/create-server-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 
 export const initClientForServer = () => {

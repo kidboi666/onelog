@@ -1,5 +1,5 @@
 import cn from '@/src/lib/cn'
-import { useTheme } from '@/src/store/useTheme'
+import { useTheme } from '@/src/store/hooks/useTheme'
 import { EmotionLevel } from '@/src/types/enums'
 import { TColor } from '@/src/types/theme'
 

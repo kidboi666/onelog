@@ -1,7 +1,7 @@
 'use client'
 
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/client'
+import { useQueries, useSuspenseQuery } from '@tanstack/react-query'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { XStack } from '@/src/components/Stack'
@@ -16,11 +16,15 @@ interface Props {
 export default function Page({ searchParams }: Props) {
   const postId = Number(searchParams?.post_id)
   const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
-  const { data: me } = useQuery(meQuery.getUserInfo(supabase, session?.id))
-  const { data: post } = useQuery(postQuery.getPost(supabase, postId))
-  const { formState, actions } = usePostForm(post ?? null)
+  const [post, me] = useQueries({
+    queries: [
+      meQuery.getSession(supabase),
+      postQuery.getPost(supabase, postId),
+    ],
+  })
+  const { states, actions } = usePostForm(post.data ?? null)
 
-  const { accessType, postType, emotionLevel } = formState
+  const { accessType, postType, emotionLevel } = states
   const { onChangeAccessType, onChangePostType, onChangeEmotion } = actions
 
   if (!me) {
@@ -37,7 +41,7 @@ export default function Page({ searchParams }: Props) {
         avatarUrl={avatarUrl}
         userName={userName}
         email={email}
-        formState={formState}
+        formState={states}
         actions={actions}
       />
       <SideOptionsBar

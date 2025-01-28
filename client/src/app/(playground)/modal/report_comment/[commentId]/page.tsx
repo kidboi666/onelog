@@ -3,7 +3,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-import { supabase } from '@/src/lib/supabase/client'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
 import useReport from '@/src/services/mutates/report/useReport'
 import { meQuery } from '@/src/services/queries/auth/me-query'
 import useInput from '@/src/hooks/useInput'
@@ -48,7 +48,11 @@ export default function ReportCommentModal({ params }: Props) {
         <TextArea value={reason} onChange={onChangeReasonValue} />
       </YStack>
       <XStack gap={4} className="w-full">
-        <Button variant="secondary" onClick={() => router.back()} className="flex-1">
+        <Button
+          variant="secondary"
+          onClick={() => router.back()}
+          className="flex-1"
+        >
           취소하기
         </Button>
         <Button
