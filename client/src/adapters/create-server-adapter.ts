@@ -24,13 +24,11 @@ import { SupabaseClient } from '@supabase/supabase-js'
 import { createServerClient } from '@/src/lib/supabase/create-server-client'
 import { Provider } from '@/src/types/enums/index'
 
-// 기본 팩토리 타입 정의
 type AdapterFactory<T> = {
   supabase: (client: SupabaseClient) => T
   nest: () => T
 }
 
-// 서버 어댑터 생성 함수
 export const createServerAdapter = async () => {
   const databaseProvider =
     (process.env.NEXT_PUBLIC_DB_PROVIDER as Provider) ?? Provider.SUPABASE

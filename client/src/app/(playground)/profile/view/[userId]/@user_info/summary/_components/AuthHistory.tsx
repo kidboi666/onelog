@@ -2,9 +2,9 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { colorTheme, useTheme } from '@/src/store/hooks/useTheme'
-import { userQuery } from '@/src/services/queries/auth/user-query'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
 import { postCountQuery } from '@/src/services/queries/post/post-count-query'
+import { userQuery } from '@/src/services/queries/user/user-query'
 import { getSignUpDays } from '@/src/utils/client-utils'
 import { XStack } from '@/src/components/Stack'
 import HistoryBlock from './HistoryBlock'

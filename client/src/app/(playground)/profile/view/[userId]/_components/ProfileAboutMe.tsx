@@ -1,7 +1,7 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { userQuery } from '@/src/services/queries/auth/user-query'
+import { userQuery } from '@/src/services/queries/user/user-query'
 import { ZStack } from '@/src/components/Stack'
 import TextDisplay from '@/src/components/TextDisplay'
 

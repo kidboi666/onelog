@@ -90,10 +90,7 @@ export default function MobileMenu({
           {me ? (
             <AuthButtonWithDropDown
               viewText
-              email={me.email}
-              meId={me.id}
-              avatarUrl={me.avatarUrl}
-              userName={me.userName}
+              me={me}
               closeMenu={close}
               pathname={pathname.split('/')[1]}
               userId={pathname.split('/')[2]}

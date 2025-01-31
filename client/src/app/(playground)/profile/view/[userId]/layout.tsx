@@ -12,7 +12,7 @@ export async function generateMetadata({ params: { userId } }: Props) {
   const userServerAdapter = await createUserServerAdapter()
   const userInfo = await userServerAdapter.getUserInfo(userId)
   return {
-    title: `${userInfo.userName}`,
+    title: `${userInfo?.userName}`,
   }
 }
 
