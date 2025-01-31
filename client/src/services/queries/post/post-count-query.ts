@@ -1,10 +1,10 @@
-import { QUERY_KEY } from '@/src/constants/query-key'
-import { SupabaseClient } from '@supabase/supabase-js'
+import { QUERY_KEY } from '@/src/constants/index'
 import { queryOptions } from '@tanstack/react-query'
-import { PostType } from '@/src/types/enums'
+import { supabase } from '@/src/lib/supabase/create-browser-client'
+import { PostType } from '@/src/types/enums/index'
 
 export const postCountQuery = {
-  countLikedPost: (supabase: SupabaseClient, userId: string) =>
+  countLikedPost: (userId: string) =>
     queryOptions({
       queryKey: QUERY_KEY.POST.COUNT.LIKED(userId),
       queryFn: async () => {
@@ -17,7 +17,7 @@ export const postCountQuery = {
       enabled: !!userId,
     }),
 
-  countAllMyPost: (supabase: SupabaseClient, userId: string) =>
+  countAllMyPost: (userId: string) =>
     queryOptions({
       queryKey: QUERY_KEY.POST.COUNT.TOTAL(userId),
       queryFn: async () => {
@@ -31,11 +31,7 @@ export const postCountQuery = {
       enabled: !!userId,
     }),
 
-  countAllPost: (
-    supabase: SupabaseClient,
-    userId: string,
-    postType: PostType,
-  ) =>
+  countAllPost: (userId: string, postType: PostType) =>
     queryOptions({
       queryKey: QUERY_KEY.POST.COUNT.POST_TYPE(userId, postType),
       queryFn: async () => {

@@ -1,13 +1,12 @@
-import { createUserAdapter } from '@/src/adapters/index'
-import { QUERY_KEY } from '@/src/constants/query-key'
-import { SupabaseClient } from '@supabase/supabase-js'
+import { userAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY } from '@/src/constants/index'
 import { queryOptions } from '@tanstack/react-query'
-import { IUserInfo } from '@/src/types/auth'
+import { IUserInfo } from '@/src/types/entities/auth'
 
 export const userQuery = {
-  getUserInfo: (supabase: SupabaseClient, userId: string) =>
-    queryOptions<Promise<IUserInfo>>({
+  getUserInfo: (userId: string) =>
+    queryOptions<IUserInfo>({
       queryKey: QUERY_KEY.USER.INFO(userId),
-      queryFn: () => createUserAdapter(supabase).getUserInfo(userId),
+      queryFn: () => userAdapter.getUserInfo(userId),
     }),
 }

@@ -1,46 +1,34 @@
+import { createUserServerAdapter } from '@/src/adapters/create-server-adapter'
 import { PropsWithChildren, ReactNode } from 'react'
-import { createServerClient } from '@/src/lib/supabase/create-server-client'
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { userQuery } from '@/src/services/queries/auth/user-query'
-import { Tables } from '@/src/types/supabase'
-import { YStack } from '@/src/components/Stack'
+import { YStack, ZStack } from '@/src/components/Stack'
+import MenuSection from '@/src/app/(playground)/profile/view/[userId]/@user_info/journal_garden/_components/MenuSection'
 
-interface MetadataProps {
-  params: { userId: string }
-  profile: ReactNode
+interface Props {
   user_info: ReactNode
+  params: { userId: string }
 }
 
-export async function generateMetadata({ params }: MetadataProps) {
-  const queryClient = getQueryClient()
-  const supabase = createServerClient()
-
-  await queryClient.prefetchQuery(
-    userQuery.getUserInfo(supabase, params.userId),
-  )
-  const userInfo = queryClient.getQueryData<Tables<'user_info'>>([
-    'user',
-    'info',
-    params.userId,
-  ])
-
+export async function generateMetadata({ params: { userId } }: Props) {
+  const userServerAdapter = await createUserServerAdapter()
+  const userInfo = await userServerAdapter.getUserInfo(userId)
   return {
-    title: `${userInfo?.user_name}`,
+    title: `${userInfo.userName}`,
   }
 }
 
-interface Props {
-  profile: ReactNode
-  user_info: ReactNode
-}
-
-export default async function UserLayout({
-  profile,
+export default function UserLayout({
+  params: { userId },
+  children,
   user_info,
 }: PropsWithChildren<Props>) {
   return (
     <YStack gap={8} className="animate-fade-in">
-      {profile}
+      <div className="overflow-x-auto rounded-md bg-white p-1 shadow-sm dark:bg-var-darkgray">
+        <ZStack gap={2}>
+          <MenuSection userId={userId} />
+        </ZStack>
+      </div>
+      {children}
       {user_info}
     </YStack>
   )

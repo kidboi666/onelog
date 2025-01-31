@@ -3,10 +3,9 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { PropsWithChildren, useEffect, useRef } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
-import { Tables } from '@/src/types/supabase'
+import { ITodo } from '@/src/types/entities/todo'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import BackButtonSection from './BackButtonSection'
 
@@ -21,9 +20,9 @@ export default function MouseEventSection({
   folderId,
 }: PropsWithChildren<Props>) {
   const router = useRouter()
-  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
   const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, session!.userId, Number(folderId)),
+    todoQuery.getTodoFromFolder(me!.id, Number(folderId)),
   )
   const isMouseDown = useRef<boolean>(false)
   const {
@@ -31,10 +30,10 @@ export default function MouseEventSection({
     open,
     ref: insideRef,
   } = useDataDrivenAnimation<HTMLDivElement>()
-  let todo: Tables<'todo'>
+  let todo: ITodo | null
 
   if (todos) {
-    todo = todos.find((item) => item.id === Number(todoId))!
+    todo = todos.find((item) => item.id === Number(todoId)) || null
   }
 
   const handleCloseTodoInfo = () => {

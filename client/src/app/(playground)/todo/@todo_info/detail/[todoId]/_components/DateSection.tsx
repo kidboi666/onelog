@@ -1,17 +1,17 @@
 'use client'
 
-import { Tables } from '@/src/types/supabase'
+import { ITodo } from '@/src/types/entities/todo'
 import { formatDateToHM, formatDateToMDY } from '@/src/utils/client-utils'
 import TextDisplay from '@/src/components/TextDisplay'
 import Title from '@/src/components/Title'
 
 interface Props {
-  todo?: Tables<'todo'>
+  todo: ITodo
 }
 
 export default function DateSection({ todo }: Props) {
-  const createdAt = todo?.created_at
-  const updatedAt = todo?.updated_at || null
+  const createdAt = todo.createdAt
+  const updatedAt = todo.updatedAt || null
 
   return (
     <>

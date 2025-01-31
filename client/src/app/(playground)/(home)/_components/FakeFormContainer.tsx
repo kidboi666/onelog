@@ -1,11 +1,9 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
+import { useMe } from '@/src/store/hooks/useMe'
 import { useTheme } from '@/src/store/hooks/useTheme'
-import { meQuery } from '@/src/services/queries/auth/me-query'
 import { ROUTES } from '@/src/routes'
 import Avatar from '@/src/components/Avatar'
 import { XStack } from '@/src/components/Stack'
@@ -13,8 +11,7 @@ import TextDisplay from '@/src/components/TextDisplay'
 
 export default function FakeFormContainer() {
   const router = useRouter()
-  const { data: session } = useQuery(meQuery.getSession(supabase))
-  const { data: me } = useQuery(meQuery.getUserInfo(supabase, session?.id))
+  const { me } = useMe()
   const { color } = useTheme()
 
   const pushNewPost = () => router.push(ROUTES.POST.NEW)

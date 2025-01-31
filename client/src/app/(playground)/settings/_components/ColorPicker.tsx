@@ -2,19 +2,17 @@
 
 import cn from '@/src/lib/cn'
 import { colorTheme, useTheme } from '@/src/store/hooks/useTheme'
-import { TColor } from '@/src/types/theme'
+import { ColorScheme } from '@/src/types/enums'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'
 import { YStack } from '@/src/components/Stack'
 import Title from '@/src/components/Title'
 
-const colors: TColor[] = ['black', 'green', 'yellow', 'blue', 'orange']
-
 export default function ColorPicker() {
   const { color: currentColor, setColor } = useTheme()
 
-  const handleColorChange = (selectedColor: TColor) => {
+  const handleColorChange = (selectedColor: ColorScheme) => {
     setColor(selectedColor)
     localStorage.setItem('color-theme', selectedColor)
   }
@@ -23,7 +21,7 @@ export default function ColorPicker() {
     <YStack>
       <Title>색상 설정</Title>
       <List className="flex gap-4 overflow-y-auto">
-        {colors.map((color) => (
+        {Object.values(ColorScheme).map((color) => (
           <List.Row key={color}>
             <ColorBlock
               color={color}
@@ -38,9 +36,9 @@ export default function ColorPicker() {
 }
 
 interface ColorBlockProps {
-  color: TColor
-  onClick: (color: TColor) => void
-  selectedColor: TColor
+  color: ColorScheme
+  onClick: (color: ColorScheme) => void
+  selectedColor: ColorScheme
 }
 
 function ColorBlock({ color, onClick, selectedColor }: ColorBlockProps) {

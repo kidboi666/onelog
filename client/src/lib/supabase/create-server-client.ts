@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 export const createServerClient = () => {
   const cookieStore = cookies()
 
-  return createClient(SUPABASE_CONFIG.url!, SUPABASE_CONFIG.key!, {
+  return createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key, {
     cookies: {
       getAll() {
         return cookieStore.getAll()

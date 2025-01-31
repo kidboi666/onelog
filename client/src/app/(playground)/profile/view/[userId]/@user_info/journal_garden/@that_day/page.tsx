@@ -1,9 +1,8 @@
 'use client'
 
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { Fragment, useEffect, useState } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import Empty from '@/src/components/Empty'
 import Spinner from '@/src/components/Spinner'
@@ -20,18 +19,12 @@ export default function PrevOnePost({ params, searchParams }: Props) {
   const year = parseInt(searchParams.year)
   const month = parseInt(searchParams.month)
   const date = parseInt(searchParams.date)
-  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
   const [startOfDay, setStartOfDay] = useState('')
   const [endOfDay, setEndOfDay] = useState('')
 
   const { data: posts, isFetching } = useQuery(
-    postQuery.getUserPostThatDay(
-      supabase,
-      params.userId,
-      startOfDay,
-      endOfDay,
-      session?.userId,
-    ),
+    postQuery.getUserPostThatDay(params.userId, startOfDay, endOfDay, me?.id),
   )
 
   useEffect(() => {
@@ -83,7 +76,7 @@ export default function PrevOnePost({ params, searchParams }: Props) {
               {posts?.map((post) => (
                 <Fragment key={post.id}>
                   {post.content ? (
-                    <PostCard post={post} postUserInfo={post?.user_info} />
+                    <PostCard post={post} />
                   ) : (
                     <Empty isShadow>
                       <Empty.Icon view="0 -960 960 960" size={20}>

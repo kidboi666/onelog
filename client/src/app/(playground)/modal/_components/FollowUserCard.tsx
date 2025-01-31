@@ -1,12 +1,12 @@
 import { MouseEvent } from 'react'
-import { TFollower } from '@/src/types/follow'
+import { IFollower } from '@/src/types/entities/follower'
 import Avatar from '@/src/components/Avatar'
 import Button from '@/src/components/Button'
 import { XStack, YStack } from '@/src/components/Stack'
 import TextDisplay from '@/src/components/TextDisplay'
 
 interface Props {
-  follower: TFollower
+  follower: IFollower
   onFollow: (e: MouseEvent) => void
   isFollowing: boolean
   isMe: boolean
@@ -31,13 +31,13 @@ export default function FollowUserCard({
         <XStack gap={4} key={follower.id} className="items-center">
           <Avatar
             size="base"
-            src={follower.user_info.avatar_url}
+            src={follower.userInfo.avatarUrl}
             className="size-8"
           />
           <YStack gap={0} className="flex-1 justify-center">
-            <TextDisplay>{follower.user_info.user_name}</TextDisplay>
+            <TextDisplay>{follower.userInfo.userName}</TextDisplay>
             <TextDisplay type="caption" size="sm">
-              @{follower.user_info.email.split('@')[0]}
+              @{follower.userInfo.email.split('@')[0]}
             </TextDisplay>
           </YStack>
         </XStack>
@@ -52,13 +52,13 @@ export default function FollowUserCard({
       <XStack gap={4} key={follower.id} className="items-center">
         <Avatar
           size="base"
-          src={follower.user_info.avatar_url}
+          src={follower.userInfo.avatarUrl}
           className="size-8"
         />
         <YStack gap={0} className="flex-1 justify-center">
-          <TextDisplay>{follower.user_info.user_name}</TextDisplay>
+          <TextDisplay>{follower.userInfo.userName}</TextDisplay>
           <TextDisplay type="caption" size="sm">
-            @{follower.user_info.email.split('@')[0]}
+            @{follower.userInfo.email.split('@')[0]}
           </TextDisplay>
         </YStack>
         {isFollowing ? (

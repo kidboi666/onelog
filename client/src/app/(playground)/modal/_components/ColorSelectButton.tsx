@@ -1,12 +1,12 @@
 import cn from '@/src/lib/cn/index'
-import { TodoFolderColorType } from '@/src/types/enums/index'
+import { FolderColor } from '@/src/types/enums/index'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 
 interface Props {
-  selectedColor: TodoFolderColorType
-  color: TodoFolderColorType
-  onColorClick: (color: TodoFolderColorType) => void
+  selectedColor: FolderColor
+  color: FolderColor
+  onColorClick: (color: FolderColor) => void
 }
 
 export default function ColorSelectButton({
@@ -21,13 +21,13 @@ export default function ColorSelectButton({
       onClick={() => onColorClick(selectedColor)}
       className={cn(
         'relative size-4 rounded-full',
-        selectedColor === TodoFolderColorType.YELLOW && 'bg-var-yellow',
-        selectedColor === TodoFolderColorType.ORANGE && 'bg-var-orange',
-        selectedColor === TodoFolderColorType.BLACK && 'bg-var-black',
-        selectedColor === TodoFolderColorType.BLUE && 'bg-var-blue',
-        selectedColor === TodoFolderColorType.GREEN && 'bg-var-green',
-        selectedColor === TodoFolderColorType.RED && 'bg-red-500',
-        selectedColor === TodoFolderColorType.PURPLE && 'bg-purple-500',
+        selectedColor === FolderColor.YELLOW && 'bg-var-yellow',
+        selectedColor === FolderColor.ORANGE && 'bg-var-orange',
+        selectedColor === FolderColor.BLACK && 'bg-var-black',
+        selectedColor === FolderColor.BLUE && 'bg-var-blue',
+        selectedColor === FolderColor.GREEN && 'bg-var-green',
+        selectedColor === FolderColor.RED && 'bg-red-500',
+        selectedColor === FolderColor.PURPLE && 'bg-purple-500',
       )}
     >
       {selectedColor === color && (

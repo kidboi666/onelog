@@ -1,10 +1,8 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import { RefObject } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Line from '@/src/components/Line'
@@ -34,9 +32,7 @@ export default function MobileMenu({
   isOpen,
 }: Props) {
   const pathname = usePathname()
-  const { data: session } = useQuery(meQuery.getSession(supabase))
-  const { data: me } = useQuery(meQuery.getUserInfo(supabase, session?.id))
-
+  const { me } = useMe()
   return (
     <>
       <div

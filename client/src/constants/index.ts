@@ -1,4 +1,4 @@
-import { IGetUserPostsThatDay } from '@/src/types/post'
+import { IGetUserPostsThatDay } from '@/src/types/dtos/post'
 
 export const TOAST_MESSAGE = {
   AUTH: {
@@ -36,6 +36,8 @@ export const TOAST_MESSAGE = {
     },
     UPLOAD_AVATAR: {
       EXCEPTION: '이미지 변경중 문제가 발생했습니다.',
+      OVER_SIZE: '이미지 파일 크기는 5MB 이하만 가능합니다.',
+      WRONG_TYPE: '이미지 파일만 업로드 가능합니다.',
     },
   },
   COMMENT: {
@@ -184,3 +186,83 @@ export const SUPABASE_QUERY = {
 export const PAGINATION = {
   LIMIT: 4,
 } as const
+
+export const MAX_PROFILE_IMAGE_FILE_SIZE = 5 * 1024 * 1024
+
+export const QUERY_KEY = {
+  AUTH: {
+    SESSION: ['me', 'session'],
+    INFO: ['me', 'info'],
+  },
+
+  USER: {
+    INFO: (userId: string) => ['user', 'info', userId],
+  },
+
+  POST: {
+    PUBLIC: ['all_post'],
+    LIKED: (authorId?: string | null, meId?: string | null) => [
+      'post',
+      'liked',
+      authorId,
+      meId,
+    ],
+    THAT_DAY: (
+      startOfDay?: string | null,
+      endOfDay?: string | null,
+      authorId?: string | null,
+    ) => ['post', startOfDay, endOfDay, authorId],
+    POST_TYPE: (postType?: 'journal' | 'article', authorId?: string | null) => [
+      'post',
+      postType,
+      authorId,
+    ],
+    DETAIL: (postId?: number) => ['post', postId],
+    CHECK_LIKED: (postId?: number, meId?: string | null) => [
+      'post',
+      'isLiked',
+      postId,
+      meId,
+    ],
+
+    COUNT: {
+      LIKED: (userId: string) => ['count', 'post', userId],
+      TOTAL: (userId: string) => ['count', 'allPost', userId],
+      POST_TYPE: (userId: string, postType?: 'journal' | 'article') => [
+        'count',
+        'post',
+        postType,
+        userId,
+      ],
+    },
+  },
+
+  WORD: {
+    USED: (authorId: string) => ['word', authorId],
+    DETAIL: (word: string) => ['word', word],
+  },
+
+  GARDEN: (userId: string, selectedYear?: number) => [
+    'garden',
+    userId,
+    selectedYear,
+  ],
+
+  FOLLOW: {
+    FOLLOWER: (userId?: string | null) => ['follower', userId],
+    FOLLOWING: (userId?: string | null) => ['following', userId],
+
+    COUNT: {
+      FOLLOWER: (userId?: string) => ['count', 'follower', userId],
+      FOLLOWING: (userId?: string) => ['count', 'following', userId],
+    },
+  },
+
+  TODO: {
+    IN_PROGRESS: ['todo', 'in_progress'],
+    COMPLETED: ['todo', 'completed'],
+    MAIN: ['todo_folder'],
+    FOLDER: (folderId: number) => ['todo', folderId],
+    INDEX: (folderId: number) => ['todo', 'index', folderId],
+  },
+}

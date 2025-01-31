@@ -1,12 +1,12 @@
+import { EmotionLevel } from '@/src/types/enums/index'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import { DropDown } from '@/src/components/DropDown'
 import TextDisplay from '@/src/components/TextDisplay'
-import { TEmotion } from '@/src/app/(playground)/post/edit/page'
 import EmotionGauge from './EmotionGauge'
 
 interface Props {
-  emotionLevel: TEmotion | null
+  emotionLevel: EmotionLevel | null
 }
 
 export default function EmotionButtonWithDropDown({ emotionLevel }: Props) {

@@ -1,17 +1,16 @@
-import { createPostAdapter } from '@/src/adapters'
-import { QUERY_KEY } from '@/src/constants/query-key'
-import { SupabaseClient } from '@supabase/supabase-js'
+import { postAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY } from '@/src/constants/index'
+import { APIError } from '@/src/error/index'
 import {
   InfiniteData,
   infiniteQueryOptions,
   queryOptions,
 } from '@tanstack/react-query'
-import { PostType } from '@/src/types/enums'
-import { ILikedPost, IPost, IPostDetail } from '@/src/types/post'
-import { APIError } from '@/src/utils/fetcher'
+import { ILikedPost, IPost, IPostDetail } from '@/src/types/entities/post'
+import { PostType } from '@/src/types/enums/index'
 
 export const postQuery = {
-  getAllPost: (supabase: SupabaseClient, limit: number, meId?: string | null) =>
+  getAllPost: (limit: number, meId?: string | null) =>
     infiniteQueryOptions<
       IPost[],
       APIError,
@@ -21,7 +20,7 @@ export const postQuery = {
     >({
       queryKey: QUERY_KEY.POST.PUBLIC,
       queryFn: ({ pageParam = 0 }) =>
-        createPostAdapter(supabase).getAllPosts({ pageParam, limit, meId }),
+        postAdapter.getAllPosts({ pageParam, limit, meId }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage && lastPage.length < limit) {
@@ -31,22 +30,17 @@ export const postQuery = {
       },
     }),
 
-  getLikedPost: (
-    supabase: SupabaseClient,
-    authorId: string,
-    limit: number,
-    meId?: string | null,
-  ) =>
+  getLikedPost: (authorId: string, limit: number, meId?: string | null) =>
     infiniteQueryOptions<
       ILikedPost[],
       APIError,
-      ILikedPost[],
+      InfiniteData<ILikedPost[]>,
       (string | null | undefined)[],
       number
     >({
       queryKey: QUERY_KEY.POST.LIKED(authorId, meId),
       queryFn: ({ pageParam = 0 }) =>
-        createPostAdapter(supabase).getLikedPosts({
+        postAdapter.getLikedPosts({
           pageParam,
           limit,
           authorId,
@@ -61,14 +55,13 @@ export const postQuery = {
       },
     }),
 
-  getPost: (supabase: SupabaseClient, postId: number, meId?: string | null) =>
+  getPost: (postId: number, meId?: string | null) =>
     queryOptions<IPostDetail | null, APIError>({
       queryKey: QUERY_KEY.POST.DETAIL(postId),
-      queryFn: () => createPostAdapter(supabase).getPost({ postId, meId }),
+      queryFn: () => postAdapter.getPost({ postId, meId }),
     }),
 
   getUserPostThatDay: (
-    supabase: SupabaseClient,
     authorId: string,
     startOfDay: string | null,
     endOfDay: string | null,
@@ -77,7 +70,7 @@ export const postQuery = {
     queryOptions<IPost[], APIError>({
       queryKey: QUERY_KEY.POST.THAT_DAY(startOfDay, endOfDay, authorId),
       queryFn: () =>
-        createPostAdapter(supabase).getUserPostsThatDay({
+        postAdapter.getUserPostsThatDay({
           authorId,
           startOfDay,
           endOfDay,
@@ -87,7 +80,6 @@ export const postQuery = {
     }),
 
   getAllUserPost: (
-    supabase: SupabaseClient,
     authorId: string,
     postType: PostType,
     limit: number,
@@ -96,13 +88,13 @@ export const postQuery = {
     infiniteQueryOptions<
       IPost[],
       APIError,
-      IPost[],
+      InfiniteData<IPost[]>,
       (string | null | undefined)[],
       number
     >({
       queryKey: QUERY_KEY.POST.POST_TYPE(postType, authorId),
       queryFn: async ({ pageParam = 0 }) =>
-        createPostAdapter(supabase).getUserPosts({
+        postAdapter.getUserPosts({
           pageParam,
           authorId,
           postType,

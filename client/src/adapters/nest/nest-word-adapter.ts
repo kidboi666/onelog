@@ -1,19 +1,16 @@
-'use client'
+import { IWordBaseAdapter } from '@/src/types/services/index'
 
-import {
-  IGetMyUsedWords,
-  IGetUsedWords,
-  IUsedWord,
-  IWord,
-  IWordBaseAdapter,
-} from '@/src/types/word'
-
-export class NestWordAdapter implements IWordBaseAdapter {
-  getMyUsedWords({ userId }: IGetMyUsedWords): Promise<IUsedWord[]> {
-    throw new Error('Method not implemented.')
+export const createNestWordAdapter = (): IWordBaseAdapter => {
+  const getMyUsedWords = async (userId: string) => {
+    return Promise.resolve(null)
   }
 
-  getUsedWords({ word }: IGetUsedWords): Promise<IWord[]> {
-    throw new Error('Method not implemented.')
+  const getUsedWords = async (word: string) => {
+    return Promise.resolve(null)
+  }
+
+  return {
+    getMyUsedWords,
+    getUsedWords,
   }
 }

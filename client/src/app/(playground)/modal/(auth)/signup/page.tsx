@@ -3,31 +3,26 @@
 import { signUpSchema } from '@/src/schemas/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import cn from '@/src/lib/cn'
-import { useSignInOauth } from '@/src/services/mutates/auth/use-sign-in-oauth'
-import useSignUp from '@/src/services/mutates/auth/use-sign-up'
-import { ISignUp } from '@/src/types/auth'
+import { ISignUp } from '@/src/types/dtos/auth'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Modal from '@/src/components/Modal'
 import { YStack } from '@/src/components/Stack'
 import Title from '@/src/components/Title'
+import useSignUpState from '@/src/app/(playground)/modal/_hooks/useSignUpState'
 import AuthForm from '../../_components/AuthForm'
 
 export default function SignUpModal() {
   const router = useRouter()
   const {
-    mutate: signUp,
-    isPending: isNormalAuthPending,
-    isSuccess: isNormalAuthSuccess,
-  } = useSignUp()
-  const {
-    mutate: signUpOAuth,
-    isPending: isOAuthPending,
-    isSuccess: isOAuthSuccess,
-  } = useSignInOauth()
+    signUp,
+    signUpKakao,
+    isKakaoLoading,
+    isSuccess,
+    isEmailLoading,
+    isAuthenticating,
+  } = useSignUpState()
   const {
     register,
     handleSubmit,
@@ -43,18 +38,11 @@ export default function SignUpModal() {
       passwordConfirmation: '',
     },
   })
-  const isPending = useMemo(
-    () => isNormalAuthPending || isOAuthPending,
-    [isNormalAuthPending, isOAuthPending],
-  )
-  const isSuccess = useMemo(
-    () => isNormalAuthSuccess || isOAuthSuccess,
-    [isNormalAuthSuccess, isOAuthSuccess],
-  )
 
   const handleSubmitSignUp = async (data: ISignUp) => {
     signUp(data, {
       onError: (error) => {
+        console.error(error)
         setError('email', {
           type: 'validate',
           message: error.message,
@@ -63,8 +51,8 @@ export default function SignUpModal() {
     })
   }
 
-  const handleSubmitOAuthSignUp = () => {
-    signUpOAuth()
+  const handleSubmitKakaoSignUp = () => {
+    signUpKakao()
   }
 
   return (
@@ -105,20 +93,17 @@ export default function SignUpModal() {
             로그인하러 가기
           </Button>
           <Button
-            isLoading={isNormalAuthPending || isNormalAuthSuccess}
-            disabled={isPending || isSuccess}
+            isLoading={isEmailLoading}
+            disabled={isAuthenticating || isSuccess}
             type="submit"
           >
             회원가입
           </Button>{' '}
           <Button
-            isLoading={isOAuthPending || isOAuthSuccess}
-            disabled={isPending || isSuccess}
-            onClick={handleSubmitOAuthSignUp}
-            className={cn(
-              'bg-var-yellow text-white ring-var-yellow dark:bg-var-yellow',
-              isPending || isSuccess ? 'bg-gray-300 dark:bg-gray-500' : '',
-            )}
+            variant="kakao"
+            isLoading={isKakaoLoading}
+            disabled={isAuthenticating || isSuccess}
+            onClick={handleSubmitKakaoSignUp}
           >
             <Icon size={20}>
               <path

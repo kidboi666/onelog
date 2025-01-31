@@ -9,7 +9,14 @@ import Spinner from './Spinner'
 export interface ButtonProps extends ComponentProps<'button'> {
   isLoading?: boolean
   dataStatus?: string
-  variant?: 'primary' | 'secondary' | 'teritory' | 'list' | 'icon' | 'none'
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'teritory'
+    | 'list'
+    | 'icon'
+    | 'none'
+    | 'kakao'
   size?: 'sm' | 'md' | 'lg' | 'icon' | 'none'
 }
 
@@ -24,6 +31,7 @@ const BUTTON_VARIANTS = cva(
         teritory: 'text-zinc-500 hover:opacity-65 dark:text-zinc-200',
         list: 'justify-start rounded-md font-normal text-zinc-600 hover:bg-var-lightgray dark:text-zinc-300 dark:hover:bg-var-dark dark:hover:text-zinc-200',
         none: '',
+        kakao: 'bg-var-yellow text-white ring-var-yellow dark:bg-var-yellow',
         icon: 'rounded-md text-zinc-400 transition hover:bg-var-lightgray dark:text-zinc-400 dark:hover:bg-var-dark dark:hover:text-zinc-300',
       },
       disabled: {
@@ -33,8 +41,9 @@ const BUTTON_VARIANTS = cva(
           'gap-2 rounded-md bg-zinc-300 text-zinc-200 ring-1 ring-zinc-300 active:scale-100 dark:bg-zinc-500 dark:text-zinc-400 dark:ring-zinc-500',
         teritory: '',
         list: '',
-        icon: 'rounded-md text-zinc-400 transition dark:text-zinc-400',
         none: '',
+        kakao: 'bg-gray-300 dark:bg-gray-500',
+        icon: 'rounded-md text-zinc-400 transition dark:text-zinc-400',
       },
       size: {
         sm: 'px-3 py-2 text-xs',

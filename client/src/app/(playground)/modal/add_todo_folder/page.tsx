@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
+import { useMe } from '@/src/store/hooks/useMe'
 import useAddTodoFolder from '@/src/services/mutates/todo/useAddTodoFolder'
-import { TodoFolderColorType } from '@/src/types/enums/index'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import { FolderColor } from '@/src/types/enums/index'
 import useInput from '@/src/hooks/useInput'
 import Button from '@/src/components/Button'
 import Input from '@/src/components/Input'
@@ -14,18 +14,18 @@ import ColorSelectButton from '@/src/app/(playground)/modal/_components/ColorSel
 
 export default function AddTodoFolderModal() {
   const router = useRouter()
-  const { me } = useMeQueries()
+  const { me } = useMe()
   const [name, onChangeName] = useInput('')
-  const [color, setColor] = useState<TodoFolderColorType>(
-    TodoFolderColorType.BLACK,
-  )
+  const [color, setColor] = useState<FolderColor>(FolderColor.BLACK)
   const { mutate: addTodoFolder } = useAddTodoFolder()
 
-  const handleColorClick = (selectedColor: TodoFolderColorType) => {
+  const handleColorClick = (selectedColor: FolderColor) => {
     setColor(selectedColor)
   }
 
   const handleSubmit = (e: FormEvent) => {
+    if (!me) return null
+
     e.preventDefault()
     const currentIndex = localStorage.getItem('todo-folder-index') || 0
     const nextIndex = Number(currentIndex) + 1
@@ -33,7 +33,7 @@ export default function AddTodoFolderModal() {
       name,
       color,
       index: nextIndex,
-      userId: me?.id,
+      userId: me.id,
     }
     addTodoFolder(newFolder)
     localStorage.setItem('todo-folder-index', nextIndex.toString())
@@ -50,7 +50,7 @@ export default function AddTodoFolderModal() {
         <div className="flex flex-col gap-2">
           <TextDisplay>색상</TextDisplay>
           <div className="flex gap-2">
-            {Object.values(TodoFolderColorType).map((prefaredColor) => (
+            {Object.values(FolderColor).map((prefaredColor) => (
               <ColorSelectButton
                 key={prefaredColor}
                 selectedColor={color}

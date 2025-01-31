@@ -1,23 +1,18 @@
-import { QueryHelpers } from '@/src/adapters/query-helpers'
+import { processQuery } from '@/src/adapters/query-helpers'
 import { SupabaseClient } from '@supabase/supabase-js'
-import { IUserInfo } from '@/src/types/auth'
-import { IUserBaseAdapter } from '@/src/types/user'
+import { IUserInfo } from '@/src/types/entities/auth'
+import { IUserBaseAdapter } from '@/src/types/services/index'
 
-export class SupabaseUserAdapter
-  extends QueryHelpers
-  implements IUserBaseAdapter
-{
-  constructor(private readonly supabase: SupabaseClient) {
-    super()
+export const createSupabaseUserAdapter = (
+  supabase: SupabaseClient,
+): IUserBaseAdapter => {
+  // 대상 유저 정보 가져오기
+  const getUserInfo = async (userId: string): Promise<IUserInfo> => {
+    const query = supabase.from('user_info').select().eq('id', userId).single()
+    return processQuery(query)
   }
 
-  async getUserInfo(userId: string): Promise<IUserInfo> {
-    const { data, error } = await this.supabase
-      .from('user_info')
-      .select()
-      .eq('id', userId)
-      .single()
-    this.handleError(error)
-    return data
+  return {
+    getUserInfo,
   }
 }

@@ -1,12 +1,10 @@
 'use client'
 
-import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { userQuery } from '@/src/services/queries/auth/user-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { postQuery } from '@/src/services/queries/post/post-query'
-import { PostType } from '@/src/types/enums'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import { PostType } from '@/src/types/enums/index'
 import useIntersect from '@/src/hooks/useIntersect'
 import Empty from '@/src/components/Empty'
 import Spinner from '@/src/components/Spinner'
@@ -17,29 +15,15 @@ interface Props {
   params: { userId: string }
 }
 
-export default function Article({ params }: Props) {
+export default function Article({ params: { userId } }: Props) {
   const limit = 4
-  const { me } = useMeQueries()
-  const { data: user } = useSuspenseQuery(
-    userQuery.getUserInfo(supabase, params.userId),
-  )
+  const { me } = useMe()
   const { data, fetchNextPage, hasNextPage, isFetching, isPending, isLoading } =
-    useInfiniteQuery(
-      postQuery.getAllUserPost(
-        supabase,
-        params.userId,
-        PostType.ARTICLE,
-        limit,
-        me?.id,
-      ),
+    useSuspenseInfiniteQuery(
+      postQuery.getAllUserPost(userId, PostType.ARTICLE, limit, me?.id),
     )
   const articles = data?.pages.flatMap((article) => article) || []
-  const [ref, inView] = useIntersect<HTMLDivElement>({}, !!isLoading)
-  const postUserInfo = {
-    email: user?.email,
-    user_name: user?.user_name,
-    avatar_url: user?.avatar_url,
-  }
+  const [ref, inView] = useIntersect<HTMLDivElement>({}, isLoading)
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -61,11 +45,7 @@ export default function Article({ params }: Props) {
         <YStack gap={8}>
           {articles?.map((article) =>
             article?.content ? (
-              <PostCard
-                key={article?.id}
-                post={article}
-                postUserInfo={postUserInfo}
-              />
+              <PostCard key={article?.id} post={article} />
             ) : (
               <Empty key={article?.id}>
                 <Empty.Icon view="0 -960 960 960" size={20}>

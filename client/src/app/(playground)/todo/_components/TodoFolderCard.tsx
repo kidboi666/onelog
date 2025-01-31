@@ -1,12 +1,13 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react'
 import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
+import { useMe } from '@/src/store/hooks/useMe'
 import useAddTodo from '@/src/services/mutates/todo/useAddTodo'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
-import { Tables } from '@/src/types/supabase'
+import { ITodoFolder } from '@/src/types/dtos/todo'
+import { ITodo } from '@/src/types/entities/todo'
 import useInput from '@/src/hooks/useInput'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
@@ -21,19 +22,16 @@ import TaskOptionDropDown from './TaskOptionDropDown'
 import Todo from './Todo'
 
 interface TodoFolderCardProps {
-  folder: Tables<'todo_folder'>
-  userId?: string
+  folder: ITodoFolder
 }
 
-export default function TodoFolderCard({
-  folder,
-  userId,
-}: TodoFolderCardProps) {
+export default function TodoFolderCard({ folder }: TodoFolderCardProps) {
   const queryClient = getQueryClient()
+  const { me } = useMe()
   const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoInProgress(supabase, userId),
+    todoQuery.getTodoInProgress(me?.id ?? ''),
   )
-  const localTodos = todos?.filter((todo) => todo.folder_id === folder.id)
+  const localTodos = todos?.filter((todo) => todo.folderId === folder.id)
   const { ref, onClick, onTransitionEnd, close } =
     useDataDrivenAnimation<HTMLDivElement>()
   const dropdownRef = useOutsideClick<HTMLButtonElement>(close)
@@ -45,12 +43,10 @@ export default function TodoFolderCard({
   const dragItem = useRef(null)
   const dragOverItem = useRef(null)
 
-  const handleUpdateButtonClick = (
-    e: MouseEvent,
-    selectedTodo: Tables<'todo'>,
-  ) => {
+  const handleUpdateButtonClick = (e: MouseEvent, selectedTodo: ITodo) => {
+    e.preventDefault()
     updateTodo(
-      { ...selectedTodo, is_complete: true },
+      { ...selectedTodo, isComplete: true },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['todo'] })
@@ -60,10 +56,12 @@ export default function TodoFolderCard({
   }
 
   const handleSubmitTodo = (e: FormEvent) => {
-    const nextIndex = Number(localStorage.getItem('todo-index')) || 0
     e.preventDefault()
+    if (!me) return
+
+    const nextIndex = Number(localStorage.getItem('todo-index')) || 0
     addTodo(
-      { name, folderId: folder.id, userId, index: nextIndex + 1 },
+      { name, folderId: folder.id, userId: me.id, index: nextIndex + 1 },
       {
         onSuccess: () => {
           setName('')
@@ -177,7 +175,7 @@ export default function TodoFolderCard({
                 dragItem={dragItem}
                 dragOverItem={dragOverItem}
                 todo={todo}
-                isComplete={todo.is_complete}
+                isComplete={todo.isComplete}
                 onUpdate={handleUpdateButtonClick}
                 orderFrom="main"
                 folderColor={folder.color}

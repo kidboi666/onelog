@@ -1,7 +1,6 @@
 import cn from '@/src/lib/cn'
 import { useTheme } from '@/src/store/hooks/useTheme'
-import { EmotionLevel } from '@/src/types/enums'
-import { TColor } from '@/src/types/theme'
+import { ColorScheme, EmotionLevel } from '@/src/types/enums/index'
 
 interface Props {
   emotionLevel: EmotionLevel | null
@@ -58,7 +57,7 @@ export default function EmotionGauge({
 
 interface RenderEmotionBlockProps {
   shouldRender: number
-  color: TColor
+  color: ColorScheme
   index: number
   onClick?: (emotion: EmotionLevel | null) => void
 }

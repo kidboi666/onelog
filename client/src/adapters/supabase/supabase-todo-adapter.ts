@@ -1,4 +1,4 @@
-import { QueryHelpers } from '@/src/adapters/query-helpers'
+import { handleError, processQuery } from '@/src/adapters/query-helpers'
 import { SupabaseClient } from '@supabase/supabase-js'
 import {
   ICreateTodo,
@@ -6,71 +6,64 @@ import {
   IDeleteTodo,
   IGetTodoFromFolder,
   IGetTodoIndex,
-  ITodo,
-  ITodoBaseAdapter,
   ITodoFolder,
   IUpdateTodo,
   IUpdateTodoFolder,
-} from '@/src/types/todo'
+} from '@/src/types/dtos/todo'
+import { ITodo } from '@/src/types/entities/todo'
+import { ITodoBaseAdapter } from '@/src/types/services/index'
 
-export class SupabaseTodoAdapter
-  extends QueryHelpers
-  implements ITodoBaseAdapter
-{
-  constructor(private readonly supabase: SupabaseClient) {
-    super()
-  }
-
-  async getTodoFolder(userId: string): Promise<ITodoFolder[]> {
-    const { data, error } = await this.supabase
+export const createSupabaseTodoAdapter = (
+  supabase: SupabaseClient,
+): ITodoBaseAdapter => {
+  // 폴더 조회
+  const getTodoFolder = async (userId: string): Promise<ITodoFolder[]> => {
+    const query = supabase
       .from('todo_folder')
       .select<string, ITodoFolder>()
       .eq('user_id', userId)
-    this.handleError(error)
-    return this.transformResponse(data ?? [])
+    return processQuery(query)
   }
 
-  async getTodoFromFolder(params: IGetTodoFromFolder): Promise<ITodo[]> {
-    const { data, error } = await this.supabase
+  // 폴더별 투두 조회
+  const getTodoFromFolder = async (
+    params: IGetTodoFromFolder,
+  ): Promise<ITodo[]> => {
+    const query = supabase
       .from('todo')
       .select<string, ITodo>()
       .eq('user_id', params.meId)
-    this.handleError(error)
-    const filteredTodos = this.filterSelectedTodo(data, params.folderId)
-    return this.transformResponse(filteredTodos)
+    const data = await processQuery<ITodo[]>(query)
+    return filterSelectedTodo(data, params.folderId)
   }
 
-  async getTodoInCompleted(userId: string): Promise<ITodo[]> {
-    const { data, error } = await this.supabase
+  // 완료된 투두 조회
+  const getTodoInCompleted = async (userId: string): Promise<ITodo[]> => {
+    const query = supabase
       .from('todo')
       .select()
       .eq('user_id', userId)
       .is('is_complete', true)
-    this.handleError(error)
-    return this.transformResponse(data ?? [])
+    return processQuery(query)
   }
 
-  async getTodoInProgress(userId: string): Promise<ITodo[]> {
-    const { data, error } = await this.supabase
+  // 진행중인 투두 조회
+  const getTodoInProgress = async (userId: string): Promise<ITodo[]> => {
+    const query = supabase
       .from('todo')
       .select()
       .eq('user_id', userId)
       .is('is_complete', false)
-    this.handleError(error)
-    return this.transformResponse(data ?? [])
+    return processQuery(query)
   }
 
-  async getTodoIndex(params: IGetTodoIndex): Promise<ITodo[]> {
-    const { data, error } = await this.supabase
-      .from('todo')
-      .select()
-      .eq('user_id', params.meId)
-    this.handleError(error)
-    return this.transformResponse(data ?? [])
+  const getTodoIndex = async (params: IGetTodoIndex): Promise<ITodo[]> => {
+    const query = supabase.from('todo').select().eq('user_id', params.meId)
+    return processQuery(query)
   }
 
-  async createTodo(params: ICreateTodo): Promise<void> {
-    const { error } = await this.supabase
+  const createTodo = async (params: ICreateTodo): Promise<void> => {
+    const { error } = await supabase
       .from('todo')
       .insert({
         name: params.name,
@@ -79,11 +72,11 @@ export class SupabaseTodoAdapter
         index: params.index,
       })
       .select()
-    this.handleError(error)
+    handleError(error)
   }
 
-  async createTodoFolder(params: ICreateTodoFolder): Promise<void> {
-    const { error } = await this.supabase
+  const createTodoFolder = async (params: ICreateTodoFolder): Promise<void> => {
+    const { error } = await supabase
       .from('todo_folder')
       .insert({
         name: params.name,
@@ -92,27 +85,27 @@ export class SupabaseTodoAdapter
         user_id: params.userId || '',
       })
       .select()
-    this.handleError(error)
+    handleError(error)
   }
 
-  async deleteTodo(params: IDeleteTodo): Promise<void> {
-    const { error } = await this.supabase
+  const deleteTodo = async (params: IDeleteTodo): Promise<void> => {
+    const { error } = await supabase
       .from('todo')
       .delete()
       .eq('id', params.todoId)
-    this.handleError(error)
+    handleError(error)
   }
 
-  async deleteTodoFolder(folderId: number): Promise<void> {
-    const { error } = await this.supabase
+  const deleteTodoFolder = async (folderId: number): Promise<void> => {
+    const { error } = await supabase
       .from('todo_folder')
       .delete()
       .eq('id', folderId)
-    this.handleError(error)
+    handleError(error)
   }
 
-  async updateTodo(params: IUpdateTodo): Promise<void> {
-    const { error } = await this.supabase
+  const updateTodo = async (params: IUpdateTodo): Promise<void> => {
+    const { error } = await supabase
       .from('todo')
       .update({
         name: params.name,
@@ -120,16 +113,16 @@ export class SupabaseTodoAdapter
         user_id: params.userId,
         memo: params.memo,
         is_complete: params.isComplete,
-        updated_at: params.updatedAt,
+        updated_at: 'now()',
         index: params.index,
       })
       .eq('id', params.id)
       .select()
-    this.handleError(error)
+    handleError(error)
   }
 
-  async updateTodoFolder(params: IUpdateTodoFolder): Promise<void> {
-    const { error } = await this.supabase
+  const updateTodoFolder = async (params: IUpdateTodoFolder): Promise<void> => {
+    const { error } = await supabase
       .from('todo_folder')
       .update({
         name: params.name,
@@ -138,11 +131,26 @@ export class SupabaseTodoAdapter
       })
       .eq('id', params.id)
       .select()
-    this.handleError(error)
+    handleError(error)
   }
 
-  private filterSelectedTodo(data: ITodo[] | null, folderId: number) {
+  // 프라이빗 헬퍼 함수
+  const filterSelectedTodo = (data: ITodo[] | null, folderId: number) => {
     if (!data) return []
     return data.filter((todoFolder) => todoFolder.folderId === folderId)
+  }
+
+  return {
+    getTodoFolder,
+    getTodoFromFolder,
+    getTodoInCompleted,
+    getTodoInProgress,
+    getTodoIndex,
+    createTodo,
+    createTodoFolder,
+    deleteTodo,
+    deleteTodoFolder,
+    updateTodo,
+    updateTodoFolder,
   }
 }

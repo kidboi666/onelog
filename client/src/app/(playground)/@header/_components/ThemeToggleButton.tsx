@@ -2,7 +2,7 @@
 
 import cn from '@/src/lib/cn'
 import { useTheme } from '@/src/store/hooks/useTheme'
-import { TTheme } from '@/src/types/theme'
+import { Theme } from '@/src/types/enums/index'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { XStack, ZStack } from '@/src/components/Stack'
@@ -15,16 +15,16 @@ interface Props {
 export default function ThemeToggleButton({ isOpen, viewToggle }: Props) {
   const { theme, setTheme } = useTheme()
 
-  const changeDocumentClass = (theme: TTheme) => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
+  const changeDocumentClass = (theme: Theme) => {
+    if (theme === Theme.DARK) {
+      document.documentElement.classList.add(Theme.DARK)
     } else {
-      document.documentElement.classList.remove('dark')
+      document.documentElement.classList.remove(Theme.DARK)
     }
   }
 
   const handleThemeChange = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark'
+    const nextTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
     setTheme(nextTheme)
     localStorage.setItem('theme', nextTheme)
     changeDocumentClass(nextTheme)

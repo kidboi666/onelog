@@ -1,13 +1,15 @@
 'use client'
 
-import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
+import {
+  useSuspenseInfiniteQuery,
+  useSuspenseQuery,
+} from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
+import { useMe } from '@/src/store/hooks/useMe'
 import { userQuery } from '@/src/services/queries/auth/user-query'
 import { postQuery } from '@/src/services/queries/post/post-query'
-import { PostType } from '@/src/types/enums'
-import { IPost } from '@/src/types/post'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
+import { IPost } from '@/src/types/entities/post'
+import { PostType } from '@/src/types/enums/index'
 import useIntersect from '@/src/hooks/useIntersect'
 import Empty from '@/src/components/Empty'
 import Spinner from '@/src/components/Spinner'
@@ -20,27 +22,14 @@ interface Props {
 
 export default function Journals({ params }: Props) {
   const limit = 4
-  const { me } = useMeQueries()
-  const { data: user } = useSuspenseQuery(
-    userQuery.getUserInfo(supabase, params.userId),
-  )
+  const { me } = useMe()
+  const { data: user } = useSuspenseQuery(userQuery.getUserInfo(params.userId))
   const { data, fetchNextPage, hasNextPage, isFetching, isPending, isLoading } =
-    useInfiniteQuery(
-      postQuery.getAllUserPost(
-        supabase,
-        params.userId,
-        PostType.JOURNAL,
-        limit,
-        me?.id,
-      ),
+    useSuspenseInfiniteQuery(
+      postQuery.getAllUserPost(params.userId, PostType.JOURNAL, limit, me?.id),
     )
   const journals = data?.pages.flatMap((journal) => journal || [])
   const [ref, inView] = useIntersect<HTMLDivElement>({}, isLoading)
-  const postUserInfo = {
-    email: user?.email,
-    user_name: user?.user_name,
-    avatar_url: user?.avatar_url,
-  }
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -62,11 +51,7 @@ export default function Journals({ params }: Props) {
         <YStack gap={8}>
           {journals?.map((journal: IPost) =>
             journal?.content ? (
-              <PostCard
-                key={journal?.id}
-                post={journal}
-                postUserInfo={postUserInfo}
-              />
+              <PostCard key={journal?.id} post={journal} />
             ) : (
               <Empty key={journal?.id}>
                 <Empty.Icon view="0 -960 960 960" size={20}>

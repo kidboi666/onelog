@@ -2,82 +2,77 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
+import { checkIsOwner } from '@/src/utils/client-utils'
 import { ROUTES } from '@/src/routes'
 import { DropDown } from '@/src/components/DropDown'
 import Icon from '@/src/components/Icon'
 
-interface Props {
-  postId: number
-  commentId?: number
-  commentAuthorId?: string
-  onModify?: () => void
+interface BaseProps {
   isSide?: boolean
+  postId: number
 }
 
-export default function OptionButtonWithDropDown({
-  postId,
-  commentId,
-  commentAuthorId,
-  onModify,
-  isSide,
-}: Props) {
+interface PostProps extends BaseProps {
+  type: 'post'
+}
+
+interface CommentProps extends BaseProps {
+  type: 'comment'
+  commentId: number
+  commentAuthorId: string
+  onModify: () => void
+}
+
+type Props = PostProps | CommentProps
+
+export default function OptionButtonWithDropDown(props: Props) {
   const router = useRouter()
   const { close, ref, onClick, onTransitionEnd } =
     useDataDrivenAnimation<HTMLDivElement>()
   const optionButtonRef = useOutsideClick<HTMLButtonElement>(close)
-  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
   const { data: post } = useSuspenseQuery(
-    postQuery.getPost(supabase, postId, session?.userId),
+    postQuery.getPost(props.postId, me?.id),
   )
 
-  const pushEditPostPage = () => router.push(ROUTES.POST.EDIT(postId))
-  const pushDeleteCommentModal = () =>
-    router.push(ROUTES.MODAL.DELETE.COMMENT(commentId!, postId))
-  const pushDeletePostModal = () =>
-    router.push(ROUTES.MODAL.DELETE.POST(postId))
-
-  let isOwner
-
-  if (commentId) {
-    isOwner = session?.userId === commentAuthorId
-  } else {
-    isOwner = session?.userId === post?.user_id
-  }
-
-  const pushDeleteModal = () => {
-    if (commentId) {
-      pushDeleteCommentModal()
-    } else {
-      pushDeletePostModal()
-    }
-  }
-
-  const pushEditPage = () => {
-    void close()
-    if (commentId && onModify) {
-      onModify()
-    } else {
-      pushEditPostPage()
-    }
-  }
+  const isOwner =
+    props.type === 'comment'
+      ? checkIsOwner(me?.id, props.commentAuthorId)
+      : checkIsOwner(me?.id, post?.userId)
 
   if (!isOwner) {
     return null
   }
 
+  const pushDeleteModal = () => {
+    if (props.type === 'comment') {
+      router.push(ROUTES.MODAL.COMMENT.DELETE(props.commentId, props.postId))
+    } else {
+      router.push(ROUTES.MODAL.POST.DELETE(props.postId))
+    }
+  }
+
+  const pushEditPage = () => {
+    void close()
+    if (props.type === 'comment') {
+      props.onModify()
+    } else {
+      router.push(ROUTES.POST.EDIT(props.postId))
+    }
+  }
+
   return (
     <DropDown.Root>
       <DropDown.Trigger
-        size={isSide ? 'md' : 'icon'}
+        size={props.isSide ? 'md' : 'icon'}
         targetRef={optionButtonRef}
         onClick={onClick}
       >
-        {isSide ? (
+        {props.isSide ? (
           <Icon view="0 -960 960 960" size={24}>
             <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
           </Icon>
@@ -90,7 +85,7 @@ export default function OptionButtonWithDropDown({
       <DropDown.Content
         ref={ref}
         initStatus="closed"
-        position={isSide ? 'topRight' : 'topLeft'}
+        position={props.isSide ? 'topRight' : 'topLeft'}
         onTransitionEnd={onTransitionEnd}
       >
         <DropDown.Button

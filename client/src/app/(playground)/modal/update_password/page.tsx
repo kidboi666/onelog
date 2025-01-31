@@ -1,23 +1,23 @@
 'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
+import { useMe } from '@/src/store/hooks/useMe'
 import useResetPassword from '@/src/services/mutates/auth/use-reset-password'
-import { meQuery } from '@/src/services/queries/auth/me-query'
 import Button from '@/src/components/Button'
 import Modal from '@/src/components/Modal'
 import Title from '@/src/components/Title'
 
 export default function ResetPasswordConfirmModal() {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
   const { mutate: resetPassword } = useResetPassword()
   const [isLoading, startTransition] = useTransition()
 
   const handleResetPassword = () => {
-    resetPassword(me!.email)
+    if (!me) return null
+
+    startTransition(() => resetPassword(me.email))
   }
 
   return (
@@ -25,7 +25,7 @@ export default function ResetPasswordConfirmModal() {
       <Title>정말 비밀번호를 변경 하시겠습니까?</Title>
       <div className="flex gap-2">
         <Button
-          onClick={() => startTransition(() => handleResetPassword())}
+          onClick={handleResetPassword}
           isLoading={isLoading}
           variant="secondary"
         >

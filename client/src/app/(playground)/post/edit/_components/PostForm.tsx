@@ -1,5 +1,8 @@
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/react'
-import { IUpdatePostFormActions, IUpdatePostFormStates } from '@/src/types/post'
+import {
+  IUpdatePostFormActions,
+  IUpdatePostFormStates,
+} from '@/src/types/dtos/post'
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 import { formatDateToMDY } from '@/src/utils/client-utils'
 import Avatar from '@/src/components/Avatar'

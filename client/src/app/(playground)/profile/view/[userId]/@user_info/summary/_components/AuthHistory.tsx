@@ -1,7 +1,6 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { colorTheme, useTheme } from '@/src/store/hooks/useTheme'
 import { userQuery } from '@/src/services/queries/auth/user-query'
 import { emotionQuery } from '@/src/services/queries/emotion/emotion-query'
@@ -16,14 +15,12 @@ interface Props {
 
 export default function AuthHistory({ userId }: Props) {
   const { color } = useTheme()
-  const { data: user } = useSuspenseQuery(
-    userQuery.getUserInfo(supabase, userId),
-  )
+  const { data: user } = useSuspenseQuery(userQuery.getUserInfo(userId))
   const { data: postLength } = useSuspenseQuery(
-    postCountQuery.countAllMyPost(supabase, userId),
+    postCountQuery.countAllMyPost(userId),
   )
   const { data: myAverageEmotion } = useSuspenseQuery(
-    emotionQuery.getEmotionAverage(supabase, userId),
+    emotionQuery.getEmotionAverage(userId),
   )
 
   return (
@@ -31,7 +28,7 @@ export default function AuthHistory({ userId }: Props) {
       <XStack className="sm:gap-8">
         <HistoryBlock
           title="시작한지"
-          content={getSignUpDays(user?.created_at)}
+          content={getSignUpDays(user?.createdAt)}
           unit="일 째"
         />
         <HistoryBlock title="기록" content={postLength} unit="개" />

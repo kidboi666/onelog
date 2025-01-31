@@ -19,9 +19,11 @@ export default function DeletePostModal({ params }: Props) {
   const [isLoading, startTransition] = useTransition()
 
   const handlePostDelete = () => {
-    deletePost(Number(params.postId), {
-      onSettled: () => router.push(ROUTES.HOME),
-    })
+    startTransition(() =>
+      deletePost(Number(params.postId), {
+        onSettled: () => router.push(ROUTES.HOME),
+      }),
+    )
   }
 
   return (
@@ -35,10 +37,7 @@ export default function DeletePostModal({ params }: Props) {
         >
           취소하기
         </Button>
-        <Button
-          onClick={() => startTransition(() => handlePostDelete())}
-          isLoading={isLoading}
-        >
+        <Button onClick={handlePostDelete} isLoading={isLoading}>
           삭제하기
         </Button>
       </XStack>

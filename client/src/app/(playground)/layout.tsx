@@ -18,7 +18,7 @@ export default function Layout({
   modal,
 }: PropsWithChildren<Props>) {
   const pathname = usePathname()
-  const isModalOpen = pathname.startsWith('/modal')
+  const isModalOpen = pathname?.startsWith('/modal')
 
   return (
     <>

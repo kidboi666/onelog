@@ -2,23 +2,23 @@
 
 import { PropsWithChildren, useLayoutEffect } from 'react'
 import { useTheme } from '@/src/store/hooks/useTheme'
-import { TColor } from '@/src/types/theme'
+import { ColorScheme, Theme } from '@/src/types/enums'
 
 export default function ThemeProvider({ children }: PropsWithChildren) {
   const { setColor, setTheme } = useTheme()
 
   useLayoutEffect(() => {
-    const currentColor = localStorage.getItem('color-theme') as TColor
-    const isDarkMode = localStorage.getItem('theme') === 'dark'
+    const currentColor = localStorage.getItem('color-theme') as ColorScheme
+    const isDarkMode = localStorage.getItem('theme') === Theme.DARK
 
     if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-      setTheme('dark')
+      document.documentElement.classList.add(Theme.DARK)
+      setTheme(Theme.DARK)
     } else {
-      document.documentElement.classList.remove('dark')
-      setTheme('light')
+      document.documentElement.classList.remove(Theme.DARK)
+      setTheme(Theme.LIGHT)
     }
-    setColor(currentColor ?? 'black')
+    setColor(currentColor ?? ColorScheme.BLACK)
 
     document.body.classList.remove('hidden')
   }, [])

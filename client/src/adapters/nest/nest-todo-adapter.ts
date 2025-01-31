@@ -4,55 +4,69 @@ import {
   IDeleteTodo,
   IGetTodoFromFolder,
   IGetTodoIndex,
-  ITodo,
-  ITodoBaseAdapter,
   ITodoFolder,
   IUpdateTodo,
   IUpdateTodoFolder,
-} from '@/src/types/todo'
+} from '@/src/types/dtos/todo'
+import { ITodo } from '@/src/types/entities/todo'
+import { ITodoBaseAdapter } from '@/src/types/services/index'
 
-export class NestTodoAdapter implements ITodoBaseAdapter {
-  getTodoFromFolder(params: IGetTodoFromFolder): Promise<ITodo[]> {
+export const createNestTodoAdapter = (): ITodoBaseAdapter => {
+  const getTodoFromFolder = (params: IGetTodoFromFolder): Promise<ITodo[]> => {
     return Promise.resolve([])
   }
 
-  getTodoInCompleted(userId: string): Promise<ITodo[]> {
+  const getTodoInCompleted = (userId: string): Promise<ITodo[]> => {
     return Promise.resolve([])
   }
 
-  getTodoInProgress(userId: string): Promise<ITodo[]> {
+  const getTodoInProgress = (userId: string): Promise<ITodo[]> => {
     return Promise.resolve([])
   }
 
-  getTodoIndex(params: IGetTodoIndex): Promise<ITodo[]> {
+  const getTodoIndex = (params: IGetTodoIndex): Promise<ITodo[]> => {
     return Promise.resolve([])
   }
 
-  createTodo(params: ICreateTodo): Promise<void> {
+  const createTodo = (params: ICreateTodo): Promise<void> => {
     return Promise.resolve(undefined)
   }
 
-  createTodoFolder(params: ICreateTodoFolder): Promise<void> {
+  const createTodoFolder = (params: ICreateTodoFolder): Promise<void> => {
     return Promise.resolve(undefined)
   }
 
-  deleteTodo(params: IDeleteTodo): Promise<void> {
+  const deleteTodo = (params: IDeleteTodo): Promise<void> => {
     return Promise.resolve(undefined)
   }
 
-  deleteTodoFolder(folderId: number): Promise<void> {
+  const deleteTodoFolder = (folderId: number): Promise<void> => {
     return Promise.resolve(undefined)
   }
 
-  getTodoFolder(userId: string): Promise<ITodoFolder[]> {
+  const getTodoFolder = (userId: string): Promise<ITodoFolder[]> => {
     return Promise.resolve([])
   }
 
-  updateTodo(params: IUpdateTodo): Promise<void> {
+  const updateTodo = (params: IUpdateTodo): Promise<void> => {
     return Promise.resolve(undefined)
   }
 
-  updateTodoFolder(params: IUpdateTodoFolder): Promise<void> {
+  const updateTodoFolder = (params: IUpdateTodoFolder): Promise<void> => {
     return Promise.resolve(undefined)
+  }
+
+  return {
+    getTodoFromFolder,
+    getTodoInCompleted,
+    getTodoInProgress,
+    getTodoIndex,
+    createTodo,
+    createTodoFolder,
+    deleteTodo,
+    deleteTodoFolder,
+    getTodoFolder,
+    updateTodo,
+    updateTodoFolder,
   }
 }

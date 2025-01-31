@@ -1,14 +1,12 @@
-import { createGardenAdapter } from '@/src/adapters/index'
-import { QUERY_KEY } from '@/src/constants/query-key'
-import { SupabaseClient } from '@supabase/supabase-js'
+import { gardenAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY } from '@/src/constants/index'
 import { queryOptions } from '@tanstack/react-query'
 import { Tables } from '@/src/types/supabase'
 
 export const gardenQuery = {
-  getGarden: (supabase: SupabaseClient, userId: string, selectedYear: number) =>
+  getGarden: (userId: string, selectedYear: number) =>
     queryOptions<Tables<'garden'>[]>({
       queryKey: QUERY_KEY.GARDEN(userId, selectedYear),
-      queryFn: () =>
-        createGardenAdapter(supabase).getGarden({ userId, selectedYear }),
+      queryFn: () => gardenAdapter.getGarden({ userId, selectedYear }),
     }),
 }

@@ -1,13 +1,9 @@
 'use client'
 
 import { PAGINATION } from '@/src/constants'
-import {
-  useSuspenseInfiniteQuery,
-  useSuspenseQuery,
-} from '@tanstack/react-query'
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useMemo } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import useIntersect from '@/src/hooks/useIntersect'
 import Spinner from '@/src/components/Spinner'
@@ -15,11 +11,10 @@ import { YStack } from '@/src/components/Stack'
 import PostCard from './PostCard'
 
 export default function PostContainer() {
-  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
+
   const { data, fetchNextPage, hasNextPage, isFetching } =
-    useSuspenseInfiniteQuery(
-      postQuery.getAllPost(supabase, PAGINATION.LIMIT, session?.id),
-    )
+    useSuspenseInfiniteQuery(postQuery.getAllPost(PAGINATION.LIMIT, me?.id))
   const posts = useMemo(
     () => data.pages.flatMap((page) => page || []) ?? [],
     [data],
@@ -37,9 +32,7 @@ export default function PostContainer() {
 
   return (
     <YStack gap={12}>
-      {posts?.map((post) => (
-        <PostCard key={post.id} post={post} postUserInfo={post.userInfo} />
-      ))}
+      {posts?.map((post) => <PostCard key={post.id} post={post} />)}
       <div ref={target} className="h-4" />
       {isFetching && (
         <Spinner.Container>

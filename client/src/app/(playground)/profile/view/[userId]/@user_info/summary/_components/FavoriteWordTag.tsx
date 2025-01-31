@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { IFavoriteWord } from '@/src/types/word'
+import { IFavoriteWord } from '@/src/types/dtos/word'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import Button from '@/src/components/Button'

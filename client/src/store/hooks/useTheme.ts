@@ -2,13 +2,13 @@
 
 import { cva } from 'class-variance-authority'
 import { create } from 'zustand'
-import { TColor, TTheme } from '@/src/types/theme'
+import { ColorScheme, Theme } from '@/src/types/enums'
 
 interface ThemeState {
-  color: TColor
-  theme: TTheme
-  setColor: (color: TColor) => void
-  setTheme: (theme: TTheme) => void
+  color: ColorScheme
+  theme: Theme
+  setColor: (color: ColorScheme) => void
+  setTheme: (theme: Theme) => void
 }
 
 export const colorTheme = cva('', {
@@ -42,8 +42,8 @@ export const ringTheme = cva('', {
 })
 
 export const useTheme = create<ThemeState>((set) => ({
-  color: 'black',
-  theme: 'light',
-  setColor: (color: TColor) => set((state) => ({ ...state, color })),
-  setTheme: (theme: TTheme) => set((state) => ({ ...state, theme })),
+  color: ColorScheme.BLACK,
+  theme: Theme.LIGHT,
+  setColor: (color: ColorScheme) => set((state) => ({ ...state, color })),
+  setTheme: (theme: Theme) => set((state) => ({ ...state, theme })),
 }))

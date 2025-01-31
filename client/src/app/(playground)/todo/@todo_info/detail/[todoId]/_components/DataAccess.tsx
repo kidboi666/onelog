@@ -1,8 +1,7 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
 import Line from '@/src/components/Line'
 import ButtonSection from './ButtonSection'
@@ -24,11 +23,12 @@ export default function DataAccess({
   orderFrom,
   color,
 }: Props) {
-  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
   const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me!.userId, Number(folderId)),
+    todoQuery.getTodoFromFolder(me!.id, Number(folderId)),
   )
-  const todo = todos ? todos?.find((item) => item.id === Number(todoId)) : null
+
+  const todo = todos.find((item) => item.id === Number(todoId))
 
   if (!todo) return null
 

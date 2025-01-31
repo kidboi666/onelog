@@ -2,10 +2,9 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { ReactElement, useMemo, useState } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { gardenQuery } from '@/src/services/queries/garden/garden-query'
-import { IDateBlock } from '@/src/types/garden'
+import { IDateBlock } from '@/src/types/dtos/garden'
 import { Tables } from '@/src/types/supabase'
 import { getDaysInYear, getFirstDayInYear } from '@/src/utils/client-utils'
 import { YStack } from '@/src/components/Stack'
@@ -95,13 +94,12 @@ export default function Garden({ params }: Props) {
   const userId = params.userId
   const currentYear = new Date().getFullYear()
   const [selectedYear, setSelectedYear] = useState(currentYear)
-
-  const { data: me } = useSuspenseQuery(meQuery.getUserInfo(supabase, userId))
-  const signedYear = new Date(me?.created_at).getFullYear()
+  const { me } = useMe()
+  const signedYear = new Date(me?.createdAt || '').getFullYear()
 
   const firstDayIndex = getFirstDayInYear(selectedYear)
   const { data: garden } = useSuspenseQuery(
-    gardenQuery.getGarden(supabase, userId, selectedYear),
+    gardenQuery.getGarden(userId, selectedYear),
   )
   const shouldRenderElement = getRenderedBlockFromEmotionLevel(
     selectedYear,

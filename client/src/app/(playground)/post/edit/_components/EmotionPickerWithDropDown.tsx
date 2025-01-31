@@ -1,7 +1,7 @@
 import { RefObject } from 'react'
 import cn from '@/src/lib/cn'
 import { useTheme } from '@/src/store/hooks/useTheme'
-import { EmotionLevel } from '@/src/types/enums'
+import { EmotionLevel } from '@/src/types/enums/index'
 import { DropDown } from '@/src/components/DropDown'
 import Icon from '@/src/components/Icon'
 import { List } from '@/src/components/List'

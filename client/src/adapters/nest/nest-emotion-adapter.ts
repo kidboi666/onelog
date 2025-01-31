@@ -1,7 +1,11 @@
-import { IEmotionBaseAdapter } from '@/src/types/emotion'
+import { IEmotionBaseAdapter } from '@/src/types/services/index'
 
-export class NestEmotionAdapter implements IEmotionBaseAdapter {
-  async getEmotionAverage(userId: string): Promise<number> {
+export const createNestEmotionAdapter = (): IEmotionBaseAdapter => {
+  const getEmotionAverage = async (userId: string): Promise<number> => {
     return Promise.resolve(75)
+  }
+
+  return {
+    getEmotionAverage,
   }
 }

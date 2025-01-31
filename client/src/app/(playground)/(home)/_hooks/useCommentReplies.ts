@@ -1,8 +1,8 @@
-import { QUERY_KEY } from '@/src/constants/query-key'
+import { QUERY_KEY } from '@/src/constants/index'
 import { useEffect, useState } from 'react'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { IComment } from '@/src/types/comment'
-import { IPostDetail } from '@/src/types/post'
+import { IComment } from '@/src/types/entities/comment'
+import { IPostDetail } from '@/src/types/entities/post'
 import { sortByDate } from '@/src/utils/client-utils'
 
 export default function useCommentReplies(commentId: number, postId: number) {

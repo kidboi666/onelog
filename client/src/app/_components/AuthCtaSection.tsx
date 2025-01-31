@@ -1,10 +1,8 @@
 'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { ROUTES } from '@/src/routes'
 import LinkButton from '@/src/components/LinkButton'
 import { XStack, YStack } from '@/src/components/Stack'
@@ -12,13 +10,13 @@ import Title from '@/src/components/Title'
 
 export default function AuthCtaSection() {
   const router = useRouter()
-  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
 
   useEffect(() => {
-    if (session) {
+    if (me) {
       router.replace('/home')
     }
-  }, [session])
+  }, [me])
 
   return (
     <XStack className="w-full justify-center">

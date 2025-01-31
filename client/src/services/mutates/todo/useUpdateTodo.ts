@@ -1,20 +1,17 @@
-import { createTodoAdapter } from '@/src/adapters/index'
-import { TOAST_MESSAGE } from '@/src/constants'
-import { QUERY_KEY } from '@/src/constants/query-key'
+import { todoAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { useToast } from '@/src/store/hooks/useToast'
-import { ToastType } from '@/src/types/enums/index'
-import { IUpdateTodo } from '@/src/types/todo'
+import { IUpdateTodo } from '@/src/types/dtos/todo'
+import { Toast } from '@/src/types/enums/index'
 
 export default function useUpdateTodo() {
   const queryClient = getQueryClient()
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (params: IUpdateTodo) =>
-      createTodoAdapter(supabase).updateTodo(params),
+    mutationFn: (params: IUpdateTodo) => todoAdapter.updateTodo(params),
     onSuccess: (_, variables) => {
       const { folderId } = variables
       const queryKeys = [
@@ -27,14 +24,14 @@ export default function useUpdateTodo() {
 
       openToast({
         text: TOAST_MESSAGE.TODO.UPDATE.SUCCESS,
-        type: ToastType.SUCCESS,
+        type: Toast.SUCCESS,
       })
     },
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.TODO.UPDATE.EXCEPTION,
         message: error.message,
-        type: ToastType.ERROR,
+        type: Toast.ERROR,
       })
     },
   })

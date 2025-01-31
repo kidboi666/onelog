@@ -8,11 +8,10 @@ import {
   useTransition,
 } from 'react'
 import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
+import { useMe } from '@/src/store/hooks/useMe'
 import useUpdateTodoFolder from '@/src/services/mutates/todo/useUpdateTodoFolder'
-import { meQuery } from '@/src/services/queries/auth/me-query'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
-import { Tables } from '@/src/types/supabase'
+import { ITodoFolder } from '@/src/types/dtos/todo'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import Button from '@/src/components/Button'
@@ -23,9 +22,9 @@ import FolderDropDown from './FolderDropDown'
 
 interface Props {
   isSelected: boolean
-  folder: Tables<'todo_folder'>
-  dragItem: MutableRefObject<Tables<'todo_folder'> | null>
-  dragOverItem: MutableRefObject<Tables<'todo_folder'> | null>
+  folder: ITodoFolder
+  dragItem: MutableRefObject<ITodoFolder | null>
+  dragOverItem: MutableRefObject<ITodoFolder | null>
 }
 
 export default function Folder({
@@ -35,9 +34,9 @@ export default function Folder({
   dragOverItem,
 }: Props) {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
   const { data: todoFolders } = useSuspenseQuery(
-    todoQuery.getTodoFolder(supabase, me!.userId),
+    todoQuery.getTodoFolder(me!.id),
   )
   const { mutate: updateTodoFolder } = useUpdateTodoFolder()
   const {
@@ -58,7 +57,7 @@ export default function Folder({
     dragItem.current = folder
   }
 
-  const dragEnter = (targetFolder: Tables<'todo_folder'>) => {
+  const dragEnter = (targetFolder: ITodoFolder) => {
     dragOverItem.current = targetFolder
 
     const isDraggingDown = dragItem.current!.index < dragOverItem.current!.index

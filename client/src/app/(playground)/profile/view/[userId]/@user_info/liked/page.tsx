@@ -1,9 +1,8 @@
 'use client'
 
-import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import useIntersect from '@/src/hooks/useIntersect'
 import Empty from '@/src/components/Empty'
@@ -15,13 +14,11 @@ interface Props {
   params: { userId: string }
 }
 
-export default function LikedPage({ params }: Props) {
+export default function LikedPage({ params: { userId } }: Props) {
   const limit = 4
-  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
   const { data, hasNextPage, fetchNextPage, isFetching, isLoading, isPending } =
-    useInfiniteQuery(
-      postQuery.getLikedPost(supabase, params.userId, limit, session?.userId),
-    )
+    useSuspenseInfiniteQuery(postQuery.getLikedPost(userId, limit, me?.id))
   const likedPosts = data?.pages.flatMap((post) => post || [])
   const [ref, inView] = useIntersect<HTMLDivElement>({}, isLoading)
 
@@ -48,8 +45,7 @@ export default function LikedPage({ params }: Props) {
               <PostCard
                 key={item.id}
                 post={item.post}
-                createdAtLiked={item.created_at}
-                postUserInfo={item.post.user_info}
+                createdAtLiked={item.createdAt}
               />
             ) : (
               <Empty key={item?.id}>

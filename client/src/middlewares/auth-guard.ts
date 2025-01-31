@@ -41,6 +41,7 @@ export async function authGuard(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser()
+
   const path = request.nextUrl.pathname
 
   if (isRestrictedAccess(user, path)) {

@@ -1,7 +1,7 @@
 'use client'
 
-import { IUserSession } from '@/src/types/auth'
-import { IComment } from '@/src/types/comment'
+import { IUserInfo } from '@/src/types/entities/auth'
+import { IComment } from '@/src/types/entities/comment'
 import useToggle from '@/src/hooks/useToggle'
 import { formatDateElapsed } from '@/src/utils/client-utils'
 import { XStack, YStack } from '@/src/components/Stack'
@@ -18,10 +18,10 @@ import ReportButton from './ReportButton'
 interface Props {
   comment: IComment
   postId: number
-  session: IUserSession
+  me: IUserInfo | null
 }
 
-export default function CommentItem({ comment, postId, session }: Props) {
+export default function CommentItem({ comment, postId, me }: Props) {
   const { isOpen: showCommentInput, toggle: toggleShowCommentInput } =
     useToggle()
   const { isOpen: isModify, toggle: toggleModify } = useToggle()
@@ -63,6 +63,7 @@ export default function CommentItem({ comment, postId, session }: Props) {
             <CommentInputButton onShowCommentInput={toggleShowCommentInput} />
             <ReportButton commentId={comment.id} />
             <OptionButtonWithDropDown
+              type="comment"
               onModify={toggleModify}
               commentAuthorId={comment.userId}
               commentId={comment.id}
@@ -71,11 +72,7 @@ export default function CommentItem({ comment, postId, session }: Props) {
           </XStack>
         </YStack>
         {showCommentInput && (
-          <CommentInput
-            postId={postId}
-            commentId={comment.id}
-            session={session}
-          />
+          <CommentInput postId={postId} commentId={comment.id} me={me} />
         )}
         {commentToComments.length > 0 &&
           commentToComments.map((comment) => (
@@ -83,7 +80,7 @@ export default function CommentItem({ comment, postId, session }: Props) {
               key={comment.id}
               postId={postId}
               comment={comment}
-              session={session}
+              me={me}
             />
           ))}
       </YStack>

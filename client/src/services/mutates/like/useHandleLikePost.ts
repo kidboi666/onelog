@@ -1,75 +1,43 @@
-import { TOAST_MESSAGE } from '@/src/constants'
-import { QUERY_KEY } from '@/src/constants/query-key'
+import { likeAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { useToast } from '@/src/store/hooks/useToast'
-import { PostType, ToastType } from '@/src/types/enums'
+import { ILike } from '@/src/types/entities/like'
+import { Toast } from '@/src/types/enums/index'
 
-interface IFavorite {
-  postId?: number
-  meId?: string | null
-  postType?: PostType
-  authorId?: string | null
-  startOfDay?: string | null
-  endOfDay?: string | null
-}
-
-export default function useHandleLikePost(isLike: boolean | null | undefined) {
+export default function useHandleLikePost() {
   const queryClient = getQueryClient()
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: async (params: IFavorite) => {
-      let query: any = supabase.from('like')
-
-      if (isLike) {
-        query = query
-          .delete()
-          .eq('user_id', params.meId)
-          .eq('post_id', params.postId)
-      } else {
-        query = query
-          .insert({
-            post_id: Number(params.postId),
-            user_id: params.meId,
-          })
-          .select()
-      }
-
-      const { data, error } = await query
-
-      if (error) {
-        console.error(error)
-        throw error
-      }
-
-      return data
-    },
-    onError: (error) => {
+    mutationFn: async (params: ILike) => likeAdapter.handleLike(params),
+    onError: (error, variables) => {
+      const { isLike } = variables
       openToast({
         text: isLike
           ? TOAST_MESSAGE.LIKE.CANCEL.EXCEPTION
           : TOAST_MESSAGE.LIKE.SEND.EXCEPTION,
         message: error.message,
-        type: ToastType.ERROR,
+        type: Toast.ERROR,
       })
     },
     onSettled: (_, __, variables) => {
-      openToast({
-        text: isLike
-          ? TOAST_MESSAGE.LIKE.CANCEL.SUCCESS
-          : TOAST_MESSAGE.LIKE.SEND.SUCCESS,
-        type: ToastType.SUCCESS,
-      })
       const {
         postId,
         meId,
+        isLike,
         authorId,
         postType,
         startOfDay = null,
         endOfDay = null,
       } = variables
+      openToast({
+        text: isLike
+          ? TOAST_MESSAGE.LIKE.CANCEL.SUCCESS
+          : TOAST_MESSAGE.LIKE.SEND.SUCCESS,
+        type: Toast.SUCCESS,
+      })
 
       const queryKeys = [
         QUERY_KEY.POST.PUBLIC,

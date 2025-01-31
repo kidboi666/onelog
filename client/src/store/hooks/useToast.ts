@@ -1,10 +1,10 @@
 import { create } from 'zustand'
-import { ToastType } from '@/src/types/enums/index'
+import { Toast } from '@/src/types/enums/index'
 
 export interface ToastContent {
   id: number
   text: string
-  type: ToastType
+  type: Toast
   message?: string
 }
 

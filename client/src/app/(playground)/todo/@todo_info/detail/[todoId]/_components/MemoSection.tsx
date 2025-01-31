@@ -1,22 +1,21 @@
 'use client'
 
-import { QUERY_KEY } from '@/src/constants/query-key'
+import { QUERY_KEY } from '@/src/constants/index'
 import { FormEvent, useEffect } from 'react'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
-import { Tables } from '@/src/types/supabase'
+import { ITodo } from '@/src/types/entities/todo'
 import useInput from '@/src/hooks/useInput'
 import Button from '@/src/components/Button'
 import TextArea from '@/src/components/TextArea'
 import Title from '@/src/components/Title'
 
 interface Props {
-  todo?: Tables<'todo'>
+  todo: ITodo
 }
 
 export default function MemoSection({ todo }: Props) {
   const queryClient = getQueryClient()
-
   const [memo, onChangeMemo, setMemo] = useInput<string>('')
 
   const { mutate: updateTodo } = useUpdateTodo()
@@ -24,7 +23,7 @@ export default function MemoSection({ todo }: Props) {
   const handleSubmitMemo = (e: FormEvent) => {
     e.preventDefault()
     updateTodo(
-      { ...todo!, memo, updated_at: new Date().toISOString() },
+      { ...todo, memo },
       {
         onSuccess: () => {
           void queryClient.invalidateQueries({
@@ -36,7 +35,7 @@ export default function MemoSection({ todo }: Props) {
   }
 
   useEffect(() => {
-    setMemo(todo?.memo ?? '')
+    setMemo(todo.memo)
   }, [todo])
 
   return (

@@ -1,9 +1,7 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { wordQuery } from '@/src/services/queries/word/word-query'
-import { IFavoriteWord } from '@/src/types/word'
 import Empty from '@/src/components/Empty'
 import { List } from '@/src/components/List'
 import { YStack } from '@/src/components/Stack'
@@ -15,11 +13,10 @@ interface Props {
 }
 
 export default function MyFavoriteWords({ userId }: Props) {
-  const { data: words } = useSuspenseQuery(
-    wordQuery.getMyUsedWords(supabase, userId),
-  )
-  const typedWords = words?.words as unknown as IFavoriteWord[]
-  const sortedUsedWords = typedWords?.sort((a, b) => b?.count - a?.count)
+  const { data: usedWords } = useSuspenseQuery(wordQuery.getMyUsedWords(userId))
+
+  const sortedUsedWords =
+    usedWords?.words?.sort((a, b) => b.count - a.count) ?? []
   const shouldRenderWords = sortedUsedWords?.filter((word) => word.count > 1)
 
   return (

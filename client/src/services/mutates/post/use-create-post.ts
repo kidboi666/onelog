@@ -1,20 +1,17 @@
-import { createPostAdapter } from '@/src/adapters'
-import { TOAST_MESSAGE } from '@/src/constants'
-import { QUERY_KEY } from '@/src/constants/query-key'
+import { postAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { useToast } from '@/src/store/hooks/useToast'
-import { ToastType } from '@/src/types/enums/index'
-import { ICreatePost } from '@/src/types/post'
+import { ICreatePost } from '@/src/types/dtos/post'
+import { Toast } from '@/src/types/enums/index'
 
 export default function useCreatePost() {
   const queryClient = getQueryClient()
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (params: ICreatePost) =>
-      createPostAdapter(supabase).createPost(params),
+    mutationFn: (params: ICreatePost) => postAdapter.createPost(params),
     onSuccess: (_, variables) => {
       const queryKeys = [
         QUERY_KEY.POST.PUBLIC,
@@ -27,14 +24,14 @@ export default function useCreatePost() {
 
       openToast({
         text: TOAST_MESSAGE.POST.POST.SUCCESS,
-        type: ToastType.SUCCESS,
+        type: Toast.SUCCESS,
       })
     },
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.POST.POST.EXCEPTION,
         message: error.message,
-        type: ToastType.ERROR,
+        type: Toast.ERROR,
       })
     },
   })

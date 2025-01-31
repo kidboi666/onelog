@@ -11,11 +11,10 @@ import {
   useTransition,
 } from 'react'
 import cn from '@/src/lib/cn'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
+import { useMe } from '@/src/store/hooks/useMe'
 import useUpdateTodo from '@/src/services/mutates/todo/useUpdateTodo'
-import { meQuery } from '@/src/services/queries/auth/me-query'
 import { todoQuery } from '@/src/services/queries/todo/todo-query'
-import { Tables } from '@/src/types/supabase'
+import { ITodo } from '@/src/types/entities/todo'
 import { formatDateToHM, formatDateToMDY } from '@/src/utils/client-utils'
 import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
@@ -26,13 +25,13 @@ import { XStack, YStack } from '@/src/components/Stack'
 import TextDisplay from '@/src/components/TextDisplay'
 
 interface TodoProps {
-  todo: Tables<'todo'>
+  todo: ITodo
   isComplete: boolean | null
   folderColor: string
-  onUpdate: (e: MouseEvent, selectedTodo: Tables<'todo'>) => void
+  onUpdate: (e: MouseEvent, selectedTodo: ITodo) => void
   isDraggable?: boolean
-  dragItem: MutableRefObject<Tables<'todo'> | null>
-  dragOverItem: MutableRefObject<Tables<'todo'> | null>
+  dragItem: MutableRefObject<ITodo | null>
+  dragOverItem: MutableRefObject<ITodo | null>
   orderFrom: 'main' | 'folder'
 }
 
@@ -46,9 +45,9 @@ export default function Todo({
   dragOverItem,
   orderFrom,
 }: TodoProps) {
-  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
   const { data: todos } = useSuspenseQuery(
-    todoQuery.getTodoFromFolder(supabase, me!.userId, todo.folder_id),
+    todoQuery.getTodoFromFolder(me!.id, todo.folderId),
   )
   const { mutate: updateTodo } = useUpdateTodo()
   const [showKebabButton, setShowKebabButton] = useState(false)
@@ -58,7 +57,7 @@ export default function Todo({
 
   const handleTodoClick = () => {
     router.push(
-      ROUTES.TODO.VIEW.DETAIL(todo.id, todo.folder_id, folderColor, orderFrom),
+      ROUTES.TODO.VIEW.DETAIL(todo.id, todo.folderId, folderColor, orderFrom),
       {
         scroll: false,
       },
@@ -95,6 +94,7 @@ export default function Todo({
     todoEle.current?.classList.remove('border-b-blue-500')
   }
 
+  // @TODO 코드를 깨끗이 하자
   const drop = (e: DragEvent<HTMLLIElement>) => {
     todoEle.current?.classList.remove('border-t-blue-500')
     todoEle.current?.classList.remove('border-b-blue-500')
@@ -205,8 +205,8 @@ export default function Todo({
             </TextDisplay>
             <TextDisplay type="caption" size="xs" className="line-clamp-1">
               {isComplete
-                ? `완료일 : ${formatDateToMDY(todo.updated_at ?? '')} ${formatDateToHM(todo.updated_at ?? '')}`
-                : `등록일 : ${formatDateToMDY(todo.created_at)} ${formatDateToHM(todo.created_at)}`}
+                ? `완료일 : ${formatDateToMDY(todo.updatedAt ?? '')} ${formatDateToHM(todo.updatedAt ?? '')}`
+                : `등록일 : ${formatDateToMDY(todo.createdAt)} ${formatDateToHM(todo.createdAt)}`}
             </TextDisplay>
           </YStack>
         </XStack>

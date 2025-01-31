@@ -1,3 +1,5 @@
+import { FolderColor } from '@/src/types/enums/index'
+
 export const colorizeOpacity = (orderBy: number) => {
   if (orderBy) {
     if (orderBy <= 20) {
@@ -111,4 +113,21 @@ export const sortByDate = <T extends { createdAt: string }>(arr: T[]): T[] => {
   return arr.sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
   )
+}
+
+export const checkIsOwner = (userId?: string, authorId?: string) =>
+  userId === authorId
+
+export const getTodoFolderColorClassName = (color: FolderColor) => {
+  const colorMap = {
+    yellow: 'bg-var-yellow/15 dark:bg-var-yellow/25',
+    orange: 'bg-var-orange/15 dark:bg-var-orange/25',
+    black: 'bg-black/15 dark:bg-black/25',
+    blue: 'bg-var-blue/15 dark:bg-var-blue/25',
+    green: 'bg-var-green/15 dark:bg-var-green/25',
+    red: 'bg-red-500/15 dark:bg-red-500/25',
+    purple: 'bg-purple-500/15 dark:bg-purple-500/25',
+  }
+
+  return colorMap[color] ?? ''
 }

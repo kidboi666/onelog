@@ -2,7 +2,7 @@
 
 import cn from '@/src/lib/cn'
 import { useTheme } from '@/src/store/hooks/useTheme'
-import { TTheme } from '@/src/types/theme'
+import { Theme } from '@/src/types/enums/index'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import { XStack, YStack } from '@/src/components/Stack'
@@ -11,17 +11,17 @@ import Title from '@/src/components/Title'
 export default function DarkModeSwitch() {
   const { theme, setTheme } = useTheme()
 
-  const handleThemeChange = (theme: TTheme) => {
+  const handleThemeChange = (theme: Theme) => {
     setTheme(theme)
     localStorage.setItem('theme', theme)
     handleDocumentClass(theme)
   }
 
-  const handleDocumentClass = (theme: TTheme) => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
+  const handleDocumentClass = (theme: Theme) => {
+    if (theme === Theme.DARK) {
+      document.documentElement.classList.add(Theme.DARK)
     } else {
-      document.documentElement.classList.remove('dark')
+      document.documentElement.classList.remove(Theme.DARK)
     }
   }
 
@@ -30,12 +30,12 @@ export default function DarkModeSwitch() {
       <Title>다크 모드 설정</Title>
       <XStack>
         <DarkModeBlock
-          theme="dark"
+          theme={Theme.DARK}
           selectedTheme={theme}
           onBlockClick={handleThemeChange}
         />
         <DarkModeBlock
-          theme="light"
+          theme={Theme.LIGHT}
           selectedTheme={theme}
           onBlockClick={handleThemeChange}
         />
@@ -45,9 +45,9 @@ export default function DarkModeSwitch() {
 }
 
 interface DarkModeBlockProps {
-  onBlockClick: (theme: TTheme) => void
-  theme: TTheme
-  selectedTheme: TTheme
+  onBlockClick: (theme: Theme) => void
+  theme: Theme
+  selectedTheme: Theme
 }
 
 function DarkModeBlock({

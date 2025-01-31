@@ -1,18 +1,16 @@
-'use client';
+'use client'
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
 import useDeleteTodoFolder from '@/src/services/mutates/todo/useDeleteTodoFolder'
 import Button from '@/src/components/Button'
 import Modal from '@/src/components/Modal'
 import Title from '@/src/components/Title'
 
-
 interface Props {
   params: { folderId: string }
 }
 
-export default function DeleteTodoFolderModal({ params }: Props) {
-  const folderId = params.folderId
+export default function DeleteTodoFolderModal({ params: { folderId } }: Props) {
   const router = useRouter()
   const { mutate: deleteFolder } = useDeleteTodoFolder()
 

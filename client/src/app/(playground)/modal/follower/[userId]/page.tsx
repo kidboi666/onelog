@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation'
 import { MouseEvent, useState } from 'react'
+import { useMe } from '@/src/store/hooks/useMe'
 import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
 import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
-import useMeQueries from '@/src/hooks/queries/useMeQueries'
 import { ROUTES } from '@/src/routes'
 import Modal from '@/src/components/Modal'
 import { YStack } from '@/src/components/Stack'
@@ -14,10 +14,9 @@ interface Props {
   params: { userId: string }
 }
 
-export default function FollowerListModal({ params }: Props) {
+export default function FollowerListModal({ params: { userId } }: Props) {
   const router = useRouter()
-  const userId = params.userId
-  const { me, session } = useMeQueries()
+  const { me } = useMe()
   const { followers, myFollows } = useFollowQueries(userId)
   const { mutate: followOrUnfollow } = useHandleFollow()
   const [pendingList, setPendingList] = useState<Record<string, boolean>>({})
@@ -28,13 +27,13 @@ export default function FollowerListModal({ params }: Props) {
     isFollowing: boolean,
   ) => {
     e.stopPropagation()
-    if (!session) return router.push(ROUTES.MODAL.AUTH.GUARD)
+    if (!me) return router.push(ROUTES.MODAL.AUTH.GUARD)
 
     setPendingList((prev) => ({ ...prev, [userId]: true }))
     followOrUnfollow(
       {
-        followed_user_id: userId,
-        follower_user_id: me.id,
+        followedUserId: userId,
+        followerUserId: me.id,
         isFollowing,
       },
       {
@@ -55,10 +54,10 @@ export default function FollowerListModal({ params }: Props) {
         {followers?.map((follower) => {
           const isFollowing = myFollows?.find(
             (myFollower: any) =>
-              myFollower.followed_user_id === follower.user_info.id,
+              myFollower.followedUserId === follower.userInfo.id,
           )
-          const isMe = me?.id === follower.user_info.id
-          const isPending = pendingList[follower.user_info.id] || false
+          const isMe = me?.id === follower.userInfo.id
+          const isPending = pendingList[follower.userInfo.id] || false
 
           return (
             <FollowUserCard
@@ -67,10 +66,10 @@ export default function FollowerListModal({ params }: Props) {
               isMe={isMe}
               follower={follower}
               onFollow={(e: MouseEvent) =>
-                handleFollow(e, follower.user_info.id, !!isFollowing)
+                handleFollow(e, follower.userInfo.id, !!isFollowing)
               }
               isPending={isPending}
-              pushUserPage={() => handlePushUserPage(follower.user_info.id)}
+              pushUserPage={() => handlePushUserPage(follower.userInfo.id)}
             />
           )
         })}

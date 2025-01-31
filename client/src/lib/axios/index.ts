@@ -1,7 +1,7 @@
 import { API_CONFIG } from '@/src/config/index'
 import axios from 'axios'
 
-const axiosInstance = axios.create(API_CONFIG)
+export const axiosInstance = axios.create(API_CONFIG)
 
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken')

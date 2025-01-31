@@ -4,29 +4,25 @@ import { signInSchema } from '@/src/schemas/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import cn from '@/src/lib/cn'
-import useSignIn from '@/src/services/mutates/auth/use-sign-in'
-import { useSignInOauth } from '@/src/services/mutates/auth/use-sign-in-oauth'
-import { ISignIn } from '@/src/types/auth'
+import { ISignIn } from '@/src/types/dtos/auth'
 import Button from '@/src/components/Button'
 import Icon from '@/src/components/Icon'
 import Modal from '@/src/components/Modal'
 import { YStack } from '@/src/components/Stack'
 import Title from '@/src/components/Title'
+import useSignInState from '@/src/app/(playground)/modal/_hooks/useSignInState'
 import AuthForm from '../../_components/AuthForm'
 
 export default function SignInModal() {
   const router = useRouter()
   const {
-    mutate: signIn,
-    isPending: isNormalAuthPending,
-    isSuccess: isNormalAuthSuccess,
-  } = useSignIn()
-  const {
-    mutate: signInOAuth,
-    isPending: isOAuthPending,
-    isSuccess: isOAuthSuccess,
-  } = useSignInOauth()
+    signIn,
+    signInKakao,
+    isAuthenticating,
+    isKakaoLoading,
+    isEmailLoading,
+    isSuccess,
+  } = useSignInState()
   const {
     register,
     handleSubmit,
@@ -40,12 +36,11 @@ export default function SignInModal() {
       password: '',
     },
   })
-  const isPending = isNormalAuthPending || isOAuthPending
-  const isSuccess = isNormalAuthSuccess || isOAuthSuccess
 
   const handleSubmitSignIn = (data: ISignIn) => {
     signIn(data, {
       onError: (error) => {
+        console.error(error)
         setError('email', {
           type: 'validateError',
           message: error.message,
@@ -54,8 +49,8 @@ export default function SignInModal() {
     })
   }
 
-  const handleSubmitOAuthSignIn = () => {
-    signInOAuth()
+  const handleSubmitKakaoSignIn = () => {
+    signInKakao()
   }
 
   return (
@@ -84,20 +79,17 @@ export default function SignInModal() {
             가입하러 가기
           </Button>
           <Button
-            isLoading={isNormalAuthPending || isNormalAuthSuccess}
-            disabled={isPending || isSuccess}
+            isLoading={isEmailLoading}
+            disabled={isAuthenticating || isSuccess}
             type="submit"
           >
             로그인
           </Button>
           <Button
-            isLoading={isOAuthPending || isOAuthSuccess}
-            disabled={isPending || isSuccess}
-            onClick={handleSubmitOAuthSignIn}
-            className={cn(
-              'bg-var-yellow text-white ring-var-yellow dark:bg-var-yellow',
-              isPending || isSuccess ? 'bg-gray-300 dark:bg-gray-500' : '',
-            )}
+            variant="kakao"
+            isLoading={isKakaoLoading}
+            disabled={isAuthenticating || isSuccess}
+            onClick={handleSubmitKakaoSignIn}
           >
             <Icon size={20}>
               <path

@@ -1,11 +1,9 @@
-import { createFollowAdapter } from '@/src/adapters/index'
-import { TOAST_MESSAGE } from '@/src/constants'
-import { QUERY_KEY } from '@/src/constants/query-key'
+import { followAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { useToast } from '@/src/store/hooks/useToast'
-import { ToastType } from '@/src/types/enums/index'
+import { Toast } from '@/src/types/enums/index'
 
 interface Params {
   followedUserId: string
@@ -20,12 +18,17 @@ export default function useHandleFollow() {
   return useMutation({
     mutationFn: async (params: Params) => {
       const { isFollowing, followedUserId, followerUserId } = params
-      const adapter = createFollowAdapter(supabase)
       let result
       if (isFollowing) {
-        result = await adapter.deleteFollow({ followedUserId, followerUserId })
+        result = await followAdapter.deleteFollow({
+          followedUserId,
+          followerUserId,
+        })
       } else {
-        result = await adapter.createFollow({ followedUserId, followerUserId })
+        result = await followAdapter.createFollow({
+          followedUserId,
+          followerUserId,
+        })
       }
       return result
     },
@@ -33,7 +36,7 @@ export default function useHandleFollow() {
       if (data) {
         openToast({
           text: TOAST_MESSAGE.FOLLOW.SEND.SUCCESS,
-          type: ToastType.SUCCESS,
+          type: Toast.SUCCESS,
         })
       }
     },
@@ -44,13 +47,13 @@ export default function useHandleFollow() {
         openToast({
           text: TOAST_MESSAGE.FOLLOW.CANCEL.EXCEPTION,
           message: error.message,
-          type: ToastType.ERROR,
+          type: Toast.ERROR,
         })
       } else {
         openToast({
           text: TOAST_MESSAGE.FOLLOW.SEND.EXCEPTION,
           message: error.message,
-          type: ToastType.ERROR,
+          type: Toast.ERROR,
         })
       }
     },
@@ -60,7 +63,7 @@ export default function useHandleFollow() {
       if (isFollowing) {
         openToast({
           text: TOAST_MESSAGE.FOLLOW.CANCEL.SUCCESS,
-          type: ToastType.SUCCESS,
+          type: Toast.SUCCESS,
         })
       }
 

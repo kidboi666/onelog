@@ -2,7 +2,7 @@ import { router } from 'next/client'
 import { FormEvent } from 'react'
 import useCreatePost from '@/src/services/mutates/post/use-create-post'
 import useUpdatePost from '@/src/services/mutates/post/use-update-post'
-import { IUpdatePostFormStates } from '@/src/types/post'
+import { IUpdatePostFormStates } from '@/src/types/dtos/post'
 import { ROUTES } from '@/src/routes'
 
 export default function usePostSubmit({

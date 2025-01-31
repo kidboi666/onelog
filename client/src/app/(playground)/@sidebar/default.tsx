@@ -1,10 +1,8 @@
 'use client'
 
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { ROUTES } from '@/src/routes'
 import Line from '@/src/components/Line'
 import { YStack, ZStack } from '@/src/components/Stack'
@@ -19,8 +17,7 @@ import {
 } from './_constants/Navigate'
 
 export default function Sidebar() {
-  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
-  const { data: me } = useQuery(meQuery.getUserInfo(supabase, session?.id))
+  const { me } = useMe()
   const [isHover, setHover] = useState(false)
   const pathname = usePathname()
 
@@ -102,7 +99,7 @@ export default function Sidebar() {
             <AuthButtonWithDropDown
               pathname={pathname.split('/')[1]}
               userId={pathname.split('/')[2] || ''}
-              meId={session?.id}
+              meId={me?.id}
               userName={me?.userName}
               avatarUrl={me?.avatarUrl}
               email={me?.email}

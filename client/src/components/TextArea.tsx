@@ -29,6 +29,7 @@ const TEXTAREA_VARIANTS = cva('w-full outline-none transition', {
 })
 
 export default function TextArea({
+  value,
   className,
   targetRef,
   variant = 'primary',
@@ -37,6 +38,7 @@ export default function TextArea({
 }: Props) {
   return (
     <textarea
+      value={value ?? ''}
       ref={targetRef}
       className={cn(TEXTAREA_VARIANTS({ variant, dimension }), className)}
       {...props}

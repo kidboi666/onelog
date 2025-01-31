@@ -1,10 +1,9 @@
-import { createAuthAdapter } from '@/src/adapters'
+import { authAdapter } from '@/src/adapters/create-client-adapter'
 import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { useToast } from '@/src/store/hooks/useToast'
-import { ToastType } from '@/src/types/enums/index'
+import { Toast } from '@/src/types/enums/index'
 import { ROUTES } from '@/src/routes'
 
 export default function useSignOut() {
@@ -12,12 +11,12 @@ export default function useSignOut() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: () => createAuthAdapter(supabase).signOut(),
+    mutationFn: () => authAdapter.signOut(),
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.AUTH.SIGN_OUT.EXCEPTION,
         message: error.message,
-        type: ToastType.ERROR,
+        type: Toast.ERROR,
       })
     },
     onSettled: () => {

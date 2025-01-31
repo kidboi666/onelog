@@ -2,8 +2,7 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
-import { meQuery } from '@/src/services/queries/auth/me-query'
+import { useMe } from '@/src/store/hooks/useMe'
 import { postQuery } from '@/src/services/queries/post/post-query'
 import { sortByDate } from '@/src/utils/client-utils'
 import Empty from '@/src/components/Empty'
@@ -16,10 +15,8 @@ interface Props {
 }
 
 export default function Comments({ postId }: Props) {
-  const { data: session } = useSuspenseQuery(meQuery.getSession(supabase))
-  const { data: post } = useSuspenseQuery(
-    postQuery.getPost(supabase, postId, session?.id),
-  )
+  const { me } = useMe()
+  const { data: post } = useSuspenseQuery(postQuery.getPost(postId, me?.id))
   const comments = useMemo(() => {
     if (!post || post.comments.length === 0) {
       return []
@@ -29,7 +26,7 @@ export default function Comments({ postId }: Props) {
 
   return (
     <>
-      <CommentInput postId={postId} session={session} />
+      <CommentInput postId={postId} me={me} />
       {comments.length === 0 ? (
         <Empty>
           <Empty.Text>아직 달린 댓글이 없습니다.</Empty.Text>
@@ -44,7 +41,7 @@ export default function Comments({ postId }: Props) {
                 key={idx}
                 comment={comment}
                 postId={postId}
-                session={session}
+                me={me}
               />
             )
           })}

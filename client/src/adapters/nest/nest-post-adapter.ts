@@ -1,5 +1,3 @@
-'use client'
-
 import { FETCH_URL } from '@/src/constants'
 import {
   ICreatePost,
@@ -8,16 +6,14 @@ import {
   IGetLikedPosts,
   IGetPost,
   IGetUserPostsThatDay,
-  ILikedPost,
-  IPost,
-  IPostBaseAdapter,
-  IPostDetail,
   IUpdatePost,
-} from '@/src/types/post'
+} from '@/src/types/dtos/post'
+import { ILikedPost, IPost, IPostDetail } from '@/src/types/entities/post'
+import { IPostBaseAdapter } from '@/src/types/services/index'
 import { fetcher } from '@/src/utils/fetcher'
 
-export class NestPostAdapter implements IPostBaseAdapter {
-  async getAllPosts(params: IGetAllPosts): Promise<IPost[]> {
+export const createNestPostAdapter = (): IPostBaseAdapter => {
+  const getAllPosts = async (params: IGetAllPosts): Promise<IPost[]> => {
     try {
       return await fetcher.get<IPost[]>(
         FETCH_URL.POST.GET_POSTS(params.pageParam, params.limit),
@@ -27,7 +23,7 @@ export class NestPostAdapter implements IPostBaseAdapter {
     }
   }
 
-  async getPost(params: IGetPost): Promise<IPostDetail> {
+  const getPost = async (params: IGetPost): Promise<IPostDetail> => {
     try {
       return await fetcher.get<IPostDetail>(
         FETCH_URL.POST.GET_POST(params.postId),
@@ -37,7 +33,9 @@ export class NestPostAdapter implements IPostBaseAdapter {
     }
   }
 
-  async getLikedPosts(params: IGetLikedPosts): Promise<ILikedPost[]> {
+  const getLikedPosts = async (
+    params: IGetLikedPosts,
+  ): Promise<ILikedPost[]> => {
     try {
       return await fetcher.get<ILikedPost[]>(
         FETCH_URL.POST.GET_LIKED_POSTS(params.authorId),
@@ -47,7 +45,9 @@ export class NestPostAdapter implements IPostBaseAdapter {
     }
   }
 
-  async getUserPostsThatDay(params: IGetUserPostsThatDay): Promise<IPost[]> {
+  const getUserPostsThatDay = async (
+    params: IGetUserPostsThatDay,
+  ): Promise<IPost[]> => {
     try {
       return await fetcher.get(FETCH_URL.POST.GET_POSTS_THAT_DAY(params))
     } catch (err) {
@@ -55,19 +55,30 @@ export class NestPostAdapter implements IPostBaseAdapter {
     }
   }
 
-  createPost(params: ICreatePost): Promise<void> {
+  const createPost = (params: ICreatePost): Promise<void> => {
     return Promise.resolve(undefined)
   }
 
-  deletePost(postId: number): Promise<void> {
+  const deletePost = (postId: number): Promise<void> => {
     return Promise.resolve(undefined)
   }
 
-  getUserPosts(params: IGetAllUserPosts): Promise<IPost[]> {
+  const getUserPosts = (params: IGetAllUserPosts): Promise<IPost[]> => {
     return Promise.resolve([])
   }
 
-  updatePost(params: IUpdatePost): Promise<void> {
+  const updatePost = (params: IUpdatePost): Promise<void> => {
     return Promise.resolve(undefined)
+  }
+
+  return {
+    getAllPosts,
+    getPost,
+    getLikedPosts,
+    getUserPostsThatDay,
+    createPost,
+    deletePost,
+    getUserPosts,
+    updatePost,
   }
 }

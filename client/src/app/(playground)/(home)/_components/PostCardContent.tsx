@@ -1,6 +1,6 @@
 import { Editor, EditorContent } from '@tiptap/react'
 import { useEffect, useRef, useState } from 'react'
-import { AccessType } from '@/src/types/enums'
+import { Access } from '@/src/types/enums/index'
 import { XStack, YStack, ZStack } from '@/src/components/Stack'
 import Tag from '@/src/components/Tag'
 import Title from '@/src/components/Title'
@@ -16,9 +16,9 @@ interface Props {
   onClick?: () => void
   disabled?: boolean
   likeCount: number
-  isLiked: boolean
+  isLike: boolean
   commentCount: number
-  accessType: AccessType
+  accessType: Access
   postId: number
 }
 
@@ -29,7 +29,7 @@ export default function PostCardContent({
   onClick,
   disabled = false,
   likeCount,
-  isLiked,
+  isLike,
   commentCount,
   accessType,
   postId,
@@ -70,7 +70,7 @@ export default function PostCardContent({
         <XStack as="nav" className="items-center justify-between">
           <LikeButton
             likeCount={likeCount}
-            isLiked={isLiked}
+            isLike={isLike}
             postId={postId}
             viewToolTip
           />

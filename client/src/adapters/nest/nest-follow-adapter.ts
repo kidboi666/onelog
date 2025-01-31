@@ -1,31 +1,37 @@
-import {
-  ICreateFollow,
-  IDeleteFollow,
-  IFollowBaseAdapter,
-} from '@/src/types/follow'
+import { ICreateFollow, IDeleteFollow } from '@/src/types/dtos/follower'
+import { IFollowBaseAdapter } from '@/src/types/services/index'
 
-export class NestFollowAdapter implements IFollowBaseAdapter {
-  getFollowers(userId: string): Promise<any> {
+export const createNestFollowAdapter = (): IFollowBaseAdapter => {
+  const getFollowers = async (userId: string): Promise<any> => {
     return Promise.resolve(undefined)
   }
 
-  getFollowings(userId: string): Promise<any> {
+  const getFollowings = async (userId: string): Promise<any> => {
     return Promise.resolve(undefined)
   }
 
-  createFollow(params: ICreateFollow): Promise<any> {
+  const createFollow = async (params: ICreateFollow): Promise<any> => {
     return Promise.resolve(undefined)
   }
 
-  deleteFollow(params: IDeleteFollow): Promise<any> {
+  const deleteFollow = async (params: IDeleteFollow): Promise<any> => {
     return Promise.resolve(undefined)
   }
 
-  getFollowersCount(userId: string): Promise<any> {
+  const getFollowersCount = async (userId: string): Promise<any> => {
     return Promise.resolve(undefined)
   }
 
-  getFollowingsCount(userId: string): Promise<any> {
+  const getFollowingsCount = async (userId: string): Promise<any> => {
     return Promise.resolve(undefined)
+  }
+
+  return {
+    getFollowers,
+    getFollowings,
+    createFollow,
+    deleteFollow,
+    getFollowersCount,
+    getFollowingsCount,
   }
 }

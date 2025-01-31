@@ -1,11 +1,9 @@
 'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
+import { useMe } from '@/src/store/hooks/useMe'
 import useReport from '@/src/services/mutates/report/useReport'
-import { meQuery } from '@/src/services/queries/auth/me-query'
 import useInput from '@/src/hooks/useInput'
 import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
@@ -20,23 +18,27 @@ interface Props {
 
 export default function ReportCommentModal({ params }: Props) {
   const router = useRouter()
-  const { data: me } = useSuspenseQuery(meQuery.getSession(supabase))
+  const { me } = useMe()
   const [reason, onChangeReasonValue] = useInput('')
   const { mutate: report } = useReport()
   const [isLoading, startTransition] = useTransition()
 
   const handleCommentReport = () => {
-    report(
-      {
-        reason,
-        reporterId: me?.userId,
-        targetCommentId: Number(params.commentId),
-      },
-      {
-        onSuccess: () => {
-          router.push(ROUTES.MODAL.SUCCESS, { scroll: false })
+    if (!me) return null
+
+    startTransition(() =>
+      report(
+        {
+          reason,
+          reporterId: me.id,
+          targetCommentId: Number(params.commentId),
         },
-      },
+        {
+          onSuccess: () => {
+            router.push(ROUTES.MODAL.SUCCESS, { scroll: false })
+          },
+        },
+      ),
     )
   }
 
@@ -56,7 +58,7 @@ export default function ReportCommentModal({ params }: Props) {
           취소하기
         </Button>
         <Button
-          onClick={() => startTransition(() => handleCommentReport())}
+          onClick={handleCommentReport}
           isLoading={isLoading}
           className="flex-1"
         >

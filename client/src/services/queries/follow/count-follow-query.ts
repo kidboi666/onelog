@@ -1,30 +1,21 @@
-import { createFollowAdapter } from '@/src/adapters/index'
-import { QUERY_KEY } from '@/src/constants/query-key'
-import { SupabaseClient } from '@supabase/supabase-js'
+import { followAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY } from '@/src/constants/index'
 import { queryOptions } from '@tanstack/react-query'
 
 export const countFollowQuery = {
   /** 유저를 팔로우하는 유저의 Id들 */
-  countFollower: (
-    supabase: SupabaseClient,
-    userId: string,
-    isMount: boolean | undefined = false,
-  ) =>
+  countFollower: (userId: string, isMount: boolean | undefined = false) =>
     queryOptions({
       queryKey: QUERY_KEY.FOLLOW.COUNT.FOLLOWER(userId),
-      queryFn: () => createFollowAdapter(supabase).getFollowersCount(userId),
+      queryFn: () => followAdapter.getFollowersCount(userId),
       enabled: isMount,
     }),
 
   /** 유저가 팔로우하는 유저의 Id들 */
-  countFollowing: (
-    supabase: SupabaseClient,
-    userId: string,
-    isMount: boolean | undefined = false,
-  ) =>
+  countFollowing: (userId: string, isMount: boolean | undefined = false) =>
     queryOptions({
       queryKey: QUERY_KEY.FOLLOW.COUNT.FOLLOWING(userId),
-      queryFn: () => createFollowAdapter(supabase).getFollowingsCount(userId),
+      queryFn: () => followAdapter.getFollowingsCount(userId),
       enabled: isMount,
     }),
 }

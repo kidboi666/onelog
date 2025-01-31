@@ -1,4 +1,4 @@
-import { AccessType, EmotionLevel, PostType } from '@/src/types/enums/index'
+import { Access, EmotionLevel, PostType } from '@/src/types/enums/index'
 import Line from '@/src/components/Line'
 import { YStack } from '@/src/components/Stack'
 import EmotionSection from '@/src/app/(playground)/post/edit/_components/EmotionSection'
@@ -6,12 +6,12 @@ import PostTypeSection from '@/src/app/(playground)/post/edit/_components/PostTy
 import PublishSection from '@/src/app/(playground)/post/edit/_components/PublishSection'
 
 interface Props {
-  accessType: AccessType
+  accessType: Access
   emotionLevel: EmotionLevel | null
   postType: PostType
   onChangeEmotion: (emotionLevel: EmotionLevel | null) => void
   onChangePostType: (postType: PostType) => void
-  onChangeAccessType: (accessType: AccessType) => void
+  onChangeAccessType: (accessType: Access) => void
 }
 
 export default function SideOptionsBar({

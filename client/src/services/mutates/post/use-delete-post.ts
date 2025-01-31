@@ -1,24 +1,21 @@
-import { createPostAdapter } from '@/src/adapters'
-import { TOAST_MESSAGE } from '@/src/constants'
-import { QUERY_KEY } from '@/src/constants/query-key'
+import { postAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
-import { supabase } from '@/src/lib/supabase/create-browser-client'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { useToast } from '@/src/store/hooks/useToast'
-import { ToastType } from '@/src/types/enums/index'
+import { Toast } from '@/src/types/enums/index'
 
 export default function useDeletePost() {
   const queryClient = getQueryClient()
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (postId: number) =>
-      createPostAdapter(supabase).deletePost(postId),
+    mutationFn: (postId: number) => postAdapter.deletePost(postId),
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.POST.DELETE.EXCEPTION,
         message: error.message,
-        type: ToastType.ERROR,
+        type: Toast.ERROR,
       })
     },
     onSettled: (_, __, postId) => {
@@ -28,7 +25,7 @@ export default function useDeletePost() {
       )
       openToast({
         text: TOAST_MESSAGE.POST.DELETE.SUCCESS,
-        type: ToastType.SUCCESS,
+        type: Toast.SUCCESS,
       })
     },
   })

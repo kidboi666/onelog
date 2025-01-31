@@ -1,10 +1,10 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { AccessType, EmotionLevel, PostType } from '@/src/types/enums'
 import {
-  IPostDetail,
   IUpdatePostFormActions,
   IUpdatePostFormStates,
-} from '@/src/types/post'
+} from '@/src/types/dtos/post'
+import { IPostDetail } from '@/src/types/entities/post'
+import { Access, EmotionLevel, PostType } from '@/src/types/enums/index'
 
 export default function usePostForm(initialPost: IPostDetail | null): {
   states: IUpdatePostFormStates
@@ -14,7 +14,7 @@ export default function usePostForm(initialPost: IPostDetail | null): {
     Omit<IUpdatePostFormStates, 'content' | 'tags'>
   >({
     emotionLevel: null,
-    accessType: AccessType.PUBLIC,
+    accessType: Access.PUBLIC,
     postType: PostType.ARTICLE,
     title: initialPost?.title ?? null,
   })
@@ -28,7 +28,7 @@ export default function usePostForm(initialPost: IPostDetail | null): {
     [],
   )
 
-  const handleChangeAccessType = useCallback((accessType: AccessType) => {
+  const handleChangeAccessType = useCallback((accessType: Access) => {
     setFormState((prev) => ({ ...prev, accessType }))
   }, [])
 

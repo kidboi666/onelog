@@ -1,23 +1,6 @@
-import { AuthError } from '@supabase/auth-js'
-import { StorageError } from '@supabase/storage-js'
-import { PostgrestError } from '@supabase/supabase-js'
+import { APIError } from '@/src/error/index'
 import { AxiosError, AxiosResponse } from 'axios'
-import { axiosInstance } from '../lib/axios'
-
-export class APIError extends Error {
-  constructor(
-    public status: number | string,
-    public message: string,
-    public originalError:
-      | AxiosError
-      | AuthError
-      | PostgrestError
-      | StorageError,
-  ) {
-    super(message)
-    this.name = 'APIError'
-  }
-}
+import { axiosInstance } from '@/src/lib/axios/index'
 
 const handleRequestError = (error: unknown) => {
   if (error instanceof AxiosError) {
@@ -57,5 +40,3 @@ export const fetcher = {
     return makeRequest<T>(() => axiosInstance.delete(url))
   },
 }
-
-export const supabaseFetcher = (fetchFn: any) => {}

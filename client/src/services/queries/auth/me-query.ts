@@ -1,27 +1,20 @@
-import { createAuthAdapter } from '@/src/adapters'
-import { QUERY_KEY } from '@/src/constants/query-key'
-import { SupabaseClient } from '@supabase/supabase-js'
+import { authAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY } from '@/src/constants/index'
 import { queryOptions } from '@tanstack/react-query'
-import { IUserInfo, IUserSession } from '@/src/types/auth'
+import { IUserInfo, IUserSession } from '@/src/types/entities/auth'
 
 export const meQuery = {
-  getSession: (supabase: SupabaseClient) =>
+  getSession: () =>
     queryOptions<IUserSession>({
       queryKey: QUERY_KEY.AUTH.SESSION,
-      queryFn: () => {
-        const auth = createAuthAdapter(supabase)
-        return auth.getSession()
-      },
+      queryFn: () => authAdapter.getSession(),
       staleTime: 300000,
     }),
 
-  getUserInfo: (supabase: SupabaseClient, userId?: string) =>
-    queryOptions<IUserInfo>({
+  getUserInfo: (userId: string) =>
+    queryOptions<IUserInfo | null>({
       queryKey: QUERY_KEY.AUTH.INFO,
-      queryFn: async () => {
-        const auth = createAuthAdapter(supabase)
-        return auth.getUserInfo(userId)
-      },
+      queryFn: () => authAdapter.getUserInfo(userId),
       enabled: !!userId,
     }),
 }

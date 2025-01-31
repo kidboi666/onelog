@@ -1,43 +1,37 @@
-import { createTodoAdapter } from '@/src/adapters/index'
-import { QUERY_KEY } from '@/src/constants/query-key'
-import { SupabaseClient } from '@supabase/supabase-js'
+import { todoAdapter } from '@/src/adapters/create-client-adapter'
+import { QUERY_KEY } from '@/src/constants/index'
 import { queryOptions } from '@tanstack/react-query'
-import { ITodo, ITodoFolder } from '@/src/types/todo'
+import { ITodoFolder } from '@/src/types/dtos/todo'
+import { ITodo } from '@/src/types/entities/todo'
 
 export const todoQuery = {
-  getTodoFromFolder: (
-    supabase: SupabaseClient,
-    meId: string,
-    folderId: number,
-  ) =>
+  getTodoFromFolder: (meId: string, folderId: number) =>
     queryOptions<ITodo[]>({
       queryKey: QUERY_KEY.TODO.FOLDER(folderId),
-      queryFn: () =>
-        createTodoAdapter(supabase).getTodoFromFolder({ meId, folderId }),
+      queryFn: () => todoAdapter.getTodoFromFolder({ meId, folderId }),
     }),
 
-  getTodoInProgress: (supabase: SupabaseClient, meId: string) =>
+  getTodoInProgress: (meId: string) =>
     queryOptions<ITodo[]>({
       queryKey: QUERY_KEY.TODO.IN_PROGRESS,
-      queryFn: () => createTodoAdapter(supabase).getTodoInProgress(meId),
+      queryFn: () => todoAdapter.getTodoInProgress(meId),
     }),
 
-  getTodoInCompleted: (supabase: SupabaseClient, meId: string) =>
+  getTodoInCompleted: (meId: string) =>
     queryOptions<ITodo[]>({
       queryKey: QUERY_KEY.TODO.COMPLETED,
-      queryFn: () => createTodoAdapter(supabase).getTodoInCompleted(meId),
+      queryFn: () => todoAdapter.getTodoInCompleted(meId),
     }),
 
-  getTodoIndex: (supabase: SupabaseClient, meId: string, folderId: number) =>
+  getTodoIndex: (meId: string, folderId: number) =>
     queryOptions({
       queryKey: QUERY_KEY.TODO.INDEX(folderId),
-      queryFn: () =>
-        createTodoAdapter(supabase).getTodoIndex({ meId, folderId }),
+      queryFn: () => todoAdapter.getTodoIndex({ meId, folderId }),
     }),
 
-  getTodoFolder: (supabase: SupabaseClient, meId: string) =>
+  getTodoFolder: (meId: string) =>
     queryOptions<ITodoFolder[]>({
       queryKey: QUERY_KEY.TODO.MAIN,
-      queryFn: () => createTodoAdapter(supabase).getTodoFolder(meId),
+      queryFn: () => todoAdapter.getTodoFolder(meId),
     }),
 }

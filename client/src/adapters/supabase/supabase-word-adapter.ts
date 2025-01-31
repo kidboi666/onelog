@@ -1,43 +1,35 @@
-'use client'
+import { SupabaseClient } from '@supabase/supabase-js'
+import { IUsedWord, IWord } from '@/src/types/entities/word'
+import { IWordBaseAdapter } from '@/src/types/services/index'
+import { processQuery } from '../query-helpers'
 
-import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'
-import {
-  IGetMyUsedWords,
-  IGetUsedWords,
-  IWordBaseAdapter,
-} from '@/src/types/word'
-import { APIError } from '@/src/utils/fetcher'
-
-export class SupabaseWordAdapter implements IWordBaseAdapter {
-  constructor(private readonly supabase: SupabaseClient) {}
-
-  async getMyUsedWords({ userId }: IGetMyUsedWords): Promise<any> {
-    const { data, error } = await this.supabase
+export const createSupabaseWordAdapter = (
+  supabase: SupabaseClient,
+): IWordBaseAdapter => {
+  // 대상 유저가 쓴 단어들 가져오기
+  const getMyUsedWords = async (userId: string) => {
+    const query = supabase
       .from('user_words')
-      .select()
+      .select<string, IUsedWord>()
       .eq('user_id', userId)
       .single()
 
-    this.handleError(error)
-
-    return data
+    return processQuery(query)
   }
 
-  async getUsedWords({ word }: IGetUsedWords): Promise<any> {
-    const { data, error } = await this.supabase
+  // 사전에서 단어 찾기
+  const getUsedWords = async (word: string) => {
+    const query = supabase
       .from('word_dictionary')
-      .select()
+      .select<string, IWord>()
       .eq('word', word)
       .single()
 
-    this.handleError(error)
-
-    return data
+    return processQuery(query)
   }
 
-  private handleError(error: PostgrestError | null) {
-    if (error && error?.code && error?.message) {
-      throw new APIError(error.code, error.message, error)
-    }
+  return {
+    getMyUsedWords,
+    getUsedWords,
   }
 }

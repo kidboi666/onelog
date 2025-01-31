@@ -1,4 +1,8 @@
-export const AUTH_RESTRICTED_ROUTES = ['/modal/signup', '/modal/signin', '/modal/auth_guard']
+export const AUTH_RESTRICTED_ROUTES = [
+  '/modal/signup',
+  '/modal/signin',
+  '/modal/auth_guard',
+]
 
 export const PROTECTED_ROUTES = [
   '/post/edit',
@@ -15,8 +19,10 @@ export const ROUTES = {
   HOME: '/',
   SETTINGS: '/settings',
   PROFILE: {
-    VIEW: (userId: string, path?: string) => `/profile/view/${userId}${path ? `/${path}` : ''}`,
+    VIEW: (userId: string, path?: string) =>
+      `/profile/view/${userId}${path ? `/${path}` : ''}`,
     EDIT: '/profile/edit',
+    SUMMARY: (userId: string) => `/profile/view/${userId}/summary`,
   },
   POST: {
     NEW: '/post/edit',
@@ -27,8 +33,14 @@ export const ROUTES = {
     TODO: '/todo',
     MAIN: '/todo/main',
     VIEW: {
-      FOLDER: (folderId: number, color: string) => `/todo/custom_task/${folderId}?color=${color}`,
-      DETAIL: (todoId: number, folderId: number, color: string, orderFrom: 'main' | 'folder') =>
+      FOLDER: (folderId: number, color: string) =>
+        `/todo/custom_task/${folderId}?color=${color}`,
+      DETAIL: (
+        todoId: number,
+        folderId: number,
+        color: string,
+        orderFrom: 'main' | 'folder',
+      ) =>
         `/todo/detail/${todoId}?folder_id=${folderId}&color=${color}&order_from=${orderFrom}`,
     },
   },
@@ -38,10 +50,12 @@ export const ROUTES = {
       SIGN_UP: '/modal/signup',
       GUARD: '/modal/auth_guard',
     },
-    DELETE: {
-      COMMENT: (commentId: number, postId: number) =>
+    COMMENT: {
+      DELETE: (commentId: number, postId: number) =>
         `/modal/delete_comment/${commentId}?post_id=${postId}`,
-      POST: (postId: number) => `/modal/delete_post/${postId}`,
+    },
+    POST: {
+      DELETE: (postId: number) => `/modal/delete_post/${postId}`,
     },
     FOLLOW: {
       FOLLOWER: (userId: string) => `/modal/follower/${userId}`,
@@ -53,9 +67,15 @@ export const ROUTES = {
     },
     TODO: {
       POST: '/modal/add_todo_folder',
-      DELETE: (todoId: string, folderId: string, color: string, orderFrom: 'main' | 'folder') =>
+      DELETE: (
+        todoId: string,
+        folderId: string,
+        color: string,
+        orderFrom: 'main' | 'folder',
+      ) =>
         `/modal/delete_todo/${todoId}?folder_id=${folderId}&color=${color}&order_from=${orderFrom}`,
-      DELETE_FOLDER: (folderId?: number) => `/modal/delete_todo_folder/${folderId}`,
+      DELETE_FOLDER: (folderId?: number) =>
+        `/modal/delete_todo_folder/${folderId}`,
       EDIT: (folderId?: number) => `/modal/edit_todo_folder/${folderId}`,
     },
     UPDATE_PASSWORD: '/modal/update_password',

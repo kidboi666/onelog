@@ -1,4 +1,4 @@
-import { EmotionLevel } from '@/src/types/enums'
+import { EmotionLevel } from '@/src/types/enums/index'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import useToggle from '@/src/hooks/useToggle'

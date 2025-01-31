@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
+import { ROUTES } from '@/src/routes'
 import Button from '@/src/components/Button'
 import Modal from '@/src/components/Modal'
 import { XStack } from '@/src/components/Stack'
@@ -11,7 +12,7 @@ export default function AuthGuardModal() {
   const router = useRouter()
 
   const pushSignIn = () => {
-    router.replace('/modal/signin')
+    router.replace(ROUTES.MODAL.AUTH.SIGN_IN)
   }
 
   const handleEnterPush = (e: KeyboardEvent) => {

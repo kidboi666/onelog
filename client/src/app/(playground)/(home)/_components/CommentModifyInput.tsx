@@ -1,6 +1,6 @@
 import { FormEvent, useEffect } from 'react'
 import useUpdateComment from '@/src/services/mutates/comment/useUpdateComment'
-import { IComment } from '@/src/types/comment'
+import { IComment } from '@/src/types/entities/comment'
 import useInput from '@/src/hooks/useInput'
 import Button from '@/src/components/Button'
 import Input from '@/src/components/Input'
@@ -16,13 +16,13 @@ export default function CommentModifyInput({ comment, onModify }: Props) {
   const { mutate: updateComment, isPending } = useUpdateComment()
 
   const handlePostComment = (e: FormEvent) => {
-    const { post_id, comment_id } = comment
+    const { postId, commentId } = comment
     e.preventDefault()
     updateComment(
       {
         content,
-        postId: post_id,
-        commentId: comment_id || null,
+        postId,
+        commentId,
       },
       {
         onSuccess: () => {

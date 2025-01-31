@@ -3,12 +3,12 @@ export enum Provider {
   NEST = 'nest',
 }
 
-export enum AuthProvider {
-  LOCAL = 'local',
+export enum AuthMethod {
+  EMAIL = 'email',
   KAKAO = 'kakao',
 }
 
-export enum AccessType {
+export enum Access {
   PUBLIC = 'public',
   PRIVATE = 'private',
 }
@@ -18,6 +18,7 @@ export enum PostType {
   JOURNAL = 'journal',
 }
 
+// @TODO 원시값으로 변경
 export enum EmotionLevel {
   '0%' = '0%',
   '25%' = '25%',
@@ -26,7 +27,7 @@ export enum EmotionLevel {
   '100%' = '100%',
 }
 
-export enum TodoFolderColorType {
+export enum FolderColor {
   BLACK = 'black',
   GREEN = 'green',
   YELLOW = 'yellow',
@@ -36,9 +37,22 @@ export enum TodoFolderColorType {
   PURPLE = 'purple',
 }
 
-export enum ToastType {
+export enum Toast {
   INFO = 'info',
   ERROR = 'error',
   WARNING = 'warning',
   SUCCESS = 'success',
+}
+
+export enum ColorScheme {
+  BLACK = 'black',
+  GREEN = 'green',
+  YELLOW = 'yellow',
+  BLUE = 'blue',
+  ORANGE = 'orange',
+}
+
+export enum Theme {
+  LIGHT = 'light',
+  DARK = 'dark',
 }

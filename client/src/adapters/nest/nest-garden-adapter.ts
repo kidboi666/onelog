@@ -1,7 +1,12 @@
-import { IGardenBaseAdapter, IGetGarden } from '@/src/types/garden'
+import { IGetGarden } from '@/src/types/dtos/garden'
+import { IGardenBaseAdapter } from '@/src/types/services/index'
 
-export class NestGardenAdapter implements IGardenBaseAdapter {
-  getGarden(parmas: IGetGarden): Promise<any> {
+export const createNestGardenAdapter = (): IGardenBaseAdapter => {
+  const getGarden = async (params: IGetGarden): Promise<any> => {
     return Promise.resolve(undefined)
+  }
+
+  return {
+    getGarden,
   }
 }

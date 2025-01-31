@@ -1,4 +1,4 @@
-import { IPost } from '@/src/types/post'
+import { IPost } from '@/src/types/entities/post'
 import useBlockEditor from '@/src/hooks/useBlockEditor'
 import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
 import { ROUTES } from '@/src/routes'
@@ -8,22 +8,11 @@ import PostHeader from './PostHeader'
 
 interface Props {
   post: IPost
-  postUserInfo: {
-    email: string
-    avatarUrl: string | null
-    userName: string | null
-    aboutMe: string | null
-  }
   createdAtLiked?: string
   disabled?: boolean
 }
 
-export default function PostCard({
-  post,
-  postUserInfo,
-  createdAtLiked,
-  disabled,
-}: Props) {
+export default function PostCard({ post, createdAtLiked, disabled }: Props) {
   const postId = Number(post?.id)
   const content = post?.content
   const tags = post?.tags || []
@@ -55,9 +44,9 @@ export default function PostCard({
           userId={userId}
           createdAtLiked={createdAtLiked}
           postType={postType}
-          email={postUserInfo.email}
-          avatarUrl={postUserInfo.avatarUrl}
-          userName={postUserInfo.userName}
+          email={post.userInfo.email}
+          avatarUrl={post.userInfo.avatarUrl}
+          userName={post.userInfo.userName}
           emotionLevel={emotionLevel}
           createdAt={createdAt}
         />
@@ -68,7 +57,7 @@ export default function PostCard({
         postTitle={title}
         accessType={accessType}
         likeCount={likeCount?.[0].count}
-        isLiked={isLiked?.length > 0}
+        isLike={isLiked?.length > 0}
         commentCount={commentCount?.[0].count}
         postId={postId}
         onClick={pushPostDetail}
