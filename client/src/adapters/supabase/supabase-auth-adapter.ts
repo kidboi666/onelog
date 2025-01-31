@@ -1,48 +1,36 @@
-import { handleError, transformResponse } from '@/src/adapters/query-helpers'
+import { processQuery } from '@/src/adapters/query-helpers'
 import { APIError } from '@/src/error/index'
 import { AuthError } from '@supabase/auth-js'
 import { StorageError } from '@supabase/storage-js'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { ISignIn, ISignUp, IUpdateUserInfo } from '@/src/types/dtos/auth'
-import {
-  IUploadAvatar,
-  IUserInfo,
-  IUserSession,
-} from '@/src/types/entities/auth'
+import { IUploadAvatar, IUserInfo } from '@/src/types/entities/auth'
 import { IAuthBaseAdapter } from '@/src/types/services/index'
 
 export const createSupabaseAuthAdapter = (
   supabase: SupabaseClient,
 ): IAuthBaseAdapter => {
-  const handleStorageError = (error: StorageError | null) => {
-    if (error?.message) {
-      throw new APIError(500, error.message, error)
-    }
-  }
-
-  const handleAuthError = (error: AuthError | null) => {
-    if (error?.status && error?.code) {
-      throw new APIError(error.status, error.code, error)
-    }
-  }
-
-  const processImageUrlPath = (imageUrl: string): string => {
-    const splitPath = imageUrl.split('/')
-    const email = splitPath[splitPath.length - 2]
-    const fileName = splitPath[splitPath.length - 1]
-    return `${email}/${fileName}`
-  }
-
-  const signIn = async (authData: ISignIn): Promise<void> => {
-    const { error } = await supabase.auth.signInWithPassword({
+  // 로그인
+  const signIn = async (authData: ISignIn) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: authData.email,
       password: authData.password,
     })
     handleAuthError(error)
+    if (data?.user?.id) {
+      const query = supabase
+        .from('user_info')
+        .select()
+        .eq('id', data.user.id)
+        .single()
+
+      return processQuery(query)
+    }
   }
 
-  const signUp = async (authData: ISignUp): Promise<void> => {
-    const { error } = await supabase.auth.signUp({
+  // 회원가입
+  const signUp = async (authData: ISignUp) => {
+    const { data, error } = await supabase.auth.signUp({
       email: authData.email,
       password: authData.password,
       options: {
@@ -55,64 +43,52 @@ export const createSupabaseAuthAdapter = (
       },
     })
     handleAuthError(error)
+    if (data?.user?.id) {
+      const query = supabase
+        .from('user_info')
+        .select()
+        .eq('id', data.user.id)
+        .single()
+
+      return processQuery(query)
+    }
   }
 
-  const signOut = async (): Promise<void> => {
+  // 로그아웃
+  const signOut = async () => {
     const { error } = await supabase.auth.signOut()
     handleAuthError(error)
+    localStorage.removeItem('auth-storage')
   }
 
-  const getSession = async (): Promise<IUserSession> => {
-    const { data, error } = await supabase.auth.getUser()
-    if (!data.user) {
-      return null
-    }
-    handleAuthError(error)
-
-    return transformResponse({
-      ...data.user?.user_metadata,
-      id: data.user?.id,
-      provider: data.user?.app_metadata.provider,
-    } as IUserSession)
-  }
-
-  const getUserInfo = async (userId: string): Promise<IUserInfo | null> => {
-    const { data, error } = await supabase
+  // 유저 정보 수정하기
+  const updateUserInfo = async (params: IUpdateUserInfo) => {
+    const query = supabase
       .from('user_info')
-      .select()
-      .eq('id', userId)
-      .single()
-
-    if (!data?.id) {
-      return null
-    }
-
-    handleError(error)
-    return transformResponse(data)
-  }
-
-  const updateUserInfo = async (params: IUpdateUserInfo): Promise<void> => {
-    const { error } = await supabase.auth.updateUser({
-      data: {
+      .update({
         about_me: params.aboutMe,
         avatar_url: params.avatarUrl,
         user_name: params.userName,
-      },
-    })
-    handleAuthError(error)
+      })
+      .eq('id', params.userId)
+      .single()
+    return processQuery<IUserInfo>(query)
   }
 
-  const uploadAvatarImage = async (params: IUploadAvatar): Promise<string> => {
+  // 유저 프로필 이미지 업로드하기
+  const uploadAvatarImage = async (params: IUploadAvatar) => {
     const { data, error } = await supabase.storage
       .from('profile_image')
       .upload(`${params.email}/${new Date().getTime()}`, params.image!)
 
     handleStorageError(error)
     const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_IMAGE_BASE_URL!
+    console.log(`${baseUrl}/${data?.fullPath}`)
     return `${baseUrl}/${data?.fullPath}`
   }
 
-  const deleteAvatarImage = async (imageUrl: string): Promise<void> => {
+  // 유저 프로필 이미지 지우기
+  const deleteAvatarImage = async (imageUrl: string) => {
     const imageUrlPath = processImageUrlPath(imageUrl)
     const { error } = await supabase.storage
       .from('profile_image')
@@ -121,12 +97,33 @@ export const createSupabaseAuthAdapter = (
     handleStorageError(error)
   }
 
+  // 스토리지 예외 처리
+  const handleStorageError = (error: StorageError | null) => {
+    if (error?.message) {
+      throw new APIError(500, error.message, error)
+    }
+  }
+
+  // auth 예외 처리
+  const handleAuthError = (error: AuthError | null) => {
+    if (error?.status && error?.code) {
+      console.error(error)
+      throw new APIError(error.status, error.code, error)
+    }
+  }
+
+  // 이미지 파일 주소화 처리 헬퍼 함수
+  const processImageUrlPath = (imageUrl: string): string => {
+    const splitPath = imageUrl.split('/')
+    const email = splitPath[splitPath.length - 2]
+    const fileName = splitPath[splitPath.length - 1]
+    return `${email}/${fileName}`
+  }
+
   return {
     signIn,
     signUp,
     signOut,
-    getSession,
-    getUserInfo,
     updateUserInfo,
     uploadAvatarImage,
     deleteAvatarImage,

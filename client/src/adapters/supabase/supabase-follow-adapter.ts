@@ -1,4 +1,8 @@
-import { handleError } from '@/src/adapters/query-helpers'
+import {
+  handleError,
+  processCountQuery,
+  processQuery,
+} from '@/src/adapters/query-helpers'
 import { SUPABASE_QUERY } from '@/src/constants/index'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { ICreateFollow, IDeleteFollow } from '@/src/types/dtos/follower'
@@ -8,60 +12,52 @@ export const createSupabaseFollowAdapter = (
   supabase: SupabaseClient,
 ): IFollowBaseAdapter => {
   const getFollowers = async (userId: string) => {
-    const { data, error } = await supabase
+    const query = supabase
       .from('follow')
       .select(SUPABASE_QUERY.FOLLOW.GET_FOLLOWERS)
       .eq('followed_user_id', userId)
       .order('created_at', { ascending: false })
-
-    handleError(error)
-    return data
+    return processQuery(query)
   }
 
   const getFollowings = async (userId: string) => {
-    const { data, error } = await supabase
+    const query = supabase
       .from('follow')
       .select(SUPABASE_QUERY.FOLLOW.GET_FOLLOWINGS)
       .eq('follower_user_id', userId)
       .order('created_at', { ascending: false })
-
-    handleError(error)
-    return data
+    return processQuery(query)
   }
 
   const getFollowersCount = async (userId: string) => {
-    const { query, options } = SUPABASE_QUERY.FOLLOW.GET_FOLLOWERS_COUNT
-    const { count, error } = await supabase
+    const { query: queryString, options } =
+      SUPABASE_QUERY.FOLLOW.GET_FOLLOWERS_COUNT
+    const query = supabase
       .from('follow')
-      .select(query, options)
+      .select(queryString, options)
       .eq('followed_user_id', userId)
-
-    handleError(error)
-    return count
+    return processCountQuery(query)
   }
 
   const getFollowingsCount = async (userId: string) => {
-    const { query, options } = SUPABASE_QUERY.FOLLOW.GET_FOLLOWINGS_COUNT
-    const { count, error } = await supabase
+    const { query: queryString, options } =
+      SUPABASE_QUERY.FOLLOW.GET_FOLLOWINGS_COUNT
+    const query = supabase
       .from('follow')
-      .select(query, options)
+      .select(queryString, options)
       .eq('follower_user_id', userId)
-
-    handleError(error)
-    return count
+    return processCountQuery(query)
   }
 
   const createFollow = async (params: ICreateFollow) => {
-    const { data, error } = await supabase
+    const query = supabase
       .from('follow')
       .insert({
         followed_user_id: params.followedUserId,
         follower_user_id: params.followerUserId,
       })
       .select()
-
-    handleError(error)
-    return data
+    return processQuery(query)
   }
 
   const deleteFollow = async (params: IDeleteFollow) => {
@@ -70,7 +66,6 @@ export const createSupabaseFollowAdapter = (
       .delete()
       .eq('followed_user_id', params.followedUserId)
       .eq('follower_user_id', params.followerUserId)
-
     handleError(error)
   }
 

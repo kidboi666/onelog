@@ -15,7 +15,8 @@ export default function useSignIn() {
 
   return useMutation({
     mutationFn: (authData: ISignIn) => authAdapter.signIn(authData),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setMe(data)
       window.location.href = ROUTES.HOME
       openToast({
         text: TOAST_MESSAGE.AUTH.SIGN_IN.SUCCESS,

@@ -18,7 +18,6 @@ export async function generateMetadata({ params: { userId } }: Props) {
 
 export default function UserLayout({
   params: { userId },
-  children,
   user_info,
 }: PropsWithChildren<Props>) {
   return (
@@ -28,7 +27,6 @@ export default function UserLayout({
           <MenuSection userId={userId} />
         </ZStack>
       </div>
-      {children}
       {user_info}
     </YStack>
   )

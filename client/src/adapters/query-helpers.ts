@@ -37,10 +37,23 @@ const toCamelCase = <T extends Record<string, any>>(obj: T): T => {
   return result as T
 }
 
-export const processQuery = async <T>(query: any): Promise<T> => {
+type QueryResponse<T> = T extends any[] ? T : T | null
+
+export const processQuery = async <T>(
+  query: any,
+): Promise<QueryResponse<T>> => {
   const { data, error } = await query
   handleError(error)
-  return transformResponse(data ?? [])
+
+  const emptyResponse = Array.isArray(data) ? [] : null
+  return transformResponse(data ?? emptyResponse) as QueryResponse<T>
+}
+
+export const processCountQuery = async (query: any): Promise<number> => {
+  const { count, error } = await query
+  handleError(error)
+
+  return count
 }
 
 export const addUserFilter = (

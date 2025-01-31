@@ -18,10 +18,7 @@ export const createSupabaseTodoAdapter = (
 ): ITodoBaseAdapter => {
   // 폴더 조회
   const getTodoFolder = async (userId: string): Promise<ITodoFolder[]> => {
-    const query = supabase
-      .from('todo_folder')
-      .select<string, ITodoFolder>()
-      .eq('user_id', userId)
+    const query = supabase.from('todo_folder').select().eq('user_id', userId)
     return processQuery(query)
   }
 

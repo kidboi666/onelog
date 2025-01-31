@@ -36,7 +36,7 @@ export const createSupabasePostAdapter = (
       .range(params.pageParam, params.pageParam + params.limit - 1)
 
     query = addUserFilter(query, undefined, params.meId)
-    return processQuery(query)
+    return processQuery<IPost[]>(query)
   }
 
   // 좋아요한 게시물 가져오기
@@ -50,7 +50,7 @@ export const createSupabasePostAdapter = (
       .range(params.pageParam, params.pageParam + params.limit - 1)
 
     query = addUserFilter(query, params.authorId, params.meId)
-    const data = await processQuery(query)
+    const data = await processQuery<ILikedPost[]>(query)
     const isMe = isCurrentUserAuthor(params.authorId, params.meId)
     return filterPrivateLikedPosts(data, isMe)
   }
@@ -83,7 +83,7 @@ export const createSupabasePostAdapter = (
       .order('created_at', { ascending: false })
 
     query = addUserFilter(query, params.authorId, params.meId)
-    const data = await processQuery(query)
+    const data = await processQuery<IPost[]>(query)
     const isMe = isCurrentUserAuthor(params.authorId, params.meId)
     return filterPrivatePosts(data, isMe)
   }
@@ -98,7 +98,7 @@ export const createSupabasePostAdapter = (
       .range(params.pageParam, params.pageParam + params.limit - 1)
 
     query = addUserFilter(query, params.authorId, params.meId)
-    const data = await processQuery(query)
+    const data = await processQuery<IPost[]>(query)
     const isMe = isCurrentUserAuthor(params.authorId, params.meId)
     return filterPrivatePosts(data, isMe)
   }

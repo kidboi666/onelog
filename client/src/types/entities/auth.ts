@@ -56,5 +56,5 @@ export interface INestUserInfo extends IBaseUserInfo {
 /**
  * Adapter Type
  */
-export type IUserSession = ISupabaseUserSession | INestUserSession | null
+export type IUserSession = ISupabaseUserSession | INestUserSession
 export type IUserInfo = ISupabaseUserInfo | INestUserInfo

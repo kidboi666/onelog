@@ -7,9 +7,9 @@ export const createSupabaseUserAdapter = (
   supabase: SupabaseClient,
 ): IUserBaseAdapter => {
   // 대상 유저 정보 가져오기
-  const getUserInfo = async (userId: string): Promise<IUserInfo> => {
+  const getUserInfo = async (userId: string) => {
     const query = supabase.from('user_info').select().eq('id', userId).single()
-    return processQuery(query)
+    return processQuery<IUserInfo>(query)
   }
 
   return {

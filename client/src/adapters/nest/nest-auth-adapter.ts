@@ -6,11 +6,7 @@ import {
   ISignUpResponse,
   IUpdateUserInfo,
 } from '@/src/types/dtos/auth'
-import {
-  INestUserInfo,
-  INestUserSession,
-  IUploadAvatar,
-} from '@/src/types/entities/auth'
+import { IUploadAvatar } from '@/src/types/entities/auth'
 import { IAuthBaseAdapter } from '@/src/types/services/index'
 import { fetcher } from '@/src/utils/fetcher'
 
@@ -51,22 +47,6 @@ export const createNestAuthAdapter = (): IAuthBaseAdapter => {
     }
   }
 
-  const getSession = async (): Promise<INestUserSession> => {
-    try {
-      return await fetcher.get<INestUserSession>(FETCH_URL.AUTH.GET_SESSION)
-    } catch (err) {
-      throw err
-    }
-  }
-
-  const getUserInfo = async (): Promise<INestUserInfo> => {
-    try {
-      return await fetcher.get<INestUserInfo>(FETCH_URL.AUTH.GET_USER_INFO)
-    } catch (err) {
-      throw err
-    }
-  }
-
   const saveTokens = (response: ISignInResponse): void => {
     localStorage.setItem('accessToken', response.accessToken)
     localStorage.setItem('refreshToken', response.refreshToken)
@@ -93,8 +73,6 @@ export const createNestAuthAdapter = (): IAuthBaseAdapter => {
     signIn,
     signUp,
     signOut,
-    getSession,
-    getUserInfo,
     deleteAvatarImage,
     updateUserInfo,
     uploadAvatarImage,

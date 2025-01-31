@@ -46,13 +46,13 @@ export default function ProfileForm({
     const baseProfileData = {
       aboutMe: states.aboutMe,
       userName: states.userName,
+      userId: me.id,
     }
     if (states.imageFile) {
       const avatarUrl = await uploadImage({
         email: me.email,
         image: states.imageFile,
       })
-
       if (states.currentAvatarUrl) {
         deletePrevImage(states.currentAvatarUrl)
       }
@@ -62,7 +62,6 @@ export default function ProfileForm({
       updateProfile({ ...baseProfileData })
     }
   }
-
   return (
     <form
       onSubmit={handleProfileUpdate}

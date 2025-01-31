@@ -7,10 +7,10 @@ export const createSupabaseWordAdapter = (
   supabase: SupabaseClient,
 ): IWordBaseAdapter => {
   // 대상 유저가 쓴 단어들 가져오기
-  const getMyUsedWords = async (userId: string) => {
+  const getMyUsedWords = async (userId: string): Promise<IUsedWord> => {
     const query = supabase
       .from('user_words')
-      .select<string, IUsedWord>()
+      .select()
       .eq('user_id', userId)
       .single()
 
@@ -18,10 +18,10 @@ export const createSupabaseWordAdapter = (
   }
 
   // 사전에서 단어 찾기
-  const getUsedWords = async (word: string) => {
+  const getUsedWords = async (word: string): Promise<IWord> => {
     const query = supabase
       .from('word_dictionary')
-      .select<string, IWord>()
+      .select()
       .eq('word', word)
       .single()
 

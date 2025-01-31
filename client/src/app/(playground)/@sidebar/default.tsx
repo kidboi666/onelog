@@ -99,10 +99,7 @@ export default function Sidebar() {
             <AuthButtonWithDropDown
               pathname={pathname.split('/')[1]}
               userId={pathname.split('/')[2] || ''}
-              meId={me?.id}
-              userName={me?.userName}
-              avatarUrl={me?.avatarUrl}
-              email={me?.email}
+              me={me}
             />
             <ToolTip
               position="right"

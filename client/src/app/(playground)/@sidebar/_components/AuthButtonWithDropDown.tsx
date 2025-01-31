@@ -1,3 +1,4 @@
+import { IUserInfo } from '@/src/types/entities/auth'
 import useOutsideClick from '@/src/hooks/useOutsideClick'
 import useDataDrivenAnimation from '@/src/hooks/useStateChange'
 import Avatar from '@/src/components/Avatar'
@@ -10,22 +11,16 @@ import LoggedInContent from './LoggedInContent'
 interface Props {
   pathname: string
   userId: string
-  meId?: string | null
+  me: IUserInfo | null
   viewText?: boolean
-  email?: string | null
-  userName?: string | null
-  avatarUrl?: string | null
   closeMenu?: () => void
 }
 
 export default function AuthButtonWithDropDown({
   pathname,
   userId,
-  meId,
+  me,
   viewText,
-  avatarUrl,
-  userName,
-  email,
   closeMenu,
 }: Props) {
   const { ref, close, onClick, onTransitionEnd } =
@@ -34,15 +29,15 @@ export default function AuthButtonWithDropDown({
 
   return (
     <DropDown.Root className="group">
-      <BookMark meId={meId} userId={userId} pathname={pathname} />
+      <BookMark meId={me?.id} userId={userId} pathname={pathname} />
       <DropDown.Trigger
         targetRef={buttonRef}
         variant="none"
         onClick={onClick}
         className="gap-4 px-1 py-1"
       >
-        <Avatar src={avatarUrl} ring shadow="sm" className="size-10" />
-        <TextDisplay type="caption">{viewText && email}</TextDisplay>
+        <Avatar src={me?.avatarUrl} ring shadow="sm" className="size-10" />
+        <TextDisplay type="caption">{viewText && me?.email}</TextDisplay>
       </DropDown.Trigger>
       <DropDown.Content
         ref={ref}
@@ -50,11 +45,11 @@ export default function AuthButtonWithDropDown({
         onTransitionEnd={onTransitionEnd}
         position="topRight"
       >
-        {meId ? (
+        {me ? (
           <LoggedInContent
-            email={email!}
-            userName={userName!}
-            meId={meId}
+            email={me.email}
+            userName={me.userName}
+            meId={me.id}
             closeMenu={closeMenu}
           />
         ) : (

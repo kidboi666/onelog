@@ -23,7 +23,7 @@ export const createSupabaseLikeAdapter = (
         .select()
     }
 
-    return processQuery(query)
+    void processQuery(query)
   }
 
   return {

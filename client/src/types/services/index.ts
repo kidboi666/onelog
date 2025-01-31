@@ -1,3 +1,4 @@
+import { AsyncNullable } from '@/src/types/common/index'
 import { ISignIn, ISignUp, IUpdateUserInfo } from '@/src/types/dtos/auth'
 import { ICreateComment, IUpdateComment } from '@/src/types/dtos/comment'
 import { ICreateFollow, IDeleteFollow } from '@/src/types/dtos/follower'
@@ -22,11 +23,7 @@ import {
   IUpdateTodo,
   IUpdateTodoFolder,
 } from '@/src/types/dtos/todo'
-import {
-  IUploadAvatar,
-  IUserInfo,
-  IUserSession,
-} from '@/src/types/entities/auth'
+import { IUploadAvatar, IUserInfo } from '@/src/types/entities/auth'
 import { ILike } from '@/src/types/entities/like'
 import { ILikedPost, IPost, IPostDetail } from '@/src/types/entities/post'
 import { ITodo } from '@/src/types/entities/todo'
@@ -36,9 +33,7 @@ export interface IAuthBaseAdapter {
   signIn: (params: ISignIn) => Promise<any>
   signUp: (params: ISignUp) => Promise<any>
   signOut: () => Promise<void>
-  getSession: () => Promise<IUserSession | null>
-  getUserInfo: (userId: string) => Promise<IUserInfo | null>
-  updateUserInfo: (params: IUpdateUserInfo) => Promise<void>
+  updateUserInfo: (params: IUpdateUserInfo) => AsyncNullable<IUserInfo>
   uploadAvatarImage: (params: IUploadAvatar) => Promise<string>
   deleteAvatarImage: (imageUrl: string) => Promise<void>
 }
@@ -96,7 +91,7 @@ export interface ITodoBaseAdapter {
 }
 
 export interface IUserBaseAdapter {
-  getUserInfo: (userId: string) => Promise<IUserInfo>
+  getUserInfo: (userId: string) => AsyncNullable<IUserInfo>
 }
 
 export interface IWordBaseAdapter {
