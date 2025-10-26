@@ -1,4 +1,4 @@
-import { todoAdapter } from '@/src/adapters/create-client-adapter'
+import { deleteTodoFolder } from '@/src/services/supabase/todo'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -10,7 +10,7 @@ export default function useDeleteTodoFolder() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (folderId: number) => todoAdapter.deleteTodoFolder(folderId),
+    mutationFn: (folderId: number) => deleteTodoFolder(folderId),
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.TODO_FOLDER.DELETE.EXCEPTION,

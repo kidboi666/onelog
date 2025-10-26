@@ -1,4 +1,4 @@
-import { todoAdapter } from '@/src/adapters/create-client-adapter'
+import { updateTodo } from '@/src/services/supabase/todo'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -11,7 +11,7 @@ export default function useUpdateTodo() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (params: IUpdateTodo) => todoAdapter.updateTodo(params),
+    mutationFn: (params: IUpdateTodo) => updateTodo(params),
     onSuccess: (_, variables) => {
       const { folderId } = variables
       const queryKeys = [

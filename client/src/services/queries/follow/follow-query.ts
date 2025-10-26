@@ -1,4 +1,4 @@
-import { followAdapter } from '@/src/adapters/create-client-adapter'
+import { getFollowers, getFollowings } from '@/src/services/supabase/follow'
 import { QUERY_KEY } from '@/src/constants/index'
 import { queryOptions } from '@tanstack/react-query'
 import { IFollower } from '@/src/types/entities/follower'
@@ -8,7 +8,7 @@ export const followQuery = {
   getFollower: (userId: string) =>
     queryOptions<IFollower[]>({
       queryKey: QUERY_KEY.FOLLOW.FOLLOWER(userId),
-      queryFn: () => followAdapter.getFollowers(userId),
+      queryFn: () => getFollowers(userId),
       enabled: !!userId,
     }),
 
@@ -16,7 +16,7 @@ export const followQuery = {
   getFollowing: (userId: string) =>
     queryOptions<IFollower[]>({
       queryKey: QUERY_KEY.FOLLOW.FOLLOWING(userId),
-      queryFn: () => followAdapter.getFollowings(userId),
+      queryFn: () => getFollowings(userId),
       enabled: !!userId,
     }),
 }

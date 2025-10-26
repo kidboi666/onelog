@@ -22,7 +22,7 @@ interface Props {
   states: IUpdateProfileFormStates
   actions: IUpdateProfileFormActions
   isLoading: boolean
-  updateProfile: UseMutateFunction<void, Error, IUpdateUserInfo, unknown>
+  updateProfile: UseMutateFunction<IUserInfo | null, Error, IUpdateUserInfo, unknown>
   uploadImage: UseMutateAsyncFunction<string, Error, IUploadAvatar, unknown>
   deletePrevImage: UseMutateFunction<void, Error, string, unknown>
 }

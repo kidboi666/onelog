@@ -1,4 +1,7 @@
-import { followAdapter } from '@/src/adapters/create-client-adapter'
+import {
+  getFollowersCount,
+  getFollowingsCount,
+} from '@/src/services/supabase/follow'
 import { QUERY_KEY } from '@/src/constants/index'
 import { queryOptions } from '@tanstack/react-query'
 
@@ -7,7 +10,7 @@ export const countFollowQuery = {
   countFollower: (userId: string, isMount: boolean | undefined = false) =>
     queryOptions({
       queryKey: QUERY_KEY.FOLLOW.COUNT.FOLLOWER(userId),
-      queryFn: () => followAdapter.getFollowersCount(userId),
+      queryFn: () => getFollowersCount(userId),
       enabled: isMount,
     }),
 
@@ -15,7 +18,7 @@ export const countFollowQuery = {
   countFollowing: (userId: string, isMount: boolean | undefined = false) =>
     queryOptions({
       queryKey: QUERY_KEY.FOLLOW.COUNT.FOLLOWING(userId),
-      queryFn: () => followAdapter.getFollowingsCount(userId),
+      queryFn: () => getFollowingsCount(userId),
       enabled: isMount,
     }),
 }

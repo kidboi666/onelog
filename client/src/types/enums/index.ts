@@ -1,8 +1,3 @@
-export enum Provider {
-  SUPABASE = 'supabase',
-  NEST = 'nest',
-}
-
 export enum AuthMethod {
   EMAIL = 'email',
   KAKAO = 'kakao',

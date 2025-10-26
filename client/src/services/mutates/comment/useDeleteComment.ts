@@ -1,4 +1,4 @@
-import { commentAdapter } from '@/src/adapters/create-client-adapter'
+import { deleteComment } from '@/src/services/supabase/comment'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -14,7 +14,7 @@ export default function useDeleteComment() {
 
   return useMutation({
     mutationFn: async (params: IDeleteComment) =>
-      commentAdapter.deleteComment(params.commentId),
+      deleteComment(params.commentId),
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.COMMENT.DELETE.EXCEPTION,

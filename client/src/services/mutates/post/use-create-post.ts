@@ -1,4 +1,4 @@
-import { postAdapter } from '@/src/adapters/create-client-adapter'
+import { createPost } from '@/src/services/supabase/post'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -11,7 +11,7 @@ export default function useCreatePost() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (params: ICreatePost) => postAdapter.createPost(params),
+    mutationFn: (params: ICreatePost) => createPost(params),
     onSuccess: (_, variables) => {
       const queryKeys = [
         QUERY_KEY.POST.PUBLIC,

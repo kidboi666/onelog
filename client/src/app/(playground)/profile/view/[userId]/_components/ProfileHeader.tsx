@@ -17,13 +17,13 @@ export default function ProfileHeader({ userId }: Props) {
   return (
     <>
       <ZStack className="relative">
-        <Avatar src={user.avatarUrl} size="md" ring shadow="sm" />
+        <Avatar src={user?.avatarUrl} size="md" ring shadow="sm" />
         <EmotionAverage userId={userId} />
       </ZStack>
       <YStack className="items-center sm:flex-row sm:items-end">
-        <Title>{user.userName}</Title>
+        <Title>{user?.userName}</Title>
         <TextDisplay as="span" type="caption" size="sm">
-          {user.email}
+          {user?.email}
         </TextDisplay>
       </YStack>
     </>

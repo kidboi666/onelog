@@ -1,4 +1,4 @@
-import { postAdapter } from '@/src/adapters/create-client-adapter'
+import { updatePost } from '@/src/services/supabase/post'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -11,7 +11,7 @@ export default function useUpdatePost() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: async (params: IUpdatePost) => postAdapter.updatePost(params),
+    mutationFn: async (params: IUpdatePost) => updatePost(params),
     onSuccess: (_, variables) => {
       const { id, meId } = variables
       const queryKeys = [

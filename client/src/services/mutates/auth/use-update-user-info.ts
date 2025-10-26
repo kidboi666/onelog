@@ -1,4 +1,4 @@
-import { authAdapter } from '@/src/adapters/create-client-adapter'
+import { updateUserInfo } from '@/src/services/supabase/auth'
 import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -14,7 +14,7 @@ export default function useUpdateUserInfo() {
   const router = useRouter()
 
   return useMutation({
-    mutationFn: (params: IUpdateUserInfo) => authAdapter.updateUserInfo(params),
+    mutationFn: (params: IUpdateUserInfo) => updateUserInfo(params),
     onSuccess: (data) => {
       setMe(data)
       openToast({

@@ -1,4 +1,4 @@
-import { QUERY_KEY } from '@/src/constants/index'
+import { QUERY_KEY } from '@/src/constants'
 import { useEffect, useState } from 'react'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
 import { IComment } from '@/src/types/entities/comment'

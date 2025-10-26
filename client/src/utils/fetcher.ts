@@ -1,6 +1,6 @@
-import { APIError } from '@/src/error/index'
+import { APIError } from '@/src/error'
 import { AxiosError, AxiosResponse } from 'axios'
-import { axiosInstance } from '@/src/lib/axios/index'
+import { axiosInstance } from '@/src/lib/axios'
 
 const handleRequestError = (error: unknown) => {
   if (error instanceof AxiosError) {

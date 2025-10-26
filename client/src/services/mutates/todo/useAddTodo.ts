@@ -1,4 +1,4 @@
-import { todoAdapter } from '@/src/adapters/create-client-adapter'
+import { createTodo } from '@/src/services/supabase/todo'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -11,7 +11,7 @@ export default function useAddTodo() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (params: ICreateTodo) => todoAdapter.createTodo(params),
+    mutationFn: (params: ICreateTodo) => createTodo(params),
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.TODO.POST.EXCEPTION,

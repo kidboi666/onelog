@@ -1,13 +1,19 @@
-import { postAdapter } from '@/src/adapters/create-client-adapter'
-import { QUERY_KEY } from '@/src/constants/index'
-import { APIError } from '@/src/error/index'
+import {
+  getAllPosts,
+  getLikedPosts,
+  getPost,
+  getUserPostsThatDay,
+  getUserPosts,
+} from '@/src/services/supabase/post'
+import { QUERY_KEY } from '@/src/constants'
+import { APIError } from '@/src/error'
 import {
   InfiniteData,
   infiniteQueryOptions,
   queryOptions,
 } from '@tanstack/react-query'
 import { ILikedPost, IPost, IPostDetail } from '@/src/types/entities/post'
-import { PostType } from '@/src/types/enums/index'
+import { PostType } from '@/src/types/enums'
 
 export const postQuery = {
   getAllPost: (limit: number, meId?: string | null) =>
@@ -20,7 +26,7 @@ export const postQuery = {
     >({
       queryKey: QUERY_KEY.POST.PUBLIC,
       queryFn: ({ pageParam = 0 }) =>
-        postAdapter.getAllPosts({ pageParam, limit, meId }),
+        getAllPosts({ pageParam, limit, meId }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage && lastPage.length < limit) {
@@ -40,7 +46,7 @@ export const postQuery = {
     >({
       queryKey: QUERY_KEY.POST.LIKED(authorId, meId),
       queryFn: ({ pageParam = 0 }) =>
-        postAdapter.getLikedPosts({
+        getLikedPosts({
           pageParam,
           limit,
           authorId,
@@ -58,7 +64,7 @@ export const postQuery = {
   getPost: (postId: number, meId?: string | null) =>
     queryOptions<IPostDetail | null, APIError>({
       queryKey: QUERY_KEY.POST.DETAIL(postId),
-      queryFn: () => postAdapter.getPost({ postId, meId }),
+      queryFn: () => getPost({ postId, meId }),
     }),
 
   getUserPostThatDay: (
@@ -70,7 +76,7 @@ export const postQuery = {
     queryOptions<IPost[], APIError>({
       queryKey: QUERY_KEY.POST.THAT_DAY(startOfDay, endOfDay, authorId),
       queryFn: () =>
-        postAdapter.getUserPostsThatDay({
+        getUserPostsThatDay({
           authorId,
           startOfDay,
           endOfDay,
@@ -94,7 +100,7 @@ export const postQuery = {
     >({
       queryKey: QUERY_KEY.POST.POST_TYPE(postType, authorId),
       queryFn: async ({ pageParam = 0 }) =>
-        postAdapter.getUserPosts({
+        getUserPosts({
           pageParam,
           authorId,
           postType,

@@ -14,9 +14,14 @@ interface Props {
   userId: string
 }
 
-export default function AvatarButtonWithDropDownContent({ userId, userName, avatarUrl }: Props) {
+export default function AvatarButtonWithDropDownContent({
+  userId,
+  userName,
+  avatarUrl,
+}: Props) {
   const [isLoadingFollowing, startTransitionFollowing] = useTransition()
-  const { followingCount, followerCount, isFollowing, isMe } = useFollowQueries(userId)
+  const { followingCount, followerCount, isFollowing, isMe } =
+    useFollowQueries(userId)
   const {
     onFollow,
     pushFollowingList,
@@ -52,7 +57,10 @@ export default function AvatarButtonWithDropDownContent({ userId, userName, avat
         <XStack gap={4}>
           {isMe ? (
             <>
-              <DropDown.LinkButton href={ROUTES.PROFILE.EDIT} variant="secondary">
+              <DropDown.LinkButton
+                href={ROUTES.PROFILE.EDIT}
+                variant="secondary"
+              >
                 프로필 수정
               </DropDown.LinkButton>
               <DropDown.LinkButton href={ROUTES.PROFILE.VIEW(userId)}>

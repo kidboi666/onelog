@@ -1,4 +1,4 @@
-import { todoAdapter } from '@/src/adapters/create-client-adapter'
+import { updateTodoFolder } from '@/src/services/supabase/todo'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -15,7 +15,7 @@ export default function useUpdateTodoFolder() {
 
   return useMutation({
     mutationFn: (params: IUpdateTodoFolder) =>
-      todoAdapter.updateTodoFolder(params),
+      updateTodoFolder(params),
     onSuccess: (_, variables) => {
       void queryClient.invalidateQueries({ queryKey: QUERY_KEY.TODO.MAIN })
       router.push(ROUTES.TODO.VIEW.FOLDER(variables.id, variables.color))

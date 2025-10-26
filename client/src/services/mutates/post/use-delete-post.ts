@@ -1,4 +1,4 @@
-import { postAdapter } from '@/src/adapters/create-client-adapter'
+import { deletePost } from '@/src/services/supabase/post'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -10,7 +10,7 @@ export default function useDeletePost() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (postId: number) => postAdapter.deletePost(postId),
+    mutationFn: (postId: number) => deletePost(postId),
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.POST.DELETE.EXCEPTION,

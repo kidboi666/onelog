@@ -1,4 +1,4 @@
-import { likeAdapter } from '@/src/adapters/create-client-adapter'
+import { handleLike } from '@/src/services/supabase/like'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -11,7 +11,7 @@ export default function useHandleLikePost() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: async (params: ILike) => likeAdapter.handleLike(params),
+    mutationFn: async (params: ILike) => handleLike(params),
     onError: (error, variables) => {
       const { isLike } = variables
       openToast({

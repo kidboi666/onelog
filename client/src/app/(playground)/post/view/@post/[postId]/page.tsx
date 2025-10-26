@@ -1,4 +1,5 @@
-import { createPostServerAdapter } from '@/src/adapters/create-server-adapter'
+import { getPost } from '@/src/services/supabase/post'
+import { createServerClient } from '@/src/lib/supabase/create-server-client'
 import Line from '@/src/components/Line'
 import { YStack } from '@/src/components/Stack'
 import PostActionBar from '@/src/app/(playground)/post/view/@post/[postId]/_components/PostActionBar'
@@ -12,8 +13,8 @@ interface Props {
 }
 
 export async function generateMetadata({ params: { postId } }: Props) {
-  const postServerAdapter = await createPostServerAdapter()
-  const post = await postServerAdapter.getPost({ postId })
+  const supabase = createServerClient()
+  const post = await getPost({ postId: Number(postId) }, supabase)
 
   return {
     title: post?.title ?? `${post?.userInfo.userName}님의 글`,

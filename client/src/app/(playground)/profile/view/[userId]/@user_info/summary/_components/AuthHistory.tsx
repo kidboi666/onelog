@@ -28,7 +28,7 @@ export default function AuthHistory({ userId }: Props) {
       <XStack className="sm:gap-8">
         <HistoryBlock
           title="시작한지"
-          content={getSignUpDays(user?.createdAt)}
+          content={getSignUpDays(user?.createdAt ?? '')}
           unit="일 째"
         />
         <HistoryBlock title="기록" content={postLength} unit="개" />

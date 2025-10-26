@@ -1,4 +1,5 @@
-import { createUserServerAdapter } from '@/src/adapters/create-server-adapter'
+import { getUserInfo } from '@/src/services/supabase/user'
+import { createServerClient } from '@/src/lib/supabase/create-server-client'
 import { PropsWithChildren, ReactNode } from 'react'
 import { YStack, ZStack } from '@/src/components/Stack'
 import MenuSection from '@/src/app/(playground)/profile/view/[userId]/@user_info/journal_garden/_components/MenuSection'
@@ -9,8 +10,8 @@ interface Props {
 }
 
 export async function generateMetadata({ params: { userId } }: Props) {
-  const userServerAdapter = await createUserServerAdapter()
-  const userInfo = await userServerAdapter.getUserInfo(userId)
+  const supabase = createServerClient()
+  const userInfo = await getUserInfo(userId, supabase)
   return {
     title: `${userInfo?.userName}`,
   }

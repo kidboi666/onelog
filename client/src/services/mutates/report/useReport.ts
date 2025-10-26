@@ -1,4 +1,4 @@
-import { reportAdapter } from '@/src/adapters/create-client-adapter'
+import { sendReport } from '@/src/services/supabase/report'
 import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { useToast } from '@/src/store/hooks/useToast'
@@ -9,7 +9,7 @@ export default function useReport() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (params: IReport) => reportAdapter.sendReport(params),
+    mutationFn: (params: IReport) => sendReport(params),
     onSuccess: (_, variables) => {
       const { targetCommentId } = variables
       if (targetCommentId) {

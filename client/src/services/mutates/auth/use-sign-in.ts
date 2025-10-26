@@ -1,4 +1,4 @@
-import { authAdapter } from '@/src/adapters/create-client-adapter'
+import { signIn } from '@/src/services/supabase/auth'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -14,7 +14,7 @@ export default function useSignIn() {
   const { setMe } = useMe()
 
   return useMutation({
-    mutationFn: (authData: ISignIn) => authAdapter.signIn(authData),
+    mutationFn: (authData: ISignIn) => signIn(authData),
     onSuccess: (data) => {
       setMe(data)
       window.location.href = ROUTES.HOME

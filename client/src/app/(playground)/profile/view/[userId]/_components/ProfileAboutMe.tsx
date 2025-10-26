@@ -14,7 +14,7 @@ export default function ProfileAboutMe({ userId }: Props) {
   return (
     <ZStack direction="col" gap={4}>
       <TextDisplay>
-        {user.aboutMe ? user.aboutMe : '자기 소개를 작성해주세요.'}
+        {user?.aboutMe ?? '자기 소개를 작성해주세요.'}
       </TextDisplay>
     </ZStack>
   )

@@ -1,4 +1,4 @@
-import { authAdapter } from '@/src/adapters/create-client-adapter'
+import { uploadAvatarImage } from '@/src/services/supabase/auth'
 import { TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { useToast } from '@/src/store/hooks/useToast'
@@ -10,7 +10,7 @@ export default function useUploadAvatarImage() {
 
   return useMutation({
     mutationFn: (params: IUploadAvatar) =>
-      authAdapter.uploadAvatarImage(params),
+      uploadAvatarImage(params),
     onError: (error) => {
       openToast({
         text: TOAST_MESSAGE.USER_INFO.UPLOAD_AVATAR.EXCEPTION,

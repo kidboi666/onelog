@@ -1,4 +1,4 @@
-import { authAdapter } from '@/src/adapters/create-client-adapter'
+import { signUp } from '@/src/services/supabase/auth'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -12,7 +12,7 @@ export default function useSignUp() {
   const { openToast } = useToast()
 
   return useMutation({
-    mutationFn: (authData: ISignUp) => authAdapter.signUp(authData),
+    mutationFn: (authData: ISignUp) => signUp(authData),
     onSuccess: () => {
       window.location.href = ROUTES.HOME
       openToast({

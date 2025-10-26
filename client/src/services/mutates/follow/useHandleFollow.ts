@@ -1,4 +1,4 @@
-import { followAdapter } from '@/src/adapters/create-client-adapter'
+import { createFollow, deleteFollow } from '@/src/services/supabase/follow'
 import { QUERY_KEY, TOAST_MESSAGE } from '@/src/constants'
 import { useMutation } from '@tanstack/react-query'
 import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
@@ -20,12 +20,12 @@ export default function useHandleFollow() {
       const { isFollowing, followedUserId, followerUserId } = params
       let result
       if (isFollowing) {
-        result = await followAdapter.deleteFollow({
+        result = await deleteFollow({
           followedUserId,
           followerUserId,
         })
       } else {
-        result = await followAdapter.createFollow({
+        result = await createFollow({
           followedUserId,
           followerUserId,
         })
