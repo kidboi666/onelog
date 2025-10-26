@@ -8,6 +8,8 @@ import PostForm from '@/src/app/(playground)/post/edit/_components/PostForm'
 import SideOptionsBar from '@/src/app/(playground)/post/edit/_components/SideOptionsBar'
 import usePostForm from '@/src/app/(playground)/post/edit/_hooks/usePostForm'
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
   searchParams: { post_id: string }
 }

@@ -16,13 +16,12 @@ export default function CommentModifyInput({ comment, onModify }: Props) {
   const { mutate: updateComment, isPending } = useUpdateComment()
 
   const handlePostComment = (e: FormEvent) => {
-    const { postId, commentId } = comment
     e.preventDefault()
     updateComment(
       {
+        id: comment.id,
+        postId: comment.postId,
         content,
-        postId,
-        commentId,
       },
       {
         onSuccess: () => {

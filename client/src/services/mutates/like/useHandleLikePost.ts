@@ -12,6 +12,15 @@ export default function useHandleLikePost() {
 
   return useMutation({
     mutationFn: async (params: ILike) => handleLike(params),
+    onSuccess: (_, variables) => {
+      const { isLike } = variables
+      openToast({
+        text: isLike
+          ? TOAST_MESSAGE.LIKE.CANCEL.SUCCESS
+          : TOAST_MESSAGE.LIKE.SEND.SUCCESS,
+        type: Toast.SUCCESS,
+      })
+    },
     onError: (error, variables) => {
       const { isLike } = variables
       openToast({
@@ -26,18 +35,11 @@ export default function useHandleLikePost() {
       const {
         postId,
         meId,
-        isLike,
         authorId,
         postType,
         startOfDay = null,
         endOfDay = null,
       } = variables
-      openToast({
-        text: isLike
-          ? TOAST_MESSAGE.LIKE.CANCEL.SUCCESS
-          : TOAST_MESSAGE.LIKE.SEND.SUCCESS,
-        type: Toast.SUCCESS,
-      })
 
       const queryKeys = [
         QUERY_KEY.POST.PUBLIC,

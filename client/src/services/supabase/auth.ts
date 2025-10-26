@@ -98,7 +98,6 @@ export const uploadAvatarImage = async (
 
   handleStorageError(error)
   const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_IMAGE_BASE_URL!
-  console.log(`${baseUrl}/${data?.fullPath}`)
   return `${baseUrl}/${data?.fullPath}`
 }
 
@@ -125,7 +124,6 @@ const handleStorageError = (error: StorageError | null) => {
 // auth 예외 처리
 const handleAuthError = (error: AuthError | null) => {
   if (error?.status && error?.code) {
-    console.error(error)
     throw new APIError(error.status, error.code, error)
   }
 }

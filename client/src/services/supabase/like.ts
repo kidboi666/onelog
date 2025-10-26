@@ -23,5 +23,5 @@ export const handleLike = async (
       .select()
   }
 
-  void processQuery(query)
+  await processQuery(query)
 }

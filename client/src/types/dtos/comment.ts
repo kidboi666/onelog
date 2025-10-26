@@ -11,7 +11,7 @@ export interface IDeleteComment {
 }
 
 export interface IUpdateComment {
-  content: string
+  id: number
   postId: number
-  commentId: number | null
+  content: string
 }

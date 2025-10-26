@@ -54,7 +54,7 @@ export interface INestUserInfo extends IBaseUserInfo {
 }
 
 /**
- * Adapter Type
+ * Adapter Type - Now using only Supabase after refactoring
  */
-export type IUserSession = ISupabaseUserSession | INestUserSession
-export type IUserInfo = ISupabaseUserInfo | INestUserInfo
+export type IUserSession = ISupabaseUserSession
+export type IUserInfo = ISupabaseUserInfo

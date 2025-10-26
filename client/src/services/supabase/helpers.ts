@@ -53,7 +53,7 @@ export const processCountQuery = async (query: any): Promise<number> => {
   const { count, error } = await query
   handleError(error)
 
-  return count
+  return count ?? 0
 }
 
 export const addUserFilter = (

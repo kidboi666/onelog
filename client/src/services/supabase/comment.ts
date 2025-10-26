@@ -33,20 +33,10 @@ export const updateComment = async (
   params: IUpdateComment,
   supabase: SupabaseClient = createBrowserClient(),
 ) => {
-  const { content, postId, commentId } = params
-
-  let query = supabase
+  const { error } = await supabase
     .from('comment')
-    .update({
-      content,
-    })
-    .eq('post_id', postId)
-
-  if (commentId) {
-    query = query.eq('comment_id', commentId)
-  }
-
-  const { error } = await query
+    .update({ content: params.content })
+    .eq('id', params.id)
 
   handleError(error)
 }
