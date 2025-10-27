@@ -3,14 +3,7 @@ import {
   infiniteQueryOptions,
   queryOptions,
 } from "@tanstack/react-query";
-import {
-  getAllPosts,
-  getEmotionAverage,
-  getLikedPosts,
-  getPost,
-  getUserPosts,
-  getUserPostsThatDay,
-} from "@/entities/post/api/post-api";
+import { postApi } from "@/entities/post/api/api";
 import { POST_QUERY_KEY } from "@/entities/post/model/constants";
 import type {
   ILikedPost,
@@ -30,7 +23,8 @@ export const postQuery = {
       number
     >({
       queryKey: POST_QUERY_KEY.PUBLIC,
-      queryFn: ({ pageParam = 0 }) => getAllPosts({ pageParam, limit, meId }),
+      queryFn: ({ pageParam = 0 }) =>
+        postApi.getAllPosts({ pageParam, limit, meId }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage && lastPage.length < limit) {
@@ -50,7 +44,7 @@ export const postQuery = {
     >({
       queryKey: POST_QUERY_KEY.LIKED(authorId, meId),
       queryFn: ({ pageParam = 0 }) =>
-        getLikedPosts({
+        postApi.getLikedPosts({
           pageParam,
           limit,
           authorId,
@@ -68,7 +62,7 @@ export const postQuery = {
   getPost: (postId: number, meId?: string | null) =>
     queryOptions<IPostDetail | null, APIError>({
       queryKey: POST_QUERY_KEY.DETAIL(postId),
-      queryFn: () => getPost({ postId, meId }),
+      queryFn: () => postApi.getPost({ postId, meId }),
     }),
 
   getUserPostThatDay: (
@@ -80,7 +74,7 @@ export const postQuery = {
     queryOptions<IPost[], APIError>({
       queryKey: POST_QUERY_KEY.THAT_DAY(startOfDay, endOfDay, authorId),
       queryFn: () =>
-        getUserPostsThatDay({
+        postApi.getUserPostsThatDay({
           authorId,
           startOfDay,
           endOfDay,
@@ -104,7 +98,7 @@ export const postQuery = {
     >({
       queryKey: POST_QUERY_KEY.POST_TYPE(postType, authorId),
       queryFn: async ({ pageParam = 0 }) =>
-        getUserPosts({
+        postApi.getUserPosts({
           pageParam,
           authorId,
           postType,
@@ -123,6 +117,6 @@ export const postQuery = {
   getEmotionAverage: (userId: string) =>
     queryOptions({
       queryKey: ["user_emotion_average", userId],
-      queryFn: () => getEmotionAverage(userId),
+      queryFn: () => postApi.getEmotionAverage(userId),
     }),
 };

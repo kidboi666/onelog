@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { IUserInfo } from "@/entities/auth/model/types";
+import type { IUserInfo } from "@/entities/user/model/types";
 
 interface MeState {
   me: IUserInfo | null;

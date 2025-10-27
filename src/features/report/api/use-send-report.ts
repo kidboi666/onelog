@@ -4,7 +4,7 @@ import { sendReport } from "@/entities/report/api/report-api";
 import { REPORT_TOAST_MESSAGE } from "@/entities/report/model/constants";
 import type { IReport } from "@/entities/report/model/types";
 
-export const useReport = () => {
+export const useSendReport = () => {
   return useMutation({
     mutationFn: (params: IReport) => sendReport(params),
     onSuccess: (_, variables) => {

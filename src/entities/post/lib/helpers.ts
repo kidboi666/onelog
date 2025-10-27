@@ -1,7 +1,7 @@
-// 현재 유저가 작성자인지 체크하는 헬퍼
 import type { ILikedPost, IPost } from "@/entities/post/model/types";
 import { Access } from "@/shared/types/enums";
 
+// 현재 유저가 작성자인지 체크하는 헬퍼
 export const isCurrentUserAuthor = (authorId: string, meId?: string | null) =>
   authorId === meId;
 
