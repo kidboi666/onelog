@@ -3,7 +3,14 @@ import {
   infiniteQueryOptions,
   queryOptions,
 } from "@tanstack/react-query";
-import { postApi } from "@/entities/post/api/api";
+import {
+  getAllPostsWithProcessing,
+  getEmotionAverage,
+  getLikedPostsWithProcessing,
+  getPostWithProcessing,
+  getUserPostsThatDayWithProcessing,
+  getUserPostsWithProcessing,
+} from "@/entities/post/lib/post-service";
 import { POST_QUERY_KEY } from "@/entities/post/model/constants";
 import type {
   ILikedPost,
@@ -24,7 +31,7 @@ export const postQuery = {
     >({
       queryKey: POST_QUERY_KEY.PUBLIC,
       queryFn: ({ pageParam = 0 }) =>
-        postApi.getAllPosts({ pageParam, limit, meId }),
+        getAllPostsWithProcessing({ pageParam, limit, meId }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage && lastPage.length < limit) {
@@ -44,7 +51,7 @@ export const postQuery = {
     >({
       queryKey: POST_QUERY_KEY.LIKED(authorId, meId),
       queryFn: ({ pageParam = 0 }) =>
-        postApi.getLikedPosts({
+        getLikedPostsWithProcessing({
           pageParam,
           limit,
           authorId,
@@ -62,7 +69,7 @@ export const postQuery = {
   getPost: (postId: number, meId?: string | null) =>
     queryOptions<IPostDetail | null, APIError>({
       queryKey: POST_QUERY_KEY.DETAIL(postId),
-      queryFn: () => postApi.getPost({ postId, meId }),
+      queryFn: () => getPostWithProcessing({ postId, meId }),
     }),
 
   getUserPostThatDay: (
@@ -74,7 +81,7 @@ export const postQuery = {
     queryOptions<IPost[], APIError>({
       queryKey: POST_QUERY_KEY.THAT_DAY(startOfDay, endOfDay, authorId),
       queryFn: () =>
-        postApi.getUserPostsThatDay({
+        getUserPostsThatDayWithProcessing({
           authorId,
           startOfDay,
           endOfDay,
@@ -98,7 +105,7 @@ export const postQuery = {
     >({
       queryKey: POST_QUERY_KEY.POST_TYPE(postType, authorId),
       queryFn: async ({ pageParam = 0 }) =>
-        postApi.getUserPosts({
+        getUserPostsWithProcessing({
           pageParam,
           authorId,
           postType,
@@ -117,6 +124,6 @@ export const postQuery = {
   getEmotionAverage: (userId: string) =>
     queryOptions({
       queryKey: ["user_emotion_average", userId],
-      queryFn: () => postApi.getEmotionAverage(userId),
+      queryFn: () => getEmotionAverage(userId),
     }),
 };

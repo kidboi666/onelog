@@ -1,10 +1,4 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import {
-  filterPrivateLikedPosts,
-  filterPrivatePosts,
-  isCurrentUserAuthor,
-  parseEmotionLevel,
-} from "@/entities/post/lib/helpers";
 import { POST_SUPABASE_QUERY } from "@/entities/post/model/constants";
 import type {
   ILikedPost,
@@ -18,7 +12,6 @@ import {
   processQuery,
 } from "@/shared/lib/supabase/helpers";
 import { Access } from "@/shared/types/enums";
-import { calculateAverage } from "@/shared/utils/calculate";
 import type {
   ICreatePost,
   IGetAllPosts,
@@ -58,9 +51,7 @@ export const postApi = {
       .range(params.pageParam, params.pageParam + params.limit - 1);
 
     query = addUserFilter(query, params.authorId, params.meId);
-    const data = await processQuery<ILikedPost[]>(query);
-    const isMe = isCurrentUserAuthor(params.authorId, params.meId);
-    return filterPrivateLikedPosts(data, isMe);
+    return processQuery<ILikedPost[]>(query);
   },
 
   getPost: async (
@@ -94,9 +85,7 @@ export const postApi = {
       .order("created_at", { ascending: false });
 
     query = addUserFilter(query, params.authorId, params.meId);
-    const data = await processQuery<IPost[]>(query);
-    const isMe = isCurrentUserAuthor(params.authorId, params.meId);
-    return filterPrivatePosts(data, isMe);
+    return processQuery<IPost[]>(query);
   },
 
   getUserPosts: async (
@@ -111,9 +100,7 @@ export const postApi = {
       .range(params.pageParam, params.pageParam + params.limit - 1);
 
     query = addUserFilter(query, params.authorId, params.meId);
-    const data = await processQuery<IPost[]>(query);
-    const isMe = isCurrentUserAuthor(params.authorId, params.meId);
-    return filterPrivatePosts(data, isMe);
+    return processQuery<IPost[]>(query);
   },
 
   createPost: async (
@@ -156,7 +143,7 @@ export const postApi = {
     handleError(error);
   },
 
-  getEmotionAverage: async (
+  getEmotionLevels: async (
     userId: string,
     supabase: SupabaseClient = createBrowserClient(),
   ) => {
@@ -166,13 +153,6 @@ export const postApi = {
       .neq("emotion_level", null)
       .eq("user_id", userId);
     handleError(error);
-    if (!data || data.length === 0) {
-      return 0;
-    }
-    const emotionLevels = data.map((item) =>
-      parseEmotionLevel(item.emotion_level),
-    );
-
-    return calculateAverage(emotionLevels);
+    return data || [];
   },
 };
