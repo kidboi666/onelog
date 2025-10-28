@@ -1,17 +1,16 @@
-import { Access, EmotionLevel, PostType } from '@/src/types/enums/index'
-import Line from '@/src/components/Line'
-import { YStack } from '@/src/components/Stack'
-import EmotionSection from '@/src/app/(playground)/post/edit/_components/EmotionSection'
-import PostTypeSection from '@/src/app/(playground)/post/edit/_components/PostTypeSection'
-import PublishSection from '@/src/app/(playground)/post/edit/_components/PublishSection'
+import { Access, EmotionLevel, PostType } from "@/shared/types/enums/index";
+import { Separator } from "@/shared/components/ui/separator";
+import EmotionSection from "./EmotionSection";
+import PostTypeSection from "./PostTypeSection";
+import PublishSection from "./PublishSection";
 
 interface Props {
-  accessType: Access
-  emotionLevel: EmotionLevel | null
-  postType: PostType
-  onChangeEmotion: (emotionLevel: EmotionLevel | null) => void
-  onChangePostType: (postType: PostType) => void
-  onChangeAccessType: (accessType: Access) => void
+  accessType: Access;
+  emotionLevel: EmotionLevel | null;
+  postType: PostType;
+  onChangeEmotion: (emotionLevel: EmotionLevel | null) => void;
+  onChangePostType: (postType: PostType) => void;
+  onChangeAccessType: (accessType: Access) => void;
 }
 
 export default function SideOptionsBar({
@@ -24,7 +23,7 @@ export default function SideOptionsBar({
 }: Props) {
   return (
     <div className="sticky left-4 top-8 hidden h-fit animate-fade-in-reverse rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
-      <YStack as="nav" className="items-center">
+      <nav className="flex flex-col items-center">
         <PublishSection
           accessType={accessType}
           onChangeAccessType={onChangeAccessType}
@@ -37,7 +36,7 @@ export default function SideOptionsBar({
         />
         {emotionLevel && (
           <>
-            <Line className="w-full" />
+            <Separator className="w-full" />
             <EmotionSection
               selectedEmotion={emotionLevel}
               onChangeEmotion={onChangeEmotion}
@@ -45,7 +44,7 @@ export default function SideOptionsBar({
             />
           </>
         )}
-      </YStack>
+      </nav>
     </div>
-  )
+  );
 }

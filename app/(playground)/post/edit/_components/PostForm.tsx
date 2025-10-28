@@ -1,31 +1,30 @@
-import { BubbleMenu, Editor, EditorContent } from '@tiptap/react'
+import { BubbleMenu, Editor, EditorContent } from "@tiptap/react";
+import { Loader2 } from "lucide-react";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 import {
   IUpdatePostFormActions,
   IUpdatePostFormStates,
-} from '@/src/types/dtos/post'
-import useBlockEditor from '@/src/hooks/useBlockEditor'
-import { formatDateToMDY } from '@/src/utils/client-utils'
-import Avatar from '@/src/components/Avatar'
-import Button from '@/src/components/Button'
-import Input from '@/src/components/Input'
-import Line from '@/src/components/Line'
-import { XStack, YStack } from '@/src/components/Stack'
-import { TagsInput } from '@/src/components/TagsInput'
-import TextDisplay from '@/src/components/TextDisplay'
-import Title from '@/src/components/Title'
-import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge'
-import BubbleMenuBar from '@/src/app/(playground)/post/edit/_components/BubbleMenuBar'
-import MobileOptionSection from '@/src/app/(playground)/post/edit/_components/MobileOptionSection'
-import usePostSubmit from '@/src/app/(playground)/post/edit/_hooks/usePostSubmit'
+} from "@/shared/types/dtos/post";
+import useBlockEditor from "@/app/hooks/useBlockEditor";
+import { Avatar, AvatarImage, AvatarFallback } from "@/shared/components/ui/avatar";
+import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
+import { Separator } from "@/shared/components/ui/separator";
+import { TagsInput } from "@/shared/components/TagsInput";
+import EmotionGauge from "../../(home)/_components/EmotionGauge";
+import BubbleMenuBar from "./BubbleMenuBar";
+import MobileOptionSection from "./MobileOptionSection";
+import usePostSubmit from "../_hooks/usePostSubmit";
 
 interface Props {
-  postId: number
-  avatarUrl: string | null
-  userName: string | null
-  email: string
-  formState: IUpdatePostFormStates
-  actions: IUpdatePostFormActions
-  meId: string
+  postId: number;
+  avatarUrl: string | null;
+  userName: string | null;
+  email: string;
+  formState: IUpdatePostFormStates;
+  actions: IUpdatePostFormActions;
+  meId: string;
 }
 
 export default function PostForm({
@@ -41,57 +40,61 @@ export default function PostForm({
     setContent: actions.setContent,
     content: formState.content,
     editable: true,
-    placeholder: '오늘 당신의 생각과 감정을 기록하세요.',
-  })
+    placeholder: "오늘 당신의 생각과 감정을 기록하세요.",
+  });
   const { onSubmitPost, isPending, isSuccess } = usePostSubmit({
     meId,
     postId,
     formState,
-  })
+  });
 
   const handleInputFocus = (editor: Editor | null) => {
-    editor?.commands.focus('end')
-  }
+    editor?.commands.focus("end");
+  };
+
+  const formattedDate = format(new Date(), "M월 d일 y년", { locale: ko });
+  const formattedTime = format(new Date(), "HH:mm");
 
   return (
     <form
       onSubmit={onSubmitPost}
       className="h-fit w-full rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray"
     >
-      <YStack gap={0}>
-        <XStack gap={4}>
-          <Avatar src={avatarUrl} size="sm" ring />
-          <YStack gap={0} className="self-end">
-            <XStack gap={1} className="items-end">
-              <Title size="xs" type="sub">
+      <div className="flex flex-col gap-0">
+        <div className="flex gap-4">
+          <Avatar className="size-10 ring-2 ring-primary">
+            <AvatarImage src={avatarUrl || undefined} alt={userName || "User"} />
+            <AvatarFallback>{userName?.charAt(0).toUpperCase()}</AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col gap-0 self-end">
+            <div className="flex items-end gap-1">
+              <h3 className="text-muted-foreground text-xs font-medium">
                 {userName}
-              </Title>
-              <TextDisplay as="span" type="caption" size="sm">
-                · @{email?.split('@')[0]}
-              </TextDisplay>
-            </XStack>
-            <TextDisplay type="caption" size="sm">
-              {formatDateToMDY(new Date().getTime())}
-            </TextDisplay>
-          </YStack>
-          <XStack className="flex-1 justify-end">
+              </h3>
+              <span className="text-muted-foreground text-caption text-sm">
+                · @{email?.split("@")[0]}
+              </span>
+            </div>
+            <p className="text-muted-foreground text-caption text-sm">
+              {formattedDate} · {formattedTime}
+            </p>
+          </div>
+          <div className="flex flex-1 justify-end">
             <EmotionGauge
               emotionLevel={formState.emotionLevel}
               onClick={actions.onChangeEmotion}
             />
-          </XStack>
-        </XStack>
-        <Line className="my-4" />
+          </div>
+        </div>
+        <Separator className="my-4" />
         <Input
-          value={formState.title || ''}
+          value={formState.title || ""}
           onChange={actions.onChangeTitle}
           disabled={meId === null}
-          variant="secondary"
-          dimension="none"
-          className="my-4 w-full overflow-x-auto text-3xl"
+          className="my-4 w-full overflow-x-auto border-none bg-transparent font-bold text-3xl shadow-none focus-visible:ring-0"
           placeholder="제목을 입력해 주세요."
         />
-        <YStack gap={0} className="max-h-full cursor-text">
+        <div className="flex max-h-full cursor-text flex-col gap-0">
           {editor && (
             <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
               <BubbleMenuBar editor={editor} />
@@ -102,14 +105,14 @@ export default function PostForm({
             onClick={() => handleInputFocus(editor)}
             className="h-20 max-h-full w-full"
           />
-        </YStack>
-        <YStack>
+        </div>
+        <div className="flex flex-col">
           <TagsInput
             tags={formState.tags}
             setTags={actions.setTags}
             disabled={meId === null}
           />
-          <XStack className="justify-between">
+          <div className="flex justify-between">
             <MobileOptionSection
               postType={formState.postType}
               accessType={formState.accessType}
@@ -119,23 +122,24 @@ export default function PostForm({
               onChangeEmotion={actions.onChangeEmotion}
             />
 
-            <XStack className="flex-1 justify-end">
+            <div className="flex flex-1 justify-end">
               <Button
-                isLoading={isPending}
                 disabled={
                   editor?.storage.characterCount.characters() === 0 ||
                   formState.tags.length > 10 ||
-                  isSuccess
+                  isSuccess ||
+                  isPending
                 }
                 type="submit"
                 size="sm"
               >
+                {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
                 등록하기
               </Button>
-            </XStack>
-          </XStack>
-        </YStack>
-      </YStack>
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
-  )
+  );
 }

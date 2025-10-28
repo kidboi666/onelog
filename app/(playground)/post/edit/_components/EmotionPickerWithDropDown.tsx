@@ -1,12 +1,11 @@
-import { RefObject } from 'react'
-import cn from '@/src/lib/cn'
-import { useTheme } from '@/src/store/hooks/useTheme'
-import { EmotionLevel } from '@/src/types/enums/index'
-import { DropDown } from '@/src/components/DropDown'
-import Icon from '@/src/components/Icon'
-import { List } from '@/src/components/List'
-import { YStack } from '@/src/components/Stack'
-import { EMOTION_STATUS } from '../_constants'
+import { RefObject } from "react";
+import { useTheme } from "@/app/store/use-theme";
+import { EmotionLevel } from "@/shared/types/enums/index";
+import { DropDown } from "@/shared/components/DropDown";
+import Icon from "@/shared/components/Icon";
+import { List } from "@/shared/components/List";
+import { cn } from "@/shared/utils/tw-merge";
+import { EMOTION_STATUS } from "../_constants";
 
 interface Props {
   selectedEmotion: EmotionLevel | null
@@ -26,11 +25,11 @@ export default function EmotionPickerWithDropDown({
   return (
     <DropDown.Content
       ref={targetRef}
-      position={isSide ? 'bottomRight' : 'topRight'}
+      position={isSide ? "bottomRight" : "topRight"}
       initStatus="closed"
       onTransitionEnd={onTransitionEnd}
     >
-      <YStack className="items-start justify-between gap-2">
+      <div className="flex flex-col items-start justify-between gap-2">
         {EMOTION_STATUS.map((emotion, index) => (
           <RenderEmotionPicker
             key={emotion.status}
@@ -40,9 +39,9 @@ export default function EmotionPickerWithDropDown({
             onChangeEmotion={onChangeEmotion}
           />
         ))}
-      </YStack>
+      </div>
     </DropDown.Content>
-  )
+  );
 }
 
 interface RenderEmotionPickerProps {

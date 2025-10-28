@@ -1,55 +1,57 @@
-'use client'
+"use client";
 
-import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
-import useFollowValidate from '@/src/hooks/queries/useFollowValidate'
-import useTransitionWithRoute from '@/src/hooks/useRouterPushWithTransition'
-import { ROUTES } from '@/src/routes'
-import Button from '@/src/components/Button'
-import { XStack } from '@/src/components/Stack'
+import { Loader2 } from "lucide-react";
+import useFollowMutates from "@/app/hooks/mutates/useFollowMutates";
+import useFollowValidate from "@/app/hooks/queries/useFollowValidate";
+import useTransitionWithRoute from "@/app/hooks/useRouterPushWithTransition";
+import { ROUTES } from "@/shared/config/routes";
+import { Button } from "@/shared/components/ui/button";
 
 interface Props {
-  meId?: string | null
-  userId: string
+  meId?: string | null;
+  userId: string;
 }
 
 export default function RenderActionButtonFromAuthorInfo({
   meId,
   userId,
 }: Props) {
-  const { isFollowing } = useFollowValidate(userId, meId)
+  const { isFollowing } = useFollowValidate(userId, meId);
   const { onFollow, isPending } = useFollowMutates({
     isFollowing,
     userId,
-  })
+  });
 
   const [isLoadingWrite, startTransitionWrite] = useTransitionWithRoute(
-    ROUTES.POST.NEW,
-  )
+    ROUTES.POST.NEW
+  );
   const [isLoadingEditProfile, startTransitionEditProfile] =
-    useTransitionWithRoute(ROUTES.PROFILE.EDIT)
+    useTransitionWithRoute(ROUTES.PROFILE.EDIT);
 
   return (
-    <XStack
+    <div
       onClick={(e) => e.stopPropagation()}
-      className="flex-col justify-center"
+      className="flex flex-col justify-center gap-2"
     >
       {meId === userId ? (
         <>
           <Button
             size="sm"
-            isLoading={isLoadingWrite}
+            disabled={isLoadingWrite}
             onClick={startTransitionWrite}
             className="w-full self-end"
           >
+            {isLoadingWrite && <Loader2 className="mr-2 size-4 animate-spin" />}
             글 쓰기
           </Button>
           <Button
             variant="secondary"
             size="sm"
             onClick={startTransitionEditProfile}
-            isLoading={isLoadingEditProfile}
+            disabled={isLoadingEditProfile}
             className="w-full self-end"
           >
+            {isLoadingEditProfile && <Loader2 className="mr-2 size-4 animate-spin" />}
             프로필 수정
           </Button>
         </>
@@ -57,17 +59,18 @@ export default function RenderActionButtonFromAuthorInfo({
         <>
           <Button
             size="sm"
-            isLoading={isPending}
+            disabled={isPending}
             onClick={onFollow}
             className="w-full self-end"
           >
-            {isFollowing ? '팔로우 취소' : '팔로우 하기'}
+            {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
+            {isFollowing ? "팔로우 취소" : "팔로우 하기"}
           </Button>
           <Button variant="secondary" size="sm" className="w-full self-end">
             메세지 보내기
           </Button>
         </>
       )}
-    </XStack>
-  )
+    </div>
+  );
 }

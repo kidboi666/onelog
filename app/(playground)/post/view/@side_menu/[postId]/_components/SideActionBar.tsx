@@ -1,26 +1,26 @@
-'use client'
+"use client";
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { useMe } from '@/src/store/hooks/useMe'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import AccessTypeButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown'
-import OptionButtonWithDropDown from '@/src/app/(playground)/(home)/_components/OptionButtonWithDropDown'
-import ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton'
-import ShareButton from '@/src/app/(playground)/(home)/_components/ShareButton'
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMe } from "@/app/store/use-me";
+import { postQueries } from "@/entities/post/api/queries";
+import AccessTypeButtonWithDropDown from "../../../../../(home)/_components/AccessTypeButtonWithDropDown";
+import OptionButtonWithDropDown from "../../../../../(home)/_components/OptionButtonWithDropDown";
+import ReportButton from "../../../../../(home)/_components/ReportButton";
+import ShareButton from "../../../../../(home)/_components/ShareButton";
 
 interface Props {
-  postId: number
+  postId: number;
 }
 
 export default function SideActionBar({ postId }: Props) {
-  const { me } = useMe()
-  const { data: post } = useSuspenseQuery(postQuery.getPost(postId, me?.id))
+  const { me } = useMe();
+  const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
 
   if (!post) {
-    return null
+    return null;
   }
 
-  const { accessType } = post
+  const { accessType } = post;
 
   return (
     <>
@@ -33,5 +33,5 @@ export default function SideActionBar({ postId }: Props) {
       <ReportButton postId={postId} viewToolTip isSide />
       <OptionButtonWithDropDown type="post" postId={postId} isSide />
     </>
-  )
+  );
 }

@@ -1,49 +1,46 @@
-'use client'
+"use client";
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
-import { useMe } from '@/src/store/hooks/useMe'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import { ROUTES } from '@/src/routes'
-import Avatar from '@/src/components/Avatar'
-import { XStack, YStack } from '@/src/components/Stack'
-import TextDisplay from '@/src/components/TextDisplay'
-import Title from '@/src/components/Title'
-import RenderActionButtonFromAuthorInfo from '@/src/app/(playground)/post/view/@post/[postId]/_components/RenderActionButtonFromAuthorInfo'
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useMe } from "@/app/store/use-me";
+import { postQueries } from "@/entities/post/api/queries";
+import { ROUTES } from "@/shared/config/routes";
+import { Avatar, AvatarImage, AvatarFallback } from "@/shared/components/ui/avatar";
+import RenderActionButtonFromAuthorInfo from "./RenderActionButtonFromAuthorInfo";
 
 interface Props {
-  postId: number
+  postId: number;
 }
 
 export default function PostAuthorInfo({ postId }: Props) {
-  const router = useRouter()
-  const { me } = useMe()
-  const { data: post } = useSuspenseQuery(postQuery.getPost(postId, me?.id))
+  const router = useRouter();
+  const { me } = useMe();
+  const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
 
   if (!post) {
-    return null
+    return null;
   }
 
-  const pushNewPostPage = () => router.push(ROUTES.PROFILE.VIEW(post.userId))
+  const pushNewPostPage = () => router.push(ROUTES.PROFILE.VIEW(post.userId));
 
-  const { userInfo, userId } = post
+  const { userInfo, userId } = post;
 
   return (
-    <YStack>
-      <YStack
-        gap={4}
-        className="w-full rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark"
-      >
-        <XStack onClick={pushNewPostPage} className="flex flex-1 gap-4">
-          <Avatar src={userInfo.avatarUrl} size="md" />
-          <YStack gap={1} className="w-full">
-            <Title size="sm">{userInfo.userName}</Title>
-            <TextDisplay type="caption">{userInfo.email}</TextDisplay>
-            <TextDisplay>{userInfo.aboutMe}</TextDisplay>
-          </YStack>
+    <div className="flex flex-col">
+      <div className="flex w-full flex-col gap-4 rounded-md bg-var-lightgray p-4 transition duration-300 hover:shadow-lg sm:flex-row dark:bg-var-dark">
+        <div onClick={pushNewPostPage} className="flex flex-1 cursor-pointer gap-4">
+          <Avatar className="size-12">
+            <AvatarImage src={userInfo.avatarUrl || undefined} alt={userInfo.userName} />
+            <AvatarFallback>{userInfo.userName.charAt(0).toUpperCase()}</AvatarFallback>
+          </Avatar>
+          <div className="flex w-full flex-col gap-1">
+            <h3 className="font-semibold text-sm">{userInfo.userName}</h3>
+            <p className="text-muted-foreground text-xs">{userInfo.email}</p>
+            <p className="text-sm">{userInfo.aboutMe}</p>
+          </div>
           <RenderActionButtonFromAuthorInfo meId={me?.id} userId={userId} />
-        </XStack>
-      </YStack>
-    </YStack>
-  )
+        </div>
+      </div>
+    </div>
+  );
 }

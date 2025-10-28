@@ -1,16 +1,15 @@
-import { Access, EmotionLevel, PostType } from '@/src/types/enums/index'
-import { XStack } from '@/src/components/Stack'
-import EmotionSection from '@/src/app/(playground)/post/edit/_components/EmotionSection'
-import PostTypeSection from '@/src/app/(playground)/post/edit/_components/PostTypeSection'
-import PublishSection from '@/src/app/(playground)/post/edit/_components/PublishSection'
+import { Access, EmotionLevel, PostType } from "@/shared/types/enums/index";
+import EmotionSection from "./EmotionSection";
+import PostTypeSection from "./PostTypeSection";
+import PublishSection from "./PublishSection";
 
 interface Props {
-  accessType: Access
-  postType: PostType
-  emotionLevel: EmotionLevel | null
-  onChangeAccessType: (accessType: Access) => void
-  onChangePostType: (postType: PostType) => void
-  onChangeEmotion: (emotionLevel: EmotionLevel | null) => void
+  accessType: Access;
+  postType: PostType;
+  emotionLevel: EmotionLevel | null;
+  onChangeAccessType: (accessType: Access) => void;
+  onChangePostType: (postType: PostType) => void;
+  onChangeEmotion: (emotionLevel: EmotionLevel | null) => void;
 }
 
 export default function MobileOptionSection({
@@ -22,7 +21,7 @@ export default function MobileOptionSection({
   onChangeEmotion,
 }: Props) {
   return (
-    <XStack gap={4} className="items-center sm:hidden">
+    <div className="flex items-center gap-4 sm:hidden">
       <PublishSection
         accessType={accessType}
         onChangeAccessType={onChangeAccessType}
@@ -35,6 +34,6 @@ export default function MobileOptionSection({
         selectedEmotion={emotionLevel}
         onChangeEmotion={onChangeEmotion}
       />
-    </XStack>
-  )
+    </div>
+  );
 }

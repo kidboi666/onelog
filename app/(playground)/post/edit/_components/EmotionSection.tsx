@@ -1,18 +1,16 @@
-import { EmotionLevel } from '@/src/types/enums/index'
-import useOutsideClick from '@/src/hooks/useOutsideClick'
-import useDataDrivenAnimation from '@/src/hooks/useStateChange'
-import useToggle from '@/src/hooks/useToggle'
-import { DropDown } from '@/src/components/DropDown'
-import Icon from '@/src/components/Icon'
-import { ZStack } from '@/src/components/Stack'
-import TextDisplay from '@/src/components/TextDisplay'
-import ToolTip from '@/src/components/Tooltip'
-import EmotionPickerWithDropDown from './EmotionPickerWithDropDown'
+import { EmotionLevel } from "@/shared/types/enums/index";
+import useOutsideClick from "@/app/hooks/useOutsideClick";
+import useDataDrivenAnimation from "@/app/hooks/useStateChange";
+import useToggle from "@/app/hooks/useToggle";
+import { DropDown } from "@/shared/components/DropDown";
+import Icon from "@/shared/components/Icon";
+import ToolTip from "@/shared/components/Tooltip";
+import EmotionPickerWithDropDown from "./EmotionPickerWithDropDown";
 
 interface Props {
-  onChangeEmotion: (emotion: EmotionLevel | null) => void
-  selectedEmotion: EmotionLevel | null
-  isSide?: boolean
+  onChangeEmotion: (emotion: EmotionLevel | null) => void;
+  selectedEmotion: EmotionLevel | null;
+  isSide?: boolean;
 }
 
 export default function EmotionSection({
@@ -25,9 +23,9 @@ export default function EmotionSection({
     onClick: emotionClick,
     onTransitionEnd: emotionTransitionEnd,
     ref: emotionRef,
-  } = useDataDrivenAnimation<HTMLDivElement>()
-  const emotionButtonRef = useOutsideClick<HTMLButtonElement>(emotionClose)
-  const { isOpen: isHover, open, close } = useToggle()
+  } = useDataDrivenAnimation<HTMLDivElement>();
+  const emotionButtonRef = useOutsideClick<HTMLButtonElement>(emotionClose);
+  const { isOpen: isHover, open, close } = useToggle();
 
   return (
     <>
@@ -37,7 +35,7 @@ export default function EmotionSection({
         className="relative flex size-full items-center justify-start"
       >
         <DropDown.Root className="flex place-items-center gap-2 sm:flex-col">
-          <ZStack direction="col" gap={0} className="items-center">
+          <div className="relative flex flex-col items-center gap-0">
             <DropDown.Trigger
               targetRef={emotionButtonRef}
               variant="icon"
@@ -45,17 +43,13 @@ export default function EmotionSection({
               className="flex-col"
             >
               {selectedEmotion && (
-                <TextDisplay
-                  type="caption"
-                  size="xs"
-                  className="absolute top-0"
-                >
-                  {(selectedEmotion === EmotionLevel['0%'] && '매우나쁨') ||
-                    (selectedEmotion === EmotionLevel['25%'] && '나쁨') ||
-                    (selectedEmotion === EmotionLevel['50%'] && '보통') ||
-                    (selectedEmotion === EmotionLevel['75%'] && '좋음') ||
-                    (selectedEmotion === EmotionLevel['100%'] && '매우좋음')}
-                </TextDisplay>
+                <p className="absolute top-0 text-muted-foreground text-xs">
+                  {(selectedEmotion === EmotionLevel["0%"] && "매우나쁨") ||
+                    (selectedEmotion === EmotionLevel["25%"] && "나쁨") ||
+                    (selectedEmotion === EmotionLevel["50%"] && "보통") ||
+                    (selectedEmotion === EmotionLevel["75%"] && "좋음") ||
+                    (selectedEmotion === EmotionLevel["100%"] && "매우좋음")}
+                </p>
               )}
               <Icon view="0 -960 960 960" size={isSide ? 24 : 18}>
                 {selectedEmotion ? (
@@ -65,7 +59,7 @@ export default function EmotionSection({
                 )}
               </Icon>
             </DropDown.Trigger>
-          </ZStack>
+          </div>
           <EmotionPickerWithDropDown
             targetRef={emotionRef}
             onTransitionEnd={emotionTransitionEnd}
@@ -74,7 +68,7 @@ export default function EmotionSection({
             isSide={isSide}
           />
           <ToolTip
-            position={isSide ? 'topLeft' : 'bottomLeft'}
+            position={isSide ? "topLeft" : "bottomLeft"}
             size="md"
             isHover={isHover}
             text="감정 농도 선택"
@@ -83,5 +77,5 @@ export default function EmotionSection({
         </DropDown.Root>
       </div>
     </>
-  )
+  );
 }

@@ -1,25 +1,23 @@
-'use client'
+"use client";
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { useMe } from '@/src/store/hooks/useMe'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import { formatDateToHM, formatDateToMDY } from '@/src/utils/client-utils'
-import { XStack, YStack } from '@/src/components/Stack'
-import TextDisplay from '@/src/components/TextDisplay'
-import Title from '@/src/components/Title'
-import AvatarButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AvatarButtonWithDropDown'
-import EmotionGauge from '@/src/app/(playground)/(home)/_components/EmotionGauge'
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
+import { useMe } from "@/app/store/use-me";
+import { postQueries } from "@/entities/post/api/queries";
+import AvatarButtonWithDropDown from "../../../../(home)/_components/AvatarButtonWithDropDown";
+import EmotionGauge from "../../../../(home)/_components/EmotionGauge";
 
 interface Props {
-  postId: number
+  postId: number;
 }
 
 export default function PostHeader({ postId }: Props) {
-  const { me } = useMe()
-  const { data: post } = useSuspenseQuery(postQuery.getPost(postId, me?.id))
+  const { me } = useMe();
+  const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
 
   if (!post) {
-    return null
+    return null;
   }
 
   const {
@@ -27,32 +25,37 @@ export default function PostHeader({ postId }: Props) {
     userInfo: { userName, avatarUrl, email },
     createdAt,
     emotionLevel,
-  } = post
+  } = post;
+
+  const formattedDate = format(new Date(createdAt), "M월 d일 y년", {
+    locale: ko,
+  });
+  const formattedTime = format(new Date(createdAt), "HH:mm");
 
   return (
-    <XStack gap={4} className="items-center">
+    <div className="flex items-center gap-4">
       <AvatarButtonWithDropDown
         userId={userId}
         userName={userName}
         avatarUrl={avatarUrl}
         position="bottomRight"
       />
-      <YStack gap={0} className="self-end">
-        <XStack gap={1} className="items-end">
-          <Title size="xs" type="sub">
+      <div className="flex flex-col gap-0 self-end">
+        <div className="flex items-end gap-1">
+          <h3 className="text-muted-foreground text-xs font-medium">
             {userName}
-          </Title>
-          <TextDisplay as="span" type="caption" size="sm">
-            · @{email?.split('@')[0]}
-          </TextDisplay>
-        </XStack>
-        <TextDisplay type="caption" size="sm">
-          {formatDateToMDY(createdAt)} · {formatDateToHM(createdAt)}
-        </TextDisplay>
-      </YStack>
-      <XStack className="h-full flex-1 items-end justify-end p-2">
+          </h3>
+          <span className="text-muted-foreground text-sm">
+            · @{email?.split("@")[0]}
+          </span>
+        </div>
+        <p className="text-muted-foreground text-sm">
+          {formattedDate} · {formattedTime}
+        </p>
+      </div>
+      <div className="flex h-full flex-1 items-end justify-end p-2">
         <EmotionGauge emotionLevel={emotionLevel} className="h-full" />
-      </XStack>
-    </XStack>
-  )
+      </div>
+    </div>
+  );
 }

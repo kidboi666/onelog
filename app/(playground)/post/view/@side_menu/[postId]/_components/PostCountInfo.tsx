@@ -1,24 +1,24 @@
-'use client'
+"use client";
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { useMe } from '@/src/store/hooks/useMe'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import CommentButton from '@/src/app/(playground)/(home)/_components/CommentButton'
-import LikeButton from '@/src/app/(playground)/(home)/_components/LikeButton'
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMe } from "@/app/store/use-me";
+import { postQueries } from "@/entities/post/api/queries";
+import CommentButton from "../../../../../(home)/_components/CommentButton";
+import LikeButton from "../../../../../(home)/_components/LikeButton";
 
 interface Props {
-  postId: number
+  postId: number;
 }
 
 export default function PostCountInfo({ postId }: Props) {
-  const { me } = useMe()
-  const { data: post } = useSuspenseQuery(postQuery.getPost(postId, me?.id))
+  const { me } = useMe();
+  const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
 
   if (!post) {
-    return null
+    return null;
   }
 
-  const { likeCount, isLiked, commentCount } = post
+  const { likeCount, isLiked, commentCount } = post;
 
   return (
     <>
@@ -31,5 +31,5 @@ export default function PostCountInfo({ postId }: Props) {
       />
       <CommentButton commentCount={commentCount[0].count} viewToolTip isSide />
     </>
-  )
+  );
 }

@@ -1,38 +1,38 @@
-'use client'
+"use client";
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { EditorContent } from '@tiptap/react'
-import { useMe } from '@/src/store/hooks/useMe'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import useBlockEditor from '@/src/hooks/useBlockEditor'
-import { XStack, YStack } from '@/src/components/Stack'
-import Tag from '@/src/components/Tag'
-import Title from '@/src/components/Title'
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { EditorContent } from "@tiptap/react";
+import { useMe } from "@/app/store/use-me";
+import { postQueries } from "@/entities/post/api/queries";
+import useBlockEditor from "@/src/hooks/useBlockEditor";
+import { Badge } from "@/shared/components/ui/badge";
 
 interface Props {
-  postId: number
+  postId: number;
 }
 
 export default function PostBody({ postId }: Props) {
-  const { me } = useMe()
-  const { data: post } = useSuspenseQuery(postQuery.getPost(postId, me?.id))
-  const { editor } = useBlockEditor({ content: post?.content })
+  const { me } = useMe();
+  const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
+  const { editor } = useBlockEditor({ content: post?.content });
 
-  if (!post || !editor) return null
+  if (!post || !editor) return null;
 
   return (
-    <YStack gap={8} className="my-8">
+    <div className="my-8 flex flex-col gap-8">
       {post.title && (
-        <Title size="lg" className="my-4">
-          {post.title}
-        </Title>
+        <h1 className="my-4 font-bold text-3xl">{post.title}</h1>
       )}
       <EditorContent editor={editor} />
       {post?.tags && post.tags.length >= 1 && (
-        <XStack className="flex-wrap">
-          {post?.tags?.map((tag, index) => <Tag key={index} tag={tag} />)}
-        </XStack>
+        <div className="flex flex-wrap gap-2">
+          {post?.tags?.map((tag, index) => (
+            <Badge key={index} variant="secondary">
+              {tag}
+            </Badge>
+          ))}
+        </div>
       )}
-    </YStack>
-  )
+    </div>
+  );
 }
