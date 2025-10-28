@@ -1,52 +1,58 @@
-'use client'
+"use client";
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { useMemo } from 'react'
-import { useMe } from '@/src/store/hooks/useMe'
-import { postQuery } from '@/src/services/queries/post/post-query'
-import { sortByDate } from '@/src/utils/client-utils'
-import Empty from '@/src/components/Empty'
-import { List } from '@/src/components/List'
-import CommentInput from './CommentInput'
-import CommentItem from './CommentItem'
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { useMe } from "@/core/store/use-me";
+import { postQuery } from "@/entities/post/api/queries";
+import CommentInput from "./CommentInput";
+import CommentItem from "./CommentItem";
 
 interface Props {
-  postId: number
+  postId: number;
+}
+
+// 날짜순 정렬 함수
+function sortByDate<T extends { createdAt: string }>(items: T[]): T[] {
+  return [...items].sort(
+    (a, b) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
 }
 
 export default function Comments({ postId }: Props) {
-  const { me } = useMe()
-  const { data: post } = useSuspenseQuery(postQuery.getPost(postId, me?.id))
+  const { me } = useMe();
+  const { data: post } = useSuspenseQuery(postQuery.getPost(postId, me?.id));
+
   const comments = useMemo(() => {
     if (!post || post.comments.length === 0) {
-      return []
+      return [];
     }
-    return sortByDate(post.comments)
-  }, [post])
+    return sortByDate(post.comments);
+  }, [post]);
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <CommentInput postId={postId} me={me} />
       {comments.length === 0 ? (
-        <Empty>
-          <Empty.Text>아직 달린 댓글이 없습니다.</Empty.Text>
-        </Empty>
+        <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
+          <p className="text-sm">아직 달린 댓글이 없습니다.</p>
+        </div>
       ) : (
-        <List className="flex w-full flex-col gap-4">
-          {comments.map((comment, idx) => {
-            if (comment.commentId) return null
+        <div className="flex w-full flex-col gap-4">
+          {comments.map((comment) => {
+            if (comment.commentId) return null;
 
             return (
               <CommentItem
-                key={idx}
+                key={comment.id}
                 comment={comment}
                 postId={postId}
                 me={me}
               />
-            )
+            );
           })}
-        </List>
+        </div>
       )}
-    </>
-  )
+    </div>
+  );
 }

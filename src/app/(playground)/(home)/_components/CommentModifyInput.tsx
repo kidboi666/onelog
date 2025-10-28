@@ -1,22 +1,21 @@
-import { FormEvent, useEffect } from 'react'
-import useUpdateComment from '@/src/services/mutates/comment/useUpdateComment'
-import { IComment } from '@/src/types/entities/comment'
-import useInput from '@/src/hooks/useInput'
-import Button from '@/src/components/Button'
-import Input from '@/src/components/Input'
-import { XStack, YStack } from '@/src/components/Stack'
+import { useEffect, useState, type FormEvent } from "react";
+import { Loader2 } from "lucide-react";
+import type { IComment } from "@/entities/comment/model/types";
+import { useUpdateComment } from "@/entities/comment/api/mutates";
+import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
 
 interface Props {
-  comment: IComment
-  onModify: () => void
+  comment: IComment;
+  onModify: () => void;
 }
 
 export default function CommentModifyInput({ comment, onModify }: Props) {
-  const [content, onChangeContent, setContent] = useInput<string>('')
-  const { mutate: updateComment, isPending } = useUpdateComment()
+  const [content, setContent] = useState("");
+  const { mutate: updateComment, isPending } = useUpdateComment();
 
   const handlePostComment = (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     updateComment(
       {
         id: comment.id,
@@ -25,40 +24,41 @@ export default function CommentModifyInput({ comment, onModify }: Props) {
       },
       {
         onSuccess: () => {
-          onModify()
+          onModify();
         },
-      },
-    )
-  }
+      }
+    );
+  };
 
   useEffect(() => {
-    setContent(comment.content)
-  }, [comment.content])
+    setContent(comment.content);
+  }, [comment.content]);
 
   return (
     <form onSubmit={handlePostComment}>
-      <YStack>
+      <div className="flex flex-col gap-2">
         <Input
           value={content}
-          onChange={onChangeContent}
-          dimension="xs"
-          className="w-full bg-var-lightgray dark:bg-var-dark"
+          onChange={(e) => setContent(e.target.value)}
+          className="w-full"
         />
-        <XStack>
+        <div className="flex gap-2">
           <Button
-            variant="primary"
             size="sm"
             type="submit"
-            disabled={comment.content === content}
-            isLoading={isPending}
+            disabled={comment.content === content || isPending}
           >
-            수정하기
+            {isPending ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              "수정하기"
+            )}
           </Button>
-          <Button variant="secondary" size="sm" onClick={onModify}>
+          <Button variant="secondary" size="sm" type="button" onClick={onModify}>
             돌아가기
           </Button>
-        </XStack>
-      </YStack>
+        </div>
+      </div>
     </form>
-  )
+  );
 }

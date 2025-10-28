@@ -1,40 +1,38 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import { FormEvent } from 'react'
-import usePostComment from '@/src/services/mutates/comment/usePostComment'
-import { IUserInfo } from '@/src/types/entities/auth'
-import useInput from '@/src/hooks/useInput'
-import { ROUTES } from '@/src/routes'
-import Avatar from '@/src/components/Avatar'
-import Button from '@/src/components/Button'
-import Input from '@/src/components/Input'
-import { XStack } from '@/src/components/Stack'
+import { useRouter } from "next/navigation";
+import type { FormEvent } from "react";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import type { IUserInfo } from "@/entities/user/model/types";
+import { usePostComment } from "@/entities/comment/api/mutates";
+import { ROUTES } from "@/core/routes";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
 
 interface Props {
-  postId: number
-  commentId?: number
-  me: IUserInfo | null
+  postId: number;
+  commentId?: number;
+  me: IUserInfo | null;
 }
 
 export default function CommentInput({ postId, commentId, me }: Props) {
-  const router = useRouter()
-  const [content, onChangeContent, setContent] = useInput('')
-  const { mutate: postComment, isPending: isPostPending } = usePostComment()
+  const router = useRouter();
+  const [content, setContent] = useState("");
+  const { mutate: postComment, isPending: isPostPending } = usePostComment();
 
-  const authGuard = () => router.push(ROUTES.MODAL.AUTH.GUARD)
+  const authGuard = () => router.push(ROUTES.MODAL.AUTH.GUARD);
 
   const handleRouterGuard = () => {
-    if (me) {
-      return null
-    } else {
-      authGuard()
+    if (!me) {
+      authGuard();
     }
-  }
+  };
 
   const handlePostComment = (e: FormEvent) => {
-    e.preventDefault()
-    if (me) {
+    e.preventDefault();
+    if (me && content.trim()) {
       postComment(
         {
           userId: me.id,
@@ -44,14 +42,12 @@ export default function CommentInput({ postId, commentId, me }: Props) {
         },
         {
           onSuccess: () => {
-            setContent('')
+            setContent("");
           },
-        },
-      )
-    } else {
-      return null
+        }
+      );
     }
-  }
+  };
 
   return (
     <form
@@ -59,24 +55,32 @@ export default function CommentInput({ postId, commentId, me }: Props) {
       onSubmit={handlePostComment}
       className="mb-2 w-full"
     >
-      <XStack gap={4}>
-        <Avatar src={me?.avatarUrl} size="sm" shadow="sm" />
+      <div className="flex items-center gap-3">
+        <Avatar className="size-8 flex-shrink-0">
+          <AvatarImage src={me?.avatarUrl || undefined} />
+          <AvatarFallback>
+            {me?.userName?.[0]?.toUpperCase() || "?"}
+          </AvatarFallback>
+        </Avatar>
         <Input
           value={content}
-          onChange={onChangeContent}
-          dimension="xs"
-          placeholder={me ? '댓글을 달아주세요.' : '로그인을 해주세요'}
-          className="w-full bg-var-lightgray dark:bg-var-dark"
+          onChange={(e) => setContent(e.target.value)}
+          placeholder={me ? "댓글을 달아주세요." : "로그인을 해주세요"}
+          className="flex-1"
+          disabled={!me}
         />
         <Button
           type="submit"
-          disabled={!content || !me}
-          isLoading={isPostPending}
+          disabled={!content.trim() || !me || isPostPending}
           size="sm"
         >
-          댓글달기
+          {isPostPending ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            "댓글달기"
+          )}
         </Button>
-      </XStack>
+      </div>
     </form>
-  )
+  );
 }

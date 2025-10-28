@@ -1,62 +1,77 @@
-'use client'
+"use client";
 
-import { IUserInfo } from '@/src/types/entities/auth'
-import { IComment } from '@/src/types/entities/comment'
-import useToggle from '@/src/hooks/useToggle'
-import { formatDateElapsed } from '@/src/utils/client-utils'
-import { XStack, YStack } from '@/src/components/Stack'
-import TextDisplay from '@/src/components/TextDisplay'
-import CommentInputButton from '@/src/app/(playground)/(home)/_components/CommentInputButton'
-import CommentModifyInput from '@/src/app/(playground)/(home)/_components/CommentModifyInput'
-import OptionButtonWithDropDown from '@/src/app/(playground)/(home)/_components/OptionButtonWithDropDown'
-import useCommentReplies from '@/src/app/(playground)/(home)/_hooks/useCommentReplies'
-import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
-import CommentButton from './CommentButton'
-import CommentInput from './CommentInput'
-import ReportButton from './ReportButton'
+import { useState } from "react";
+import Link from "next/link";
+import { formatDistanceToNow } from "date-fns";
+import { ko } from "date-fns/locale";
+import type { IUserInfo } from "@/entities/user/model/types";
+import type { IComment } from "@/entities/comment/model/types";
+import { useCommentReplies } from "@/entities/comment/hooks/useCommentReplies";
+import { ROUTES } from "@/core/routes";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import AvatarButtonWithDropDown from "./AvatarButtonWithDropDown";
+import CommentButton from "./CommentButton";
+import CommentInput from "./CommentInput";
+import CommentInputButton from "./CommentInputButton";
+import CommentModifyInput from "./CommentModifyInput";
+import OptionButtonWithDropDown from "./OptionButtonWithDropDown";
+import ReportButton from "./ReportButton";
 
 interface Props {
-  comment: IComment
-  postId: number
-  me: IUserInfo | null
+  comment: IComment;
+  postId: number;
+  me: IUserInfo | null;
 }
 
 export default function CommentItem({ comment, postId, me }: Props) {
-  const { isOpen: showCommentInput, toggle: toggleShowCommentInput } =
-    useToggle()
-  const { isOpen: isModify, toggle: toggleModify } = useToggle()
-  const commentToComments = useCommentReplies(comment.id, postId)
+  const [showCommentInput, setShowCommentInput] = useState(false);
+  const [isModify, setIsModify] = useState(false);
+  const commentToComments = useCommentReplies(comment.id, postId);
+
+  const toggleShowCommentInput = () => setShowCommentInput(!showCommentInput);
+  const toggleModify = () => setIsModify(!isModify);
+
+  const displayName =
+    comment.userInfo.userName ||
+    comment.userInfo.email?.split("@")[0] ||
+    "익명";
+  const timeAgo = formatDistanceToNow(new Date(comment.createdAt), {
+    addSuffix: true,
+    locale: ko,
+  });
 
   return (
-    <XStack className="w-full">
-      <AvatarButtonWithDropDown
-        avatarUrl={comment.userInfo.avatarUrl}
-        userId={comment.userId}
-        userName={comment.userInfo.userName}
-      />
-      <YStack className="flex-1">
-        <YStack gap={1}>
-          <XStack className="items-end">
-            <TextDisplay>{comment.userInfo.userName}</TextDisplay>
-            <TextDisplay as="span" type="caption" size="sm">
-              @{comment.userInfo.email?.split('@')[0]}
-            </TextDisplay>
-          </XStack>
-          <XStack>
-            <TextDisplay type="caption" size="sm">
-              {formatDateElapsed(comment.createdAt)}
-            </TextDisplay>
-          </XStack>
+    <div className="flex w-full gap-3">
+      <Link href={ROUTES.PROFILE.VIEW(comment.userId)}>
+        <Avatar className="size-10 cursor-pointer flex-shrink-0">
+          <AvatarImage src={comment.userInfo.avatarUrl || undefined} />
+          <AvatarFallback>{displayName[0]?.toUpperCase()}</AvatarFallback>
+        </Avatar>
+      </Link>
+      <div className="flex flex-1 flex-col gap-2">
+        <div className="flex flex-col gap-1">
+          <div className="flex items-end gap-1">
+            <Link
+              href={ROUTES.PROFILE.VIEW(comment.userId)}
+              className="font-medium text-sm hover:underline"
+            >
+              {displayName}
+            </Link>
+            <span className="text-muted-foreground text-xs">
+              @{comment.userInfo.email?.split("@")[0]}
+            </span>
+          </div>
+          <span className="text-muted-foreground text-xs">{timeAgo}</span>
 
           {isModify ? (
             <CommentModifyInput comment={comment} onModify={toggleModify} />
           ) : (
-            <div className="w-fit rounded-md bg-var-lightgray p-2 dark:bg-var-dark">
-              <TextDisplay>{comment.content}</TextDisplay>
+            <div className="w-fit rounded-md bg-muted p-2">
+              <p className="text-sm">{comment.content}</p>
             </div>
           )}
 
-          <XStack gap={0}>
+          <div className="flex gap-0">
             {comment.commentId && (
               <CommentButton commentCount={comment.comment ?? 0} />
             )}
@@ -69,21 +84,21 @@ export default function CommentItem({ comment, postId, me }: Props) {
               commentId={comment.id}
               postId={postId}
             />
-          </XStack>
-        </YStack>
+          </div>
+        </div>
         {showCommentInput && (
           <CommentInput postId={postId} commentId={comment.id} me={me} />
         )}
         {commentToComments.length > 0 &&
-          commentToComments.map((comment) => (
+          commentToComments.map((reply) => (
             <CommentItem
-              key={comment.id}
+              key={reply.id}
               postId={postId}
-              comment={comment}
+              comment={reply}
               me={me}
             />
           ))}
-      </YStack>
-    </XStack>
-  )
+      </div>
+    </div>
+  );
 }
