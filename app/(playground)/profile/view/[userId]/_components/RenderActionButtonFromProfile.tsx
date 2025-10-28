@@ -1,83 +1,101 @@
-'use client'
+"use client";
 
-import { useMe } from '@/src/store/hooks/useMe'
-import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
-import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
-import { ROUTES } from '@/src/routes'
-import Button from '@/src/components/Button'
-import { XStack } from '@/src/components/Stack'
+import { useRouter } from "next/navigation";
+import { useTransition, useMemo } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { useMe } from "@/app/store/use-me";
+import { ROUTES } from "@/app/routes";
+import { followQuery } from "@/entities/follow/api/queries";
+import { useHandleFollow } from "@/entities/follow/api/mutates";
+import { Button } from "@/shared/components/ui/button";
 
 interface Props {
-  userId: string
+  userId: string;
 }
 
 export default function RenderActionButtonFromProfile({ userId }: Props) {
-  const { me } = useMe()
-  const { isFollowing } = useFollowQueries(userId)
-  const { onFollow, isPending } = useFollowMutates({
-    isFollowing,
-    userId,
-  })
-  let isMyProfilePage: boolean = false
+  const router = useRouter();
+  const { me } = useMe();
+  const [isLoadingProfile, startProfileTransition] = useTransition();
+  const [isLoadingWrite, startWriteTransition] = useTransition();
 
-  if (me) {
-    isMyProfilePage = me?.id === userId
-  }
+  const { data: followingList } = useSuspenseQuery(
+    followQuery.getFollowing(me?.id ?? "")
+  );
+  const { mutate: handleFollow, isPending } = useHandleFollow();
 
-  const [isLoadingProfile, handlePushEditProfilePage] =
-    useRouterPushWithTransition(ROUTES.PROFILE.EDIT)
-  const [isLoadingWrite, handlePushNewPostPage] = useRouterPushWithTransition(
-    ROUTES.POST.NEW,
-  )
+  const isMyProfilePage = me?.id === userId;
+  const isFollowing = useMemo(
+    () => followingList?.some((follower) => follower.followedUserId === userId),
+    [followingList, userId]
+  );
+
+  const handlePushEditProfilePage = () => {
+    startProfileTransition(() => {
+      router.push(ROUTES.PROFILE.EDIT);
+    });
+  };
+
+  const handlePushNewPostPage = () => {
+    startWriteTransition(() => {
+      router.push(ROUTES.POST.NEW);
+    });
+  };
+
+  const onFollow = () => {
+    if (!me?.id) return;
+    handleFollow({
+      followedUserId: userId,
+      followerUserId: me.id,
+      isFollowing: isFollowing ?? false,
+    });
+  };
 
   const handleSendMessageButtonClick = () => {
-    return null
-    /**
-     * TODO 추후 redis 같은 db로 기능 구현 @kidboi666
-     */
-  }
+    // TODO: Implement message feature with redis
+    return null;
+  };
 
   return (
-    <XStack gap={4}>
+    <div className="flex gap-4">
       {isMyProfilePage ? (
         <>
           <Button
             variant="secondary"
             size="sm"
-            isLoading={isLoadingProfile}
             onClick={handlePushEditProfilePage}
+            disabled={isLoadingProfile}
             className="text-nowrap"
           >
+            {isLoadingProfile && <Loader2 className="mr-2 size-4 animate-spin" />}
             프로필 수정
           </Button>
           <Button
             size="sm"
-            isLoading={isLoadingWrite}
             onClick={handlePushNewPostPage}
+            disabled={isLoadingWrite}
           >
+            {isLoadingWrite && <Loader2 className="mr-2 size-4 animate-spin" />}
             글쓰기
           </Button>
         </>
       ) : (
         <>
           <Button
-            variant={isFollowing ? 'secondary' : 'primary'}
+            variant={isFollowing ? "secondary" : "default"}
             size="sm"
-            isLoading={isPending}
             onClick={onFollow}
+            disabled={isPending}
           >
-            {isFollowing ? '팔로우 취소' : '팔로우 하기'}
+            {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
+            {isFollowing ? "팔로우 취소" : "팔로우 하기"}
           </Button>
-          <Button
-            size="sm"
-            variant="secondary"
-            onClick={handleSendMessageButtonClick}
-          >
+          <Button size="sm" variant="secondary" onClick={handleSendMessageButtonClick}>
             메시지 보내기
           </Button>
         </>
       )}
-    </XStack>
-  )
+    </div>
+  );
 }

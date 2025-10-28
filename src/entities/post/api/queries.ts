@@ -127,3 +127,23 @@ export const postQuery = {
       queryFn: () => getEmotionAverage(userId),
     }),
 };
+
+export const postCountQuery = {
+  countUserPosts: (userId: string) =>
+    queryOptions<number, APIError>({
+      queryKey: POST_QUERY_KEY.COUNT.TOTAL(userId),
+      queryFn: async () => {
+        const { createBrowserClient } = await import(
+          "@/shared/lib/supabase/create-browser-client"
+        );
+        const supabase = createBrowserClient();
+        const { count, error } = await supabase
+          .from("post")
+          .select("*", { count: "exact", head: true })
+          .eq("user_id", userId);
+
+        if (error) throw error;
+        return count ?? 0;
+      },
+    }),
+};

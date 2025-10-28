@@ -1,13 +1,10 @@
-import cn from '@/src/lib/cn'
-import { YStack } from '@/src/components/Stack'
-import TextDisplay from '@/src/components/TextDisplay'
-import Title from '@/src/components/Title'
+import { cn } from "@/shared/utils/tw-merge";
 
 interface Props {
-  title: string
-  content: string | number | null
-  unit: string
-  className?: string
+  title: string;
+  content: string | number | null;
+  unit: string;
+  className?: string;
 }
 
 export default function HistoryBlock({
@@ -16,45 +13,38 @@ export default function HistoryBlock({
   unit,
   className,
 }: Props) {
+  const isEmotionBlock = title === "평균 감정 농도";
+
   return (
     <div
       className={cn(
-        'flex-1 rounded-lg bg-white p-2 shadow-sm sm:p-4 dark:bg-var-darkgray',
-        className,
+        "flex-1 rounded-lg bg-white p-2 shadow-sm sm:p-4 dark:bg-var-darkgray",
+        className
       )}
     >
-      <YStack gap={4} className="items-center">
-        <YStack gap={0}>
-          <Title
-            type="caption"
-            size="xs"
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col gap-0">
+          <h3
             className={cn(
-              title === '평균 감정 농도' && 'text-white dark:text-white',
-              className,
+              "text-muted-foreground text-xs font-medium",
+              isEmotionBlock && "text-white dark:text-white"
             )}
           >
             {title}
-          </Title>
-        </YStack>
-        <TextDisplay
-          size="bigger"
+          </h3>
+        </div>
+        <div
           className={cn(
-            title === '평균 감정 농도' && 'text-white dark:text-white',
-            className,
+            "text-3xl font-bold",
+            isEmotionBlock && "text-white dark:text-white"
           )}
         >
           {content}
-          <TextDisplay
-            as="span"
-            className={cn(
-              title === '평균 감정 농도' && 'text-white dark:text-white',
-              className,
-            )}
-          >
+          <span className={cn(isEmotionBlock && "text-white dark:text-white")}>
             {unit}
-          </TextDisplay>
-        </TextDisplay>
-      </YStack>
+          </span>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
