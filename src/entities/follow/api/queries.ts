@@ -1,10 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import {
-  getFollowers,
-  getFollowersCount,
-  getFollowings,
-  getFollowingsCount,
-} from "@/entities/follow/api/follow-api";
+import * as followService from "@/entities/follow/lib/follow-service";
 import { FOLLOW_QUERY_KEY } from "@/entities/follow/model/constants";
 import type { IFollower } from "@/entities/follow/model/types";
 
@@ -13,7 +8,7 @@ export const followQuery = {
   getFollower: (userId: string) =>
     queryOptions<IFollower[]>({
       queryKey: FOLLOW_QUERY_KEY.FOLLOWER(userId),
-      queryFn: () => getFollowers(userId),
+      queryFn: () => followService.getFollowers(userId),
       enabled: !!userId,
     }),
 
@@ -21,7 +16,7 @@ export const followQuery = {
   getFollowing: (userId: string) =>
     queryOptions<IFollower[]>({
       queryKey: FOLLOW_QUERY_KEY.FOLLOWING(userId),
-      queryFn: () => getFollowings(userId),
+      queryFn: () => followService.getFollowings(userId),
       enabled: !!userId,
     }),
 };
@@ -31,7 +26,7 @@ export const countFollowQuery = {
   countFollower: (userId: string, isMount: boolean | undefined = false) =>
     queryOptions({
       queryKey: FOLLOW_QUERY_KEY.COUNT.FOLLOWER(userId),
-      queryFn: () => getFollowersCount(userId),
+      queryFn: () => followService.getFollowersCount(userId),
       enabled: isMount,
     }),
 
@@ -39,7 +34,7 @@ export const countFollowQuery = {
   countFollowing: (userId: string, isMount: boolean | undefined = false) =>
     queryOptions({
       queryKey: FOLLOW_QUERY_KEY.COUNT.FOLLOWING(userId),
-      queryFn: () => getFollowingsCount(userId),
+      queryFn: () => followService.getFollowingsCount(userId),
       enabled: isMount,
     }),
 };

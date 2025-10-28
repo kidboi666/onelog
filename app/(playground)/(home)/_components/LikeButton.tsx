@@ -1,9 +1,9 @@
+import { Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
-import { Heart } from "lucide-react";
-import { useMe } from "@/core/store/use-me";
+import { ROUTES } from "@/app/routes";
+import { useMe } from "@/app/store/use-me";
 import { useLikeMutates } from "@/entities/like/api/mutates";
-import { ROUTES } from "@/core/routes";
 import { Button } from "@/shared/components/ui/button";
 import {
   Tooltip,
@@ -46,14 +46,12 @@ export default function LikeButton({
       size={isSide ? "default" : "sm"}
       onClick={handleFavoritePost}
       className={cn(
-        "gap-1 text-xs font-light transition-colors hover:text-red-500",
+        "gap-1 font-light text-xs transition-colors hover:text-red-500",
         isSide && "max-lg:flex-col",
-        isLike && "text-red-500"
+        isLike && "text-red-500",
       )}
     >
-      <Heart
-        className={cn("size-4", isLike && "fill-red-500")}
-      />
+      <Heart className={cn("size-4", isLike && "fill-red-500")} />
       {likeCount ?? 0}
     </Button>
   );

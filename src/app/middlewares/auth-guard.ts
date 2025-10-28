@@ -1,11 +1,7 @@
 import type { User } from "@supabase/auth-js";
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
-import {
-  AUTH_RESTRICTED_ROUTES,
-  PROTECTED_ROUTES,
-  ROUTES,
-} from "@/core/routes";
+import { AUTH_RESTRICTED_ROUTES, PROTECTED_ROUTES, ROUTES } from "@/app/routes";
 
 const isRestrictedAccess = (user: User | null, path: string) =>
   user && AUTH_RESTRICTED_ROUTES.some((route) => path.startsWith(route));

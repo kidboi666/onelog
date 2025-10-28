@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { ROUTES } from "@/core/routes";
+import { ROUTES } from "@/app/routes";
+import Modal from "@/shared/components/Modal";
 import { Button } from "@/shared/components/ui/button";
 import {
   DialogDescription,
@@ -10,7 +11,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/components/ui/dialog";
-import Modal from "@/shared/components/Modal";
 
 export default function AuthGuardModal() {
   const router = useRouter();

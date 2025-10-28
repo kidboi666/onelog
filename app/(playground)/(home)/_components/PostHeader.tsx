@@ -1,9 +1,13 @@
-import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
-import { Badge } from "@/shared/components/ui/badge";
-import { ROUTES } from "@/core/routes";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
+import Link from "next/link";
+import { ROUTES } from "@/app/routes";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
+import { Badge } from "@/shared/components/ui/badge";
 
 type EmotionLevel = 1 | 2 | 3 | 4 | 5;
 type PostType = "journal" | "article";

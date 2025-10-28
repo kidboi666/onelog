@@ -1,9 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ROUTES } from "@/core/routes";
-import { useMe } from "@/core/store/use-me";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { ROUTES } from "@/app/routes";
+import { useMe } from "@/app/store/use-me";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
 import { Card } from "@/shared/components/ui/card";
 
 export default function FakeFormContainer() {

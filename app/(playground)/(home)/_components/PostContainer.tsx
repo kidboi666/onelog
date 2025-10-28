@@ -1,9 +1,9 @@
 "use client";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
 import { Loader2 } from "lucide-react";
-import { useMe } from "@/core/store/use-me";
+import { useEffect, useMemo } from "react";
+import { useMe } from "@/app/store/use-me";
 import { postQuery } from "@/entities/post/api/queries";
 import PostCard from "./PostCard";
 
@@ -17,7 +17,7 @@ export default function PostContainer() {
 
   const posts = useMemo(
     () => data.pages.flatMap((page) => page || []) ?? [],
-    [data]
+    [data],
   );
 
   // Intersection Observer for infinite scroll
@@ -28,7 +28,7 @@ export default function PostContainer() {
           void fetchNextPage();
         }
       },
-      { threshold: 0.1, rootMargin: "50px" }
+      { threshold: 0.1, rootMargin: "50px" },
     );
 
     const target = document.getElementById("infinite-scroll-trigger");

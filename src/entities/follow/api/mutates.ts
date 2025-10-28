@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import type { IHandleFollow } from "@/entities/follow/api/dtos";
-import { createFollow, deleteFollow } from "@/entities/follow/api/follow-api";
+import * as followService from "@/entities/follow/lib/follow-service";
 import {
   FOLLOW_QUERY_KEY,
   FOLLOW_TOAST_MESSAGE,
@@ -14,19 +14,11 @@ export const useHandleFollow = () => {
   return useMutation({
     mutationFn: async (params: IHandleFollow) => {
       const { isFollowing, followedUserId, followerUserId } = params;
-      let result = null;
-      if (isFollowing) {
-        result = await deleteFollow({
-          followedUserId,
-          followerUserId,
-        });
-      } else {
-        result = await createFollow({
-          followedUserId,
-          followerUserId,
-        });
-      }
-      return result;
+      return followService.handleFollow(
+        followedUserId,
+        followerUserId,
+        isFollowing,
+      );
     },
     onSuccess: (data) => {
       if (data) {

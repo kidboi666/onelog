@@ -1,23 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import {
   Home,
   ListTodo,
-  Settings,
-  PenSquare,
-  Sun,
-  Moon,
   LogIn,
   Menu,
+  Moon,
+  PenSquare,
+  Settings,
+  Sun,
   UserPlus,
 } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import { ROUTES } from "@/core/routes";
-import { useMe } from "@/core/store/use-me";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { useState } from "react";
+import { ROUTES } from "@/app/routes";
+import { useMe } from "@/app/store/use-me";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
 import { Button } from "@/shared/components/ui/button";
 import { Separator } from "@/shared/components/ui/separator";
 import {
@@ -230,7 +234,7 @@ export default function Header() {
               <div
                 className={cn(
                   "transition-transform duration-300",
-                  theme === "dark" ? "-translate-y-6" : "translate-y-0"
+                  theme === "dark" ? "-translate-y-6" : "translate-y-0",
                 )}
               >
                 <Sun className="size-5" />

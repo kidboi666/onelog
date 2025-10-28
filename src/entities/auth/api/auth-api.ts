@@ -71,9 +71,6 @@ export const signOut = async (
 ) => {
   const { error } = await supabase.auth.signOut();
   handleAuthError(error);
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("auth-storage");
-  }
 };
 
 // 유저 정보 수정하기

@@ -1,11 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import {
-  createComment,
-  deleteComment,
-  updateComment,
-} from "@/entities/comment/api/comment-api";
+import * as commentService from "@/entities/comment/lib/comment-service";
 import type {
   ICreateComment,
   IDeleteComment,
@@ -21,7 +17,7 @@ export const useDeleteComment = () => {
 
   return useMutation({
     mutationFn: async (params: IDeleteComment) =>
-      deleteComment(params.commentId),
+      commentService.deleteComment(params.commentId),
     onError: (error) => {
       toast.error(COMMENT_TOAST_MESSAGE.DELETE.EXCEPTION, {
         description: error.message,
@@ -42,7 +38,7 @@ export const usePostComment = () => {
   const queryClient = getQueryClient();
 
   return useMutation({
-    mutationFn: (params: ICreateComment) => createComment(params),
+    mutationFn: (params: ICreateComment) => commentService.createComment(params),
     onSuccess: (_, variables) => {
       const { postId } = variables;
       void queryClient.invalidateQueries({
@@ -63,7 +59,7 @@ export const useUpdateComment = () => {
   const queryClient = getQueryClient();
 
   return useMutation({
-    mutationFn: (params: IUpdateComment) => updateComment(params),
+    mutationFn: (params: IUpdateComment) => commentService.updateComment(params),
     onSuccess: (_, variables) => {
       const { postId } = variables;
       void queryClient.invalidateQueries({

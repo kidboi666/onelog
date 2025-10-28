@@ -1,8 +1,8 @@
-import type { IPost } from "@/entities/post/model/types";
-import { useBlockEditor } from "@/features/post/hooks/useBlockEditor";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { ROUTES } from "@/core/routes";
+import { ROUTES } from "@/app/routes";
+import type { IPost } from "@/entities/post/model/types";
+import { useBlockEditor } from "@/features/post/hooks/useBlockEditor";
 import PostCardContent from "./PostCardContent";
 import PostHeader from "./PostHeader";
 

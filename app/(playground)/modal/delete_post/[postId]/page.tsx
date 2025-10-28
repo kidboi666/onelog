@@ -1,9 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/app/routes";
 import { useDeletePost } from "@/entities/post/api/mutates";
-import { ROUTES } from "@/core/routes";
+import Modal from "@/shared/components/Modal";
 import { Button } from "@/shared/components/ui/button";
 import {
   DialogDescription,
@@ -11,7 +12,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/components/ui/dialog";
-import Modal from "@/shared/components/Modal";
 
 interface Props {
   params: { postId: string };
@@ -51,11 +51,7 @@ export default function DeletePostModal({ params }: Props) {
           disabled={isPending}
           className="flex-1"
         >
-          {isPending ? (
-            <Loader2 className="size-4 animate-spin" />
-          ) : (
-            "삭제하기"
-          )}
+          {isPending ? <Loader2 className="size-4 animate-spin" /> : "삭제하기"}
         </Button>
       </DialogFooter>
     </Modal>

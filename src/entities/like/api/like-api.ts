@@ -1,27 +1,33 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { ILike } from "@/entities/like/model/types";
 import { createBrowserClient } from "@/shared/lib/supabase/create-browser-client";
-import { processQuery } from "@/shared/lib/supabase/helpers";
+import { handleError, processQuery } from "@/shared/lib/supabase/helpers";
 
-export const handleLike = async (
-  params: ILike,
+export const createLike = async (
+  postId: number,
+  userId: string,
   supabase: SupabaseClient = createBrowserClient(),
 ) => {
-  let query: any = supabase.from("like");
+  const query = supabase
+    .from("like")
+    .insert({
+      post_id: Number(postId),
+      user_id: userId,
+    })
+    .select();
 
-  if (params.isLike) {
-    query = query
-      .delete()
-      .eq("user_id", params.meId)
-      .eq("post_id", params.postId);
-  } else {
-    query = query
-      .insert({
-        post_id: Number(params.postId),
-        user_id: params.meId,
-      })
-      .select();
-  }
+  return processQuery(query);
+};
 
-  await processQuery(query);
+export const deleteLike = async (
+  postId: number,
+  userId: string,
+  supabase: SupabaseClient = createBrowserClient(),
+) => {
+  const { error } = await supabase
+    .from("like")
+    .delete()
+    .eq("user_id", userId)
+    .eq("post_id", postId);
+
+  handleError(error);
 };

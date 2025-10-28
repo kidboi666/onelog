@@ -2,7 +2,7 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { useMe } from "@/core/store/use-me";
+import { useMe } from "@/app/store/use-me";
 import { postQuery } from "@/entities/post/api/queries";
 import CommentInput from "./CommentInput";
 import CommentItem from "./CommentItem";
@@ -14,8 +14,7 @@ interface Props {
 // 날짜순 정렬 함수
 function sortByDate<T extends { createdAt: string }>(items: T[]): T[] {
   return [...items].sort(
-    (a, b) =>
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 }
 

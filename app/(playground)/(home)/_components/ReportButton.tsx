@@ -1,9 +1,9 @@
 "use client";
 
+import { Flag } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
-import { Flag } from "lucide-react";
-import { ROUTES } from "@/core/routes";
+import { ROUTES } from "@/app/routes";
 import { Button } from "@/shared/components/ui/button";
 import {
   Tooltip,
@@ -43,7 +43,7 @@ export default function ReportButton({
       size={isSide ? "default" : "sm"}
       onClick={pushReportModal}
       className={cn(
-        "gap-2 text-xs font-light transition-colors hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-900/25 dark:hover:text-red-600"
+        "gap-2 font-light text-xs transition-colors hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-900/25 dark:hover:text-red-600",
       )}
     >
       <Flag className="size-4" />

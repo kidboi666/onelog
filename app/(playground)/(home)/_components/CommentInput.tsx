@@ -1,13 +1,17 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
-import type { IUserInfo } from "@/entities/user/model/types";
+import { ROUTES } from "@/app/routes";
 import { usePostComment } from "@/entities/comment/api/mutates";
-import { ROUTES } from "@/core/routes";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import type { IUserInfo } from "@/entities/user/model/types";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 
@@ -44,7 +48,7 @@ export default function CommentInput({ postId, commentId, me }: Props) {
           onSuccess: () => {
             setContent("");
           },
-        }
+        },
       );
     }
   };

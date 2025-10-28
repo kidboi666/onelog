@@ -1,16 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import * as likeService from "@/entities/like/lib/like-service";
 import { LIKE_TOAST_MESSAGE } from "@/entities/like/model/constants";
 import type { ILike } from "@/entities/like/model/types";
 import { POST_QUERY_KEY } from "@/entities/post/model/constants";
 import { getQueryClient } from "@/shared/lib/tanstack-query/get-query-client";
-import { handleLike } from "./like-api";
 
 export const useHandleLikePost = () => {
   const queryClient = getQueryClient();
 
   return useMutation({
-    mutationFn: async (params: ILike) => handleLike(params),
+    mutationFn: async (params: ILike) => likeService.handleLike(params),
     onSuccess: (_, variables) => {
       const { isLike } = variables;
       toast.success(

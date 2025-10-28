@@ -1,12 +1,24 @@
 "use client";
 
+import {
+  Home,
+  ListTodo,
+  LogIn,
+  Moon,
+  PenSquare,
+  Settings,
+  Sun,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Home, ListTodo, Settings, PenSquare, Sun, Moon, LogIn } from "lucide-react";
 import { useTheme } from "next-themes";
-import { ROUTES } from "@/core/routes";
-import { useMe } from "@/core/store/use-me";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { ROUTES } from "@/app/routes";
+import { useMe } from "@/app/store/use-me";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
 import { Button } from "@/shared/components/ui/button";
 import { Separator } from "@/shared/components/ui/separator";
 import {
@@ -68,7 +80,7 @@ export default function Sidebar() {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <nav className="fixed bottom-4 left-4 z-40 hidden h-fit w-16 flex-col gap-2 rounded-lg bg-background p-2 shadow-md sm:flex lg:-translate-y-1/2 lg:top-1/2">
+      <nav className="lg:-translate-y-1/2 fixed bottom-4 left-4 z-40 hidden h-fit w-16 flex-col gap-2 rounded-lg bg-background p-2 shadow-md sm:flex lg:top-1/2">
         {/* Write Button */}
         <Tooltip>
           <TooltipTrigger asChild>
@@ -104,7 +116,7 @@ export default function Sidebar() {
                     size="icon"
                     className={cn(
                       "relative h-12 w-12",
-                      active && "bg-primary text-primary-foreground"
+                      active && "bg-primary text-primary-foreground",
                     )}
                     asChild
                   >
@@ -135,7 +147,7 @@ export default function Sidebar() {
                     size="icon"
                     className={cn(
                       "relative h-12 w-12",
-                      active && "bg-primary text-primary-foreground"
+                      active && "bg-primary text-primary-foreground",
                     )}
                     asChild
                   >

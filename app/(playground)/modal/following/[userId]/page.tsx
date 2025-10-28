@@ -1,15 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
 import { useState } from "react";
-import { useMe } from "@/core/store/use-me";
-import { followQuery } from "@/entities/follow/api/queries";
+import { ROUTES } from "@/app/routes";
+import { useMe } from "@/app/store/use-me";
 import { useHandleFollow } from "@/entities/follow/api/mutates";
-import { ROUTES } from "@/core/routes";
-import { DialogHeader, DialogTitle } from "@/shared/components/ui/dialog";
+import { followQuery } from "@/entities/follow/api/queries";
 import Modal from "@/shared/components/Modal";
+import { DialogHeader, DialogTitle } from "@/shared/components/ui/dialog";
 import FollowUserCard from "../../_components/FollowUserCard";
 
 interface Props {
@@ -19,9 +19,11 @@ interface Props {
 export default function FollowingListModal({ params: { userId } }: Props) {
   const router = useRouter();
   const { me } = useMe();
-  const { data: followings } = useSuspenseQuery(followQuery.getFollowing(userId));
+  const { data: followings } = useSuspenseQuery(
+    followQuery.getFollowing(userId),
+  );
   const { data: myFollows } = useSuspenseQuery(
-    followQuery.getFollowing(me?.id || "")
+    followQuery.getFollowing(me?.id || ""),
   );
   const { mutate: followOrUnfollow } = useHandleFollow();
   const [pendingList, setPendingList] = useState<Record<string, boolean>>({});
@@ -29,7 +31,7 @@ export default function FollowingListModal({ params: { userId } }: Props) {
   const handleFollow = (
     e: MouseEvent,
     targetUserId: string,
-    isFollowing: boolean
+    isFollowing: boolean,
   ) => {
     e.stopPropagation();
     if (!me) return router.push(ROUTES.MODAL.AUTH.GUARD);
@@ -45,7 +47,7 @@ export default function FollowingListModal({ params: { userId } }: Props) {
         onSettled: () => {
           setPendingList((prev) => ({ ...prev, [targetUserId]: false }));
         },
-      }
+      },
     );
   };
 
@@ -61,7 +63,7 @@ export default function FollowingListModal({ params: { userId } }: Props) {
       <div className="flex w-full flex-col gap-2">
         {followings?.map((user) => {
           const isFollowing = myFollows?.some(
-            (myFollower) => myFollower.followedUserId === user.userInfo.id
+            (myFollower) => myFollower.followedUserId === user.userInfo.id,
           );
           const isMe = me?.id === user.followedUserId;
           const isPending = pendingList[user.userInfo.id] || false;

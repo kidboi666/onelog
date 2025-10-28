@@ -1,21 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { ROUTES } from "@/core/routes";
-import { useMe } from "@/core/store/use-me";
-import {
-  deleteAvatarImage,
-  signIn,
-  signOut,
-  signUp,
-  updateUserInfo,
-  uploadAvatarImage,
-} from "@/entities/auth/api/auth-api";
+import { ROUTES } from "@/app/routes";
+import { useMe } from "@/app/store/use-me";
 import type {
   ISignIn,
   ISignUp,
   IUpdateUserInfo,
 } from "@/entities/auth/api/dtos";
+import * as authService from "@/entities/auth/lib/auth-service";
 import {
   AUTH_QUERY_KEY,
   AUTH_TOAST_MESSAGE,
@@ -25,7 +18,7 @@ import { getQueryClient } from "@/shared/lib/tanstack-query/get-query-client";
 
 export const useDeleteAvatarImage = () => {
   return useMutation({
-    mutationFn: (imageUrl: string) => deleteAvatarImage(imageUrl),
+    mutationFn: (imageUrl: string) => authService.deleteAvatarImage(imageUrl),
     onError: (error) => {
       toast.error(AUTH_TOAST_MESSAGE.USER_INFO.UPLOAD_AVATAR.EXCEPTION, {
         description: error.message,
@@ -39,7 +32,7 @@ export const useSignIn = () => {
   const { setMe } = useMe();
 
   return useMutation({
-    mutationFn: (authData: ISignIn) => signIn(authData),
+    mutationFn: (authData: ISignIn) => authService.signIn(authData),
     onSuccess: (data) => {
       setMe(data);
       window.location.href = ROUTES.HOME;
@@ -65,7 +58,7 @@ export const useSignUp = () => {
   const queryClient = getQueryClient();
 
   return useMutation({
-    mutationFn: (authData: ISignUp) => signUp(authData),
+    mutationFn: (authData: ISignUp) => authService.signUp(authData),
     onSuccess: () => {
       window.location.href = ROUTES.HOME;
       toast.success(AUTH_TOAST_MESSAGE.AUTH.SIGN_UP.SUCCESS, {
@@ -90,7 +83,7 @@ export const useSignOut = () => {
   const queryClient = getQueryClient();
 
   return useMutation({
-    mutationFn: () => signOut(),
+    mutationFn: () => authService.signOutWithCleanup(),
     onError: (error) => {
       toast.error(AUTH_TOAST_MESSAGE.AUTH.SIGN_OUT.EXCEPTION, {
         description: error.message,
@@ -109,7 +102,7 @@ export const useUpdateUserInfo = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (params: IUpdateUserInfo) => updateUserInfo(params),
+    mutationFn: (params: IUpdateUserInfo) => authService.updateUserInfo(params),
     onSuccess: (data) => {
       setMe(data);
       toast.success(AUTH_TOAST_MESSAGE.USER_INFO.EDIT.SUCCESS);
@@ -125,7 +118,8 @@ export const useUpdateUserInfo = () => {
 
 export const useUploadAvatarImage = () => {
   return useMutation({
-    mutationFn: (params: IUploadAvatar) => uploadAvatarImage(params),
+    mutationFn: (params: IUploadAvatar) =>
+      authService.uploadAvatarImage(params),
     onError: (error) => {
       toast.error(AUTH_TOAST_MESSAGE.USER_INFO.UPLOAD_AVATAR.EXCEPTION, {
         description: error.message,

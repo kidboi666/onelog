@@ -1,14 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
-import type { IUserInfo } from "@/entities/user/model/types";
-import type { IComment } from "@/entities/comment/model/types";
+import Link from "next/link";
+import { useState } from "react";
+import { ROUTES } from "@/app/routes";
 import { useCommentReplies } from "@/entities/comment/hooks/useCommentReplies";
-import { ROUTES } from "@/core/routes";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import type { IComment } from "@/entities/comment/model/types";
+import type { IUserInfo } from "@/entities/user/model/types";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
 import AvatarButtonWithDropDown from "./AvatarButtonWithDropDown";
 import CommentButton from "./CommentButton";
 import CommentInput from "./CommentInput";
@@ -43,7 +47,7 @@ export default function CommentItem({ comment, postId, me }: Props) {
   return (
     <div className="flex w-full gap-3">
       <Link href={ROUTES.PROFILE.VIEW(comment.userId)}>
-        <Avatar className="size-10 cursor-pointer flex-shrink-0">
+        <Avatar className="size-10 flex-shrink-0 cursor-pointer">
           <AvatarImage src={comment.userInfo.avatarUrl || undefined} />
           <AvatarFallback>{displayName[0]?.toUpperCase()}</AvatarFallback>
         </Avatar>
