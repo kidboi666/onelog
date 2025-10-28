@@ -1,16 +1,35 @@
-import { EmotionLevel } from "@/shared/types/enums/index";
-import useOutsideClick from "@/app/hooks/useOutsideClick";
-import useDataDrivenAnimation from "@/app/hooks/useStateChange";
-import useToggle from "@/app/hooks/useToggle";
-import { DropDown } from "@/shared/components/DropDown";
-import Icon from "@/shared/components/Icon";
-import ToolTip from "@/shared/components/Tooltip";
-import EmotionPickerWithDropDown from "./EmotionPickerWithDropDown";
+'use client'
+
+import { useState } from 'react'
+import { Smile, SmilePlus, Check } from 'lucide-react'
+import { EmotionLevel } from "@/shared/types/enums/index"
+import { Button } from "@/shared/components/ui/button"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/shared/components/ui/popover"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/shared/components/ui/tooltip"
+import { cn } from "@/lib/utils"
+import { EMOTION_STATUS } from "../_constants"
 
 interface Props {
-  onChangeEmotion: (emotion: EmotionLevel | null) => void;
-  selectedEmotion: EmotionLevel | null;
-  isSide?: boolean;
+  onChangeEmotion: (emotion: EmotionLevel | null) => void
+  selectedEmotion: EmotionLevel | null
+  isSide?: boolean
+}
+
+const emotionLabels: Record<EmotionLevel, string> = {
+  [EmotionLevel['0%']]: '매우나쁨',
+  [EmotionLevel['25%']]: '나쁨',
+  [EmotionLevel['50%']]: '보통',
+  [EmotionLevel['75%']]: '좋음',
+  [EmotionLevel['100%']]: '매우좋음',
 }
 
 export default function EmotionSection({
@@ -18,64 +37,88 @@ export default function EmotionSection({
   onChangeEmotion,
   isSide,
 }: Props) {
-  const {
-    close: emotionClose,
-    onClick: emotionClick,
-    onTransitionEnd: emotionTransitionEnd,
-    ref: emotionRef,
-  } = useDataDrivenAnimation<HTMLDivElement>();
-  const emotionButtonRef = useOutsideClick<HTMLButtonElement>(emotionClose);
-  const { isOpen: isHover, open, close } = useToggle();
+  const [isHover, setIsHover] = useState(false)
 
   return (
-    <>
-      <div
-        onMouseEnter={open}
-        onMouseLeave={close}
-        className="relative flex size-full items-center justify-start"
-      >
-        <DropDown.Root className="flex place-items-center gap-2 sm:flex-col">
-          <div className="relative flex flex-col items-center gap-0">
-            <DropDown.Trigger
-              targetRef={emotionButtonRef}
-              variant="icon"
-              onClick={emotionClick}
-              className="flex-col"
-            >
-              {selectedEmotion && (
-                <p className="absolute top-0 text-muted-foreground text-xs">
-                  {(selectedEmotion === EmotionLevel["0%"] && "매우나쁨") ||
-                    (selectedEmotion === EmotionLevel["25%"] && "나쁨") ||
-                    (selectedEmotion === EmotionLevel["50%"] && "보통") ||
-                    (selectedEmotion === EmotionLevel["75%"] && "좋음") ||
-                    (selectedEmotion === EmotionLevel["100%"] && "매우좋음")}
-                </p>
-              )}
-              <Icon view="0 -960 960 960" size={isSide ? 24 : 18}>
-                {selectedEmotion ? (
-                  <path d="M480-800q134 0 227 93t93 227q0 134-93 227t-227 93q-134 0-227-93t-93-227q0-134 93-227t227-93Zm0 560q100 0 170-70t70-170q0-100-70-170t-170-70q-100 0-170 70t-70 170q0 100 70 170t170 70Zm0-100q48 0 86-27.5t54-72.5H340q16 45 54 72.5t86 27.5ZM340-560q0 17 11.5 28.5T380-520q17 0 28.5-11.5T420-560q0-17-11.5-28.5T380-600q-17 0-28.5 11.5T340-560Zm200 0q0 17 11.5 28.5T580-520q17 0 28.5-11.5T620-560q0-17-11.5-28.5T580-600q-17 0-28.5 11.5T540-560ZM40-720v-120q0-33 23.5-56.5T120-920h120v80H120v120H40ZM240-40H120q-33 0-56.5-23.5T40-120v-120h80v120h120v80Zm480 0v-80h120v-120h80v120q0 33-23.5 56.5T840-40H720Zm120-680v-120H720v-80h120q33 0 56.5 23.5T920-840v120h-80ZM480-480Z" />
-                ) : (
-                  <path d="M620-520q25 0 42.5-17.5T680-580q0-25-17.5-42.5T620-640q-25 0-42.5 17.5T560-580q0 25 17.5 42.5T620-520Zm-280 0q25 0 42.5-17.5T400-580q0-25-17.5-42.5T340-640q-25 0-42.5 17.5T280-580q0 25 17.5 42.5T340-520Zm140 260q68 0 123.5-38.5T684-400H276q25 63 80.5 101.5T480-260Zm0 180q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z" />
-                )}
-              </Icon>
-            </DropDown.Trigger>
-          </div>
-          <EmotionPickerWithDropDown
-            targetRef={emotionRef}
-            onTransitionEnd={emotionTransitionEnd}
-            selectedEmotion={selectedEmotion}
-            onChangeEmotion={onChangeEmotion}
-            isSide={isSide}
-          />
-          <ToolTip
-            position={isSide ? "topLeft" : "bottomLeft"}
-            size="md"
-            isHover={isHover}
-            text="감정 농도 선택"
-            className="left-0"
-          />
-        </DropDown.Root>
-      </div>
-    </>
-  );
+    <div
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      className="relative flex h-full items-center justify-start"
+    >
+      <TooltipProvider>
+        <Tooltip>
+          <Popover>
+            <PopoverTrigger asChild>
+              <TooltipTrigger asChild>
+                <div className="relative flex flex-col items-center gap-0">
+                  <Button variant="ghost" size="icon" className="h-auto p-2 flex-col">
+                    {selectedEmotion && (
+                      <p className="absolute top-0 text-xs text-muted-foreground">
+                        {emotionLabels[selectedEmotion]}
+                      </p>
+                    )}
+                    {selectedEmotion ? (
+                      <SmilePlus className={isSide ? 'h-6 w-6' : 'h-4 w-4'} />
+                    ) : (
+                      <Smile className={isSide ? 'h-6 w-6' : 'h-4 w-4'} />
+                    )}
+                  </Button>
+                </div>
+              </TooltipTrigger>
+            </PopoverTrigger>
+            <PopoverContent align={isSide ? 'start' : 'end'} className="w-auto p-2">
+              <div className="flex flex-col items-start justify-between gap-2">
+                {EMOTION_STATUS.map((emotion, index) => {
+                  let blockOpacity: string
+                  switch (index) {
+                    case 0:
+                      blockOpacity = "opacity-20"
+                      break
+                    case 1:
+                      blockOpacity = "opacity-40"
+                      break
+                    case 2:
+                      blockOpacity = "opacity-60"
+                      break
+                    case 3:
+                      blockOpacity = "opacity-80"
+                      break
+                    case 4:
+                      blockOpacity = "opacity-100"
+                      break
+                    default:
+                      blockOpacity = "opacity-100"
+                      break
+                  }
+
+                  return (
+                    <button
+                      key={emotion.status}
+                      onClick={() => onChangeEmotion(emotion.percent)}
+                      className="relative flex cursor-pointer justify-center p-2 hover:bg-accent rounded-md"
+                    >
+                      <div className="relative flex flex-col gap-2 font-medium text-zinc-400">
+                        <div
+                          className={cn(
+                            "flex size-6 items-center justify-center rounded-full bg-primary transition",
+                            blockOpacity
+                          )}
+                        />
+                        {selectedEmotion === emotion.percent && (
+                          <Check className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+                        )}
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            </PopoverContent>
+          </Popover>
+          <TooltipContent side={isSide ? 'top' : 'bottom'} align="start">
+            <p>감정 농도 선택</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+  )
 }
