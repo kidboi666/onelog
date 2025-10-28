@@ -1,10 +1,14 @@
-import { useTransition } from "react";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
-import { Button } from "@/shared/components/ui/button";
+import { useTransition } from "react";
+import { ROUTES } from "@/app/_routes/constants";
 import useFollowMutates from "@/hooks/mutates/useFollowMutates";
 import useFollowQueries from "@/hooks/queries/useFollowQueries";
-import { ROUTES } from "@/app/_routes/constants";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
+import { Button } from "@/shared/components/ui/button";
 
 interface Props {
   avatarUrl: string | null;
@@ -33,16 +37,16 @@ export default function AvatarButtonWithDropDownContent({
 
   return (
     <div className="flex flex-col gap-4 p-4">
-      <div className="flex flex-col gap-4 items-center">
+      <div className="flex flex-col items-center gap-4">
         <Avatar className="h-16 w-16">
           <AvatarImage src={avatarUrl ?? undefined} alt={userName ?? "User"} />
-          <AvatarFallback>{userName?.charAt(0).toUpperCase() ?? "U"}</AvatarFallback>
+          <AvatarFallback>
+            {userName?.charAt(0).toUpperCase() ?? "U"}
+          </AvatarFallback>
         </Avatar>
-        <h3 className="text-sm font-semibold">
-          {userName}
-        </h3>
+        <h3 className="font-semibold text-sm">{userName}</h3>
       </div>
-      <div className="flex flex-col gap-4 items-center">
+      <div className="flex flex-col items-center gap-4">
         <div className="flex gap-4">
           <Button
             variant="ghost"
@@ -51,7 +55,7 @@ export default function AvatarButtonWithDropDownContent({
             onClick={pushFollowerList}
             className="flex flex-col items-center gap-1"
           >
-            <span className="text-xs text-muted-foreground">팔로워</span>
+            <span className="text-muted-foreground text-xs">팔로워</span>
             <span className="font-semibold">{followerCount}</span>
           </Button>
           <Button
@@ -61,7 +65,7 @@ export default function AvatarButtonWithDropDownContent({
             onClick={pushFollowingList}
             className="flex flex-col items-center gap-1"
           >
-            <span className="text-xs text-muted-foreground">팔로잉</span>
+            <span className="text-muted-foreground text-xs">팔로잉</span>
             <span className="font-semibold">{followingCount}</span>
           </Button>
         </div>
@@ -69,14 +73,10 @@ export default function AvatarButtonWithDropDownContent({
           {isMe ? (
             <>
               <Button variant="secondary" size="sm" asChild>
-                <Link href={ROUTES.PROFILE.EDIT}>
-                  프로필 수정
-                </Link>
+                <Link href={ROUTES.PROFILE.EDIT}>프로필 수정</Link>
               </Button>
               <Button size="sm" asChild>
-                <Link href={ROUTES.PROFILE.VIEW(userId)}>
-                  마이 페이지
-                </Link>
+                <Link href={ROUTES.PROFILE.VIEW(userId)}>마이 페이지</Link>
               </Button>
             </>
           ) : (
@@ -90,9 +90,7 @@ export default function AvatarButtonWithDropDownContent({
                 {isFollowing ? "팔로우 취소" : "팔로우 하기"}
               </Button>
               <Button size="sm" asChild>
-                <Link href={ROUTES.PROFILE.VIEW(userId)}>
-                  프로필 페이지
-                </Link>
+                <Link href={ROUTES.PROFILE.VIEW(userId)}>프로필 페이지</Link>
               </Button>
             </>
           )}

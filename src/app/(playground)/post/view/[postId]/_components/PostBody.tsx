@@ -5,7 +5,7 @@ import { EditorContent } from "@tiptap/react";
 import { useMe } from "@/app/_store/use-me";
 import { postQueries } from "@/entities/post/api/queries";
 import { Badge } from "@/shared/components/ui/badge";
-import useBlockEditor from "@/src/hooks/useBlockEditor";
+import useBlockEditor from "@/hooks/useBlockEditor";
 
 interface Props {
   postId: number;

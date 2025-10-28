@@ -1,4 +1,4 @@
-import { EmotionLevel } from '@/src/types/enums/index'
+import { EmotionLevel } from '@/shared/types/enums/index'
 
 export const INIT_STATUS = { percent: '', color: '' }
 

@@ -1,28 +1,28 @@
-import { QUERY_KEY } from '@/src/constants'
-import { useEffect, useState } from 'react'
-import { getQueryClient } from '@/src/lib/tanstack/get-query-client'
-import { IComment } from '@/src/types/entities/comment'
-import { IPostDetail } from '@/src/types/entities/post'
-import { sortByDate } from '@/src/utils/client-utils'
+import { useEffect, useState } from "react";
+import type { IComment } from "@/entities/comment/model/types";
+import { POST_QUERY_KEY } from "@/entities/post/model/constants";
+import type { IPostDetail } from "@/entities/post/model/types";
+import { getQueryClient } from "@/shared/lib/tanstack-query/get-query-client";
+import { sortByDate } from "@/shared/utils/date";
 
-export default function useCommentReplies(commentId: number, postId: number) {
-  const [replies, setReplies] = useState<IComment[]>([])
+export function useCommentReplies(commentId: number, postId: number) {
+  const [replies, setReplies] = useState<IComment[]>([]);
 
   useEffect(() => {
     if (commentId) {
-      const queryClient = getQueryClient()
+      const queryClient = getQueryClient();
       const cachedPost = queryClient.getQueryData<IPostDetail>(
-        QUERY_KEY.POST.DETAIL(postId),
-      )
+        POST_QUERY_KEY.DETAIL(postId),
+      );
 
-      if (!cachedPost) return
+      if (!cachedPost) return;
 
       const filteredComments = cachedPost.comments.filter(
         (v) => v.commentId === commentId,
-      )
-      setReplies(sortByDate(filteredComments))
+      );
+      setReplies(sortByDate(filteredComments));
     }
-  }, [commentId, postId])
+  }, [commentId, postId]);
 
-  return replies
+  return replies;
 }

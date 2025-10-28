@@ -1,9 +1,9 @@
-import { router } from 'next/client'
+import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
-import useCreatePost from '@/src/services/mutates/post/use-create-post'
-import useUpdatePost from '@/src/services/mutates/post/use-update-post'
-import { IUpdatePostFormStates } from '@/src/types/dtos/post'
-import { ROUTES } from '@/src/routes'
+import useCreatePost from '@/features/post/api/use-create-post'
+import useUpdatePost from '@/features/post/api/use-update-post'
+import { IUpdatePostFormStates } from '@/shared/types/dtos/post'
+import { ROUTES } from '@/app/_routes/constants'
 
 export default function usePostSubmit({
   meId,
@@ -14,6 +14,7 @@ export default function usePostSubmit({
   postId: number
   formState: IUpdatePostFormStates
 }) {
+  const router = useRouter()
   const { mutate: addPost, isPending, isSuccess } = useCreatePost()
   const { mutate: updatePost } = useUpdatePost()
 

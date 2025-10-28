@@ -9,7 +9,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/shared/components/ui/avatar";
-import { ROUTES } from "@/shared/config/routes";
+import { ROUTES } from "@/app/_routes/constants";
 import RenderActionButtonFromAuthorInfo from "./RenderActionButtonFromAuthorInfo";
 
 interface Props {

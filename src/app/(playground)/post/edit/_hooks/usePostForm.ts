@@ -2,9 +2,9 @@ import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import {
   IUpdatePostFormActions,
   IUpdatePostFormStates,
-} from '@/src/types/dtos/post'
-import { IPostDetail } from '@/src/types/entities/post'
-import { Access, EmotionLevel, PostType } from '@/src/types/enums/index'
+} from '@/shared/types/dtos/post'
+import { IPostDetail } from '@/shared/types/entities/post'
+import { Access, EmotionLevel, PostType } from '@/shared/types/enums/index'
 
 export default function usePostForm(initialPost: IPostDetail | null): {
   states: IUpdatePostFormStates

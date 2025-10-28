@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Button } from "@/shared/components/ui/button";
-import Icon from "@/shared/components/Icon";
 import { cn } from "@/shared/utils/tw-merge";
 
 export default function MenuItem({
@@ -25,9 +24,7 @@ export default function MenuItem({
         isActive && isActive() ? "bg-zinc-300 dark:bg-zinc-600" : ""
       )}
     >
-      <Icon view="0 -960 960 960" size={20}>
-        {icon}
-      </Icon>
+      {icon}
     </Button>
   );
 }

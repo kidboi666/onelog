@@ -6,7 +6,7 @@ import {
   IUpdatePostFormActions,
   IUpdatePostFormStates,
 } from "@/shared/types/dtos/post";
-import useBlockEditor from "@/app/hooks/useBlockEditor";
+import useBlockEditor from "@/hooks/useBlockEditor";
 import { Avatar, AvatarImage, AvatarFallback } from "@/shared/components/ui/avatar";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";

@@ -1,7 +1,7 @@
 'use client'
 
 import { EmotionLevel } from '@/shared/types/enums'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/utils/tw-merge'
 
 interface Props {
   emotionLevel: EmotionLevel

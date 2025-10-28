@@ -1,10 +1,11 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
-import useFollowMutates from "@/app/hooks/mutates/useFollowMutates";
-import useFollowValidate from "@/app/hooks/queries/useFollowValidate";
-import useTransitionWithRoute from "@/app/hooks/useRouterPushWithTransition";
-import { ROUTES } from "@/shared/config/routes";
+import useFollowMutates from "@/hooks/mutates/useFollowMutates";
+import useFollowValidate from "@/hooks/queries/useFollowValidate";
+import { ROUTES } from "@/app/_routes/constants";
 import { Button } from "@/shared/components/ui/button";
 
 interface Props {
@@ -16,17 +17,27 @@ export default function RenderActionButtonFromAuthorInfo({
   meId,
   userId,
 }: Props) {
+  const router = useRouter();
   const { isFollowing } = useFollowValidate(userId, meId);
   const { onFollow, isPending } = useFollowMutates({
     isFollowing,
     userId,
   });
 
-  const [isLoadingWrite, startTransitionWrite] = useTransitionWithRoute(
-    ROUTES.POST.NEW
-  );
-  const [isLoadingEditProfile, startTransitionEditProfile] =
-    useTransitionWithRoute(ROUTES.PROFILE.EDIT);
+  const [isLoadingWrite, startTransitionWrite] = useTransition();
+  const [isLoadingEditProfile, startTransitionEditProfile] = useTransition();
+
+  const handleWriteClick = () => {
+    startTransitionWrite(() => {
+      router.push(ROUTES.POST.NEW);
+    });
+  };
+
+  const handleEditProfileClick = () => {
+    startTransitionEditProfile(() => {
+      router.push(ROUTES.PROFILE.EDIT);
+    });
+  };
 
   return (
     <div
@@ -38,7 +49,7 @@ export default function RenderActionButtonFromAuthorInfo({
           <Button
             size="sm"
             disabled={isLoadingWrite}
-            onClick={startTransitionWrite}
+            onClick={handleWriteClick}
             className="w-full self-end"
           >
             {isLoadingWrite && <Loader2 className="mr-2 size-4 animate-spin" />}
@@ -47,7 +58,7 @@ export default function RenderActionButtonFromAuthorInfo({
           <Button
             variant="secondary"
             size="sm"
-            onClick={startTransitionEditProfile}
+            onClick={handleEditProfileClick}
             disabled={isLoadingEditProfile}
             className="w-full self-end"
           >

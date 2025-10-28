@@ -5,7 +5,7 @@ import { ko } from "date-fns/locale";
 import Link from "next/link";
 import { useState } from "react";
 import { ROUTES } from "@/app/_routes/constants";
-import { useCommentReplies } from "@/entities/comment/hooks/useCommentReplies";
+import { useCommentReplies } from "@/app/(playground)/(home)/_hooks/useCommentReplies";
 import type { IComment } from "@/entities/comment/model/types";
 import type { IUserInfo } from "@/entities/user/model/types";
 import {
@@ -13,7 +13,6 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/shared/components/ui/avatar";
-import AvatarButtonWithDropDown from "./AvatarButtonWithDropDown";
 import CommentButton from "./CommentButton";
 import CommentInput from "./CommentInput";
 import CommentInputButton from "./CommentInputButton";
