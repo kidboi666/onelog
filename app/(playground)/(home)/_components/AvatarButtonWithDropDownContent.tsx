@@ -1,17 +1,17 @@
-import { useTransition } from 'react'
-import useFollowMutates from '@/src/hooks/mutates/useFollowMutates'
-import useFollowQueries from '@/src/hooks/queries/useFollowQueries'
-import { ROUTES } from '@/src/routes'
-import Avatar from '@/src/components/Avatar'
-import { DropDown } from '@/src/components/DropDown'
-import Follow from '@/src/components/Follow'
-import { XStack, YStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
+import { useTransition } from "react";
+import Avatar from "@/src/components/Avatar";
+import { DropDown } from "@/src/components/DropDown";
+import Follow from "@/src/components/Follow";
+import { XStack, YStack } from "@/src/components/Stack";
+import Title from "@/src/components/Title";
+import useFollowMutates from "@/src/hooks/mutates/useFollowMutates";
+import useFollowQueries from "@/src/hooks/queries/useFollowQueries";
+import { ROUTES } from "@/src/routes";
 
 interface Props {
-  avatarUrl: string | null
-  userName: string | null
-  userId: string
+  avatarUrl: string | null;
+  userName: string | null;
+  userId: string;
 }
 
 export default function AvatarButtonWithDropDownContent({
@@ -19,9 +19,9 @@ export default function AvatarButtonWithDropDownContent({
   userName,
   avatarUrl,
 }: Props) {
-  const [isLoadingFollowing, startTransitionFollowing] = useTransition()
+  const [isLoadingFollowing, startTransitionFollowing] = useTransition();
   const { followingCount, followerCount, isFollowing, isMe } =
-    useFollowQueries(userId)
+    useFollowQueries(userId);
   const {
     onFollow,
     pushFollowingList,
@@ -31,7 +31,7 @@ export default function AvatarButtonWithDropDownContent({
   } = useFollowMutates({
     isFollowing,
     userId,
-  })
+  });
 
   return (
     <YStack gap={4} className="p-4">
@@ -74,7 +74,7 @@ export default function AvatarButtonWithDropDownContent({
                 isLoading={isLoadingFollowing}
                 onClick={() => startTransitionFollowing(() => onFollow())}
               >
-                {isFollowing ? '팔로우 취소' : '팔로우 하기'}
+                {isFollowing ? "팔로우 취소" : "팔로우 하기"}
               </DropDown.Button>
               <DropDown.LinkButton href={ROUTES.PROFILE.VIEW(userId)}>
                 프로필 페이지
@@ -84,5 +84,5 @@ export default function AvatarButtonWithDropDownContent({
         </XStack>
       </YStack>
     </YStack>
-  )
+  );
 }

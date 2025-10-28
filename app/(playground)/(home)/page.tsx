@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import FakeFormContainer from "./_components/FakeFormContainer";
 import PostContainer from "./_components/PostContainer";
 

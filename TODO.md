@@ -53,7 +53,7 @@ one_log/
     │
     ├── widgets/                  # 복합 UI 블록
     │
-    └── middleware.ts
+    └── proxy.ts
 ```
 
 ### 주요 변경사항

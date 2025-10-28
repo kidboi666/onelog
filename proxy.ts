@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { authGuard } from "@/app/middlewares/auth-guard";
 import { xPathname } from "@/app/middlewares/x-pathname";
 
-export default async function middleware(req: NextRequest) {
+export default async function proxy(req: NextRequest) {
   const pathnameResult = await xPathname(req);
 
   const updatedRequest = new NextRequest(req.url, {
