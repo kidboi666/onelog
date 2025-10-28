@@ -4,7 +4,7 @@ import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useEffect, useMemo } from "react";
 import { useMe } from "@/app/store/use-me";
-import { postQuery } from "@/entities/post/api/queries";
+import { postQueries } from "@/entities/post/api/queries";
 import PostCard from "./PostCard";
 
 const PAGINATION_LIMIT = 10;
@@ -13,7 +13,7 @@ export default function PostContainer() {
   const { me } = useMe();
 
   const { data, fetchNextPage, hasNextPage, isFetching } =
-    useSuspenseInfiniteQuery(postQuery.getAllPost(PAGINATION_LIMIT, me?.id));
+    useSuspenseInfiniteQuery(postQueries.getAllPost(PAGINATION_LIMIT, me?.id));
 
   const posts = useMemo(
     () => data.pages.flatMap((page) => page || []) ?? [],

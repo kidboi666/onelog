@@ -1,8 +1,8 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { postCountQuery, postQueries } from "@/entities/post/api/queries";
 import { userQuery } from "@/entities/user/api/queries";
-import { postQuery, postCountQuery } from "@/entities/post/api/queries";
 import { getSignUpDays } from "@/shared/utils/date";
 import HistoryBlock from "./HistoryBlock";
 
@@ -14,10 +14,10 @@ interface Props {
 export default function AuthHistory({ userId, color }: Props) {
   const { data: user } = useSuspenseQuery(userQuery.getUserInfo(userId));
   const { data: postLength } = useSuspenseQuery(
-    postCountQuery.countUserPosts(userId)
+    postCountQuery.countUserPosts(userId),
   );
   const { data: myAverageEmotion } = useSuspenseQuery(
-    postQuery.getEmotionAverage(userId)
+    postQueries.getEmotionAverage(userId),
   );
 
   const getColorClass = () => {

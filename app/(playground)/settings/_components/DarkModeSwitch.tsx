@@ -1,53 +1,51 @@
-'use client'
+"use client";
 
-import cn from '@/src/lib/cn'
-import { useTheme } from '@/src/store/hooks/useTheme'
-import { Theme } from '@/src/types/enums/index'
-import Button from '@/src/components/Button'
-import Icon from '@/src/components/Icon'
-import { XStack, YStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
+import { Check } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect } from "react";
+import { Button } from "@/shared/components/ui/button";
+import { Label } from "@/shared/components/ui/label";
+import { cn } from "@/shared/utils/tw-merge";
 
 export default function DarkModeSwitch() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
 
-  const handleThemeChange = (theme: Theme) => {
-    setTheme(theme)
-    localStorage.setItem('theme', theme)
-    handleDocumentClass(theme)
-  }
-
-  const handleDocumentClass = (theme: Theme) => {
-    if (theme === Theme.DARK) {
-      document.documentElement.classList.add(Theme.DARK)
-    } else {
-      document.documentElement.classList.remove(Theme.DARK)
+  useEffect(() => {
+    // 초기 테마 설정
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
     }
-  }
+  }, [setTheme]);
+
+  const handleThemeChange = (newTheme: string) => {
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
 
   return (
-    <YStack>
-      <Title>다크 모드 설정</Title>
-      <XStack>
+    <div className="flex flex-col gap-4">
+      <Label className="font-bold text-lg">다크 모드 설정</Label>
+      <div className="flex gap-4">
         <DarkModeBlock
-          theme={Theme.DARK}
+          theme="dark"
           selectedTheme={theme}
           onBlockClick={handleThemeChange}
         />
         <DarkModeBlock
-          theme={Theme.LIGHT}
+          theme="light"
           selectedTheme={theme}
           onBlockClick={handleThemeChange}
         />
-      </XStack>
-    </YStack>
-  )
+      </div>
+    </div>
+  );
 }
 
 interface DarkModeBlockProps {
-  onBlockClick: (theme: Theme) => void
-  theme: Theme
-  selectedTheme: Theme
+  onBlockClick: (theme: string) => void;
+  theme: string;
+  selectedTheme: string | undefined;
 }
 
 function DarkModeBlock({
@@ -58,25 +56,18 @@ function DarkModeBlock({
   return (
     <Button
       onClick={() => onBlockClick(theme)}
-      variant="none"
+      variant="outline"
       size="sm"
       className={cn(
-        'flex gap-2 rounded-md font-semibold ring-1',
-        theme === 'light'
-          ? 'bg-white text-sm text-black ring-1 ring-gray-400'
-          : 'bg-var-black text-white ring-gray-500',
+        "flex gap-2 font-semibold",
+        theme === "light"
+          ? "bg-white text-black"
+          : "bg-var-black text-white",
+        selectedTheme === theme && "ring-2 ring-primary"
       )}
     >
-      {theme === 'light' ? '밝은' : '어두운'} 화면
-      {selectedTheme === theme && (
-        <Icon view={20} size={20}>
-          <path
-            fillRule="evenodd"
-            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-            clipRule="evenodd"
-          />
-        </Icon>
-      )}
+      {theme === "light" ? "밝은" : "어두운"} 화면
+      {selectedTheme === theme && <Check className="size-4" />}
     </Button>
-  )
+  );
 }

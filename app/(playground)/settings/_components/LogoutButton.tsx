@@ -1,30 +1,24 @@
-'use client'
+"use client";
 
-import { useMe } from '@/src/store/hooks/useMe'
-import useSignOut from '@/src/services/mutates/auth/use-sign-out'
-import Button from '@/src/components/Button'
-import { YStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
+import { useMe } from "@/app/store/use-me";
+import { useSignOut } from "@/entities/auth/api/mutates";
+import { Button } from "@/shared/components/ui/button";
+import { Label } from "@/shared/components/ui/label";
 
 export default function LogoutButton() {
-  const { me } = useMe()
-  const { mutate: signOut } = useSignOut()
+  const { me } = useMe();
+  const { mutate: signOut } = useSignOut();
 
-  const handleSingOut = () => {
-    signOut()
-  }
+  const handleSignOut = () => {
+    signOut();
+  };
 
   return (
-    <YStack>
-      <Title>로그아웃</Title>
-      <Button
-        size="sm"
-        onClick={handleSingOut}
-        disabled={!me}
-        className="w-fit"
-      >
+    <div className="flex flex-col gap-4">
+      <Label className="font-bold text-lg">로그아웃</Label>
+      <Button size="sm" onClick={handleSignOut} disabled={!me} className="w-fit">
         로그아웃 하기
       </Button>
-    </YStack>
-  )
+    </div>
+  );
 }

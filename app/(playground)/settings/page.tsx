@@ -1,19 +1,18 @@
-import { Metadata } from 'next'
-import { YStack } from '@/src/components/Stack'
-import ColorPicker from './_components/ColorPicker'
-import DarkModeSwitch from './_components/DarkModeSwitch'
-import LogoutButton from './_components/LogoutButton'
+import { Metadata } from "next";
+import ColorPicker from "./_components/ColorPicker";
+import DarkModeSwitch from "./_components/DarkModeSwitch";
+import LogoutButton from "./_components/LogoutButton";
 
 export const metadata: Metadata = {
-  title: 'Settings',
-}
+  title: "Settings",
+};
 
 export default function SettingsPage() {
   return (
-    <YStack gap={12} className="animate-fade-in">
+    <div className="flex animate-fade-in flex-col gap-12">
       <ColorPicker />
       <DarkModeSwitch />
       <LogoutButton />
-    </YStack>
-  )
+    </div>
+  );
 }

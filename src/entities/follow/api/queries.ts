@@ -3,7 +3,7 @@ import * as followService from "@/entities/follow/lib/follow-service";
 import { FOLLOW_QUERY_KEY } from "@/entities/follow/model/constants";
 import type { IFollower } from "@/entities/follow/model/types";
 
-export const followQuery = {
+export const followQueries = {
   /** 유저를 팔로우하는 유저의 Id들 */
   getFollower: (userId: string) =>
     queryOptions<IFollower[]>({
@@ -21,7 +21,7 @@ export const followQuery = {
     }),
 };
 
-export const countFollowQuery = {
+export const countFollowQueries = {
   /** 유저를 팔로우하는 유저의 Id들 */
   countFollower: (userId: string, isMount: boolean | undefined = false) =>
     queryOptions({

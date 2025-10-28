@@ -20,7 +20,7 @@ import type {
 import type { APIError } from "@/shared/lib/errors/api-error";
 import type { PostType } from "@/shared/types/enums";
 
-export const postQuery = {
+export const postQueries = {
   getAllPost: (limit: number, meId?: string | null) =>
     infiniteQueryOptions<
       IPost[],

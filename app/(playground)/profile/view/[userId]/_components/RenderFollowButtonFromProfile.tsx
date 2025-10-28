@@ -1,11 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { ROUTES } from "@/app/routes";
-import { countFollowQuery } from "@/entities/follow/api/queries";
+import { countFollowQueries } from "@/entities/follow/api/queries";
 import { Button } from "@/shared/components/ui/button";
 
 interface Props {
@@ -18,10 +18,10 @@ export default function RenderFollowButtonFromProfile({ userId }: Props) {
   const [isLoadingFollowing, startFollowingTransition] = useTransition();
 
   const { data: followerCount } = useSuspenseQuery(
-    countFollowQuery.countFollower(userId, true)
+    countFollowQueries.countFollower(userId, true),
   );
   const { data: followingCount } = useSuspenseQuery(
-    countFollowQuery.countFollowing(userId, true)
+    countFollowQueries.countFollowing(userId, true),
   );
 
   const pushFollowerList = () => {

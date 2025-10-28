@@ -7,7 +7,7 @@ import { useState } from "react";
 import { ROUTES } from "@/app/routes";
 import { useMe } from "@/app/store/use-me";
 import { useHandleFollow } from "@/entities/follow/api/mutates";
-import { followQuery } from "@/entities/follow/api/queries";
+import { followQueries } from "@/entities/follow/api/queries";
 import Modal from "@/shared/components/Modal";
 import { DialogHeader, DialogTitle } from "@/shared/components/ui/dialog";
 import FollowUserCard from "../../_components/FollowUserCard";
@@ -19,9 +19,11 @@ interface Props {
 export default function FollowerListModal({ params: { userId } }: Props) {
   const router = useRouter();
   const { me } = useMe();
-  const { data: followers } = useSuspenseQuery(followQuery.getFollower(userId));
+  const { data: followers } = useSuspenseQuery(
+    followQueries.getFollower(userId),
+  );
   const { data: myFollows } = useSuspenseQuery(
-    followQuery.getFollowing(me?.id || ""),
+    followQueries.getFollowing(me?.id || ""),
   );
   const { mutate: followOrUnfollow } = useHandleFollow();
   const [pendingList, setPendingList] = useState<Record<string, boolean>>({});

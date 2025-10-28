@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { PropsWithChildren } from "react";
 import { getQueryClient } from "@/shared/lib/tanstack-query/get-query-client";
 
-export default function ReactQueryProvider({ children }: PropsWithChildren) {
+export default function QueryProvider({ children }: PropsWithChildren) {
   const queryClient = getQueryClient();
 
   return (

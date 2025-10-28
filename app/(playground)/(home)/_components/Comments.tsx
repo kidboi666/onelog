@@ -3,7 +3,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useMe } from "@/app/store/use-me";
-import { postQuery } from "@/entities/post/api/queries";
+import { postQueries } from "@/entities/post/api/queries";
 import CommentInput from "./CommentInput";
 import CommentItem from "./CommentItem";
 
@@ -20,7 +20,7 @@ function sortByDate<T extends { createdAt: string }>(items: T[]): T[] {
 
 export default function Comments({ postId }: Props) {
   const { me } = useMe();
-  const { data: post } = useSuspenseQuery(postQuery.getPost(postId, me?.id));
+  const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
 
   const comments = useMemo(() => {
     if (!post || post.comments.length === 0) {

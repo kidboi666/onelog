@@ -1,13 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useTransition, useMemo } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import { useMe } from "@/app/store/use-me";
+import { useRouter } from "next/navigation";
+import { useMemo, useTransition } from "react";
 import { ROUTES } from "@/app/routes";
-import { followQuery } from "@/entities/follow/api/queries";
+import { useMe } from "@/app/store/use-me";
 import { useHandleFollow } from "@/entities/follow/api/mutates";
+import { followQueries } from "@/entities/follow/api/queries";
 import { Button } from "@/shared/components/ui/button";
 
 interface Props {
@@ -21,14 +21,14 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
   const [isLoadingWrite, startWriteTransition] = useTransition();
 
   const { data: followingList } = useSuspenseQuery(
-    followQuery.getFollowing(me?.id ?? "")
+    followQueries.getFollowing(me?.id ?? ""),
   );
   const { mutate: handleFollow, isPending } = useHandleFollow();
 
   const isMyProfilePage = me?.id === userId;
   const isFollowing = useMemo(
     () => followingList?.some((follower) => follower.followedUserId === userId),
-    [followingList, userId]
+    [followingList, userId],
   );
 
   const handlePushEditProfilePage = () => {
@@ -68,7 +68,9 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
             disabled={isLoadingProfile}
             className="text-nowrap"
           >
-            {isLoadingProfile && <Loader2 className="mr-2 size-4 animate-spin" />}
+            {isLoadingProfile && (
+              <Loader2 className="mr-2 size-4 animate-spin" />
+            )}
             프로필 수정
           </Button>
           <Button
@@ -91,7 +93,11 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
             {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
             {isFollowing ? "팔로우 취소" : "팔로우 하기"}
           </Button>
-          <Button size="sm" variant="secondary" onClick={handleSendMessageButtonClick}>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={handleSendMessageButtonClick}
+          >
             메시지 보내기
           </Button>
         </>

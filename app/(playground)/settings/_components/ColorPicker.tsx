@@ -1,65 +1,80 @@
-'use client'
+"use client";
 
-import cn from '@/src/lib/cn'
-import { colorTheme, useTheme } from '@/src/store/hooks/useTheme'
-import { ColorScheme } from '@/src/types/enums'
-import Button from '@/src/components/Button'
-import Icon from '@/src/components/Icon'
-import { List } from '@/src/components/List'
-import { YStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
+import { Check } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ColorScheme } from "@/shared/types/enums";
+import { Button } from "@/shared/components/ui/button";
+import { Label } from "@/shared/components/ui/label";
+import { cn } from "@/shared/utils/tw-merge";
+
+const getColorClass = (color: ColorScheme): string => {
+  switch (color) {
+    case ColorScheme.BLACK:
+      return "bg-var-black";
+    case ColorScheme.GREEN:
+      return "bg-var-green";
+    case ColorScheme.YELLOW:
+      return "bg-var-yellow";
+    case ColorScheme.BLUE:
+      return "bg-var-blue";
+    case ColorScheme.ORANGE:
+      return "bg-var-orange";
+    default:
+      return "bg-primary";
+  }
+};
 
 export default function ColorPicker() {
-  const { color: currentColor, setColor } = useTheme()
+  const [currentColor, setCurrentColor] = useState<ColorScheme>(
+    ColorScheme.BLUE
+  );
+
+  useEffect(() => {
+    const savedColor = localStorage.getItem("color-theme") as ColorScheme;
+    if (savedColor) {
+      setCurrentColor(savedColor);
+    }
+  }, []);
 
   const handleColorChange = (selectedColor: ColorScheme) => {
-    setColor(selectedColor)
-    localStorage.setItem('color-theme', selectedColor)
-  }
+    setCurrentColor(selectedColor);
+    localStorage.setItem("color-theme", selectedColor);
+  };
 
   return (
-    <YStack>
-      <Title>색상 설정</Title>
-      <List className="flex gap-4 overflow-y-auto">
+    <div className="flex flex-col gap-4">
+      <Label className="font-bold text-lg">색상 설정</Label>
+      <div className="flex gap-4 overflow-y-auto">
         {Object.values(ColorScheme).map((color) => (
-          <List.Row key={color}>
-            <ColorBlock
-              color={color}
-              onClick={() => handleColorChange(color)}
-              selectedColor={currentColor}
-            />
-          </List.Row>
+          <ColorBlock
+            key={color}
+            color={color}
+            onClick={() => handleColorChange(color)}
+            selectedColor={currentColor}
+          />
         ))}
-      </List>
-    </YStack>
-  )
+      </div>
+    </div>
+  );
 }
 
 interface ColorBlockProps {
-  color: ColorScheme
-  onClick: (color: ColorScheme) => void
-  selectedColor: ColorScheme
+  color: ColorScheme;
+  onClick: (color: ColorScheme) => void;
+  selectedColor: ColorScheme;
 }
 
 function ColorBlock({ color, onClick, selectedColor }: ColorBlockProps) {
   return (
     <Button
-      variant="secondary"
+      variant="outline"
       onClick={() => onClick(color)}
       className={cn(
-        colorTheme({ color }),
-        'size-14 rounded-full border text-white ring-0 dark:border-gray-500',
+        getColorClass(color),
+        "size-14 rounded-full border text-white dark:border-gray-500"
       )}
     >
-      {selectedColor === color && (
-        <Icon view={20} size={34}>
-          <path
-            fillRule="evenodd"
-            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-            clipRule="evenodd"
-          />
-        </Icon>
-      )}
+      {selectedColor === color && <Check className="size-8" />}
     </Button>
-  )
+  );
 }
