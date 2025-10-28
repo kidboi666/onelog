@@ -1,30 +1,35 @@
-import { IPost } from '@/src/types/entities/post'
-import useBlockEditor from '@/src/hooks/useBlockEditor'
-import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
-import { ROUTES } from '@/src/routes'
-import { YStack } from '@/src/components/Stack'
-import PostCardContent from './PostCardContent'
-import PostHeader from './PostHeader'
+import type { IPost } from "@/entities/post/model/types";
+import { useBlockEditor } from "@/features/post/hooks/useBlockEditor";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { ROUTES } from "@/core/routes";
+import PostCardContent from "./PostCardContent";
+import PostHeader from "./PostHeader";
 
 interface Props {
-  post: IPost
-  createdAtLiked?: string
-  disabled?: boolean
+  post: IPost;
+  createdAtLiked?: string;
+  disabled?: boolean;
 }
 
 export default function PostCard({ post, createdAtLiked, disabled }: Props) {
-  const postId = Number(post?.id)
-  const content = post?.content
-  const tags = post?.tags || []
-  const [, pushPostDetail] = useRouterPushWithTransition(
-    ROUTES.POST.VIEW(postId),
-  )
+  const router = useRouter();
+  const [, startTransition] = useTransition();
+  const postId = Number(post?.id);
+  const content = post?.content;
+  const tags = post?.tags || [];
+
+  const pushPostDetail = () => {
+    startTransition(() => {
+      router.push(ROUTES.POST.VIEW(postId));
+    });
+  };
 
   const { editor } = useBlockEditor({
     content,
-  })
+  });
 
-  if (!editor) return null
+  if (!editor) return null;
 
   const {
     accessType,
@@ -36,10 +41,11 @@ export default function PostCard({ post, createdAtLiked, disabled }: Props) {
     postType,
     emotionLevel,
     createdAt,
-  } = post
+  } = post;
+
   return (
-    <YStack>
-      {post ? (
+    <div className="flex flex-col gap-4">
+      {post && (
         <PostHeader
           userId={userId}
           createdAtLiked={createdAtLiked}
@@ -50,7 +56,7 @@ export default function PostCard({ post, createdAtLiked, disabled }: Props) {
           emotionLevel={emotionLevel}
           createdAt={createdAt}
         />
-      ) : null}
+      )}
       <PostCardContent
         tags={tags}
         editor={editor}
@@ -63,6 +69,6 @@ export default function PostCard({ post, createdAtLiked, disabled }: Props) {
         onClick={pushPostDetail}
         disabled={disabled}
       />
-    </YStack>
-  )
+    </div>
+  );
 }

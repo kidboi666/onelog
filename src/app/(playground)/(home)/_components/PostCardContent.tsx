@@ -1,25 +1,27 @@
-import { Editor, EditorContent } from '@tiptap/react'
-import { useEffect, useRef, useState } from 'react'
-import { Access } from '@/src/types/enums/index'
-import { XStack, YStack, ZStack } from '@/src/components/Stack'
-import Tag from '@/src/components/Tag'
-import Title from '@/src/components/Title'
-import AccessTypeButtonWithDropDown from '@/src/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown'
-import CommentButton from '@/src/app/(playground)/(home)/_components/CommentButton'
-import LikeButton from '@/src/app/(playground)/(home)/_components/LikeButton'
-import ReportButton from '@/src/app/(playground)/(home)/_components/ReportButton'
+import { useEffect, useRef, useState } from "react";
+import type { Editor } from "@tiptap/react";
+import { EditorContent } from "@tiptap/react";
+import { Card } from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { cn } from "@/shared/utils/tw-merge";
+import LikeButton from "./LikeButton";
+import CommentButton from "./CommentButton";
+import AccessTypeButtonWithDropDown from "./AccessTypeButtonWithDropDown";
+import ReportButton from "./ReportButton";
+
+type Access = "public" | "private" | "friends";
 
 interface Props {
-  tags?: string[]
-  editor: Editor
-  postTitle?: string | null
-  onClick?: () => void
-  disabled?: boolean
-  likeCount: number
-  isLike: boolean
-  commentCount: number
-  accessType: Access
-  postId: number
+  tags?: string[];
+  editor: Editor;
+  postTitle?: string | null;
+  onClick?: () => void;
+  disabled?: boolean;
+  likeCount: number;
+  isLike: boolean;
+  commentCount: number;
+  accessType: Access;
+  postId: number;
 }
 
 export default function PostCardContent({
@@ -34,40 +36,46 @@ export default function PostCardContent({
   accessType,
   postId,
 }: Props) {
-  const [showGradient, setShowGradient] = useState(false)
-  const contentRef = useRef<HTMLDivElement>(null)
+  const [showGradient, setShowGradient] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (contentRef.current) {
-      const contentHeight = contentRef.current.scrollHeight
-      const maxHeight = 256
-      setShowGradient(contentHeight > maxHeight)
+      const contentHeight = contentRef.current.scrollHeight;
+      const maxHeight = 256;
+      setShowGradient(contentHeight > maxHeight);
     }
-  }, [editor])
+  }, [editor]);
 
   return (
-    <div
+    <Card
       onClick={onClick}
-      className="size-full w-full cursor-pointer rounded-md bg-white p-4 shadow-sm transition duration-300 ease-in-out hover:shadow-lg dark:bg-var-darkgray"
+      className="w-full cursor-pointer p-4 transition-shadow hover:shadow-lg"
     >
-      <YStack gap={4}>
-        <ZStack direction="col" className="max-h-64 overflow-hidden">
-          {postTitle && <Title>{postTitle}</Title>}
+      <div className="flex flex-col gap-4">
+        <div className="relative max-h-64 overflow-hidden">
+          {postTitle && (
+            <h3 className="mb-2 font-semibold text-lg">{postTitle}</h3>
+          )}
           <EditorContent
             innerRef={contentRef}
             editor={editor}
             className="line-clamp-6"
           />
           {showGradient && (
-            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-var-darkgray" />
+            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background" />
           )}
-        </ZStack>
-        {tags?.length! > 0 && (
-          <XStack className="flex-wrap">
-            {tags?.map((tag, idx) => <Tag key={idx} tag={tag} />)}
-          </XStack>
+        </div>
+        {tags && tags.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag, idx) => (
+              <Badge key={idx} variant="secondary">
+                {tag}
+              </Badge>
+            ))}
+          </div>
         )}
-        <XStack as="nav" className="items-center justify-between">
+        <nav className="flex items-center justify-between">
           <LikeButton
             likeCount={likeCount}
             isLike={isLike}
@@ -81,8 +89,8 @@ export default function PostCardContent({
           />
           <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
           <ReportButton postId={postId} viewToolTip />
-        </XStack>
-      </YStack>
-    </div>
-  )
+        </nav>
+      </div>
+    </Card>
+  );
 }

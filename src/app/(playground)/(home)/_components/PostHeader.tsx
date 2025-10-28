@@ -1,20 +1,22 @@
-import { EmotionLevel } from '@/src/types/enums/index'
-import useToggle from '@/src/hooks/useToggle'
-import { XStack, ZStack } from '@/src/components/Stack'
-import ToolTip from '@/src/components/Tooltip'
-import AvatarButtonWithDropDown from './AvatarButtonWithDropDown'
-import EmotionButtonWithDropDown from './EmotionButtonWithDropDown'
-import NameWithDateSection from './NameWithDateSection'
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { Badge } from "@/shared/components/ui/badge";
+import { ROUTES } from "@/core/routes";
+import { formatDistanceToNow } from "date-fns";
+import { ko } from "date-fns/locale";
+
+type EmotionLevel = 1 | 2 | 3 | 4 | 5;
+type PostType = "journal" | "article";
 
 interface Props {
-  avatarUrl: string | null
-  userName: string | null
-  email: string | null
-  emotionLevel: EmotionLevel | null
-  createdAt: string
-  userId: string
-  createdAtLiked?: string
-  postType: 'journal' | 'article'
+  avatarUrl: string | null;
+  userName: string | null;
+  email: string | null;
+  emotionLevel: EmotionLevel | null;
+  createdAt: string;
+  userId: string;
+  createdAtLiked?: string;
+  postType: PostType;
 }
 
 export default function PostHeader({
@@ -27,37 +29,38 @@ export default function PostHeader({
   createdAt,
   postType,
 }: Props) {
-  const { isOpen: isHover, open: hover, close: leave } = useToggle()
+  const displayName = userName || email?.split("@")[0] || "익명";
+  const timeAgo = formatDistanceToNow(new Date(createdAt), {
+    addSuffix: true,
+    locale: ko,
+  });
 
   return (
-    <XStack className="w-full items-end">
-      <AvatarButtonWithDropDown
-        avatarUrl={avatarUrl}
-        userId={userId}
-        userName={userName}
-        position="bottomRight"
-      />
-      <XStack className="flex-1 items-end">
-        <NameWithDateSection
-          userName={userName}
-          email={email}
-          createdAt={createdAt}
-          createdAtLiked={createdAtLiked}
-          postType={postType}
-        />
-      </XStack>
+    <div className="flex w-full items-center gap-3">
+      <Link href={ROUTES.PROFILE.VIEW(userId)}>
+        <Avatar className="size-10 cursor-pointer">
+          <AvatarImage src={avatarUrl || undefined} />
+          <AvatarFallback>{displayName[0]?.toUpperCase()}</AvatarFallback>
+        </Avatar>
+      </Link>
+      <div className="flex flex-1 flex-col">
+        <Link
+          href={ROUTES.PROFILE.VIEW(userId)}
+          className="font-medium text-sm hover:underline"
+        >
+          {displayName}
+        </Link>
+        <div className="flex items-center gap-2 text-muted-foreground text-xs">
+          <span>{timeAgo}</span>
+          {postType === "journal" && <Badge variant="outline">일기</Badge>}
+          {createdAtLiked && <span>• {createdAtLiked}에 좋아요함</span>}
+        </div>
+      </div>
       {emotionLevel && (
-        <ZStack>
-          <div onMouseEnter={hover} onMouseLeave={leave}>
-            <EmotionButtonWithDropDown emotionLevel={emotionLevel} />
-            <ToolTip
-              isHover={isHover}
-              position="bottomRight"
-              text="감정 농도"
-            />
-          </div>
-        </ZStack>
+        <Badge variant="secondary" className="ml-auto">
+          감정 레벨 {emotionLevel}
+        </Badge>
       )}
-    </XStack>
-  )
+    </div>
+  );
 }
