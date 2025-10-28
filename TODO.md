@@ -75,7 +75,7 @@ one_log/
 
 ## 📊 shadcn/ui 마이그레이션 진행 상황
 
-### ✅ 완료 (7/10 페이지 영역)
+### ✅ 완료 (8/10 페이지 영역)
 
 #### 1. 레이아웃 컴포넌트
 - ✅ **Sidebar** (`app/@sidebar/default.tsx`)
@@ -147,21 +147,18 @@ one_log/
 - ✅ **Header 컴포넌트**
   - MobileWriteButtonWithLogo
 
+#### 6. 프로필 편집 페이지 (100% 완료)
+- ✅ **ProfileForm** - shadcn Button, Loader2, 폼 검증
+- ✅ **ProfileImageSection** - shadcn Avatar, Pencil 아이콘, toast
+- ✅ **EmailSection** - shadcn Input (disabled), Label
+- ✅ **UserNameSection** - shadcn Input, Label, 문자 수 카운터
+- ✅ **AboutMeSection** - shadcn Textarea, Label, 문자 수 카운터
+- ✅ **MBTISection** - shadcn Select (커스텀 DropDown 대체)
+- ✅ **PasswordResetForm** - shadcn Button, Label
+
 ---
 
-### 🔄 진행 필요 (3/10 페이지 영역)
-
-#### 6. 프로필 편집 페이지
-- [ ] **프로필 편집** (`app/profile/edit/`)
-  - ProfileForm - Form, Input, Textarea
-  - ProfileImageSection - Avatar 업로드
-  - MBTISection - Select or RadioGroup
-  - PasswordResetForm
-
-- [ ] **저널 가든**
-  - 커스텀 시각화 - 유지 검토 필요
-  - ColorInfoDisplay
-  - GardenBlockSection
+### 🔄 진행 필요 (2/10 페이지 영역)
 
 #### 7. 포스트 페이지
 - [ ] **포스트 상세** (`app/post/view/@post/[postId]/`)
@@ -236,11 +233,26 @@ one_log/
    - postCountQuery.countUserPosts 추가
    - 모든 컴포넌트 엔티티 계층 쿼리 사용
 
+9. **`2901fe2`** - 프로필 편집 페이지 shadcn/ui로 마이그레이션
+   - 8 files, 204 insertions, 228 deletions
+   - ProfileForm, ProfileImageSection, EmailSection
+   - UserNameSection, AboutMeSection, MBTISection
+   - PasswordResetForm
+   - 커스텀 DropDown → shadcn Select
+   - 커스텀 Toast → sonner
+   - maxLength로 입력 길이 제한
+
 ---
 
 ## 🎯 남은 작업
 
-### 1순위: 포스트 페이지 마이그레이션
+### 1순위: 설정 페이지 마이그레이션
+```
+app/settings/
+└── page.tsx
+```
+
+### 2순위: 포스트 페이지 마이그레이션
 ```
 app/post/
 ├── view/
@@ -250,18 +262,6 @@ app/post/
     └── page.tsx
 ```
 
-### 2순위: 프로필 편집 페이지 마이그레이션
-```
-app/profile/
-└── edit/
-    └── page.tsx
-```
-
-### 3순위: 설정 페이지 마이그레이션
-```
-app/settings/
-└── page.tsx
-```
 
 ### 최종: 정리 작업
 - [x] Import 경로 일괄 변경 (완료된 영역)
@@ -384,11 +384,11 @@ import { cn } from "@/shared/utils/tw-merge";
 | 모달 | 1/1 | - | - | 100% |
 | Import 경로 | 1/1 | - | - | 100% |
 | 프로필 뷰 | 1/1 | - | - | 100% |
-| 프로필 편집 | 0/1 | - | 1 | 0% |
+| 프로필 편집 | 1/1 | - | - | 100% |
 | 포스트 | 0/2 | - | 2 | 0% |
 | 설정 | 0/1 | - | 1 | 0% |
 | Todo | - | - | - | 스킵 |
-| **전체** | **7/10** | **0** | **3** | **70%** |
+| **전체** | **8/10** | **0** | **2** | **80%** |
 
 ---
 
