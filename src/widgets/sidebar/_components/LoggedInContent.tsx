@@ -1,7 +1,7 @@
-import { useRouter } from "next/navigation";
 import { LogOut, Settings, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/app/_routes/constants";
 import { useSignOut } from "@/entities/auth/api/mutates";
-import { ROUTES } from "@/app/routes";
 import {
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -43,16 +43,25 @@ export default function LoggedInContent({
         </div>
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
-      <DropdownMenuItem onClick={pushEditProfilePage} className="cursor-pointer gap-2">
+      <DropdownMenuItem
+        onClick={pushEditProfilePage}
+        className="cursor-pointer gap-2"
+      >
         <Settings className="size-4" />
         프로필 수정
       </DropdownMenuItem>
-      <DropdownMenuItem onClick={pushProfilePage} className="cursor-pointer gap-2">
+      <DropdownMenuItem
+        onClick={pushProfilePage}
+        className="cursor-pointer gap-2"
+      >
         <User className="size-4" />
         프로필 페이지
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer gap-2">
+      <DropdownMenuItem
+        onClick={() => signOut()}
+        className="cursor-pointer gap-2"
+      >
         <LogOut className="size-4" />
         로그아웃
       </DropdownMenuItem>

@@ -1,25 +1,25 @@
-'use client'
+"use client";
 
-import { useCallback, useEffect, useState } from 'react'
-import { wait } from '@/src/utils/client-utils'
+import { useCallback, useEffect, useState } from "react";
+import { wait } from "@/src/utils/client-utils";
 
 export default function useFetchWithDelay(
   pending: boolean,
   delay: number = 500,
 ) {
-  const [isPending, setPending] = useState(false)
+  const [isPending, setPending] = useState(false);
 
   const updatePendingState = useCallback(async () => {
     if (pending) {
-      setPending(true)
-      await wait(delay)
+      setPending(true);
+      await wait(delay);
     }
-    setPending(pending)
-  }, [pending, delay])
+    setPending(pending);
+  }, [pending, delay]);
 
   useEffect(() => {
-    void updatePendingState()
-  }, [pending, delay, updatePendingState])
+    void updatePendingState();
+  }, [pending, delay, updatePendingState]);
 
-  return isPending
+  return isPending;
 }

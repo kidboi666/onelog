@@ -1,6 +1,12 @@
-'use client'
+"use client";
 
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react'
+import {
+  type RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 /**
  *
@@ -13,30 +19,33 @@ export default function useIntersect<T extends HTMLElement>(
   opt?: IntersectionObserverInit,
   once: boolean | undefined = false,
 ): [RefObject<T>, boolean] {
-  const [isIntersecting, setIntersecting] = useState(false)
-  const target = useRef(null)
+  const [isIntersecting, setIntersecting] = useState(false);
+  const target = useRef(null);
 
   const handleIntersect = useCallback(
-    (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
+    (
+      entries: IntersectionObserverEntry[],
+      observer: IntersectionObserver,
+    ): void => {
       entries.forEach((entry) => {
-        setIntersecting(entry.isIntersecting)
+        setIntersecting(entry.isIntersecting);
         if (once && entry.isIntersecting) {
-          observer.unobserve(entry.target)
+          observer.unobserve(entry.target);
         }
-      })
+      });
     },
     [once],
-  )
+  );
 
   useEffect(() => {
-    if (target.current === null) return
+    if (target.current === null) return;
 
-    const observer = new IntersectionObserver(handleIntersect, opt)
+    const observer = new IntersectionObserver(handleIntersect, opt);
 
-    observer.observe(target.current)
+    observer.observe(target.current);
 
-    return () => observer.disconnect()
-  }, [handleIntersect, opt])
+    return () => observer.disconnect();
+  }, [handleIntersect, opt]);
 
-  return [target, isIntersecting]
+  return [target, isIntersecting];
 }

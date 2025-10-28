@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
-import { ROUTES } from "@/app/routes";
-import { useMe } from "@/app/store/use-me";
+import { ROUTES } from "@/app/_routes/constants";
+import { useMe } from "@/app/_store/use-me";
 import { useHandleLikePost } from "@/entities/like";
 
 interface Props {

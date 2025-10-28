@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { authGuard } from "@/app/middlewares/auth-guard";
-import { xPathname } from "@/app/middlewares/x-pathname";
+import { authGuard } from "@/app/_routes/middlewares/auth-guard";
+import { xPathname } from "@/app/_routes/middlewares/x-pathname";
 
 export default async function proxy(req: NextRequest) {
   const pathnameResult = await xPathname(req);

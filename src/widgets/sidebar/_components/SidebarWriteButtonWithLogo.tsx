@@ -1,6 +1,6 @@
 import { PenSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { ROUTES } from "@/app/routes";
+import { ROUTES } from "@/app/_routes/constants";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/utils/tw-merge";
 
@@ -17,10 +17,7 @@ export default function SidebarWriteButtonWithLogo({ isSelected }: Props) {
         variant={isSelected ? "default" : "outline"}
         size="icon"
         onClick={() => router.push(ROUTES.POST.NEW)}
-        className={cn(
-          "relative transition-all",
-          isSelected && "shadow-lg"
-        )}
+        className={cn("relative transition-all", isSelected && "shadow-lg")}
       >
         <PenSquare className="size-5" />
       </Button>

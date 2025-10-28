@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { ROUTES } from "@/app/routes";
-import { useMe } from "@/app/store/use-me";
+import { ROUTES } from "@/app/_routes/constants";
+import { useMe } from "@/app/_store/use-me";
 import type {
   ISignIn,
   ISignUp,

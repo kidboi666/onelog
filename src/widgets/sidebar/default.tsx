@@ -4,8 +4,8 @@ import { Home, LogIn, Moon, PenSquare, Settings, Sun } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import { ROUTES } from "@/app/routes";
-import { useMe } from "@/app/store/use-me";
+import { ROUTES } from "@/app/_routes/constants";
+import { useMe } from "@/app/_store/use-me";
 import {
   Avatar,
   AvatarFallback,

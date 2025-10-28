@@ -30,5 +30,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "app/(playground)/_todo"]
+  "exclude": ["node_modules",
+    "src/app/(playground)/_todo"
+  ]
 }

@@ -29,7 +29,7 @@ one_log/
     ├── app/                      # ✨ core → app 리네이밍
     │   ├── middlewares/          # 미들웨어 (auth-guard, x-pathname)
     │   ├── providers/            # Context Providers
-    │   ├── routes.ts             # 라우트 상수
+    │   ├── constants.ts             # 라우트 상수
     │   └── store/                # Zustand 스토어
     │
     ├── entities/                 # 도메인 엔티티
@@ -355,7 +355,7 @@ export const useDeletePost = () => {
 ### 4. Import Path Convention
 ```typescript
 // App layer (routes, store, providers)
-import { ROUTES } from "@/app/routes";
+import { Constants } from "@/app/routes";
 import { useMe } from "@/app/store/use-me";
 
 // Entity layer

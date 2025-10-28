@@ -1,6 +1,6 @@
-import { useRouter } from "next/navigation";
 import { LogIn, UserPlus } from "lucide-react";
-import { ROUTES } from "@/app/routes";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/app/_routes/constants";
 import { DropdownMenuItem } from "@/shared/components/ui/dropdown-menu";
 
 interface Props {
@@ -22,11 +22,17 @@ export default function GuestContent({ closeMenu }: Props) {
 
   return (
     <>
-      <DropdownMenuItem onClick={pushSignUpPage} className="cursor-pointer gap-2">
+      <DropdownMenuItem
+        onClick={pushSignUpPage}
+        className="cursor-pointer gap-2"
+      >
         <UserPlus className="size-4" />
         회원가입
       </DropdownMenuItem>
-      <DropdownMenuItem onClick={pushSignInPage} className="cursor-pointer gap-2">
+      <DropdownMenuItem
+        onClick={pushSignInPage}
+        className="cursor-pointer gap-2"
+      >
         <LogIn className="size-4" />
         로그인
       </DropdownMenuItem>
