@@ -75,7 +75,7 @@ one_log/
 
 ## 📊 shadcn/ui 마이그레이션 진행 상황
 
-### ✅ 완료 (8/10 페이지 영역)
+### ✅ 완료 (9/10 페이지 영역)
 
 #### 1. 레이아웃 컴포넌트
 - ✅ **Sidebar** (`app/@sidebar/default.tsx`)
@@ -156,11 +156,17 @@ one_log/
 - ✅ **MBTISection** - shadcn Select (커스텀 DropDown 대체)
 - ✅ **PasswordResetForm** - shadcn Button, Label
 
+#### 7. 설정 페이지 (100% 완료)
+- ✅ **LogoutButton** - shadcn Button, Label
+- ✅ **DarkModeSwitch** - next-themes useTheme, Check 아이콘
+- ✅ **ColorPicker** - useState 로컬 상태, Check 아이콘
+- ✅ **page.tsx** - YStack → div + flex
+
 ---
 
-### 🔄 진행 필요 (2/10 페이지 영역)
+### 🔄 진행 필요 (1/10 페이지 영역)
 
-#### 7. 포스트 페이지
+#### 8. 포스트 페이지
 - [ ] **포스트 상세** (`app/post/view/@post/[postId]/`)
   - PostBody - Card
   - PostActionBar - Button 그룹
@@ -172,13 +178,13 @@ one_log/
   - PublishSection - Button, Switch
   - BubbleMenuBar - Tooltip
 
-#### 8. 설정 페이지
-- [ ] **설정 옵션** (`app/settings/`)
-  - DarkModeSwitch - Switch
-  - ColorPicker - 커스텀 or shadcn
-  - LogoutButton - Button
+#### 9. 저널 가든 (선택)
+- [ ] **저널 가든**
+  - 커스텀 시각화 - 유지 검토 필요
+  - ColorInfoDisplay
+  - GardenBlockSection
 
-#### 9. Todo 페이지 (⚠️ 스킵 - 사용자 요청)
+#### 10. Todo 페이지 (⚠️ 스킵 - 사용자 요청)
 - ⏭️ Todo 관련 파일은 현재 상태 유지
 - ⏭️ 추후 필요시 별도 작업
 
@@ -242,17 +248,18 @@ one_log/
    - 커스텀 Toast → sonner
    - maxLength로 입력 길이 제한
 
+10. **`f4be4ff`** - 설정 페이지 shadcn/ui로 마이그레이션 및 코드 정리
+   - 17 files, 163 insertions, 156 deletions
+   - LogoutButton, DarkModeSwitch, ColorPicker
+   - 커스텀 useTheme → next-themes
+   - 엔티티 쿼리 이름 정리 (postQuery → postQueries)
+   - ReactQueryProvider → query-provider.tsx
+
 ---
 
 ## 🎯 남은 작업
 
-### 1순위: 설정 페이지 마이그레이션
-```
-app/settings/
-└── page.tsx
-```
-
-### 2순위: 포스트 페이지 마이그레이션
+### 1순위: 포스트 페이지 마이그레이션
 ```
 app/post/
 ├── view/
@@ -385,10 +392,11 @@ import { cn } from "@/shared/utils/tw-merge";
 | Import 경로 | 1/1 | - | - | 100% |
 | 프로필 뷰 | 1/1 | - | - | 100% |
 | 프로필 편집 | 1/1 | - | - | 100% |
+| 설정 | 1/1 | - | - | 100% |
 | 포스트 | 0/2 | - | 2 | 0% |
-| 설정 | 0/1 | - | 1 | 0% |
+| 저널 가든 | 0/1 | - | 1 | 0% (선택) |
 | Todo | - | - | - | 스킵 |
-| **전체** | **8/10** | **0** | **2** | **80%** |
+| **전체** | **9/10** | **0** | **1** | **90%** |
 
 ---
 
