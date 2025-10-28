@@ -1,120 +1,112 @@
-'use client'
+"use client";
 
-import { signUpSchema } from '@/src/schemas/auth'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { ISignUp } from '@/src/types/dtos/auth'
-import Button from '@/src/components/Button'
-import Icon from '@/src/components/Icon'
-import Modal from '@/src/components/Modal'
-import { YStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
-import useSignUpState from '@/src/app/(playground)/modal/_hooks/useSignUpState'
-import AuthForm from '../../_components/AuthForm'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
+import { z } from "zod";
+import { useSignUp } from "@/entities/auth/api/mutates";
+import { Button } from "@/shared/components/ui/button";
+import {
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/shared/components/ui/dialog";
+import Modal from "@/shared/components/Modal";
+import AuthForm from "../../_components/AuthForm";
+
+const signUpSchema = z
+  .object({
+    email: z.string().email("유효한 이메일을 입력해주세요"),
+    userName: z.string().min(2, "필명은 최소 2자 이상이어야 합니다"),
+    password: z.string().min(6, "비밀번호는 최소 6자 이상이어야 합니다"),
+    passwordConfirmation: z.string(),
+  })
+  .refine((data) => data.password === data.passwordConfirmation, {
+    message: "비밀번호가 일치하지 않습니다",
+    path: ["passwordConfirmation"],
+  });
+
+type SignUpFormData = z.infer<typeof signUpSchema>;
 
 export default function SignUpModal() {
-  const router = useRouter()
-  const {
-    signUp,
-    signUpKakao,
-    isKakaoLoading,
-    isSuccess,
-    isEmailLoading,
-    isAuthenticating,
-  } = useSignUpState()
+  const router = useRouter();
+  const { mutate: signUp, isPending } = useSignUp();
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
-  } = useForm({
+  } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
-    mode: 'onBlur',
+    mode: "onBlur",
     defaultValues: {
-      email: '',
-      userName: '',
-      password: '',
-      passwordConfirmation: '',
+      email: "",
+      userName: "",
+      password: "",
+      passwordConfirmation: "",
     },
-  })
+  });
 
-  const handleSubmitSignUp = async (data: ISignUp) => {
-    signUp(data, {
-      onError: (error) => {
-        console.error(error)
-        setError('email', {
-          type: 'validate',
-          message: error.message,
-        })
-      },
-    })
-  }
-
-  const handleSubmitKakaoSignUp = () => {
-    signUpKakao()
-  }
+  const handleSubmitSignUp = (data: SignUpFormData) => {
+    signUp({
+      email: data.email,
+      userName: data.userName,
+      password: data.password,
+    });
+  };
 
   return (
-    <Modal className="w-[420px]">
-      <form onSubmit={handleSubmit(handleSubmitSignUp)} className="w-full">
-        <YStack gap={4}>
-          <Title>회원가입</Title>
-          <AuthForm
-            register={register('email')}
-            error={errors.email}
-            type="email"
-            name="이메일"
-          />
-          <AuthForm
-            register={register('userName')}
-            error={errors.userName}
-            type="userName"
-            name="필명"
-          />
-          <AuthForm
-            register={register('password')}
-            error={errors.password}
-            type="password"
-            name="비밀번호"
-          />
-          <AuthForm
-            register={register('passwordConfirmation')}
-            error={errors.passwordConfirmation}
-            type="password"
-            name="비밀번호 확인"
-          />
+    <Modal className="sm:max-w-md">
+      <DialogHeader>
+        <DialogTitle>회원가입</DialogTitle>
+        <DialogDescription>
+          정보를 입력하여 계정을 생성하세요
+        </DialogDescription>
+      </DialogHeader>
+      <form onSubmit={handleSubmit(handleSubmitSignUp)} className="w-full space-y-4">
+        <AuthForm
+          register={register("email")}
+          error={errors.email}
+          type="email"
+          name="이메일"
+        />
+        <AuthForm
+          register={register("userName")}
+          error={errors.userName}
+          type="text"
+          name="필명"
+        />
+        <AuthForm
+          register={register("password")}
+          error={errors.password}
+          type="password"
+          name="비밀번호"
+        />
+        <AuthForm
+          register={register("passwordConfirmation")}
+          error={errors.passwordConfirmation}
+          type="password"
+          name="비밀번호 확인"
+        />
+        <div className="flex items-center justify-end">
           <Button
+            type="button"
+            variant="link"
             size="sm"
-            variant="teritory"
-            className="w-fit self-end px-0"
-            onClick={() => router.replace('/modal/signin')}
+            className="px-0"
+            onClick={() => router.replace("/modal/signin")}
           >
             로그인하러 가기
           </Button>
-          <Button
-            isLoading={isEmailLoading}
-            disabled={isAuthenticating || isSuccess}
-            type="submit"
-          >
-            회원가입
-          </Button>{' '}
-          <Button
-            variant="kakao"
-            isLoading={isKakaoLoading}
-            disabled={isAuthenticating || isSuccess}
-            onClick={handleSubmitKakaoSignUp}
-          >
-            <Icon size={20}>
-              <path
-                d="M11.6144 3C6.30451 3 2 6.48454 2 10.7831C2 13.5255 3.75623 15.9314 6.4034 17.3177L5.38748 20.7042C5.32567 20.9098 5.55504 21.0797 5.7336 20.9606L9.58943 18.3899C10.2428 18.5035 10.9194 18.5662 11.6144 18.5662C16.9243 18.5662 21.2288 15.0816 21.2288 10.7831C21.2288 6.48454 16.9243 3 11.6144 3Z"
-                fill="currentColor"
-              />
-            </Icon>{' '}
-            카카오로 가입
-          </Button>
-        </YStack>
+        </div>
+        <Button type="submit" disabled={isPending} className="w-full">
+          {isPending ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            "회원가입"
+          )}
+        </Button>
       </form>
     </Modal>
-  )
+  );
 }

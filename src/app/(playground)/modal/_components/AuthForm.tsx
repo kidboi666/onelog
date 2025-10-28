@@ -1,13 +1,13 @@
-import { ComponentProps } from 'react'
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form'
-import Input from '@/src/components/Input'
-import { YStack } from '@/src/components/Stack'
-import TextDisplay from '@/src/components/TextDisplay'
-import Title from '@/src/components/Title'
+import type { FieldError, UseFormRegisterReturn } from "react-hook-form";
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
 
-interface Props extends ComponentProps<'input'> {
-  register: UseFormRegisterReturn
-  error?: FieldError
+interface Props {
+  register: UseFormRegisterReturn;
+  error?: FieldError;
+  type?: string;
+  name?: string;
+  placeholder?: string;
 }
 
 export default function AuthForm({
@@ -18,25 +18,22 @@ export default function AuthForm({
   error,
 }: Props) {
   return (
-    <YStack className="w-full">
-      <Title as="h2" type="sub" size="xs">
-        {name}
-      </Title>
-      <label htmlFor={type} className="relative">
-        <Input
-          variant="primary"
-          placeholder={placeholder}
-          type={type}
-          register={register}
-          error={error}
-          className="mt-2 w-full"
-        />
-      </label>
-      {error?.message && (
-        <TextDisplay type="error" size="sm">
-          {error.message}
-        </TextDisplay>
+    <div className="flex w-full flex-col gap-2">
+      {name && (
+        <Label htmlFor={type} className="font-semibold text-sm">
+          {name}
+        </Label>
       )}
-    </YStack>
-  )
+      <Input
+        id={type}
+        placeholder={placeholder}
+        type={type}
+        {...register}
+        className="w-full"
+      />
+      {error?.message && (
+        <p className="text-destructive text-sm">{error.message}</p>
+      )}
+    </div>
+  );
 }
