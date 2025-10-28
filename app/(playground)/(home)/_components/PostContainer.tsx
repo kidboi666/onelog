@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 import { useEffect, useMemo } from "react";
 import { useMe } from "@/app/store/use-me";
 import { postQueries } from "@/entities/post/api/queries";
-import PostCard from "./PostCard";
+import { PostCard } from "./PostCard";
 
 const PAGINATION_LIMIT = 10;
 

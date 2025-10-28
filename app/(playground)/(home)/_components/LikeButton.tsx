@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
 import { ROUTES } from "@/app/routes";
 import { useMe } from "@/app/store/use-me";
-import { useLikeMutates } from "@/entities/like/api/mutates";
+import { useLikeMutates } from "@/hooks/mutates/useLikeMutates";
 import { Button } from "@/shared/components/ui/button";
 import {
   Tooltip,

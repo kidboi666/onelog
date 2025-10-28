@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Home,
-  ListTodo,
-  LogIn,
-  Moon,
-  PenSquare,
-  Settings,
-  Sun,
-} from "lucide-react";
+import { Home, LogIn, Moon, PenSquare, Settings, Sun } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -36,12 +28,6 @@ const TOP_MENUS = [
     icon: Home,
     path: ROUTES.HOME,
   },
-  {
-    id: "todo",
-    name: "할일",
-    icon: ListTodo,
-    path: ROUTES.TODO.TODO,
-  },
 ];
 
 const BOTTOM_MENUS = [
@@ -53,7 +39,7 @@ const BOTTOM_MENUS = [
   },
 ];
 
-export default function Sidebar() {
+export function Sidebar() {
   const { me } = useMe();
   const pathname = usePathname();
   const router = useRouter();

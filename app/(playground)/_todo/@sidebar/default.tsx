@@ -1,32 +1,32 @@
-'use client'
+"use client";
 
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { usePathname } from 'next/navigation'
-import cn from '@/src/lib/cn'
-import { useMe } from '@/src/store/hooks/useMe'
-import { todoQuery } from '@/src/services/queries/todo/todo-query'
-import { ROUTES } from '@/src/routes'
-import Line from '@/src/components/Line'
-import { List } from '@/src/components/List'
-import { YStack } from '@/src/components/Stack'
-import MenuButton from '../../@sidebar/_components/MenuButton'
-import { TODO_MENU } from '../_constants'
-import TaskFolderSection from './_components/TaskFolderSection'
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
+import Line from "@/src/components/Line";
+import { List } from "@/src/components/List";
+import { YStack } from "@/src/components/Stack";
+import cn from "@/src/lib/cn";
+import { ROUTES } from "@/src/routes";
+import { todoQuery } from "@/src/services/queries/todo/todo-query";
+import { useMe } from "@/src/store/hooks/useMe";
+import MenuButton from "../../@sidebar/_components/MenuButton";
+import { TODO_MENU } from "../_constants";
+import TaskFolderSection from "./_components/TaskFolderSection";
 
 export default function SideBarPage() {
-  const pathname = usePathname()
-  const { me } = useMe()
+  const pathname = usePathname();
+  const { me } = useMe();
   const { data: todoFolders } = useSuspenseQuery(
     todoQuery.getTodoFolder(me!.id),
-  )
+  );
 
   return (
     <div
       className={cn(
-        'sticky left-4 top-8 hidden h-fit animate-fade-in-reverse rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray',
+        "sticky top-8 left-4 hidden h-fit animate-fade-in-reverse rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray",
       )}
     >
-      <div className="absolute left-0 top-0 -z-10 hidden h-full w-72 origin-left bg-white transition ease-in-out dark:bg-var-darkgray" />
+      <div className="-z-10 absolute top-0 left-0 hidden h-full w-72 origin-left bg-white transition ease-in-out dark:bg-var-darkgray" />
       <YStack>
         <List className="flex flex-col gap-2">
           {TODO_MENU.map((menu) => (
@@ -51,5 +51,5 @@ export default function SideBarPage() {
         />
       </YStack>
     </div>
-  )
+  );
 }

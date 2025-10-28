@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { ROUTES } from "@/app/routes";
 import type { IPost } from "@/entities/post/model/types";
-import useBlockEditor from "@/app/hooks/useBlockEditor";
+import useBlockEditor from "@/hooks/useBlockEditor";
 import PostCardContent from "./PostCardContent";
 import PostHeader from "./PostHeader";
 
@@ -12,7 +12,7 @@ interface Props {
   disabled?: boolean;
 }
 
-export default function PostCard({ post, createdAtLiked, disabled }: Props) {
+export function PostCard({ post, createdAtLiked, disabled }: Props) {
   const router = useRouter();
   const [, startTransition] = useTransition();
   const postId = Number(post?.id);
