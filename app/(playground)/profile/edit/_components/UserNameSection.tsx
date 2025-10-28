@@ -1,31 +1,35 @@
-import { ComponentProps } from 'react'
-import cn from '@/src/lib/cn'
-import Input from '@/src/components/Input'
-import { XStack, YStack } from '@/src/components/Stack'
-import TextDisplay from '@/src/components/TextDisplay'
-import Title from '@/src/components/Title'
+import { ComponentProps } from "react";
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
+import { cn } from "@/shared/utils/tw-merge";
 
-interface Props extends ComponentProps<'input'> {
-  value: string
+interface Props extends ComponentProps<"input"> {
+  value: string;
 }
 
 export default function UserNameSection({ value, onChange }: Props) {
   return (
-    <YStack gap={4} className="max-w-52">
-      <Title>필명</Title>
-      <XStack className="items-end">
+    <div className="flex max-w-52 flex-col gap-4">
+      <Label htmlFor="userName" className="font-bold text-lg">
+        필명
+      </Label>
+      <div className="flex items-end gap-2">
         <Input
+          id="userName"
           value={value}
           onChange={onChange}
           className="bg-var-lightgray dark:bg-var-dark"
+          maxLength={10}
         />
         {value && (
-          <TextDisplay
-            size="sm"
-            className={cn(value?.length > 10 && 'text-red-600')}
-          >{`${value?.length} / 10`}</TextDisplay>
+          <span
+            className={cn(
+              "text-nowrap text-sm",
+              value?.length > 10 && "text-red-600"
+            )}
+          >{`${value?.length} / 10`}</span>
         )}
-      </XStack>
-    </YStack>
-  )
+      </div>
+    </div>
+  );
 }

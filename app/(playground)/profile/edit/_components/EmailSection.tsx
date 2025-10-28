@@ -1,30 +1,30 @@
-import Input from '@/src/components/Input'
-import { YStack } from '@/src/components/Stack'
-import TextDisplay from '@/src/components/TextDisplay'
-import Title from '@/src/components/Title'
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
 
 interface Props {
-  email?: string
-  provider?: string
+  email?: string;
+  provider?: string;
 }
 
 export default function EmailSection({ email, provider }: Props) {
   return (
-    <YStack gap={4}>
-      <Title>이메일</Title>
-      <YStack>
+    <div className="flex flex-col gap-4">
+      <Label htmlFor="email" className="font-bold text-lg">
+        이메일
+      </Label>
+      <div className="flex flex-col gap-1">
         <Input
+          id="email"
           disabled
-          variant="auth"
           value={email}
           className="text-zinc-400 dark:text-zinc-500"
         />
-        <TextDisplay type="caption">
-          {provider === 'kakao'
-            ? '카카오로 가입한 유저 입니다.'
-            : '이메일로 가입한 유저 입니다.'}
-        </TextDisplay>
-      </YStack>
-    </YStack>
-  )
+        <p className="text-muted-foreground text-xs">
+          {provider === "kakao"
+            ? "카카오로 가입한 유저 입니다."
+            : "이메일로 가입한 유저 입니다."}
+        </p>
+      </div>
+    </div>
+  );
 }

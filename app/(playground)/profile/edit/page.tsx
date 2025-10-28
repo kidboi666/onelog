@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { useMe } from '@/src/store/hooks/useMe'
-import ProfileForm from '@/src/app/(playground)/profile/edit/_components/ProfileForm'
-import useProfileForm from '@/src/app/(playground)/profile/edit/_hooks/useProfileForm'
-import useProfileMutations from '@/src/app/(playground)/profile/edit/_hooks/useProfileMutations'
+import { useMe } from "@/app/store/use-me";
+import ProfileForm from "./_components/ProfileForm";
+import useProfileForm from "./_hooks/useProfileForm";
+import useProfileMutations from "./_hooks/useProfileMutations";
 
 export default function ProfileEditPage() {
-  const { me } = useMe()
-  const { states, actions } = useProfileForm(me)
+  const { me } = useMe();
+  const { states, actions } = useProfileForm(me);
   const { updateProfile, uploadImage, deletePrevImage, isLoading } =
-    useProfileMutations()
+    useProfileMutations();
 
-  if (!me) return null
+  if (!me) return null;
 
   return (
     <ProfileForm
@@ -23,5 +23,5 @@ export default function ProfileEditPage() {
       uploadImage={uploadImage}
       deletePrevImage={deletePrevImage}
     />
-  )
+  );
 }

@@ -1,30 +1,35 @@
 import {
   UseMutateAsyncFunction,
   UseMutateFunction,
-} from '@tanstack/react-query'
-import { FormEvent } from 'react'
+} from "@tanstack/react-query";
+import { FormEvent } from "react";
+import { Loader2 } from "lucide-react";
 import {
   IUpdateProfileFormActions,
   IUpdateProfileFormStates,
   IUpdateUserInfo,
-} from '@/src/types/dtos/auth'
-import { IUploadAvatar, IUserInfo } from '@/src/types/entities/auth'
-import Button from '@/src/components/Button'
-import { YStack } from '@/src/components/Stack'
-import AboutMeSection from '@/src/app/(playground)/profile/edit/_components/AboutMeSection'
-import EmailSection from '@/src/app/(playground)/profile/edit/_components/EmailSection'
-import ProfileImageSection from '@/src/app/(playground)/profile/edit/_components/ProfileImageSection'
-import UserNameSection from '@/src/app/(playground)/profile/edit/_components/UserNameSection'
-import useProfileFormValidation from '@/src/app/(playground)/profile/edit/_hooks/useProfileFormValidation'
+} from "@/src/types/dtos/auth";
+import { IUploadAvatar, IUserInfo } from "@/src/types/entities/auth";
+import { Button } from "@/shared/components/ui/button";
+import AboutMeSection from "./AboutMeSection";
+import EmailSection from "./EmailSection";
+import ProfileImageSection from "./ProfileImageSection";
+import UserNameSection from "./UserNameSection";
+import useProfileFormValidation from "../_hooks/useProfileFormValidation";
 
 interface Props {
-  me: IUserInfo
-  states: IUpdateProfileFormStates
-  actions: IUpdateProfileFormActions
-  isLoading: boolean
-  updateProfile: UseMutateFunction<IUserInfo | null, Error, IUpdateUserInfo, unknown>
-  uploadImage: UseMutateAsyncFunction<string, Error, IUploadAvatar, unknown>
-  deletePrevImage: UseMutateFunction<void, Error, string, unknown>
+  me: IUserInfo;
+  states: IUpdateProfileFormStates;
+  actions: IUpdateProfileFormActions;
+  isLoading: boolean;
+  updateProfile: UseMutateFunction<
+    IUserInfo | null,
+    Error,
+    IUpdateUserInfo,
+    unknown
+  >;
+  uploadImage: UseMutateAsyncFunction<string, Error, IUploadAvatar, unknown>;
+  deletePrevImage: UseMutateFunction<void, Error, string, unknown>;
 }
 
 export default function ProfileForm({
@@ -38,36 +43,36 @@ export default function ProfileForm({
 }: Props) {
   const { isFormUnChanged, isFormInvalid } = useProfileFormValidation(
     states,
-    me,
-  )
+    me
+  );
 
   const handleProfileUpdate = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     const baseProfileData = {
       aboutMe: states.aboutMe,
       userName: states.userName,
       userId: me.id,
-    }
+    };
     if (states.imageFile) {
       const avatarUrl = await uploadImage({
         email: me.email,
         image: states.imageFile,
-      })
+      });
       if (states.currentAvatarUrl) {
-        deletePrevImage(states.currentAvatarUrl)
+        deletePrevImage(states.currentAvatarUrl);
       }
 
-      updateProfile({ ...baseProfileData, avatarUrl })
+      updateProfile({ ...baseProfileData, avatarUrl });
     } else {
-      updateProfile({ ...baseProfileData })
+      updateProfile({ ...baseProfileData });
     }
-  }
+  };
   return (
     <form
       onSubmit={handleProfileUpdate}
       className="animate-fade-in rounded-md bg-white p-2 shadow-sm sm:p-8 dark:bg-var-darkgray"
     >
-      <YStack gap={8}>
+      <div className="flex flex-col gap-8">
         <ProfileImageSection
           actions={actions}
           states={states}
@@ -75,21 +80,21 @@ export default function ProfileForm({
         />
         <EmailSection email={me.email} provider={me.provider} />
         <UserNameSection
-          value={states.userName ?? ''}
+          value={states.userName ?? ""}
           onChange={actions.onChangeUserName}
         />
         <AboutMeSection
-          value={states.aboutMe ?? ''}
+          value={states.aboutMe ?? ""}
           onChange={actions.onChangeAboutMe}
         />
         <Button
           type="submit"
-          isLoading={isLoading}
-          disabled={isFormUnChanged || isFormInvalid}
+          disabled={isFormUnChanged || isFormInvalid || isLoading}
         >
+          {isLoading && <Loader2 className="mr-2 size-4 animate-spin" />}
           수정하기
         </Button>
-      </YStack>
+      </div>
     </form>
-  )
+  );
 }

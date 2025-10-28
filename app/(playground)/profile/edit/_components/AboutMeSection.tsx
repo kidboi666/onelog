@@ -1,31 +1,35 @@
-import { ComponentProps } from 'react'
-import cn from '@/src/lib/cn'
-import { XStack, YStack } from '@/src/components/Stack'
-import TextArea from '@/src/components/TextArea'
-import TextDisplay from '@/src/components/TextDisplay'
-import Title from '@/src/components/Title'
+import { ComponentProps } from "react";
+import { Textarea } from "@/shared/components/ui/textarea";
+import { Label } from "@/shared/components/ui/label";
+import { cn } from "@/shared/utils/tw-merge";
 
-interface Props extends ComponentProps<'textarea'> {
-  value: string
+interface Props extends ComponentProps<"textarea"> {
+  value: string;
 }
 
 export default function AboutMeSection({ value, onChange }: Props) {
   return (
-    <YStack gap={4}>
-      <Title>한줄 소개</Title>
-      <XStack className="items-end">
-        <TextArea
-          value={value ?? ''}
+    <div className="flex flex-col gap-4">
+      <Label htmlFor="aboutMe" className="font-bold text-lg">
+        한줄 소개
+      </Label>
+      <div className="flex items-end gap-2">
+        <Textarea
+          id="aboutMe"
+          value={value ?? ""}
           onChange={onChange}
           className="bg-var-lightgray p-2 dark:bg-var-dark"
+          maxLength={150}
         />
         {value && (
-          <TextDisplay
-            size="sm"
-            className={cn('text-nowrap', value?.length > 150 && 'text-red-600')}
-          >{`${value?.length} / 150`}</TextDisplay>
+          <span
+            className={cn(
+              "text-nowrap text-sm",
+              value?.length > 150 && "text-red-600"
+            )}
+          >{`${value?.length} / 150`}</span>
         )}
-      </XStack>
-    </YStack>
-  )
+      </div>
+    </div>
+  );
 }

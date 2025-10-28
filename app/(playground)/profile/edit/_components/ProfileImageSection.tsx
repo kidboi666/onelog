@@ -1,25 +1,20 @@
-import {
-  MAX_PROFILE_IMAGE_FILE_SIZE,
-  TOAST_MESSAGE,
-} from '@/src/constants/index'
-import { ChangeEvent, ComponentProps, useEffect, useRef } from 'react'
-import { useToast } from '@/src/store/hooks/useToast'
+import { ChangeEvent, ComponentProps, useEffect, useRef } from "react";
+import { Pencil } from "lucide-react";
+import { toast } from "sonner";
 import {
   IUpdateProfileFormActions,
   IUpdateProfileFormStates,
-} from '@/src/types/dtos/auth'
-import { Toast } from '@/src/types/enums/index'
-import Avatar from '@/src/components/Avatar'
-import Button from '@/src/components/Button'
-import Icon from '@/src/components/Icon'
-import { XStack, YStack, ZStack } from '@/src/components/Stack'
-import TextDisplay from '@/src/components/TextDisplay'
-import Title from '@/src/components/Title'
+} from "@/src/types/dtos/auth";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { Button } from "@/shared/components/ui/button";
+import { Label } from "@/shared/components/ui/label";
 
-interface Props extends ComponentProps<'input'> {
-  imagePreview: string | null
-  actions: IUpdateProfileFormActions
-  states: IUpdateProfileFormStates
+const MAX_PROFILE_IMAGE_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+interface Props extends ComponentProps<"input"> {
+  imagePreview: string | null;
+  actions: IUpdateProfileFormActions;
+  states: IUpdateProfileFormStates;
 }
 
 export default function ProfileImageSection({
@@ -27,53 +22,49 @@ export default function ProfileImageSection({
   actions,
   states,
 }: Props) {
-  const { openToast } = useToast()
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
 
-    if (!file) return null
+    if (!file) return null;
 
     if (file.size > MAX_PROFILE_IMAGE_FILE_SIZE) {
-      openToast({
-        text: TOAST_MESSAGE.USER_INFO.UPLOAD_AVATAR.OVER_SIZE,
-        type: Toast.ERROR,
-      })
-      return null
+      toast.error("파일 크기는 5MB 이하여야 합니다.");
+      return null;
     }
 
-    if (!file.type.startsWith('image/')) {
-      openToast({
-        text: TOAST_MESSAGE.USER_INFO.UPLOAD_AVATAR.WRONG_TYPE,
-        type: Toast.ERROR,
-      })
-      return null
+    if (!file.type.startsWith("image/")) {
+      toast.error("이미지 파일만 업로드 가능합니다.");
+      return null;
     }
-    actions.onChangeImageFile(file)
-    actions.onChangeAvatarPreview(URL.createObjectURL(file))
-  }
+    actions.onChangeImageFile(file);
+    actions.onChangeAvatarPreview(URL.createObjectURL(file));
+  };
 
   const handlePreviewClick = () => {
     if (inputRef.current) {
-      inputRef.current.click()
+      inputRef.current.click();
     }
-  }
+  };
 
   useEffect(() => {
     return () => {
       if (states.avatarPreview) {
-        URL.revokeObjectURL(states.avatarPreview)
+        URL.revokeObjectURL(states.avatarPreview);
       }
-    }
-  }, [states.avatarPreview])
+    };
+  }, [states.avatarPreview]);
 
   return (
-    <YStack gap={4}>
-      <Title>프로필 사진</Title>
-      <XStack className="items-end">
-        <ZStack>
-          <Avatar src={imagePreview} size="xl" ring shadow="sm" />
+    <div className="flex flex-col gap-4">
+      <Label className="font-bold text-lg">프로필 사진</Label>
+      <div className="flex items-end gap-4">
+        <div className="relative">
+          <Avatar className="size-32 ring-2 ring-border shadow-sm">
+            <AvatarImage src={imagePreview || undefined} />
+            <AvatarFallback className="text-4xl">U</AvatarFallback>
+          </Avatar>
           <input
             ref={inputRef}
             type="file"
@@ -82,18 +73,18 @@ export default function ProfileImageSection({
             className="hidden"
           />
           <Button
+            type="button"
+            size="icon"
             onClick={handlePreviewClick}
             className="absolute bottom-0 right-0 rounded-full"
           >
-            <Icon view="0 -960 960 960">
-              <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
-            </Icon>
+            <Pencil className="size-4" />
           </Button>
-        </ZStack>
-        <TextDisplay type="caption">
-          5MB 이하의 PNG,JPG,GIF 파일을 올려주세요.
-        </TextDisplay>
-      </XStack>
-    </YStack>
-  )
+        </div>
+        <p className="text-muted-foreground text-xs">
+          5MB 이하의 PNG, JPG, GIF 파일을 올려주세요.
+        </p>
+      </div>
+    </div>
+  );
 }
