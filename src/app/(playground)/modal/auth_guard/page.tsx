@@ -1,50 +1,58 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
-import { ROUTES } from '@/src/routes'
-import Button from '@/src/components/Button'
-import Modal from '@/src/components/Modal'
-import { XStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { ROUTES } from "@/core/routes";
+import { Button } from "@/shared/components/ui/button";
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/shared/components/ui/dialog";
+import Modal from "@/shared/components/Modal";
 
 export default function AuthGuardModal() {
-  const router = useRouter()
+  const router = useRouter();
 
   const pushSignIn = () => {
-    router.replace(ROUTES.MODAL.AUTH.SIGN_IN)
-  }
+    router.replace(ROUTES.MODAL.AUTH.SIGN_IN);
+  };
 
   const handleEnterPush = (e: KeyboardEvent) => {
-    const ReactEvent = e as never as React.KeyboardEvent
-    if (ReactEvent?.key === 'Enter') {
-      pushSignIn()
+    if (e.key === "Enter") {
+      pushSignIn();
     }
-  }
+  };
 
   const pushBack = () => {
-    router.back()
-  }
+    router.back();
+  };
 
   useEffect(() => {
-    document.addEventListener('keydown', handleEnterPush)
+    document.addEventListener("keydown", handleEnterPush);
 
     return () => {
-      document.removeEventListener('keydown', handleEnterPush)
-    }
-  }, [])
+      document.removeEventListener("keydown", handleEnterPush);
+    };
+  }, []);
 
   return (
     <Modal>
-      <Title>로그인이 필요합니다.</Title>
-      <XStack className="w-full">
-        <Button onClick={pushSignIn} className="w-full">
+      <DialogHeader>
+        <DialogTitle>로그인이 필요합니다.</DialogTitle>
+        <DialogDescription>
+          이 기능을 사용하려면 로그인이 필요합니다.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter className="flex-row gap-2">
+        <Button onClick={pushSignIn} className="flex-1">
           로그인 하러가기
         </Button>
-        <Button variant="secondary" onClick={pushBack} className="w-full">
+        <Button variant="secondary" onClick={pushBack} className="flex-1">
           취소
         </Button>
-      </XStack>
+      </DialogFooter>
     </Modal>
-  )
+  );
 }

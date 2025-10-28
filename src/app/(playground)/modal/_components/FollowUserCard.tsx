@@ -1,17 +1,16 @@
-import { MouseEvent } from 'react'
-import { IFollower } from '@/src/types/entities/follower'
-import Avatar from '@/src/components/Avatar'
-import Button from '@/src/components/Button'
-import { XStack, YStack } from '@/src/components/Stack'
-import TextDisplay from '@/src/components/TextDisplay'
+import type { MouseEvent } from "react";
+import { Loader2 } from "lucide-react";
+import type { IFollower } from "@/entities/follow/model/types";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { Button } from "@/shared/components/ui/button";
 
 interface Props {
-  follower: IFollower
-  onFollow: (e: MouseEvent) => void
-  isFollowing: boolean
-  isMe: boolean
-  pushUserPage: () => void
-  isPending: boolean
+  follower: IFollower;
+  onFollow: (e: MouseEvent) => void;
+  isFollowing: boolean;
+  isMe: boolean;
+  pushUserPage: () => void;
+  isPending: boolean;
 }
 
 export default function FollowUserCard({
@@ -22,65 +21,39 @@ export default function FollowUserCard({
   pushUserPage,
   isPending,
 }: Props) {
-  if (isMe)
-    return (
-      <div
-        onClick={pushUserPage}
-        className="w-full cursor-pointer rounded-md p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700"
-      >
-        <XStack gap={4} key={follower.id} className="items-center">
-          <Avatar
-            size="base"
-            src={follower.userInfo.avatarUrl}
-            className="size-8"
-          />
-          <YStack gap={0} className="flex-1 justify-center">
-            <TextDisplay>{follower.userInfo.userName}</TextDisplay>
-            <TextDisplay type="caption" size="sm">
-              @{follower.userInfo.email.split('@')[0]}
-            </TextDisplay>
-          </YStack>
-        </XStack>
-      </div>
-    )
+  const displayName = follower.userInfo.userName || follower.userInfo.email?.split("@")[0] || "익명";
 
   return (
     <div
       onClick={pushUserPage}
-      className="w-full cursor-pointer rounded-md p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+      className="flex w-full cursor-pointer items-center gap-4 rounded-md p-2 hover:bg-muted"
     >
-      <XStack gap={4} key={follower.id} className="items-center">
-        <Avatar
-          size="base"
-          src={follower.userInfo.avatarUrl}
-          className="size-8"
-        />
-        <YStack gap={0} className="flex-1 justify-center">
-          <TextDisplay>{follower.userInfo.userName}</TextDisplay>
-          <TextDisplay type="caption" size="sm">
-            @{follower.userInfo.email.split('@')[0]}
-          </TextDisplay>
-        </YStack>
-        {isFollowing ? (
-          <Button
-            variant="secondary"
-            size="sm"
-            isLoading={isPending}
-            onClick={onFollow}
-          >
-            팔로우 취소
-          </Button>
-        ) : (
-          <Button
-            className="h-fit"
-            size="sm"
-            isLoading={isPending}
-            onClick={onFollow}
-          >
-            팔로우 하기
-          </Button>
-        )}
-      </XStack>
+      <Avatar className="size-10">
+        <AvatarImage src={follower.userInfo.avatarUrl || undefined} />
+        <AvatarFallback>{displayName[0]?.toUpperCase()}</AvatarFallback>
+      </Avatar>
+      <div className="flex flex-1 flex-col justify-center">
+        <p className="font-medium text-sm">{displayName}</p>
+        <p className="text-muted-foreground text-xs">
+          @{follower.userInfo.email?.split("@")[0]}
+        </p>
+      </div>
+      {!isMe && (
+        <Button
+          variant={isFollowing ? "secondary" : "default"}
+          size="sm"
+          disabled={isPending}
+          onClick={onFollow}
+        >
+          {isPending ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : isFollowing ? (
+            "팔로우 취소"
+          ) : (
+            "팔로우 하기"
+          )}
+        </Button>
+      )}
     </div>
-  )
+  );
 }

@@ -1,47 +1,69 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
-import useDeleteComment from '@/src/services/mutates/comment/useDeleteComment'
-import Button from '@/src/components/Button'
-import Modal from '@/src/components/Modal'
-import { XStack } from '@/src/components/Stack'
-import Title from '@/src/components/Title'
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { useDeleteComment } from "@/entities/comment/api/mutates";
+import { Button } from "@/shared/components/ui/button";
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/shared/components/ui/dialog";
+import Modal from "@/shared/components/Modal";
 
 interface Props {
-  params: { commentId: string }
-  searchParams: { post_id: string }
+  params: { commentId: string };
+  searchParams: { post_id: string };
 }
 
 export default function DeleteCommentModal({ params, searchParams }: Props) {
-  const router = useRouter()
-  const { mutate: deleteComment } = useDeleteComment()
-  const [isLoading, startTransition] = useTransition()
+  const router = useRouter();
+  const { mutate: deleteComment, isPending } = useDeleteComment();
 
   const handleCommentDelete = () => {
-    startTransition(() =>
-      deleteComment({
+    deleteComment(
+      {
         commentId: Number(params.commentId),
         postId: Number(searchParams.post_id),
-      }),
-    )
-  }
+      },
+      {
+        onSuccess: () => {
+          router.back();
+        },
+      }
+    );
+  };
 
   return (
     <Modal>
-      <Title>정말 댓글을 삭제하시겠습니까?</Title>
-      <XStack>
+      <DialogHeader>
+        <DialogTitle>댓글 삭제</DialogTitle>
+        <DialogDescription>
+          정말 댓글을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter className="flex-row gap-2">
         <Button
           variant="secondary"
-          disabled={isLoading}
+          disabled={isPending}
           onClick={() => router.back()}
+          className="flex-1"
         >
           취소하기
         </Button>
-        <Button onClick={handleCommentDelete} isLoading={isLoading}>
-          삭제하기
+        <Button
+          onClick={handleCommentDelete}
+          disabled={isPending}
+          className="flex-1"
+        >
+          {isPending ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            "삭제하기"
+          )}
         </Button>
-      </XStack>
+      </DialogFooter>
     </Modal>
-  )
+  );
 }

@@ -90,3 +90,13 @@ export const getEmotionAverage = async (
   );
   return calculateAverage(emotionLevels);
 };
+
+/**
+ * 게시물 삭제
+ */
+export const deletePost = async (
+  postId: number,
+  supabase?: SupabaseClient,
+): Promise<void> => {
+  return postApi.deletePost(postId, supabase);
+};
