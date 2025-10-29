@@ -13,14 +13,7 @@ export enum PostType {
   JOURNAL = "journal",
 }
 
-// @TODO 원시값으로 변경
-export enum EmotionLevel {
-  "0%" = "0%",
-  "25%" = "25%",
-  "50%" = "50%",
-  "75%" = "75%",
-  "100%" = "100%",
-}
+export type EmotionLevel = 0 | 25 | 50 | 75 | 100;
 
 export enum FolderColor {
   BLACK = "black",

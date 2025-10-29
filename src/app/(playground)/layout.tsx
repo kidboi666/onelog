@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
-import { Header } from "@/widgets/header/default";
-import { Sidebar } from "@/widgets/sidebar/default";
+import { Header } from "@/widgets/header/ui/header";
+import { Sidebar } from "@/widgets/sidebar/ui/sidebar";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
