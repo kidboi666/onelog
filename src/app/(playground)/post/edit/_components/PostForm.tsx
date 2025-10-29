@@ -8,8 +8,8 @@ import type {
   IUpdatePostFormStates,
 } from "@/entities/post";
 import useBlockEditor from "@/hooks/useBlockEditor";
-import EmotionGauge from "@/shared/components/EmotionGauge";
-import { TagsInput } from "@/shared/components/TagsInput";
+import EmotionGauge from "@/shared/components/emotion-gauge";
+import { TagsInput } from "@/shared/components/tags-input";
 import {
   Avatar,
   AvatarFallback,

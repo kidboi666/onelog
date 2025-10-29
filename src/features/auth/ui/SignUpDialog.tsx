@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useSignUp } from "@/entities/auth/api/mutates";
+import { AuthFormField } from "@/shared/components/ui/auth-form-field";
 import { Button } from "@/shared/components/ui/button";
 import {
   Dialog,
@@ -15,7 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/components/ui/dialog";
-import { AuthFormField } from "@/shared/components/ui/AuthFormField";
 
 const signUpSchema = z
   .object({
@@ -74,7 +74,9 @@ export function SignUpDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>회원가입</DialogTitle>
-          <DialogDescription>정보를 입력하여 계정을 생성하세요</DialogDescription>
+          <DialogDescription>
+            정보를 입력하여 계정을 생성하세요
+          </DialogDescription>
         </DialogHeader>
         <form
           onSubmit={handleSubmit(handleSubmitSignUp)}
@@ -118,7 +120,11 @@ export function SignUpDialog({
             </div>
           )}
           <Button type="submit" disabled={isPending} className="w-full">
-            {isPending ? <Loader2 className="size-4 animate-spin" /> : "회원가입"}
+            {isPending ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              "회원가입"
+            )}
           </Button>
         </form>
       </DialogContent>

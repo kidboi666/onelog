@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useSignIn } from "@/entities/auth/api/mutates";
+import { AuthFormField } from "@/shared/components/ui/auth-form-field";
 import { Button } from "@/shared/components/ui/button";
 import {
   Dialog,
@@ -15,7 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/components/ui/dialog";
-import { AuthFormField } from "@/shared/components/ui/AuthFormField";
 
 const signInSchema = z.object({
   email: z.string().email("유효한 이메일을 입력해주세요"),

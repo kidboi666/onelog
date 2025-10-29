@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/components/ui/dialog";
-import { FollowUserCard } from "@/shared/components/ui/FollowUserCard";
+import { FollowUserCard } from "@/shared/components/ui/follow-user-card";
 
 interface FollowingListDialogProps {
   userId: string;

@@ -4,13 +4,13 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useMe } from "@/app/_store/use-me";
 import { postQueries } from "@/entities/post/api/queries";
+import { RenderActionButtonFromAuthorInfo } from "@/features/post";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/shared/components/ui/avatar";
 import { ROUTES } from "@/shared/routes/constants";
-import RenderActionButtonFromAuthorInfo from "./RenderActionButtonFromAuthorInfo";
 
 interface Props {
   postId: number;

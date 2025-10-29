@@ -6,7 +6,7 @@ import { ko } from "date-fns/locale";
 import { useMe } from "@/app/_store/use-me";
 import AvatarButtonWithDropDown from "@/app/(playground)/(home)/_components/AvatarButtonWithDropDown";
 import { postQueries } from "@/entities/post/api/queries";
-import EmotionGauge from "@/shared/components/EmotionGauge";
+import EmotionGauge from "@/shared/components/emotion-gauge";
 
 interface Props {
   postId: number;

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useMe } from "@/app/_store/use-me";
 import { postQueries } from "@/entities/post/api/queries";
-import { DeleteCommentDialog } from "@/features/comment/ui";
+import { DeleteCommentDialog } from "@/features/comment/ui/DeleteCommentDialog";
 import { DeletePostDialog } from "@/features/post";
 import { Button } from "@/shared/components/ui/button";
 import {

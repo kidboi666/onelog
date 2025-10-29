@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/components/ui/dialog";
-import { FollowUserCard } from "@/shared/components/ui/FollowUserCard";
+import { FollowUserCard } from "@/shared/components/ui/follow-user-card";
 
 interface FollowerListDialogProps {
   userId: string;
@@ -78,7 +78,8 @@ export function FollowerListDialog({
         <div className="flex w-full flex-col gap-2">
           {followers?.map((follower) => {
             const isFollowing = myFollows?.some(
-              (myFollower) => myFollower.followedUserId === follower.userInfo.id,
+              (myFollower) =>
+                myFollower.followedUserId === follower.userInfo.id,
             );
             const isMe = me?.id === follower.userInfo.id;
             const isPending = pendingList[follower.userInfo.id] || false;
