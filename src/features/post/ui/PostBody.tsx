@@ -4,14 +4,14 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { EditorContent } from "@tiptap/react";
 import { useMe } from "@/app/_store/use-me";
 import { postQueries } from "@/entities/post/api/queries";
-import { Badge } from "@/shared/components/ui/badge";
 import useBlockEditor from "@/hooks/useBlockEditor";
+import { Badge } from "@/shared/components/ui/badge";
 
 interface Props {
   postId: number;
 }
 
-export default function PostBody({ postId }: Props) {
+export function PostBody({ postId }: Props) {
   const { me } = useMe();
   const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
   const { editor } = useBlockEditor({ content: post?.content });

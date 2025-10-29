@@ -16,7 +16,7 @@ interface Props {
   postId: number;
 }
 
-export default function PostAuthorInfo({ postId }: Props) {
+export function PostAuthorInfo({ postId }: Props) {
   const router = useRouter();
   const { me } = useMe();
   const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));

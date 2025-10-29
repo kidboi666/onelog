@@ -4,7 +4,7 @@ interface Props {
   postId: number;
 }
 
-export default function RenderCommentFromPost({ postId }: Props) {
+export function RenderCommentFromPost({ postId }: Props) {
   return (
     <div className="flex flex-col gap-4 rounded-md bg-white p-4 shadow-sm dark:bg-var-darkgray">
       <Comments postId={postId} />

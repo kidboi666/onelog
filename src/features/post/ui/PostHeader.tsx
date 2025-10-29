@@ -12,7 +12,7 @@ interface Props {
   postId: number;
 }
 
-export default function PostHeader({ postId }: Props) {
+export function PostHeader({ postId }: Props) {
   const { me } = useMe();
   const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
 

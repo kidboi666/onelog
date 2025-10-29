@@ -2,20 +2,20 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMe } from "@/app/_store/use-me";
-import { postQueries } from "@/entities/post/api/queries";
-import { Separator } from "@/shared/components/ui/separator";
 import AccessTypeButtonWithDropDown from "@/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown";
 import CommentButton from "@/app/(playground)/(home)/_components/CommentButton";
 import LikeButton from "@/app/(playground)/(home)/_components/LikeButton";
 import OptionButtonWithDropDown from "@/app/(playground)/(home)/_components/OptionButtonWithDropDown";
 import ReportButton from "@/app/(playground)/(home)/_components/ReportButton";
 import ShareButton from "@/app/(playground)/(home)/_components/ShareButton";
+import { postQueries } from "@/entities/post/api/queries";
+import { Separator } from "@/shared/components/ui/separator";
 
 interface Props {
   postId: number;
 }
 
-export default function PostActionBar({ postId }: Props) {
+export function PostActionBar({ postId }: Props) {
   const { me } = useMe();
   const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
 

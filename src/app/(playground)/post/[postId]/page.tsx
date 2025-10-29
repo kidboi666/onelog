@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import { getPostWithProcessing } from "@/entities/post/lib/post-service";
+import {
+  PostActionBar,
+  PostAuthorInfo,
+  PostBody,
+  PostCountInfo,
+  PostHeader,
+  RenderCommentFromPost,
+  SideActionBar,
+} from "@/features/post";
 import { Separator } from "@/shared/components/ui/separator";
 import { createServerClient } from "@/shared/lib/supabase/create-server-client";
-import PostActionBar from "./_components/PostActionBar";
-import PostAuthorInfo from "./_components/PostAuthorInfo";
-import PostBody from "./_components/PostBody";
-import PostCountInfo from "./_components/PostCountInfo";
-import PostHeader from "./_components/PostHeader";
-import RenderCommentFromPost from "./_components/RenderCommentFromPost";
-import SideActionBar from "./_components/SideActionBar";
 
 interface Props {
   params: Promise<{ postId: string }>;
@@ -23,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   );
 
   return {
-    title: post?.title ?? `${post?.userInfo.userName}님의 글`,
+    title: post?.title ?? `${post?.userInfo.userName} 님의 글`,
   };
 }
 

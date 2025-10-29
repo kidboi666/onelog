@@ -2,15 +2,15 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMe } from "@/app/_store/use-me";
-import { postQueries } from "@/entities/post/api/queries";
 import CommentButton from "@/app/(playground)/(home)/_components/CommentButton";
 import LikeButton from "@/app/(playground)/(home)/_components/LikeButton";
+import { postQueries } from "@/entities/post/api/queries";
 
 interface Props {
   postId: number;
 }
 
-export default function PostCountInfo({ postId }: Props) {
+export function PostCountInfo({ postId }: Props) {
   const { me } = useMe();
   const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
 

@@ -5,9 +5,9 @@ import { Edit2, MoreVertical, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useMe } from "@/app/_store/use-me";
-import { DeleteCommentDialog } from "@/features/comment/ui";
-import { DeletePostDialog } from "@/features/post/ui";
 import { postQueries } from "@/entities/post/api/queries";
+import { DeleteCommentDialog } from "@/features/comment/ui";
+import { DeletePostDialog } from "@/features/post";
 import { Button } from "@/shared/components/ui/button";
 import {
   DropdownMenu,
@@ -77,33 +77,33 @@ export default function OptionButtonWithDropDown(props: Props) {
 
   return (
     <>
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size={props.isSide ? "default" : "icon"}
-          className="h-auto p-2"
-        >
-          <MoreVertical className={props.isSide ? "h-6 w-6" : "h-4 w-4"} />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align={props.isSide ? "start" : "end"}>
-        <DropdownMenuItem
-          onClick={pushEditPage}
-          className="cursor-pointer gap-2"
-        >
-          <Edit2 className="h-4 w-4" />
-          수정하기
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={handleDeleteClick}
-          className="cursor-pointer gap-2"
-        >
-          <Trash2 className="h-4 w-4" />
-          삭제하기
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            size={props.isSide ? "default" : "icon"}
+            className="h-auto p-2"
+          >
+            <MoreVertical className={props.isSide ? "h-6 w-6" : "h-4 w-4"} />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align={props.isSide ? "start" : "end"}>
+          <DropdownMenuItem
+            onClick={pushEditPage}
+            className="cursor-pointer gap-2"
+          >
+            <Edit2 className="h-4 w-4" />
+            수정하기
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={handleDeleteClick}
+            className="cursor-pointer gap-2"
+          >
+            <Trash2 className="h-4 w-4" />
+            삭제하기
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       {/* Delete Dialogs */}
       {props.type === "post" ? (

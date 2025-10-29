@@ -1,22 +1,19 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { Loader2 } from "lucide-react";
 import useFollowMutates from "@/hooks/mutates/useFollowMutates";
 import useFollowValidate from "@/hooks/queries/useFollowValidate";
-import { ROUTES } from "@/shared/routes/constants";
 import { Button } from "@/shared/components/ui/button";
+import { ROUTES } from "@/shared/routes/constants";
 
 interface Props {
   meId?: string | null;
   userId: string;
 }
 
-export default function RenderActionButtonFromAuthorInfo({
-  meId,
-  userId,
-}: Props) {
+export function RenderActionButtonFromAuthorInfo({ meId, userId }: Props) {
   const router = useRouter();
   const { isFollowing } = useFollowValidate(userId, meId);
   const { onFollow, isPending } = useFollowMutates({
@@ -62,7 +59,9 @@ export default function RenderActionButtonFromAuthorInfo({
             disabled={isLoadingEditProfile}
             className="w-full self-end"
           >
-            {isLoadingEditProfile && <Loader2 className="mr-2 size-4 animate-spin" />}
+            {isLoadingEditProfile && (
+              <Loader2 className="mr-2 size-4 animate-spin" />
+            )}
             프로필 수정
           </Button>
         </>
