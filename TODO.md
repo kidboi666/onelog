@@ -29,7 +29,7 @@ one_log/
     ├── app/                      # ✨ core → app 리네이밍
     │   ├── middlewares/          # 미들웨어 (auth-guard, x-pathname)
     │   ├── providers/            # Context Providers
-    │   ├── constants.ts             # 라우트 상수
+    │   ├── menu-items.ts             # 라우트 상수
     │   └── store/                # Zustand 스토어
     │
     ├── entities/                 # 도메인 엔티티
@@ -78,12 +78,12 @@ one_log/
 ### ✅ 완료 (9/10 페이지 영역)
 
 #### 1. 레이아웃 컴포넌트
-- ✅ **Sidebar** (`app/@sidebar/default.tsx`)
+- ✅ **Sidebar** (`app/@sidebar/header.tsx`)
   - shadcn: Button, Tooltip, Avatar, Separator
   - Lucide React 아이콘
   - Stack → div + flex 변환
 
-- ✅ **Header** (`app/@header/default.tsx`)
+- ✅ **Header** (`app/@header/header.tsx`)
   - shadcn: Sheet (모바일 메뉴), Button
   - 테마 토글 버튼
   - 반응형 디자인
@@ -359,7 +359,6 @@ import { Constants } from "@/app/routes";
 import { useMe } from "@/app/store/use-me";
 
 // Entity layer
-import { useDeletePost } from "@/entities/post/api/mutates";
 import type { IPost } from "@/entities/post/model/types";
 
 // Shared layer

@@ -20,7 +20,8 @@
       "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off",
-        "useIterableCallbackReturn": "off"
+        "useIterableCallbackReturn": "off",
+        "noArrayIndexKey": "warn"
       },
       "nursery": {
         "useSortedClasses": {
