@@ -16,13 +16,17 @@ import {
 
 interface DeletePostDialogProps {
   postId: number;
-  children: ReactNode;
+  children?: ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   onSuccess?: () => void;
 }
 
 export function DeletePostDialog({
   postId,
   children,
+  open,
+  onOpenChange,
   onSuccess,
 }: DeletePostDialogProps) {
   const { mutate: deletePost, isPending } = useDeletePost();
@@ -36,8 +40,8 @@ export function DeletePostDialog({
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {children && <DialogTrigger asChild>{children}</DialogTrigger>}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>게시물 삭제</DialogTitle>

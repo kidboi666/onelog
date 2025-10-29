@@ -17,7 +17,9 @@ import {
 interface DeleteCommentDialogProps {
   commentId: number;
   postId: number;
-  children: ReactNode;
+  children?: ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   onSuccess?: () => void;
 }
 
@@ -25,6 +27,8 @@ export function DeleteCommentDialog({
   commentId,
   postId,
   children,
+  open,
+  onOpenChange,
   onSuccess,
 }: DeleteCommentDialogProps) {
   const { mutate: deleteComment, isPending } = useDeleteComment();
@@ -44,8 +48,8 @@ export function DeleteCommentDialog({
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {children && <DialogTrigger asChild>{children}</DialogTrigger>}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>댓글 삭제</DialogTitle>
