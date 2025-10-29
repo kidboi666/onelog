@@ -258,10 +258,191 @@ const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
 6. **Don't** use `useEffect` for data fetching - use TanStack Query
 7. **Don't** use old Tailwind config patterns - v4 uses PostCSS plugin
 
-## File Naming
+## File Naming Conventions
 
-- Components: PascalCase (`PostCard.tsx`)
-- Utilities: camelCase (`format-date.ts`)
-- Types: PascalCase interfaces (`IPost`, `IUser`)
-- Hooks: camelCase with `use` prefix (`usePostForm.ts`)
-- Constants: SCREAMING_SNAKE_CASE (`ROUTES`, `POST_TYPES`)
+### General Rules
+
+All file names use **kebab-case** (lowercase with hyphens):
+
+```
+✅ Good
+post-detail-view.tsx
+user-avatar-menu.tsx
+format-date-utils.ts
+use-post-form.ts
+
+❌ Bad
+PostDetailView.tsx
+UserAvatarMenu.tsx
+formatDateUtils.ts
+usePostForm.ts
+```
+
+### Specific Rules by File Type
+
+#### Components (`.tsx`)
+- **Format**: `[domain]-[descriptor]-[type].tsx`
+- **Always kebab-case**
+- Include component type suffix when applicable
+
+```typescript
+// Entities (data display)
+entities/post/ui/post-header-info.tsx
+entities/post/ui/post-content.tsx
+entities/user/ui/user-avatar.tsx
+
+// Features (user actions)
+features/post/ui/like-button.tsx
+features/post/ui/delete-post-dialog.tsx
+features/comment/ui/comment-input.tsx
+
+// Widgets (composite)
+widgets/post/ui/post-detail-view.tsx
+widgets/header/ui/app-header.tsx
+```
+
+**Component Type Suffixes:**
+- `-button`: Interactive buttons (`like-button.tsx`, `share-button.tsx`)
+- `-dialog`: Dialog/Modal components (`delete-post-dialog.tsx`)
+- `-form`: Form components (`post-edit-form.tsx`)
+- `-input`: Input components (`comment-input.tsx`)
+- `-card`: Card-style containers (`user-profile-card.tsx`)
+- `-menu`: Menu/Dropdown components (`post-options-menu.tsx`)
+- `-list`: List components (`comment-list.tsx`)
+- `-item`: Individual list items (`comment-item.tsx`)
+- `-view`: Full view/page components (`post-detail-view.tsx`)
+- `-bar`: Action/Tool bars (`post-action-bar.tsx`)
+- `-section`: Logical sections (`emotion-section.tsx`)
+
+#### Utilities & Helpers (`.ts`)
+- **Format**: `[purpose]-[type].ts`
+- **kebab-case**
+
+```typescript
+shared/utils/format-date.ts
+shared/utils/cn.ts
+entities/post/lib/post-service.ts
+shared/helpers/validation-helpers.ts
+```
+
+#### Hooks (`.ts`, `.tsx`)
+- **Format**: `use-[purpose].ts`
+- **kebab-case with `use-` prefix**
+
+```typescript
+shared/hooks/use-media-query.ts
+features/post/hooks/use-post-form.ts
+entities/auth/hooks/use-session.ts
+```
+
+#### Types & Models (`.ts`)
+- **kebab-case for files**
+- **PascalCase for interface/type names inside**
+
+```typescript
+// File: entities/post/model/types.ts
+export interface IPost { ... }
+export type PostType = "JOURNAL" | "ARTICLE"
+
+// File: shared/types/enums.ts
+export enum Access { ... }
+```
+
+#### API & Services (`.ts`)
+- **kebab-case**
+
+```typescript
+entities/post/api/queries.ts
+entities/post/api/mutates.ts
+entities/post/api/dtos.ts
+entities/post/lib/post-service.ts
+```
+
+#### Constants (`.ts`)
+- **kebab-case for files**
+- **SCREAMING_SNAKE_CASE for values**
+
+```typescript
+// File: shared/routes/constants.ts
+export const ROUTES = {
+  POST: {
+    VIEW: (id: number) => `/post/${id}`,
+  }
+}
+
+// File: entities/post/model/constants.ts
+export const POST_TYPES = {
+  JOURNAL: "JOURNAL",
+  ARTICLE: "ARTICLE",
+} as const
+```
+
+### Component Naming Pattern by Layer
+
+#### Entities Layer (Data Display)
+Focus on **what** is being displayed:
+
+```
+post-header-info.tsx      # Post header information
+post-content.tsx          # Post content/body
+post-author-card.tsx      # Author information card
+user-avatar.tsx           # User avatar display
+post-metrics.tsx          # Post statistics (read-only)
+```
+
+#### Features Layer (User Actions)
+Focus on **actions** user can take:
+
+```
+like-button.tsx           # Like/unlike action
+share-button.tsx          # Share action
+delete-post-dialog.tsx    # Delete dialog
+comment-input.tsx         # Comment input
+follow-button.tsx         # Follow/unfollow action
+post-options-menu.tsx     # Post options dropdown
+access-type-selector.tsx  # Access type selection
+```
+
+#### Widgets Layer (Composite)
+Focus on **complete sections/views**:
+
+```
+post-detail-view.tsx      # Complete post detail page
+post-detail-header.tsx    # Header section with actions
+post-detail-sidebar.tsx   # Sidebar with actions
+post-comment-section.tsx  # Comment section
+app-header.tsx            # Application header
+app-sidebar.tsx           # Application sidebar
+```
+
+### Export Naming
+
+Export component/function names in **PascalCase** (for components) or **camelCase** (for functions):
+
+```typescript
+// File: post-detail-view.tsx
+export function PostDetailView() { ... }
+
+// File: format-date.ts
+export function formatDate() { ... }
+
+// File: use-post-form.ts
+export function usePostForm() { ... }
+```
+
+### Index Files
+
+Use `index.ts` to re-export public APIs:
+
+```typescript
+// entities/post/index.ts
+export type { IPost, ICreatePost } from "./api/dtos"
+export { postQueries } from "./api/queries"
+
+// features/post/index.ts
+export { LikeButton } from "./ui/like-button"
+export { DeletePostDialog } from "./ui/delete-post-dialog"
+
+// widgets/post/index.ts
+export { PostDetailView } from "./ui/post-detail-view"
+```
