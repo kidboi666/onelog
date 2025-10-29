@@ -2,10 +2,9 @@
 
 import { useSuspenseQueries, useSuspenseQuery } from "@tanstack/react-query";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { Fragment } from "react";
 import NavigationMenuButton from "@/app/(playground)/profile/[userId]/@user_info/journal_garden/_components/NavigationMenuButton";
 import { postCountQueries } from "@/entities/post/api/queries";
-import { cn } from "@/shared/utils/tw-merge";
+import { Separator } from "@/shared/components/ui/separator";
 import { PROFILE_NAVIGATE_MENUS } from "../../../_constants/navigate";
 
 interface Props {
@@ -31,24 +30,25 @@ export default function MenuSection({ userId }: Props) {
   );
   const segment = useSelectedLayoutSegment();
 
-  return PROFILE_NAVIGATE_MENUS.map((menu, idx) => {
-    return (
-      <Fragment key={menu.id}>
-        <NavigationMenuButton
-          segment={segment}
-          menu={menu}
-          counts={counts}
-          likedCount={likedCount}
-          userId={userId}
-        />
-        {PROFILE_NAVIGATE_MENUS.length === idx + 1 ? null : (
-          <div
-            className={cn(
-              "my-auto h-3 border-zinc-200 border-r dark:border-zinc-600",
+  return (
+    <div className="flex justify-between rounded-md bg-card p-2 shadow-sm">
+      {PROFILE_NAVIGATE_MENUS.map((menu, idx) => {
+        return (
+          <>
+            <NavigationMenuButton
+              key={menu.id}
+              segment={segment}
+              menu={menu}
+              counts={counts}
+              likedCount={likedCount}
+              userId={userId}
+            />
+            {PROFILE_NAVIGATE_MENUS.length === idx + 1 ? null : (
+              <Separator orientation="vertical" />
             )}
-          />
-        )}
-      </Fragment>
-    );
-  });
+          </>
+        );
+      })}
+    </div>
+  );
 }

@@ -13,7 +13,7 @@ export default async function Default({ params }: Props) {
   const { userId } = await params;
   return (
     <>
-      <div className="rounded-md bg-white p-8 shadow-sm transition max-lg:py-4 dark:bg-var-darkgray">
+      <div className="rounded-md bg-card p-8 shadow-sm transition max-lg:py-4">
         <div className="flex flex-col items-center justify-center gap-4">
           <ProfileHeader userId={userId} />
           <ProfileAboutMe userId={userId} />

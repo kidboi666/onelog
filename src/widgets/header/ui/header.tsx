@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useState } from "react";
-import { ROUTES } from "@/shared/routes/constants";
 import { useMe } from "@/app/_store/use-me";
 import { SignInDialog, SignUpDialog } from "@/features/auth/ui";
 import {
@@ -22,6 +21,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/shared/components/ui/sheet";
+import { ROUTES } from "@/shared/routes/constants";
 import { cn } from "@/shared/utils/tw-merge";
 import { TOP_MENUS } from "@/widgets/header/model/menu-items";
 
@@ -173,17 +173,12 @@ export function Header() {
             </SheetContent>
           </Sheet>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleThemeToggle}
-            className="flex items-center gap-2"
-          >
-            <div className="flex size-6 items-center justify-center overflow-hidden">
+          <Button variant="ghost" size="icon" onClick={handleThemeToggle}>
+            <div className="flex size-5 overflow-hidden">
               <div
                 className={cn(
                   "transition-transform duration-300",
-                  theme === "dark" ? "-translate-y-6" : "translate-y-0",
+                  theme === "dark" ? "-translate-y-5" : "translate-y-0",
                 )}
               >
                 <Sun className="size-5" />

@@ -33,9 +33,8 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div className="flex gap-4">
-      {/* Main Content */}
       <div className="flex flex-1 animate-fade-in flex-col gap-8">
-        <div className="flex flex-col gap-0 rounded-md bg-white p-2 shadow-sm sm:gap-4 sm:p-4 dark:bg-var-darkgray">
+        <div className="flex flex-col gap-0 rounded-md bg-card p-2 shadow-sm sm:gap-4 sm:p-4">
           <PostHeader postId={postIdNum} />
           <Separator />
           <PostBody postId={postIdNum} />
@@ -45,8 +44,7 @@ export default async function PostPage({ params }: Props) {
         <RenderCommentFromPost postId={postIdNum} />
       </div>
 
-      {/* Side Menu */}
-      <div className="sticky top-8 left-4 hidden h-fit animate-fade-in-reverse rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
+      <div className="sticky top-8 left-4 hidden h-fit animate-fade-in-reverse rounded-md bg-card p-2 shadow-md max-lg:fixed sm:flex">
         <nav className="flex flex-col items-center">
           <PostCountInfo postId={postIdNum} />
           <Separator className="w-full" />

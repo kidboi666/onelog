@@ -25,11 +25,7 @@ export default async function UserLayout({
   const { userId } = await params;
   return (
     <div className="flex flex-col gap-8">
-      <div className="overflow-x-auto rounded-md bg-white p-1 shadow-sm dark:bg-var-darkgray">
-        <div className="relative gap-2">
-          <MenuSection userId={userId} />
-        </div>
-      </div>
+      <MenuSection userId={userId} />
       {user_info}
     </div>
   );
