@@ -12,7 +12,7 @@ import type {
 import type { IUploadAvatar } from "@/entities/auth/model/types";
 import type { IUserInfo } from "@/entities/user/model/types";
 import { Button } from "@/shared/components/ui/button";
-import useProfileFormValidation from "../_hooks/useProfileFormValidation";
+import { useProfileFormValidation } from "@/features/user/hooks/use-profile-form-validation";
 import AboutMeSection from "./AboutMeSection";
 import EmailSection from "./EmailSection";
 import ProfileImageSection from "./ProfileImageSection";

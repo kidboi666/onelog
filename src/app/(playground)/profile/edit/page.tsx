@@ -2,8 +2,8 @@
 
 import { useMe } from "@/app/_store/use-me";
 import ProfileForm from "./_components/ProfileForm";
-import useProfileForm from "./_hooks/useProfileForm";
-import useProfileMutations from "./_hooks/useProfileMutations";
+import { useProfileForm } from "@/features/user/hooks/use-profile-form";
+import { useProfileMutations } from "@/features/user/hooks/use-profile-mutations";
 
 export default function ProfileEditPage() {
   const { me } = useMe();

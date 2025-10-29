@@ -6,7 +6,7 @@ import type {
 import type { IUserInfo } from '@/entities/user/model/types'
 import type { TMBTI } from '@/app/(playground)/profile/edit/_constants/mbti'
 
-export default function useProfileForm(initialValues?: IUserInfo | null): {
+export function useProfileForm(initialValues?: IUserInfo | null): {
   states: IUpdateProfileFormStates
   actions: IUpdateProfileFormActions
 } {

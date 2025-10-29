@@ -4,7 +4,7 @@ import {
   useUploadAvatarImage,
 } from '@/entities/auth/api/mutates'
 
-export default function useProfileMutations() {
+export function useProfileMutations() {
   const {
     mutate: updateProfile,
     isPending: isPendingUpdateUserInfo,
