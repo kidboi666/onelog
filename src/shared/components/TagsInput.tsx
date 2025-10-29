@@ -1,59 +1,55 @@
-'use client'
+"use client";
 
-import { useState, KeyboardEvent } from 'react'
-import { X } from 'lucide-react'
-import { Input } from '@/shared/components/ui/input'
-import { Badge } from '@/shared/components/ui/badge'
-import { Button } from '@/shared/components/ui/button'
-import { cn } from '@/shared/utils/tw-merge'
+import { X } from "lucide-react";
+import { type KeyboardEvent, useState } from "react";
+import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
+import { cn } from "@/shared/utils/tw-merge";
 
 interface TagsInputProps {
-  tags: string[]
-  setTags: (tags: string[]) => void
-  disabled?: boolean
-  placeholder?: string
-  maxTags?: number
-  className?: string
+  tags: string[];
+  setTags: (tags: string[]) => void;
+  disabled?: boolean;
+  placeholder?: string;
+  maxTags?: number;
+  className?: string;
 }
 
 export function TagsInput({
   tags,
   setTags,
   disabled = false,
-  placeholder = '태그를 입력하세요 (Enter로 추가)',
+  placeholder = "태그를 입력하세요 (Enter로 추가)",
   maxTags = 10,
   className,
 }: TagsInputProps) {
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState("");
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      addTag()
-    } else if (e.key === 'Backspace' && inputValue === '' && tags.length > 0) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addTag();
+    } else if (e.key === "Backspace" && inputValue === "" && tags.length > 0) {
       // Backspace on empty input removes the last tag
-      removeTag(tags.length - 1)
+      removeTag(tags.length - 1);
     }
-  }
+  };
 
   const addTag = () => {
-    const trimmedValue = inputValue.trim()
-    if (
-      trimmedValue &&
-      !tags.includes(trimmedValue) &&
-      tags.length < maxTags
-    ) {
-      setTags([...tags, trimmedValue])
-      setInputValue('')
+    const trimmedValue = inputValue.trim();
+    if (trimmedValue && !tags.includes(trimmedValue) && tags.length < maxTags) {
+      setTags([...tags, trimmedValue]);
+      setInputValue("");
     }
-  }
+  };
 
   const removeTag = (index: number) => {
-    setTags(tags.filter((_, i) => i !== index))
-  }
+    setTags(tags.filter((_, i) => i !== index));
+  };
 
   return (
-    <div className={cn('flex flex-col gap-2', className)}>
+    <div className={cn("flex flex-col gap-2", className)}>
       <Input
         type="text"
         value={inputValue}
@@ -67,11 +63,7 @@ export function TagsInput({
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {tags.map((tag, index) => (
-            <Badge
-              key={index}
-              variant="secondary"
-              className="gap-1 pr-1"
-            >
+            <Badge key={index} variant="secondary" className="gap-1 pr-1">
               <span>{tag}</span>
               <Button
                 type="button"
@@ -88,10 +80,10 @@ export function TagsInput({
         </div>
       )}
       {tags.length >= maxTags && (
-        <p className="text-xs text-muted-foreground">
+        <p className="text-muted-foreground text-xs">
           최대 {maxTags}개의 태그까지 추가할 수 있습니다.
         </p>
       )}
     </div>
-  )
+  );
 }
