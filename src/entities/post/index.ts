@@ -10,3 +10,4 @@ export type {
   IUpdatePostFormStates,
 } from "./api/dtos";
 export { postQueries } from "./api/queries";
+export { PostContent, PostHeaderInfo, PostAuthorCard } from "./ui";

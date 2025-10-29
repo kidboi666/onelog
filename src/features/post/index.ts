@@ -11,3 +11,10 @@ export { PostHeader } from "./ui/PostHeader";
 export { RenderActionButtonFromAuthorInfo } from "./ui/RenderActionButtonFromAuthorInfo";
 export { RenderCommentFromPost } from "./ui/RenderCommentFromPost";
 export { SideActionBar } from "./ui/SideActionBar";
+
+// New kebab-case components
+export { LikeButton } from "./ui/like-button";
+export { ShareButton } from "./ui/share-button";
+export { ReportButton } from "./ui/report-button";
+export { PostOptionsMenu } from "./ui/post-options-menu";
+export { AccessTypeSelector } from "./ui/access-type-selector";
