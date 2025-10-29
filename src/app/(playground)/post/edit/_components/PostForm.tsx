@@ -18,7 +18,7 @@ import {
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Separator } from "@/shared/components/ui/separator";
-import usePostSubmit from "../_hooks/usePostSubmit";
+import { usePostSubmit } from "@/features/post/hooks/use-post-submit";
 import BubbleMenuBar from "./BubbleMenuBar";
 import MobileOptionSection from "./MobileOptionSection";
 

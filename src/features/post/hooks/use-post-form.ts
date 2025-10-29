@@ -7,7 +7,7 @@ import type { IPostDetail } from "@/entities/post/model/types";
 import type { EmotionLevel } from "@/shared/types/enums";
 import { Access, PostType } from "@/shared/types/enums";
 
-export default function usePostForm(initialPost: IPostDetail | null): {
+export function usePostForm(initialPost: IPostDetail | null): {
   states: IUpdatePostFormStates;
   actions: IUpdatePostFormActions;
 } {

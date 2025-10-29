@@ -4,7 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { useMe } from "@/app/_store/use-me";
 import { postQueries } from "@/entities/post/api/queries";
-import usePostForm from "./_hooks/usePostForm";
+import { usePostForm } from "@/features/post/hooks/use-post-form";
 
 const PostForm = dynamic(() => import("./_components/PostForm"), {
   ssr: false,

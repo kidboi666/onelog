@@ -5,7 +5,7 @@ import type { IUpdatePostFormStates } from "@/entities/post";
 import { useCreatePost } from "@/features/post/api/use-create-post";
 import { useUpdatePost } from "@/features/post/api/use-update-post";
 
-export default function usePostSubmit({
+export function usePostSubmit({
   meId,
   postId,
   formState,

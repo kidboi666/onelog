@@ -4,7 +4,7 @@ import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import Link from "next/link";
 import { useState } from "react";
-import { useCommentReplies } from "@/app/(playground)/(home)/_hooks/useCommentReplies";
+import { useCommentReplies } from "../hooks/use-comment-replies";
 import type { IComment } from "@/entities/comment/model/types";
 import type { IUserInfo } from "@/entities/user/model/types";
 import { ROUTES } from "@/shared/routes/constants";
