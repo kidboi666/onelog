@@ -9,7 +9,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/shared/components/ui/avatar";
-import { ROUTES } from "@/app/_routes/constants";
+import { ROUTES } from "@/shared/routes/constants";
 import RenderActionButtonFromAuthorInfo from "./RenderActionButtonFromAuthorInfo";
 
 interface Props {
@@ -39,10 +39,10 @@ export default function PostAuthorInfo({ postId }: Props) {
           <Avatar className="size-12">
             <AvatarImage
               src={userInfo.avatarUrl || undefined}
-              alt={userInfo.userName}
+              alt={userInfo.userName || undefined}
             />
             <AvatarFallback>
-              {userInfo.userName.charAt(0).toUpperCase()}
+              {userInfo.userName?.charAt(0).toUpperCase() || "U"}
             </AvatarFallback>
           </Avatar>
           <div className="flex w-full flex-col gap-1">

@@ -1,21 +1,26 @@
-import { BubbleMenu, Editor, EditorContent } from "@tiptap/react";
-import { Loader2 } from "lucide-react";
+import { type Editor, EditorContent } from "@tiptap/react";
+import { BubbleMenu } from "@tiptap/react/menus";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import {
+import { Loader2 } from "lucide-react";
+import type {
   IUpdatePostFormActions,
   IUpdatePostFormStates,
-} from "@/shared/types/dtos/post";
+} from "@/entities/post";
 import useBlockEditor from "@/hooks/useBlockEditor";
-import { Avatar, AvatarImage, AvatarFallback } from "@/shared/components/ui/avatar";
+import EmotionGauge from "@/shared/components/EmotionGauge";
+import { TagsInput } from "@/shared/components/TagsInput";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Separator } from "@/shared/components/ui/separator";
-import { TagsInput } from "@/shared/components/TagsInput";
-import EmotionGauge from "@/app/(playground)/(home)/_components/EmotionGauge";
+import usePostSubmit from "../_hooks/usePostSubmit";
 import BubbleMenuBar from "./BubbleMenuBar";
 import MobileOptionSection from "./MobileOptionSection";
-import usePostSubmit from "../_hooks/usePostSubmit";
 
 interface Props {
   postId: number;
@@ -63,27 +68,27 @@ export default function PostForm({
       <div className="flex flex-col gap-0">
         <div className="flex gap-4">
           <Avatar className="size-10 ring-2 ring-primary">
-            <AvatarImage src={avatarUrl || undefined} alt={userName || "User"} />
+            <AvatarImage
+              src={avatarUrl || undefined}
+              alt={userName || "User"}
+            />
             <AvatarFallback>{userName?.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-0 self-end">
             <div className="flex items-end gap-1">
-              <h3 className="text-muted-foreground text-xs font-medium">
+              <h3 className="font-medium text-muted-foreground text-xs">
                 {userName}
               </h3>
-              <span className="text-muted-foreground text-caption text-sm">
+              <span className="text-caption text-muted-foreground text-sm">
                 · @{email?.split("@")[0]}
               </span>
             </div>
-            <p className="text-muted-foreground text-caption text-sm">
+            <p className="text-caption text-muted-foreground text-sm">
               {formattedDate} · {formattedTime}
             </p>
           </div>
           <div className="flex flex-1 justify-end">
-            <EmotionGauge
-              emotionLevel={formState.emotionLevel}
-              onClick={actions.onChangeEmotion}
-            />
+            <EmotionGauge emotionLevel={formState.emotionLevel} />
           </div>
         </div>
         <Separator className="my-4" />
@@ -96,7 +101,7 @@ export default function PostForm({
         />
         <div className="flex max-h-full cursor-text flex-col gap-0">
           {editor && (
-            <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+            <BubbleMenu editor={editor}>
               <BubbleMenuBar editor={editor} />
             </BubbleMenu>
           )}

@@ -1,4 +1,5 @@
-import { Access, EmotionLevel, PostType } from "@/shared/types/enums/index";
+import type { EmotionLevel } from "@/shared/types/enums";
+import { Access, PostType } from "@/shared/types/enums";
 import EmotionSection from "./EmotionSection";
 import PostTypeSection from "./PostTypeSection";
 import PublishSection from "./PublishSection";

@@ -14,7 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/shared/components/ui/tooltip";
-import { EmotionLevel } from "@/shared/types/enums";
+import type { EmotionLevel } from "@/shared/types/enums";
 import { cn } from "@/shared/utils/tw-merge";
 import { EMOTION_STATUS } from "../_constants";
 
@@ -25,11 +25,11 @@ interface Props {
 }
 
 const emotionLabels: Record<EmotionLevel, string> = {
-  [EmotionLevel["0%"]]: "매우나쁨",
-  [EmotionLevel["25%"]]: "나쁨",
-  [EmotionLevel["50%"]]: "보통",
-  [EmotionLevel["75%"]]: "좋음",
-  [EmotionLevel["100%"]]: "매우좋음",
+  0: "매우나쁨",
+  25: "나쁨",
+  50: "보통",
+  75: "좋음",
+  100: "매우좋음",
 };
 
 export default function EmotionSection({

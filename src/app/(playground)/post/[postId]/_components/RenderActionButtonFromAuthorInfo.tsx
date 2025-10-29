@@ -5,7 +5,7 @@ import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import useFollowMutates from "@/hooks/mutates/useFollowMutates";
 import useFollowValidate from "@/hooks/queries/useFollowValidate";
-import { ROUTES } from "@/app/_routes/constants";
+import { ROUTES } from "@/shared/routes/constants";
 import { Button } from "@/shared/components/ui/button";
 
 interface Props {

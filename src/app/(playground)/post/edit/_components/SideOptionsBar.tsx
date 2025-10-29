@@ -1,5 +1,5 @@
-import { Access, EmotionLevel, PostType } from "@/shared/types/enums/index";
 import { Separator } from "@/shared/components/ui/separator";
+import type { Access, EmotionLevel, PostType } from "@/shared/types/enums";
 import EmotionSection from "./EmotionSection";
 import PostTypeSection from "./PostTypeSection";
 import PublishSection from "./PublishSection";
@@ -22,7 +22,7 @@ export default function SideOptionsBar({
   onChangeAccessType,
 }: Props) {
   return (
-    <div className="sticky left-4 top-8 hidden h-fit animate-fade-in-reverse rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
+    <div className="sticky top-8 left-4 hidden h-fit animate-fade-in-reverse rounded-md bg-white p-2 shadow-md max-lg:fixed sm:flex dark:bg-var-darkgray">
       <nav className="flex flex-col items-center">
         <PublishSection
           accessType={accessType}
