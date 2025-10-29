@@ -4,8 +4,8 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useMe } from "@/app/_store/use-me";
-import AvatarButtonWithDropDown from "@/app/(playground)/(home)/_components/AvatarButtonWithDropDown";
 import { postQueries } from "@/entities/post/api/queries";
+import { UserAvatarCard } from "@/entities/user/ui";
 import EmotionGauge from "@/shared/components/emotion-gauge";
 
 interface Props {
@@ -34,7 +34,7 @@ export function PostHeader({ postId }: Props) {
 
   return (
     <div className="flex items-center gap-4">
-      <AvatarButtonWithDropDown
+      <UserAvatarCard
         userId={userId}
         userName={userName}
         avatarUrl={avatarUrl}

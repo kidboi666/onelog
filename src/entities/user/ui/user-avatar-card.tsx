@@ -10,7 +10,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/shared/components/ui/hover-card";
-import AvatarButtonWithDropDownContent from "./AvatarButtonWithDropDownContent";
+import { UserAvatarCardContent } from "./user-avatar-card-content";
 
 interface Props {
   avatarUrl: string | null;
@@ -19,7 +19,7 @@ interface Props {
   position?: "bottomRight" | "topRight" | "topLeft" | "bottomLeft";
 }
 
-export default function AvatarButtonWithDropDown({
+export function UserAvatarCard({
   avatarUrl,
   userId,
   userName,
@@ -57,7 +57,7 @@ export default function AvatarButtonWithDropDown({
         side={getSide()}
         className="w-80 p-0"
       >
-        <AvatarButtonWithDropDownContent
+        <UserAvatarCardContent
           avatarUrl={avatarUrl}
           userName={userName}
           userId={userId}

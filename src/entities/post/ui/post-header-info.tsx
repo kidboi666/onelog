@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import AvatarButtonWithDropDown from "@/app/(playground)/(home)/_components/AvatarButtonWithDropDown";
 import type { IPost } from "@/entities/post/model/types";
+import { UserAvatarCard } from "@/entities/user/ui";
 import EmotionGauge from "@/shared/components/emotion-gauge";
 
 interface Props {
@@ -23,7 +23,7 @@ export function PostHeaderInfo({ post }: Props) {
 
   return (
     <div className="flex items-center gap-4">
-      <AvatarButtonWithDropDown
+      <UserAvatarCard
         userId={userId}
         userName={userName}
         avatarUrl={avatarUrl}

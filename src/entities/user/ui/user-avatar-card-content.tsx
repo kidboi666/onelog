@@ -16,7 +16,7 @@ interface Props {
   userId: string;
 }
 
-export default function AvatarButtonWithDropDownContent({
+export function UserAvatarCardContent({
   userId,
   userName,
   avatarUrl,
