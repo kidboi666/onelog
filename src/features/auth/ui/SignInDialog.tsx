@@ -25,11 +25,18 @@ const signInSchema = z.object({
 type SignInFormData = z.infer<typeof signInSchema>;
 
 interface SignInDialogProps {
-  children: ReactNode;
+  children?: ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   onSwitchToSignUp?: () => void;
 }
 
-export function SignInDialog({ children, onSwitchToSignUp }: SignInDialogProps) {
+export function SignInDialog({
+  children,
+  open,
+  onOpenChange,
+  onSwitchToSignUp,
+}: SignInDialogProps) {
   const { mutate: signIn, isPending } = useSignIn();
   const {
     register,
@@ -49,8 +56,8 @@ export function SignInDialog({ children, onSwitchToSignUp }: SignInDialogProps) 
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {children && <DialogTrigger asChild>{children}</DialogTrigger>}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>로그인</DialogTitle>

@@ -32,11 +32,18 @@ const signUpSchema = z
 type SignUpFormData = z.infer<typeof signUpSchema>;
 
 interface SignUpDialogProps {
-  children: ReactNode;
+  children?: ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   onSwitchToSignIn?: () => void;
 }
 
-export function SignUpDialog({ children, onSwitchToSignIn }: SignUpDialogProps) {
+export function SignUpDialog({
+  children,
+  open,
+  onOpenChange,
+  onSwitchToSignIn,
+}: SignUpDialogProps) {
   const { mutate: signUp, isPending } = useSignUp();
   const {
     register,
@@ -62,8 +69,8 @@ export function SignUpDialog({ children, onSwitchToSignIn }: SignUpDialogProps) 
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {children && <DialogTrigger asChild>{children}</DialogTrigger>}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>회원가입</DialogTitle>
