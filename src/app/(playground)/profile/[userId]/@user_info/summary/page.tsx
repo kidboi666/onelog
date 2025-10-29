@@ -1,8 +1,7 @@
 "use client";
 
 import { Separator } from "@/shared/components/ui/separator";
-import ProfileAboutMe from "../../_components/ProfileAboutMe";
-import ProfileHeader from "../../_components/ProfileHeader";
+import { ProfileAboutMeView, ProfileHeaderView } from "@/widgets/profile";
 import RenderFollowButtonFromProfile from "../../_components/RenderFollowButtonFromProfile";
 import AuthHistory from "./_components/AuthHistory";
 import MyFavoriteWords from "./_components/MyFavoriteWords";
@@ -16,9 +15,9 @@ export default function UserInfoSummary({ params: { userId } }: Props) {
     <>
       <div className="rounded-md bg-white p-8 shadow-sm transition max-lg:py-4 dark:bg-var-darkgray">
         <div className="flex flex-col items-center justify-center gap-4">
-          <ProfileHeader userId={userId} />
+          <ProfileHeaderView userId={userId} />
           <Separator className="w-full" />
-          <ProfileAboutMe userId={userId} />
+          <ProfileAboutMeView userId={userId} />
           <RenderFollowButtonFromProfile userId={userId} />
         </div>
       </div>
