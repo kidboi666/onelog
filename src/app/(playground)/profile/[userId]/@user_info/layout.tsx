@@ -1,16 +1,11 @@
-'use client'
+"use client";
 
-import { useSelectedLayoutSegment } from 'next/navigation'
-import { PropsWithChildren } from 'react'
+import type { PropsWithChildren } from "react";
 
 interface Props {
-  params: Promise<{ userId: string }>
+  params: Promise<{ userId: string }>;
 }
 
-export default function Layout({
-  children,
-}: PropsWithChildren<Props>) {
-  const segment = useSelectedLayoutSegment()
-  console.log(segment)
-  return <>{children}</>
+export default function Layout({ children }: PropsWithChildren<Props>) {
+  return <>{children}</>;
 }

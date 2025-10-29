@@ -1,3 +1,4 @@
+import MenuSection from "@/app/(playground)/profile/[userId]/@user_info/journal_garden/_components/MenuSection";
 import AuthHistory from "@/app/(playground)/profile/[userId]/@user_info/summary/_components/AuthHistory";
 import ProfileAboutMe from "@/app/(playground)/profile/[userId]/_components/ProfileAboutMe";
 import ProfileHeader from "@/app/(playground)/profile/[userId]/_components/ProfileHeader";
@@ -21,6 +22,7 @@ export default async function Default({ params }: Props) {
           <RenderActionButtonFromProfile userId={userId} />
         </div>
       </div>
+      <MenuSection userId={userId} />
       <AuthHistory userId={userId} />
       <MyFavoriteWords userId={userId} />
     </>

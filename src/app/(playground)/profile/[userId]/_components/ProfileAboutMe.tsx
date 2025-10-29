@@ -12,7 +12,7 @@ export default function ProfileAboutMe({ userId }: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-sm text-foreground">
+      <p className="text-foreground text-sm">
         {user?.aboutMe ?? "자기 소개를 작성해주세요."}
       </p>
     </div>

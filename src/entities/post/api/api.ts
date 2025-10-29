@@ -155,4 +155,28 @@ export const postApi = {
     handleError(error);
     return data || [];
   },
+
+  countUserPost: async (
+    userId: string,
+    supabase: SupabaseClient = createBrowserClient(),
+  ) => {
+    const { count, error } = await supabase
+      .from("post")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", userId);
+    handleError(error);
+    return count ?? 0;
+  },
+
+  countLikedPost: async (
+    userId: string,
+    supabase: SupabaseClient = createBrowserClient(),
+  ) => {
+    const { count, error } = await supabase
+      .from("like")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", userId);
+    handleError(error);
+    return count ?? 0;
+  },
 };

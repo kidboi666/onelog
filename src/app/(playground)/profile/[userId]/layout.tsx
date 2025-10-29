@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import type { PropsWithChildren, ReactNode } from "react";
-import MenuSection from "@/app/(playground)/profile/[userId]/@user_info/journal_garden/_components/MenuSection";
 import { getUserInfo } from "@/entities/user/lib/user-service";
 import { createServerClient } from "@/shared/lib/supabase/create-server-client";
 
@@ -19,14 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function UserLayout({
-  params,
   user_info,
 }: PropsWithChildren<Props>) {
-  const { userId } = await params;
-  return (
-    <div className="flex flex-col gap-8">
-      <MenuSection userId={userId} />
-      {user_info}
-    </div>
-  );
+  return <div className="flex flex-col gap-8">{user_info}</div>;
 }

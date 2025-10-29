@@ -18,16 +18,16 @@ export default function HistoryBlock({
   return (
     <div
       className={cn(
-        "flex-1 rounded-lg bg-white p-2 shadow-sm sm:p-4 dark:bg-var-darkgray",
-        className
+        "flex-1 rounded-lg bg-card p-2 shadow-sm sm:p-4",
+        className,
       )}
     >
       <div className="flex flex-col items-center gap-4">
         <div className="flex flex-col gap-0">
           <h3
             className={cn(
-              "text-muted-foreground text-xs font-medium",
-              isEmotionBlock && "text-white dark:text-white"
+              "font-medium text-muted-foreground text-xs",
+              isEmotionBlock && "text-white dark:text-white",
             )}
           >
             {title}
@@ -35,8 +35,8 @@ export default function HistoryBlock({
         </div>
         <div
           className={cn(
-            "text-3xl font-bold",
-            isEmotionBlock && "text-white dark:text-white"
+            "font-bold text-3xl",
+            isEmotionBlock && "text-white dark:text-white",
           )}
         >
           {content}

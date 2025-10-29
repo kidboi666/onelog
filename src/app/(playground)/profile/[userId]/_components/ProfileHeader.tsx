@@ -2,7 +2,11 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { userQuery } from "@/entities/user/api/queries";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
 import EmotionAverage from "./EmotionAverage";
 
 interface Props {
@@ -17,7 +21,7 @@ export default function ProfileHeader({ userId, color }: Props) {
   return (
     <>
       <div className="relative">
-        <Avatar className="size-20 ring-2 ring-border shadow-sm">
+        <Avatar className="size-20 shadow-sm ring-2 ring-border">
           <AvatarImage src={user?.avatarUrl || undefined} alt={displayName} />
           <AvatarFallback className="text-lg">
             {displayName[0]?.toUpperCase()}
