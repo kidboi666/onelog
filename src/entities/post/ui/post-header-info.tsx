@@ -1,25 +1,14 @@
-"use client";
-
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import { useMe } from "@/app/_store/use-me";
 import AvatarButtonWithDropDown from "@/app/(playground)/(home)/_components/AvatarButtonWithDropDown";
-import { postQueries } from "@/entities/post/api/queries";
+import type { IPost } from "@/entities/post/model/types";
 import EmotionGauge from "@/shared/components/emotion-gauge";
 
 interface Props {
-  postId: number;
+  post: IPost;
 }
 
-export function PostHeaderInfo({ postId }: Props) {
-  const { me } = useMe();
-  const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
-
-  if (!post) {
-    return null;
-  }
-
+export function PostHeaderInfo({ post }: Props) {
   const {
     userId,
     userInfo: { userName, avatarUrl, email },

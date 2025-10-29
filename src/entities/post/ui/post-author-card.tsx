@@ -1,9 +1,7 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useMe } from "@/app/_store/use-me";
-import { postQueries } from "@/entities/post/api/queries";
+import type { IPost } from "@/entities/post/model/types";
 import {
   Avatar,
   AvatarFallback,
@@ -13,18 +11,12 @@ import { ROUTES } from "@/shared/routes/constants";
 import type { ReactNode } from "react";
 
 interface Props {
-  postId: number;
+  post: IPost;
   children?: ReactNode;
 }
 
-export function PostAuthorCard({ postId, children }: Props) {
+export function PostAuthorCard({ post, children }: Props) {
   const router = useRouter();
-  const { me } = useMe();
-  const { data: post } = useSuspenseQuery(postQueries.getPost(postId, me?.id));
-
-  if (!post) {
-    return null;
-  }
 
   const pushNewPostPage = () => router.push(ROUTES.PROFILE.VIEW(post.userId));
 
