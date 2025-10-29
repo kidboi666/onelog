@@ -1,13 +1,13 @@
 import { Editor } from "@tiptap/react";
 import { Fragment } from "react";
-import MenuItem from "./MenuItem";
+import { MenuItem } from "./menu-item";
 
 
 interface Props {
   editor: Editor
 }
 
-export default function BubbleMenuBar({ editor }: Props) {
+export function BubbleMenuBar({ editor }: Props) {
   if (!editor) return null
 
   const items = [

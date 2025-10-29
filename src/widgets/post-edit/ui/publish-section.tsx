@@ -23,7 +23,7 @@ interface Props {
   isSide?: boolean;
 }
 
-export default function PublishSection({
+export function PublishSection({
   onChangeAccessType,
   accessType,
   isSide,

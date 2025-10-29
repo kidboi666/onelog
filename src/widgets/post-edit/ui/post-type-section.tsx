@@ -23,7 +23,7 @@ interface Props {
   isSide?: boolean;
 }
 
-export default function PostTypeSection({
+export function PostTypeSection({
   onChangePostType,
   postType,
   isSide,

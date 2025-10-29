@@ -16,7 +16,7 @@ import {
 } from "@/shared/components/ui/tooltip";
 import type { EmotionLevel } from "@/shared/types/enums";
 import { cn } from "@/shared/utils/tw-merge";
-import { EMOTION_STATUS } from "../_constants";
+import { EMOTION_STATUS } from "../model/constants";
 
 interface Props {
   onChangeEmotion: (emotion: EmotionLevel | null) => void;
@@ -32,7 +32,7 @@ const emotionLabels: Record<EmotionLevel, string> = {
   100: "매우좋음",
 };
 
-export default function EmotionSection({
+export function EmotionSection({
   selectedEmotion,
   onChangeEmotion,
   isSide,

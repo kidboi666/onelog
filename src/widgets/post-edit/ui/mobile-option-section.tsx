@@ -1,8 +1,8 @@
 import type { EmotionLevel } from "@/shared/types/enums";
 import { Access, PostType } from "@/shared/types/enums";
-import EmotionSection from "./EmotionSection";
-import PostTypeSection from "./PostTypeSection";
-import PublishSection from "./PublishSection";
+import { EmotionSection } from "./emotion-section";
+import { PostTypeSection } from "./post-type-section";
+import { PublishSection } from "./publish-section";
 
 interface Props {
   accessType: Access;
@@ -13,7 +13,7 @@ interface Props {
   onChangeEmotion: (emotionLevel: EmotionLevel | null) => void;
 }
 
-export default function MobileOptionSection({
+export function MobileOptionSection({
   accessType,
   postType,
   emotionLevel,

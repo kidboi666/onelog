@@ -1,8 +1,8 @@
 import { Separator } from "@/shared/components/ui/separator";
 import type { Access, EmotionLevel, PostType } from "@/shared/types/enums";
-import EmotionSection from "./EmotionSection";
-import PostTypeSection from "./PostTypeSection";
-import PublishSection from "./PublishSection";
+import { EmotionSection } from "./emotion-section";
+import { PostTypeSection } from "./post-type-section";
+import { PublishSection } from "./publish-section";
 
 interface Props {
   accessType: Access;
@@ -13,7 +13,7 @@ interface Props {
   onChangeAccessType: (accessType: Access) => void;
 }
 
-export default function SideOptionsBar({
+export function SideOptionsBar({
   accessType,
   emotionLevel,
   postType,

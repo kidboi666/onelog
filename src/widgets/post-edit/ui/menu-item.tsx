@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/utils/tw-merge";
 
-export default function MenuItem({
+export function MenuItem({
   icon,
   title,
   action,

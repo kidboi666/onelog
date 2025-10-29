@@ -6,12 +6,14 @@ import { useMe } from "@/app/_store/use-me";
 import { postQueries } from "@/entities/post/api/queries";
 import { usePostForm } from "@/features/post/hooks/use-post-form";
 
-const PostForm = dynamic(() => import("./_components/PostForm"), {
-  ssr: false,
-});
-const SideOptionsBar = dynamic(() => import("./_components/SideOptionsBar"), {
-  ssr: false,
-});
+const PostForm = dynamic(
+  () => import("@/widgets/post-edit/ui").then((mod) => ({ default: mod.PostForm })),
+  { ssr: false }
+);
+const SideOptionsBar = dynamic(
+  () => import("@/widgets/post-edit/ui").then((mod) => ({ default: mod.SideOptionsBar })),
+  { ssr: false }
+);
 
 interface Props {
   searchParams: { post_id: string };
