@@ -1,21 +1,22 @@
-import {
+import type {
   UseMutateAsyncFunction,
   UseMutateFunction,
 } from "@tanstack/react-query";
-import { FormEvent } from "react";
 import { Loader2 } from "lucide-react";
-import {
+import type { FormEvent } from "react";
+import type {
   IUpdateProfileFormActions,
   IUpdateProfileFormStates,
   IUpdateUserInfo,
-} from "@/src/types/dtos/auth";
-import { IUploadAvatar, IUserInfo } from "@/src/types/entities/auth";
+} from "@/entities/auth/api/dtos";
+import type { IUploadAvatar } from "@/entities/auth/model/types";
+import type { IUserInfo } from "@/entities/user/model/types";
 import { Button } from "@/shared/components/ui/button";
+import useProfileFormValidation from "../_hooks/useProfileFormValidation";
 import AboutMeSection from "./AboutMeSection";
 import EmailSection from "./EmailSection";
 import ProfileImageSection from "./ProfileImageSection";
 import UserNameSection from "./UserNameSection";
-import useProfileFormValidation from "../_hooks/useProfileFormValidation";
 
 interface Props {
   me: IUserInfo;
@@ -43,7 +44,7 @@ export default function ProfileForm({
 }: Props) {
   const { isFormUnChanged, isFormInvalid } = useProfileFormValidation(
     states,
-    me
+    me,
   );
 
   const handleProfileUpdate = async (e: FormEvent) => {

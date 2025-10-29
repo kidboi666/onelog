@@ -1,5 +1,5 @@
-import { IUpdateProfileFormStates } from '@/src/types/dtos/auth'
-import { IUserInfo } from '@/src/types/entities/auth'
+import type { IUpdateProfileFormStates } from '@/entities/auth/api/dtos'
+import type { IUserInfo } from '@/entities/user/model/types'
 
 export default function useProfileFormValidation(
   states: IUpdateProfileFormStates,

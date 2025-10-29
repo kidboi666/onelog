@@ -1,10 +1,10 @@
 import { ChangeEvent, ComponentProps, useEffect, useRef } from "react";
 import { Pencil } from "lucide-react";
 import { toast } from "sonner";
-import {
+import type {
   IUpdateProfileFormActions,
   IUpdateProfileFormStates,
-} from "@/src/types/dtos/auth";
+} from "@/entities/auth/api/dtos";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
 import { Button } from "@/shared/components/ui/button";
 import { Label } from "@/shared/components/ui/label";

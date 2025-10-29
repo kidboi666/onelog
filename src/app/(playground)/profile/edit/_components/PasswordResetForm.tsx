@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ROUTES } from "@/app/_routes/constants";
+import { ROUTES } from "@/shared/routes/constants";
 import { useMe } from "@/app/_store/use-me";
 import { Button } from "@/shared/components/ui/button";
 import { Label } from "@/shared/components/ui/label";

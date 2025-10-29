@@ -1,6 +1,8 @@
-import useDeleteAvatarImage from '@/src/services/mutates/auth/use-delete-avatar-image'
-import useUpdateUserInfo from '@/src/services/mutates/auth/use-update-user-info'
-import useUploadAvatarImage from '@/src/services/mutates/auth/use-upload-avatar-image'
+import {
+  useDeleteAvatarImage,
+  useUpdateUserInfo,
+  useUploadAvatarImage,
+} from '@/entities/auth/api/mutates'
 
 export default function useProfileMutations() {
   const {

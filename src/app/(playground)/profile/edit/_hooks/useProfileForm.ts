@@ -1,10 +1,10 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import {
+import type {
   IUpdateProfileFormActions,
   IUpdateProfileFormStates,
-} from '@/src/types/dtos/auth'
-import { IUserInfo } from '@/src/types/entities/auth'
-import { TMBTI } from '@/src/app/(playground)/profile/edit/_constants/mbti'
+} from '@/entities/auth/api/dtos'
+import type { IUserInfo } from '@/entities/user/model/types'
+import type { TMBTI } from '@/app/(playground)/profile/edit/_constants/mbti'
 
 export default function useProfileForm(initialValues?: IUserInfo | null): {
   states: IUpdateProfileFormStates
