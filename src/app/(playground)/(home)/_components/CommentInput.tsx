@@ -1,11 +1,11 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { usePostComment } from "@/entities/comment/api/mutates";
 import type { IUserInfo } from "@/entities/user/model/types";
+import { AuthGuardDialog, SignInDialog, SignUpDialog } from "@/features/auth/ui";
 import {
   Avatar,
   AvatarFallback,
@@ -13,7 +13,6 @@ import {
 } from "@/shared/components/ui/avatar";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
-import { ROUTES } from "@/shared/routes/constants";
 
 interface Props {
   postId: number;
@@ -22,17 +21,31 @@ interface Props {
 }
 
 export default function CommentInput({ postId, commentId, me }: Props) {
-  const router = useRouter();
   const [content, setContent] = useState("");
+  const [showAuthGuard, setShowAuthGuard] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
   const { mutate: postComment, isPending: isPostPending } = usePostComment();
 
-  // TODO: Replace with AuthGuardDialog component
-  // import { AuthGuardDialog } from '@/features/auth/ui'
   const handleRouterGuard = () => {
     if (!me) {
-      // Show auth guard dialog or redirect to home
-      router.push(ROUTES.HOME);
+      setShowAuthGuard(true);
     }
+  };
+
+  const handleSignInClick = () => {
+    setShowAuthGuard(false);
+    setShowSignIn(true);
+  };
+
+  const handleSwitchToSignUp = () => {
+    setShowSignIn(false);
+    setShowSignUp(true);
+  };
+
+  const handleSwitchToSignIn = () => {
+    setShowSignUp(false);
+    setShowSignIn(true);
   };
 
   const handlePostComment = (e: FormEvent) => {
@@ -55,37 +68,56 @@ export default function CommentInput({ postId, commentId, me }: Props) {
   };
 
   return (
-    <form
-      onClick={handleRouterGuard}
-      onSubmit={handlePostComment}
-      className="mb-2 w-full"
-    >
-      <div className="flex items-center gap-3">
-        <Avatar className="size-8 flex-shrink-0">
-          <AvatarImage src={me?.avatarUrl || undefined} />
-          <AvatarFallback>
-            {me?.userName?.[0]?.toUpperCase() || "?"}
-          </AvatarFallback>
-        </Avatar>
-        <Input
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder={me ? "댓글을 달아주세요." : "로그인을 해주세요"}
-          className="flex-1"
-          disabled={!me}
-        />
-        <Button
-          type="submit"
-          disabled={!content.trim() || !me || isPostPending}
-          size="sm"
-        >
-          {isPostPending ? (
-            <Loader2 className="size-4 animate-spin" />
-          ) : (
-            "댓글달기"
-          )}
-        </Button>
-      </div>
-    </form>
+    <>
+      <form
+        onClick={handleRouterGuard}
+        onSubmit={handlePostComment}
+        className="mb-2 w-full"
+      >
+        <div className="flex items-center gap-3">
+          <Avatar className="size-8 flex-shrink-0">
+            <AvatarImage src={me?.avatarUrl || undefined} />
+            <AvatarFallback>
+              {me?.userName?.[0]?.toUpperCase() || "?"}
+            </AvatarFallback>
+          </Avatar>
+          <Input
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder={me ? "댓글을 달아주세요." : "로그인을 해주세요"}
+            className="flex-1"
+            disabled={!me}
+          />
+          <Button
+            type="submit"
+            disabled={!content.trim() || !me || isPostPending}
+            size="sm"
+          >
+            {isPostPending ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              "댓글달기"
+            )}
+          </Button>
+        </div>
+      </form>
+
+      {/* Auth Dialogs */}
+      <AuthGuardDialog
+        open={showAuthGuard}
+        onOpenChange={setShowAuthGuard}
+        onSignInClick={handleSignInClick}
+      />
+      <SignInDialog
+        open={showSignIn}
+        onOpenChange={setShowSignIn}
+        onSwitchToSignUp={handleSwitchToSignUp}
+      />
+      <SignUpDialog
+        open={showSignUp}
+        onOpenChange={setShowSignUp}
+        onSwitchToSignIn={handleSwitchToSignIn}
+      />
+    </>
   );
 }

@@ -1,8 +1,10 @@
+"use client";
+
 import { Heart } from "lucide-react";
-import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
-import { ROUTES } from "@/app/_routes/constants";
+import { useState } from "react";
 import { useMe } from "@/app/_store/use-me";
+import { AuthGuardDialog, SignInDialog, SignUpDialog } from "@/features/auth/ui";
 import { useLikeMutates } from "@/hooks/mutates/useLikeMutates";
 import { Button } from "@/shared/components/ui/button";
 import {
@@ -28,16 +30,34 @@ export default function LikeButton({
   postId,
   isLike,
 }: Props) {
-  const router = useRouter();
   const { me } = useMe();
+  const [showAuthGuard, setShowAuthGuard] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
   const { onLikePost } = useLikeMutates({ isLike, postId });
-
-  const authGuard = () =>
-    router.push(ROUTES.MODAL.AUTH.GUARD, { scroll: false });
 
   const handleFavoritePost = (e: MouseEvent): void => {
     e.stopPropagation();
-    me ? onLikePost(e) : authGuard();
+    if (me) {
+      onLikePost(e);
+    } else {
+      setShowAuthGuard(true);
+    }
+  };
+
+  const handleSignInClick = () => {
+    setShowAuthGuard(false);
+    setShowSignIn(true);
+  };
+
+  const handleSwitchToSignUp = () => {
+    setShowSignIn(false);
+    setShowSignUp(true);
+  };
+
+  const handleSwitchToSignIn = () => {
+    setShowSignUp(false);
+    setShowSignIn(true);
   };
 
   const button = (
@@ -56,18 +76,37 @@ export default function LikeButton({
     </Button>
   );
 
-  if (viewToolTip) {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>{button}</TooltipTrigger>
-          <TooltipContent>
-            <p>좋아요</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-  }
+  return (
+    <>
+      {viewToolTip ? (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>{button}</TooltipTrigger>
+            <TooltipContent>
+              <p>좋아요</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : (
+        button
+      )}
 
-  return button;
+      {/* Auth Dialogs */}
+      <AuthGuardDialog
+        open={showAuthGuard}
+        onOpenChange={setShowAuthGuard}
+        onSignInClick={handleSignInClick}
+      />
+      <SignInDialog
+        open={showSignIn}
+        onOpenChange={setShowSignIn}
+        onSwitchToSignUp={handleSwitchToSignUp}
+      />
+      <SignUpDialog
+        open={showSignUp}
+        onOpenChange={setShowSignUp}
+        onSwitchToSignIn={handleSwitchToSignIn}
+      />
+    </>
+  );
 }
