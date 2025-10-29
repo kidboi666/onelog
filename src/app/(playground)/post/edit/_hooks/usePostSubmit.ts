@@ -1,40 +1,40 @@
-import { useRouter } from 'next/navigation'
-import { FormEvent } from 'react'
-import useCreatePost from '@/features/post/api/use-create-post'
-import useUpdatePost from '@/features/post/api/use-update-post'
-import { IUpdatePostFormStates } from '@/shared/types/dtos/post'
-import { ROUTES } from '@/app/_routes/constants'
+import { useRouter } from "next/navigation";
+import type { FormEvent } from "react";
+import { ROUTES } from "@/shared/routes/constants";
+import type { IUpdatePostFormStates } from "@/entities/post";
+import { useCreatePost } from "@/features/post/api/use-create-post";
+import { useUpdatePost } from "@/features/post/api/use-update-post";
 
 export default function usePostSubmit({
   meId,
   postId,
   formState,
 }: {
-  meId: string
-  postId: number
-  formState: IUpdatePostFormStates
+  meId: string;
+  postId: number;
+  formState: IUpdatePostFormStates;
 }) {
-  const router = useRouter()
-  const { mutate: addPost, isPending, isSuccess } = useCreatePost()
-  const { mutate: updatePost } = useUpdatePost()
+  const router = useRouter();
+  const { mutate: addPost, isPending, isSuccess } = useCreatePost();
+  const { mutate: updatePost } = useUpdatePost();
 
   const handleSubmitPost = (e: FormEvent) => {
-    e.preventDefault()
-    if (!meId) return
+    e.preventDefault();
+    if (!meId) return;
 
-    const postData = { ...formState, meId }
+    const postData = { ...formState, meId };
 
     if (postId) {
       updatePost(
         { ...postData, id: postId },
-        { onSuccess: () => router.replace(ROUTES.MODAL.SUCCESS) },
-      )
+        { onSuccess: () => router.replace(ROUTES.HOME) },
+      );
     } else {
       addPost(postData, {
-        onSuccess: () => router.replace(ROUTES.MODAL.SUCCESS),
-      })
+        onSuccess: () => router.replace(ROUTES.HOME),
+      });
     }
-  }
+  };
 
-  return { onSubmitPost: handleSubmitPost, isPending, isSuccess }
+  return { onSubmitPost: handleSubmitPost, isPending, isSuccess };
 }

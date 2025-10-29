@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { ROUTES } from "@/app/_routes/constants";
 import { useMe } from "@/app/_store/use-me";
 import type {
   ISignIn,
@@ -14,6 +13,7 @@ import {
   AUTH_TOAST_MESSAGE,
 } from "@/entities/auth/model/constants";
 import type { IUploadAvatar } from "@/entities/auth/model/types";
+import { ROUTES } from "@/shared/routes/constants";
 import { getQueryClient } from "@/shared/lib/tanstack-query/get-query-client";
 
 export const useDeleteAvatarImage = () => {
@@ -99,14 +99,12 @@ export const useSignOut = () => {
 
 export const useUpdateUserInfo = () => {
   const { setMe } = useMe();
-  const router = useRouter();
 
   return useMutation({
     mutationFn: (params: IUpdateUserInfo) => authService.updateUserInfo(params),
     onSuccess: (data) => {
       setMe(data);
       toast.success(AUTH_TOAST_MESSAGE.USER_INFO.EDIT.SUCCESS);
-      router.replace(ROUTES.MODAL.SUCCESS);
     },
     onError: (error) => {
       toast.error(AUTH_TOAST_MESSAGE.USER_INFO.EDIT.EXCEPTION, {
