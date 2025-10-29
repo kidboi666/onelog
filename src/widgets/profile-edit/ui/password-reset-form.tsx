@@ -6,7 +6,7 @@ import { useMe } from "@/app/_store/use-me";
 import { Button } from "@/shared/components/ui/button";
 import { Label } from "@/shared/components/ui/label";
 
-export default function PasswordResetForm() {
+export function PasswordResetForm() {
   const router = useRouter();
   const { me } = useMe();
   const handlePasswordReset = () => {

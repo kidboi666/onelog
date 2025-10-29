@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRef } from "react";
-import { WEEKDAY } from "@/app/(playground)/post/edit/_constants";
+import { WEEKDAY } from "@/shared/constants/date";
 import type { IBlockInfo } from "@/entities/garden/api/dtos";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/utils/tw-merge";

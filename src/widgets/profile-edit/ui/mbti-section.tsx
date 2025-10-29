@@ -6,14 +6,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/components/ui/select";
-import { MBTI, TMBTI } from "../_constants/mbti";
+import { MBTI, TMBTI } from "../model/mbti";
 
 interface Props {
   mbti?: TMBTI;
   setMbti: (mbti: TMBTI) => void;
 }
 
-export default function MBTISection({ mbti, setMbti }: Props) {
+export function MBTISection({ mbti, setMbti }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <Label htmlFor="mbti" className="font-bold text-lg">

@@ -13,10 +13,10 @@ import type { IUploadAvatar } from "@/entities/auth/model/types";
 import type { IUserInfo } from "@/entities/user/model/types";
 import { Button } from "@/shared/components/ui/button";
 import { useProfileFormValidation } from "@/features/user/hooks/use-profile-form-validation";
-import AboutMeSection from "./AboutMeSection";
-import EmailSection from "./EmailSection";
-import ProfileImageSection from "./ProfileImageSection";
-import UserNameSection from "./UserNameSection";
+import { AboutMeSection } from "./about-me-section";
+import { EmailSection } from "./email-section";
+import { ProfileImageSection } from "./profile-image-section";
+import { UserNameSection } from "./user-name-section";
 
 interface Props {
   me: IUserInfo;
@@ -33,7 +33,7 @@ interface Props {
   deletePrevImage: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export default function ProfileForm({
+export function ProfileForm({
   me,
   states,
   actions,

@@ -7,7 +7,7 @@ interface Props extends ComponentProps<"input"> {
   value: string;
 }
 
-export default function UserNameSection({ value, onChange }: Props) {
+export function UserNameSection({ value, onChange }: Props) {
   return (
     <div className="flex max-w-52 flex-col gap-4">
       <Label htmlFor="userName" className="font-bold text-lg">

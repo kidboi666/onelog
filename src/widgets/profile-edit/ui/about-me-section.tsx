@@ -7,7 +7,7 @@ interface Props extends ComponentProps<"textarea"> {
   value: string;
 }
 
-export default function AboutMeSection({ value, onChange }: Props) {
+export function AboutMeSection({ value, onChange }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <Label htmlFor="aboutMe" className="font-bold text-lg">

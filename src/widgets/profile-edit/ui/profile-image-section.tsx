@@ -17,7 +17,7 @@ interface Props extends ComponentProps<"input"> {
   states: IUpdateProfileFormStates;
 }
 
-export default function ProfileImageSection({
+export function ProfileImageSection({
   imagePreview,
   actions,
   states,

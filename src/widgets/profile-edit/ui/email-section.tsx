@@ -6,7 +6,7 @@ interface Props {
   provider?: string;
 }
 
-export default function EmailSection({ email, provider }: Props) {
+export function EmailSection({ email, provider }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <Label htmlFor="email" className="font-bold text-lg">

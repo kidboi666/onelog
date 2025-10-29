@@ -1,7 +1,7 @@
 "use client";
 
 import { useMe } from "@/app/_store/use-me";
-import ProfileForm from "./_components/ProfileForm";
+import { ProfileForm } from "@/widgets/profile-edit/ui";
 import { useProfileForm } from "@/features/user/hooks/use-profile-form";
 import { useProfileMutations } from "@/features/user/hooks/use-profile-mutations";
 
