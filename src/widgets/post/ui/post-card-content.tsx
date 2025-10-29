@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/shared/components/ui/badge";
 import { Card } from "@/shared/components/ui/card";
 import AccessTypeButtonWithDropDown from "@/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown";
-import CommentButton from "@/app/(playground)/(home)/_components/CommentButton";
+import { CommentButton } from "@/features/comment/ui";
 import LikeButton from "@/app/(playground)/(home)/_components/LikeButton";
 import ReportButton from "@/app/(playground)/(home)/_components/ReportButton";
 
