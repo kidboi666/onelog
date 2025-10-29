@@ -1,16 +1,14 @@
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import Link from "next/link";
-import { ROUTES } from "@/app/_routes/constants";
+import { ROUTES } from "@/shared/routes/constants";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/shared/components/ui/avatar";
 import { Badge } from "@/shared/components/ui/badge";
-
-type EmotionLevel = 1 | 2 | 3 | 4 | 5;
-type PostType = "journal" | "article";
+import type { EmotionLevel, PostType } from "@/shared/types/enums";
 
 interface Props {
   avatarUrl: string | null;
@@ -23,7 +21,7 @@ interface Props {
   postType: PostType;
 }
 
-export default function PostHeader({
+export function PostHeader({
   avatarUrl,
   userName,
   email,
@@ -60,9 +58,9 @@ export default function PostHeader({
           {createdAtLiked && <span>• {createdAtLiked}에 좋아요함</span>}
         </div>
       </div>
-      {emotionLevel && (
+      {emotionLevel !== null && (
         <Badge variant="secondary" className="ml-auto">
-          감정 레벨 {emotionLevel}
+          {emotionLevel}%
         </Badge>
       )}
     </div>

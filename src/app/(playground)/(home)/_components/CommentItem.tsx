@@ -4,10 +4,10 @@ import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import Link from "next/link";
 import { useState } from "react";
-import { ROUTES } from "@/app/_routes/constants";
 import { useCommentReplies } from "@/app/(playground)/(home)/_hooks/useCommentReplies";
 import type { IComment } from "@/entities/comment/model/types";
 import type { IUserInfo } from "@/entities/user/model/types";
+import { ROUTES } from "@/shared/routes/constants";
 import {
   Avatar,
   AvatarFallback,

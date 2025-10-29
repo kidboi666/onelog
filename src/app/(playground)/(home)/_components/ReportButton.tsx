@@ -3,7 +3,7 @@
 import { Flag } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
-import { ROUTES } from "@/app/_routes/constants";
+import { ROUTES } from "@/shared/routes/constants";
 import { Button } from "@/shared/components/ui/button";
 import {
   Tooltip,

@@ -1,10 +1,10 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { ROUTES } from "@/app/_routes/constants";
 import type { IPost } from "@/entities/post/model/types";
 import useBlockEditor from "@/hooks/useBlockEditor";
-import PostCardContent from "./PostCardContent";
-import PostHeader from "./PostHeader";
+import { ROUTES } from "@/shared/routes/constants";
+import { PostCardContent } from "./PostCardContent";
+import { PostHeader } from "./PostHeader";
 
 interface Props {
   post: IPost;

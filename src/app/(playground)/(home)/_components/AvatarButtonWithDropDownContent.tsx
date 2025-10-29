@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useTransition } from "react";
-import { ROUTES } from "@/app/_routes/constants";
 import useFollowMutates from "@/hooks/mutates/useFollowMutates";
 import useFollowQueries from "@/hooks/queries/useFollowQueries";
+import { ROUTES } from "@/shared/routes/constants";
 import {
   Avatar,
   AvatarFallback,
@@ -22,15 +22,12 @@ export default function AvatarButtonWithDropDownContent({
   avatarUrl,
 }: Props) {
   const [isLoadingFollowing, startTransitionFollowing] = useTransition();
+  const [isLoadingFollower, startTransitionFollower] = useTransition();
+  const [isLoadingFollowingList, startTransitionFollowingList] =
+    useTransition();
   const { followingCount, followerCount, isFollowing, isMe } =
     useFollowQueries(userId);
-  const {
-    onFollow,
-    pushFollowingList,
-    isLoadingFollowerRoute,
-    pushFollowerList,
-    isLoadingFollowingRoute,
-  } = useFollowMutates({
+  const { onFollow, pushFollowingList, pushFollowerList } = useFollowMutates({
     isFollowing,
     userId,
   });
@@ -51,8 +48,8 @@ export default function AvatarButtonWithDropDownContent({
           <Button
             variant="ghost"
             size="sm"
-            disabled={isLoadingFollowerRoute}
-            onClick={pushFollowerList}
+            disabled={isLoadingFollower}
+            onClick={() => startTransitionFollower(() => pushFollowerList())}
             className="flex flex-col items-center gap-1"
           >
             <span className="text-muted-foreground text-xs">팔로워</span>
@@ -61,8 +58,10 @@ export default function AvatarButtonWithDropDownContent({
           <Button
             variant="ghost"
             size="sm"
-            disabled={isLoadingFollowingRoute}
-            onClick={pushFollowingList}
+            disabled={isLoadingFollowingList}
+            onClick={() =>
+              startTransitionFollowingList(() => pushFollowingList())
+            }
             className="flex flex-col items-center gap-1"
           >
             <span className="text-muted-foreground text-xs">팔로잉</span>

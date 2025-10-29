@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from "react";
 import type { Editor } from "@tiptap/react";
 import { EditorContent } from "@tiptap/react";
-import { Card } from "@/shared/components/ui/card";
+import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/shared/components/ui/badge";
-import { cn } from "@/shared/utils/tw-merge";
-import LikeButton from "./LikeButton";
-import CommentButton from "./CommentButton";
+import { Card } from "@/shared/components/ui/card";
 import AccessTypeButtonWithDropDown from "./AccessTypeButtonWithDropDown";
+import CommentButton from "./CommentButton";
+import LikeButton from "./LikeButton";
 import ReportButton from "./ReportButton";
 
 type Access = "public" | "private" | "friends";
@@ -24,7 +23,7 @@ interface Props {
   postId: number;
 }
 
-export default function PostCardContent({
+export function PostCardContent({
   tags,
   editor,
   postTitle,
@@ -45,12 +44,12 @@ export default function PostCardContent({
       const maxHeight = 256;
       setShowGradient(contentHeight > maxHeight);
     }
-  }, [editor]);
+  }, []);
 
   return (
     <Card
       onClick={onClick}
-      className="w-full cursor-pointer p-4 transition-shadow hover:shadow-lg"
+      className="w-full cursor-pointer border-0 p-4 transition-shadow hover:shadow-lg"
     >
       <div className="flex flex-col gap-4">
         <div className="relative max-h-64 overflow-hidden">
@@ -63,7 +62,7 @@ export default function PostCardContent({
             className="line-clamp-6"
           />
           {showGradient && (
-            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background" />
+            <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-16 bg-gradient-to-t from-background" />
           )}
         </div>
         {tags && tags.length > 0 && (
