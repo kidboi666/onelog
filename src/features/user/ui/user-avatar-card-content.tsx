@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useTransition } from "react";
-import useFollowMutates from "@/hooks/mutates/useFollowMutates";
-import useFollowQueries from "@/hooks/queries/useFollowQueries";
+import { useFollowMutates } from "../hooks/use-follow-mutates";
+import { useFollowQueries } from "../hooks/use-follow-queries";
 import { ROUTES } from "@/shared/routes/constants";
 import {
   Avatar,

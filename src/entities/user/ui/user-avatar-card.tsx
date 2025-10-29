@@ -10,7 +10,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/shared/components/ui/hover-card";
-import { UserAvatarCardContent } from "./user-avatar-card-content";
+import { UserAvatarCardContent } from "@/features/user/ui";
 
 interface Props {
   avatarUrl: string | null;

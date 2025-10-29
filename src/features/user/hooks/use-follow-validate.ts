@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { followQueries } from "@/entities/follow";
 
-export default function useFollowValidate(
+export function useFollowValidate(
   userId: string,
   meId?: string | null,
 ) {

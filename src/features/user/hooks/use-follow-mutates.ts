@@ -10,7 +10,7 @@ interface Props {
   userId: string;
 }
 
-export default function useFollowMutates({ isFollowing, userId }: Props) {
+export function useFollowMutates({ isFollowing, userId }: Props) {
   const router = useRouter();
   const { me } = useMe();
   const { mutate: followOrUnfollow, isPending } = useHandleFollow();

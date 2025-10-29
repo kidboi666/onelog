@@ -3,8 +3,8 @@
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import useFollowMutates from "@/hooks/mutates/useFollowMutates";
-import useFollowValidate from "@/hooks/queries/useFollowValidate";
+import { useFollowMutates } from "@/features/user/hooks/use-follow-mutates";
+import { useFollowValidate } from "@/features/user/hooks/use-follow-validate";
 import { Button } from "@/shared/components/ui/button";
 import { ROUTES } from "@/shared/routes/constants";
 

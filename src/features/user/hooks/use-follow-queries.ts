@@ -4,7 +4,7 @@ import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useMe } from "@/app/_store/use-me";
 import { countFollowQueries, followQueries } from "@/entities/follow";
 
-export default function useFollowQueries(userId: string) {
+export function useFollowQueries(userId: string) {
   const { me } = useMe();
   const { data: followerCount } = useSuspenseQuery(
     countFollowQueries.countFollower(userId),
