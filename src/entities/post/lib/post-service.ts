@@ -11,7 +11,6 @@ import {
   filterPrivateLikedPosts,
   filterPrivatePosts,
   isCurrentUserAuthor,
-  parseEmotionLevel,
 } from "@/entities/post/lib/helpers";
 import type { ILikedPost, IPost, IPostDetail } from "@/entities/post/model/types";
 import { calculateAverage } from "@/shared/utils/calculate";
@@ -85,9 +84,9 @@ export const getEmotionAverage = async (
     return 0;
   }
 
-  const emotionLevels = data.map((item) =>
-    parseEmotionLevel(item.emotion_level),
-  );
+  const emotionLevels = data
+    .map((item) => item.emotion_level)
+    .filter((level): level is number => level !== null);
   return calculateAverage(emotionLevels);
 };
 

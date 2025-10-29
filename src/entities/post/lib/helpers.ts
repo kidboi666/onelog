@@ -32,8 +32,3 @@ export const filterPrivatePosts = (data: IPost[], isMe: boolean): IPost[] => {
       );
 };
 
-// 퍼센티지 제외한 숫자로 형변환 해주는 헬퍼
-export const parseEmotionLevel = (emotionLevel: string | null): number => {
-  if (!emotionLevel) return 0;
-  return Number(emotionLevel.split("%")[0]);
-};

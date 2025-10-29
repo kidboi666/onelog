@@ -1,7 +1,8 @@
 'use client'
 
 import { useRef } from 'react'
-import { wait } from '@/src/utils/client-utils'
+
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export default function useDataDrivenAnimation<T extends HTMLElement>(
   initClass: string = 'hidden',

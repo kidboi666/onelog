@@ -49,7 +49,7 @@ export interface IUpdatePost {
   meId: string;
   title: string | null;
   content: string;
-  emotionLevel: string | null;
+  emotionLevel: EmotionLevel | null;
   tags: string[];
   accessType: Access;
   postType: PostType;

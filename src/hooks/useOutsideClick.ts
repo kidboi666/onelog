@@ -9,7 +9,7 @@ import { type RefObject, useCallback, useEffect, useRef } from "react";
  */
 export default function useOutsideClick<T extends HTMLElement>(
   setter: () => void,
-): RefObject<T> {
+): RefObject<T | null> {
   const target = useRef<T>(null);
 
   const handleClickOutside = useCallback(

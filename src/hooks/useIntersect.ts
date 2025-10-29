@@ -18,9 +18,9 @@ import {
 export default function useIntersect<T extends HTMLElement>(
   opt?: IntersectionObserverInit,
   once: boolean | undefined = false,
-): [RefObject<T>, boolean] {
+): [RefObject<T | null>, boolean] {
   const [isIntersecting, setIntersecting] = useState(false);
-  const target = useRef(null);
+  const target = useRef<T>(null);
 
   const handleIntersect = useCallback(
     (

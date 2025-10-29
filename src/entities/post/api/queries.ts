@@ -128,7 +128,7 @@ export const postQueries = {
     }),
 };
 
-export const postCountQuery = {
+export const postCountQueries = {
   countUserPosts: (userId: string) =>
     queryOptions<number, APIError>({
       queryKey: POST_QUERY_KEY.COUNT.TOTAL(userId),
@@ -139,6 +139,41 @@ export const postCountQuery = {
         const supabase = createBrowserClient();
         const { count, error } = await supabase
           .from("post")
+          .select("*", { count: "exact", head: true })
+          .eq("user_id", userId);
+
+        if (error) throw error;
+        return count ?? 0;
+      },
+    }),
+
+  countAllPost: () =>
+    queryOptions<number, APIError>({
+      queryKey: ["count", "allPost"],
+      queryFn: async () => {
+        const { createBrowserClient } = await import(
+          "@/shared/lib/supabase/create-browser-client"
+        );
+        const supabase = createBrowserClient();
+        const { count, error } = await supabase
+          .from("post")
+          .select("*", { count: "exact", head: true });
+
+        if (error) throw error;
+        return count ?? 0;
+      },
+    }),
+
+  countLikedPost: (userId: string) =>
+    queryOptions<number, APIError>({
+      queryKey: POST_QUERY_KEY.COUNT.LIKED(userId),
+      queryFn: async () => {
+        const { createBrowserClient } = await import(
+          "@/shared/lib/supabase/create-browser-client"
+        );
+        const supabase = createBrowserClient();
+        const { count, error } = await supabase
+          .from("like")
           .select("*", { count: "exact", head: true })
           .eq("user_id", userId);
 

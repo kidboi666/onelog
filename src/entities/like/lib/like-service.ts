@@ -7,6 +7,10 @@ import type { ILike } from "@/entities/like/model/types";
  * isLike가 true면 좋아요 취소, false면 좋아요 추가
  */
 export const handleLike = async (params: ILike, supabase?: SupabaseClient) => {
+  if (!params.postId || !params.meId) {
+    throw new Error("postId and meId are required");
+  }
+
   if (params.isLike) {
     // 이미 좋아요한 상태 -> 좋아요 취소
     await likeApi.deleteLike(params.postId, params.meId, supabase);

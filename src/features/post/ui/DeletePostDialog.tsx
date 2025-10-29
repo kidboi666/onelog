@@ -2,7 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import type { ReactNode } from "react";
-import { useDeletePost } from "@/entities/post/api/mutates";
+import { useDeletePost } from "@/features/post/api/use-delete-post";
 import { Button } from "@/shared/components/ui/button";
 import {
   Dialog,
@@ -50,11 +50,7 @@ export function DeletePostDialog({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex-row gap-2">
-          <Button
-            variant="secondary"
-            disabled={isPending}
-            className="flex-1"
-          >
+          <Button variant="secondary" disabled={isPending} className="flex-1">
             취소하기
           </Button>
           <Button
@@ -62,7 +58,11 @@ export function DeletePostDialog({
             disabled={isPending}
             className="flex-1"
           >
-            {isPending ? <Loader2 className="size-4 animate-spin" /> : "삭제하기"}
+            {isPending ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              "삭제하기"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

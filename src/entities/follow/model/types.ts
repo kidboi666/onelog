@@ -1,4 +1,4 @@
-import type { IUserInfo } from "@/entities/auth/model/types";
+import type { IUserInfo } from "@/entities/user/model/types";
 
 export interface IFollower {
   id: number;

@@ -1,27 +1,28 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import { useMe } from '@/src/store/hooks/useMe'
-import useHandleFollow from '@/src/services/mutates/follow/useHandleFollow'
-import useRouterPushWithTransition from '@/src/hooks/useRouterPushWithTransition'
-import { ROUTES } from '@/src/routes'
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/shared/routes/constants";
+import { useMe } from "@/app/_store/use-me";
+import { useHandleFollow } from "@/entities/follow";
 
 interface Props {
-  isFollowing: boolean
-  userId: string
+  isFollowing: boolean;
+  userId: string;
 }
 
 export default function useFollowMutates({ isFollowing, userId }: Props) {
-  const router = useRouter()
-  const [isLoadingFollowerRoute, pushFollowerList] =
-    useRouterPushWithTransition(ROUTES.MODAL.FOLLOW.FOLLOWER(userId))
-  const [isLoadingFollowingRoute, pushFollowingList] =
-    useRouterPushWithTransition(ROUTES.MODAL.FOLLOW.FOLLOWING(userId))
-  const { me } = useMe()
-  const { mutate: followOrUnfollow, isPending } = useHandleFollow()
+  const router = useRouter();
+  const { me } = useMe();
+  const { mutate: followOrUnfollow, isPending } = useHandleFollow();
+
+  const pushFollowerList = () =>
+    router.push(ROUTES.MODAL.FOLLOW.FOLLOWER(userId));
+
+  const pushFollowingList = () =>
+    router.push(ROUTES.MODAL.FOLLOW.FOLLOWING(userId));
 
   const authGuard = () =>
-    router.push(ROUTES.MODAL.AUTH.GUARD, { scroll: false })
+    router.push(ROUTES.MODAL.AUTH.GUARD, { scroll: false });
 
   const handleFollow = (options?: any) => {
     me
@@ -33,15 +34,13 @@ export default function useFollowMutates({ isFollowing, userId }: Props) {
           },
           { ...options },
         )
-      : authGuard()
-  }
+      : authGuard();
+  };
 
   return {
     onFollow: handleFollow,
     pushFollowerList,
     pushFollowingList,
-    isLoadingFollowerRoute,
-    isLoadingFollowingRoute,
     isPending,
-  }
+  };
 }

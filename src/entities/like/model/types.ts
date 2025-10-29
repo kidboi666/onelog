@@ -1,3 +1,5 @@
+import type { PostType } from "@/shared/types/enums";
+
 export interface ILike {
   postId?: number;
   meId?: string | null;
