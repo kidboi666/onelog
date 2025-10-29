@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import { PostAuthorCard, PostContent, PostHeaderInfo } from "@/entities/post";
 import { getPostWithProcessing } from "@/entities/post/lib/post-service";
-import { PostHeaderInfo, PostContent, PostAuthorCard } from "@/entities/post";
 import {
   PostActionBar,
   PostCountInfo,
