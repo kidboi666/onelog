@@ -4,7 +4,6 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 import { useState } from "react";
-import { ROUTES } from "@/app/_routes/constants";
 import { usePostComment } from "@/entities/comment/api/mutates";
 import type { IUserInfo } from "@/entities/user/model/types";
 import {
@@ -14,6 +13,7 @@ import {
 } from "@/shared/components/ui/avatar";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
+import { ROUTES } from "@/shared/routes/constants";
 
 interface Props {
   postId: number;
@@ -26,11 +26,12 @@ export default function CommentInput({ postId, commentId, me }: Props) {
   const [content, setContent] = useState("");
   const { mutate: postComment, isPending: isPostPending } = usePostComment();
 
-  const authGuard = () => router.push(ROUTES.MODAL.AUTH.GUARD);
-
+  // TODO: Replace with AuthGuardDialog component
+  // import { AuthGuardDialog } from '@/features/auth/ui'
   const handleRouterGuard = () => {
     if (!me) {
-      authGuard();
+      // Show auth guard dialog or redirect to home
+      router.push(ROUTES.HOME);
     }
   };
 
