@@ -4,7 +4,7 @@ import type { IPost } from "@/entities/post/model/types";
 import useBlockEditor from "@/hooks/useBlockEditor";
 import { ROUTES } from "@/shared/routes/constants";
 import { PostCardContent } from "./PostCardContent";
-import { PostHeader } from "./PostHeader";
+import { PostHeader } from "@/entities/post/ui";
 
 interface Props {
   post: IPost;
