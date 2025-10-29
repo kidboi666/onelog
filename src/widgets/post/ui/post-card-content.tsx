@@ -3,10 +3,8 @@ import { EditorContent } from "@tiptap/react";
 import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/shared/components/ui/badge";
 import { Card } from "@/shared/components/ui/card";
-import AccessTypeButtonWithDropDown from "@/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown";
 import { CommentButton } from "@/features/comment/ui";
-import LikeButton from "@/app/(playground)/(home)/_components/LikeButton";
-import ReportButton from "@/app/(playground)/(home)/_components/ReportButton";
+import { AccessTypeSelector, LikeButton, ReportButton } from "@/features/post";
 
 type Access = "public" | "private" | "friends";
 
@@ -86,7 +84,7 @@ export function PostCardContent({
             disabled={disabled}
             viewToolTip
           />
-          <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
+          <AccessTypeSelector accessType={accessType} viewToolTip />
           <ReportButton postId={postId} viewToolTip />
         </nav>
       </div>
