@@ -258,6 +258,81 @@ const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
 6. **Don't** use `useEffect` for data fetching - use TanStack Query
 7. **Don't** use old Tailwind config patterns - v4 uses PostCSS plugin
 
+## Git Commit Conventions
+
+### Commit Message Format
+
+Follow the Conventional Commits specification:
+
+```
+<type>: <subject>
+
+[optional body]
+```
+
+**DO NOT include:**
+- ❌ Claude Code attribution footer
+- ❌ Co-Authored-By: Claude
+- ❌ "Generated with Claude Code" message
+
+### Types
+
+- `feat`: New feature
+- `fix`: Bug fix
+- `refactor`: Code refactoring (no functionality change)
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, missing semicolons, etc.)
+- `test`: Adding or updating tests
+- `chore`: Build process or auxiliary tool changes
+- `perf`: Performance improvements
+
+### Examples
+
+```bash
+# Good commits
+feat: add post detail view component
+fix: resolve React key warning in comment list
+refactor: migrate post components to FSD structure
+docs: update naming conventions in CLAUDE.md
+style: format code with Biome
+
+# Bad commits (don't include attribution)
+feat: add post detail view component
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+### Subject Guidelines
+
+- Use imperative mood ("add" not "added" or "adds")
+- Don't capitalize first letter
+- No period at the end
+- Keep under 72 characters
+- Be concise but descriptive
+
+### Body Guidelines (Optional)
+
+- Separate from subject with blank line
+- Explain **what** and **why**, not **how**
+- Use bullet points for multiple changes
+- Wrap at 72 characters
+
+### Example with Body
+
+```bash
+refactor: migrate post page components to FSD structure
+
+- Move data display components to entities/post/ui/
+- Move user action components to features/post/ui/
+- Create composite components in widgets/post/ui/
+- Update imports to use new kebab-case file names
+
+This change improves code organization and maintainability
+by following Feature-Sliced Design principles.
+```
+
 ## File Naming Conventions
 
 ### General Rules
