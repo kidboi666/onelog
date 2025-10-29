@@ -2,14 +2,14 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMe } from "@/app/_store/use-me";
-import AccessTypeButtonWithDropDown from "@/app/(playground)/(home)/_components/AccessTypeButtonWithDropDown";
-import CommentButton from "@/app/(playground)/(home)/_components/CommentButton";
-import LikeButton from "@/app/(playground)/(home)/_components/LikeButton";
-import OptionButtonWithDropDown from "@/app/(playground)/(home)/_components/OptionButtonWithDropDown";
-import ReportButton from "@/app/(playground)/(home)/_components/ReportButton";
-import ShareButton from "@/app/(playground)/(home)/_components/ShareButton";
+import { CommentButton } from "@/features/comment";
 import { postQueries } from "@/entities/post/api/queries";
 import { Separator } from "@/shared/components/ui/separator";
+import { AccessTypeSelector } from "./access-type-selector";
+import { LikeButton } from "./like-button";
+import { PostOptionsMenu } from "./post-options-menu";
+import { ReportButton } from "./report-button";
+import { ShareButton } from "./share-button";
 
 interface Props {
   postId: number;
@@ -36,10 +36,10 @@ export function PostActionBar({ postId }: Props) {
           viewToolTip
         />
         <CommentButton viewToolTip commentCount={commentCount[0].count} />
-        <AccessTypeButtonWithDropDown accessType={accessType} viewToolTip />
+        <AccessTypeSelector accessType={accessType} viewToolTip />
         <ShareButton viewToolTip />
         <ReportButton viewToolTip postId={postId} />
-        <OptionButtonWithDropDown type="post" postId={post.id} />
+        <PostOptionsMenu type="post" postId={post.id} />
       </div>
     </div>
   );

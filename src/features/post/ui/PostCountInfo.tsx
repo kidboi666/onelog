@@ -2,9 +2,9 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMe } from "@/app/_store/use-me";
-import CommentButton from "@/app/(playground)/(home)/_components/CommentButton";
-import LikeButton from "@/app/(playground)/(home)/_components/LikeButton";
+import { CommentButton } from "@/features/comment";
 import { postQueries } from "@/entities/post/api/queries";
+import { LikeButton } from "./like-button";
 
 interface Props {
   postId: number;

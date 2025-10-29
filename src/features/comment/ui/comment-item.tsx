@@ -17,8 +17,7 @@ import { CommentButton } from "./comment-button";
 import { CommentInput } from "./comment-input";
 import { CommentInputButton } from "./comment-input-button";
 import { CommentModifyInput } from "./comment-modify-input";
-import OptionButtonWithDropDown from "@/app/(playground)/(home)/_components/OptionButtonWithDropDown";
-import ReportButton from "@/app/(playground)/(home)/_components/ReportButton";
+import { PostOptionsMenu, ReportButton } from "@/features/post";
 
 interface Props {
   comment: IComment;
@@ -80,7 +79,7 @@ export function CommentItem({ comment, postId, me }: Props) {
             )}
             <CommentInputButton onShowCommentInput={toggleShowCommentInput} />
             <ReportButton commentId={comment.id} />
-            <OptionButtonWithDropDown
+            <PostOptionsMenu
               type="comment"
               onModify={toggleModify}
               commentAuthorId={comment.userId}

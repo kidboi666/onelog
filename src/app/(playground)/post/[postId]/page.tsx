@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { getPostWithProcessing } from "@/entities/post/lib/post-service";
+import { PostHeaderInfo, PostContent, PostAuthorCard } from "@/entities/post";
 import {
   PostActionBar,
-  PostAuthorInfo,
-  PostBody,
   PostCountInfo,
-  PostHeader,
   RenderCommentFromPost,
   SideActionBar,
 } from "@/features/post";
@@ -37,10 +35,10 @@ export default async function PostPage({ params }: Props) {
     <div className="flex gap-4">
       <div className="flex flex-1 animate-fade-in flex-col gap-8">
         <div className="flex flex-col gap-0 rounded-md bg-card p-2 shadow-sm sm:gap-4 sm:p-4">
-          <PostHeader postId={postIdNum} />
+          <PostHeaderInfo postId={postIdNum} />
           <Separator />
-          <PostBody postId={postIdNum} />
-          <PostAuthorInfo postId={postIdNum} />
+          <PostContent postId={postIdNum} />
+          <PostAuthorCard postId={postIdNum} />
           <PostActionBar postId={postIdNum} />
         </div>
         <RenderCommentFromPost postId={postIdNum} />
