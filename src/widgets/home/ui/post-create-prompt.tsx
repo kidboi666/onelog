@@ -12,7 +12,7 @@ import {
 } from "@/shared/components/ui/avatar";
 import { Card } from "@/shared/components/ui/card";
 
-export default function FakeFormContainer() {
+export function PostCreatePrompt() {
   const router = useRouter();
   const { me } = useMe();
   const [showAuthGuard, setShowAuthGuard] = useState(false);

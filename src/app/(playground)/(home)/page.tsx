@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { PostListView } from "@/widgets/home";
-import FakeFormContainer from "./_components/FakeFormContainer";
+import { PostCreatePrompt, PostListView } from "@/widgets/home";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -9,7 +8,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="flex animate-fade-in flex-col gap-12">
-      <FakeFormContainer />
+      <PostCreatePrompt />
       <PostListView />
     </div>
   );

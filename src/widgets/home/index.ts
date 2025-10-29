@@ -1,1 +1,1 @@
-export { PostListView } from "./ui";
+export { PostListView, PostCreatePrompt } from "./ui";
