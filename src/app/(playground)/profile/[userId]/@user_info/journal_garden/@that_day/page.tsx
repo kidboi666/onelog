@@ -5,7 +5,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Lock, Loader2, Trash2 } from 'lucide-react'
 import { useMe } from '@/app/_store/use-me'
 import { postQueries } from '@/entities/post/api/queries'
-import { PostCard } from '@/app/(playground)/(home)/_components/PostCard'
+import { PostCard } from '@/widgets/post/ui'
 
 interface Props {
   params: { userId: string }

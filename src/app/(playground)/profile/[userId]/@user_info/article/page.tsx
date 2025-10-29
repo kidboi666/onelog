@@ -7,7 +7,7 @@ import { useMe } from '@/app/_store/use-me'
 import { postQueries } from '@/entities/post/api/queries'
 import { PostType } from '@/shared/types/enums'
 import useIntersect from '@/hooks/useIntersect'
-import { PostCard } from '@/app/(playground)/(home)/_components/PostCard'
+import { PostCard } from '@/widgets/post/ui'
 
 interface Props {
   params: { userId: string }

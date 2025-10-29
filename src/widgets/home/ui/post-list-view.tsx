@@ -3,7 +3,7 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useEffect, useMemo } from "react";
-import { PostCard } from "@/app/(playground)/(home)/_components/PostCard";
+import { PostCard } from "@/widgets/post/ui";
 import { useMe } from "@/app/_store/use-me";
 import { postQueries } from "@/entities/post/api/queries";
 

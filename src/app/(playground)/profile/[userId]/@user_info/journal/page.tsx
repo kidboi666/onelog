@@ -7,7 +7,7 @@ import {
 import { Loader2, Lock } from "lucide-react";
 import { useEffect } from "react";
 import { useMe } from "@/app/_store/use-me";
-import { PostCard } from "@/app/(playground)/(home)/_components/PostCard";
+import { PostCard } from "@/widgets/post/ui";
 import { postQueries } from "@/entities/post/api/queries";
 import type { IPost } from "@/entities/post/model/types";
 import { userQuery } from "@/entities/user/api/queries";
