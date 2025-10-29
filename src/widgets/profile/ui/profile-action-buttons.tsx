@@ -4,17 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useTransition } from "react";
-import { ROUTES } from "@/shared/routes/constants";
 import { useMe } from "@/app/_store/use-me";
 import { useHandleFollow } from "@/entities/follow/api/mutates";
 import { followQueries } from "@/entities/follow/api/queries";
 import { Button } from "@/shared/components/ui/button";
+import { ROUTES } from "@/shared/routes/constants";
 
 interface Props {
   userId: string;
 }
 
-export default function RenderActionButtonFromProfile({ userId }: Props) {
+export function ProfileActionButtons({ userId }: Props) {
   const router = useRouter();
   const { me } = useMe();
   const [isLoadingProfile, startProfileTransition] = useTransition();
@@ -29,7 +29,7 @@ export default function RenderActionButtonFromProfile({ userId }: Props) {
   const isMyProfilePage = me?.id === userId;
   const isFollowing = useMemo(
     () => followingList?.some((follower) => follower.followedUserId === userId),
-    [followingList, userId],
+    [followingList, userId]
   );
 
   const handlePushEditProfilePage = () => {

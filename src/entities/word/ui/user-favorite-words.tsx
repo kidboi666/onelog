@@ -1,19 +1,13 @@
-"use client";
-
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { wordQuery } from "@/entities/word/api/queries";
-import FavoriteWordTag from "./FavoriteWordTag";
+import type { IFavoriteWord } from "@/entities/word/api/dtos";
+import FavoriteWordTag from "@/app/(playground)/profile/[userId]/@user_info/summary/_components/FavoriteWordTag";
 
 interface Props {
-  userId: string;
+  words: IFavoriteWord[];
 }
 
-export default function MyFavoriteWords({ userId }: Props) {
-  const { data: usedWords } = useSuspenseQuery(wordQuery.getMyUsedWords(userId));
-
-  const sortedUsedWords =
-    usedWords?.words?.sort((a, b) => b.count - a.count) ?? [];
-  const shouldRenderWords = sortedUsedWords?.filter((word) => word.count > 1);
+export function UserFavoriteWords({ words }: Props) {
+  const sortedWords = words?.sort((a, b) => b.count - a.count) ?? [];
+  const shouldRenderWords = sortedWords?.filter((word) => word.count > 1);
 
   return (
     <div className="animate-fade-in">

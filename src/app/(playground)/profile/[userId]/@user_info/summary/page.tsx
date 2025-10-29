@@ -1,10 +1,13 @@
 "use client";
 
 import { Separator } from "@/shared/components/ui/separator";
-import { ProfileAboutMeView, ProfileHeaderView } from "@/widgets/profile";
-import RenderFollowButtonFromProfile from "../../_components/RenderFollowButtonFromProfile";
-import AuthHistory from "./_components/AuthHistory";
-import MyFavoriteWords from "./_components/MyFavoriteWords";
+import {
+  ProfileAboutMeView,
+  ProfileFollowStats,
+  ProfileHeaderView,
+  UserFavoriteWordsView,
+  UserHistoryStatsView,
+} from "@/widgets/profile";
 
 interface Props {
   params: { userId: string };
@@ -18,11 +21,11 @@ export default function UserInfoSummary({ params: { userId } }: Props) {
           <ProfileHeaderView userId={userId} />
           <Separator className="w-full" />
           <ProfileAboutMeView userId={userId} />
-          <RenderFollowButtonFromProfile userId={userId} />
+          <ProfileFollowStats userId={userId} />
         </div>
       </div>
-      <AuthHistory userId={userId} />
-      <MyFavoriteWords userId={userId} />
+      <UserHistoryStatsView userId={userId} />
+      <UserFavoriteWordsView userId={userId} />
     </>
   );
 }

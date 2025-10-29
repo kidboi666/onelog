@@ -13,15 +13,15 @@ interface Props {
   userId: string;
 }
 
-export default function RenderFollowButtonFromProfile({ userId }: Props) {
+export function ProfileFollowStats({ userId }: Props) {
   const router = useRouter();
   const [isLoadingFollowing, startFollowingTransition] = useTransition();
 
   const { data: followerCount } = useSuspenseQuery(
-    countFollowQueries.countFollower(userId, true),
+    countFollowQueries.countFollower(userId, true)
   );
   const { data: followingCount } = useSuspenseQuery(
-    countFollowQueries.countFollowing(userId, true),
+    countFollowQueries.countFollowing(userId, true)
   );
 
   const pushFollowingList = () => {
