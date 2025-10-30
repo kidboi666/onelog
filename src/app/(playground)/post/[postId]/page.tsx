@@ -1,14 +1,11 @@
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import type { Metadata } from "next";
-import { PostAuthorCard, PostContent, PostHeaderInfo } from "@/entities/post";
+import { postQueries } from "@/entities/post";
 import { getPostWithProcessing } from "@/entities/post/lib/post-service";
-import {
-  PostActionBar,
-  PostCountInfo,
-  RenderCommentFromPost,
-  SideActionBar,
-} from "@/features/post";
-import { Separator } from "@/shared/components/ui/separator";
+
 import { createServerClient } from "@/shared/lib/supabase/create-server-client";
+import { getQueryClient } from "@/shared/lib/tanstack-query/get-query-client";
+import { PostDetail } from "@/widgets/post/ui/post-detail";
 
 interface Props {
   params: Promise<{ postId: string }>;
@@ -29,28 +26,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PostPage({ params }: Props) {
   const { postId } = await params;
-  const postIdNum = Number(postId);
+  const queryClient = getQueryClient();
+  await queryClient.prefetchQuery(postQueries.getPost(Number(postId)));
 
   return (
-    <div className="flex gap-4">
-      <div className="flex flex-1 animate-fade-in flex-col gap-8">
-        <div className="flex flex-col gap-0 rounded-md bg-card p-2 shadow-sm sm:gap-4 sm:p-4">
-          <PostHeaderInfo postId={postIdNum} />
-          <Separator />
-          <PostContent postId={postIdNum} />
-          <PostAuthorCard postId={postIdNum} />
-          <PostActionBar postId={postIdNum} />
-        </div>
-        <RenderCommentFromPost postId={postIdNum} />
-      </div>
-
-      <div className="sticky top-8 left-4 hidden h-fit animate-fade-in-reverse rounded-md bg-card p-2 shadow-md max-lg:fixed sm:flex">
-        <nav className="flex flex-col items-center">
-          <PostCountInfo postId={postIdNum} />
-          <Separator className="w-full" />
-          <SideActionBar postId={postIdNum} />
-        </nav>
-      </div>
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <PostDetail />
+    </HydrationBoundary>
   );
 }

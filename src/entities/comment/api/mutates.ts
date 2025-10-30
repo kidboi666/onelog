@@ -1,5 +1,4 @@
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import * as commentService from "@/entities/comment/lib/comment-service";
 import type {
@@ -10,6 +9,7 @@ import type {
 import { COMMENT_TOAST_MESSAGE } from "@/entities/comment/model/constants";
 import { POST_QUERY_KEY } from "@/entities/post/model/constants";
 import { getQueryClient } from "@/shared/lib/tanstack-query/get-query-client";
+import { useRouter } from "next/router";
 
 export const useDeleteComment = () => {
   const queryClient = getQueryClient();

@@ -5,8 +5,8 @@ import { Badge } from "@/shared/components/ui/badge";
 import { Card } from "@/shared/components/ui/card";
 import AccessTypeButtonWithDropDown from "./AccessTypeButtonWithDropDown";
 import CommentButton from "./CommentButton";
-import LikeButton from "./LikeButton";
 import ReportButton from "./ReportButton";
+import {LikeButton} from "@/features/post";
 
 type Access = "public" | "private" | "friends";
 

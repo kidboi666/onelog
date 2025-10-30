@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState, type FormEvent } from "react";
 import { Loader2 } from "lucide-react";
 import type { IComment } from "@/entities/comment/model/types";

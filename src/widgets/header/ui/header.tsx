@@ -4,7 +4,7 @@ import { LogIn, Menu, Moon, PenSquare, Sun, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useMe } from "@/app/_store/use-me";
 import { SignInDialog, SignUpDialog } from "@/features/auth/ui";
 import {
@@ -33,6 +33,13 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [mounted, setMounted]  = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, []);
+
+  if (!mounted) return null
 
   const isActive = (menuPath: string) => {
     if (menuPath === ROUTES.HOME) {

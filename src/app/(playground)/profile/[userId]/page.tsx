@@ -13,7 +13,7 @@ export default async function ProfilePage({ params }: Props) {
   const queryClient = getQueryClient();
   const supabase = await createServerClient();
 
-  await queryClient.prefetchQuery({
+  void queryClient.prefetchQuery({
     queryKey: USER_QUERY_KEY.INFO(userId),
     queryFn: () => getUserInfo(userId, supabase),
   });

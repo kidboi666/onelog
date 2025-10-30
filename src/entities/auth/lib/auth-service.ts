@@ -56,6 +56,19 @@ export const uploadAvatarImage = (
 /**
  * 프로필 이미지 삭제
  */
-export const deleteAvatarImage = (imageUrl: string, supabase?: SupabaseClient) => {
+export const deleteAvatarImage = (
+  imageUrl: string,
+  supabase?: SupabaseClient,
+) => {
   return authApi.deleteAvatarImage(imageUrl, supabase);
+};
+
+export const getCurrentUser = async (supabase: SupabaseClient) => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return null;
+
+  return user;
 };
