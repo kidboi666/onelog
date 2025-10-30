@@ -19,7 +19,7 @@ export const userInfo = pgTable("user_info", {
 });
 
 export const posts = pgTable("posts", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: uuid().primaryKey().defaultRandom(),
   user_id: uuid().references(() => userInfo.id),
   content: text().notNull(),
   emotion_level: integer().notNull(),
