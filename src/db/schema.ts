@@ -9,21 +9,23 @@ import {
 import { authUsers } from "drizzle-orm/supabase";
 
 export const userInfo = pgTable("user_info", {
-  id: uuid()
+  id: uuid("id")
     .primaryKey()
     .references(() => authUsers.id), // Supabase Auth 연동
-  user_name: text().notNull(),
-  avatar_url: text(),
-  about_me: text(),
-  created_at: timestamp().defaultNow().notNull(),
+  email: text("email").notNull(),
+  userName: text("user_name").notNull(),
+  avatarUrl: text("avatar_url"),
+  aboutMe: text("about_me"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const posts = pgTable("posts", {
-  id: uuid().primaryKey().defaultRandom(),
-  user_id: uuid().references(() => userInfo.id),
-  content: text().notNull(),
-  emotion_level: integer().notNull(),
-  is_public: boolean().default(true),
-  created_at: timestamp().defaultNow().notNull(),
-  updated_at: timestamp().defaultNow().notNull(),
+export const articles = pgTable("articles", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id").references(() => userInfo.id),
+  content: text("content").notNull(),
+  emotionLevel: integer("emotion_level").notNull(),
+  isPublic: boolean("is_public").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
