@@ -49,7 +49,7 @@ export const FakeForm = () => {
   return (
     <>
       <Card
-        className="flex cursor-pointer gap-4 p-4 transition-colors hover:bg-accent"
+        className="flex cursor-pointer gap-4 border-0 p-4"
         onClick={handlePostClick}
       >
         <Avatar className="hidden size-10 sm:flex">

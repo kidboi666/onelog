@@ -24,8 +24,9 @@ export const useSignUp = () => {
     mutationFn: async ({
       email,
       password,
+      userName,
     }: Params): Promise<UserInfo | null> => {
-      const result = await authApi.signUp({ email, password });
+      const result = await authApi.signUp({ email, password, userName });
       return signUpToEntity(result);
     },
     onSuccess: (data) => {

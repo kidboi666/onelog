@@ -8,15 +8,11 @@ import { getQueryClient } from "@/shared/lib/get-query-client";
 
 const HomePage = async () => {
   const queryClient = getQueryClient();
-  try {
-    await queryClient.prefetchInfiniteQuery(articleQueries.infinite());
-  } catch (e) {
-    console.log(e);
-  }
+  await queryClient.prefetchInfiniteQuery(articleQueries.infinite());
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PageTransitionContainer className="flex animate-fade-in flex-col gap-12">
+      <PageTransitionContainer className="flex flex-col gap-12">
         <Suspense fallback={<p>loading...</p>}>
           <FakeForm />
           <InfiniteArticleList />

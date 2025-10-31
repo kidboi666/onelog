@@ -5,7 +5,9 @@ type SignInParams = {
   email: string;
   password: string;
 };
-type SignUpParams = SignInParams;
+type SignUpParams = SignInParams & {
+  userName: string;
+};
 
 export const authApi = {
   signIn: async ({ email, password }: SignInParams): Promise<User> => {
@@ -18,10 +20,19 @@ export const authApi = {
     return data.user;
   },
 
-  signUp: async ({ email, password }: SignUpParams): Promise<User | null> => {
+  signUp: async ({
+    email,
+    password,
+    userName,
+  }: SignUpParams): Promise<User | null> => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          username: userName,
+        },
+      },
     });
 
     if (error) throw error;
