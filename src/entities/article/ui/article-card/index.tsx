@@ -3,14 +3,15 @@ import { ArticleCardHeader } from "@/entities/article/ui/article-card/article-ca
 
 type ArticleCardProps = {
   userId: string;
-  userName: string;
-  avatarUrl: string | null;
-  email: string;
+  userName?: string;
+  avatarUrl?: string | null;
+  email?: string;
   emotionLevel: number;
   isMe: boolean;
   content: string;
-  createdAt: string;
-  onClick?: () => void;
+  createdAt: Date;
+  isPublic: boolean;
+  onClick: () => void;
 };
 
 export const ArticleCard = ({
@@ -21,7 +22,9 @@ export const ArticleCard = ({
   emotionLevel,
   isMe,
   content,
+  isPublic,
   createdAt,
+  onClick,
 }: ArticleCardProps) => {
   return (
     <article className="flex flex-col gap-4">
@@ -34,7 +37,13 @@ export const ArticleCard = ({
         isMe={isMe}
         createdAt={createdAt}
       />
-      <ArticleCardContent userId={userId} isMe={isMe} content={content} />
+      <ArticleCardContent
+        userId={userId}
+        isMe={isMe}
+        content={content}
+        isPublic={isPublic}
+        onClick={onClick}
+      />
     </article>
   );
 };

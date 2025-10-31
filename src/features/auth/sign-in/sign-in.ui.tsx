@@ -27,7 +27,7 @@ type SignInDialogProps = {
   onSwitchToSignUp?: () => void;
 };
 
-export const SignInModal = ({
+export const SignInDialog = ({
   children,
   open,
   onOpenChange,

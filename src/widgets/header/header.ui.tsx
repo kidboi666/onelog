@@ -5,8 +5,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { SignInModal } from "@/features/auth/sign-in/sign-in.ui";
-import { SignUpModal } from "@/features/auth/sign-up/sign-up.ui";
+import { SignInDialog } from "@/features/auth/sign-in/sign-in.ui";
+import { SignUpDialog } from "@/features/auth/sign-up/sign-up.ui";
 import {
   Avatar,
   AvatarFallback,
@@ -24,9 +24,9 @@ import {
 import { cn } from "@/shared/lib/utils";
 import { ROUTES } from "@/shared/routes";
 import { useMe } from "@/shared/store/use-me";
-import { TOP_MENUS } from "@/widgets/header/header-widget-model";
+import { TOP_MENUS } from "@/widgets/header/header.model";
 
-export const HeaderWidgetUi = () => {
+export const Header = () => {
   const { me } = useMe();
   const pathname = usePathname();
   const router = useRouter();
@@ -98,12 +98,14 @@ export const HeaderWidgetUi = () => {
               <div className="mt-4 flex flex-col gap-4">
                 {/* Write Button */}
                 <Button
-                  variant={pathname === ROUTES.POST.NEW ? "default" : "outline"}
+                  variant={
+                    pathname === ROUTES.ARTICLE.NEW ? "default" : "outline"
+                  }
                   className="w-full justify-start gap-2"
                   asChild
                   onClick={() => setOpen(false)}
                 >
-                  <Link href={ROUTES.POST.NEW}>
+                  <Link href={ROUTES.ARTICLE.NEW}>
                     <PenSquare className="size-5" />
                     <span>글쓰기</span>
                   </Link>
@@ -198,12 +200,12 @@ export const HeaderWidgetUi = () => {
       </div>
 
       {/* Auth Dialogs */}
-      <SignInModal
+      <SignInDialog
         open={showSignIn}
         onOpenChange={setShowSignIn}
         onSwitchToSignUp={handleSwitchToSignUp}
       />
-      <SignUpModal
+      <SignUpDialog
         open={showSignUp}
         onOpenChange={setShowSignUp}
         onSwitchToSignIn={handleSwitchToSignIn}

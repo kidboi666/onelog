@@ -22,10 +22,12 @@ export const userInfo = pgTable("user_info", {
 
 export const articles = pgTable("articles", {
   id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id").references(() => userInfo.id),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => userInfo.id),
   content: text("content").notNull(),
   emotionLevel: integer("emotion_level").notNull(),
-  isPublic: boolean("is_public").default(true),
+  isPublic: boolean("is_public").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

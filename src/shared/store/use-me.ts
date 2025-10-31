@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { UserInfo } from "@/db/schema";
+import type { UserInfo } from "@/entities/user/user.model";
 
 type MeState = {
   me: UserInfo | null;

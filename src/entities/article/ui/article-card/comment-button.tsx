@@ -9,12 +9,11 @@ import {
 import { cn } from "@/shared/lib/utils";
 
 interface Props {
-  disabled?: boolean;
-  commentCount: number | null;
+  commentCount?: number;
   isSide?: boolean;
 }
 
-export const CommentButton = ({ disabled, isSide, commentCount }: Props) => {
+export const CommentButton = ({ isSide, commentCount = 0 }: Props) => {
   return (
     <TooltipProvider>
       <Tooltip>
@@ -22,7 +21,6 @@ export const CommentButton = ({ disabled, isSide, commentCount }: Props) => {
           <Button
             variant="ghost"
             size={isSide ? "default" : "sm"}
-            disabled={disabled}
             className={cn(
               "gap-1 font-light text-xs transition-colors hover:text-blue-400",
               isSide && "max-lg:flex-col",

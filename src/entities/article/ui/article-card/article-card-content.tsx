@@ -1,15 +1,21 @@
+import { AccessTypeButton } from "@/entities/article/ui/article-card/access-type-button";
+import { CommentButton } from "@/entities/article/ui/article-card/comment-button";
+import { LikeButton } from "@/entities/article/ui/article-card/like-button";
+import { ReportButton } from "@/entities/article/ui/article-card/report-button";
 import { Card } from "@/shared/components/ui/card";
 
 type ArticleCardContentProps = {
   userId: string;
   isMe: boolean;
   content: string;
-  onClick?: () => void;
+  isPublic: boolean;
+  onClick: () => void;
 };
 
 export const ArticleCardContent = ({
   userId,
   isMe,
+  isPublic,
   content,
   onClick,
 }: ArticleCardContentProps) => {
@@ -24,15 +30,10 @@ export const ArticleCardContent = ({
         </div>
 
         <div className="flex items-center justify-between">
-          {/*<LikeButton*/}
-          {/*  likeCount={likeCount}*/}
-          {/*  isLike={isLike}*/}
-          {/*  postId={postId}*/}
-          {/*  onClick={() => null}*/}
-          {/*/>*/}
-          {/*<CommentButton commentCount={commentCount} disabled={disabled} />*/}
-          {/*<AccessTypeButton accessType={accessType} />*/}
-          {/*<ReportButton isSide={postId} onClick={() => null} />*/}
+          <LikeButton likeCount={0} isLike={false} onClick={() => null} />
+          <CommentButton commentCount={0} />
+          <AccessTypeButton isPublic={isPublic} />
+          <ReportButton isSide={false} onClick={() => null} />
         </div>
       </div>
     </Card>

@@ -10,17 +10,9 @@ export const ROUTES = {
     EDIT: "/profile/edit",
     SUMMARY: (userId: string) => `/profile/${userId}/summary`,
   },
-  POST: {
-    NEW: "/post/edit",
-    VIEW: (postId: number) => `/post/${postId}`,
-    EDIT: (postId: number) => `/post/edit?post_id=${postId}`,
-  },
-  MODAL: {
-    COMMENT: {
-      DELETE: (commentId: number, postId: number) => "/", // Deprecated - use DeleteCommentDialog
-    },
-    POST: {
-      DELETE: (postId: number) => "/", // Deprecated - use DeletePostDialog
-    },
+  ARTICLE: {
+    NEW: "/article/edit",
+    VIEW: (id: number) => `/article/${id}`,
+    EDIT: (id: number) => `/article/edit?id=${id}`,
   },
 };

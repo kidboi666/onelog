@@ -15,17 +15,6 @@ import {
 import { cn } from "@/shared/lib/utils";
 import { ROUTES } from "@/shared/routes";
 
-type ArticleCardHeaderProps = {
-  userId: string;
-  userName: string;
-  avatarUrl: string | null;
-  email: string;
-  emotionLevel: number;
-  isMe: boolean;
-  createdAt: string;
-  onClick?: () => void;
-};
-
 const emotionColors: Record<number, string> = {
   0: "bg-gray-300",
   25: "bg-blue-400",
@@ -40,6 +29,17 @@ const emotionLabels: Record<number, string> = {
   50: "보통",
   75: "좋음",
   100: "매우 좋음",
+};
+
+type ArticleCardHeaderProps = {
+  userId: string;
+  userName?: string;
+  avatarUrl?: string | null;
+  email?: string;
+  emotionLevel: number;
+  isMe: boolean;
+  createdAt: Date;
+  onClick?: () => void;
 };
 
 export const ArticleCardHeader = ({

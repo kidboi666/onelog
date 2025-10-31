@@ -11,17 +11,16 @@ import { cn } from "@/shared/lib/utils";
 
 type LikeButtonProps = {
   isSide?: boolean;
-  postId: number;
   onClick: (e: MouseEvent) => void;
-  likeCount: number;
-  isLike: boolean;
+  likeCount?: number;
+  isLike?: boolean;
 };
 
 export const LikeButton = ({
   isSide,
-  likeCount,
+  likeCount = 0,
   onClick,
-  isLike,
+  isLike = false,
 }: LikeButtonProps) => {
   return (
     <TooltipProvider>
