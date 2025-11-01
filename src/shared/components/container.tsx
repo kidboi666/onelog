@@ -1,14 +1,6 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/shared/lib/utils";
 
-const variantsBody = {
-  default: "",
-  write: "bg-card p-4 rounded-lg shadow-md",
-};
-type BodyProps = ComponentProps<"div"> & {
-  variant?: "default" | "write";
-};
-
 const Sidebar = ({ className, children }: ComponentProps<"aside">) => {
   return (
     <aside
@@ -46,6 +38,14 @@ const Layout = ({ className, children }: ComponentProps<"div">) => {
       {children}
     </main>
   );
+};
+
+const variantsBody = {
+  default: "",
+  write: "bg-card p-4 rounded-lg shadow-md",
+};
+type BodyProps = ComponentProps<"div"> & {
+  variant?: "default" | "write";
 };
 
 const Body = ({ variant = "default", className, children }: BodyProps) => {

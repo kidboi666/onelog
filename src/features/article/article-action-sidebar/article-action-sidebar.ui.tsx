@@ -1,3 +1,4 @@
+import type { AccessType } from "@/entities/article/article.model";
 import { ArticleAccessTypeButton } from "@/entities/article/ui/article-access-type-button";
 import { ArticleCommentButton } from "@/entities/article/ui/article-comment-button";
 import { ArticleLikeButton } from "@/entities/article/ui/article-like-button";
@@ -11,6 +12,7 @@ type ArticleActionbarProps = {
   likeCount: number;
   isLike: boolean;
   commentCount: number;
+  accessType: AccessType;
   isPublic: boolean;
   onDelete: () => void;
   onModify: () => void;
@@ -22,7 +24,7 @@ export const ArticleActionbar = ({
   likeCount = 0,
   isLike = false,
   commentCount = 0,
-  isPublic = true,
+  accessType,
   onDelete,
   onLike,
   onModify,
@@ -38,7 +40,7 @@ export const ArticleActionbar = ({
         />
         <ArticleCommentButton commentCount={commentCount} />
         <Separator />
-        <ArticleAccessTypeButton isPublic={isPublic} />
+        <ArticleAccessTypeButton value={accessType} />
         <ArticleShareButton onClick={copyURL} />
         <ArticleReportButton onClick={onReport} />
         <ArticleOptionsDropdownMenu onDelete={onDelete} onModify={onModify} />

@@ -50,7 +50,7 @@ const Page = () => {
     setContent(e.target.value);
   };
   return (
-    <Container.Body variant="write">
+    <>
       <WritePageSidebar
         emotionLevel={emotionLevel}
         accessType={accessType}
@@ -65,16 +65,18 @@ const Page = () => {
         onEmotionChange={handleEmotionChange}
         onBack={() => router.back()}
       />
-      <WriteBodyHeader
-        avatarUrl={null}
-        userName="test"
-        email="dolosolo@naver.com"
-        createdAt="2025-10-30T08:21:12.192595+00:00"
-        emotionLevel={25}
-      />
-      <Separator />
-      <WriteForm value={content} onValueChange={handleValueChange} />
-    </Container.Body>
+      <Container.Body variant="write">
+        <WriteBodyHeader
+          avatarUrl={null}
+          userName="test"
+          email="dolosolo@naver.com"
+          createdAt="2025-10-30T08:21:12.192595+00:00"
+          emotionLevel={25}
+        />
+        <Separator />
+        <WriteForm value={content} onValueChange={handleValueChange} />
+      </Container.Body>
+    </>
   );
 };
 

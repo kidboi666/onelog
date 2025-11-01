@@ -5,7 +5,7 @@ import { TransitionContainer } from "@/shared/components/transition-container";
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <TransitionContainer.FadeIn>
-      <Container.Page>{children}</Container.Page>
+      <Container.Body>{children}</Container.Body>
     </TransitionContainer.FadeIn>
   );
 };
