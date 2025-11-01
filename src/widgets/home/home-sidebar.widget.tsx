@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { SignInDialog } from "@/features/auth/sign-in/sign-in.ui";
 import { SignUpDialog } from "@/features/auth/sign-up/sign-up.ui";
+import { Container } from "@/shared/components/container";
 import {
   Avatar,
   AvatarFallback,
@@ -20,7 +21,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/shared/components/ui/tooltip";
-import { cn } from "@/shared/lib/utils";
 import { ROUTES } from "@/shared/routes";
 import { useMe } from "@/shared/store/use-me";
 
@@ -32,7 +32,7 @@ const TOP_MENUS = [
   },
 ];
 
-export const Sidebar = () => {
+export const HomeSidebar = () => {
   const { me } = useMe();
   const pathname = usePathname();
   const router = useRouter();
@@ -78,18 +78,16 @@ export const Sidebar = () => {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <nav className="lg:-translate-y-1/2 fixed top-4 left-4 z-40 hidden h-fit w-16 flex-col gap-2 rounded-lg bg-card p-2 shadow-md sm:flex lg:top-1/2">
+      <Container.Sidebar>
         {/* Write Button */}
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant={pathname === ROUTES.ARTICLE.NEW ? "default" : "ghost"}
-              size="icon"
-              className="relative h-12 w-12"
               asChild
             >
               <Link href={ROUTES.ARTICLE.NEW}>
-                <PenSquare className="size-5" />
+                <PenSquare />
               </Link>
             </Button>
           </TooltipTrigger>
@@ -109,15 +107,7 @@ export const Sidebar = () => {
             return (
               <Tooltip key={menu.name}>
                 <TooltipTrigger asChild>
-                  <Button
-                    variant={active ? "default" : "ghost"}
-                    size="icon"
-                    className={cn(
-                      "relative h-12 w-12",
-                      active && "bg-primary text-primary-foreground",
-                    )}
-                    asChild
-                  >
+                  <Button variant={active ? "default" : "ghost"} asChild>
                     <Link href={menu.path}>
                       <Icon className="size-5" />
                     </Link>
@@ -135,17 +125,8 @@ export const Sidebar = () => {
           {/* Theme Toggle */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-12 w-12"
-                onClick={handleThemeToggle}
-              >
-                {theme === "dark" ? (
-                  <Moon className="size-5" />
-                ) : (
-                  <Sun className="size-5" />
-                )}
+              <Button variant="ghost" onClick={handleThemeToggle}>
+                {theme === "dark" ? <Moon /> : <Sun />}
               </Button>
             </TooltipTrigger>
             <TooltipContent side="right">
@@ -181,7 +162,7 @@ export const Sidebar = () => {
             </TooltipContent>
           </Tooltip>
         </div>
-      </nav>
+      </Container.Sidebar>
 
       {/* Auth Dialogs */}
       <SignInDialog

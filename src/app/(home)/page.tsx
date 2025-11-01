@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { articleQueries } from "@/entities/article/article.queries";
 import { FakeForm } from "@/features/article/fake-form/fake-form.ui";
 import { InfiniteArticleList } from "@/features/article/infinite-article-list/infinite-article-list.ui";
+import { Container } from "@/shared/components/container";
 import { TransitionContainer } from "@/shared/components/transition-container";
 import { getQueryClient } from "@/shared/lib/get-query-client";
 
@@ -13,11 +14,13 @@ const HomePage = async () => {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Suspense fallback={<p>loading...</p>}>
-        <TransitionContainer.SlideIn type="spring">
-          <FakeForm />
-        </TransitionContainer.SlideIn>
+        <Container.Body>
+          <TransitionContainer.SlideIn type="spring">
+            <FakeForm />
+          </TransitionContainer.SlideIn>
 
-        <InfiniteArticleList />
+          <InfiniteArticleList />
+        </Container.Body>
       </Suspense>
     </HydrationBoundary>
   );

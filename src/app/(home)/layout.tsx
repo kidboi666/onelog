@@ -1,15 +1,17 @@
 import type { PropsWithChildren } from "react";
 import { Container } from "@/shared/components/container";
 import { TransitionContainer } from "@/shared/components/transition-container";
-import { Header } from "@/widgets/home/header.widget";
-import { Sidebar } from "@/widgets/home/sidebar.widget";
+import { HomeHeader } from "@/widgets/home/home-header.widget";
+import { HomeSidebar } from "@/widgets/home/home-sidebar.widget";
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <TransitionContainer.FadeIn>
-      <Header />
-      <Sidebar />
-      <Container.Page>{children}</Container.Page>
+      <Container.Layout>
+        <HomeHeader />
+        <HomeSidebar />
+        {children}
+      </Container.Layout>
     </TransitionContainer.FadeIn>
   );
 };

@@ -1,5 +1,6 @@
 import type { PopoverContentProps } from "@radix-ui/react-popover";
 import { Globe, Lock } from "lucide-react";
+import type { AccessType } from "@/entities/article/article.model";
 import { Button } from "@/shared/components/ui/button";
 import {
   DropdownMenu,
@@ -16,9 +17,8 @@ import {
 import { cn } from "@/shared/lib/utils";
 
 type AccessTypeButtonProps = {
-  value: string;
+  value: AccessType;
   onValueChange?: (value: string) => void;
-  readonly?: boolean;
   tooltipSide?: PopoverContentProps["side"];
   dropdownMenuSide?: PopoverContentProps["side"];
   dropdownMenuAlign?: PopoverContentProps["align"];

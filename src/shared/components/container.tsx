@@ -1,11 +1,19 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/shared/lib/utils";
 
+const variantsBody = {
+  default: "",
+  write: "bg-card p-4 rounded-lg shadow-md",
+};
+type BodyProps = ComponentProps<"div"> & {
+  variant?: "default" | "write";
+};
+
 const Sidebar = ({ className, children }: ComponentProps<"aside">) => {
   return (
     <aside
       className={cn(
-        "lg:-translate-y-1/2 fixed top-4 left-4 z-40 hidden h-fit w-16 flex-col gap-2 rounded-lg bg-card p-2 shadow-md sm:flex lg:top-1/2",
+        "hidden h-fit flex-col gap-2 rounded-lg bg-card p-2 shadow-md sm:my-8 sm:flex",
         className,
       )}
     >
@@ -14,12 +22,44 @@ const Sidebar = ({ className, children }: ComponentProps<"aside">) => {
   );
 };
 
-const Page = ({ className, children }: ComponentProps<"div">) => {
+const Header = ({ className, children }: ComponentProps<"header">) => {
   return (
-    <main className="mt-4 flex justify-center px-4 sm:ml-[80px]">
-      <div className={cn("w-full lg:w-[880px]", className)}>{children}</div>
+    <header
+      className={cn(
+        "sticky top-0 z-50 flex w-full bg-card/60 p-2 shadow-sm backdrop-blur-xl sm:hidden",
+        className,
+      )}
+    >
+      {children}
+    </header>
+  );
+};
+
+const Layout = ({ className, children }: ComponentProps<"div">) => {
+  return (
+    <main
+      className={cn(
+        "flex h-screen w-full flex-col items-start justify-center gap-4 sm:flex-row",
+        className,
+      )}
+    >
+      {children}
     </main>
   );
 };
 
-export const Container = { Sidebar, Page };
+const Body = ({ variant = "default", className, children }: BodyProps) => {
+  return (
+    <div
+      className={cn(
+        "flex size-full flex-col gap-4 sm:my-8 sm:w-md md:w-lg lg:w-2xl",
+        variantsBody[variant],
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
+export const Container = { Sidebar, Body, Layout, Header };
