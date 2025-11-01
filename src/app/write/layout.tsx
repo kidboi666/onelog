@@ -1,14 +1,14 @@
 import type { PropsWithChildren } from "react";
 import { Container } from "@/shared/components/container";
 import { TransitionContainer } from "@/shared/components/transition-container";
-import { EditorFooterWidget } from "@/widgets/write/editor-footer.widget";
-import { EditorSidebarWidget } from "@/widgets/write/editor-sidebar.widget";
+import { EditorFooter } from "@/widgets/write/editor-footer.widget";
+import { EditorSidebar } from "@/widgets/write/editor-sidebar.widget";
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <TransitionContainer.FadeIn>
-      <EditorSidebarWidget />
-      <EditorFooterWidget />
+      <EditorSidebar />
+      <EditorFooter />
       <Container.Page>{children}</Container.Page>
     </TransitionContainer.FadeIn>
   );

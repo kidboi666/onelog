@@ -1,6 +1,6 @@
 "use client";
 
-import { LogIn, Moon, PenSquare, Sun } from "lucide-react";
+import { Home, LogIn, Moon, PenSquare, Sun } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -23,7 +23,14 @@ import {
 import { cn } from "@/shared/lib/utils";
 import { ROUTES } from "@/shared/routes";
 import { useMe } from "@/shared/store/use-me";
-import { TOP_MENUS } from "@/widgets/home/app-navigation-sidebar.model";
+
+const TOP_MENUS = [
+  {
+    name: "홈",
+    icon: Home,
+    path: ROUTES.HOME,
+  },
+];
 
 export const Sidebar = () => {
   const { me } = useMe();
@@ -100,7 +107,7 @@ export const Sidebar = () => {
             const active = isActive(menu.path);
 
             return (
-              <Tooltip key={menu.id}>
+              <Tooltip key={menu.name}>
                 <TooltipTrigger asChild>
                   <Button
                     variant={active ? "default" : "ghost"}

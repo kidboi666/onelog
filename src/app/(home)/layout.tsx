@@ -1,8 +1,8 @@
 import type { PropsWithChildren } from "react";
 import { Container } from "@/shared/components/container";
 import { TransitionContainer } from "@/shared/components/transition-container";
-import { Header } from "@/widgets/home/app-navigation-header.widget";
-import { Sidebar } from "@/widgets/home/app-navigation-sidebar.widget";
+import { Header } from "@/widgets/home/header.widget";
+import { Sidebar } from "@/widgets/home/sidebar.widget";
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (

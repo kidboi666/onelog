@@ -2,8 +2,11 @@
 
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ArticleAccessTypeButton } from "@/entities/article/ui/article-access-type-button";
 import { Container } from "@/shared/components/container";
 import { Button } from "@/shared/components/ui/button";
+import { Separator } from "@/shared/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
@@ -11,29 +14,32 @@ import {
   TooltipTrigger,
 } from "@/shared/components/ui/tooltip";
 
-export const EditorSidebarWidget = () => {
+export const EditorSidebar = () => {
   const router = useRouter();
+  const [isPublic, setIsPublic] = useState(true);
+  const computedAccessTypeValue = isPublic ? "public" : "private";
+
+  const handlePublicChange = (value: string) => {
+    setIsPublic(value === "public");
+  };
 
   return (
-    <Container.Sidebar>
-      <TooltipProvider>
+    <TooltipProvider>
+      <Container.Sidebar>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative h-12 w-12"
-              onClick={() => router.back()}
-            >
-              <ArrowLeft className="size-5" />
+            <Button variant="ghost" onClick={() => router.back()}>
+              <ArrowLeft />
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>글쓰기</p>
-          </TooltipContent>
+          <TooltipContent side="right">뒤로 가기</TooltipContent>
         </Tooltip>
-        <div className="flex flex-col items-center gap-2"></div>
-      </TooltipProvider>
-    </Container.Sidebar>
+        <Separator />
+        <ArticleAccessTypeButton
+          value={computedAccessTypeValue}
+          onValueChange={handlePublicChange}
+        />
+      </Container.Sidebar>
+    </TooltipProvider>
   );
 };

@@ -1,9 +1,9 @@
-import { ArticleCardAccessTypeButton } from "@/entities/article/ui/article-card-access-type-button";
-import { ArticleCardCommentButton } from "@/entities/article/ui/article-card-comment-button";
-import { ArticleCardLikeButton } from "@/entities/article/ui/article-card-like-button";
-import { ArticleOptionsDropdownMenu } from "@/entities/article/ui/article-card-option-dropdown-menu";
-import { ArticleCardReportButton } from "@/entities/article/ui/article-card-report-button";
-import { ArticleCardShareButton } from "@/entities/article/ui/article-card-share-button";
+import { ArticleAccessTypeButton } from "@/entities/article/ui/article-access-type-button";
+import { ArticleCommentButton } from "@/entities/article/ui/article-comment-button";
+import { ArticleLikeButton } from "@/entities/article/ui/article-like-button";
+import { ArticleOptionsDropdownMenu } from "@/entities/article/ui/article-option-button";
+import { ArticleReportButton } from "@/entities/article/ui/article-report-button";
+import { ArticleShareButton } from "@/entities/article/ui/article-share-button";
 import { Separator } from "@/shared/components/ui/separator";
 import { copyURL } from "@/shared/lib/utils";
 
@@ -31,16 +31,16 @@ export const ArticleActionbar = ({
   return (
     <aside className="sticky top-8 left-4 hidden h-fit rounded-md bg-card p-2 shadow-md max-lg:fixed sm:flex">
       <div className="flex flex-col items-center">
-        <ArticleCardLikeButton
+        <ArticleLikeButton
           likeCount={likeCount}
           isLike={isLike}
           onClick={onLike}
         />
-        <ArticleCardCommentButton commentCount={commentCount} />
+        <ArticleCommentButton commentCount={commentCount} />
         <Separator />
-        <ArticleCardAccessTypeButton isPublic={isPublic} />
-        <ArticleCardShareButton onClick={copyURL} />
-        <ArticleCardReportButton onClick={onReport} />
+        <ArticleAccessTypeButton isPublic={isPublic} />
+        <ArticleShareButton onClick={copyURL} />
+        <ArticleReportButton onClick={onReport} />
         <ArticleOptionsDropdownMenu onDelete={onDelete} onModify={onModify} />
       </div>
     </aside>

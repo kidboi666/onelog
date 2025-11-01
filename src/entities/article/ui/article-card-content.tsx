@@ -1,7 +1,7 @@
-import { ArticleCardAccessTypeButton } from "@/entities/article/ui/article-card-access-type-button";
-import { ArticleCardCommentButton } from "@/entities/article/ui/article-card-comment-button";
-import { ArticleCardLikeButton } from "@/entities/article/ui/article-card-like-button";
-import { ArticleCardReportButton } from "@/entities/article/ui/article-card-report-button";
+import { ArticleAccessTypeButton } from "@/entities/article/ui/article-access-type-button";
+import { ArticleCommentButton } from "@/entities/article/ui/article-comment-button";
+import { ArticleLikeButton } from "@/entities/article/ui/article-like-button";
+import { ArticleReportButton } from "@/entities/article/ui/article-report-button";
 import { Card } from "@/shared/components/ui/card";
 
 type ArticleCardContentProps = {
@@ -28,14 +28,14 @@ export const ArticleCardContent = ({
         </div>
 
         <div className="flex items-center justify-between">
-          <ArticleCardLikeButton
+          <ArticleLikeButton
             likeCount={0}
             isLike={false}
             onClick={() => null}
           />
-          <ArticleCardCommentButton commentCount={0} />
-          <ArticleCardAccessTypeButton isPublic={isPublic} />
-          <ArticleCardReportButton onClick={() => null} />
+          <ArticleCommentButton commentCount={0} />
+          <ArticleAccessTypeButton value={isPublic ? "public" : "private"} />
+          <ArticleReportButton onClick={() => null} />
         </div>
       </div>
     </Card>

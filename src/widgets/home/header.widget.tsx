@@ -1,6 +1,14 @@
 "use client";
 
-import { LogIn, Menu, Moon, PenSquare, Sun, UserPlus } from "lucide-react";
+import {
+  Home,
+  LogIn,
+  Menu,
+  Moon,
+  PenSquare,
+  Sun,
+  UserPlus,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -24,7 +32,14 @@ import {
 import { cn } from "@/shared/lib/utils";
 import { ROUTES } from "@/shared/routes";
 import { useMe } from "@/shared/store/use-me";
-import { TOP_MENUS } from "@/widgets/home/app-navigation-header.model";
+
+const TOP_MENUS = [
+  {
+    name: "홈",
+    icon: Home,
+    path: ROUTES.HOME,
+  },
+];
 
 export const Header = () => {
   const { me } = useMe();
@@ -122,7 +137,7 @@ export const Header = () => {
 
                       return (
                         <Button
-                          key={menu.id}
+                          key={menu.name}
                           variant={active ? "default" : "ghost"}
                           className="w-full justify-start gap-2"
                           asChild
