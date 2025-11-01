@@ -10,7 +10,8 @@
     "format": "biome format --write",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "db:pull": "drizzle-kit pull"
+    "db:pull": "drizzle-kit pull",
+    "db:seed": "tsx src/db/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -39,6 +40,7 @@
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
+    "drizzle-seed": "^0.3.1",
     "lucide-react": "^0.548.0",
     "motion": "^12.23.24",
     "next": "16.0.1",

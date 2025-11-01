@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { articleQueries } from "@/entities/article/article.queries";
 import { FakeForm } from "@/features/article/fake-form/fake-form.ui";
 import { InfiniteArticleList } from "@/features/article/infinite-article-list/infinite-article-list.ui";
-import { PageTransitionContainer } from "@/shared/components/container/page-transition-container";
+import { TransitionContainer } from "@/shared/components/transition-container";
 import { getQueryClient } from "@/shared/lib/get-query-client";
 
 const HomePage = async () => {
@@ -12,12 +12,13 @@ const HomePage = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PageTransitionContainer className="flex flex-col gap-12">
-        <Suspense fallback={<p>loading...</p>}>
+      <Suspense fallback={<p>loading...</p>}>
+        <TransitionContainer.SlideIn type="spring">
           <FakeForm />
-          <InfiniteArticleList />
-        </Suspense>
-      </PageTransitionContainer>
+        </TransitionContainer.SlideIn>
+
+        <InfiniteArticleList />
+      </Suspense>
     </HydrationBoundary>
   );
 };

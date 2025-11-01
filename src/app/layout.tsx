@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "하루 한 문장씩 - 당신의 감정을 기록하세요.",
 };
 
-const RootLayout = ({
+const RootLayout = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;

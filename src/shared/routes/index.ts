@@ -4,15 +4,15 @@ export const PROTECTED_ROUTES = ["/post/edit", "/profile/edit"];
 
 export const ROUTES = {
   HOME: "/",
-  PROFILE: {
-    VIEW: (userId: string, path?: string) =>
-      `/profile/${userId}${path ? `/${path}` : ""}`,
-    EDIT: "/profile/edit",
-    SUMMARY: (userId: string) => `/profile/${userId}/summary`,
+  USER: {
+    VIEW: (userId: string) => `/${userId}`,
   },
   ARTICLE: {
-    NEW: "/article/edit",
-    VIEW: (id: number) => `/article/${id}`,
-    EDIT: (id: number) => `/article/edit?id=${id}`,
+    VIEW: (id: string) => `/article/${id}`,
+    NEW: "/write",
+    EDIT: (id: string) => `/article/${id}/edit`,
+  },
+  SETTINGS: {
+    PROFILE: "/settings/profile",
   },
 };

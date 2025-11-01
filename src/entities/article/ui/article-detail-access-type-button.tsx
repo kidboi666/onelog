@@ -1,6 +1,4 @@
 import { Globe, Lock } from "lucide-react";
-import type { MouseEvent } from "react";
-import type { AccessType } from "@/entities/article/article.model";
 import { Button } from "@/shared/components/ui/button";
 import {
   Popover,
@@ -16,18 +14,12 @@ import {
 import { cn } from "@/shared/lib/utils";
 
 type AccessTypeButtonProps = {
-  isSide?: boolean;
   isPublic: boolean;
 };
 
-export const AccessTypeButton = ({
-  isSide,
+export const ArticleDetailAccessTypeButton = ({
   isPublic,
 }: AccessTypeButtonProps) => {
-  const handleButtonClick = (e: MouseEvent) => {
-    e.stopPropagation();
-  };
-
   return (
     <TooltipProvider>
       <Tooltip>
@@ -36,11 +28,8 @@ export const AccessTypeButton = ({
             <PopoverTrigger asChild>
               <Button
                 variant="ghost"
-                size={isSide ? "default" : "sm"}
-                onClick={handleButtonClick}
                 className={cn(
                   "gap-1 font-light text-xs transition-colors hover:text-green-400",
-                  isSide && "max-lg:flex-col",
                 )}
               >
                 {isPublic ? (

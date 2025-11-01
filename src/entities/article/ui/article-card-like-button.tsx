@@ -10,14 +10,12 @@ import {
 import { cn } from "@/shared/lib/utils";
 
 type LikeButtonProps = {
-  isSide?: boolean;
   onClick: (e: MouseEvent) => void;
   likeCount?: number;
   isLike?: boolean;
 };
 
-export const LikeButton = ({
-  isSide,
+export const ArticleCardLikeButton = ({
   likeCount = 0,
   onClick,
   isLike = false,
@@ -28,11 +26,9 @@ export const LikeButton = ({
         <TooltipTrigger asChild>
           <Button
             variant="ghost"
-            size={isSide ? "default" : "sm"}
             onClick={onClick}
             className={cn(
               "gap-1 font-light text-xs transition-colors hover:text-red-500",
-              isSide && "max-lg:flex-col",
               isLike && "text-red-500",
             )}
           >

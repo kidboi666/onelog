@@ -4,8 +4,8 @@ import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useEffect, useRef } from "react";
 import { articleQueries } from "@/entities/article/article.queries";
-import { ArticleCard } from "@/entities/article/ui/article-card";
 import { useMe } from "@/shared/store/use-me";
+import { ArticleCard } from "@/widgets/article/article-card.widget";
 
 export const InfiniteArticleList = () => {
   const { me } = useMe();

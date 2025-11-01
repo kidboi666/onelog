@@ -23,7 +23,7 @@ import {
 import { cn } from "@/shared/lib/utils";
 import { ROUTES } from "@/shared/routes";
 import { useMe } from "@/shared/store/use-me";
-import { TOP_MENUS } from "@/widgets/sidebar/sidebar.model";
+import { TOP_MENUS } from "@/widgets/home/app-navigation-sidebar.model";
 
 export const Sidebar = () => {
   const { me } = useMe();
@@ -53,7 +53,7 @@ export const Sidebar = () => {
 
   const handleAuthClick = () => {
     if (me) {
-      router.push(ROUTES.PROFILE.VIEW(me.id));
+      router.push(ROUTES.USER.VIEW(me.id));
     } else {
       setShowSignIn(true);
     }
@@ -71,7 +71,7 @@ export const Sidebar = () => {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <nav className="lg:-translate-y-1/2 fixed bottom-4 left-4 z-40 hidden h-fit w-16 flex-col gap-2 rounded-lg bg-card p-2 shadow-md sm:flex lg:top-1/2">
+      <nav className="lg:-translate-y-1/2 fixed top-4 left-4 z-40 hidden h-fit w-16 flex-col gap-2 rounded-lg bg-card p-2 shadow-md sm:flex lg:top-1/2">
         {/* Write Button */}
         <Tooltip>
           <TooltipTrigger asChild>

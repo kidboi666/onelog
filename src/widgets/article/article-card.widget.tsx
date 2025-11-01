@@ -1,5 +1,5 @@
-import { ArticleCardContent } from "@/entities/article/ui/article-card/article-card-content";
-import { ArticleCardHeader } from "@/entities/article/ui/article-card/article-card-header";
+import { ArticleCardContent } from "@/entities/article/ui/article-card-content";
+import { ArticleCardHeader } from "@/entities/article/ui/article-card-header";
 
 type ArticleCardProps = {
   userId: string;

@@ -13,7 +13,10 @@ interface Props {
   isSide?: boolean;
 }
 
-export const CommentButton = ({ isSide, commentCount = 0 }: Props) => {
+export const ArticleCardCommentButton = ({
+  isSide,
+  commentCount = 0,
+}: Props) => {
   return (
     <TooltipProvider>
       <Tooltip>

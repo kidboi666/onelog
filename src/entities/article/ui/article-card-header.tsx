@@ -93,19 +93,15 @@ export const ArticleCardHeader = ({
                 {isMe ? (
                   <>
                     <Button variant="secondary" size="sm" asChild>
-                      <Link href={ROUTES.PROFILE.EDIT}>프로필 수정</Link>
+                      <Link href={ROUTES.SETTINGS.PROFILE}>프로필 수정</Link>
                     </Button>
                     <Button size="sm" asChild>
-                      <Link href={ROUTES.PROFILE.VIEW(userId)}>
-                        마이 페이지
-                      </Link>
+                      <Link href={ROUTES.USER.VIEW(userId)}>프로필 페이지</Link>
                     </Button>
                   </>
                 ) : (
                   <Button size="sm" asChild>
-                    <Link href={ROUTES.PROFILE.VIEW(userId)}>
-                      프로필 페이지
-                    </Link>
+                    <Link href={ROUTES.USER.VIEW(userId)}>프로필 페이지</Link>
                   </Button>
                 )}
               </div>
