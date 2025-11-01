@@ -3,7 +3,12 @@
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import {
+  EMOTION_STATUS,
+  type EmotionLevel,
+} from "@/entities/article/article.model";
 import { ArticleAccessTypeButton } from "@/entities/article/ui/article-access-type-button";
+import { ArticleEmotionButton } from "@/entities/article/ui/article-emotion-button";
 import { Container } from "@/shared/components/container";
 import { Button } from "@/shared/components/ui/button";
 import { Separator } from "@/shared/components/ui/separator";
@@ -17,10 +22,30 @@ import {
 export const EditorSidebar = () => {
   const router = useRouter();
   const [isPublic, setIsPublic] = useState(true);
+  const [emotionLevel, setEmotionLevel] = useState<EmotionLevel | null>(null);
   const computedAccessTypeValue = isPublic ? "public" : "private";
 
   const handlePublicChange = (value: string) => {
     setIsPublic(value === "public");
+  };
+
+  const handleEmotionChange = (value: string) => {
+    setEmotionLevel(() => {
+      switch (value) {
+        case "0":
+          return 0;
+        case "25":
+          return 25;
+        case "50":
+          return 50;
+        case "75":
+          return 75;
+        case "100":
+          return 100;
+        default:
+          return null;
+      }
+    });
   };
 
   return (
@@ -38,6 +63,10 @@ export const EditorSidebar = () => {
         <ArticleAccessTypeButton
           value={computedAccessTypeValue}
           onValueChange={handlePublicChange}
+        />
+        <ArticleEmotionButton
+          value={emotionLevel}
+          onValueChange={handleEmotionChange}
         />
       </Container.Sidebar>
     </TooltipProvider>

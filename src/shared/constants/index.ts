@@ -110,15 +110,3 @@ export const QUERY_KEY = {
     },
   },
 };
-
-export enum Access {
-  PUBLIC = "public",
-  PRIVATE = "private",
-}
-
-export enum PostType {
-  ARTICLE = "article",
-  JOURNAL = "journal",
-}
-
-export type EmotionLevel = 0 | 25 | 50 | 75 | 100;
