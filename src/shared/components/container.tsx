@@ -31,7 +31,7 @@ const Layout = ({ className, children }: ComponentProps<"div">) => {
   return (
     <main
       className={cn(
-        "flex h-screen w-full flex-col items-start justify-center gap-4 sm:flex-row",
+        "flex flex-col items-start justify-center gap-4 sm:flex-row",
         className,
       )}
     >
@@ -52,7 +52,7 @@ const Body = ({ variant = "default", className, children }: BodyProps) => {
   return (
     <div
       className={cn(
-        "flex size-full flex-col gap-4 sm:my-8 sm:w-md md:w-lg lg:w-2xl",
+        "flex h-[calc(100vh-5.2rem)] w-full flex-col gap-4 sm:my-8 sm:h-[calc(100vh-4rem)] sm:w-md md:w-lg lg:w-2xl",
         variantsBody[variant],
         className,
       )}

@@ -1,6 +1,6 @@
 {
-  "id": "3b830c04-1a1e-476a-8e73-c9d804dfe75f",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "b8c65afc-e027-4a5c-94fc-483bf3ed49ea",
+  "prevId": "3b830c04-1a1e-476a-8e73-c9d804dfe75f",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -58,10 +58,11 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "articles_user_id_user_info_id_fk": {
-          "name": "articles_user_id_user_info_id_fk",
+        "articles_user_id_users_id_fk": {
+          "name": "articles_user_id_users_id_fk",
           "tableFrom": "articles",
-          "tableTo": "user_info",
+          "tableTo": "users",
+          "schemaTo": "auth",
           "columnsFrom": [
             "user_id"
           ],
@@ -151,7 +152,16 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.access_types": {
+      "name": "access_types",
+      "schema": "public",
+      "values": [
+        "public",
+        "private"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

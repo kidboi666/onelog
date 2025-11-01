@@ -1,6 +1,8 @@
 import {
   boolean,
   integer,
+  pgEnum,
+  pgPolicy,
   pgTable,
   text,
   timestamp,
@@ -8,6 +10,10 @@ import {
 } from "drizzle-orm/pg-core";
 import { authUsers } from "drizzle-orm/supabase";
 
+// Enums
+export const accessTypes = pgEnum("access_types", ["public", "private"]);
+
+// Tables
 export const userInfo = pgTable("user_info", {
   id: uuid("id")
     .primaryKey()
@@ -24,10 +30,10 @@ export const articles = pgTable("articles", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: uuid("user_id")
     .notNull()
-    .references(() => userInfo.id),
+    .references(() => authUsers.id),
   content: text("content").notNull(),
   emotionLevel: integer("emotion_level").notNull(),
-  isPublic: boolean("is_public").default(true).notNull(),
+  accessType: accessTypes("access_type").default("public"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

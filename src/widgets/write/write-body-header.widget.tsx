@@ -17,7 +17,7 @@ type WriteHeaderProps = {
   avatarUrl?: string | null;
   email?: string | null;
   userName?: string;
-  createdAt: string;
+  createdAt?: Date;
   emotionLevel: EmotionLevel;
 };
 
@@ -28,10 +28,14 @@ export const WriteBodyHeader = ({
   createdAt,
   emotionLevel,
 }: WriteHeaderProps) => {
-  const formattedDate = format(new Date(createdAt), "M월 d일 y년", {
-    locale: ko,
-  });
-  const formattedTime = format(new Date(createdAt), "HH:mm");
+  const formattedDate = format(
+    new Date(createdAt ?? Date.now()),
+    "M월 d일 y년",
+    {
+      locale: ko,
+    },
+  );
+  const formattedTime = format(new Date(createdAt ?? Date.now()), "HH:mm");
 
   return (
     <header className="flex items-center gap-4">

@@ -3,7 +3,7 @@ CREATE TABLE "articles" (
 	"user_id" uuid NOT NULL,
 	"content" text NOT NULL,
 	"emotion_level" integer NOT NULL,
-	"is_public" boolean DEFAULT true NOT NULL,
+	"access_type" "access_types" DEFAULT 'public',
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );

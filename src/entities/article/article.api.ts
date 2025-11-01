@@ -4,13 +4,12 @@ import { desc, eq, getTableColumns, gt } from "drizzle-orm";
 import { db } from "@/db";
 import { articles, userInfo } from "@/db/schema";
 import {
+  type Article,
   type ArticleInsertSchema,
   type ArticleWithAuthorInfo,
   type InfiniteArticleList,
   PAGE_LIMIT,
 } from "@/entities/article/article.model";
-
-type PostParams = ArticleInsertSchema;
 
 export const getInfinitePublicArticleList = async (
   pageParam?: string,
@@ -63,8 +62,14 @@ export const getArticleDetail = async (
     });
 };
 
-export const postArticle = async (params: PostParams) => {
-  return db.insert(articles).values(params).returning();
+export const postArticle = async (
+  params: ArticleInsertSchema,
+): Promise<Article> => {
+  return db
+    .insert(articles)
+    .values(params)
+    .returning()
+    .then((rows) => rows[0]);
 };
 
 export const deleteArticle = async (id: string) => {

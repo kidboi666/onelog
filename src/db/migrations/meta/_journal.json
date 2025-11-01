@@ -5,8 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1761921036827,
-      "tag": "0000_foamy_molten_man",
+      "when": 1762011330905,
+      "tag": "0000_common_goliath",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1762014603951,
+      "tag": "0001_left_warbound",
       "breakpoints": true
     }
   ]

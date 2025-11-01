@@ -9,7 +9,7 @@ export type InfiniteArticleList = {
   previousId?: string;
   nextId?: string;
 };
-export type AccessType = "public" | "private";
+export type AccessType = typeof articles.$inferSelect.accessType;
 
 export const PAGE_LIMIT = 10;
 
@@ -21,7 +21,7 @@ export const EMOTION_STATUS = [
   { percent: 100, status: "매우 좋음" },
 ] as const;
 
-export type EmotionLevel = (typeof EMOTION_STATUS)[number]["percent"];
+export type EmotionLevel = typeof articles.$inferSelect.emotionLevel;
 
 export const POST_QUERY_KEY = {
   PUBLIC: ["all_post"],
